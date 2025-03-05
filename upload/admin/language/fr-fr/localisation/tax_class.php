@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']     = 'Classes de Taxes';
 
 // Texte
@@ -9,7 +9,7 @@ $_['text_add']          = 'Ajouter une Classe de Taxes';
 $_['text_edit']         = 'Modifier une Classe de Taxes';
 $_['text_tax_class']    = 'Classe de Taxes';
 $_['text_tax_rate']     = 'Taux de Taxes';
-$_['text_shipping']     = 'Adresse de Livraison';
+$_['text_shipping']     = 'Adresse d\'Expéditon';
 $_['text_payment']      = 'Adresse de Paiement';
 $_['text_store']        = 'Adresse du Magasin';
 
@@ -17,7 +17,7 @@ $_['text_store']        = 'Adresse du Magasin';
 $_['column_title']      = 'Titre de la Classe de Taxes';
 $_['column_action']     = 'Action';
 
-// Champ
+// Entrée
 $_['entry_title']       = 'Titre de la Classe de Taxes';
 $_['entry_description'] = 'Description';
 $_['entry_rate']        = 'Taux de Taxes';

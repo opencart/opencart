@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']                       = 'Paramètres';
 
 // Texte
@@ -10,7 +10,7 @@ $_['text_register']                       = 'S\'inscrire';
 $_['text_guest']                          = 'Commande Invité';
 $_['text_return']                         = 'Retours';
 $_['text_contact']                        = 'Contact';
-$_['text_shipping']                       = 'Adresse de Livraison';
+$_['text_shipping']                       = 'Adresse d\'Expéditon';
 $_['text_payment']                        = 'Adresse de Facturation';
 $_['text_image']                          = 'Images';
 $_['text_image_size']                     = 'Tailles d\'Image';
@@ -30,7 +30,6 @@ $_['text_error']                          = 'Gestion des Erreurs';
 $_['text_product']                        = 'Produits';
 $_['text_review']                         = 'Avis';
 $_['text_cms']                            = 'CMS';
-$_['text_voucher']                        = 'Bon';
 $_['text_legal']                          = 'Légal';
 $_['text_tax']                            = 'Taxes';
 $_['text_account']                        = 'Compte';
@@ -54,7 +53,7 @@ $_['text_password_lowercase']             = 'Minuscule';
 $_['text_password_number']                = 'Numéro';
 $_['text_password_symbol']                = 'Symbole';
 
-// Entrées
+// Entrée
 $_['entry_meta_title']                    = 'Titre Meta';
 $_['entry_meta_description']              = 'Description des Balises Meta';
 $_['entry_meta_keyword']                  = 'Mots-clés des Balises Meta';
@@ -94,8 +93,6 @@ $_['entry_comment_status']                = 'Autoriser les Commentaires';
 $_['entry_comment_guest']                 = 'Autoriser les Commentaires Invités';
 $_['entry_comment_approve']               = 'Approuver les Commentaires Automatiquement';
 $_['entry_comment_interval']              = 'Commentaires en Interval';
-$_['entry_voucher_min']                   = 'Montant Minimum du Bon';
-$_['entry_voucher_max']                   = 'Montant Maximum du Bon';
 $_['entry_cookie']                        = 'Politique de Cookies';
 $_['entry_gdpr']                          = 'Politique RGPD';
 $_['entry_gdpr_limit']                    = 'Limite RGPD';
@@ -120,7 +117,7 @@ $_['entry_account']                       = 'Conditions du Compte';
 $_['entry_cart_weight']                   = 'Afficher le Poids dans le Panier';
 $_['entry_checkout_guest']                = 'Commande Invité';
 $_['entry_checkout_payment_address']      = 'Adresse de Facturation Requise';
-$_['entry_checkout_shipping_address']     = 'Utiliser l\'Adresse de Livraison pour la Facturation';
+$_['entry_checkout_shipping_address']     = 'Utiliser l\'Adresse d\'Expéditon pour la Facturation';
 $_['entry_checkout']                      = 'Conditions de Validation';
 $_['entry_invoice_prefix']                = 'Préfixe des Factures';
 $_['entry_order_status']                  = 'Statut des Commandes';
@@ -163,7 +160,6 @@ $_['entry_image_additional']              = 'Taille des Images Supplémentaires 
 $_['entry_image_related']                 = 'Taille des Images Liées (L x H)';
 $_['entry_image_article']                 = 'Taille des Images des Articles (L x H)';
 $_['entry_image_topic']                   = 'Taille des Images des Topiques (L x H)';
-$_['entry_image_blog']                    = 'Taille des Images des Blogs (L x H)';
 $_['entry_image_compare']                 = 'Taille des Images de Comparaison (L x H)';
 $_['entry_image_wishlist']                = 'Taille des Images des Souhaits (L x H)';
 $_['entry_image_cart']                    = 'Taille des Images du Panier (L x H)';
@@ -190,14 +186,12 @@ $_['entry_session_expire']                = 'Durée de Vie de Session';
 $_['entry_session_samesite']              = 'Cookie Samesite de Session';
 $_['entry_compression']                   = 'Niveau de Compression de Sortie';
 $_['entry_user_2fa']                      = 'L\'authentification à Deux Facteurs';
-$_['entry_security']                      = 'Sécurité à Deux Facteurs';
-$_['entry_encryption']                    = 'Clé de Chiffrement';
 $_['entry_error_display']                 = 'Afficher les Erreurs';
 $_['entry_error_log']                     = 'Journaliser les Erreurs';
 $_['entry_error_filename']                = 'Nom du Fichier Journal des Erreurs';
 $_['entry_status']                        = 'Statut';
 
-// Help
+// Aide
 $_['help_geocode']                        = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre magasin.';
 $_['help_icon']                           = 'L\'icône devrait être sous format PNG d\'une taille de 16px par 16px.';
 $_['help_open']                           = 'Indiquez les horaires d\'ouverture de votre magasin.';
@@ -215,18 +209,15 @@ $_['help_review']                         = 'Activer/Désactiver l\'entrée de n
 $_['help_review_purchased']               = 'Les avis sont autorisés uniquement pour les produits que le client a achetés.';
 $_['help_review_guest']                   = 'Permettre aux invités de publier des avis.';
 $_['help_article_description_length']     = 'Dans la vue liste, limite de caractères pour la description courte des articles.';
-$_['help_comment']                        = 'Activer/Désactiver l\'entrée de nouveaux commentaires et l\'affichage des commentaires existants.';
 $_['help_comment_status']                 = 'Activer/Désactiver l\'entrée de nouveaux commentaires et l\'affichage des commentaires existants.';
 $_['help_comment_guest']                  = 'Permettre aux invités de publier des commentaires.';
 $_['help_comment_approve']                = 'Auto-approbation des commentaires. Autrement, le premier commentaire doit être approuvé avant qu\'il soit ajouté sur la liste verte.';
 $_['help_comment_interval']               = 'Le nombre de minutes avant qu\'un utilisateur puisse soumettre un autre commentaire une fois avoir soumis son dernier commentaire. Entrez 0 pour désactiver cette protection.';
-$_['help_voucher_min']                    = 'Montant minimum pour l\'achat d\'un bon.';
-$_['help_voucher_max']                    = 'Montant maximum pour l\'achat d\'un bon.';
 $_['help_cookie']                         = 'Afficher la politique de cookies conformément à la loi européenne.';
 $_['help_gdpr']                           = 'Activer les fonctionnalités GDPR et lier à la politique GDPR.';
 $_['help_gdpr_limit']                     = 'Limite le nombre de jours avant qu\'une demande de suppression de données personnelles ne soit effectuée après son approbation. Requis pour les retours, rétrofacturations et prévention des fraudes.';
-$_['help_tax_default']                    = 'Utiliser l\'adresse du magasin pour calculer les taxes si le client n\'est pas connecté. Vous pouvez choisir d\'utiliser l\'adresse du magasin pour l\'adresse de livraison ou de paiement du client.';
-$_['help_tax_customer']                   = 'Utilisez l\'adresse par défaut du client lorsqu\'il se connecte pour calculer les taxes. Vous pouvez choisir d\'utiliser l\'adresse par défaut pour l\'adresse de livraison ou de paiement du client.';
+$_['help_tax_default']                    = 'Utiliser l\'adresse du magasin pour calculer les taxes si le client n\'est pas connecté. Vous pouvez choisir d\'utiliser l\'adresse du magasin pour l\'adresse d\'Expéditon ou de paiement du client.';
+$_['help_tax_customer']                   = 'Utilisez l\'adresse par défaut du client lorsqu\'il se connecte pour calculer les taxes. Vous pouvez choisir d\'utiliser l\'adresse par défaut pour l\'adresse d\'Expéditon ou de paiement du client.';
 $_['help_customer_online']                = 'Suivre les clients en ligne via la section rapports des clients.';
 $_['help_customer_online_expire']         = 'Indiquez la durée pendant laquelle les visiteurs de votre site apparaîtront dans la liste des clients en ligne.';
 $_['help_customer_activity']              = 'Suivre l\'activité des clients via la section rapports des clients.';
@@ -241,14 +232,14 @@ $_['help_invoice_prefix']                 = 'Définir le préfixe de facture (pa
 $_['help_cart_weight']                    = 'Afficher le poids du panier sur la page du panier.';
 $_['help_checkout_guest']                 = 'Permettre aux clients de payer sans créer de compte. Cela ne sera pas disponible si un produit téléchargeable est dans le panier.';
 $_['help_checkout_payment_address']       = 'Choisir si les clients doivent fournir une adresse de facturation pour le paiement.';
-$_['help_checkout_shipping_address']      = 'Si aucune adresse de facturation n\'est fournie, utiliser l\'adresse de livraison pour calculer les méthodes de paiement disponibles.';
+$_['help_checkout_shipping_address']      = 'Si aucune adresse de facturation n\'est fournie, utiliser l\'adresse d\'Expéditon pour calculer les méthodes de paiement disponibles.';
 $_['help_checkout']                       = 'Oblige les clients à accepter les conditions générales avant de finaliser leur achat.';
 $_['help_order_status']                   = 'Définir le statut de commande par défaut lorsqu\'une commande est traitée.';
-$_['help_processing_status']              = 'Définir le statut de commande nécessaire pour que la commande commence à déduire le stock et activer les coupons, bons et récompenses.';
+$_['help_processing_status']              = 'Définir le statut de commande nécessaire pour que la commande commence à déduire le stock et activer les coupons, les bons, et les récompenses offertes.';
 $_['help_complete_status']                = 'Définir le statut de commande nécessaire pour que les clients puissent accéder à leurs produits téléchargeables et bons cadeaux.';
 $_['help_failed_status']                  = 'Définir le statut de commande nécessaire lorsque la commande a échouée.';
 $_['help_void_status']                    = 'Définir le statut de commande nécessaire lorsque la commande est annulée.';
-$_['help_fraud_status']                   = 'Définir le statut de commande lorsque le client est suspecté de tenter de modifier les détails de paiement de la commande ou d\'utiliser un coupon, un bon cadeau ou des points de récompense déjà utilisés.';
+$_['help_fraud_status']                   = 'Définir le statut de commande lorsque le client est suspecté de tenter de modifier les détails de paiement de la commande ou d\'utiliser un coupon, un bon cadeau, ou des récompenses offertes déjà utilisés.';
 $_['help_subscription']                   = 'Définir le statut d\'abonnement par défaut lorsque le client est suspecté de tenter de modifier les détails de paiement ou d\'utiliser des avantages déjà utilisés.';
 $_['help_api']                            = 'Utilisateur API par défaut que l\'administrateur doit utiliser.';
 $_['help_stock_display']                  = 'Afficher la quantité de stock sur la page produit.';
@@ -273,7 +264,6 @@ $_['help_mail_alert_email']               = 'Ajoutez des adresses emails supplé
 $_['help_session_expire']                 = 'Définir la durée de vie de la session PHP en secondes (par exemple: 3600 = 1 heure).';
 $_['help_session_samesite']               = 'Définir le cookie Samesite pour la session PHP.';
 $_['help_user_2fa']                       = 'Authentification à Deux Facteurs pour les utilisateurs administrateurs.';
-$_['help_security']                       = 'Sécurité à deux facteurs pour les utilisateurs administrateurs.';
 $_['help_shared']                         = 'Essayez de partager le cookie de session entre les magasins pour que le panier puisse être transmis entre différents domaines.';
 $_['help_robots']                         = 'Liste des agents utilisateurs de crawlers web pour lesquels les sessions partagées ne seront pas utilisées. Utilisez une ligne distincte pour chaque agent utilisateur.';
 $_['help_seo_url']                        = 'Pour utiliser les URLs SEO, le module apache mod-rewrite doit être installé et vous devez renommer le fichier htaccess.txt en .htaccess.';
@@ -281,10 +271,9 @@ $_['help_file_max_size']                  = 'La taille maximale des fichiers que
 $_['help_file_ext_allowed']               = 'Ajoutez les extensions de fichiers autorisées pour le téléchargement. Utilisez une ligne distincte pour chaque extension.';
 $_['help_file_mime_allowed']              = 'Ajoutez les types MIME autorisés pour le téléchargement. Utilisez une ligne distincte pour chaque type MIME.';
 $_['help_maintenance']                    = 'Empêche les clients de naviguer sur votre boutique. Ils verront à la place un message de maintenance. Si vous êtes connecté en tant qu\'administrateur, vous verrez la boutique normalement.';
-$_['help_encryption']                     = 'Fournissez une clé secrète pour chiffrer les informations privées lors du traitement des commandes.';
 $_['help_compression']                    = 'GZIP pour un transfert plus efficace vers les clients demandeurs. Le niveau de compression doit être compris entre 0 et 9.';
 
-// Error
+// Erreur
 $_['error_warning']                       = 'Attention: Veuillez vérifier soigneusement le formulaire pour détecter les erreurs!';
 $_['error_permission']                    = 'Attention: Vous n\'avez pas la permission de modifier les paramètres!';
 $_['error_meta_title']                    = 'Le titre doit comporter entre 1 et 64 caractères!';
@@ -292,14 +281,11 @@ $_['error_name']                          = 'Le nom de la boutique doit comporte
 $_['error_owner']                         = 'Le propriétaire de la boutique doit comporter entre 3 et 64 caractères!';
 $_['error_address']                       = 'L\'adresse de la boutique doit comporter entre 3 et 256 caractères!';
 $_['error_email']                         = 'L\'adresse e-mail semble invalide!';
-$_['error_telephone']                     = 'Le téléphone doit comporter entre 3 et 32 caractères!';
 $_['error_product_description_length']    = 'La longueur de la description du produit est requise!';
 $_['error_pagination']                    = 'La pagination est requise!';
 $_['error_autocomplete_limit']            = 'La limite de la saisie automatique est requise!';
 $_['error_login_attempts']                = 'Les tentatives de connexion doivent être supérieures à 0!';
 $_['error_customer_group_display']        = 'Vous devez inclure le groupe de clients par défaut si vous utilisez cette fonctionnalité!';
-$_['error_voucher_min']                   = 'Le montant minimum du bon est requis!';
-$_['error_voucher_max']                   = 'Le montant maximum du bon est requis!';
 $_['error_customer_online_expire']        = 'Le paramètre de délai d\'expiration pour la liste des clients en ligne est requis!';
 $_['error_processing_status']             = 'Vous devez choisir au moins 1 statut de traitement de commande!';
 $_['error_complete_status']               = 'Vous devez choisir au moins 1 statut de commande terminée!';
@@ -318,7 +304,6 @@ $_['error_image_cart']                    = 'Les dimensions des images du panier
 $_['error_image_location']                = 'Les dimensions des images de l\'emplacement sont requises!';
 $_['error_file_max_size']                 = 'La taille maximale du fichier est requise!';
 $_['error_user_2fa']                      = 'L\'authentification à Deux Facteurs ne peut pas être utilisée si vous n\'avez pas configuré votre adresse courriel!';
-$_['error_security']                      = 'La sécurité à deux facteurs ne peut pas être utilisée si votre email n\'est pas encore configuré!';
 $_['error_extension']                     = 'Les téléchargements PHP ne sont pas autorisés!';
 $_['error_mime']                          = 'Les téléchargements PHP ne sont pas autorisés!';
 $_['error_log_required']                  = 'Le nom du fichier journal des erreurs est requis!';

@@ -1,5 +1,5 @@
 <?php
-// Locale
+// Lieu
 $_['code']                  = 'fr';
 $_['direction']             = 'ltr';
 $_['date_format_short']     = 'd/m/Y';
@@ -34,7 +34,7 @@ $_['text_months_ago']       = 'il y a %s mois';
 $_['text_year_ago']         = 'il y a %s an';
 $_['text_years_ago']        = 'il y a %s ans';
 
-// Boutons
+// Bouton
 $_['button_address_add']    = 'Ajouter une adresse';
 $_['button_back']           = 'Retour';
 $_['button_continue']       = 'Continuer';
@@ -63,11 +63,10 @@ $_['button_search']         = 'Rechercher';
 $_['button_submit']         = 'Soumettre';
 $_['button_guest']          = 'Commander en tant qu\'invité';
 $_['button_view']           = 'Voir';
-$_['button_voucher']        = 'Appliquer le bon cadeau';
 $_['button_upload']         = 'Télécharger un fichier';
 $_['button_reward']         = 'Appliquer des points';
 $_['button_choose']         = 'Choisir';
-$_['button_shipping']       = 'Appliquer la livraison';
+$_['button_shipping']       = 'Appliquer la Expédition';
 $_['button_quote']          = 'Obtenir des devis';
 $_['button_list']           = 'Liste';
 $_['button_grid']           = 'Grille';

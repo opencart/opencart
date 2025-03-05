@@ -10,7 +10,6 @@ $_['text_price']        = 'Prix';
 $_['text_model']        = 'Modèle';
 $_['text_manufacturer'] = 'Marque';
 $_['text_availability'] = 'Disponibilité';
-$_['text_instock']      = 'En stock';
 $_['text_rating']       = 'Évaluation';
 $_['text_reviews']      = 'Basé sur %s avis.';
 $_['text_summary']      = 'Résumé';

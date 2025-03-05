@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']              = 'Panier d\'achat';
 
 // Texte
@@ -18,9 +18,9 @@ $_['text_week']                  = 'semaine';
 $_['text_semi_month']            = 'demi-mois';
 $_['text_month']                 = 'mois';
 $_['text_year']                  = 'année';
-$_['text_points']                = 'Points de récompense';
+$_['text_points']                = 'Points de récompenses';
 $_['text_next']                  = 'Que souhaitez-vous faire ensuite?';
-$_['text_next_choice']           = 'Choisissez si vous avez un code de réduction ou des points de récompense que vous souhaitez utiliser ou si vous souhaitez estimer le coût de votre livraison.';
+$_['text_next_choice']           = 'Choisissez si vous avez un code de réduction ou des points de récompenses que vous souhaitez utiliser ou si vous souhaitez estimer le coût de votre Expédition.';
 
 // Colonne
 $_['column_image']               = 'Image';

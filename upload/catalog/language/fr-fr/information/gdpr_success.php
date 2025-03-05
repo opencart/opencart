@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title'] = 'Succès RGPD';
 
 // Texte

@@ -1,11 +1,11 @@
 <?php
-// Titre
-$_['heading_title']         = 'Adresse de livraison';
+// En-tête
+$_['heading_title']         = 'Adresse d\'Expéditon';
 
 // Texte
 $_['text_address_new']      = 'Je souhaite utiliser une nouvelle adresse';
 $_['text_address_existing'] = 'Je souhaite utiliser une adresse existante';
-$_['text_success']          = 'Succès: Vous avez modifié l\'adresse de livraison!';
+$_['text_success']          = 'Succès: Vous avez modifié l\'adresse d\'Expéditon!';
 
 // Entrée
 $_['entry_address']         = 'Choisir une adresse';
@@ -20,7 +20,7 @@ $_['entry_country']         = 'Pays';
 $_['entry_zone']            = 'Région / État';
 
 // Erreur
-$_['error_address']         = 'L\'adresse de livraison est introuvable!';
+$_['error_address']         = 'L\'adresse d\'Expéditon est introuvable!';
 $_['error_firstname']       = 'Le prénom doit contenir entre 1 et 32 caractères!';
 $_['error_lastname']        = 'Le nom doit contenir entre 1 et 32 caractères!';
 $_['error_address_1']       = 'L\'adresse 1 doit contenir entre 3 et 128 caractères!';

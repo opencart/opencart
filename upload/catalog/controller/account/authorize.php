@@ -175,7 +175,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['code']);
 
 			// On success we need to reset the attempts and status.
-			$this->model_account_customer->editAuthorizeStatus($token_info['customer_authorize_id'], true);
+			//$this->model_account_customer->editAuthorizeStatus($token_info['customer_authorize_id'], true);
 			$this->model_account_customer->editAuthorizeTotal($token_info['customer_authorize_id'], 0);
 
 			if (isset($this->request->post['redirect'])) {
@@ -186,7 +186,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			// Register the cookie for security.
 			if ($redirect && str_starts_with($redirect, HTTP_SERVER)) {
-				$json['redirect'] = $redirect;
+				$json['redirect'] = $redirect . '&customer_token=' . $this->session->data['customer_token'];
 			} else {
 				$json['redirect'] = $this->url->link('account/account', 'customer_token=' . $this->session->data['customer_token'], true);
 			}

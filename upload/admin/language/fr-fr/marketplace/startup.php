@@ -12,7 +12,7 @@ $_['column_code']       = 'Code de démarrage';
 $_['column_sort_order'] = 'Ordre de tri';
 $_['column_action']     = 'Action';
 
-// Entry
+// Entrée
 $_['entry_description'] = 'Description';
 
 // Erreur

@@ -1,8 +1,8 @@
 <?php
-// Heading
+// En-tête
 $_['heading_title']        = 'Champs Personnalisés';
 
-// Text
+// Texte
 $_['text_success']         = 'Succès: Vous avez modifié les champs personnalisés!';
 $_['text_list']            = 'Liste des Champs Personnalisés';
 $_['text_add']             = 'Ajouter un Champ Personnalisé';
@@ -25,7 +25,7 @@ $_['text_regex']           = 'Regex';
 $_['text_custom_field']    = 'Champ Personnalisé';
 $_['text_value']           = 'Valeurs des Champs Personnalisés';
 
-// Column
+// Colonne
 $_['column_name']          = 'Nom du Champ Personnalisé';
 $_['column_location']      = 'Emplacement';
 $_['column_type']          = 'Type';
@@ -33,7 +33,7 @@ $_['column_status']        = 'Statut';
 $_['column_sort_order']    = 'Ordre de Tri';
 $_['column_action']        = 'Action';
 
-// Entry
+// Entrée
 $_['entry_name']           = 'Nom du Champ Personnalisé';
 $_['entry_location']       = 'Emplacement';
 $_['entry_type']           = 'Type';
@@ -45,11 +45,11 @@ $_['entry_required']       = 'Requis';
 $_['entry_status']         = 'Statut';
 $_['entry_sort_order']     = 'Ordre de Tri';
 
-// Help
+// Aide
 $_['help_regex']           = 'Utilisez regex. Exemple: [^a-zA-Z0-9_-]';
 $_['help_sort_order']      = 'Utilisez un nombre négatif pour compter à rebours à partir du dernier champ dans l\'ensemble.';
 
-// Error
+// Erreur
 $_['error_permission']     = 'Attention: Vous n\'avez pas la permission de modifier les champs personnalisés!';
 $_['error_name']           = 'Le nom du champ personnalisé doit contenir entre 1 et 128 caractères!';
 $_['error_type']           = 'Attention: Les valeurs de champ personnalisé sont requises!';

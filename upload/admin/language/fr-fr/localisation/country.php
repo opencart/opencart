@@ -26,8 +26,8 @@ $_['entry_status']            = 'Statut';
 // Erreur
 $_['error_permission']        = 'Attention: Vous n\'avez pas la permission de modifier les pays!';
 $_['error_name']              = 'Le nom du pays doit contenir entre 1 et 128 caractères!';
-$_['error_iso_code_2']        = 'La norme ISO Code 2 doit contenir 2 caractères!';
-$_['error_iso_code_3']        = 'La norme ISO Code 3 doit contenir 3 caractères!';
+$_['error_iso_code_2']        = 'Le code ISO Code 2 doit contenir 2 caractères!';
+$_['error_iso_code_3']        = 'Le code ISO Code 3 doit contenir 3 caractères!';
 $_['error_default']           = 'Attention: Ce pays ne peut pas être supprimé car il est actuellement défini comme le pays par défaut de la boutique!';
 $_['error_store']             = 'Attention: Ce pays ne peut pas être supprimé car il est actuellement attribué à %s boutiques!';
 $_['error_address']           = 'Attention: Ce pays ne peut pas être supprimé car il est actuellement attribué à %s entrées dans le carnet d\'adresses!';

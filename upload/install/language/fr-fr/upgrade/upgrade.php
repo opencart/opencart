@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']     = 'Mise à niveau';
 
 // Texte
@@ -16,7 +16,7 @@ $_['text_store']        = 'Chargez l\'interface de la boutique et appuyez deux f
 $_['text_success']      = 'Félicitations ! Vous avez réussi à mettre à niveau votre installation OpenCart !';
 $_['text_patch']        = 'Patch %s a été appliqué (%s sur %s)';
 
-// Saisie
+// Entrée
 $_['entry_admin']       = 'Nom de l\'administrateur';
 $_['entry_progress']    = 'Progression';
 

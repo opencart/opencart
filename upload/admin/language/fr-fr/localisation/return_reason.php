@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']    = 'Raisons de Retour';
 
 // Texte
@@ -12,7 +12,7 @@ $_['text_edit']        = 'Modifier une Raison de Retour';
 $_['column_name']      = 'Nom de la Raison de Retour';
 $_['column_action']    = 'Action';
 
-// Champ
+// Entrée
 $_['entry_name']       = 'Nom de la Raison de Retour';
 
 // Erreur

@@ -1,8 +1,8 @@
 <?php
-// Text
+// Texte
 $_['text_success']         = 'Vous avez modifié avec succès les clients';
 
-// Error
+// Erreur
 $_['error_customer']       = 'Attention: Le client n\'a pas pu être trouvé!';
 $_['error_customer_group'] = 'Le groupe de clients ne semble pas être valide!';
 $_['error_firstname']      = 'Le prénom doit contenir entre 1 et 32 caractères!';

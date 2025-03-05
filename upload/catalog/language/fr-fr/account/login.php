@@ -1,8 +1,8 @@
 <?php
-// Heading
+// En-tête
 $_['heading_title']                = 'Connexion au Compte';
 
-// Text
+// Texte
 $_['text_account']                 = 'Compte';
 $_['text_login']                   = 'Connexion';
 $_['text_new_customer']            = 'Nouveau Client';
@@ -12,11 +12,11 @@ $_['text_returning_customer']      = 'Client déjà enregistré';
 $_['text_i_am_returning_customer'] = 'Je suis un client déjà enregistré';
 $_['text_forgotten']               = 'Mot de passe oublié';
 
-// Entry
+// Entrée
 $_['entry_email']                  = 'Adresse e-mail';
 $_['entry_password']               = 'Mot de passe';
 
-// Error
+// Erreur
 $_['error_token']                  = 'Attention: Session de jeton invalide. Veuillez vous reconnecter !';
 $_['error_login']                  = 'Attention: Aucune correspondance pour l\'adresse e-mail et/ou le mot de passe.';
 $_['error_attempts']               = 'Attention: Votre compte a dépassé le nombre autorisé de tentatives de connexion. Veuillez réessayer dans 1 heure.';

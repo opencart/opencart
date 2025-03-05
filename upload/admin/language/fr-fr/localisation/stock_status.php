@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']    = 'Statuts de Stock';
 
 // Texte
@@ -12,7 +12,7 @@ $_['text_edit']        = 'Modifier un Statut de Stock';
 $_['column_name']      = 'Nom du Statut de Stock';
 $_['column_action']    = 'Action';
 
-// Champ
+// Entrée
 $_['entry_name']       = 'Nom du Statut de Stock';
 
 // Erreur

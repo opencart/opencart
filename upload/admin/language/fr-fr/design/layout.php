@@ -1,8 +1,8 @@
 <?php
-// Heading
+// En-tête
 $_['heading_title']       = 'Mises en page';
 
-// Text
+// Texte
 $_['text_success']        = 'Succès: Vous avez modifié les mises en page!';
 $_['text_list']           = 'Liste des mises en page';
 $_['text_add']            = 'Ajouter une mise en page';
@@ -16,17 +16,17 @@ $_['text_content_bottom'] = 'Contenu bas';
 $_['text_column_left']    = 'Colonne gauche';
 $_['text_column_right']   = 'Colonne droite';
 
-// Column
+// Colonne
 $_['column_name']         = 'Nom de la mise en page';
 $_['column_action']       = 'Action';
 
-// Entry
+// Entrée
 $_['entry_name']          = 'Nom de la mise en page';
 $_['entry_store']         = 'Magasin';
 $_['entry_route']         = 'Itinéraire';
 $_['entry_module']        = 'Module';
 
-// Error
+// Erreur
 $_['error_permission']    = 'Attention: Vous n\'avez pas la permission de modifier les mises en page!';
 $_['error_name']          = 'Le nom de la mise en page doit contenir entre 3 et 64 caractères!';
 $_['error_module']        = 'Module requis!';

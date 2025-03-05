@@ -13,7 +13,7 @@ $_['column_name']       = 'Nom du groupe de filtres';
 $_['column_sort_order'] = 'Ordre de tri';
 $_['column_action']     = 'Action';
 
-// Champ
+// Entrée
 $_['entry_name']        = 'Nom du groupe de filtres';
 $_['entry_sort_order']  = 'Ordre de tri';
 

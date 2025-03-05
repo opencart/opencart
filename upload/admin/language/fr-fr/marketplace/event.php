@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']     = 'Événements';
 
 // Texte
@@ -9,7 +9,7 @@ $_['text_event']        = 'Les événements sont utilisés par les extensions po
 $_['text_info']         = 'Informations sur les événements';
 
 // Colonne
-$_['column_code']       = 'Code de l’événement';
+$_['column_code']       = 'Code de l\'événement';
 $_['column_sort_order'] = 'Ordre de tri';
 $_['column_action']     = 'Action';
 
@@ -19,4 +19,4 @@ $_['entry_trigger']     = 'Déclencheur';
 $_['entry_action']      = 'Action';
 
 // Erreur
-$_['error_permission']  = 'Attention: Vous n’avez pas la permission de modifier les événements!';
+$_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier les événements!';

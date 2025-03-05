@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']    = 'Classes de Poids';
 
 // Texte
@@ -14,7 +14,7 @@ $_['column_unit']      = 'Unité de Poids';
 $_['column_value']     = 'Valeur';
 $_['column_action']    = 'Action';
 
-// Champ
+// Entrée
 $_['entry_title']      = 'Titre du Poids';
 $_['entry_unit']       = 'Unité de Poids';
 $_['entry_value']      = 'Valeur';

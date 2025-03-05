@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']          = 'Configuration';
 
 // Texte
@@ -14,7 +14,7 @@ $_['text_cpanel']            = 'Configuration DB avec CPanel';
 $_['text_plesk']             = 'Configuration DB avec Plesk';
 $_['text_db_ssl']            = 'Les entrées des certificats doivent être ajoutées en une seule ligne comme : "MIIDrzCCApegAwIBAgIQ....=="';
 
-// Saisie
+// Entrée
 $_['entry_db_driver']        = 'Pilote DB';
 $_['entry_db_hostname']      = 'Nom d\'hôte';
 $_['entry_db_username']      = 'Nom d\'utilisateur';

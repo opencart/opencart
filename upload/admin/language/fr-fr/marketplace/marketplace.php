@@ -1,6 +1,6 @@
 <?php
-// Titre
-$_['heading_title']      = 'Marketplace d’Extensions';
+// En-tête
+$_['heading_title']      = 'Marketplace d\'Extensions';
 
 // Texte
 $_['text_success']       = 'Succès: Vous avez modifié les extensions!';
@@ -13,7 +13,7 @@ $_['text_theme']         = 'Thèmes';
 $_['text_marketplace']   = 'Marketplaces';
 $_['text_language']      = 'Langues';
 $_['text_payment']       = 'Paiement';
-$_['text_shipping']      = 'Livraison';
+$_['text_shipping']      = 'Expédition';
 $_['text_module']        = 'Modules';
 $_['text_total']         = 'Totaux de commande';
 $_['text_feed']          = 'Flux';
@@ -24,7 +24,7 @@ $_['text_paid']          = 'Payant';
 $_['text_purchased']     = 'Acheté';
 $_['text_recommended']   = 'Recommandé';
 $_['text_date_modified'] = 'Date de modification';
-$_['text_date_added']    = 'Date d’ajout';
+$_['text_date_added']    = 'Date d\'ajout';
 $_['text_rating']        = 'Évaluation';
 $_['text_reviews']       = 'avis';
 $_['text_compatibility'] = 'Compatibilité';
@@ -43,7 +43,7 @@ $_['text_comment_add']   = 'Laissez votre commentaire';
 $_['text_write']         = 'Écrivez votre commentaire ici.';
 $_['text_purchase']      = 'Veuillez confirmer votre identité!';
 $_['text_pin']           = 'Veuillez entrer votre code PIN à 4 chiffres. Ce code PIN protège votre compte.';
-$_['text_secure']        = 'Ne communiquez pas votre code PIN à quiconque (y compris les développeurs). Si vous avez besoin d’aide, veuillez envoyer un e-mail au vendeur de l’extension concernant le package spécifique.';
+$_['text_secure']        = 'Ne communiquez pas votre code PIN à quiconque (y compris les développeurs). Si vous avez besoin d\'aide, veuillez envoyer un e-mail au vendeur de l\'extension concernant le package spécifique.';
 $_['text_name']          = 'Nom du téléchargement';
 $_['text_available']     = 'Installations disponibles';
 $_['text_action']        = 'Action';
@@ -56,7 +56,7 @@ $_['text_refresh']       = 'Actualiser';
 // Entrée
 $_['entry_pin']          = 'PIN';
 
-// Onglet
+// Onglets
 $_['tab_description']    = 'Description';
 $_['tab_documentation']  = 'Documentation';
 $_['tab_download']       = 'Téléchargement';
@@ -72,7 +72,7 @@ $_['button_reply']       = 'Répondre';
 $_['button_forgot_pin']  = 'PIN oublié?';
 
 // Erreur
-$_['error_permission']   = 'Attention: Vous n’avez pas la permission de modifier les extensions!';
-$_['error_api']          = 'Attention: Vous devez entrer vos informations d’API OpenCart en cliquant sur <i class="fa-solid fa-triangle-exclamation"></i> avant de pouvoir télécharger des extensions ou effectuer des achats!';
-$_['error_purchase']     = 'L’extension n’a pas pu être achetée!';
-$_['error_download']     = 'L’extension n’a pas pu être téléchargée!';
+$_['error_permission']   = 'Attention: Vous n\'avez pas la permission de modifier les extensions!';
+$_['error_api']          = 'Attention: Vous devez entrer vos informations d\'API OpenCart en cliquant sur <i class="fa-solid fa-triangle-exclamation"></i> avant de pouvoir télécharger des extensions ou effectuer des achats!';
+$_['error_purchase']     = 'l\'extension n\'a pas pu être achetée!';
+$_['error_download']     = 'l\'extension n\'a pas pu être téléchargée!';

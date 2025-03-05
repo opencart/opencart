@@ -1,19 +1,19 @@
 <?php
 // En-tête
-$_['heading_title']      = 'Statuts d\'abonnement';
+$_['heading_title']      = 'Statuts d\'Abonnement';
 
 // Texte
 $_['text_success']       = 'Succès: Vous avez modifié les statuts d\'abonnement!';
-$_['text_list']          = 'Liste des Statuts d\'abonnement';
-$_['text_add']           = 'Ajouter un Statut d\'abonnement';
-$_['text_edit']          = 'Modifier un Statut d\'abonnement';
+$_['text_list']          = 'Liste des Statuts d\'Abonnement';
+$_['text_add']           = 'Ajouter un Statut d\'Abonnement';
+$_['text_edit']          = 'Modifier un Statut d\'Abonnement';
 
 // Colonne
-$_['column_name']        = 'Nom du Statut d\'abonnement';
+$_['column_name']        = 'Nom du Statut d\'Abonnement';
 $_['column_action']      = 'Action';
 
 // Entrée
-$_['entry_name']         = 'Nom du Statut d\'abonnement';
+$_['entry_name']         = 'Nom du Statut d\'Abonnement';
 
 // Erreur
 $_['error_permission']   = 'Attention: Vous n\'êtes pas autorisé à modifier les statuts d\'abonnement!';

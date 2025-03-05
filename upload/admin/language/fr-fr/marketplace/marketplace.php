@@ -63,7 +63,7 @@ $_['tab_download']       = 'Téléchargement';
 $_['tab_comment']        = 'Commentaire';
 
 // Bouton
-$_['button_api']         = 'Le Marché APIAPI';
+$_['button_api']         = 'Le Marché API';
 $_['button_purchase']    = 'Acheter';
 $_['button_view_all']    = 'Voir toutes les extensions';
 $_['button_support']     = 'Obtenir du soutien';

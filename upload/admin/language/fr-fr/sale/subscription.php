@@ -27,8 +27,8 @@ $_['text_month']                 = 'Mois';
 $_['text_year']                  = 'Année';
 $_['text_payment_method']        = 'Méthode de Paiement';
 $_['text_payment']               = 'Veuillez svp sélectionner la préférence de la méthode de paiement pour cet abonnement.';
-$_['text_shipping_method']       = 'Méthode d\'Expéditon';
-$_['text_shipping']              = 'Veuillez svp sélectionner la préférence de la méthode d\'Expéditon pour cet abonnement.';
+$_['text_shipping_method']       = 'Méthode d\'Expédition';
+$_['text_shipping']              = 'Veuillez svp sélectionner la préférence de la méthode d\'Expédition pour cet abonnement.';
 $_['text_history']               = 'Historique';
 $_['text_history_add']           = 'Ajouter à l\'Historique';
 $_['text_log']                   = 'Rapports';
@@ -70,7 +70,7 @@ $_['entry_product']              = 'Veuillez Choisir le Produit';
 $_['entry_option']               = 'Veuillez Choisir les Options';
 $_['entry_quantity']             = 'Quantité';
 $_['entry_payment_address']      = 'Adresse de Paiement';
-$_['entry_shipping_address']     = 'Addresse d\'Expéditon';
+$_['entry_shipping_address']     = 'Addresse d\'Expédition';
 
 // Onglet
 $_['tab_order']                  = 'Commandes';

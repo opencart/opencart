@@ -1,6 +1,6 @@
 <?php
 // Texte
-$_['text_success']       = 'Succès: L\'adresse d\'expéditon a été définie!';
+$_['text_success']       = 'Succès: L\'adresse d\'expédition a été définie!';
 
 // Erreur
 $_['error_firstname']    = 'Le prénom doit contenir entre 1 et 32 caractères!';
@@ -12,4 +12,4 @@ $_['error_country']      = 'Veuillez sélectionner un pays!';
 $_['error_zone']         = 'Veuillez sélectionner une région / un état!';
 $_['error_custom_field'] = '%s requis!';
 $_['error_regex']        = '%s n\'est pas une entrée valide!';
-$_['error_shipping']     = 'Attention: Aucun produit ne nécessite d\'expéditon';
+$_['error_shipping']     = 'Attention: Aucun produit ne nécessite d\'expédition';

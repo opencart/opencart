@@ -11,6 +11,6 @@ $_['error_payment_address']  = 'Attention: L\'extension du mode de paiement est 
 $_['error_shipping_address'] = 'Attention: L\'extension du mode de paiement est introuvable!';
 $_['error_product']          = 'Attention: L\'extension du mode de paiement est introuvable!';
 $_['error_option']           = 'Attention: L\'option %s n\'a pu être trouvée!';
-$_['error_shipping_method']  = 'Attention: Le mode d\'expéditon %s est introuvable!';
+$_['error_shipping_method']  = 'Attention: Le mode d\'expédition %s est introuvable!';
 $_['error_payment_method']   = 'Attention: Le mode de paiement %s est introuvable!';
 $_['error_extension']        = 'Attention: L\'extension du mode de paiement est introuvable!';

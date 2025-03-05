@@ -31,9 +31,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$route = substr($route, 0, $pos);
 		}
 
-		// Block access to 2fa if not active or logged in
+		// Block access to 2fa if logged in
 		if ($route == 'account/authorize' && !$this->config->get('config_2fa')) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language'), true));
+			$this->response->redirect($this->url->link('common/home', 'language=' . $this->config->get('config_language'), true));
 		}
 
 		if ($this->config->get('config_2fa') && $this->customer->isLogged()) {
@@ -43,7 +43,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token_info = $this->model_account_customer->getAuthorizeByToken($this->customer->getId(), $token);
 
 			if ($token_info && $token_info['status']) {
-				$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . 'customer_token=' . $this->sesssion->data['customer_token'], true));
+				return null;
 			}
 
 			// Don't force redirect to authorize page if already on authorize page.

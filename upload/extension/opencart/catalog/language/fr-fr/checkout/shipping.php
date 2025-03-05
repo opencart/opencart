@@ -5,7 +5,7 @@ $_['heading_title']        = 'Prix d\'estimation d\'expédition &amp; Taxes';
 // Texte
 $_['text_shipping_method'] = 'Options des méthodes d\'expédition';
 $_['text_destination']     = 'Entrez votre destination pour obtenir une estimation d\'expédition.';
-$_['text_estimate']        = 'Veuillez svp sélectionner le mode d\'Expédition que vous préférez sur cette commande.';
+$_['text_estimate']        = 'Veuillez svp sélectionner le mode d\'expédition que vous préférez sur cette commande.';
 $_['text_success']         = 'Succès: Votre estimation d\'expédition a été appliquée!';
 
 // Entrée

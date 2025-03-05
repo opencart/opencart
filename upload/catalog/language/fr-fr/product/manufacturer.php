@@ -5,7 +5,6 @@ $_['heading_title']    = 'Trouvez votre marque préférée';
 // Texte
 $_['text_brand']       = 'Marque';
 $_['text_index']       = 'Index des marques:';
-$_['text_error']       = 'Marque introuvable!';
 $_['text_no_results']  = 'Il n\'y a aucun produit à afficher.';
 $_['text_compare']     = 'Comparateur de produits (%s)';
 $_['text_sort']        = 'Trier par';

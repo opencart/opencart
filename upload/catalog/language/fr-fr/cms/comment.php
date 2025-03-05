@@ -18,11 +18,11 @@ $_['text_success']          = 'Succès: Merci pour votre commentaire!';
 $_['text_queue']            = 'Succès: Votre commentaire a été ajouté à notre file de modération!';
 $_['text_rating']           = 'Succès: Merci pour votre évaluation!';
 
-// Champs
+// Entrée
 $_['entry_author']          = 'Votre nom';
 $_['entry_comment']         = 'Commentaire';
 
-// Boutons
+// Bouton
 $_['button_comment']        = 'Publier le commentaire';
 $_['button_reply']          = 'Publier une réponse';
 $_['button_replies']        = 'Afficher les réponses';
@@ -32,7 +32,7 @@ $_['button_login_reply']    = 'Se connecter pour répondre';
 $_['button_like']           = 'J\'aime';
 $_['button_dislike']        = 'Je n\'aime pas';
 
-// Erreurs
+// Erreur
 $_['error_article']         = 'Attention: Article introuvable!';
 $_['error_article_comment'] = 'Attention: Commentaire de l\'article introuvable!';
 $_['error_token']           = 'Attention: Jeton de commentaire invalide!';

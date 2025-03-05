@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title'] = 'Votre commande a été passée!';
 
 // Texte

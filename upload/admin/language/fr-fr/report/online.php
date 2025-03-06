@@ -17,7 +17,7 @@ $_['column_referer']    = 'Référent';
 $_['column_date_added'] = 'Dernier clic';
 $_['column_action']     = 'Action';
 
-// Saisie
+// Entrée
 $_['entry_ip']          = 'IP';
 $_['entry_customer']    = 'Client';
 

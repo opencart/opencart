@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']     = 'Demande relative au Règlement Général sur la Protection des Données (RGPD)';
 
 // Texte
@@ -20,6 +20,6 @@ $_['text_cancel']		= 'Annuler';
 // Entrée
 $_['entry_email']       = 'E-Mail';
 
-// Erreurs
+// Erreur
 $_['error_email']       = 'L\'adresse e-mail ne semble pas valide!';
 $_['error_action']      = 'Vous devez sélectionner une action RGPD valide!';

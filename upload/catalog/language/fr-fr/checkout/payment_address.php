@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']         = 'Adresse de facturation';
 
 // Texte

@@ -1,14 +1,14 @@
 <?php
-// Heading
+// En-tête
 $_['heading_title']    = 'Notifications';
 
-// Text
+// Texte
 $_['text_success']     = 'Succès: Vous avez modifié les notifications!';
 $_['text_list']        = 'Liste des notifications';
 
-// Column
+// Colonne
 $_['column_message']   = 'Message';
 $_['column_action']    = 'Action';
 
-// Error
+// Erreur
 $_['error_permission'] = 'Attention: Vous n\'avez pas la permission de modifier les notifications!';

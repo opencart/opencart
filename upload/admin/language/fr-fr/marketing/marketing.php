@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']     = 'Suivi Marketing';
 
 // Texte
@@ -21,7 +21,7 @@ $_['column_ip']         = 'IP';
 $_['column_account']    = 'Comptes';
 $_['column_store']      = 'Boutique';
 $_['column_country']    = 'Pays';
-$_['column_date_added'] = 'Date d’ajout';
+$_['column_date_added'] = 'Date d\'ajout';
 $_['column_action']     = 'Action';
 
 // Entrée
@@ -34,10 +34,10 @@ $_['entry_date_to']     = 'Date de fin';
 
 // Aide
 $_['help_code']         = 'Le code de suivi qui sera utilisé pour suivre les campagnes marketing.';
-$_['help_example']      = 'Pour que le système puisse suivre les références, vous devez ajouter le code de suivi à la fin de l’URL menant à votre site.';
+$_['help_example']      = 'Pour que le système puisse suivre les références, vous devez ajouter le code de suivi à la fin de l\'URL menant à votre site.';
 
 // Erreur
-$_['error_permission']  = 'Attention: Vous n’avez pas la permission de modifier le suivi marketing!';
+$_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier le suivi marketing!';
 $_['error_name']        = 'Le nom de la campagne doit comporter entre 1 et 32 caractères!';
 $_['error_code']        = 'Code de suivi requis!';
 $_['error_exists']      = 'Le code de suivi est déjà utilisé par une autre campagne!';

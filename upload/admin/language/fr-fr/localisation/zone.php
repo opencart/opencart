@@ -1,5 +1,5 @@
 <?php
-// Titre
+// En-tête
 $_['heading_title']          = 'Zones';
 
 // Texte
@@ -15,7 +15,7 @@ $_['column_code']            = 'Code de la Zone';
 $_['column_country']         = 'Pays';
 $_['column_action']          = 'Action';
 
-// Champ
+// Entrée
 $_['entry_name']             = 'Nom de la Zone';
 $_['entry_code']             = 'Code de la Zone';
 $_['entry_country']          = 'Pays';

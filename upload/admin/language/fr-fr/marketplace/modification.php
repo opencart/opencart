@@ -16,7 +16,7 @@ $_['column_status']     = 'Statut';
 $_['column_date_added'] = 'Date ajoutée';
 $_['column_action']     = 'Action';
 
-// Champ
+// Entrée
 $_['entry_name']        = 'Nom de la modification';
 $_['entry_description'] = 'Description';
 $_['entry_code']        = 'Code';

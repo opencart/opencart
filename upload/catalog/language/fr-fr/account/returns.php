@@ -1,8 +1,8 @@
 <?php
-// Heading
+// En-tête
 $_['heading_title']      = 'Retours de Produits';
 
-// Text
+// Texte
 $_['text_account']       = 'Compte';
 $_['text_return']        = 'Informations sur le Retour';
 $_['text_description']   = 'Veuillez remplir le formulaire ci-dessous pour demander un numéro RMA.';
@@ -25,11 +25,11 @@ $_['text_history']       = 'Historique des Retours';
 $_['text_no_results']    = 'Vous n\'avez effectué aucun retour précédent!';
 $_['text_agree']         = 'J\'ai lu et j\'accepte les <a href="%s" class="modal-link"><b>%s</b></a>';
 
-// Column
+// Colonne
 $_['column_return_id']   = 'ID de Retour';
 $_['column_order_id']    = 'ID de Commande';
 $_['column_status']      = 'Statut';
-$_['column_date_added']  = 'Date d\'ajout';
+$_['column_date_added']  = 'Date d\'Ajout';
 $_['column_product']     = 'Nom du Produit';
 $_['column_model']       = 'Modèle';
 $_['column_quantity']    = 'Quantité';
@@ -38,7 +38,7 @@ $_['column_comment']     = 'Commentaire';
 $_['column_reason']      = 'Raison';
 $_['column_action']      = 'Action';
 
-// Entry
+// Entrée
 $_['entry_order_id']     = 'ID de Commande';
 $_['entry_date_ordered'] = 'Date de la Commande';
 $_['entry_firstname']    = 'Prénom';
@@ -52,7 +52,7 @@ $_['entry_reason']       = 'Raison du Retour';
 $_['entry_opened']       = 'Produit ouvert';
 $_['entry_fault_detail'] = 'Défaut ou autres détails';
 
-// Error
+// Erreur
 $_['error_return']       = 'Les demandes de retour n\'ont pu être trouvées!';
 $_['error_token']        = 'Attention: Jeton de réinitialisation invalide!';
 $_['error_order_id']     = 'ID de commande requis!';

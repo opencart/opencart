@@ -1,8 +1,8 @@
 <?php
-// Heading
+// En-tête
 $_['heading_title']         = 'Utilisateurs';
 
-// Text
+// Texte
 $_['text_success']          = 'Succès: Vous avez modifié les utilisateurs!';
 $_['text_list']             = 'Liste des utilisateurs';
 $_['text_add']              = 'Ajouter un utilisateur';
@@ -14,7 +14,7 @@ $_['text_login']            = 'Historique des connexions';
 $_['text_authorize']        = 'Historique des autorisations';
 $_['text_filter']           = 'Filtre';
 
-// Column
+// Colonne
 $_['column_username']       = 'Nom d\'utilisateur';
 $_['column_name']           = 'Nom';
 $_['column_email']          = 'E-Mail';
@@ -26,7 +26,7 @@ $_['column_date_added']     = 'Date d\'ajout';
 $_['column_date_expire']    = 'Date d\'expiration';
 $_['column_action']         = 'Action';
 
-// Entry
+// Entrée
 $_['entry_username']        = 'Nom d\'utilisateur';
 $_['entry_user_group']      = 'Groupe d\'utilisateurs';
 $_['entry_password']        = 'Mot de passe';
@@ -41,11 +41,11 @@ $_['entry_ip']              = 'IP';
 $_['entry_date_from']       = 'Date de Début';
 $_['entry_date_to']         = 'Date de Fin';
 
-// Tabs
+// Onglets
 $_['tab_authorize']         = 'Autoriser';
 $_['tab_login']             = 'Connexion';
 
-// Error
+// Erreur
 $_['error_permission']      = 'Attention: Vous n\'avez pas la permission de modifier les utilisateurs!';
 $_['error_account']         = 'Attention: Vous ne pouvez pas supprimer votre propre compte!';
 $_['error_login']           = 'Attention: La connexion de l\'utilisateur n\'existe pas!';

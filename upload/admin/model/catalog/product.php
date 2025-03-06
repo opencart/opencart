@@ -1753,15 +1753,15 @@ class Product extends \Opencart\System\Engine\Model {
 		foreach ($product_option_query->rows as $product_option) {
 			$value = $product_option['value'];
 
-			if ($product_option['type'] == 'date') {
+			if ($product_option['type'] == 'date' && $product_option['value']) {
 				$value = date('Y-m-d', strtotime($product_option['value']));
 			}
 
-			if ($product_option['type'] == 'time') {
+			if ($product_option['type'] == 'time' && $product_option['value']) {
 				$value = date('H:i:s', strtotime($product_option['value']));
 			}
 
-			if ($product_option['type'] == 'datetime') {
+			if ($product_option['type'] == 'datetime' && $product_option['value']) {
 				$value = date('Y-m-d H:i:s', strtotime($product_option['value']));
 			}
 

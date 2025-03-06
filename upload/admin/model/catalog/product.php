@@ -1753,16 +1753,16 @@ class Product extends \Opencart\System\Engine\Model {
 		foreach ($product_option_query->rows as $product_option) {
 			$value = $product_option['value'];
 
-			if ($product_option['type'] == 'date' && $product_option['value']) {
-				$value = date('Y-m-d', strtotime($product_option['value']));
+			if ($product_option['type'] == 'date' && $value) {
+				$value = date('Y-m-d', strtotime($value));
 			}
 
-			if ($product_option['type'] == 'time' && $product_option['value']) {
-				$value = date('H:i:s', strtotime($product_option['value']));
+			if ($product_option['type'] == 'time' && $value) {
+				$value = date('H:i:s', strtotime($value));
 			}
 
-			if ($product_option['type'] == 'datetime' && $product_option['value']) {
-				$value = date('Y-m-d H:i:s', strtotime($product_option['value']));
+			if ($product_option['type'] == 'datetime' && $value) {
+				$value = date('Y-m-d H:i:s', strtotime($value));
 			}
 
 			$product_option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) WHERE `pov`.`product_option_id` = '" . (int)$product_option['product_option_id'] . "' ORDER BY `ov`.`sort_order` ASC");

@@ -4,8 +4,8 @@ $_['heading_title']     = 'Composante HTML';
 
 // Texte
 $_['text_extension']    = 'Extensions';
-$_['text_success']      = 'Succès: Vous avez modifié le module de la composante HTML!';
-$_['text_edit']         = 'Modifier le Module de la Composante HTML';
+$_['text_success']      = 'Succès: Vous avez modifié le module composante HTML!';
+$_['text_edit']         = 'Modifier le Module Composante HTML';
 
 // Entrée
 $_['entry_name']        = 'Nom du Module';
@@ -14,5 +14,5 @@ $_['entry_description'] = 'Description';
 $_['entry_status']      = 'Statut';
 
 // Erreur
-$_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier le module de la composante HTML!';
+$_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier le module composante HTML!';
 $_['error_name']        = 'Le nom du module doit contenir entre 3 à 64 caractères!';

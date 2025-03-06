@@ -1,10 +1,10 @@
 <?php
 // En-tête
-$_['heading_title']      = 'Rapport des commandes d\'Expédition';
+$_['heading_title']      = 'Rapport des Commandes d\'Expédition';
 
 // Texte
 $_['text_extension']     = 'Extensions';
-$_['text_edit']          = 'Modifier le Rapport des commandes d\'Expédition';
+$_['text_edit']          = 'Modifier le Rapport des Commandes d\'Expédition';
 $_['text_success']       = 'Succès: Vous avez modifié le rapport des commandes d\'expédition!';
 $_['text_filter']        = 'Filtre';
 $_['text_year']          = 'Années';

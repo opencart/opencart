@@ -1,6 +1,6 @@
 <?php
 // En-tête
-$_['heading_title']    = 'Convertisseur de devises de la Banque centrale européenne';
+$_['heading_title']    = 'Convertisseur de Devises de la Banque Centrale Européenne';
 
 // Texte
 $_['text_extension']   = 'Extensions';

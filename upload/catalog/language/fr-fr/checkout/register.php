@@ -7,7 +7,7 @@ $_['text_login']              = 'Si vous avez déjà un compte chez nous, veuill
 $_['text_register']           = 'Créer un compte';
 $_['text_guest']              = 'Commande en tant qu\'invité';
 $_['text_payment_address']    = 'Adresse de facturation';
-$_['text_shipping_address']   = 'Adresse d\'Expéditon';
+$_['text_shipping_address']   = 'Adresse d\'expédition';
 $_['text_your_password']      = 'Votre mot de passe';
 $_['text_agree']              = 'J\'ai lu et j\'accepte les <a href="%s" class="modal-link"><b>%s</b></a>';
 $_['text_success_add']        = 'Succès: Votre compte a été créé!';
@@ -28,7 +28,7 @@ $_['entry_postcode']          = 'Code postal';
 $_['entry_city']              = 'Ville';
 $_['entry_country']           = 'Pays';
 $_['entry_zone']              = 'Région / État';
-$_['entry_match']             = 'Mes adresses d\'Expéditon et de facturation sont identiques.';
+$_['entry_match']             = 'Mes adresses d\'expédition et de facturation sont identiques.';
 $_['entry_newsletter']        = 'Je souhaite m\'abonner à la newsletter %s.';
 
 // Erreur

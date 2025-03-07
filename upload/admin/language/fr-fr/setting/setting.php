@@ -260,7 +260,7 @@ $_['help_mail_parameter']                 = 'Lorsque "Mail" est utilisé, des pa
 $_['help_mail_smtp_hostname']             = 'Ajoutez le préfixe "tls://" ou "ssl://" si une connexion sécurisée est requise (par exemple: tls://smtp.gmail.com, ssl://smtp.gmail.com).';
 $_['help_mail_smtp_password']             = 'Pour Gmail, vous pourriez avoir besoin de configurer un mot de passe spécifique à l\'application ici: <a href="https://security.google.com/settings/security/apppasswords" target="_blank">https://security.google.com/settings/security/apppasswords</a>.';
 $_['help_mail_alert']                     = 'Sélectionnez les fonctionnalités pour lesquelles vous souhaitez recevoir un mail d\'alerte lorsqu\'un client les utilise.';
-$_['help_mail_alert_email']               = 'Ajoutez des adresses emails supplémentaires pour recevoir les alertes, en plus de l\'email principal du magasin (séparées par des virgules).';
+$_['help_mail_alert_email']               = 'Ajoutez des adresses e-mails supplémentaires pour recevoir les alertes, en plus de l\'email principal du magasin (séparées par des virgules).';
 $_['help_session_expire']                 = 'Définir la durée de vie de la session PHP en secondes (par exemple: 3600 = 1 heure).';
 $_['help_session_samesite']               = 'Définir le cookie Samesite pour la session PHP.';
 $_['help_user_2fa']                       = 'Authentification à Deux Facteurs pour les utilisateurs administrateurs.';

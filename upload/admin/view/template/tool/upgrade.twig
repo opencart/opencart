@@ -76,6 +76,8 @@ $('#button-upgrade').on('click', function() {
                 url: next,
                 dataType: 'json',
                 success: function(json) {
+                    console.log(json);
+
                     $('#input-upgrade').removeClass('is-valid is-invalid');
 
                     if (json['error']) {

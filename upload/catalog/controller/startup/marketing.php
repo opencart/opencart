@@ -48,6 +48,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 						$option = [
 							'expires'  => $this->config->get('config_affiliate_expire') ? time() + (int)$this->config->get('config_affiliate_expire') : 0,
 							'path'     => $this->config->get('session_path'),
+                            'secure'   => $this->request->server['HTTPS'],
 							'SameSite' => $this->config->get('config_session_samesite')
 						];
 

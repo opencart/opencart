@@ -886,3 +886,11 @@ td {
     position: relative;
 	vertical-align: middle;
 }
+ .list-disabled, .list-disabled td {
+     color: #888;
+     background-color: #EBEBEB;
+     border: #CCC 1px solid;
+ }
+ .list-disabled :hover {
+     color: #000;
+ }

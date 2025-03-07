@@ -9,14 +9,14 @@ $_['text_add']               = 'Ajouter un Attribut';
 $_['text_edit']              = 'Modifier l\'Attribut';
 
 // Colonne
-$_['column_name']            = 'Nom de l\'Attributs';
-$_['column_attribute_group'] = 'Attributs';
+$_['column_name']            = 'Nom de l\'Attribut';
+$_['column_attribute_group'] = 'Nom du Groupe d\'Attributs';
 $_['column_sort_order']      = 'Ordre de Tri';
 $_['column_action']          = 'Action';
 
 // Entrée
 $_['entry_name']             = 'Nom de l\'Attribut';
-$_['entry_attribute_group']  = 'Attributs';
+$_['entry_attribute_group']  = 'Nom du Groupe d\'Attributs';
 $_['entry_sort_order']       = 'Ordre de Tri';
 
 // Erreur

@@ -1,6 +1,6 @@
 <?php
 // En-tête
-$_['heading_title']      = 'Marketplace d\'Extensions';
+$_['heading_title']      = 'Le Marché d\'Extensions';
 
 // Texte
 $_['text_success']       = 'Succès: Vous avez modifié les extensions!';
@@ -10,7 +10,7 @@ $_['text_search']        = 'Rechercher des extensions et des thèmes';
 $_['text_category']      = 'Catégories';
 $_['text_all']           = 'Tous';
 $_['text_theme']         = 'Thèmes';
-$_['text_marketplace']   = 'Marketplaces';
+$_['text_marketplace']   = 'Les marchés';
 $_['text_language']      = 'Langues';
 $_['text_payment']       = 'Paiement';
 $_['text_shipping']      = 'Expédition';
@@ -63,10 +63,10 @@ $_['tab_download']       = 'Téléchargement';
 $_['tab_comment']        = 'Commentaire';
 
 // Bouton
-$_['button_api']         = 'API Marketplace';
+$_['button_api']         = 'Le Marché API';
 $_['button_purchase']    = 'Acheter';
 $_['button_view_all']    = 'Voir toutes les extensions';
-$_['button_support']     = 'Obtenir du support';
+$_['button_support']     = 'Obtenir du soutien';
 $_['button_comment']     = 'Commenter';
 $_['button_reply']       = 'Répondre';
 $_['button_forgot_pin']  = 'PIN oublié?';
@@ -74,5 +74,5 @@ $_['button_forgot_pin']  = 'PIN oublié?';
 // Erreur
 $_['error_permission']   = 'Attention: Vous n\'avez pas la permission de modifier les extensions!';
 $_['error_api']          = 'Attention: Vous devez entrer vos informations d\'API OpenCart en cliquant sur <i class="fa-solid fa-triangle-exclamation"></i> avant de pouvoir télécharger des extensions ou effectuer des achats!';
-$_['error_purchase']     = 'l\'extension n\'a pas pu être achetée!';
-$_['error_download']     = 'l\'extension n\'a pas pu être téléchargée!';
+$_['error_purchase']     = 'L\'extension n\'a pas pu être achetée!';
+$_['error_download']     = 'L\'extension n\'a pas pu être téléchargée!';

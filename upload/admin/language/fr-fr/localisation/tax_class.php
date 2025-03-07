@@ -9,7 +9,7 @@ $_['text_add']          = 'Ajouter une Classe de Taxes';
 $_['text_edit']         = 'Modifier une Classe de Taxes';
 $_['text_tax_class']    = 'Classe de Taxes';
 $_['text_tax_rate']     = 'Taux de Taxes';
-$_['text_shipping']     = 'Adresse d\'Expéditon';
+$_['text_shipping']     = 'Adresse d\'Expédition';
 $_['text_payment']      = 'Adresse de Paiement';
 $_['text_store']        = 'Adresse du Magasin';
 

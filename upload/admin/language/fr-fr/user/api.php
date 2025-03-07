@@ -7,7 +7,7 @@ $_['text_success']         = 'Succès: Vous avez modifié les APIs!';
 $_['text_list']            = 'Liste des APIs';
 $_['text_add']             = 'Ajouter une API';
 $_['text_edit']            = 'Modifier une API';
-$_['text_ip']              = 'Ci-dessous, vous pouvez créer une liste d\'IP autorisées à accéder à l\'API. Votre IP actuelle est %s';
+$_['text_ip']              = 'Ci-dessous, vous pouvez créer une liste d\'adresses IP autorisées à accéder à l\'API. Votre IP actuelle est %s';
 $_['text_history']         = 'Historique';
 
 // Colonne

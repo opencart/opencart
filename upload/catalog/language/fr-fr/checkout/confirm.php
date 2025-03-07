@@ -1,7 +1,7 @@
 <?php
 // Texte
 $_['text_model']        = 'Modèle';
-$_['text_subscription'] = 'Inscription';
+$_['text_subscription'] = 'Abonnement';
 $_['text_points']       = 'Points de Récompenses';
 
 // Colonne

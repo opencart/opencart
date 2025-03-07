@@ -20,7 +20,7 @@ $_['text_month']                 = 'mois';
 $_['text_year']                  = 'année';
 $_['text_points']                = 'Points de récompenses';
 $_['text_next']                  = 'Que souhaitez-vous faire ensuite?';
-$_['text_next_choice']           = 'Choisissez si vous avez un code de réduction ou des points de récompenses que vous souhaitez utiliser ou si vous souhaitez estimer le coût de votre Expédition.';
+$_['text_next_choice']           = 'Choisissez si vous avez un code de réduction ou des points de récompenses que vous souhaitez utiliser ou si vous souhaitez estimer le coût de votre expédition.';
 
 // Colonne
 $_['column_image']               = 'Image';

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Api;
 /**
  * Class Cart
- * 
+ *
  * Can be loaded using $this->load->controller('api/cart');
  *
  * @package Opencart\Catalog\Controller\Api
@@ -11,7 +11,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function index(): array {
 		$this->load->language('api/cart');
@@ -144,7 +144,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 *
 	 * Add any single product
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function addProduct(): array {
 		$this->load->language('api/cart');
@@ -266,7 +266,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get products
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getProducts(): array {
 		$this->load->language('api/cart');
@@ -305,7 +305,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Totals
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getTotals(): array {
 		$totals = [];

@@ -15,7 +15,7 @@ $_['entry_status']     = 'Statut';
 $_['entry_sort_order'] = 'Ordre de Tri';
 
 // Aide
-$_['help_rate']        = 'Exemple: 5:10.00,7:12.00 Weight:Cost,Weight:Cost, etc..';
+$_['help_rate']        = 'Exemple: 5:10.00,7:12.00 Weight:Cost,Weight:Cost, etc.';
 
 // Erreur
 $_['error_permission'] = 'Attention: Vous n\'avez pas la permission de modifier les tarifs d\'expéditon par Poids de Matériaux!';

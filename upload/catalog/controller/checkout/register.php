@@ -62,7 +62,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['telephone'] = $this->session->data['customer']['telephone'];
 			$data['account_custom_field'] = $this->session->data['customer']['custom_field'];
 		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
 			$data['firstname'] = '';
 			$data['lastname'] = '';
 			$data['email'] = '';
@@ -89,7 +89,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['payment_address_2'] = '';
 			$data['payment_postcode'] = '';
 			$data['payment_city'] = '';
-			$data['payment_country_id'] = $this->config->get('config_country_id');
+			$data['payment_country_id'] = (int)$this->config->get('config_country_id');
 			$data['payment_zone_id'] = 0;
 			$data['payment_custom_field'] = [];
 		}
@@ -131,7 +131,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			if (isset($this->session->data['shipping_address']['country_id'])) {
 				$data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 			} else {
-				$data['shipping_country_id'] = $this->config->get('config_country_id');
+				$data['shipping_country_id'] = (int)$this->config->get('config_country_id');
 			}
 
 			if (isset($this->session->data['shipping_address']['zone_id'])) {

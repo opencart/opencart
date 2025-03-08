@@ -804,7 +804,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		if (!empty($product_info)) {
 			$data['length_class_id'] = $product_info['length_class_id'];
 		} else {
-			$data['length_class_id'] = $this->config->get('config_length_class_id');
+			$data['length_class_id'] = (int)$this->config->get('config_length_class_id');
 		}
 
 		if (!empty($product_info)) {
@@ -820,7 +820,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		if (!empty($product_info)) {
 			$data['weight_class_id'] = $product_info['weight_class_id'];
 		} else {
-			$data['weight_class_id'] = $this->config->get('config_weight_class_id');
+			$data['weight_class_id'] = (int)$this->config->get('config_weight_class_id');
 		}
 
 		if (!empty($product_info)) {

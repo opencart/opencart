@@ -548,7 +548,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!empty($customer_info)) {
 			$data['customer_group_id'] = $customer_info['customer_group_id'];
 		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
 		}
 
 		if (!empty($customer_info)) {
@@ -1504,7 +1504,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['customer_group_id'])) {
 			$customer_group_id = (int)$this->request->get['customer_group_id'];
 		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
+			$customer_group_id = (int)$this->config->get('config_customer_group_id');
 		}
 
 		$this->load->model('customer/custom_field');

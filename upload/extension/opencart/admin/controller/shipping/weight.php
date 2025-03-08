@@ -47,7 +47,7 @@ class Weight extends \Opencart\System\Engine\Controller {
 
 		$data['geo_zones'] = $geo_zones;
 
-		$data['shipping_weight_tax_class_id'] = $this->config->get('shipping_weight_tax_class_id');
+		$data['shipping_weight_tax_class_id'] = (int)$this->config->get('shipping_weight_tax_class_id');
 
 		$this->load->model('localisation/tax_class');
 

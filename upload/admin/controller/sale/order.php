@@ -606,7 +606,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!empty($order_info)) {
 			$data['customer_group_id'] = $order_info['customer_group_id'];
 		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
 		}
 
 		if (!empty($order_info)) {
@@ -988,7 +988,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!empty($order_info)) {
 			$data['order_status_id'] = $order_info['order_status_id'];
 		} else {
-			$data['order_status_id'] = $this->config->get('config_order_status_id');
+			$data['order_status_id'] = (int)$this->config->get('config_order_status_id');
 		}
 
 		$data['complete_status'] = in_array($data['order_status_id'], (array)$this->config->get('config_complete_status'));

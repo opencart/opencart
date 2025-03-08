@@ -137,7 +137,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (!empty($address_info)) {
 			$data['country_id'] = $address_info['country_id'];
 		} else {
-			$data['country_id'] = $this->config->get('config_country_id');
+			$data['country_id'] = (int)$this->config->get('config_country_id');
 		}
 
 		if (!empty($address_info)) {

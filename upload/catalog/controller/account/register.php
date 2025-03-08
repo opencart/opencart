@@ -68,7 +68,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+		$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
 
 		// Custom Fields
 		$data['custom_fields'] = [];

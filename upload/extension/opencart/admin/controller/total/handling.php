@@ -38,7 +38,7 @@ class Handling extends \Opencart\System\Engine\Controller {
 
 		$data['total_handling_total'] = $this->config->get('total_handling_total');
 		$data['total_handling_fee'] = $this->config->get('total_handling_fee');
-		$data['total_handling_tax_class_id'] = $this->config->get('total_handling_tax_class_id');
+		$data['total_handling_tax_class_id'] = (int)$this->config->get('total_handling_tax_class_id');
 
 		$this->load->model('localisation/tax_class');
 

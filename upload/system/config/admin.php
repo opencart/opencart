@@ -23,11 +23,11 @@ $_['error_display']     = true;
 
 // Actions
 $_['action_pre_action'] = [
+	'startup/extension',
 	'startup/setting',
 	'startup/session',
 	'startup/language',
 	'startup/application',
-	'startup/extension',
 	'startup/startup',
 	'startup/error',
 	'startup/event',

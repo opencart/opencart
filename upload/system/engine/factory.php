@@ -40,8 +40,11 @@ class Factory {
 
 		// Class path
 		$class = 'Opencart\\' . $this->registry->get('config')->get('application') . '\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+		$ocmod_class = 'Opencart\\' . $this->registry->get('config')->get('application') . '\Controller\Extension\Ocmod\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
-		if (class_exists($class)) {
+		if (class_exists($ocmod_class)) {
+			return new $ocmod_class($this->registry);
+		} elseif (class_exists($class)) {
 			return new $class($this->registry);
 		} else {
 			return new \Exception('Error: Could not load controller ' . $route . '!');
@@ -61,9 +64,12 @@ class Factory {
 
 		// Generate the class
 		$class = 'Opencart\\' . $this->registry->get('config')->get('application') . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+		$ocmod_class = 'Opencart\\' . $this->registry->get('config')->get('application') . '\Model\Extension\Ocmod\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 		// Check if the requested model is already stored in the registry.
-		if (class_exists($class)) {
+		if (class_exists($ocmod_class)) {
+			return new $ocmod_class($this->registry);
+		} elseif (class_exists($class)) {
 			return new $class($this->registry);
 		} else {
 			return new \Exception('Error: Could not load model ' . $route . '!');
@@ -78,15 +84,18 @@ class Factory {
 	 *
 	 * @return object
 	 */
-	public function library(string $route, array $args): object {
+	public function library(string $route, array $args = []): object {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
 		// Generate the class
 		$class = 'Opencart\System\Library\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+		$ocmod_class = 'Opencart\System\Library\Extension\Ocmod\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 		// Check if the requested model is already stored in the registry.
-		if (class_exists($class)) {
+		if (class_exists($ocmod_class)) {
+			return new $ocmod_class(...$args);
+		} elseif (class_exists($class)) {
 			return new $class(...$args);
 		} else {
 			return new \Exception('Error: Could not load library ' . $route . '!');

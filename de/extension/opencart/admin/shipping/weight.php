@@ -15,7 +15,7 @@ $_['entry_status']     = 'Status';
 $_['entry_sort_order'] = 'Sortierreihenfolge';
 
 // Help
-$_['help_rate']        = 'Beispiel: 5:10.00,7:12.00 Gewicht:Kosten, Gewicht:Kosten usw.';
+$_['help_rate']        = 'Example: 5:10.00,7:12.00 Weight:Cost,Weight:Cost, etc.';
 
 // Error
 $_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, den gewichtsbasierten Versand zu ändern!';

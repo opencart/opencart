@@ -9,7 +9,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * History
 	 *
-	 * admin/controller/sale/subscription/addHistory/after
+	 * admin/controller/sale/subscription.addHistory/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -163,7 +163,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// admin/controller/sale/subscription/addTransaction/after
+	// admin/controller/sale/subscription.addTransaction/after
 
 	/**
 	 * Transaction

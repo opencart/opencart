@@ -27,7 +27,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Return
 	 *
-	 * catalog/model/account/returns/addReturn/after
+	 * catalog/model/account/returns.addReturn/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -42,10 +42,10 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->model_report_statistics->addValue('returns', 1);
 	}
 
-	// catalog/model/checkout/order/addHistory/before
-
 	/**
 	 * Add History
+	 *
+	 * catalog/model/checkout/order.addHistory/before
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

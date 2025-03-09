@@ -9,7 +9,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * catalog/model/account/customer/addTransaction/after
+	 * catalog/model/account/customer.addTransaction/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

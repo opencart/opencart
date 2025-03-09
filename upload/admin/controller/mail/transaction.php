@@ -9,6 +9,8 @@ class Transaction extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * admin/model/customer/customer.addTransaction/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output

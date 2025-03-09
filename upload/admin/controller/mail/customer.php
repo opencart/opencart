@@ -9,6 +9,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Approve
 	 *
+	 * admin/model/customer/customer_approval.approveCustomer/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output
@@ -108,6 +110,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Deny
+	 *
+	 * admin/model/customer/customer_approval.denyCustomer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

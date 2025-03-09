@@ -9,7 +9,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * catalog/model/catalog/review/addReview/after
+	 * catalog/model/catalog/review.addReview/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

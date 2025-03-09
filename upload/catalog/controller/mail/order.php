@@ -9,7 +9,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Trigger catalog/model/checkout/order/addHistory/before
+	 * catalog/model/checkout/order.addHistory/before
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -359,7 +359,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * History
 	 *
-	 * catalog/model/checkout/order/addHistory/before
+	 * catalog/model/checkout/order.addHistory/before
 	 *
 	 * @param array<string, mixed> $order_info
 	 * @param int                  $order_status_id
@@ -468,10 +468,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Alert
 	 *
+	 * catalog/model/checkout/order.addHistory/before
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
-	 *
-	 * Event called catalog/model/checkout/order/addHistory/before
 	 *
 	 * @throws \Exception
 	 *

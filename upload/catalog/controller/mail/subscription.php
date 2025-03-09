@@ -9,6 +9,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * catalog/model/checkout/subscription.addSubscription/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param array<mixed>      $output
@@ -374,10 +376,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
-	// catalog/model/checkout/order/addHistory/before
-
 	/**
 	 * Alert
+	 *
+	 * catalog/model/checkout/order.addHistory/before
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

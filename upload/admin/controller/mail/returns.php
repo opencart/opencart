@@ -9,6 +9,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * admin/model/sale/returns.addHistory/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output

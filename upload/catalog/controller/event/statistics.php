@@ -6,9 +6,10 @@ namespace Opencart\Catalog\Controller\Event;
  * @package Opencart\Catalog\Controller\Event
  */
 class Statistics extends \Opencart\System\Engine\Controller {
-	// catalog/model/catalog/review/addReview/after
 	/**
 	 * Add Review
+	 *
+	 * catalog/model/catalog/review/addReview/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -23,10 +24,10 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->model_report_statistics->addValue('review', 1);
 	}
 
-	// catalog/model/account/returns/addReturn/after
-
 	/**
 	 * Add Return
+	 *
+	 * catalog/model/account/returns/addReturn/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

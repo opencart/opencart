@@ -9,8 +9,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-     * catalog/controller/account/authorize.send/after
-     * 
+	 * catalog/controller/account/authorize.send/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param array<mixed>      $output
@@ -62,8 +62,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * Reset
 	 *
-     * catalog/model/account/customer.addToken/after
-     * 
+	 * catalog/model/account/customer.addToken/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param array<mixed>      $output

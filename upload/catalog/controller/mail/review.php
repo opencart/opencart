@@ -6,9 +6,10 @@ namespace Opencart\Catalog\Controller\Mail;
  * @package Opencart\Catalog\Controller\Mail
  */
 class Review extends \Opencart\System\Engine\Controller {
-	// catalog/model/catalog/review/addReview/after
 	/**
 	 * Index
+	 *
+	 * catalog/model/catalog/review/addReview/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

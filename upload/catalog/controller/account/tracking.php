@@ -22,6 +22,7 @@ class Tracking extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true));
 		}
 
+		// Affiliate
 		$this->load->model('account/affiliate');
 
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());

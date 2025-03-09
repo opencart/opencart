@@ -69,6 +69,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 			$data['module_description'] = [];
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

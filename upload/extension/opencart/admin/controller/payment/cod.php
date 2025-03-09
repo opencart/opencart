@@ -36,12 +36,14 @@ class Cod extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('extension/opencart/payment/cod.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
+		// Order Status
 		$data['payment_cod_order_status_id'] = (int)$this->config->get('payment_cod_order_status_id');
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
+		// Geo Zone
 		$data['payment_cod_geo_zone_id'] = $this->config->get('payment_cod_geo_zone_id');
 
 		$this->load->model('localisation/geo_zone');

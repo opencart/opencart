@@ -74,6 +74,7 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 
+		// Product
 		$data['products'] = [];
 
 		$filter_data = [
@@ -83,7 +84,6 @@ class Special extends \Opencart\System\Engine\Controller {
 			'limit' => $limit
 		];
 
-		// Product
 		$this->load->model('catalog/product');
 
 		// Image

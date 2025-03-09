@@ -12,9 +12,9 @@ class Setting extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
+		// Setting
 		$this->load->model('setting/setting');
 
-		// Settings
 		$results = $this->model_setting_setting->getSettings(0);
 
 		foreach ($results as $result) {

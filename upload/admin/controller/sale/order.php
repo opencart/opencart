@@ -139,6 +139,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		// Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -318,6 +319,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Order
 		$data['orders'] = [];
 
 		$filter_data = [
@@ -599,6 +601,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['customer_edit'] = '';
 		}
 
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();

@@ -101,6 +101,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
+        // Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -417,6 +418,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$data['seo_url_id'] = 0;
 		}
 
+        // Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -434,6 +436,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = '';
 		}
 
+        // Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

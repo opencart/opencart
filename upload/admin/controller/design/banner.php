@@ -107,6 +107,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('design/banner.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+        // Banner
 		$data['banners'] = [];
 
 		$filter_data = [
@@ -226,10 +227,12 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
+        // Image
 		$this->load->model('tool/image');
 
 		if (!empty($banner_info)) {

@@ -116,6 +116,7 @@ class Fixer extends \Opencart\System\Engine\Controller {
 					$currencies[$key] = $value;
 				}
 
+				// Currency
 				$this->load->model('localisation/currency');
 
 				$results = $this->model_localisation_currency->getCurrencies();

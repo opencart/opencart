@@ -95,6 +95,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		// Look for any new extensions
@@ -149,6 +150,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Extension
 		$data['extensions'] = [];
 
 		$filter_data = [
@@ -343,6 +345,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
@@ -479,6 +482,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
@@ -642,6 +646,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
@@ -774,6 +779,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);

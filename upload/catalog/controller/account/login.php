@@ -244,6 +244,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		unset($this->session->data['reward']);
 		unset($this->session->data['customer_token']);
 
+		// Customer
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);

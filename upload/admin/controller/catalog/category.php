@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Category
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/category');
  *
  * @package Opencart\Admin\Controller\Catalog
@@ -153,6 +153,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Category
 		$data['categories'] = [];
 
 		$filter_data = [
@@ -164,6 +165,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'limit'         => $this->config->get('config_pagination_admin')
 		];
 
+		// Image
 		$this->load->model('tool/image');
 
 		$this->load->model('catalog/category');
@@ -291,6 +293,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['category_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -313,6 +316,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['parent_id'] = 0;
 		}
 
+		// Filter
 		$this->load->model('catalog/filter');
 
 		if (isset($this->request->get['category_id'])) {
@@ -334,6 +338,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -355,6 +360,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['category_store'] = [0];
 		}
 
+		// Image
 		if (!empty($category_info)) {
 			$data['image'] = $category_info['image'];
 		} else {
@@ -403,6 +409,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Layout
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -461,6 +468,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Category
 		$this->load->model('catalog/category');
 
 		if (isset($post_info['category_id']) && $post_info['parent_id']) {

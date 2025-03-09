@@ -139,6 +139,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			$data['text_compare'] = sprintf($this->language->get('text_compare'), isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0);
 
+			// Image
 			$this->load->model('tool/image');
 
 			if (!empty($category_info['image']) && is_file(DIR_IMAGE . html_entity_decode($category_info['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -170,6 +171,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			$data['categories'] = [];
 
+			// Product
 			$this->load->model('catalog/product');
 
 			$results = $this->model_catalog_category->getCategories($category_id);
@@ -212,6 +214,7 @@ class Category extends \Opencart\System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			// Product
 			$data['products'] = [];
 
 			$filter_data = [

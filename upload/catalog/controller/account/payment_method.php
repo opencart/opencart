@@ -94,6 +94,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$data['payment_methods'] = [];
 
+        // Extension
 		$this->load->model('setting/extension');
 
 		$results = $this->model_setting_extension->getExtensionsByType('payment');

@@ -82,8 +82,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-
-
 	/**
 	 * Remove
 	 *
@@ -110,11 +108,13 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$status = 0;
 		}
 
+		// GDPR
 		$this->load->model('account/gdpr');
 
 		$gdpr_info = $this->model_account_gdpr->getGdpr($gdpr_id);
 
 		if ($gdpr_info && $gdpr_info['action'] == 'remove' && $status == 3) {
+			// Store
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -155,6 +155,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
+			// Image
 			$this->load->model('tool/image');
 
 			if (is_file(DIR_IMAGE . $store_logo)) {
@@ -163,6 +164,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				$data['logo'] = '';
 			}
 
+			// Customer
 			$this->load->model('account/customer');
 
 			$customer_info = $this->model_account_customer->getCustomerByEmail($gdpr_info['email']);

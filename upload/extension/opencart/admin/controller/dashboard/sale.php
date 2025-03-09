@@ -88,6 +88,7 @@ class Sale extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/sale');
 
+		// Sale
 		$this->load->model('extension/opencart/report/sale');
 
 		$today = $this->model_extension_opencart_report_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-1 day'))]);

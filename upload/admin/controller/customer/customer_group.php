@@ -107,6 +107,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('customer/customer_group.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Customer Group
 		$data['customer_groups'] = [];
 
 		$filter_data = [
@@ -218,6 +219,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$data['customer_group_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

@@ -155,6 +155,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['store_id'])) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$store_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
@@ -180,6 +181,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['themes'] = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
@@ -199,6 +201,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_theme'] = '';
 		}
 
+		// Layout
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -245,6 +248,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_telephone'] = '';
 		}
 
+		// Image
 		if (isset($store_info['config_image'])) {
 			$data['config_image'] = $store_info['config_image'];
 		} else {
@@ -273,6 +277,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_comment'] = '';
 		}
 
+		// Location
 		$this->load->model('localisation/location');
 
 		$data['locations'] = $this->model_localisation_location->getLocations();
@@ -299,6 +304,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_zone_id'] = $this->config->get('config_zone_id');
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -368,6 +374,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_tax_customer'] = '';
 		}
 
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -390,6 +397,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_customer_price'] = '';
 		}
 
+		// Information
 		$this->load->model('catalog/information');
 
 		$data['informations'] = $this->model_catalog_information->getInformations();
@@ -430,7 +438,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_stock_checkout'] = '';
 		}
 
-		// Images
+		// Image
 		if (isset($store_info['config_logo'])) {
 			$data['config_logo'] = $store_info['config_logo'];
 		} else {

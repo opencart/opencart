@@ -107,6 +107,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('user/user_permission.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// User Group
 		$data['user_groups'] = [];
 
 		$filter_data = [

@@ -218,10 +218,12 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['topic_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
+		// Image
 		$this->load->model('tool/image');
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));

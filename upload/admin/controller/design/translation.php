@@ -109,6 +109,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
+		// Translation
 		$data['translations'] = [];
 
 		$filter_data = [
@@ -225,6 +226,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$data['translation_id'] = 0;
 		}
 
+		// Store
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -235,6 +237,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = '';
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -356,6 +359,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$language_id = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
@@ -434,6 +438,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$route = '';
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage($language_id);

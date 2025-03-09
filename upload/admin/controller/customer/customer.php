@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Customer;
 /**
  * Class Customer
- * 
+ *
  * Can be loaded using $this->load->controller('customer/customer');
  *
  * @package Opencart\Admin\Controller\Customer
@@ -119,6 +119,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+        // Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -261,10 +262,12 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('customer/customer.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+        // Store
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
 
+        // Customer
 		$data['customers'] = [];
 
 		$filter_data = [
@@ -514,6 +517,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['customer_id'] = 0;
 		}
 
+        // Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -531,6 +535,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -541,6 +546,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['language_id'] = 0;
 		}
 
+        // Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -630,6 +636,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['commenter'] = 0;
 		}
 
+        // Country
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -851,6 +858,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			$this->model_customer_customer->editToken($customer_id, $token);
 
+            // Store
 			if (isset($this->request->get['store_id'])) {
 				$store_id = (int)$this->request->get['store_id'];
 			} else {
@@ -906,6 +914,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['payment_methods'] = [];
 
+        // Subscription
 		$this->load->model('sale/subscription');
 
 		$results = $this->model_sale_subscription->getSubscriptions(['filter_customer_id' => $customer_id]);

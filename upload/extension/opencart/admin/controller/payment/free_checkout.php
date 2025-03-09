@@ -36,6 +36,7 @@ class FreeCheckout extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('extension/opencart/payment/free_checkout.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
+		// Order Status
 		$data['payment_free_checkout_order_status_id'] = (int)$this->config->get('payment_free_checkout_order_status_id');
 
 		$this->load->model('localisation/order_status');

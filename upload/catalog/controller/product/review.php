@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Product;
 /**
  * Class Review
- * 
+ *
  * Can be loaded using $this->load->controller('product/review');
  *
  * @package Opencart\Catalog\Controller\Product
@@ -86,6 +86,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Review
 		$data['reviews'] = [];
 
 		$this->load->model('catalog/review');
@@ -150,6 +151,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_status');
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);

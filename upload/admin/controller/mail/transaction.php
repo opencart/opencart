@@ -49,6 +49,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 		if ($customer_info) {
 			$this->load->language('mail/transaction');
 
+            // Store
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
@@ -61,6 +62,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 				$store_url = $this->config->get('config_url');
 			}
 
+			// Language
 			$this->load->model('localisation/language');
 
 			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);

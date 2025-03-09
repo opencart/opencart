@@ -238,6 +238,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('sale/subscription.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Subscription
 		$data['subscriptions'] = [];
 
 		$filter_data = [
@@ -424,6 +425,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('sale/subscription', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Subscription
 		$this->load->model('sale/subscription');
 
 		$subscription_info = $this->model_sale_subscription->getSubscription($subscription_id);
@@ -991,6 +993,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['histories'] = [];
 
+		// Subscription
 		$this->load->model('sale/subscription');
 
 		$results = $this->model_sale_subscription->getHistories($subscription_id, ($page - 1) * $limit, $limit);
@@ -1046,7 +1049,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_subscription');
 		}
 
-		// Subscription Plan
+		// Subscription Status
 		$this->load->model('localisation/subscription_status');
 
 		$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($this->request->post['subscription_status_id']);
@@ -1096,6 +1099,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Order
 		$data['orders'] = [];
 
 		$this->load->model('sale/order');
@@ -1157,6 +1161,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['logs'] = [];
 
+		// Subscription
 		$this->load->model('sale/subscription');
 
 		$results = $this->model_sale_subscription->getLogs($subscription_id, ($page - 1) * $limit, $limit);

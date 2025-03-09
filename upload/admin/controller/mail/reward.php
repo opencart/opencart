@@ -61,6 +61,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 				$store_url = HTTP_CATALOG;
 			}
 
+			// Send the email in the correct language
 			$this->load->model('localisation/language');
 
 			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);

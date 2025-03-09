@@ -32,6 +32,7 @@ class Cheque extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Order
 		if (isset($this->session->data['order_id'])) {
 			$this->load->model('checkout/order');
 

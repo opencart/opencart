@@ -20,6 +20,7 @@ class Weight extends \Opencart\System\Engine\Model {
 
 		$quote_data = [];
 
+		// Geo Zone
 		$this->load->model('localisation/geo_zone');
 
 		$results = $this->model_localisation_geo_zone->getGeoZones();

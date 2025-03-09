@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class Cart
- * 
+ *
  * Can be loaded using $this->load->controller('checkout/cart');
  *
  * @package Opencart\Catalog\Controller\Checkout
@@ -110,6 +110,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		// Upload
 		$this->load->model('tool/upload');
 
+		// Cart
 		$data['products'] = [];
 
 		$this->load->model('checkout/cart');
@@ -178,6 +179,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['modules'] = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -234,6 +236,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$subscription_plan_id = 0;
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);

@@ -127,6 +127,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		// Return Status
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
@@ -280,6 +281,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Returns
 		$data['returns'] = [];
 
 		$filter_data = [
@@ -568,14 +570,17 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['comment'] = '';
 		}
 
+		// Return Reason
 		$this->load->model('localisation/return_reason');
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
 
+		// Return Action
 		$this->load->model('localisation/return_action');
 
 		$data['return_actions'] = $this->model_localisation_return_action->getReturnActions();
 
+		// Return Status
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
@@ -611,6 +616,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
+		// Order
 		$this->load->model('sale/order');
 
 		$order_info = $this->model_sale_order->getOrder($this->request->post['order_id']);
@@ -665,6 +671,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['quantity'] = $this->language->get('error_quantity');
 		}
 
+		// Return Reason
 		$this->load->model('localisation/return_reason');
 
 		$return_reason_info = $this->model_localisation_return_reason->getReturnReason($this->request->post['return_reason_id']);
@@ -673,6 +680,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['reason'] = $this->language->get('error_reason');
 		}
 
+		// Return Action
 		$this->load->model('localisation/return_action');
 
 		$return_action_info = $this->model_localisation_return_action->getReturnAction($this->request->post['return_action_id']);

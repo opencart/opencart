@@ -31,6 +31,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$data['code'] = '';
 			}
 
+			// Country
 			$this->load->model('localisation/country');
 
 			$data['countries'] = $this->model_localisation_country->getCountries();
@@ -73,6 +74,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		}
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
@@ -102,6 +104,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$address_format_id = '';
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);

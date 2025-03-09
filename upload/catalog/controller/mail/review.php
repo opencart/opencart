@@ -22,6 +22,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		if (in_array('review', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/review');
 
+			// Product
 			$this->load->model('catalog/product');
 
 			$product_info = $this->model_catalog_product->getProduct((int)$args[0]);

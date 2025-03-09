@@ -159,6 +159,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Zone
 		$data['zones'] = [];
 
 		$filter_data = [
@@ -328,6 +329,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$data['code'] = '';
 		}
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();

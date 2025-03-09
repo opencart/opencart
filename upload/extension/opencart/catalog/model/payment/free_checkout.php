@@ -23,6 +23,7 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
 
+		// Cart
 		$this->load->model('checkout/cart');
 
 		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);

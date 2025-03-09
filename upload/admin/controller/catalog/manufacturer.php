@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Manufacturer
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/manufacturer');
  *
  * @package Opencart\Admin\Controller\Catalog
@@ -109,6 +109,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Manufacturer
 		$data['manufacturers'] = [];
 
 		$filter_data = [
@@ -118,6 +119,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
+		// Image
 		$this->load->model('tool/image');
 
 		$this->load->model('catalog/manufacturer');
@@ -253,6 +255,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['manufacturer_store'] = [0];
 		}
 
+		// Image
 		if (!empty($manufacturer_info)) {
 			$data['image'] = $manufacturer_info['image'];
 		} else {
@@ -275,6 +278,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -287,6 +291,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['manufacturer_seo_url'] = [];
 		}
 
+		// Layout
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();

@@ -169,6 +169,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$data['theme_id'] = 0;
 		}
 
+        // Store
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();

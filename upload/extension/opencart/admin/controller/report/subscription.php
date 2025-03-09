@@ -82,6 +82,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		// Order Status
 		$this->load->model('localisation/subscription_status');
 
 		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
@@ -160,6 +161,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Subscription
 		$data['subscriptions'] = [];
 
 		$filter_data = [

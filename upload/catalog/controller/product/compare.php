@@ -55,11 +55,12 @@ class Compare extends \Opencart\System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		$data['products'] = [];
-
+		// Attribute Group
 		$data['attribute_groups'] = [];
 
 		// Product
+		$data['products'] = [];
+
 		$this->load->model('catalog/product');
 
 		// Manufacturer
@@ -198,6 +199,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 			$product_id = 0;
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);

@@ -128,6 +128,7 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Customer Transaction
 		$data['customers'] = [];
 
 		$filter_data = [

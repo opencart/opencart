@@ -174,6 +174,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 			$product_id = 0;
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);

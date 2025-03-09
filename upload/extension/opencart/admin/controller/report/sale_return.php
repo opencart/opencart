@@ -82,6 +82,7 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		// Return Status
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
@@ -160,6 +161,7 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Returns
 		$data['returns'] = [];
 
 		$filter_data = [

@@ -140,6 +140,7 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Search
 		$data['searches'] = [];
 
 		$filter_data = [
@@ -152,7 +153,6 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination')
 		];
 
-		// Customer
 		$this->load->model('extension/opencart/report/customer');
 
 		// Category

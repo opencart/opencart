@@ -17,6 +17,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
+		// GDPR
 		$this->load->model('customer/gdpr');
 
 		$gdpr_info = $this->model_customer_gdpr->getGdpr($args[0]);
@@ -56,6 +57,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function export(array $gdpr_info): void {
+		// Store
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -235,6 +237,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function approve(array $gdpr_info): void {
+		// Store
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -275,6 +278,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
+		// Image
 		$this->load->model('tool/image');
 
 		if (is_file(DIR_IMAGE . $store_logo)) {
@@ -329,6 +333,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deny(array $gdpr_info): void {
+		// Store
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -369,6 +374,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
+		// Image
 		$this->load->model('tool/image');
 
 		if (is_file(DIR_IMAGE . $store_logo)) {
@@ -423,6 +429,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function remove(array $gdpr_info): void {
+		// Store
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -463,6 +470,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
+		// Image
 		$this->load->model('tool/image');
 
 		if (is_file(DIR_IMAGE . $store_logo)) {

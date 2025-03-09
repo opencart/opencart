@@ -49,9 +49,9 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * After
 	 *
-	 *  // 2. After controller load restore old language data.
+	 * 2. After controller load restore old language data.
 	 *
-	 * // controller/ * / * /after
+	 * controller/ * / * /after
 	 *
 	 * @param string       $route
 	 * @param array<mixed> $args

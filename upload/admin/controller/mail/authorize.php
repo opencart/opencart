@@ -9,6 +9,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * admin/controller/common/authorize.send/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param array<mixed>      $output
@@ -16,8 +18,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @throws \Exception
 	 *
 	 * @return void
-	 *
-	 * admin/controller/common/authorize.send/after
 	 */
 	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($this->session->data['code'])) {
@@ -62,6 +62,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * Reset
 	 *
+	 * admin/model/user/user.addToken/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param array<mixed>      $output
@@ -69,8 +71,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @throws \Exception
 	 *
 	 * @return void
-	 *
-	 * admin/model/user/user.addToken/after
 	 */
 	public function reset(&$route, &$args, &$output): void {
 		if (isset($args[0])) {

@@ -18,6 +18,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 *
+	 * @example
+	 *
 	 * $this->load->model('account/transaction');
 	 *
 	 * $this->model_account_transaction->addTransaction($customer_id, $order_id, $description, $amount);

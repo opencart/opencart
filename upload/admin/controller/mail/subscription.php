@@ -163,10 +163,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// admin/controller/sale/subscription.addTransaction/after
-
 	/**
 	 * Transaction
+	 *
+	 * admin/controller/sale/subscription.addTransaction/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

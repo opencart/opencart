@@ -2,7 +2,7 @@
 namespace Opencart\catalog\controller\api;
 /**
  * Class Affiliate
- * 
+ *
  * Can be loaded using $this->load->controller('api/affiliate');
  *
  * @package Opencart\Catalog\Controller\Api\Sale

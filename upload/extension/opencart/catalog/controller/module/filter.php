@@ -12,7 +12,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
-        // Category
+		// Category
 		if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);
 		} else {
@@ -21,7 +21,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$category_id = (int)end($parts);
 
-        $this->load->model('catalog/category');
+		$this->load->model('catalog/category');
 
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 

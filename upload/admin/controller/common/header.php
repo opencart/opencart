@@ -71,7 +71,7 @@ class Header extends \Opencart\System\Engine\Controller {
 
 			$data['profile'] = $this->url->link('user/profile', 'user_token=' . $this->session->data['user_token']);
 
-            // User
+			// User
 			$this->load->model('user/user');
 
 			$user_info = $this->model_user_user->getUser($this->user->getId());

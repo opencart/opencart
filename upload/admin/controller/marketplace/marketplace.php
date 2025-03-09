@@ -664,7 +664,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-            // Extension
+			// Extension
 			$this->load->model('setting/extension');
 
 			$data['downloads'] = [];
@@ -700,7 +700,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	public function extension(): void {
 		$this->load->language('marketplace/marketplace');
 
-        // Extension
+		// Extension
 		if (isset($this->request->get['extension_id'])) {
 			$extension_id = (int)$this->request->get['extension_id'];
 		} else {

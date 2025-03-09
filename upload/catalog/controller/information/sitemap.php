@@ -28,7 +28,7 @@ class Sitemap extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('information/sitemap', 'language=' . $this->config->get('config_language'))
 		];
 
-        // Category
+		// Category
 		$this->load->model('catalog/category');
 
 		$data['categories'] = [];
@@ -74,7 +74,7 @@ class Sitemap extends \Opencart\System\Engine\Controller {
 		$data['contact'] = $this->url->link('information/contact', 'language=' . $this->config->get('config_language'));
 
 		// Information
-        $this->load->model('catalog/information');
+		$this->load->model('catalog/information');
 
 		$data['informations'] = [];
 

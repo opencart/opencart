@@ -194,7 +194,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-            // Total Orders
+			// Total Orders
 			$this->load->model('sale/order');
 
 			$this->model_report_statistics->editValue('order_other', $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', $order_status_data)]));

@@ -106,7 +106,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('common/login', '', true));
 		}
 
-        // User
+		// User
 		$this->load->model('user/user');
 
 		$user_info = $this->model_user_user->getTokenByCode($code);
@@ -176,7 +176,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/forgotten', '', true);
 		}
 
-        // User
+		// User
 		$this->load->model('user/user');
 
 		$user_info = $this->model_user_user->getUserByEmail($email);

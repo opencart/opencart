@@ -94,6 +94,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise removeTagsAsync(array $args = [])
  * @method \Aws\Result restoreEventDataStore(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreEventDataStoreAsync(array $args = [])
+ * @method \Aws\Result searchSampleQueries(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchSampleQueriesAsync(array $args = [])
  * @method \Aws\Result startDashboardRefresh(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDashboardRefreshAsync(array $args = [])
  * @method \Aws\Result startEventDataStoreIngestion(array $args = [])

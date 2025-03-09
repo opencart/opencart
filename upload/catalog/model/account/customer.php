@@ -481,7 +481,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Authorizes
 	 *
-	 * @param int $customer_id primary key of the customer record
+	 * @param int    $customer_id primary key of the customer record
+	 * @param string $token
 	 *
 	 * @return void
 	 *
@@ -538,7 +539,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $type
 	 * @param string $code
-     *
+	 *
 	 * @example
 	 *
 	 * $this->load->model('account/customer');
@@ -575,7 +576,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Token By Code
 	 *
-	 * @param int $customer_id primary key of the customer record
+	 * @param string $code
+	 * @param int    $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 *

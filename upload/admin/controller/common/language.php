@@ -14,7 +14,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
-        // Language
+		// Language
 		$data['languages'] = [];
 
 		$this->load->model('localisation/language');

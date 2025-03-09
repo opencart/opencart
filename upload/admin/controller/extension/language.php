@@ -33,7 +33,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-        // Extension
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('language');
@@ -154,7 +154,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-        // Language
+		// Language
 		$this->load->model('localisation/language');
 
 		$results = $this->model_localisation_language->getLanguagesByExtension($this->request->get['extension']);

@@ -141,6 +141,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putAccountSuppressionAttributesAsync(array $args = [])
  * @method \Aws\Result putAccountVdmAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountVdmAttributesAsync(array $args = [])
+ * @method \Aws\Result putConfigurationSetArchivingOptions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putConfigurationSetArchivingOptionsAsync(array $args = [])
  * @method \Aws\Result putConfigurationSetDeliveryOptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putConfigurationSetDeliveryOptionsAsync(array $args = [])
  * @method \Aws\Result putConfigurationSetReputationOptions(array $args = [])

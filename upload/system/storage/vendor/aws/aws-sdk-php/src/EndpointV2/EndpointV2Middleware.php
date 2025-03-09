@@ -8,6 +8,7 @@ use Aws\CommandInterface;
 use Aws\MetricsBuilder;
 use Closure;
 use GuzzleHttp\Promise\Promise;
+use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use function JmesPath\search;
 
 /**
@@ -99,10 +100,11 @@ class EndpointV2Middleware
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $providerArgs = $this->resolveArgs($commandArgs, $operation);
-        if (!empty($providerArgs[self::ACCOUNT_ID_PARAM])) {
-            $command->getMetricsBuilder()->append(MetricsBuilder::RESOLVED_ACCOUNT_ID);
-        }
+
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
+
+        $this->appendEndpointMetrics($providerArgs, $endpoint, $command);
+
         if (!empty($authSchemes = $endpoint->getProperty('authSchemes'))) {
             $this->applyAuthScheme(
                 $authSchemes,
@@ -396,5 +398,30 @@ class EndpointV2Middleware
         $identity = $identityProviderFn()->wait();
 
         return $identity->getAccountId();
+    }
+
+    private function appendEndpointMetrics(
+        array $providerArgs,
+        RulesetEndpoint $endpoint,
+        CommandInterface $command
+    ): void
+    {
+        // Resolved AccountId Metric
+        if (!empty($providerArgs[self::ACCOUNT_ID_PARAM])) {
+            $command->getMetricsBuilder()->append(MetricsBuilder::RESOLVED_ACCOUNT_ID);
+        }
+        // AccountIdMode Metric
+        if(!empty($providerArgs[self::ACCOUNT_ID_ENDPOINT_MODE_PARAM])) {
+            $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+                'account_id_endpoint_mode',
+                $providerArgs[self::ACCOUNT_ID_ENDPOINT_MODE_PARAM]
+            );
+        }
+
+        // AccountId Endpoint Metric
+        $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+            'account_id_endpoint',
+            $endpoint->getUrl()
+        );
     }
 }

@@ -39,7 +39,7 @@ class LowOrderFee extends \Opencart\System\Engine\Controller {
 		$data['total_low_order_fee_total'] = $this->config->get('total_low_order_fee_total');
 		$data['total_low_order_fee_fee'] = $this->config->get('total_low_order_fee_fee');
 
-        // Tax Class
+		// Tax Class
 		$data['total_low_order_fee_tax_class_id'] = (int)$this->config->get('total_low_order_fee_tax_class_id');
 
 		$this->load->model('localisation/tax_class');

@@ -49,7 +49,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 		if ($customer_info) {
 			$this->load->language('mail/transaction');
 
-            // Store
+			// Store
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);

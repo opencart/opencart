@@ -31,7 +31,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		$data['approve'] = $this->url->link('customer/customer_approval.approve', 'user_token=' . $this->session->data['user_token'], true);
 		$data['deny'] = $this->url->link('customer/customer_approval.deny', 'user_token=' . $this->session->data['user_token'], true);
 
-        // Customer Group
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -138,7 +138,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('customer/customer_approval.list', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
-        // Customer Approval
+		// Customer Approval
 		$data['customer_approvals'] = [];
 
 		$filter_data = [

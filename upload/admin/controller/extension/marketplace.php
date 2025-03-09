@@ -33,7 +33,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-        // Extension
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('marketplace');

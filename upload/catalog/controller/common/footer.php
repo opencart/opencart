@@ -16,7 +16,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/footer');
 
-        // Article
+		// Article
 		$this->load->model('cms/article');
 
 		$article_total = $this->model_cms_article->getTotalArticles();
@@ -27,7 +27,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 			$data['blog'] = '';
 		}
 
-        // Information
+		// Information
 		$data['informations'] = [];
 
 		$this->load->model('catalog/information');

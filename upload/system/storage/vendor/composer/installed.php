@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'opencart/opencart',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '82ccdea60fa7d9a16310310788024dab413e8751',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../../../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'aws/aws-sdk-php' => array(
-            'pretty_version' => '3.336.13',
-            'version' => '3.336.13.0',
-            'reference' => 'dcb43c029ca74c52fa03a739341cc77086296a83',
+            'pretty_version' => '3.342.2',
+            'version' => '3.342.2.0',
+            'reference' => 'ef66e0fdba9e7f786a7b1e522f847d76d0320e89',
             'type' => 'library',
             'install_path' => __DIR__ . '/../aws/aws-sdk-php',
             'aliases' => array(),
@@ -65,9 +65,9 @@
             'dev_requirement' => false,
         ),
         'opencart/opencart' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '82ccdea60fa7d9a16310310788024dab413e8751',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../../../../',
             'aliases' => array(),

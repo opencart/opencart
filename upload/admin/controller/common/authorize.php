@@ -94,7 +94,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token = '';
 		}
 
-		// If token already exists, check if it's valid
+		// 3. If token already exists, check if it's valid
 		$this->load->model('user/user');
 
 		$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);

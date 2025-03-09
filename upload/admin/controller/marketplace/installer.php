@@ -239,7 +239,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_file_type');
 			}
 
-			// 4. check if there is already a file
+			// 4. Check if there is already a file.
 			$file = DIR_STORAGE . 'marketplace/' . $filename;
 
 			if (is_file($file)) {

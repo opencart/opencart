@@ -3,6 +3,8 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Pagination
  *
+ * Can be loaded using $this->load->controller('common/pagination', $setting);
+ *
  * @example
  *
  * $setting = [
@@ -11,8 +13,6 @@ namespace Opencart\Catalog\Controller\Common;
  *     'limit' => 10,
  *     'url'   => ''
  * ];
- *
- * Can be loaded using $this->load->controller('common/pagination', $setting);
  *
  * @package Opencart\Catalog\Controller\Common
  */

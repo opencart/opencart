@@ -124,6 +124,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
+		// Order
 		$this->load->model('account/order');
 
 		$order_info = $this->model_account_order->getOrder($order_id);
@@ -169,6 +170,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['order_id'] = $order_id;
 
+			// Order Status
 			$this->load->model('localisation/order_status');
 
 			$order_status_info = $this->model_localisation_order_status->getOrderStatus($order_info['order_status_id']);

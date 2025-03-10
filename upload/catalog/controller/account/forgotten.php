@@ -112,6 +112,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true));
 		}
 
+		// Customer
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getTokenByCode($code);

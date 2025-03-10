@@ -106,6 +106,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Startup
 		$data['startups'] = [];
 
 		$filter_data = [

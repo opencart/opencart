@@ -41,6 +41,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getFindingRecommendationAsync(array $args = [])
  * @method \Aws\Result getFindingV2(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFindingV2Async(array $args = [])
+ * @method \Aws\Result getFindingsStatistics(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getFindingsStatisticsAsync(array $args = [])
  * @method \Aws\Result getGeneratedPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getGeneratedPolicyAsync(array $args = [])
  * @method \Aws\Result listAccessPreviewFindings(array $args = [])

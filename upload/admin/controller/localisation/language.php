@@ -107,6 +107,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Language
 		$data['languages'] = [];
 
 		$filter_data = [

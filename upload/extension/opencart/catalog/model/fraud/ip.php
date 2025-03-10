@@ -22,6 +22,7 @@ class Ip extends \Opencart\System\Engine\Model {
 	public function check(array $order_info): int {
 		$status = false;
 
+		// Customer
 		if ($order_info['customer_id']) {
 			$this->load->model('account/customer');
 

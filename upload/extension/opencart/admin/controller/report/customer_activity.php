@@ -134,6 +134,7 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Activity
 		$data['activities'] = [];
 
 		$filter_data = [

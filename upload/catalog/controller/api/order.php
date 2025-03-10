@@ -144,6 +144,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = $this->load->controller('api/shipping_method');
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -200,6 +201,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = $this->load->controller('api/payment_method');
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -237,6 +239,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -279,6 +282,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -319,6 +323,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_method');
 		$this->load->controller('api/payment_method');
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -548,6 +553,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
+			// Cart
 			$this->load->model('checkout/cart');
 
 			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
@@ -680,6 +686,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Order
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder((int)$this->request->post['order_id']);

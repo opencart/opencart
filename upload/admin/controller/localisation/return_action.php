@@ -107,6 +107,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/return_action.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Return Action
 		$data['return_actions'] = [];
 
 		$filter_data = [
@@ -208,6 +209,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$data['return_action_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Account;
 /**
  * Class Login
- * 
+ *
  * Can be loaded using $this->load->controller('account/login');
  *
  * @package Opencart\Catalog\Controller\Account
@@ -244,6 +244,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		unset($this->session->data['reward']);
 		unset($this->session->data['customer_token']);
 
+		// Customer
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
@@ -288,6 +289,11 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * Validate
+	 *
+	 * @return bool
+	 */
 	public function validate(): bool {
 		return !(!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token'])));
 	}

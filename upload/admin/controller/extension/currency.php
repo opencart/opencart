@@ -33,6 +33,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('currency');

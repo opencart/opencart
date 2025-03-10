@@ -6,9 +6,10 @@ namespace Opencart\Catalog\Controller\Mail;
  * @package Opencart\Catalog\Controller\Mail
  */
 class Transaction extends \Opencart\System\Engine\Controller {
-	// catalog/model/account/customer/addTransaction/after
 	/**
 	 * Index
+	 *
+	 * catalog/model/account/customer.addTransaction/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -21,11 +22,13 @@ class Transaction extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$this->load->language('mail/transaction');
 
+		// Customer
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
+			// Store
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
@@ -38,6 +41,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 				$store_url = $this->config->get('config_url');
 			}
 
+			// Send the email in the correct language
 			$this->load->model('localisation/language');
 
 			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
@@ -65,6 +69,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 			$data['amount'] = $this->currency->format($args[2], $this->config->get('config_currency'));
 
+			// Transaction
 			$this->load->model('account/transaction');
 
 			$data['total'] = $this->currency->format($this->model_account_transaction->getTransactionTotal($args[0]), $this->config->get('config_currency'));

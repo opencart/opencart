@@ -141,6 +141,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['description'] = '';
 		}
 
+		// Image
 		$this->load->model('tool/image');
 
 		if (!empty($topic_info['image']) && is_file(DIR_IMAGE . html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -151,6 +152,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$limit = $this->config->get('config_pagination');
 
+		// Article
 		$data['articles'] = [];
 
 		$filter_data = [
@@ -327,6 +329,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$topic_id = 0;
 		}
 
+		// Article
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
@@ -388,6 +391,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 			$data['heading_title'] = $article_info['name'];
 
+			// Image
 			$this->load->model('tool/image');
 
 			if (!empty($article_info['image']) && is_file(DIR_IMAGE . html_entity_decode($article_info['image'], ENT_QUOTES, 'UTF-8'))) {

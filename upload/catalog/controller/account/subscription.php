@@ -313,6 +313,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['payment_method'] = '';
 			}
 
+			// Product
 			$data['products'] = [];
 
 			$this->load->model('catalog/product');
@@ -575,6 +576,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Order
 		$data['orders'] = [];
 
 		$this->load->model('account/order');

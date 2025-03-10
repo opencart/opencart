@@ -9,7 +9,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Trigger catalog/model/checkout/order/addHistory/before
+	 * catalog/model/checkout/order.addHistory/before
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -84,6 +84,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Store
 		$store_logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
@@ -105,6 +106,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store_url = $store_info['url'];
 		}
 
+		// Send the email in the correct language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
@@ -128,6 +130,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$subject = sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']);
 
+		// Image
 		$this->load->model('tool/image');
 
 		if (is_file(DIR_IMAGE . $store_logo)) {
@@ -280,6 +283,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$description = '';
 
+			// Order
 			$this->load->model('checkout/order');
 
 			$subscription_info = $this->model_checkout_order->getSubscription($order_info['order_id'], $order_product['order_product_id']);
@@ -323,6 +327,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['totals'][] = ['text' => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value'])] + $order_total;
 		}
 
+		// Setting
 		$this->load->model('setting/setting');
 
 		$from = $this->model_setting_setting->getValue('config_email', $order_info['store_id']);
@@ -354,7 +359,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * History
 	 *
-	 * catalog/model/checkout/order/addHistory/before
+	 * catalog/model/checkout/order.addHistory/before
 	 *
 	 * @param array<string, mixed> $order_info
 	 * @param int                  $order_status_id
@@ -374,6 +379,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store_url = HTTP_CATALOG;
 		}
 
+		// Store
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($order_info['store_id']);
@@ -383,6 +389,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store_url = $store_info['url'];
 		}
 
+		// Send the email in the correct language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
@@ -425,9 +432,11 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['comment'] = strip_tags($comment);
 
+		// Store
 		$data['store'] = $store_name;
 		$data['store_url'] = $store_url;
 
+		// Setting
 		$this->load->model('setting/setting');
 
 		$from = $this->model_setting_setting->getValue('config_email', $order_info['store_id']);
@@ -459,10 +468,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Alert
 	 *
+	 * catalog/model/checkout/order.addHistory/before
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
-	 *
-	 * Event called catalog/model/checkout/order/addHistory/before
 	 *
 	 * @throws \Exception
 	 *

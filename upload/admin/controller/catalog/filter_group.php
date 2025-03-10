@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Filter Group
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/filter_group');
  *
  * @package Opencart\Admin\Controller\Catalog
@@ -109,6 +109,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Filter Group
 		$data['filter_groups'] = [];
 
 		$filter_data = [
@@ -221,6 +222,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			$data['filter_group_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -312,6 +314,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Filter
 		$this->load->model('catalog/filter');
 
 		foreach ($selected as $filter_group_id) {

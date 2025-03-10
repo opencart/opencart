@@ -107,6 +107,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/order_status.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Order Status
 		$data['order_statuses'] = [];
 
 		$filter_data = [
@@ -211,6 +212,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			$data['order_status_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

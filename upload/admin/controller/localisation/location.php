@@ -107,6 +107,7 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/location.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Location
 		$data['locations'] = [];
 
 		$filter_data = [
@@ -245,6 +246,7 @@ class Location extends \Opencart\System\Engine\Controller {
 			$data['image'] = '';
 		}
 
+		// Image
 		$this->load->model('tool/image');
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));

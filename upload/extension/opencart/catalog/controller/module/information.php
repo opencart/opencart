@@ -12,6 +12,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
+		// Information
 		$this->load->language('extension/opencart/module/information');
 
 		$this->load->model('catalog/information');

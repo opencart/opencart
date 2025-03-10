@@ -37,6 +37,7 @@ class Report extends \Opencart\System\Engine\Controller {
 		// Reports
 		$data['reports'] = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		// Get a list of installed modules

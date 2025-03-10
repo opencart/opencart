@@ -37,11 +37,15 @@ class Item extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
 		$data['shipping_item_cost'] = $this->config->get('shipping_item_cost');
-		$data['shipping_item_tax_class_id'] = $this->config->get('shipping_item_tax_class_id');
+
+		// Tax Class
+		$data['shipping_item_tax_class_id'] = (int)$this->config->get('shipping_item_tax_class_id');
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
+
+		// Geo Zone
 		$data['shipping_item_geo_zone_id'] = $this->config->get('shipping_item_geo_zone_id');
 
 		$this->load->model('localisation/geo_zone');

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Subscription Plan
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/subscription_plan');
  *
  * @package Opencart\Admin\Controller\Catalog
@@ -110,6 +110,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Subscription Plan
 		$data['subscription_plans'] = [];
 
 		$filter_data = [
@@ -218,6 +219,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$data['subscription_plan_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

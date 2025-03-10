@@ -51,6 +51,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token']);
 
+		// Affiliate
 		$this->load->model('account/affiliate');
 
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());

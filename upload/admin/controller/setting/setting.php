@@ -46,6 +46,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['themes'] = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
@@ -72,6 +73,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_geocode'] = $this->config->get('config_geocode');
 		$data['config_email'] = $this->config->get('config_email');
 		$data['config_telephone'] = $this->config->get('config_telephone');
+
+		// Image
 		$data['config_image'] = $this->config->get('config_image');
 
 		$this->load->model('tool/image');
@@ -87,13 +90,14 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_open'] = $this->config->get('config_open');
 		$data['config_comment'] = $this->config->get('config_comment');
 
+		// Location
 		$this->load->model('localisation/location');
 
 		$data['locations'] = $this->model_localisation_location->getLocations();
 
 		$data['config_location'] = (array)$this->config->get('config_location');
 
-		// Localisation
+		// Country
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -136,6 +140,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['currency_engines'] = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('currency');
@@ -154,12 +159,14 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_currency_engine'] = $this->config->get('config_currency_engine');
 		$data['config_currency_auto'] = $this->config->get('config_currency_auto');
 
+		// Length Class
 		$this->load->model('localisation/length_class');
 
 		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
 
 		$data['config_length_class_id'] = $this->config->get('config_length_class_id');
 
+		// Weight Class
 		$this->load->model('localisation/weight_class');
 
 		$data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
@@ -201,6 +208,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_customer_activity'] = $this->config->get('config_customer_activity');
 		$data['config_customer_search'] = $this->config->get('config_customer_search');
 
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -218,6 +226,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_password_symbol'] = $this->config->get('config_password_symbol');
 		$data['config_password_length'] = $this->config->get('config_password_length');
 
+		// Information
 		$this->load->model('catalog/information');
 
 		$data['informations'] = $this->model_catalog_information->getInformations();
@@ -248,7 +257,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_void_status_id'] = $this->config->get('config_void_status_id');
 		$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
 
-		// Subscription
+		// Subscription Status
 		$this->load->model('localisation/subscription_status');
 
 		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
@@ -268,7 +277,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_api_id'] = $this->config->get('config_api_id');
 
-		// Stock
+		// Stock Status
 		$this->load->model('localisation/stock_status');
 
 		$data['stock_statuses'] = $this->model_localisation_stock_status->getStockStatuses();
@@ -302,6 +311,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Captcha
 		$data['config_captcha'] = $this->config->get('config_captcha');
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$data['captchas'] = [];
@@ -680,6 +690,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$theme = '';
 		}
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extension_info = $this->model_setting_extension->getExtensionByCode('theme', $theme);

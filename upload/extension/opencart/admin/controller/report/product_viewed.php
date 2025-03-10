@@ -221,6 +221,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 				'limit' => $limit
 			];
 
+			// Product
 			$this->load->model('catalog/product');
 
 			$product_total = $this->model_catalog_product->getTotalProducts();

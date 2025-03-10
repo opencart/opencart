@@ -323,6 +323,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Affiliate
 		$data['affiliates'] = [];
 
 		$filter_data = [
@@ -645,6 +646,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['bank_account_number'] = '';
 		}
 
+		// Custom Fields
 		$data['custom_fields'] = [];
 
 		$filter_data = [
@@ -653,7 +655,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'order'           => 'ASC'
 		];
 
-		// Custom Fields
 		$this->load->model('customer/custom_field');
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);

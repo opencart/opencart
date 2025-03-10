@@ -106,6 +106,7 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Event
 		$data['events'] = [];
 
 		$filter_data = [

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Cron;
 /**
  * Class Subscription
- * 
+ *
  * Can be loaded using $this->load->controller('cron/subscription');
  *
  * @package Opencart\Catalog\Controller\Cron
@@ -346,6 +346,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$order_data['currency_code'] = $store->session->data['currency'];
 					$order_data['currency_value'] = $store->currency->getValue($store->session->data['currency']);
 
+					// Order
 					$this->load->model('checkout/order');
 
 					$order_info = $this->model_checkout_order->getOrder($result['order_id']);

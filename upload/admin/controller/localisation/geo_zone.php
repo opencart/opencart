@@ -107,6 +107,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Geo Zone
 		$data['geo_zones'] = [];
 
 		$filter_data = [
@@ -227,6 +228,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$data['description'] = '';
 		}
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -304,6 +306,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Tax Rate
 		$this->load->model('localisation/tax_rate');
 
 		foreach ($selected as $geo_zone_id) {

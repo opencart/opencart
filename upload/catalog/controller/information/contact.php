@@ -30,6 +30,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 		$data['send'] = $this->url->link('information/contact.send', 'language=' . $this->config->get('config_language'));
 
+		// Image
 		$this->load->model('tool/image');
 
 		if ($this->config->get('config_image') && is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_image'), ENT_QUOTES, 'UTF-8'))) {
@@ -46,6 +47,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = nl2br($this->config->get('config_comment'));
 
+		// Location
 		$data['locations'] = [];
 
 		$this->load->model('localisation/location');

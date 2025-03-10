@@ -159,6 +159,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Country
 		$data['countries'] = [];
 
 		$filter_data = [
@@ -328,6 +329,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$data['iso_code_3'] = '';
 		}
 
+		// Address Format
 		$this->load->model('localisation/address_format');
 
 		$data['address_formats'] = $this->model_localisation_address_format->getAddressFormats();

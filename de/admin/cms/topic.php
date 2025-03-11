@@ -26,6 +26,7 @@ $_['entry_store']             = 'Online-Shop (Store)';
 $_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_status']            = 'Status';
 $_['entry_keyword']           = 'SEO-URL Kennung (Schlüsselwort)';
+$_['entry_layout']            = 'Layout überschreiben';
 
 // Error
 $_['error_warning']           = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';

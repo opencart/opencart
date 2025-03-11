@@ -117,6 +117,7 @@ $_['entry_tag']                  = 'Tags du Produit';
 $_['entry_reward']               = 'Points de Récompenses';
 $_['entry_layout']               = 'Remplacement de la Disposition';
 $_['entry_subscription']         = 'Plan d\'Abonnement';
+$_['entry_barcode']              = 'Code-barres';
 
 // Aide
 $_['help_tag']                   = 'Séparés par des virgules';

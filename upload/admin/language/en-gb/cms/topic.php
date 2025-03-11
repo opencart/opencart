@@ -26,6 +26,7 @@ $_['entry_store']             = 'Stores';
 $_['entry_sort_order']        = 'Sort Order';
 $_['entry_status']            = 'Status';
 $_['entry_keyword']           = 'Keyword';
+$_['entry_layout']            = 'Layout Override';
 
 // Error
 $_['error_warning']           = 'Warning: Please check the form carefully for errors!';

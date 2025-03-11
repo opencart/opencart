@@ -977,6 +977,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'filter_quantity_from'   => 1,
 	 *     'filter_quantity_to'     => 100,
 	 *     'filter_status'          => 1,
+	 *     'filter_barcode'         => 'xyz123',
 	 *     'start'                  => 0,
 	 *     'limit'                  => 10
 	 * ];
@@ -1026,6 +1027,15 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
 			$sql .= " AND `p`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
+		if (isset($data['filter_barcode']) && $data['filter_barcode'] !== '') {
+			$sql .= " AND (LOWER(`p`.`sku`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`upc`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`ean`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`jan`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`isbn`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`mpn`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "')";
 		}
 
 		$sql .= " GROUP BY `p`.`product_id`";
@@ -1096,6 +1106,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'filter_quantity_from'   => 1,
 	 *     'filter_quantity_to'     => 100,
 	 *     'filter_status'          => 1,
+	 * 	   'filter_barcode'         => 'xyz123',
 	 *     'start'                  => 0,
 	 *     'limit'                  => 10
 	 * ];
@@ -1145,6 +1156,15 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
 			$sql .= " AND `p`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+		
+		if (isset($data['filter_barcode']) && $data['filter_barcode'] !== '') {
+			$sql .= " AND (LOWER(`p`.`sku`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`upc`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`ean`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`jan`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`isbn`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "'";
+			$sql .= " OR LOWER(`p`.`mpn`) LIKE '" . $this->db->escape("%" . oc_strtolower($data['filter_barcode']) . "%") . "')";
 		}
 
 		$query = $this->db->query($sql);

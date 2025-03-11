@@ -117,6 +117,7 @@ $_['entry_tag']                  = 'Product Tags';
 $_['entry_reward']               = 'Reward Points';
 $_['entry_layout']               = 'Layout Override';
 $_['entry_subscription']         = 'Subscription Plan';
+$_['entry_barcode']              = 'Barcode';
 
 // Help
 $_['help_tag']                   = 'Comma separated';

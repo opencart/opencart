@@ -236,7 +236,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	protected function getCart(): array {
 		$this->setCustomer();
 
-		// If any errors at the cart level such as products don't exist then we want to return the error
+		// If any errors at the cart level, such as products don't exist, then we want to return the error
 		$output = $this->load->controller('api/cart');
 
 		$this->setPaymentAddress();

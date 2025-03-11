@@ -31,7 +31,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$route = substr($route, 0, $pos);
 		}
 
-		// Block access to 2fa if logged in
+		// Block access to 2fa, if logged in
 		if ($route == 'account/authorize' && !$this->config->get('config_2fa')) {
 			$this->response->redirect($this->url->link('common/home', 'language=' . $this->config->get('config_language'), true));
 		}

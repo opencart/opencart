@@ -253,7 +253,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				$gdpr_info = $this->model_customer_gdpr->getGdpr($gdpr_id);
 
 				if ($gdpr_info) {
-					// If we remove we want to change the status to processing
+					// If we remove, we want to change the status to processing
 					// to give time for store owners to process orders and refunds.
 					if ($gdpr_info['action'] == 'export') {
 						$this->model_customer_gdpr->editStatus($gdpr_id, 3);

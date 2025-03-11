@@ -678,7 +678,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['success'] = $this->language->get('text_success_guest');
 				}
 			} else {
-				// If account needs approval we redirect to the account success / requires approval page.
+				// If account needs approval, we redirect to the account success / requires approval page.
 				$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);
 			}
 

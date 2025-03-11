@@ -94,6 +94,7 @@ class S3SignatureV4 extends SignatureV4
                 $this->getPresignedPayload($request)
             );
         }
+
         if (strpos($request->getUri()->getHost(), "accesspoint.s3-global")) {
             $request = $request->withHeader("x-amz-region-set", "*");
         }

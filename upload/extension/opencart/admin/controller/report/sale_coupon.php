@@ -122,6 +122,7 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Sale
 		$data['coupons'] = [];
 
 		$filter_data = [

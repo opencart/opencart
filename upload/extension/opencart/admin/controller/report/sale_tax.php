@@ -82,6 +82,7 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		// Order Status
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -160,6 +161,7 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Sale
 		$data['orders'] = [];
 
 		$filter_data = [
@@ -175,6 +177,7 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 
 		$order_total = $this->model_extension_opencart_report_sale->getTotalTaxes($filter_data);
 
+		// Sale
 		$data['orders'] = [];
 
 		$results = $this->model_extension_opencart_report_sale->getTaxes($filter_data);

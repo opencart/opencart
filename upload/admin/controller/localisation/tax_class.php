@@ -107,6 +107,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/tax_class.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Tax Class
 		$data['tax_classes'] = [];
 
 		$filter_data = [
@@ -226,6 +227,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$data['description'] = '';
 		}
 
+		// Tax Rate
 		$this->load->model('localisation/tax_rate');
 
 		$data['tax_rates'] = $this->model_localisation_tax_rate->getTaxRates();

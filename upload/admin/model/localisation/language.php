@@ -357,7 +357,7 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_information->deleteDescriptionsByLanguageId($language_id);
 
-		// Length
+		// Length Class
 		$this->load->model('localisation/length_class');
 
 		$this->model_localisation_length_class->deleteDescriptionsByLanguageId($language_id);

@@ -2,7 +2,7 @@
 namespace Opencart\catalog\controller\api;
 /**
  * Class Payment Address
- * 
+ *
  * Can be loaded using $this->load->controller('api/payment_address');
  *
  * @package Opencart\Catalog\Controller\Api
@@ -53,6 +53,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$output['error']['payment_city'] = $this->language->get('error_city');
 		}
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
@@ -97,6 +98,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$address_format_id = 0;
 			}
 
+			// Address Format
 			$this->load->model('localisation/address_format');
 
 			$address_format_info = $this->model_localisation_address_format->getAddressFormat($address_format_id);
@@ -107,6 +109,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$address_format = '';
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_info = $this->model_localisation_zone->getZone($this->request->post['payment_zone_id']);

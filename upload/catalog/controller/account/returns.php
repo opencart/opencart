@@ -283,6 +283,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['model'] = '';
 		}
 
+		// Return Reason
 		$this->load->model('localisation/return_reason');
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
@@ -298,6 +299,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['captcha'] = '';
 		}
 
+		// Information
 		$this->load->model('catalog/information');
 
 		$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_return_id'));

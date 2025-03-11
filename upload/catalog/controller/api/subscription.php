@@ -107,6 +107,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$address_id = 0;
 		}
 
+		// Payment Address
 		$this->load->model('account/address');
 
 		$address_info = $this->model_account_address->getAddress($this->customer->getId(), $address_id);
@@ -140,6 +141,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$address_id = 0;
 		}
 
+		// Shipping Address
 		$this->load->model('account/address');
 
 		$address_info = $this->model_account_address->getAddress($this->customer->getId(), $address_id);
@@ -234,7 +236,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	protected function getCart(): array {
 		$this->setCustomer();
 
-		// If any errors at the cart level such as products don't exist then we want to return the error
+		// If any errors at the cart level, such as products don't exist, then we want to return the error
 		$output = $this->load->controller('api/cart');
 
 		$this->setPaymentAddress();
@@ -416,6 +418,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Subscription
 		$this->load->model('checkout/subscription');
 
 		$subscription_info = $this->model_checkout_subscription->getSubscription((int)$this->request->post['subscription_id']);

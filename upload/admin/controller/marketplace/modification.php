@@ -111,6 +111,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/modification.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Modification
 		$data['modifications'] = [];
 
 		$filter_data = [
@@ -192,6 +193,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			// Just before files are deleted, if config settings say maintenance mode is off then turn it on
 			$maintenance = $this->config->get('config_maintenance');
 
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editValue('config', 'config_maintenance', '1');

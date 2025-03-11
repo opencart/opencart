@@ -130,6 +130,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise modifyCertificateBasedAuthPropertiesAsync(array $args = [])
  * @method \Aws\Result modifyClientProperties(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyClientPropertiesAsync(array $args = [])
+ * @method \Aws\Result modifyEndpointEncryptionMode(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifyEndpointEncryptionModeAsync(array $args = [])
  * @method \Aws\Result modifySamlProperties(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifySamlPropertiesAsync(array $args = [])
  * @method \Aws\Result modifySelfservicePermissions(array $args = [])

@@ -124,6 +124,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('customer/gdpr.list', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
+		// GDPR
 		$data['gdprs'] = [];
 
 		$filter_data = [
@@ -136,7 +137,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			'limit'            => $this->config->get('config_pagination_admin')
 		];
 
-		// GDPR
 		$this->load->model('customer/gdpr');
 
 		// Customer
@@ -253,7 +253,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				$gdpr_info = $this->model_customer_gdpr->getGdpr($gdpr_id);
 
 				if ($gdpr_info) {
-					// If we remove we want to change the status to processing
+					// If we remove, we want to change the status to processing
 					// to give time for store owners to process orders and refunds.
 					if ($gdpr_info['action'] == 'export') {
 						$this->model_customer_gdpr->editStatus($gdpr_id, 3);

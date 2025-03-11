@@ -2,9 +2,11 @@
 namespace Opencart\Catalog\Controller\Product;
 /**
  * Class Thumb
- * 
+ *
+ * Can be loaded using $this->load->controller('product/thumb', $product_data);
+ *
  * @example
- * 
+ *
  * $product_data = [
  *     'description' => '',
  *     'thumb'       => '',
@@ -14,8 +16,6 @@ namespace Opencart\Catalog\Controller\Product;
  *     'minimum'     => 1,
  *     'href'        => ''
  * ];
- * 
- * Can be loaded using $this->load->controller('product/thumb', $product_data);
  *
  * @package Opencart\Catalog\Controller\Product
  */

@@ -25,6 +25,7 @@ class BankTransfer extends \Opencart\System\Engine\Model {
 		} elseif (!$this->config->get('payment_bank_transfer_geo_zone_id')) {
 			$status = true;
 		} else {
+			// Geo Zone
 			$this->load->model('localisation/geo_zone');
 
 			$results = $this->model_localisation_geo_zone->getGeoZone((int)$this->config->get('payment_bank_transfer_geo_zone_id'), (int)$address['country_id'], (int)$address['zone_id']);

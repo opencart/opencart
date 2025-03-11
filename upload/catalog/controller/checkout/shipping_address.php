@@ -42,10 +42,12 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$data['zone_id'] = '';
 		}
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
+		// Zone
 		$this->load->model('localisation/zone');
 
 		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
@@ -129,6 +131,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['city'] = $this->language->get('error_city');
 			}
 
+			// Country
 			$this->load->model('localisation/country');
 
 			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);

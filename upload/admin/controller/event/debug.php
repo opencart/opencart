@@ -15,7 +15,7 @@ class Debug extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function before(string &$route, array &$args): void {
-		if ($route == 'common/home') { // add the route you want to test
+		if ($route == 'common/home') { // Add the route you want to test
 			//$this->session->data['debug'][$route] = microtime();
 		}
 	}

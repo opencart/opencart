@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Option
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/option');
  *
  * @package Opencart\Admin\Controller\Catalog
@@ -109,6 +109,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Option
 		$data['options'] = [];
 
 		$filter_data = [
@@ -217,6 +218,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			$data['option_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -251,6 +253,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			$option_values = [];
 		}
 
+		// Image
 		$this->load->model('tool/image');
 
 		$data['option_values'] = [];

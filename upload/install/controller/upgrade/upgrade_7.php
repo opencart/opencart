@@ -71,9 +71,6 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 			// Drop Fields
 			$remove = [];
 
-
-
-
 			// custom_field
 			$remove[] = [
 				'table' => 'custom_field',
@@ -194,9 +191,11 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	// Function to repair any erroneous categories that are not in the category path table.
-
 	/**
+	 * Repair Categories
+	 *
+	 * Function to repair any erroneous categories that are not in the category path table.
+	 *
 	 * @param int $parent_id primary key of the parent category record
 	 *
 	 * @return void

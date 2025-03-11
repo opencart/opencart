@@ -16,7 +16,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, string &$code): void {
-		// If there is a theme override we should get it
+		// If there is a theme override, we should get it
 		$this->load->model('design/theme');
 
 		$theme_info = $this->model_design_theme->getTheme($route, $this->config->get('config_theme'));

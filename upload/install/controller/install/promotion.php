@@ -2,7 +2,7 @@
 namespace Opencart\Install\Controller\Install;
 /**
  * Class Promotion
- * 
+ *
  * Can be loaded using $this->load->controller('install/promotion');
  *
  * @package Opencart\Install\Controller\Install

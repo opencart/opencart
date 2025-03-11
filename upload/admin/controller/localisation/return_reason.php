@@ -107,6 +107,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Return Reason
 		$data['return_reasons'] = [];
 
 		$filter_data = [
@@ -208,6 +209,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$data['return_reason_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

@@ -581,6 +581,30 @@ class StreamWrapper
         return false;
     }
 
+    public function stream_set_option($option, $arg1, $arg2)
+    {
+        return false;
+    }
+
+    public function stream_metadata($path, $option, $value)
+    {
+        return false;
+    }
+
+    public function stream_lock($operation)
+    {
+        trigger_error(
+            'stream_lock() is not supported by the Amazon S3 stream wrapper',
+            E_USER_WARNING
+        );
+        return false;
+    }
+
+    public function stream_truncate($new_size)
+    {
+        return false;
+    }
+
     /**
      * Validates the provided stream arguments for fopen and returns an array
      * of errors.

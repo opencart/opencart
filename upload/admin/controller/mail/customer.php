@@ -9,6 +9,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Approve
 	 *
+	 * admin/model/customer/customer_approval.approveCustomer/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output
@@ -45,6 +47,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$store_url = HTTP_CATALOG;
 			}
 
+			// Language
 			$this->load->model('localisation/language');
 
 			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
@@ -66,6 +69,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$data[$key] = $value;
 			}
 
+			// Image
 			$this->load->model('tool/image');
 
 			if (is_file(DIR_IMAGE . $store_logo)) {
@@ -107,6 +111,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Deny
 	 *
+	 * admin/model/customer/customer_approval.denyCustomer/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output
@@ -143,6 +149,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$store_url = HTTP_CATALOG;
 			}
 
+			// Language
 			$this->load->model('localisation/language');
 
 			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
@@ -164,6 +171,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$data[$key] = $value;
 			}
 
+			// Image
 			$this->load->model('tool/image');
 
 			if (is_file(DIR_IMAGE . $store_logo)) {

@@ -6,9 +6,10 @@ namespace Opencart\Catalog\Controller\Mail;
  * @package Opencart\Catalog\Controller\Mail
  */
 class Register extends \Opencart\System\Engine\Controller {
-	// catalog/model/account/customer/addCustomer/after
 	/**
 	 * Index
+	 *
+	 * catalog/model/account/customer.addCustomer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -68,10 +69,10 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// catalog/model/account/customer/addCustomer/after
-
 	/**
 	 * Alert
+	 *
+	 * catalog/model/account/customer.addCustomer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

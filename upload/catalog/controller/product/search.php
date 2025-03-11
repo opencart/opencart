@@ -136,8 +136,6 @@ class Search extends \Opencart\System\Engine\Controller {
 
 		$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 
-		$this->load->model('catalog/category');
-
 		// 3 Level Category Search
 		$data['categories'] = [];
 

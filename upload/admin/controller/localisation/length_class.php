@@ -107,6 +107,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Length Class
 		$data['length_classes'] = [];
 
 		$filter_data = [
@@ -167,6 +168,8 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Form
+	 *
 	 * @return void
 	 */
 	public function form(): void {
@@ -217,6 +220,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$data['length_class_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

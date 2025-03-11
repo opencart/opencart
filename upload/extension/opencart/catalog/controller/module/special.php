@@ -18,6 +18,7 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['axis'] = $setting['axis'];
 
+		// Product
 		$data['products'] = [];
 
 		$filter_data = [
@@ -27,7 +28,6 @@ class Special extends \Opencart\System\Engine\Controller {
 			'limit' => $setting['limit']
 		];
 
-		// Product
 		$this->load->model('catalog/product');
 
 		// Image

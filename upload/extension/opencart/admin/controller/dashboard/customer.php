@@ -90,7 +90,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		// Total Orders
+		// Total Customers
 		$this->load->model('customer/customer');
 
 		$today = $this->model_customer_customer->getTotalCustomers(['filter_date_added' => date('Y-m-d', strtotime('-1 day'))]);

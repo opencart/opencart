@@ -919,7 +919,9 @@ class CredentialProvider
             $token->getToken(),
             $config
         );
-        $expiration = $ssoCredentials['expiration'];
+
+        //Expiration value is returned in epoch milliseconds. Conversion to seconds
+        $expiration = intdiv($ssoCredentials['expiration'], 1000);
         return Promise\Create::promiseFor(
             new Credentials(
                 $ssoCredentials['accessKeyId'],

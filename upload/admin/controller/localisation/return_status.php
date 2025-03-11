@@ -107,6 +107,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/return_status.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Return Status
 		$data['return_statuses'] = [];
 
 		$filter_data = [
@@ -211,6 +212,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$data['return_status_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

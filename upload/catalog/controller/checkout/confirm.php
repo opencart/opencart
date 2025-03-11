@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class Confirm
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/confirm');
  *
  * @package Opencart\Catalog\Controller\Checkout
@@ -21,6 +21,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
 
+		// Cart
 		$this->load->model('checkout/cart');
 
 		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
@@ -69,6 +70,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$status = false;
 		}
 
+		// Order
 		if (isset($this->session->data['order_id'])) {
 			$order_id = $this->session->data['order_id'];
 		} else {

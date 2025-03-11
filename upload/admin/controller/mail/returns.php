@@ -9,6 +9,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * admin/model/sale/returns.addHistory/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output
@@ -60,6 +62,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 					$store_url = HTTP_CATALOG;
 				}
 
+				// Send the email in the correct language
 				$this->load->model('localisation/language');
 
 				$language_info = $this->model_localisation_language->getLanguage($return_info['language_id']);

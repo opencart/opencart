@@ -92,6 +92,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// Manufacturer
 			$this->load->model('catalog/manufacturer');
 
 			if (isset($this->request->get['manufacturer_id'])) {
@@ -268,6 +269,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['points'] = $product_info['points'];
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
+			// Stock Status
 			if ($product_info['quantity'] <= 0) {
 				$stock_status_id = $product_info['stock_status_id'];
 			} elseif (!$this->config->get('config_stock_display')) {
@@ -276,6 +278,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$stock_status_id = 0;
 			}
 
+			// Stock Status
 			$this->load->model('localisation/stock_status');
 
 			$stock_status_info = $this->model_localisation_stock_status->getStockStatus($stock_status_id);
@@ -293,6 +296,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['wishlist_add'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));
 			$data['compare_add'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
 
+			// Image
 			$this->load->model('tool/image');
 
 			if ($product_info['image'] && is_file(DIR_IMAGE . html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'))) {

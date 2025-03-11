@@ -4,6 +4,8 @@ namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
  * Class Free
  *
  * Can be called from $this->load->model('extension/opencart/shipping/free');
+ *
+ * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
  */
 class Free extends \Opencart\System\Engine\Model {
 	/**
@@ -16,6 +18,7 @@ class Free extends \Opencart\System\Engine\Model {
 	public function getQuote(array $address): array {
 		$this->load->language('extension/opencart/shipping/free');
 
+		// Geo Zone
 		$this->load->model('localisation/geo_zone');
 
 		$results = $this->model_localisation_geo_zone->getGeoZone((int)$this->config->get('shipping_free_geo_zone_id'), (int)$address['country_id'], (int)$address['zone_id']);

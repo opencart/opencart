@@ -6,9 +6,10 @@ namespace Opencart\Admin\Controller\Mail;
  * @package Opencart\Admin\Controller\Mail
  */
 class Subscription extends \Opencart\System\Engine\Controller {
-	// admin/controller/sale/subscription/addHistory/after
 	/**
 	 * History
+	 *
+	 * admin/controller/sale/subscription.addHistory/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -162,10 +163,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	// admin/controller/sale/subscription/addTransaction/after
-
 	/**
 	 * Transaction
+	 *
+	 * admin/controller/sale/subscription.addTransaction/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

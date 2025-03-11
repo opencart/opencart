@@ -89,6 +89,7 @@ class Address extends \Opencart\System\Engine\Controller {
 	protected function getList(): string {
 		$data['addresses'] = [];
 
+		// Address
 		$this->load->model('account/address');
 
 		$results = $this->model_account_address->getAddresses($this->customer->getId());
@@ -239,16 +240,18 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['city'] = '';
 		}
 
+		// Country
 		if (!empty($address_info)) {
 			$data['country_id'] = $address_info['country_id'];
 		} else {
-			$data['country_id'] = $this->config->get('config_country_id');
+			$data['country_id'] = (int)$this->config->get('config_country_id');
 		}
 
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
+		// Zone
 		if (!empty($address_info)) {
 			$data['zone_id'] = $address_info['zone_id'];
 		} else {
@@ -259,7 +262,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
 
-		// Custom fields
+		// Custom Fields
 		$data['custom_fields'] = [];
 
 		$this->load->model('account/custom_field');
@@ -318,7 +321,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$filter_data = [
 				'firstname'  => '',
 				'lastname'   => '',
-				'company'   => '',
+				'company'    => '',
 				'address_1'  => '',
 				'address_2'  => '',
 				'city'       => '',
@@ -345,6 +348,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['city'] = $this->language->get('error_city');
 			}
 
+			// Country
 			$this->load->model('localisation/country');
 
 			$country_info = $this->model_localisation_country->getCountry($post_info['country_id']);
@@ -452,12 +456,14 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Address
 			$this->load->model('account/address');
 
 			if ($this->model_account_address->getTotalAddresses($this->customer->getId()) == 1) {
 				$json['error'] = $this->language->get('error_delete');
 			}
 
+			// Subscription
 			$this->load->model('account/subscription');
 
 			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByShippingAddressId($address_id);

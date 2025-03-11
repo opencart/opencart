@@ -119,6 +119,8 @@ $_['entry_order_id']             = 'ID de commande';
 $_['entry_total']                = 'Total';
 $_['entry_date_from']            = 'Date de début';
 $_['entry_date_to']              = 'Date de fin';
+$_['entry_date_modified_from']   = 'Date de modification à partir de';
+$_['entry_date_modified_to']     = 'Date de modification jusqu\'à';
 
 // Aide
 $_['help_override']              = 'Si la commande du client est bloquée pour changer le statut de la commande en raison d\'une extension anti-fraude, activez le dépassement.';

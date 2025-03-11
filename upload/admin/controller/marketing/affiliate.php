@@ -714,7 +714,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$json['error']['customer'] = $this->language->get('error_customer');
 		}
 
-		// Check to see if customer is already a affiliate
+		// Check to see if customer is already an affiliate
 		$this->load->model('marketing/affiliate');
 
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliate((int)$this->request->post['customer_id']);

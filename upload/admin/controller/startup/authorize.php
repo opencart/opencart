@@ -31,7 +31,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$route = substr($route, 0, $pos);
 		}
 
-		// Block access to 2fa if not active or logged in
+		// Block access to 2fa, if not active or logged in
 		if ($route == 'common/authorize' && !$this->config->get('config_user_2fa')) {
 			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
 		}

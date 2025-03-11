@@ -504,7 +504,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if ($zip->open($file, \ZipArchive::RDONLY)) {
 				$this->load->model('setting/modification');
 
-				// If xml file just put it straight into the DB
+				// If xml file, just put it straight into the DB
 				// Check if any of the files already exist.
 				for ($i = 0; $i < $zip->numFiles; $i++) {
 					$source = $zip->getNameIndex($i);

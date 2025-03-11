@@ -24,30 +24,20 @@ class Subscription extends \Opencart\System\Engine\Model {
      * $results = $this->model_extension_opencart_report_subscription->getSubscriptions();
 	 */
 	public function getSubscriptions(array $data = []): array {
-		$sql = "SELECT 
-       MIN(`o`.`date_added`) AS `date_start`, 
-       MAX(`o`.`date_added`) AS `date_end`, 
-       COUNT(*) AS `subscriptions`, 
-       SUM(`os`.`quantity`) AS `products`, 
-       SUM(`os`.`tax`) AS `tax`,
-       SUM(`os`.`price`) AS `total` 
-       FROM `" . DB_PREFIX . "order_subscription` `os`
-       LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`os`.`order_id` = `o`.`order_id`)
-       WHERE 
-       ";
+		$sql = "SELECT MIN(`s`.`date_added`) AS `date_start`, MAX(`s`.`date_added`) AS `date_end`, COUNT(*) AS `subscriptions`, SUM((SELECT `quantity` FROM `" . DB_PREFIX . "subscription_product` `sp` WHERE `sp`.`subscription_id` = `s`.`subscription_id`)) AS `products`, SUM(`s`.`tax`) AS `tax`, SUM(`s`.`price`) AS `total` FROM `" . DB_PREFIX . "subscription` `s`";
 
 		if (!empty($data['filter_order_status_id'])) {
-			$sql .= " WHERE `o`.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
+			$sql .= " WHERE `s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		} else {
-			$sql .= " WHERE `o`.`order_status_id` > '0'";
+			$sql .= " WHERE `s`.`subscription_status_id` > '0'";
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(`o`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
+			$sql .= " AND DATE(`s`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(`o`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
+			$sql .= " AND DATE(`s`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		if (!empty($data['filter_group'])) {
@@ -58,21 +48,21 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		switch ($group) {
 			case 'day':
-				$sql .= " GROUP BY YEAR(`s`.`date_added`), MONTH(`s`.`date_added`), DAY(`s`.`date_added`)";
+				$sql .= " GROUP BY YEAR(`date_added`), MONTH(`s`.`date_added`), DAY(`s`.`date_added`)";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY YEAR(`s`.`date_added`), WEEK(`s`.`date_added`)";
+				$sql .= " GROUP BY YEAR(`date_added`), WEEK(`s`.`date_added`)";
 				break;
 			case 'month':
-				$sql .= " GROUP BY YEAR(`s`.`date_added`), MONTH(`s`.`date_added`)";
+				$sql .= " GROUP BY YEAR(`date_added`), MONTH(`s`.`date_added`)";
 				break;
 			case 'year':
-				$sql .= " GROUP BY YEAR(`s`.`date_added`)";
+				$sql .= " GROUP BY YEAR(`date_added`)";
 				break;
 		}
 
-		$sql .= " ORDER BY `s`.`date_added` DESC";
+		$sql .= " ORDER BY `date_added` DESC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

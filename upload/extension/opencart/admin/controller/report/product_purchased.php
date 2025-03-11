@@ -132,6 +132,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Product Purchased
 		$data['products'] = [];
 
 		$filter_data = [

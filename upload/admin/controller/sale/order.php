@@ -159,6 +159,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		// Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -360,6 +361,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Order
 		$data['orders'] = [];
 
 		$filter_data = [
@@ -659,6 +661,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['customer_edit'] = '';
 		}
 
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -666,7 +669,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!empty($order_info)) {
 			$data['customer_group_id'] = $order_info['customer_group_id'];
 		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
 		}
 
 		if (!empty($order_info)) {
@@ -1048,7 +1051,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!empty($order_info)) {
 			$data['order_status_id'] = $order_info['order_status_id'];
 		} else {
-			$data['order_status_id'] = $this->config->get('config_order_status_id');
+			$data['order_status_id'] = (int)$this->config->get('config_order_status_id');
 		}
 
 		$data['complete_status'] = in_array($data['order_status_id'], (array)$this->config->get('config_complete_status'));

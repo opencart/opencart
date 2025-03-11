@@ -269,25 +269,26 @@ class S3ControlClient extends AwsClient
 
         if ($this->isUseEndpointV2()) {
             $this->processEndpointV2Model();
+        } else {
+            $stack = $this->getHandlerList();
+            $stack->appendBuild(
+                EndpointArnMiddleware::wrap(
+                    $this->getApi(),
+                    $this->getRegion(),
+                    [
+                        'use_arn_region' => $this->getConfig('use_arn_region'),
+                        'dual_stack' =>
+                            $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
+                        'endpoint' => isset($args['endpoint'])
+                            ? $args['endpoint']
+                            : null,
+                        'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
+                    ],
+                    $this->isUseEndpointV2()
+                ),
+                's3control.endpoint_arn_middleware'
+            );
         }
-        $stack = $this->getHandlerList();
-        $stack->appendBuild(
-            EndpointArnMiddleware::wrap(
-                $this->getApi(),
-                $this->getRegion(),
-                [
-                    'use_arn_region' => $this->getConfig('use_arn_region'),
-                    'dual_stack' =>
-                        $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
-                    'endpoint' => isset($args['endpoint'])
-                        ? $args['endpoint']
-                        : null,
-                    'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
-                ],
-                $this->isUseEndpointV2()
-            ),
-            's3control.endpoint_arn_middleware'
-        );
     }
 
     /**

@@ -255,7 +255,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Address
 	 *
-	 * Called by catalog/model/account/address/editAddress/after
+	 * catalog/model/account/address/editAddress/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -279,7 +279,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Delete Address
 	 *
-	 * Called by catalog/model/account/address/deleteAddress/after
+	 * catalog/model/account/address/deleteAddress/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

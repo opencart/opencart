@@ -49,6 +49,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Transaction
 		$data['transactions'] = [];
 
 		$filter_data = [

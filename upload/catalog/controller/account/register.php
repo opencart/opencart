@@ -68,7 +68,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+		$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
 
 		// Custom Fields
 		$data['custom_fields'] = [];
@@ -94,6 +94,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['captcha'] = '';
 		}
 
+		// Information
 		$this->load->model('catalog/information');
 
 		$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_account_id'));
@@ -184,6 +185,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
+			// Customer
 			$this->load->model('account/customer');
 
 			if ($this->model_account_customer->getTotalCustomersByEmail($post_info['email'])) {

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Customer;
 /**
  * Class Address
- * 
+ *
  * Can be loaded using $this->load->controller('customer/address');
  *
  * @package Opencart\Admin\Controller\Customer
@@ -137,7 +137,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (!empty($address_info)) {
 			$data['country_id'] = $address_info['country_id'];
 		} else {
-			$data['country_id'] = $this->config->get('config_country_id');
+			$data['country_id'] = (int)$this->config->get('config_country_id');
 		}
 
 		if (!empty($address_info)) {
@@ -146,11 +146,12 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['zone_id'] = '';
 		}
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		// Custom fields
+		// Custom Fields
 		$data['custom_fields'] = [];
 
 		$filter_data = [
@@ -238,6 +239,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['address_city'] = $this->language->get('error_city');
 			}
 
+			// Country
 			$this->load->model('localisation/country');
 
 			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);

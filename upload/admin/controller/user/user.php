@@ -107,6 +107,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		// User Group
 		$this->load->model('user/user_group');
 
 		$data['user_groups'] = $this->model_user_user_group->getUserGroups();
@@ -238,6 +239,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// User
 		$data['users'] = [];
 
 		$filter_data = [
@@ -465,6 +467,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$data['email'] = '';
 		}
 
+		// Image
 		if (!empty($user_info)) {
 			$data['image'] = $user_info['image'];
 		} else {

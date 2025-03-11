@@ -469,16 +469,17 @@ class SignatureV4 implements SignatureInterface
 
     private function removeIllegalV4aHeaders(&$request)
     {
-        $illegalV4aHeaders = [
+        static $illegalV4aHeaders = [
             self::AMZ_CONTENT_SHA256_HEADER,
-            "aws-sdk-invocation-id",
-            "aws-sdk-retry",
+            'aws-sdk-invocation-id',
+            'aws-sdk-retry',
             'x-amz-region-set',
+            'transfer-encoding'
         ];
         $storedHeaders = [];
 
         foreach ($illegalV4aHeaders as $header) {
-            if ($request->hasHeader($header)){
+            if ($request->hasHeader($header)) {
                 $storedHeaders[$header] = $request->getHeader($header);
                 $request = $request->withoutHeader($header);
             }

@@ -60,6 +60,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$data['name'] = '';
 		}
 
+		// Banner
 		if (isset($module_info['banner_id'])) {
 			$data['banner_id'] = $module_info['banner_id'];
 		} else {

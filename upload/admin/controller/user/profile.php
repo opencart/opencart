@@ -31,6 +31,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('user/profile.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
 
+		// User
 		$this->load->model('user/user');
 
 		$user_info = $this->model_user_user->getUser($this->user->getId());
@@ -59,6 +60,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 			$data['email'] = '';
 		}
 
+		// Image
 		if (!empty($user_info)) {
 			$data['image'] = $user_info['image'];
 		} else {
@@ -100,6 +102,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
+		// User
 		$this->load->model('user/user');
 
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);

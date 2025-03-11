@@ -6,9 +6,10 @@ namespace Opencart\Catalog\Controller\Mail;
  * @package Opencart\Catalog\Controller\Mail
  */
 class Forgotten extends \Opencart\System\Engine\Controller {
-	// catalog/model/account/customer.addToken/after
 	/**
 	 * Index
+	 *
+	 * catalog/model/account/customer.addToken/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -37,6 +38,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
+		// Customer
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getCustomer($customer_id);

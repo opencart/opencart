@@ -36,6 +36,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 
 		$data['categories'] = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$files = glob(DIR_APPLICATION . 'controller/extension/*.php');

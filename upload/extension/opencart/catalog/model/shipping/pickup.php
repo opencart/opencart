@@ -18,6 +18,7 @@ class Pickup extends \Opencart\System\Engine\Model {
 	public function getQuote(array $address): array {
 		$this->load->language('extension/opencart/shipping/pickup');
 
+		// Geo Zone
 		$this->load->model('localisation/geo_zone');
 
 		$results = $this->model_localisation_geo_zone->getGeoZone((int)$this->config->get('shipping_pickup_geo_zone_id'), (int)$address['country_id'], (int)$address['zone_id']);

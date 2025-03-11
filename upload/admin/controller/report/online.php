@@ -88,6 +88,7 @@ class Online extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		// Customer
 		$data['customers'] = [];
 
 		$filter_data = [
@@ -100,7 +101,6 @@ class Online extends \Opencart\System\Engine\Controller {
 		// Online
 		$this->load->model('report/online');
 
-		// Customer
 		$this->load->model('customer/customer');
 
 		$results = $this->model_report_online->getOnline($filter_data);

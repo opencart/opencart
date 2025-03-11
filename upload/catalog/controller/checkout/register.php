@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class Register
- * 
+ *
  * Can be loaded using $this->load->controller('checkout/register');
  *
  * @package Opencart\Catalog\Controller\Checkout
@@ -62,7 +62,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['telephone'] = $this->session->data['customer']['telephone'];
 			$data['account_custom_field'] = $this->session->data['customer']['custom_field'];
 		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
 			$data['firstname'] = '';
 			$data['lastname'] = '';
 			$data['email'] = '';
@@ -89,15 +89,17 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['payment_address_2'] = '';
 			$data['payment_postcode'] = '';
 			$data['payment_city'] = '';
-			$data['payment_country_id'] = $this->config->get('config_country_id');
+			$data['payment_country_id'] = (int)$this->config->get('config_country_id');
 			$data['payment_zone_id'] = 0;
 			$data['payment_custom_field'] = [];
 		}
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
+		// Zone
 		$this->load->model('localisation/zone');
 
 		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
@@ -131,7 +133,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			if (isset($this->session->data['shipping_address']['country_id'])) {
 				$data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 			} else {
-				$data['shipping_country_id'] = $this->config->get('config_country_id');
+				$data['shipping_country_id'] = (int)$this->config->get('config_country_id');
 			}
 
 			if (isset($this->session->data['shipping_address']['zone_id'])) {
@@ -143,6 +145,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['shipping_custom_field'] = [];
 		}
 
+		// Zone
 		$this->load->model('localisation/zone');
 
 		if ($data['payment_country_id'] == $data['shipping_country_id']) {
@@ -167,6 +170,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['captcha'] = '';
 		}
 
+		// Information
 		$this->load->model('catalog/information');
 
 		$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_account_id'));
@@ -271,6 +275,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
+			// Customer
 			$this->load->model('account/customer');
 
 			if ($this->request->post['account'] && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
@@ -314,6 +319,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['payment_city'] = $this->language->get('error_city');
 				}
 
+				// Country
 				$this->load->model('localisation/country');
 
 				$payment_country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
@@ -362,6 +368,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_city'] = $this->language->get('error_city');
 				}
 
+				// Country
 				$this->load->model('localisation/country');
 
 				$shipping_country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
@@ -420,6 +427,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['password'] = sprintf($this->language->get('error_password'), implode(', ', $required), $this->config->get('config_password_length'));
 				}
 
+				// Agree to terms
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_account_id'));
@@ -494,6 +502,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$address_format_id = 0;
 				}
 
+				// Address Format
 				$this->load->model('localisation/address_format');
 
 				$address_format_info = $this->model_localisation_address_format->getAddressFormat($address_format_id);
@@ -504,6 +513,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$address_format = '';
 				}
 
+				// Zone
 				$this->load->model('localisation/zone');
 
 				$zone_info = $this->model_localisation_zone->getZone($this->request->post['payment_zone_id']);
@@ -571,6 +581,7 @@ class Register extends \Opencart\System\Engine\Controller {
 						$lastname = $this->request->post['shipping_lastname'];
 					}
 
+					// Address Format
 					if ($shipping_country_info) {
 						$country = $shipping_country_info['name'];
 						$iso_code_2 = $shipping_country_info['iso_code_2'];
@@ -593,6 +604,7 @@ class Register extends \Opencart\System\Engine\Controller {
 						$address_format = '';
 					}
 
+					// Zone
 					$this->load->model('localisation/zone');
 
 					$zone_info = $this->model_localisation_zone->getZone($this->request->post['shipping_zone_id']);

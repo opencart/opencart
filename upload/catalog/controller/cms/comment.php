@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Cms;
 /**
  * Class Comment
- * 
+ *
  * Can be loaded using $this->load->controller('cms/comment');
  *
  * @package Opencart\Catalog\Controller\Cms
@@ -50,6 +50,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['like'] = $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=1&comment_token=' . $this->session->data['comment_token'], true);
 		$data['dislike'] = $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&rate=0&comment_token=' . $this->session->data['comment_token'], true);
 
+		// Article
 		$this->load->model('cms/article');
 
 		$data['list'] = $this->load->controller('cms/comment.getList');
@@ -152,6 +153,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			'limit'     => $limit
 		];
 
+		// Article
 		$this->load->model('cms/article');
 
 		$results = $this->model_cms_article->getComments($article_id, $filter_data);
@@ -234,6 +236,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			'limit'     => $limit
 		];
 
+		// Article
 		$this->load->model('cms/article');
 
 		$results = $this->model_cms_article->getComments($article_id, $filter_data);
@@ -302,6 +305,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_login');
 		}
 
+		// Article
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);
@@ -425,6 +429,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_login');
 		}
 
+		// Article
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($article_id);

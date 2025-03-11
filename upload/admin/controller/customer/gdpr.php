@@ -124,6 +124,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('customer/gdpr.list', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
+		// GDPR
 		$data['gdprs'] = [];
 
 		$filter_data = [
@@ -136,7 +137,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			'limit'            => $this->config->get('config_pagination_admin')
 		];
 
-		// GDPR
 		$this->load->model('customer/gdpr');
 
 		// Customer

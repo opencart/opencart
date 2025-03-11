@@ -107,6 +107,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// API
 		$data['apis'] = [];
 
 		$filter_data = [

@@ -9,6 +9,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * catalog/controller/account/authorize.send/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param array<mixed>      $output
@@ -16,8 +18,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @throws \Exception
 	 *
 	 * @return void
-	 *
-	 * catalog/controller/account/authorize.send/after
 	 */
 	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($this->session->data['code'])) {
@@ -26,6 +26,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
+		// Customer
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
@@ -61,6 +62,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	/**
 	 * Reset
 	 *
+	 * catalog/model/account/customer.addToken/after
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param array<mixed>      $output
@@ -68,8 +71,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	 * @throws \Exception
 	 *
 	 * @return void
-	 *
-	 * catalog/model/account/customer.addToken/after
 	 */
 	public function reset(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0])) {
@@ -90,6 +91,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
+		// Customer
 		$this->load->model('account/customer');
 
 		$customer_info = $this->model_account_customer->getCustomer($customer_id);

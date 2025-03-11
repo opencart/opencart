@@ -89,6 +89,7 @@ class Reward extends \Opencart\System\Engine\Model {
 			$points = (float)substr($order_total['title'], $start + 1, $end - ($start + 1));
 		}
 
+		// Reward
 		$this->load->model('account/reward');
 
 		if ($order_info['customer_id'] && $this->model_account_reward->getRewardTotal($order_info['customer_id']) >= $points) {

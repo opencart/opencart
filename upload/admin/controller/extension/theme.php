@@ -33,6 +33,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
@@ -45,7 +46,10 @@ class Theme extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Store
 		$this->load->model('setting/store');
+
+		// Setting
 		$this->load->model('setting/setting');
 
 		$stores = $this->model_setting_store->getStores();

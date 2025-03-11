@@ -68,6 +68,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		// Notification
 		$data['notifications'] = [];
 
 		$filter_data = [

@@ -15,6 +15,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, string &$prefix): void {
+		// Translation
 		$this->load->model('design/translation');
 
 		$results = $this->model_design_translation->getTranslations($route);

@@ -285,6 +285,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Category
 		if (!empty($coupon_info)) {
 			$categories = $this->model_marketing_coupon->getCategories($this->request->get['coupon_id']);
 		} else {

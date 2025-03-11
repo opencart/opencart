@@ -6,9 +6,10 @@ namespace Opencart\Catalog\Controller\Mail;
  * @package Opencart\Catalog\Controller\Mail
  */
 class Review extends \Opencart\System\Engine\Controller {
-	// catalog/model/catalog/review/addReview/after
 	/**
 	 * Index
+	 *
+	 * catalog/model/catalog/review.addReview/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -22,6 +23,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		if (in_array('review', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/review');
 
+			// Product
 			$this->load->model('catalog/product');
 
 			$product_info = $this->model_catalog_product->getProduct((int)$args[0]);

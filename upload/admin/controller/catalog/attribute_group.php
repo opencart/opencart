@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Attribute Group
- * 
+ *
  * Can be loaded using $this->load->controller('catalog/attribute_group');
  *
  * @package Opencart\Admin\Controller\Catalog
@@ -108,6 +108,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Attribute Group
 		$data['attribute_groups'] = [];
 
 		$filter_data = [
@@ -216,6 +217,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$data['attribute_group_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -309,6 +311,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Attribute
 		$this->load->model('catalog/attribute');
 
 		foreach ($selected as $attribute_group_id) {

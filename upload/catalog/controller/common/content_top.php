@@ -14,6 +14,7 @@ class ContentTop extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
+		// Layout
 		$this->load->model('design/layout');
 
 		if (isset($this->request->get['route'])) {
@@ -64,6 +65,7 @@ class ContentTop extends \Opencart\System\Engine\Controller {
 			$layout_id = $this->config->get('config_layout_id');
 		}
 
+		// Extension
 		$this->load->model('setting/module');
 
 		$data['modules'] = [];

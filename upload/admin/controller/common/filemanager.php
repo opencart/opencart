@@ -82,6 +82,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['directories'] = [];
+
+		// Image
 		$data['images'] = [];
 
 		$this->load->model('tool/image');

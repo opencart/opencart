@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Api;
 /**
  * Class Cart
- * 
+ *
  * Can be loaded using $this->load->controller('api/cart');
  *
  * @package Opencart\Catalog\Controller\Api
@@ -11,7 +11,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function index(): array {
 		$this->load->language('api/cart');
@@ -144,7 +144,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	 *
 	 * Add any single product
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function addProduct(): array {
 		$this->load->language('api/cart');
@@ -176,6 +176,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$subscription_plan_id = 0;
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
@@ -266,7 +267,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get products
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getProducts(): array {
 		$this->load->language('api/cart');
@@ -274,6 +275,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		// We fetch any products that have an error
 		$product_data = [];
 
+		// Cart
 		$this->load->model('checkout/cart');
 
 		$products = $this->model_checkout_cart->getProducts();
@@ -305,13 +307,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Totals
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function getTotals(): array {
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
 
+		// Cart
 		$this->load->model('checkout/cart');
 
 		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);

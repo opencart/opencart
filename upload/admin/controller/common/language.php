@@ -14,6 +14,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
+		// Language
 		$data['languages'] = [];
 
 		$this->load->model('localisation/language');
@@ -80,6 +81,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$redirect = '';
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguageByCode($code);
@@ -92,7 +94,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$option = [
 				'expires'  => time() + 60 * 60 * 24 * 365 * 10,
 				'path'     => $this->config->get('session_path'),
-                'secure'   => $this->request->server['HTTPS'],
+				'secure'   => $this->request->server['HTTPS'],
 				'SameSite' => $this->config->get('config_session_samesite')
 			];
 

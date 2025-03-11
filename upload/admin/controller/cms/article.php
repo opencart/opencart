@@ -341,10 +341,11 @@ class Article extends \Opencart\System\Engine\Controller {
 			'article_id'          => 0,
 			'article_description' => [],
 			'author'              => '',
+			'topic_id'            => 0,
 			'article_seo_url'     => []
 		];
 
-		$post_info = oc_filter_data($this->request->post, $filter_data);
+		$post_info = oc_filter_data($filter_data, $this->request->post);
 
 		foreach ($post_info['article_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 255)) {

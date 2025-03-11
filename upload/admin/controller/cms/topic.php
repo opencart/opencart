@@ -285,6 +285,17 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['topic_seo_url'] = [];
 		}
 
+		// Layout
+		$this->load->model('design/layout');
+
+		$data['layouts'] = $this->model_design_layout->getLayouts();
+
+		if (isset($this->request->get['topic_id'])) {
+			$data['topic_layout'] = $this->model_cms_topic->getLayouts($this->request->get['topic_id']);
+		} else {
+			$data['topic_layout'] = [];
+		}
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');

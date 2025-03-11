@@ -52,6 +52,15 @@ class Topic extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Layouts
+		if (isset($data['topic_layout'])) {
+			foreach ($data['topic_layout'] as $store_id => $layout_id) {
+				if ($layout_id) {
+					$this->model_cms_topic->addLayout($topic_id, $store_id, $layout_id);
+				}
+			}
+		}
+
 		$this->cache->delete('topic');
 
 		return $topic_id;
@@ -106,6 +115,17 @@ class Topic extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Layouts
+		$this->model_cms_topic->deleteLayouts($topic_id);
+
+		if (isset($data['topic_layout'])) {
+			foreach ($data['topic_layout'] as $store_id => $layout_id) {
+				if ($layout_id) {
+					$this->model_cms_topic->addLayout($topic_id, $store_id, $layout_id);
+				}
+			}
+		}
+
 		$this->cache->delete('topic');
 	}
 
@@ -132,6 +152,8 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('topic_id', $topic_id);
+
+		$this->model_cms_topic->deleteLayouts($topic_id);
 
 		$this->cache->delete('topic');
 	}
@@ -444,7 +466,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
-	 * @param int $article_id primary key of the article record
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
 	 *
@@ -454,8 +476,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_cms_topic->deleteLayouts($article_id);
 	 */
-	public function deleteLayouts(int $article_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");
+	public function deleteLayouts(int $topic_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$topic_id . "'");
 	}
 
 	/**
@@ -473,5 +495,43 @@ class Topic extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+	}
+
+	/**
+	 * Get Layouts
+	 *
+	 * @param int $topic_id primary key of the topic record
+	 *
+	 * @return array<int, int> layout records that have topic ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('cms/topic');
+	 *
+	 * $topic_layout = $this->model_cms_topic->getLayouts($topic_id);
+	 */
+	public function getLayouts(int $topic_id): array {
+		$topic_id_layout_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "topic_to_layout` WHERE `topic_id` = '" . (int)$topic_id . "'");
+
+		foreach ($query->rows as $result) {
+			$topic_id_layout_data[$result['store_id']] = $result['layout_id'];
+		}
+
+		return $topic_id_layout_data;
+	}
+
+	/**
+	 * Get Total Layouts By Layout ID
+	 *
+	 * @param int $layout_id primary key of the layout record
+	 *
+	 * @return int total number of layout records that have layout ID
+	 */
+	public function getTotalLayoutsByLayoutId(int $layout_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+
+		return (int)$query->row['total'];
 	}
 }

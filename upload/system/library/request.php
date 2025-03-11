@@ -72,7 +72,6 @@ class Request {
 				return $value;
 		}
 	}
-
 	public function post(string $key, string $type = ''): mixed {
 		if (isset($this->post[$key])) {
 			$value = $this->post[$key];

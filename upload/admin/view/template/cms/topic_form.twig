@@ -22,6 +22,7 @@
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
             <li class="nav-item"><a href="#tab-seo" data-bs-toggle="tab" class="nav-link">{{ tab_seo }}</a></li>
+            <li class="nav-item"><a href="#tab-design" data-bs-toggle="tab" class="nav-link">{{ tab_design }}</a></li>
           </ul>
           <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
@@ -133,6 +134,31 @@
                             </div>
                             <div id="error-keyword-{{ store.store_id }}-{{ language.language_id }}" class="invalid-feedback"></div>
                           {% endfor %}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div id="tab-design" class="tab-pane">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>{{ entry_store }}</th>
+                      <th>{{ entry_layout }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for store in stores %}
+                      <tr>
+                        <td>{{ store.name }}</td>
+                        <td><select name="topic_layout[{{ store.store_id }}]" class="form-select">
+                            <option value=""></option>
+                            {% for layout in layouts %}
+                              <option value="{{ layout.layout_id }}"{% if topic_layout[store.store_id] and topic_layout[store.store_id] == layout.layout_id %} selected{% endif %}>{{ layout.name }}</option>
+                            {% endfor %}
+                          </select></td>
                       </tr>
                     {% endfor %}
                   </tbody>

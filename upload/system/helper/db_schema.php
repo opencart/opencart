@@ -994,6 +994,50 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'topic_to_layout',
+		'field' => [
+			[
+				'name' => 'topic_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name'    => 'store_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name'    => 'layout_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'topic_id',
+			'store_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'topic_id',
+				'table' => 'topic',
+				'field' => 'topic_id'
+			],
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			],
+			[
+				'key'   => 'layout_id',
+				'table' => 'layout',
+				'field' => 'layout_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'topic_to_store',
 		'field' => [
 			[

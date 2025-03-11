@@ -169,13 +169,14 @@ class Article extends \Opencart\System\Engine\Model {
 
 		$this->model_cms_article->deleteDescriptions($article_id);
 		$this->model_cms_article->deleteStores($article_id);
-		$this->model_cms_article->deleteLayouts($article_id);
 		$this->model_cms_article->deleteCommentsByArticleId($article_id);
 
 		// SEO URL
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('article_id', $article_id);
+
+		$this->model_cms_article->deleteLayouts($article_id);
 
 		$this->cache->delete('article');
 	}

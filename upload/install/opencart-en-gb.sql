@@ -6579,6 +6579,38 @@ VALUES (3093, 203, 'Västmanland', 'U', 1),
        (4444, 109, 'Shymkent', 'SHY', 1),
        (4445, 109, 'Ulytau', 'ULY', 1);
 
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`)
+VALUES (4446, 97, 'Baranya', 'HU-BA', 1),
+       (4447, 97, 'Bács-Kiskun', 'HU-BK', 1),
+       (4448, 97, 'Békés', 'HU-BE', 1),
+       (4449, 97, 'Borsod-Abaúj-Zemplén', 'HU-BZ', 1),
+       (4450, 97, 'Budapest', 'HU-BU', 1),
+       (4451, 97, 'Csongrád-Csanád', 'HU-CS', 1),
+       (4452, 97, 'Fejér', 'HU-FE', 1),
+       (4453, 97, 'Győr-Moson-Sopron', 'HU-GS', 1),
+       (4454, 97, 'Hajdú-Bihar', 'HU-HB', 1),
+       (4455, 97, 'Heves', 'HU-HE', 1),
+       (4456, 97, 'Jász-Nagykun-Szolnok', 'HU-JN', 1),
+       (4457, 97, 'Komárom-Esztergom', 'HU-KE', 1),
+       (4458, 97, 'Nógrád', 'HU-NO', 1),
+       (4459, 97, 'Pest', 'HU-PE', 1),
+       (4460, 97, 'Somogy', 'HU-SO', 1),
+       (4461, 97, 'Szabolcs-Szatmár-Bereg', 'HU-SZ', 1),
+       (4462, 97, 'Tolna', 'HU-TO', 1),
+       (4463, 97, 'Vas', 'HU-VA', 1),
+       (4464, 97, 'Veszprém', 'HU-VE', 1),
+       (4465, 97, 'Zala', 'HU-ZA', 1);
+
+INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`)
+VALUES (4466, 126, 'Vardarski', 'MK001', 1),
+       (4467, 126, 'Istočen', 'MK002', 1),
+       (4468, 126, 'Jugozapaden', 'MK003', 1),
+       (4469, 126, 'Jugoistočen', 'MK004', 1),
+       (4470, 126, 'Pelagoniski', 'MK005', 1),
+       (4471, 126, 'Pološki', 'MK006', 1),
+       (4472, 126, 'Severoistočen', 'MK007', 1),
+       (4473, 126, 'Skopski', 'MK008', 1);
+
 -----------------------------------------------------------
 
 --

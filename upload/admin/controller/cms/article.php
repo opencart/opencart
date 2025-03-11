@@ -340,9 +340,13 @@ class Article extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'article_id'          => 0,
 			'article_description' => [],
-			'author'              => '',
 			'topic_id'            => 0,
-			'article_seo_url'     => []
+			'author'              => '',
+			'rating'              => 0,
+			'status'              => 0,
+			'article_store'       => [],
+			'article_seo_url'     => [],
+			'article_layout'      => []
 		];
 
 		$post_info = oc_filter_data($filter_data, $this->request->post);

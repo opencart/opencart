@@ -36,3 +36,5 @@ $_['error_product']       = 'Warning: This layout cannot be deleted as it is cur
 $_['error_category']      = 'Warning: This layout cannot be deleted as it is currently assigned to %s categories!';
 $_['error_manufacturer']  = 'Warning: This layout cannot be deleted as it is currently assigned to %s manufacturers!';
 $_['error_information']   = 'Warning: This layout cannot be deleted as it is currently assigned to %s information pages!';
+$_['error_article']       = 'Warning: This layout cannot be deleted as it is currently assigned to %s article pages!';
+$_['error_topic']         = 'Warning: This layout cannot be deleted as it is currently assigned to %s topic pages!';

@@ -1,16 +1,4 @@
 <?php
-
-/*
-oc_file_delete();
-oc_directory_list();
-oc_directory_create();
-oc_directory_exist();
-oc_directory_delete();
-oc_file_get_contents();
-oc_file_put_contents();
-oc_unlink();
-*/
-
 /**
  * Other
  *

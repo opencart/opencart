@@ -11,6 +11,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Option
 	 *
+	 * Create a new option record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new option record
@@ -47,6 +49,8 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Option
+	 *
+	 * Edit option record in the database.
 	 *
 	 * @param int                  $option_id primary key of the option record
 	 * @param array<string, mixed> $data      array of data
@@ -86,6 +90,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Option
 	 *
+	 * Delete option record in the database.
+	 *
 	 * @param int $option_id primary key of the option record
 	 *
 	 * @return void
@@ -106,6 +112,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option
 	 *
+	 * Get the record of the option record in the database.
+	 *
 	 * @param int $option_id primary key of the option record
 	 *
 	 * @return array<string, mixed> option record that has option ID
@@ -124,6 +132,8 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Options
+	 *
+	 * Get the record of the option records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -187,6 +197,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Options
 	 *
+	 * Get the total number of option records in the database.
+	 *
 	 * @return int total number of option records
 	 *
 	 * @example
@@ -203,6 +215,8 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 *
+	 * Create a new option description record in the database.
 	 *
 	 * @param int                  $option_id   primary key of the option record
 	 * @param int                  $language_id primary key of the language record
@@ -227,6 +241,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete option description records in the database.
+	 *
 	 * @param int $option_id primary key of the option record
 	 *
 	 * @return void
@@ -244,6 +260,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete option description records by language records n the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -260,6 +278,8 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the option description records in the database.
 	 *
 	 * @param int $option_id primary key of the option record
 	 *
@@ -286,6 +306,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the option description records by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -304,6 +326,8 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Value
+	 *
+	 * Create a new option value record in the database.
 	 *
 	 * @param int                  $option_id primary key of the option record
 	 * @param array<string, mixed> $data      array of data
@@ -346,6 +370,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Values
 	 *
+	 * Delete option value records in the database.
+	 *
 	 * @param int $option_id primary key of the option record
 	 *
 	 * @return void
@@ -364,6 +390,8 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Value
+	 *
+	 * Get the record of the option value record in the database.
 	 *
 	 * @param int $option_value_id primary key of the option value record
 	 *
@@ -384,6 +412,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Values
 	 *
+	 * Get the record of the option value records in the database.
+	 *
 	 * @param int $option_id primary key of the option record
 	 *
 	 * @return array<int, array<string, mixed>> value records that have option ID
@@ -402,6 +432,8 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Value Description
+	 *
+	 * Create a new option value description record in the database.
 	 *
 	 * @param int                  $option_value_id primary key of the option value record
 	 * @param int                  $option_id       primary key of the option record
@@ -427,6 +459,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Value Descriptions By Option ID
 	 *
+	 * Delete option value description records by option records in the database.
+	 *
 	 * @param int $option_id primary key of the option record
 	 *
 	 * @return void
@@ -444,6 +478,8 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Value Descriptions By Language ID
 	 *
+	 * Delete option value description records by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -460,6 +496,8 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Value Descriptions
+	 *
+	 * Get the record of the option value description records in the database.
 	 *
 	 * @param int $option_id primary key of the option record
 	 *
@@ -493,6 +531,8 @@ class Option extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Value Descriptions By Language ID
+	 *
+	 * Get the record of the option value description records by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

@@ -11,6 +11,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Review
 	 *
+	 * Create a new review record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new review record
@@ -48,6 +50,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Review
 	 *
+	 * Edit review record in the database.
+	 *
 	 * @param int                  $review_id primary key of the review record
 	 * @param array<string, mixed> $data      array of data
 	 *
@@ -82,6 +86,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Review
 	 *
+	 * Delete review record in the database.
+	 *
 	 * @param int $review_id primary key of the review record
 	 *
 	 * @return void
@@ -110,6 +116,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reviews By Product ID
 	 *
+	 * Delete reviews by product records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -129,6 +137,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Review
 	 *
+	 * Get the record of the review record in the database.
+	 *
 	 * @param int $review_id primary key of the review record
 	 *
 	 * @return array<string, mixed> review record that has review ID
@@ -147,6 +157,8 @@ class Review extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Rating
+	 *
+	 * Get the rating of the review record in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -170,6 +182,8 @@ class Review extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Reviews
+	 *
+	 * Get the record of the review records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -256,6 +270,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reviews
 	 *
+	 * Get the total number of review records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of review records
@@ -308,6 +324,8 @@ class Review extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Reviews Awaiting Approval
+	 *
+	 * Get the total number of awaiting approvals on review records in the database.
 	 *
 	 * @return int total number of reviews awaiting approval records
 	 *

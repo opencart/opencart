@@ -194,7 +194,7 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 	/**
 	 * Repair Categories
 	 *
-	 * Function to repair any erroneous categories that are not in the category path table.
+	 * Repair any erroneous categories that are not in the category path table.
 	 *
 	 * @param int $parent_id primary key of the parent category record
 	 *

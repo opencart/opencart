@@ -11,6 +11,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Attribute Group
 	 *
+	 * Create a new attribute group record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new attribute group record
@@ -40,6 +42,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Attribute Group
 	 *
+	 * Edit attribute group record in the database.
+	 *
 	 * @param int                  $attribute_group_id primary key of the attribute group record
 	 * @param array<string, mixed> $data               array of data
 	 *
@@ -68,6 +72,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Attribute Group
 	 *
+	 * Delete attribute group record in the database.
+	 *
 	 * @param int $attribute_group_id primary key of the attribute group record
 	 *
 	 * @return void
@@ -87,6 +93,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Attribute Group
 	 *
+	 * Get the record of the attribute group record in the database.
+	 *
 	 * @param int $attribute_group_id primary key of the attribute group record
 	 *
 	 * @return array<string, mixed> attribute group record that has attribute group ID
@@ -105,6 +113,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Attribute Groups
+	 *
+	 * Get the record of the attribute group records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -163,6 +173,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Attribute Groups
 	 *
+	 * Get the total number of attribute group records in the database.
+	 *
 	 * @return int total number of attribute group records
 	 *
 	 * @example
@@ -179,6 +191,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 *
+	 * Create a new attribute group description record in the database.
 	 *
 	 * @param int                  $attribute_group_id primary key of the attribute group record
 	 * @param int                  $language_id        primary key of the language record
@@ -205,6 +219,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete attribute group description records in the database.
+	 *
 	 * @param int $attribute_group_id primary key of the attribute group record
 	 *
 	 * @return void
@@ -222,6 +238,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete attribute description records by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -238,6 +256,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the attribute group description records in the database.
 	 *
 	 * @param int $attribute_group_id primary key of the attribute group record
 	 *
@@ -263,6 +283,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
+	 *
+	 * Get the record of the attribute group description records by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

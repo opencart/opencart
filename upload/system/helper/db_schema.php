@@ -4819,8 +4819,8 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'quantity',
-				'type' => 'int(4)',
+				'name'    => 'quantity',
+				'type'    => 'int(4)',
 				'default' => '1'
 			],
 			[

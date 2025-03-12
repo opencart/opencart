@@ -107,6 +107,8 @@
                       $('#button-upload').button('reset');
                   },
                   success: function(json) {
+                      console.log(json);
+
                       if (json['error']) {
                           alert(json['error']);
                       }
@@ -150,6 +152,8 @@
               $('#button-create').button('reset');
           },
           success: function(json) {
+              console.log(json);
+
               if (json['error']) {
                   alert(json['error']);
               }
@@ -180,6 +184,8 @@
                   $('#button-delete').button('reset');
               },
               success: function(json) {
+                  console.log(json);
+
                   if (json['error']) {
                       alert(json['error']);
                   }

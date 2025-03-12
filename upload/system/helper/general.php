@@ -1,4 +1,27 @@
 <?php
+
+/*
+oc_file_delete();
+oc_directory_list();
+oc_directory_create();
+oc_directory_exist();
+oc_directory_delete();
+oc_file_get_contents();
+oc_file_put_contents();
+oc_unlink();
+*/
+
+/**
+ * Other
+ *
+ * @param int $length
+ *
+ * @return string
+ */
+function oc_token(int $length = 32): string {
+	return substr(bin2hex(random_bytes($length)), 0, $length);
+}
+
 // @return string
 function oc_get_ip(): string {
 	$headers = [
@@ -23,6 +46,8 @@ function oc_get_ip(): string {
 
 	return $_SERVER['REMOTE_ADDR'];
 }
+
+// Sting functions
 
 /**
  * @param string $string
@@ -82,17 +107,6 @@ function oc_strtoupper(string $string): string {
  */
 function oc_strtolower(string $string): string {
 	return mb_strtolower($string);
-}
-
-/**
- * Other
- *
- * @param int $length
- *
- * @return string
- */
-function oc_token(int $length = 32): string {
-	return substr(bin2hex(random_bytes($length)), 0, $length);
 }
 
 // Pre PHP8 compatibility

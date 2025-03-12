@@ -638,6 +638,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Orders By Subscription ID
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return int total number of order that have subscription ID

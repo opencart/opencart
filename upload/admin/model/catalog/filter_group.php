@@ -11,6 +11,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Filter Group
 	 *
+	 * Create a new filter group record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new filter group record
@@ -42,6 +44,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Filter Group
 	 *
+	 * Edit filter group record in the database.
+	 *
 	 * @param int                  $filter_group_id primary key of the filter group record
 	 * @param array<string, mixed> $data            array of data
 	 *
@@ -72,6 +76,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filter Group
 	 *
+	 * Delete filter group record in the database.
+	 *
 	 * @param int $filter_group_id primary key of the filter group record
 	 *
 	 * @return void
@@ -93,6 +99,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filter Group
 	 *
+	 * Get the record of the filter group record in the database.
+	 *
 	 * @param int $filter_group_id primary key of the filter group record
 	 *
 	 * @return array<string, mixed> filter group record that has filter group ID
@@ -111,6 +119,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Filter Groups
+	 *
+	 * Get the record of the filter group records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -173,6 +183,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Filter Groups
 	 *
+	 * Get the total number of filter group records in the database.
+	 *
 	 * @return int total number of filter group records
 	 *
 	 * @example
@@ -189,6 +201,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 *
+	 * Create a new filter group description record in the database.
 	 *
 	 * @param int                  $filter_group_id primary key of the filter group record
 	 * @param int                  $language_id     primary key of the language record
@@ -213,6 +227,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete filter group description records in the database.
+	 *
 	 * @param int $filter_group_id primary key of the filter group record
 	 *
 	 * @return void
@@ -230,6 +246,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete filter group description records by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -246,6 +264,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the filter group description records in the database.
 	 *
 	 * @param int $filter_group_id primary key of the filter group record
 	 *
@@ -271,6 +291,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
+	 *
+	 * Get the record of the filter group description records by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

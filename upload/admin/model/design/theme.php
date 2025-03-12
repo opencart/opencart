@@ -11,6 +11,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Theme
 	 *
+	 * Create a new theme record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -36,6 +38,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Theme
 	 *
+	 * Edit theme record in the database.
+	 *
 	 * @param int                  $theme_id primary key of the theme record
 	 * @param array<string, mixed> $data     array of data
 	 *
@@ -60,6 +64,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Theme
 	 *
+	 * Delete theme record in the database.
+	 *
 	 * @param int $theme_id primary key of the theme record
 	 *
 	 * @return void
@@ -77,6 +83,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Themes By Store ID
 	 *
+	 * Delete themes by store record in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -93,6 +101,8 @@ class Theme extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Theme
+	 *
+	 * Get the record of the theme record in the database.
 	 *
 	 * @param int $theme_id primary key of the theme record
 	 *
@@ -112,6 +122,8 @@ class Theme extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Themes
+	 *
+	 * Get the record of the theme records in the database.
 	 *
 	 * @param int $start
 	 * @param int $limit
@@ -140,6 +152,8 @@ class Theme extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Themes
+	 *
+	 * Get the total number of theme records in the database.
 	 *
 	 * @return int total number of theme records
 	 *

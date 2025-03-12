@@ -317,7 +317,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * Delete information description records by language records in the database.
+	 * Delete information descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -363,7 +363,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * Get the record of the information description records by language records in the database.
+	 * Get the record of the information descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -423,7 +423,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
-	 * Delete information store records by store records in the database.
+	 * Delete information stores by store records in the database.
 	 *
 	 * @param int $store_id primary key of the store record
 	 *
@@ -509,7 +509,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Layout ID
 	 *
-	 * Delete information layout records by language records in the database.
+	 * Delete information layouts by language records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -528,7 +528,7 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
-	 * Delete information layout records by store records in the database.
+	 * Delete information layouts by store records in the database.
 	 *
 	 * @param int $store_id primary key of the store record
 	 *

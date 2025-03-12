@@ -11,6 +11,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
+	 * Create a new layout record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new layout record
@@ -47,6 +49,8 @@ class Layout extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Layout
+	 *
+	 * Edit layout record in the database.
 	 *
 	 * @param int                  $layout_id primary key of the layout record
 	 * @param array<string, mixed> $data      array of data
@@ -85,6 +89,8 @@ class Layout extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Layout
+	 *
+	 * Delete layout record in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -131,6 +137,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layout
 	 *
+	 * Get the record of the layout record in the database.
+	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return array<string, mixed> layout record that has layout ID
@@ -149,6 +157,8 @@ class Layout extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layouts
+	 *
+	 * Get the record of the layout records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -204,6 +214,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Layouts
 	 *
+	 * Get the total number of layout records in the database.
+	 *
 	 * @return int total number of layout records
 	 *
 	 * @example
@@ -228,6 +240,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Route
 	 *
+	 * Create a new layout route record in the database.
+	 *
 	 * @param int                  $layout_id primary key of the layout record
 	 * @param array<string, mixed> $data      array of data
 	 *
@@ -251,6 +265,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Routes
 	 *
+	 * Delete layout route records in the database.
+	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
@@ -267,6 +283,8 @@ class Layout extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Routes By Layout ID
+	 *
+	 * Delete layout routes by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -285,6 +303,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Routes By Store ID
 	 *
+	 * Delete layout routes by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -301,6 +321,8 @@ class Layout extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Routes
+	 *
+	 * Get the record of the layout route records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -321,6 +343,8 @@ class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Routes By Store ID
 	 *
+	 * Get the record of the layout routes by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return array<int, array<string, mixed>> route records that have store ID
@@ -339,6 +363,8 @@ class Layout extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Module
+	 *
+	 * Create a new layout module record in the database.
 	 *
 	 * @param int                  $layout_id primary key of the layout record
 	 * @param array<string, mixed> $data      array of data
@@ -363,6 +389,8 @@ class Layout extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Modules
+	 *
+	 * Delete layout module records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -397,6 +425,8 @@ class Layout extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Modules
+	 *
+	 * Get the record of the layout module records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *

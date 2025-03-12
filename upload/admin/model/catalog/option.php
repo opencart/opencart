@@ -260,7 +260,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * Delete option description records by language records n the database.
+	 * Delete option descriptions by language records n the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -306,7 +306,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * Get the record of the option description records by language records in the database.
+	 * Get the record of the option descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -459,7 +459,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Value Descriptions By Option ID
 	 *
-	 * Delete option value description records by option records in the database.
+	 * Delete option value descriptions by option records in the database.
 	 *
 	 * @param int $option_id primary key of the option record
 	 *
@@ -478,7 +478,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Value Descriptions By Language ID
 	 *
-	 * Delete option value description records by language records in the database.
+	 * Delete option value descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -532,7 +532,7 @@ class Option extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Value Descriptions By Language ID
 	 *
-	 * Get the record of the option value description records by language records in the database.
+	 * Get the record of the option value descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

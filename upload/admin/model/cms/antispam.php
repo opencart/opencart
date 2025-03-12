@@ -11,6 +11,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Antispam
 	 *
+	 * Create a new antispam record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -34,6 +36,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Antispam
 	 *
+	 * Edit antispam record in the database.
+	 *
 	 * @param int                  $antispam_id primary key of the antispam record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -56,6 +60,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Antispam
 	 *
+	 * Delete antispam record in the database.
+	 *
 	 * @param int $antispam_id primary key of the antispam record
 	 *
 	 * @return void
@@ -72,6 +78,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Antispam
+	 *
+	 * Get the record of the antispam record in the database.
 	 *
 	 * @param int $antispam_id primary key of the antispam record
 	 *
@@ -91,6 +99,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Antispam(s)
+	 *
+	 * Get the record of the antispam records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -156,6 +166,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Antispam(s)
+	 *
+	 * Get the total number of antispam records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *

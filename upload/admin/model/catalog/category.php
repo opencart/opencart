@@ -11,6 +11,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Category
 	 *
+	 * Create a new category record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new category record
@@ -101,6 +103,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Category
+	 *
+	 * Edit category record in the database.
 	 *
 	 * @param int                  $category_id primary key of the category record
 	 * @param array<string, mixed> $data        array of data
@@ -273,6 +277,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Category
 	 *
+	 * Delete category record in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
@@ -326,6 +332,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Repair Categories
 	 *
+	 * Repair any erroneous categories that are not in the category path table.
+	 *
 	 * @param int $parent_id primary key of the parent category record
 	 *
 	 * @return void
@@ -363,6 +371,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Category
 	 *
+	 * Get the record of the category record in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<string, mixed> category record that has category ID
@@ -381,6 +391,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Categories
+	 *
+	 * Get the record of the category records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -462,6 +474,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Categories
 	 *
+	 * Get the total number of category records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of category records
@@ -504,6 +518,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
+	 * Create a new category description record in the database.
+	 *
 	 * @param int                  $category_id primary key of the category record
 	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data        array of data
@@ -531,6 +547,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete category description records in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
@@ -548,6 +566,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete category description records by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -564,6 +584,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the category description records in the database.
 	 *
 	 * @param int $category_id primary key of the category record
 	 *
@@ -590,6 +612,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the category description records by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -608,6 +632,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Path
+	 *
+	 * Create a new category path record in the database.
 	 *
 	 * @param int $category_id primary key of the category record
 	 * @param int $path_id     primary key of the category path record
@@ -628,6 +654,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Paths
 	 *
+	 * Delete category path records in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
@@ -644,6 +672,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Paths By Level
+	 *
+	 * Delete category path records by level in the database.
 	 *
 	 * @param int $category_id primary key of the category record
 	 * @param int $level
@@ -680,6 +710,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Paths
 	 *
+	 * Get the record of the category path records in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<int, array<string, mixed>> path records that have category ID
@@ -698,6 +730,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Paths By Path ID
+	 *
+	 * Get the record of the category path records by path records in the database.
 	 *
 	 * @param int $path_id primary key of the category path record
 	 *
@@ -718,6 +752,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Filter
 	 *
+	 * Create a new category filter record in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 * @param int $filter_id   primary key of the filter record
 	 *
@@ -736,6 +772,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filters
 	 *
+	 * Delete filter records in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
@@ -753,6 +791,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filters By Filter ID
 	 *
+	 * Delete filter records by filter records in the database.
+	 *
 	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return void
@@ -769,6 +809,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Filters
+	 *
+	 * Get the record of the category filter records in the database.
 	 *
 	 * @param int $category_id primary key of the category record
 	 *
@@ -795,6 +837,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
+	 * Create a new category store record in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 * @param int $store_id    primary key of the store record
 	 *
@@ -813,6 +857,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
+	 * Delete category store records in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
@@ -830,6 +876,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
+	 * Delete category store records by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -846,6 +894,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stores
+	 *
+	 * Get the record of the category store records in the database.
 	 *
 	 * @param int $category_id primary key of the category record
 	 *
@@ -872,6 +922,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
+	 * Create a new category layout record in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 * @param int $store_id    primary key of the store record
 	 * @param int $layout_id   primary key of the layout record
@@ -891,6 +943,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
+	 * Delete category layout records in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
@@ -907,6 +961,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Layouts By Layout ID
+	 *
+	 * Delete category layout records by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -925,6 +981,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
+	 * Delete category layout records by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -941,6 +999,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layouts
+	 *
+	 * Get the record of the category layout records in the database.
 	 *
 	 * @param int $category_id primary key of the category record
 	 *
@@ -966,6 +1026,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Layouts By Layout ID
+	 *
+	 * Get the total number of category layout by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *

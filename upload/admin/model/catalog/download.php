@@ -11,6 +11,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Download
 	 *
+	 * Create a new download record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new download record
@@ -41,6 +43,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Download
 	 *
+	 * Edit download record in the database.
+	 *
 	 * @param int                  $download_id primary key of the download record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -70,6 +74,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Download
 	 *
+	 * Delete download record in the database.
+	 *
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void
@@ -95,6 +101,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Download
 	 *
+	 * Get the record of the download record in the database.
+	 *
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return array<string, mixed> download record that has download ID
@@ -113,6 +121,8 @@ class Download extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Downloads
+	 *
+	 * Get the record of the download records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -175,6 +185,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
+	 * Create a new download description record in the database.
+	 *
 	 * @param int                  $download_id primary key of the download record
 	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data        array of data
@@ -198,6 +210,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete download description records in the database.
+	 *
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void
@@ -215,6 +229,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete download description records by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -231,6 +247,8 @@ class Download extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the download description records in the database.
 	 *
 	 * @param int $download_id primary key of the download record
 	 *
@@ -257,6 +275,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the download description records by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -276,6 +296,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Downloads
 	 *
+	 * Get the total number of download records in the database.
+	 *
 	 * @return int total number of download records
 	 *
 	 * @example
@@ -292,6 +314,8 @@ class Download extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Reports
+	 *
+	 * Get the record of the download report records in the database.
 	 *
 	 * @param int $download_id primary key of the download record
 	 * @param int $start
@@ -322,6 +346,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reports
 	 *
+	 * Delete download report records in the database.
+	 *
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void
@@ -338,6 +364,8 @@ class Download extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Reports
+	 *
+	 * Get the total number of download report records in the database.
 	 *
 	 * @param int $download_id primary key of the download record
 	 *

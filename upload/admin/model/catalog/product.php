@@ -11,6 +11,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Product
 	 *
+	 * Create a new product record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new product record
@@ -182,6 +184,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Product
+	 *
+	 * Edit product record in the database.
 	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
@@ -427,6 +431,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Product
+	 *
+	 * Delete product record in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -897,6 +903,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Rating
 	 *
+	 * Edit product rating record in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $rating
 	 *
@@ -915,6 +923,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Master ID
 	 *
+	 * Edit product master record in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $master_id  primary key of the product record
 	 *
@@ -932,6 +942,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Product
+	 *
+	 * Get the record of the product record in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -960,6 +972,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Products
+	 *
+	 * Get the record of the product records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -1080,6 +1094,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products
 	 *
+	 * Get the total number of product records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of product records
@@ -1155,6 +1171,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products By Manufacturer ID
 	 *
+	 * Get the total number of products by manufacturer records in the database.
+	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return int total number of product records that have manufacturer ID
@@ -1173,6 +1191,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Products By Tax Class ID
+	 *
+	 * Get the total number of products by tax class records in the database.
 	 *
 	 * @param int $tax_class_id primary key of the tax class record
 	 *
@@ -1193,6 +1213,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products By Stock Status ID
 	 *
+	 * Get the total number of products by stock status records in the database.
+	 *
 	 * @param int $stock_status_id primary key of the stock status record
 	 *
 	 * @return int total number of product records that have stock status ID
@@ -1211,6 +1233,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Products By Weight Class ID
+	 *
+	 * Get the total number of products by weight class records in the database.
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
 	 *
@@ -1231,6 +1255,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products By Length Class ID
 	 *
+	 * Get the total number of products by length class records in the database.
+	 *
 	 * @param int $length_class_id primary key of the length class record
 	 *
 	 * @return int total number of product records that have length class ID
@@ -1249,6 +1275,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 *
+	 * Create a new product description record in the database.
 	 *
 	 * @param int                  $product_id  primary key of the product record
 	 * @param int                  $language_id primary key of the language record
@@ -1278,6 +1306,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete product description records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -1295,6 +1325,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete product descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -1311,6 +1343,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the product description records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1337,6 +1371,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the product descriptions by language record in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -1356,6 +1392,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Category
 	 *
+	 * Create a new product category record in the database.
+	 *
 	 * @param int $product_id  primary key of the product record
 	 * @param int $category_id primary key of the category record
 	 *
@@ -1374,6 +1412,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Categories
 	 *
+	 * Delete product category records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -1391,6 +1431,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Categories By Category ID
 	 *
+	 * Delete categories by category record in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return void
@@ -1407,6 +1449,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Categories
+	 *
+	 * Get the record of the product category records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1433,6 +1477,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Filter
 	 *
+	 * Create a new product filter record in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $filter_id  primary key of the filter record
 	 *
@@ -1451,6 +1497,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filters
 	 *
+	 * Delete product filter records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -1468,6 +1516,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filters By Filter ID
 	 *
+	 * Delete product filters by filter records in the database.
+	 *
 	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return void
@@ -1484,6 +1534,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Filters
+	 *
+	 * Get the record of the product filter records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1510,6 +1562,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Attribute
 	 *
+	 * Create a new product attribute record in the database.
+	 *
 	 * @param int                  $product_id   primary key of the product record
 	 * @param int                  $attribute_id primary key of the attribute record
 	 * @param int                  $language_id  primary key of the language record
@@ -1533,6 +1587,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Attributes
+	 *
+	 * Delete product attribute records in the database.
 	 *
 	 * @param int $product_id   primary key of the product record
 	 * @param int $attribute_id primary key of the attribute record
@@ -1558,6 +1614,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Attributes By Language ID
 	 *
+	 * Delete product attributes by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -1574,6 +1632,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Attributes
+	 *
+	 * Get the product attribute records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1608,6 +1668,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Attributes By Language ID
 	 *
+	 * Get the product attributes by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, mixed>> attribute records that have language ID
@@ -1627,6 +1689,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Attributes By Attribute ID
 	 *
+	 * Get the total number of product attributes by attribute records in the database.
+	 *
 	 * @param int $attribute_id primary key of the attribute record
 	 *
 	 * @return int total number of attribute records that have attribute ID
@@ -1645,6 +1709,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Option
+	 *
+	 * Create a new product option record in the database.
 	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
@@ -1696,6 +1762,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Options
 	 *
+	 * Delete product option description records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -1714,6 +1782,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Option
+	 *
+	 * Get the record of the product option record in the database.
 	 *
 	 * @param int $product_id        primary key of the product record
 	 * @param int $product_option_id primary key of the product option record
@@ -1734,6 +1804,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Options
+	 *
+	 * Get the record of the product option records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1779,6 +1851,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Options By Option ID
 	 *
+	 * Get the total number of product options by option records in the database.
+	 *
 	 * @param int $option_id primary key of the option record
 	 *
 	 * @return int total number of option records that have option ID
@@ -1797,6 +1871,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Option Value
+	 *
+	 * Create a new product option value record in the database.
 	 *
 	 * @param int                  $product_id        primary key of the product record
 	 * @param int                  $product_option_id primary key of the product option record
@@ -1844,6 +1920,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Option Values
 	 *
+	 * Delete product option value records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -1860,6 +1938,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Option Value
+	 *
+	 * Get the record of the product option value record in the database.
 	 *
 	 * @param int $product_id              primary key of the product record
 	 * @param int $product_option_value_id primary key of the product option value record
@@ -1881,6 +1961,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option Values By Option ID
 	 *
+	 * Get the record of the product option values by option record in the database.
+	 *
 	 * @param int $option_id primary key of the option record
 	 *
 	 * @return array<int, array<string, mixed>> option value records that have option ID
@@ -1900,6 +1982,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Option Values By Option Value ID
 	 *
+	 * Get the total number of product option values by option value records in the database.
+	 *
 	 * @param int $option_value_id primary key of the option value record
 	 *
 	 * @return int total number of option value records that have option value ID
@@ -1918,6 +2002,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Image
+	 *
+	 * Create a new product image record in the database.
 	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
@@ -1942,6 +2028,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Images
 	 *
+	 * Delete product image records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -1958,6 +2046,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Images
+	 *
+	 * Get the record of the product image records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -1977,6 +2067,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Discount
+	 *
+	 * Create a new discount record in the database.
 	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
@@ -2007,6 +2099,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Discounts
 	 *
+	 * Delete discount records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -2024,6 +2118,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Discounts By Customer ID
 	 *
+	 * Delete discounts by customer group records in the database.
+	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return void
@@ -2040,6 +2136,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Discounts
+	 *
+	 * Get the record of the discount records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -2059,6 +2157,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Reward
+	 *
+	 * Create a new reward record in the database.
 	 *
 	 * @param int                  $product_id        primary key of the product record
 	 * @param int                  $customer_group_id primary key of the customer group record
@@ -2083,6 +2183,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rewards
 	 *
+	 * Delete product reward records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -2100,6 +2202,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rewards By Customer Group ID
 	 *
+	 * Delete rewards by customer group records in the database.
+	 *
 	 * @param int $customer_group_id primary key of the customer group record to be deleted
 	 *
 	 * @return void
@@ -2116,6 +2220,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Rewards
+	 *
+	 * Get the record of the reward records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -2142,6 +2248,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Download
 	 *
+	 * Create a product download record in the database.
+	 *
 	 * @param int $product_id  primary key of the product record
 	 * @param int $download_id primary key of the download record
 	 *
@@ -2160,6 +2268,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Downloads
 	 *
+	 * Delete download records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -2177,6 +2287,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Downloads By Download ID
 	 *
+	 * Delete product downloads by download records in the database.
+	 *
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return void
@@ -2193,6 +2305,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Downloads
+	 *
+	 * Get the record of the product download records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -2219,6 +2333,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Downloads By Download ID
 	 *
+	 * Get the total number of product downloads by download records in the database.
+	 *
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return int total number of download records that have download ID
@@ -2238,6 +2354,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
+	 * Create a new product store record in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $store_id   primary key of the store record
 	 *
@@ -2256,6 +2374,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
+	 * Delete product store records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -2273,6 +2393,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
+	 * Delete product stores by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -2289,6 +2411,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stores
+	 *
+	 * Get the record of the product store records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -2315,6 +2439,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
+	 * Create a new product layout record in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $store_id   primary key of the store record
 	 * @param int $layout_id  primary key of the layout record
@@ -2334,6 +2460,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
+	 * Delete product layout records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -2350,6 +2478,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Layouts By Layout ID
+	 *
+	 * Delete product layouts by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -2368,6 +2498,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
+	 * Delete product layouts by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -2384,6 +2516,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Seo Urls
+	 *
+	 * Get the record of the seo url records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -2410,6 +2544,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layouts
 	 *
+	 * Get the record of the product layout records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, int> layout records that have product ID
@@ -2435,6 +2571,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Layouts By Layout ID
 	 *
+	 * Get the record of the product layouts by layout records in the database.
+	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return int total number of layout records that have layout ID
@@ -2453,6 +2591,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Related
+	 *
+	 * Create a new related record in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $related_id primary key of the product related record
@@ -2476,6 +2616,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Related
 	 *
+	 * Delete related record in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -2493,6 +2635,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Related
+	 *
+	 * Get the record of the related record in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -2518,6 +2662,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Subscription
+	 *
+	 * Create a new product subscription record in the database.
 	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
@@ -2548,6 +2694,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscriptions
 	 *
+	 * Delete product subscription records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -2564,6 +2712,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription
+	 *
+	 * Get the record of the product subscription record in the database.
 	 *
 	 * @param int $product_id           primary key of the product record
 	 * @param int $subscription_plan_id primary key of the subscription plan record
@@ -2586,6 +2736,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
+	 * Get the record of the product subscription records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> subscription records that have product ID
@@ -2605,6 +2757,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscriptions By Subscription Plan ID
 	 *
+	 * Delete product subscriptions by subscription plan records in the database.
+	 *
 	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return void
@@ -2621,6 +2775,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Subscriptions By Subscription Plan ID
+	 *
+	 * Get the total number of product subscriptions by subscription plan records in the database.
 	 *
 	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
@@ -2641,6 +2797,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reports
 	 *
+	 * Delete product report records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -2657,6 +2815,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Reports
+	 *
+	 * Get the record of the product report records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $start
@@ -2686,6 +2846,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Reports
+	 *
+	 * Get the total number of product report records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *

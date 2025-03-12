@@ -116,7 +116,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Attributes
 	 *
-	 * Get the record of the attribute record in the database.
+	 * Get the record of the attribute records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -207,7 +207,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Attributes By Attribute Group ID
 	 *
-	 * Get the total number of attribute records with group ID in the database.
+	 * Get the total number of attributes by attribute group records in the database.
 	 *
 	 * @param int $attribute_group_id foreign key of the attribute group record
 	 *
@@ -227,6 +227,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 *
+	 * Create a new attribute description record in the database.
 	 *
 	 * @param int                  $attribute_id primary key of the attribute record
 	 * @param int                  $language_id  primary key of the language record
@@ -251,7 +253,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
-	 * Delete attribute description record in the database.
+	 * Delete attribute description records in the database.
 	 *
 	 * @param int $attribute_id primary key of the attribute record
 	 *
@@ -270,7 +272,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * Delete attribute description record in the database.
+	 * Delete attribute description records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -338,7 +340,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * Get the record of the attribute record in the database.
+	 * Get the record of the attribute description records by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

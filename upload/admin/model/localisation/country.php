@@ -259,10 +259,6 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * $country_data['country_description'] = [
 	 *     'name'             => 'Country Name',
-	 *     'description'      => 'Country Description',
-	 *     'meta_title'       => 'Meta Title',
-	 *     'meta_description' => 'Meta Description',
-	 *     'meta_keyword'     => 'Meta Keyword'
 	 * ];
 	 *
 	 * $this->load->model('localisation/country');

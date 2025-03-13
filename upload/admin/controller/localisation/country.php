@@ -323,12 +323,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($country_info)) {
-			$data['name'] = $country_info['name'];
-		} else {
-			$data['name'] = '';
-		}
-
-		if (!empty($country_info)) {
 			$data['iso_code_2'] = $country_info['iso_code_2'];
 		} else {
 			$data['iso_code_2'] = '';

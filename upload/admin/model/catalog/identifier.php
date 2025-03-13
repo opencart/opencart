@@ -35,11 +35,11 @@ class Identifier extends \Opencart\System\Engine\Model {
 	public function addIdentifier(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
 
-		$review_id = $this->db->getLastId();
+		$identifier_id = $this->db->getLastId();
 
 		$this->cache->delete('identifier');
 
-		return $review_id;
+		return $identifier_id;
 	}
 
 	/**
@@ -90,6 +90,8 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteIdentifier(int $identifier_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "identifier` WHERE `identifier_id` = '" . (int)$identifier_id . "'");
+
+		$this->cache->delete('identifier');
 	}
 
 	/**
@@ -141,7 +143,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_review->getReviews($filter_data);
 	 */
 	public function getIdentifiers(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "identifier` ORDER BY  ASC";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "identifier` ORDER BY `name` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

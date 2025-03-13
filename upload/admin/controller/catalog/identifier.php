@@ -89,7 +89,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/identifier');
 
-		$results = $this->model_catalog_identifier->getProductIdentifiers($filter_data);
+		$results = $this->model_catalog_identifier->getIdentifiers($filter_data);
 
 		foreach ($results as $result) {
 			$data['identifiers'][] = ['edit' => $this->url->link('catalog/identifier.form', 'user_token=' . $this->session->data['user_token'] . '&identifier_id=' . $result['identifier_id'] . $url)] + $result;
@@ -97,7 +97,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		$identifier_total = $this->model_catalog_identifier->getTotalCountries($filter_data);
+		$identifier_total = $this->model_catalog_identifier->getTotalIdentifiers($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $identifier_total,

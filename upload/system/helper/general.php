@@ -10,7 +10,7 @@ function oc_token(int $length = 32): string {
 	return substr(bin2hex(random_bytes($length)), 0, $length);
 }
 
-// @return string
+/** @return string */
 function oc_get_ip(): string {
 	$headers = [
 		'HTTP_CF_CONNECTING_IP', // CloudFlare

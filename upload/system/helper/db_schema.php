@@ -5254,6 +5254,87 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'product_code',
+		'field' => [
+			[
+				'name' => 'product_code_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(48)'
+			],
+			[
+				'name' => 'value',
+				'type' => 'varchar(255)'
+			]
+		],
+		'primary' => [
+			'product_code_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'product_id',
+				'table' => 'product',
+				'field' => 'product_id'
+			],
+			[
+				'key'   => 'product_identifier_id',
+				'table' => 'product_identifier',
+				'field' => 'product_identifier_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'code',
+				'key'  => [
+					'code'
+				]
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'product_identifier',
+		'field' => [
+			[
+				'name' => 'product_identifier_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(96)'
+			],
+			[
+				'name' => 'description',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(48)'
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'product_identifier_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'product_description',
 		'field' => [
 			[

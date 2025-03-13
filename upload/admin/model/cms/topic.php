@@ -11,6 +11,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Topic
 	 *
+	 * Create a new topic record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new topic record
@@ -52,6 +54,15 @@ class Topic extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Layouts
+		if (isset($data['topic_layout'])) {
+			foreach ($data['topic_layout'] as $store_id => $layout_id) {
+				if ($layout_id) {
+					$this->model_cms_topic->addLayout($topic_id, $store_id, $layout_id);
+				}
+			}
+		}
+
 		$this->cache->delete('topic');
 
 		return $topic_id;
@@ -59,6 +70,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Topic
+	 *
+	 * Edit topic record in the database.
 	 *
 	 * @param int                  $topic_id primary key of the topic record
 	 * @param array<string, mixed> $data     array of data
@@ -106,11 +119,24 @@ class Topic extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Layouts
+		$this->model_cms_topic->deleteLayouts($topic_id);
+
+		if (isset($data['topic_layout'])) {
+			foreach ($data['topic_layout'] as $store_id => $layout_id) {
+				if ($layout_id) {
+					$this->model_cms_topic->addLayout($topic_id, $store_id, $layout_id);
+				}
+			}
+		}
+
 		$this->cache->delete('topic');
 	}
 
 	/**
 	 * Delete Topic
+	 *
+	 * Delete topic record in the database.
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
@@ -133,11 +159,15 @@ class Topic extends \Opencart\System\Engine\Model {
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('topic_id', $topic_id);
 
+		$this->model_cms_topic->deleteLayouts($topic_id);
+
 		$this->cache->delete('topic');
 	}
 
 	/**
 	 * Get Topic
+	 *
+	 * Get the record of the topic record in the database.
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
@@ -167,6 +197,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Topics
+	 *
+	 * Get the record of the topic records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -235,6 +267,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Topics
 	 *
+	 * Get the total number of topic records in the database.
+	 *
 	 * @return int total number of topic records
 	 *
 	 * @example
@@ -258,6 +292,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 *
+	 * Create a new topic description record in the database.
 	 *
 	 * @param int                  $topic_id    primary key of the topic record
 	 * @param int                  $language_id primary key of the language record
@@ -287,6 +323,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete topic description records in the database.
+	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
@@ -304,6 +342,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete topic descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -320,6 +360,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the topic description records in the database.
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
@@ -346,6 +388,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the topic descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -365,6 +409,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
+	 * Create a new topic store record in the database.
+	 *
 	 * @param int $topic_id primary key of the topic record
 	 * @param int $store_id primary key of the store record
 	 *
@@ -383,6 +429,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
+	 * Delete topic store records in the database.
+	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
@@ -399,6 +447,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stores
+	 *
+	 * Get the record of the topic store records in the database.
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
@@ -425,6 +475,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
+	 * Create a new topic layout record in the database.
+	 *
 	 * @param int $topic_id  primary key of the topic record
 	 * @param int $store_id  primary key of the store record
 	 * @param int $layout_id primary key of the layout record
@@ -444,7 +496,9 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
-	 * @param int $article_id primary key of the article record
+	 * Delete topic layout records in the database.
+	 *
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
 	 *
@@ -454,12 +508,14 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_cms_topic->deleteLayouts($article_id);
 	 */
-	public function deleteLayouts(int $article_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$article_id . "'");
+	public function deleteLayouts(int $topic_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$topic_id . "'");
 	}
 
 	/**
 	 * Delete Layouts By Layout ID
+	 *
+	 * Delete topic layouts by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -473,5 +529,47 @@ class Topic extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteLayoutsByLayoutId(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+	}
+
+	/**
+	 * Get Layouts
+	 *
+	 * Get the record of the topic layout records in the database.
+	 *
+	 * @param int $topic_id primary key of the topic record
+	 *
+	 * @return array<int, int> layout records that have topic ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('cms/topic');
+	 *
+	 * $topic_layout = $this->model_cms_topic->getLayouts($topic_id);
+	 */
+	public function getLayouts(int $topic_id): array {
+		$topic_id_layout_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "topic_to_layout` WHERE `topic_id` = '" . (int)$topic_id . "'");
+
+		foreach ($query->rows as $result) {
+			$topic_id_layout_data[$result['store_id']] = $result['layout_id'];
+		}
+
+		return $topic_id_layout_data;
+	}
+
+	/**
+	 * Get Total Layouts By Layout ID
+	 *
+	 * Get the total number of topic layouts by layout records in the database.
+	 *
+	 * @param int $layout_id primary key of the layout record
+	 *
+	 * @return int total number of layout records that have layout ID
+	 */
+	public function getTotalLayoutsByLayoutId(int $layout_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+
+		return (int)$query->row['total'];
 	}
 }

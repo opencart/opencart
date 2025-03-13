@@ -11,6 +11,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Manufacturer
 	 *
+	 * Create a new manufacturer record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new manufacturer record
@@ -64,6 +66,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Manufacturer
+	 *
+	 * Edit manufacturer record in the database.
 	 *
 	 * @param int                  $manufacturer_id primary key of the manufacturer record
 	 * @param array<string, mixed> $data            array of data
@@ -124,6 +128,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Manufacturer
 	 *
+	 * Delete manufacturer record in the database.
+	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
@@ -151,6 +157,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Manufacturer
 	 *
+	 * Get the record of the manufacturer record in the database.
+	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<string, mixed> manufacturer record that has manufacturer ID
@@ -169,6 +177,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Manufacturers
+	 *
+	 * Get the record of the manufacturer records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -231,6 +241,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Manufacturers
 	 *
+	 * Get the total number of manufacturer records in the database.
+	 *
 	 * @return int total number of manufacturer records
 	 *
 	 * @example
@@ -247,6 +259,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Store
+	 *
+	 * Create a new information store record in the database.
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 * @param int $store_id        primary key of the store record
@@ -266,6 +280,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
+	 * Delete manufacturer store records in the database.
+	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
@@ -283,6 +299,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
+	 * Delete manufacturer stores by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -299,6 +317,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stores
+	 *
+	 * Get the record of the manufacturer store records in the database.
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
@@ -325,6 +345,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
+	 * Create a new manufacturer layout record in the database.
+	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 * @param int $store_id        primary key of the store record
 	 * @param int $layout_id       primary key of the layout record
@@ -344,6 +366,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
+	 * Delete manufacturer layout records in the database.
+	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
@@ -360,6 +384,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Layouts By Layout ID
+	 *
+	 * Delete manufacturer layouts by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -378,6 +404,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
+	 * Delete manufacturer layouts by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -394,6 +422,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layouts
+	 *
+	 * Get the record of the manufacturer layout records in the database.
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
@@ -419,6 +449,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Layouts By Layout ID
+	 *
+	 * Get the total number of manufacturer layout by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *

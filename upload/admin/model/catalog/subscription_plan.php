@@ -11,6 +11,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Plan
 	 *
+	 * Create a new subscription plan record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new subscription plan record
@@ -46,6 +48,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Subscription Plan
+	 *
+	 * Edit subscription plan record in the database.
 	 *
 	 * @param int                  $subscription_plan_id primary key of the subscription plan record
 	 * @param array<string, mixed> $data                 array of data
@@ -99,6 +103,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription Plan
 	 *
+	 * Delete subscription plan record in the database.
+	 *
 	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return void
@@ -123,6 +129,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Plan
 	 *
+	 * Get the record of the subscription plan record in the database.
+	 *
 	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return array<string, mixed> subscription plan record that has subscription plan ID
@@ -141,6 +149,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription Plans
+	 *
+	 * Get the record of the subscription plan records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -203,6 +213,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
+	 * Create a new subscription plan description record in the database.
+	 *
 	 * @param int                  $subscription_plan_id primary key of the subscription plan record
 	 * @param int                  $language_id          primary key of the language record
 	 * @param array<string, mixed> $data                 array of data
@@ -226,6 +238,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete subscription plan description records in the database.
+	 *
 	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return void
@@ -243,6 +257,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete subscription plan descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -259,6 +275,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the subscription plan description records in the database.
 	 *
 	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
@@ -285,6 +303,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the subscription plan descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -303,6 +323,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Subscription Plans
+	 *
+	 * Get the total number of subscription plan records in the database.
 	 *
 	 * @return int total number of subscription plan records
 	 *

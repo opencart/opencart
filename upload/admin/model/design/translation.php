@@ -11,6 +11,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Translation
 	 *
+	 * Create a new translation record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
@@ -35,6 +37,8 @@ class Translation extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Translation
+	 *
+	 * Edit translation record in the database.
 	 *
 	 * @param int                  $translation_id primary key of the translation record
 	 * @param array<string, mixed> $data           array of data
@@ -62,6 +66,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Translation
 	 *
+	 * Delete translation record in the database.
+	 *
 	 * @param int $translation_id primary key of the translation record
 	 *
 	 * @return void
@@ -78,6 +84,8 @@ class Translation extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Translations By Store ID
+	 *
+	 * Delete translations by store record in the database.
 	 *
 	 * @param int $store_id primary key of the store record
 	 *
@@ -96,6 +104,8 @@ class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Translations By Language ID
 	 *
+	 * Delete translations by language record in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -112,6 +122,8 @@ class Translation extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Translation
+	 *
+	 * Get the record of the translation record in the database.
 	 *
 	 * @param int $translation_id primary key of the translation record
 	 *
@@ -131,6 +143,8 @@ class Translation extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Translations
+	 *
+	 * Get the record of the translation records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -191,6 +205,8 @@ class Translation extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Translations
+	 *
+	 * Get the total number of translation records in the database.
 	 *
 	 * @return int total number of translation records
 	 *

@@ -11,6 +11,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
+	 * Edit gdpr status record in the database.
+	 *
 	 * @param int $gdpr_id primary key of the gdpr record
 	 * @param int $status
 	 *
@@ -29,6 +31,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Gdpr
 	 *
+	 * Delete gdpr record in the database.
+	 *
 	 * @param int $gdpr_id primary key of the gdpr record
 	 *
 	 * @return void
@@ -46,6 +50,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Gdpr(s) By Store ID
 	 *
+	 * Delete gdprs by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -62,6 +68,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Gdpr(s)
+	 *
+	 * Get the record of the gdpr records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -134,6 +142,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Gdpr
 	 *
+	 * Get the record of the gdpr record in the database.
+	 *
 	 * @param int $gdpr_id primary key of the gdpr record
 	 *
 	 * @return array<string, mixed> gdpr record that has gdpr ID
@@ -152,6 +162,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Gdpr(s)
+	 *
+	 * Get the total number of gdpr records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *

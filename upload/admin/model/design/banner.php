@@ -11,6 +11,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Banner
 	 *
+	 * Create a new banner record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new banner record
@@ -45,6 +47,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Banner
 	 *
+	 * Edit banner record in the database.
+	 *
 	 * @param int                  $banner_id primary key of the banner record
 	 * @param array<string, mixed> $data      array of data
 	 *
@@ -78,6 +82,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Banner
 	 *
+	 * Delete banner record in the database.
+	 *
 	 * @param int $banner_id primary key of the banner record
 	 *
 	 * @return void
@@ -97,6 +103,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Banner
 	 *
+	 * Get the record of the banner record in the database.
+	 *
 	 * @param int $banner_id primary key of the banner record
 	 *
 	 * @return array<string, mixed> banner record that has banner ID
@@ -115,6 +123,8 @@ class Banner extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Banners
+	 *
+	 * Get the record of the banner records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -173,6 +183,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Banners
 	 *
+	 * Get the total number of banner records in the database.
+	 *
 	 * @return int total number of banner records
 	 *
 	 * @example
@@ -189,6 +201,8 @@ class Banner extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Image
+	 *
+	 * Create a new banner image record in the database.
 	 *
 	 * @param int                  $banner_id   primary key of the banner record
 	 * @param int                  $language_id primary key of the language record
@@ -216,6 +230,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Images
 	 *
+	 * Delete banner image records in the database.
+	 *
 	 * @param int $banner_id primary key of the banner record
 	 *
 	 * @return void
@@ -233,6 +249,8 @@ class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Images By Language ID
 	 *
+	 * Delete banner images by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -249,6 +267,8 @@ class Banner extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Images
+	 *
+	 * Get the record of the banner image records in the database.
 	 *
 	 * @param int $banner_id primary key of the banner record
 	 *
@@ -274,6 +294,8 @@ class Banner extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Images By Language ID
+	 *
+	 * Get the record of the banner images by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

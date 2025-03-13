@@ -497,7 +497,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 				$this->session->data['success'] = $this->language->get('text_admin_success');
 
-				// 6. redirect to the new admin
+				// 6. Redirect to the new admin
 				$json['redirect'] = str_replace('&amp;', '&', substr(HTTP_SERVER, 0, -6) . $name . '/index.php?route=common/login');
 			}
 		}

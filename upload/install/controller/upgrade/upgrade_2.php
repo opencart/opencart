@@ -103,7 +103,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 								}
 							}
 
-							// Check if the path is not directory and check there is no existing file
+							// Check if the path is not directory, and check there is no existing file
 							if (substr($destination, -1) != '/' && !is_dir($base . $destination)) {
 								if (is_file($base . $destination)) {
 									unlink($base . $destination);

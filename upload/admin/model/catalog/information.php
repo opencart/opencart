@@ -11,6 +11,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Information
 	 *
+	 * Create a new information record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new information record
@@ -65,6 +67,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Information
+	 *
+	 * Edit information record in the database.
 	 *
 	 * @param int                  $information_id primary key of the information record
 	 * @param array<string, mixed> $data           array of data
@@ -126,6 +130,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Information
 	 *
+	 * Delete information record in the database.
+	 *
 	 * @param int $information_id primary key of the information record
 	 *
 	 * @return void
@@ -154,6 +160,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Information
 	 *
+	 * Get the record of the information record in the database.
+	 *
 	 * @param int $information_id primary key of the information record
 	 *
 	 * @return array<string, mixed> information record that has information ID
@@ -172,6 +180,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Information(s)
+	 *
+	 * Get the record of the information records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -240,6 +250,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Information(s)
 	 *
+	 * Get the total number of information records in the database.
+	 *
 	 * @return int total number of information records
 	 *
 	 * @example
@@ -256,6 +268,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 *
+	 * Create a new information description record in the database.
 	 *
 	 * @param int                  $information_id primary key of the information record
 	 * @param int                  $language_id    primary key of the language record
@@ -284,6 +298,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete information description records in the database.
+	 *
 	 * @param int $information_id primary key of the information record
 	 *
 	 * @return void
@@ -301,6 +317,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete information descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -317,6 +335,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the information description records in the database.
 	 *
 	 * @param int $information_id primary key of the information record
 	 *
@@ -343,6 +363,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the information descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -362,6 +384,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
+	 * Create a new information store record in the database.
+	 *
 	 * @param int $information_id primary key of the information record
 	 * @param int $store_id       primary key of the store record
 	 *
@@ -380,6 +404,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
+	 * Delete information store records in the database.
+	 *
 	 * @param int $information_id primary key of the information record
 	 *
 	 * @return void
@@ -397,6 +423,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
+	 * Delete information stores by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -413,6 +441,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stores
+	 *
+	 * Get the record of the information store records in the database.
 	 *
 	 * @param int $information_id primary key of the information record
 	 *
@@ -439,6 +469,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
+	 * Create a new information layout record in the database.
+	 *
 	 * @param int $information_id primary key of the information record
 	 * @param int $store_id       primary key of the store record
 	 * @param int $layout_id      primary key of the layout record
@@ -458,6 +490,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
+	 * Delete information layout records in the database.
+	 *
 	 * @param int $information_id primary key of the information record
 	 *
 	 * @return void
@@ -474,6 +508,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Layouts By Layout ID
+	 *
+	 * Delete information layouts by language records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -492,6 +528,8 @@ class Information extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
+	 * Delete information layouts by store records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return void
@@ -508,6 +546,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layouts
+	 *
+	 * Get the record of the information layout records in the database.
 	 *
 	 * @param int $information_id primary key of the information record
 	 *
@@ -533,6 +573,8 @@ class Information extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Layouts By Layout ID
+	 *
+	 * Get the total number of information layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *

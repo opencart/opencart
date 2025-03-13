@@ -311,6 +311,17 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$data['zone_id'] = 0;
 		}
 
+		// Language
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		if (isset($this->request->get['zone_id'])) {
+			$data['zone_description'] = $this->model_localisation_zone->getDescriptions($this->request->get['zone_id']);
+		} else {
+			$data['zone_description'] = [];
+		}
+
 		if (!empty($zone_info)) {
 			$data['status'] = $zone_info['status'];
 		} else {
@@ -361,8 +372,18 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 1, 64)) {
-			$json['error']['name'] = $this->language->get('error_name');
+		$filter_data = [
+			'zone_id'          => 0,
+			'status'           => 0,
+			'zone_description' => [],
+		];
+
+		$post_info = oc_filter_data($filter_data, $this->request->post);
+
+		foreach ($post_info['zone_description'] as $language_id => $value) {
+			if (!oc_validate_length($value['name'], 1, 128)) {
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+			}
 		}
 
 		if (!$json) {

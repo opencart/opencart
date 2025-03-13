@@ -994,6 +994,50 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'topic_to_layout',
+		'field' => [
+			[
+				'name' => 'topic_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name'    => 'store_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name'    => 'layout_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'topic_id',
+			'store_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'topic_id',
+				'table' => 'topic',
+				'field' => 'topic_id'
+			],
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			],
+			[
+				'key'   => 'layout_id',
+				'table' => 'layout',
+				'field' => 'layout_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'topic_to_store',
 		'field' => [
 			[
@@ -1413,6 +1457,46 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'country_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'country_description',
+		'field' => [
+			[
+				'name' => 'country_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)'
+			]
+		],
+		'primary' => [
+			'country_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'name',
+				'key'  => [
+					'name'
+				]
+			]
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -4775,6 +4859,11 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
+				'name'    => 'quantity',
+				'type'    => 'int(4)',
+				'default' => '1'
+			],
+			[
 				'name' => 'subscription_plan_id',
 				'type' => 'int(11)'
 			],
@@ -7711,6 +7800,46 @@ function oc_db_schema() {
 				'key'   => 'country_id',
 				'table' => 'country',
 				'field' => 'country_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'zone_description',
+		'field' => [
+			[
+				'name' => 'zone_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)'
+			]
+		],
+		'primary' => [
+			'country_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'name',
+				'key'  => [
+					'name'
+				]
 			]
 		],
 		'engine'  => 'InnoDB',

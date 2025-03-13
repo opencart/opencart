@@ -11,6 +11,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Filter
 	 *
+	 * Create a new filter record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new filter record
@@ -42,6 +44,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Filter
 	 *
+	 * Edit filter record in the database.
+	 *
 	 * @param int                  $filter_id primary key of the filter record
 	 * @param array<string, mixed> $data      array of data
 	 *
@@ -69,6 +73,8 @@ class Filter extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Filter
+	 *
+	 * Delete filter record in the database.
 	 *
 	 * @param int $filter_id primary key of the filter record
 	 *
@@ -101,6 +107,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Filter
 	 *
+	 * Get the record of the filter record in the database.
+	 *
 	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return array<string, mixed> filter record that has filter ID
@@ -119,6 +127,8 @@ class Filter extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Filters
+	 *
+	 * Get the record of the filter records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -182,6 +192,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Filters
 	 *
+	 * Get the total number of filter records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of filter records
@@ -214,6 +226,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Filters By Filter Group ID
 	 *
+	 * Get the total number of filters by filter group records in the database.
+	 *
 	 * @param int $filter_group_id primary key of the filter group record
 	 *
 	 * @return int total number of filter records that have filter group ID
@@ -232,6 +246,8 @@ class Filter extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 *
+	 * Create a new filter description record in the database.
 	 *
 	 * @param int                  $filter_id   primary key of the filter record
 	 * @param int                  $language_id primary key of the language record
@@ -256,6 +272,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete filter description records in the database.
+	 *
 	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return void
@@ -273,6 +291,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete filter descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -289,6 +309,8 @@ class Filter extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the filter description records in the database.
 	 *
 	 * @param int $filter_id primary key of the filter record
 	 *
@@ -314,6 +336,8 @@ class Filter extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
+	 *
+	 * Get the record of the filter descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

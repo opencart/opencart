@@ -18,7 +18,6 @@ class Country extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $country_data = [
-	 *     'name'              => 'Country Name',
 	 *     'iso_code_2'        => 'Country ISO Code 2',
 	 *     'iso_code_3'        => 'Country ISO Code 3',
 	 *     'address_format_id' => 1,
@@ -31,11 +30,17 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $country_id = $this->model_localisation_country->addCountry($country_data);
 	 */
 	public function addCountry(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format_id` = '" . (int)$data['address_format_id'] . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "country` SET `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format_id` = '" . (int)$data['address_format_id'] . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
+
+		$country_id = $this->db->getLastId();
+
+		foreach ($data['country_description'] as $language_id => $country_description) {
+			$this->model_localisation_country->addDescription($country_id, $language_id, $country_description);
+		}
 
 		$this->cache->delete('country');
 
-		return $this->db->getLastId();
+		return $country_id;
 	}
 
 	/**
@@ -49,7 +54,6 @@ class Country extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $country_data = [
-	 *     'name'              => 'Country Name',
 	 *     'iso_code_2'        => 'Country ISO Code 2',
 	 *     'iso_code_3'        => 'Country ISO Code 3',
 	 *     'address_format_id' => 1,
@@ -62,7 +66,13 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $this->model_localisation_country->editCountry($country_id, $country_data);
 	 */
 	public function editCountry(int $country_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format_id` = '" . (int)$data['address_format_id'] . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `country_id` = '" . (int)$country_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format_id` = '" . (int)$data['address_format_id'] . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `country_id` = '" . (int)$country_id . "'");
+
+		$this->model_localisation_country->deleteDescriptions($country_id);
+
+		foreach ($data['country_description'] as $language_id => $country_description) {
+			$this->model_localisation_country->addDescription($country_id, $language_id, $country_description);
+		}
 
 		$this->cache->delete('country');
 	}
@@ -82,6 +92,8 @@ class Country extends \Opencart\System\Engine\Model {
 	 */
 	public function deleteCountry(int $country_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
+
+		$this->model_localisation_country->deleteDescriptions($country_id);
 
 		$this->cache->delete('country');
 	}
@@ -167,24 +179,24 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $countries = $this->model_localisation_country->getCountries($filter_data);
 	 */
 	public function getCountries(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "country`";
+		$sql = "SELECT `c`.* FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_iso_code_2'])) {
-			$implode[] = "LCASE(`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
+			$implode[] = "LCASE(`c`.`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_iso_code_3'])) {
-			$implode[] = "LCASE(`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
+			$implode[] = "LCASE(`c`.`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
 		}
 
 		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
+			$sql .= " AND " . implode(" AND ", $implode);
 		}
 
 		$sort_data = [
@@ -196,7 +208,7 @@ class Country extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY `name`";
+			$sql .= " ORDER BY `cd`.`name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -230,6 +242,121 @@ class Country extends \Opencart\System\Engine\Model {
 		}
 
 		return $country_data;
+	}
+
+	/**
+	 * Add Description
+	 *
+	 * Create a new country description record in the database.
+	 *
+	 * @param int                  $country_id  primary key of the country record
+	 * @param int                  $language_id primary key of the language record
+	 * @param array<string, mixed> $data        array of data
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $country_data['country_description'] = [
+	 *     'name'             => 'Country Name',
+	 *     'description'      => 'Country Description',
+	 *     'meta_title'       => 'Meta Title',
+	 *     'meta_description' => 'Meta Description',
+	 *     'meta_keyword'     => 'Meta Keyword'
+	 * ];
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $this->model_catalog_category->addDescription($country_id, $language_id, $country_data);
+	 */
+	public function addDescription(int $country_id, int $language_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "country_description` SET `country_id` = '" . (int)$country_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	}
+
+	/**
+	 * Delete Descriptions
+	 *
+	 * Delete country description records in the database.
+	 *
+	 * @param int $country_id primary key of the country record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $this->model_localisation_country->deleteDescriptions($country_id);
+	 */
+	public function deleteDescriptions(int $country_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$country_id . "'");
+	}
+
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * Delete country descriptions by language records in the database.
+	 *
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $this->model_localisation_country->deleteDescriptionsByLanguageId($language_id);
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
+	/**
+	 * Get Descriptions
+	 *
+	 * Get the record of the country description records in the database.
+	 *
+	 * @param int $country_id primary key of the country record
+	 *
+	 * @return array<int, array<string, string>> description records that have country ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $country_description = $this->model_localisation_country->getDescriptions($country_id);
+	 */
+	public function getDescriptions(int $country_id): array {
+		$country_description_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$country_id . "'");
+
+		foreach ($query->rows as $result) {
+			$country_description_data[$result['language_id']] = $result;
+		}
+
+		return $country_description_data;
+	}
+
+	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * Get the record of the country descriptions by language records in the database.
+	 *
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return array<int, array<string, string>> description records that have language ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $results = $this->model_localisation_country->getDescriptionsByLanguageId($language_id);
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

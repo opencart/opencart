@@ -413,7 +413,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 		// If subscription add details
 		if (!empty($data['subscription'])) {
-			$this->model_checkout_order->addSubscription($order_id, $order_product_id, $data['subscription']);
+			$this->model_checkout_order->addSubscription($order_id, $order_product_id, $data['subscription'] + ['quantity' => $data['quantity']]);
 		}
 
 		return $order_product_id;

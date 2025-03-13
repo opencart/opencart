@@ -7,13 +7,13 @@ namespace Opencart\Install\Controller\Install;
  */
 class Step2 extends \Opencart\System\Engine\Controller {
 	/**
-	 * Index
-	 *
 	 * @var array<string, string>
 	 */
 	private array $error = [];
 
 	/**
+	 * Index
+	 *
 	 * @return void
 	 */
 	public function index(): void {
@@ -142,6 +142,8 @@ class Step2 extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Save
+	 *
 	 * @return void
 	 */
 	public function save(): void {

@@ -230,7 +230,11 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['payment_address'] = str_replace($pattern_1, '<br/>', preg_replace($pattern_2, '<br/>', trim(str_replace($find, $replace, $format))));
 
-			$data['payment_method'] = $order_info['payment_method']['name'];
+			if (ísset($order_info['payment_method']['name'])) {
+				$data['payment_method'] = $order_info['payment_method']['name'];
+			} else {
+				$data['payment_method'] = '';
+			}
 
 			// Shipping Address
 			if ($order_info['shipping_method']) {

@@ -263,6 +263,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 				if ($product['subscription']) {
 					$subscription_data = [
+						'quantity'  => $product['quantity'],
 						'trial_tax' => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
 						'tax'       => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id'])
 					] + $product['subscription'];

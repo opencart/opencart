@@ -64,6 +64,14 @@
                 <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
                 <input type="date" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control"/>
               </div>
+              <div class="mb-3">
+                <label for="input-date-modified-from" class="form-label">{{ entry_date_modified_from }}</label>
+                <input type="date" name="filter_date_modified_from" value="{{ filter_date_modified_from }}" placeholder="{{ entry_date_modified_from }}" id="input-date-modified-from" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label for="input-date-modified-to" class="form-label">{{ entry_date_modified_to }}</label>
+                <input type="date" name="filter_date_modified_to" value="{{ filter_date_modified_to }}" placeholder="{{ entry_date_modified_to }}" id="input-date-modified-to" class="form-control"/>
+              </div>
               <div class="text-end">
                 <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
@@ -131,6 +139,18 @@ $('#button-filter').on('click', function() {
 
     if (filter_date_to) {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
+    }
+
+    var filter_date_modified_from = $('#input-date-modified-from').val();
+
+    if (filter_date_modified_from) {
+        url += '&filter_date_modified_from=' + encodeURIComponent(filter_date_modified_from);
+    }
+
+    var filter_date_modified_to = $('#input-date-modified-to').val();
+
+    if (filter_date_modified_to) {
+        url += '&filter_date_modified_to=' + encodeURIComponent(filter_date_modified_to);
     }
 
     window.history.pushState({}, null, 'index.php?route=sale/order&user_token={{ user_token }}' + url);

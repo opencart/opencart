@@ -150,19 +150,21 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_order_id'        => 1,
-	 *     'filter_customer_id'     => 1,
-	 *     'filter_customer'        => 'John Doe',
-	 *     'filter_store_id'        => 1,
-	 *     'filter_order_status'    => 'Pending',
-	 *     'filter_order_status_id' => 1,
-	 *     'filter_total'           => 0.0000,
-	 *     'filter_date_from'       => '2021-01-01',
-	 *     'filter_date_to'         => '2021-01-31',
-	 *     'sort'                   => 'o.order_id',
-	 *     'order'                  => 'DESC',
-	 *     'start'                  => 0,
-	 *     'limit'                  => 10
+	 *     'filter_order_id'           => 1,
+	 *     'filter_customer_id'        => 1,
+	 *     'filter_customer'           => 'John Doe',
+	 *     'filter_store_id'           => 1,
+	 *     'filter_order_status'       => 'Pending',
+	 *     'filter_order_status_id'    => 1,
+	 *     'filter_total'              => 0.0000,
+	 *     'filter_date_from'          => '2021-01-01',
+	 *     'filter_date_to'            => '2021-01-31',
+	 *     'filter_date_modified_from' => '2021-01-01',
+	 *     'filter_date_modified_to'   => '2021-01-31',
+	 *     'sort'                      => 'o.order_id',
+	 *     'order'                     => 'DESC',
+	 *     'start'                     => 0,
+	 *     'limit'                     => 10
 	 * ];
 	 *
 	 * $this->load->model('sale/order');
@@ -217,6 +219,14 @@ class Order extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_date_to'])) {
 			$sql .= " AND DATE(`o`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+		}
+
+		if (!empty($data['filter_date_modified_from'])) {
+			$sql .= " AND DATE(`o`.`date_modified`) >= DATE('" . $this->db->escape((string)$data['filter_date_modified_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_modified_to'])) {
+			$sql .= " AND DATE(`o`.`date_modified`) <= DATE('" . $this->db->escape((string)$data['filter_date_modified_to']) . "')";
 		}
 
 		if (!empty($data['filter_total'])) {
@@ -284,19 +294,21 @@ class Order extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_order_id'        => 1,
-	 *     'filter_customer_id'     => 1,
-	 *     'filter_customer'        => 'John Doe',
-	 *     'filter_store_id'        => 1,
-	 *     'filter_order_status'    => 'Pending',
-	 *     'filter_order_status_id' => 1,
-	 *     'filter_total'           => 0.0000,
-	 *     'filter_date_from'       => '2021-01-01',
-	 *     'filter_date_to'         => '2021-01-31',
-	 *     'sort'                   => 'o.order_id',
-	 *     'order'                  => 'DESC',
-	 *     'start'                  => 0,
-	 *     'limit'                  => 10
+	 *     'filter_order_id'           => 1,
+	 *     'filter_customer_id'        => 1,
+	 *     'filter_customer'           => 'John Doe',
+	 *     'filter_store_id'           => 1,
+	 *     'filter_order_status'       => 'Pending',
+	 *     'filter_order_status_id'    => 1,
+	 *     'filter_total'              => 0.0000,
+	 *     'filter_date_from'          => '2021-01-01',
+	 *     'filter_date_to'            => '2021-01-31',
+	 *     'filter_date_modified_from' => '2021-01-01',
+	 *     'filter_date_modified_to'   => '2021-01-31',
+	 *     'sort'                      => 'o.order_id',
+	 *     'order'                     => 'DESC',
+	 *     'start'                     => 0,
+	 *     'limit'                     => 10
 	 * ];
 	 *
 	 * $this->load->model('sale/order');
@@ -351,6 +363,14 @@ class Order extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_date_to'])) {
 			$sql .= " AND DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+		}
+
+		if (!empty($data['filter_date_modified_from'])) {
+			$sql .= " AND DATE(`date_modified`) >= DATE('" . $this->db->escape((string)$data['filter_date_modified_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_modified_to'])) {
+			$sql .= " AND DATE(`date_modified`) <= DATE('" . $this->db->escape((string)$data['filter_date_modified_to']) . "')";
 		}
 
 		if (!empty($data['filter_total'])) {

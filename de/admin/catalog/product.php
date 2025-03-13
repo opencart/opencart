@@ -69,12 +69,15 @@ $_['entry_meta_description']     = 'Meta-Tag-Beschreibung';
 $_['entry_store']                = 'Online-Shop (Store)';
 $_['entry_keyword']              = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_model']                = 'Modell';
+$_['entry_product_code']         = 'Product Codes';
+
 $_['entry_sku']                  = 'Artikelnummer';
 $_['entry_upc']                  = 'UPC';
 $_['entry_ean']                  = 'EAN';
 $_['entry_jan']                  = 'JAN';
 $_['entry_isbn']                 = 'ISBN';
 $_['entry_mpn']                  = 'MPN';
+
 $_['entry_location']             = 'Standort';
 $_['entry_shipping']             = 'Erfordert Versand';
 $_['entry_manufacturer']         = 'Hersteller';

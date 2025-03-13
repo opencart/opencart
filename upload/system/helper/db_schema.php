@@ -1187,6 +1187,11 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
+				'name'    => 'column',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
 				'name'    => 'sort_order',
 				'type'    => 'int(3)',
 				'default' => '0'
@@ -7824,7 +7829,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'country_id',
+			'zone_id',
 			'language_id'
 		],
 		'foreign' => [

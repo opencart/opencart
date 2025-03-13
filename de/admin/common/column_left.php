@@ -35,6 +35,7 @@ $_['text_filter']              = 'Filter';
 $_['text_filter_group']        = 'Filter Gruppen';
 $_['text_geo_zone']            = 'Geozonen';
 $_['text_gdpr']                = 'DSGVO';
+$_['text_identifier']          = 'Identifiers';
 $_['text_information']         = 'Informationen';
 $_['text_installer']           = 'Installateur';
 $_['text_language']            = 'Sprachen';

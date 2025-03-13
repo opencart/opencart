@@ -11,6 +11,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Topic
 	 *
+	 * Create a new topic record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new topic record
@@ -68,6 +70,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Topic
+	 *
+	 * Edit topic record in the database.
 	 *
 	 * @param int                  $topic_id primary key of the topic record
 	 * @param array<string, mixed> $data     array of data
@@ -132,6 +136,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Topic
 	 *
+	 * Delete topic record in the database.
+	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
@@ -161,6 +167,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Topic
 	 *
+	 * Get the record of the topic record in the database.
+	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return array<string, mixed> topic records that have topic ID
@@ -189,6 +197,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Topics
+	 *
+	 * Get the record of the topic records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -257,6 +267,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Topics
 	 *
+	 * Get the total number of topic records in the database.
+	 *
 	 * @return int total number of topic records
 	 *
 	 * @example
@@ -280,6 +292,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 *
+	 * Create a new topic description record in the database.
 	 *
 	 * @param int                  $topic_id    primary key of the topic record
 	 * @param int                  $language_id primary key of the language record
@@ -309,6 +323,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete topic description records in the database.
+	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
@@ -326,6 +342,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete topic descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -342,6 +360,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the topic description records in the database.
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
@@ -368,6 +388,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the topic descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -387,6 +409,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
+	 * Create a new topic store record in the database.
+	 *
 	 * @param int $topic_id primary key of the topic record
 	 * @param int $store_id primary key of the store record
 	 *
@@ -405,6 +429,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
+	 * Delete topic store records in the database.
+	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
@@ -421,6 +447,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stores
+	 *
+	 * Get the record of the topic store records in the database.
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
@@ -447,6 +475,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
+	 * Create a new topic layout record in the database.
+	 *
 	 * @param int $topic_id  primary key of the topic record
 	 * @param int $store_id  primary key of the store record
 	 * @param int $layout_id primary key of the layout record
@@ -466,6 +496,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
+	 * Delete topic layout records in the database.
+	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return void
@@ -483,6 +515,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Layout ID
 	 *
+	 * Delete topic layouts by layout records in the database.
+	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
@@ -499,6 +533,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layouts
+	 *
+	 * Get the record of the topic layout records in the database.
 	 *
 	 * @param int $topic_id primary key of the topic record
 	 *
@@ -524,6 +560,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Layouts By Layout ID
+	 *
+	 * Get the total number of topic layouts by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *

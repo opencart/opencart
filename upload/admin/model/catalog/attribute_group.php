@@ -238,7 +238,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * Delete attribute description records by language records in the database.
+	 * Delete attribute descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -284,7 +284,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * Get the record of the attribute group description records by language records in the database.
+	 * Get the record of the attribute group descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

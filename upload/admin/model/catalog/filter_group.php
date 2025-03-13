@@ -246,7 +246,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * Delete filter group description records by language records in the database.
+	 * Delete filter group descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -292,7 +292,7 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * Get the record of the filter group description records by language records in the database.
+	 * Get the record of the filter group descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

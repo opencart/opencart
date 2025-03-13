@@ -11,6 +11,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Article
 	 *
+	 * Create a new article record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new article record
@@ -70,6 +72,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Article
+	 *
+	 * Edit article record in the database.
 	 *
 	 * @param int                  $article_id primary key of the article record
 	 * @param array<string, mixed> $data       array of data
@@ -136,6 +140,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Rating
 	 *
+	 * Edit article rating record in the database.
+	 *
 	 * @param int $article_id primary key of the article record
 	 * @param int $rating
 	 *
@@ -153,6 +159,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Article
+	 *
+	 * Delete article record in the database.
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
@@ -184,6 +192,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Article
 	 *
+	 * Get the record of the article record in the database.
+	 *
 	 * @param int $article_id primary key of the article record
 	 *
 	 * @return array<string, mixed> article record that has article ID
@@ -202,6 +212,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Articles
+	 *
+	 * Get the record of the article records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -276,6 +288,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Articles
 	 *
+	 * Get the total number of article records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of article records
@@ -308,6 +322,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
+	 * Create a new article description record in the database.
+	 *
 	 * @param int                  $article_id  primary key of the article record
 	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data        array of data
@@ -337,6 +353,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete article description records in the database.
+	 *
 	 * @param int $article_id primary key of the article record
 	 *
 	 * @return void
@@ -354,6 +372,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete article descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -370,6 +390,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the article description records in the database.
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
@@ -396,6 +418,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the article descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -415,6 +439,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
+	 * Create a new article store record in the database.
+	 *
 	 * @param int $article_id primary key of the article record
 	 * @param int $store_id   primary key of the store record
 	 *
@@ -433,6 +459,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores
 	 *
+	 * Delete article store records in the database.
+	 *
 	 * @param int $article_id primary key of the article record
 	 *
 	 * @return void
@@ -449,6 +477,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stores
+	 *
+	 * Get the record of the article store records in the database.
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
@@ -475,6 +505,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Layout
 	 *
+	 * Create a new article layout record in the database.
+	 *
 	 * @param int $article_id primary key of the article record
 	 * @param int $store_id   primary key of the store record
 	 * @param int $layout_id  primary key of the layout record
@@ -494,6 +526,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts
 	 *
+	 * Delete article layout records in the database.
+	 *
 	 * @param int $article_id primary key of the article record
 	 *
 	 * @return void
@@ -511,6 +545,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Layout ID
 	 *
+	 * Delete article layouts by layout records in the database.
+	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return void
@@ -527,6 +563,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layouts
+	 *
+	 * Get the record of the article layout records in the database.
 	 *
 	 * @param int $article_id primary key of the article record
 	 *
@@ -553,6 +591,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Layouts By Layout ID
 	 *
+	 * Get the total number of article layouts by layout records in the database.
+	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
 	 * @return int total number of layout records that have layout ID
@@ -571,6 +611,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Comment Status
+	 *
+	 * Edit article comment status record in the database.
 	 *
 	 * @param int  $article_comment_id primary key of the article comment record
 	 * @param bool $status
@@ -592,6 +634,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Comment Rating
 	 *
+	 * Edit article comment rating record in the database.
+	 *
 	 * @param int $article_id         primary key of the article record
 	 * @param int $article_comment_id primary key of the article comment record
 	 * @param int $rating
@@ -610,6 +654,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Comment
+	 *
+	 * Delete article comment record in the database.
 	 *
 	 * @param int $article_comment_id primary key of the article comment record
 	 *
@@ -630,6 +676,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Comments by article ID
 	 *
+	 * Delete article comments by article records in the database.
+	 *
 	 * @param int $article_id primary key of the article record
 	 *
 	 * @return void
@@ -649,6 +697,8 @@ class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Comment
 	 *
+	 * Get the record of the article comment record in the database.
+	 *
 	 * @param int $article_comment_id primary key of the article comment record
 	 *
 	 * @return array<string, mixed> comment record that has article comment ID
@@ -667,6 +717,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Ratings
+	 *
+	 * Get the record of the article rating records in the database.
 	 *
 	 * @param int $article_id         primary key of the article record
 	 * @param int $article_comment_id primary key of the article comment record
@@ -695,6 +747,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Comments
+	 *
+	 * Get the record of the article comment records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -767,6 +821,8 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Comments
+	 *
+	 * Get the total number of article comment records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *

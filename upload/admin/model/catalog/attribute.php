@@ -340,7 +340,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * Get the record of the attribute description records by language records in the database.
+	 * Get the record of the attribute descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

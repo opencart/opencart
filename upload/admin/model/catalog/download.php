@@ -229,7 +229,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * Delete download description records by language records in the database.
+	 * Delete download descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -275,7 +275,7 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * Get the record of the download description records by language records in the database.
+	 * Get the record of the download descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *

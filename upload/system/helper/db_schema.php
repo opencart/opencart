@@ -1464,6 +1464,46 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'country_description',
+		'field' => [
+			[
+				'name' => 'country_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)'
+			]
+		],
+		'primary' => [
+			'country_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'name',
+				'key'  => [
+					'name'
+				]
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'coupon',
 		'field' => [
 			[
@@ -7760,6 +7800,46 @@ function oc_db_schema() {
 				'key'   => 'country_id',
 				'table' => 'country',
 				'field' => 'country_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'zone_description',
+		'field' => [
+			[
+				'name' => 'zone_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)'
+			]
+		],
+		'primary' => [
+			'country_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'name',
+				'key'  => [
+					'name'
+				]
 			]
 		],
 		'engine'  => 'InnoDB',

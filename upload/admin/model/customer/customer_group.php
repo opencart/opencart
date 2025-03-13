@@ -11,6 +11,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer Group
 	 *
+	 * Create a new customer group record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new customer group record
@@ -41,6 +43,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Customer Group
 	 *
+	 * Edit customer group record in the database.
+	 *
 	 * @param int                  $customer_group_id primary key of the customer group record
 	 * @param array<string, mixed> $data              array of data
 	 *
@@ -69,6 +73,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Customer Group
+	 *
+	 * Delete customer group record in the database.
 	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
@@ -100,6 +106,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Group
 	 *
+	 * Get the record of the customer group record in the database.
+	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return array<string, mixed> customer group record that has customer group ID
@@ -118,6 +126,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Customer Groups
+	 *
+	 * Get the record of the customer group records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -176,6 +186,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
+	 * Create a new customer group description record in the database.
+	 *
 	 * @param int                  $customer_group_id primary key of the customer group record
 	 * @param int                  $language_id       primary key of the language record
 	 * @param array<string, mixed> $data              array of data
@@ -200,6 +212,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions
 	 *
+	 * Delete customer group description records in the database.
+	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return void
@@ -217,6 +231,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
+	 * Delete customer group descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -233,6 +249,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the customer group description records in the database.
 	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
@@ -259,6 +277,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the customer group descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -277,6 +297,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Customer Groups
+	 *
+	 * Get the total number of customer group records in the database.
 	 *
 	 * @return int total number of customer group records
 	 *

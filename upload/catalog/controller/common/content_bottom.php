@@ -51,6 +51,12 @@ class ContentBottom extends \Opencart\System\Engine\Controller {
 			$layout_id = $this->model_catalog_information->getLayoutId((int)$this->request->get['information_id']);
 		}
 
+		if ($route == 'cms/blog' && isset($this->request->get['topic_id'])) {
+			$this->load->model('cms/topic');
+
+			$layout_id = $this->model_cms_topic->getLayoutId((int)$this->request->get['topic_id']);
+		}
+
 		if ($route == 'cms/blog.info' && isset($this->request->get['article_id'])) {
 			$this->load->model('cms/article');
 

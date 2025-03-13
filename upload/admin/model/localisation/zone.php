@@ -228,7 +228,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new zone description record in the database.
 	 *
-	 * @param int                  $zone_id primary key of the zone record
+	 * @param int                  $zone_id     primary key of the zone record
 	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data        array of data
 	 *

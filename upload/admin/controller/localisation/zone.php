@@ -302,7 +302,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['zone_id'])) {
 			$this->load->model('localisation/zone');
 
-			$zone_info = $this->model_localisation_zone->getCountry($this->request->get['zone_id']);
+			$zone_info = $this->model_localisation_zone->getZone($this->request->get['zone_id']);
 		}
 
 		if (isset($this->request->get['zone_id'])) {
@@ -371,11 +371,11 @@ class Zone extends \Opencart\System\Engine\Controller {
 		if (!$this->user->hasPermission('modify', 'localisation/zone')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
-		
+
 		$filter_data = [
-			'zone_id'             => 0,
-			'status'              => 0,
-			'zone_description'    => [],
+			'zone_id'          => 0,
+			'status'           => 0,
+			'zone_description' => [],
 		];
 
 		$post_info = oc_filter_data($filter_data, $this->request->post);

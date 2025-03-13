@@ -11,6 +11,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer
 	 *
+	 * Create a new customer record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -45,6 +47,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Customer
+	 *
+	 * Edit customer record in the database.
 	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
@@ -84,6 +88,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Token
 	 *
+	 * Edit customer token record in the database.
+	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $token
 	 *
@@ -102,6 +108,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Commenter
 	 *
+	 * Edit customer commenter record in the database.
+	 *
 	 * @param int  $customer_id primary key of the customer record
 	 * @param bool $status
 	 *
@@ -119,6 +127,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Customer
+	 *
+	 * Delete customer record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -156,6 +166,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Customer
+	 *
+	 * Get the record of the customer record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -202,6 +214,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Customers
+	 *
+	 * Get the record of the customer records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -309,6 +323,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customers
 	 *
+	 * Get the total number of customer records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of customer records
@@ -382,6 +398,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customers By Customer Group ID
 	 *
+	 * Get the total number of customers by customer group records in the database.
+	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return int total number of customer records that have customer group ID
@@ -405,6 +423,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Activities
 	 *
+	 * Delete customer activity records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -421,6 +441,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Address
+	 *
+	 * Create a new address record in the database.
 	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
@@ -462,6 +484,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Address
 	 *
+	 * Edit address record in the database.
+	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param int                  $address_id  primary key of the address record
 	 * @param array<string, mixed> $data        array of data
@@ -499,6 +523,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Addresses
 	 *
+	 * Delete address records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $address_id  primary key of the address record
 	 *
@@ -522,6 +548,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Address
+	 *
+	 * Get the record of the address record in the database.
 	 *
 	 * @param int $address_id primary key of the address record
 	 *
@@ -594,6 +622,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Addresses
+	 *
+	 * Get the record of the address records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -669,6 +699,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Addresses
 	 *
+	 * Get the total number of address records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int total number of address records that have customer ID
@@ -687,6 +719,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Addresses By Country ID
+	 *
+	 * Get the total number of addresses by country records in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
@@ -707,6 +741,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Addresses By Zone ID
 	 *
+	 * Get the total number of addresses by zone records in the database.
+	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
 	 * @return int total number of address records that have zone ID
@@ -726,6 +762,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add History
 	 *
+	 * Create a new customer history record in the database.
+	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $comment
 	 *
@@ -744,6 +782,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Histories
 	 *
+	 * Delete customer history records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -760,6 +800,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Histories
+	 *
+	 * Get the record of the customer history records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
@@ -790,6 +832,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
+	 * Get the total number of customer history records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int total number of history records that have customer ID
@@ -809,6 +853,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Wishlists
 	 *
+	 * Delete customer wishlist records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -825,6 +871,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Wishlist By Store ID
+	 *
+	 * Delete customer wishlist by store record in the database.
 	 *
 	 * @param int $store_id primary key of the store record
 	 *
@@ -843,6 +891,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Wishlist By Product ID
 	 *
+	 * Delete customer wishlist by product record in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return void
@@ -859,6 +909,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Transaction
+	 *
+	 * Create a new customer transaction record in the database.
 	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $description
@@ -880,6 +932,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Transactions
 	 *
+	 * Delete customer transaction records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -897,6 +951,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Transactions By Order ID
 	 *
+	 * Delete customer transactions by order records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
@@ -913,6 +969,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Transactions
+	 *
+	 * Get the record of the customer transaction records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
@@ -942,6 +1000,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Transactions
+	 *
+	 * Get the total number of customer transaction records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -981,6 +1041,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Transactions By Order ID
 	 *
+	 * Get the total number of customer transactions by order records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int total number of transaction records that have order ID
@@ -999,6 +1061,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Reward
+	 *
+	 * Create a new customer reward record in the database.
 	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $description
@@ -1020,6 +1084,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rewards
 	 *
+	 * Delete customer reward records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -1037,6 +1103,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Rewards By Order ID
 	 *
+	 * Delete customer reward by order records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
@@ -1053,6 +1121,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Rewards
+	 *
+	 * Get the record of the customer reward records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
@@ -1082,6 +1152,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Rewards
+	 *
+	 * Get the total number of customer reward records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -1121,6 +1193,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Rewards By Order ID
 	 *
+	 * Get the total number of customer reward by order records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int total number of reward records that have order ID
@@ -1140,6 +1214,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Ips
 	 *
+	 * Delete customer ip records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -1156,6 +1232,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Ips
+	 *
+	 * Get the record of the customer ip records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
@@ -1185,6 +1263,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Ips
 	 *
+	 * Get the total number of customer ip records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int total number of ip records that have customer ID
@@ -1203,6 +1283,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Customers By Ip
+	 *
+	 * Get the total number of customers by ip records in the database.
 	 *
 	 * @param string $ip
 	 *
@@ -1223,6 +1305,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Login Attempts
 	 *
+	 * Get the total number of customer login records in the database.
+	 *
 	 * @param string $email
 	 *
 	 * @return array<string, mixed>
@@ -1242,6 +1326,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Login Attempts
 	 *
+	 * Delete customer login records in the database.
+	 *
 	 * @param string $email
 	 *
 	 * @return void
@@ -1259,6 +1345,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Reset Authorizes
 	 *
+	 * Edit customer authorize record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -1275,6 +1363,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Authorizes
+	 *
+	 * Delete customer authorize records in the database.
 	 *
 	 * @param int $customer_id           primary key of the customer record
 	 * @param int $customer_authorize_id primary key of the customer authorize record
@@ -1300,6 +1390,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorize
 	 *
+	 * Get the record of the customer authorize record in the database.
+	 *
 	 * @param int $customer_authorize_id
 	 * @param int $user_authorize_id     primary key of the user authorize record
 	 *
@@ -1320,6 +1412,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorize By Token
 	 *
+	 * Get the record of the customer authorize by token record in the database.
+	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $token
 	 *
@@ -1339,6 +1433,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Authorizes
+	 *
+	 * Get the record of the customer authorize records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
@@ -1372,6 +1468,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Authorizes
+	 *
+	 * Get the total number of customer authorize records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

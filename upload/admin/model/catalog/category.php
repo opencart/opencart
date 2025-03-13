@@ -566,7 +566,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * Delete category description records by language records in the database.
+	 * Delete category descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -612,7 +612,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * Get the record of the category description records by language records in the database.
+	 * Get the record of the category descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -731,7 +731,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Paths By Path ID
 	 *
-	 * Get the record of the category path records by path records in the database.
+	 * Get the record of the category paths by path records in the database.
 	 *
 	 * @param int $path_id primary key of the category path record
 	 *
@@ -791,7 +791,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Filters By Filter ID
 	 *
-	 * Delete filter records by filter records in the database.
+	 * Delete filters by filter records in the database.
 	 *
 	 * @param int $filter_id primary key of the filter record
 	 *
@@ -876,7 +876,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Stores By Store ID
 	 *
-	 * Delete category store records by store records in the database.
+	 * Delete category stores by store records in the database.
 	 *
 	 * @param int $store_id primary key of the store record
 	 *
@@ -962,7 +962,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Layout ID
 	 *
-	 * Delete category layout records by layout records in the database.
+	 * Delete category layouts by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -981,7 +981,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Layouts By Store ID
 	 *
-	 * Delete category layout records by store records in the database.
+	 * Delete category layouts by store records in the database.
 	 *
 	 * @param int $store_id primary key of the store record
 	 *

@@ -41,7 +41,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $zones = $this->model_localisation_zone->getZonesByCountryId($country_id);
 	 */
 	public function getZonesByCountryId(int $country_id): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "' AND `status` = '1' ORDER BY `name`";
+		$sql = "SELECT `z`.*, `zd`.`name` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`country_id` = '" . (int)$country_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `z`.`status` = '1' ORDER BY `zd`.`name`";
 
 		$key = md5($sql);
 

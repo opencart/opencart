@@ -1187,6 +1187,11 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
+				'name'    => 'column',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
 				'name'    => 'sort_order',
 				'type'    => 'int(3)',
 				'default' => '0'
@@ -1457,6 +1462,46 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'country_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'country_description',
+		'field' => [
+			[
+				'name' => 'country_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)'
+			]
+		],
+		'primary' => [
+			'country_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'name',
+				'key'  => [
+					'name'
+				]
+			]
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -7841,6 +7886,46 @@ function oc_db_schema() {
 				'key'   => 'country_id',
 				'table' => 'country',
 				'field' => 'country_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'zone_description',
+		'field' => [
+			[
+				'name' => 'zone_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)'
+			]
+		],
+		'primary' => [
+			'zone_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'name',
+				'key'  => [
+					'name'
+				]
 			]
 		],
 		'engine'  => 'InnoDB',

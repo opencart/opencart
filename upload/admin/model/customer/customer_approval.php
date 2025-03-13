@@ -11,6 +11,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Approvals By Customer ID
 	 *
+	 * Delete customer approvals by customer records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -27,6 +29,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Customer Approvals
+	 *
+	 * Get the record of the customer approval records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -98,6 +102,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Approval
 	 *
+	 * Get the record of the customer approval record in the database.
+	 *
 	 * @param int $customer_approval_id primary key of the customer approval record
 	 *
 	 * @return array<string, mixed> customer approval record that has customer approval ID
@@ -116,6 +122,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Customer Approvals
+	 *
+	 * Get the total number of customer approval records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -231,6 +239,8 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Deny Affiliate
+	 *
+	 * Delete customer approval record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

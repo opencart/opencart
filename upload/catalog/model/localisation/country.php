@@ -101,7 +101,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $countries = $this->model_localisation_country->getCountries();
 	 */
 	public function getCountries(): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "country` WHERE `status` = '1' ORDER BY `name` ASC";
+		$sql = "SELECT `c`.*, `cd`.`name` FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `c`.`status` = '1' AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `cd`.`name` ASC";
 
 		$key = md5($sql);
 

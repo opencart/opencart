@@ -82,6 +82,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			if ($this->user->hasPermission('access', 'catalog/identifier')) {
+				$catalog[] = [
+					'name'     => $this->language->get('text_identifier'),
+					'href'     => $this->url->link('catalog/identifier', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
 			// Attributes
 			$attribute = [];
 

@@ -3405,6 +3405,39 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'identifier',
+		'field' => [
+			[
+				'name' => 'identifier_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(96)'
+			],
+			[
+				'name' => 'description',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(48)'
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'identifier_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'information',
 		'field' => [
 			[
@@ -5326,11 +5359,6 @@ function oc_db_schema() {
 				'key'   => 'product_id',
 				'table' => 'product',
 				'field' => 'product_id'
-			],
-			[
-				'key'   => 'product_identifier_id',
-				'table' => 'product_identifier',
-				'field' => 'product_identifier_id'
 			]
 		],
 		'index' => [
@@ -5340,39 +5368,6 @@ function oc_db_schema() {
 					'code'
 				]
 			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'product_identifier',
-		'field' => [
-			[
-				'name' => 'product_identifier_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(96)'
-			],
-			[
-				'name' => 'description',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'code',
-				'type' => 'varchar(48)'
-			],
-			[
-				'name' => 'status',
-				'type' => 'tinyint(1)',
-				'default' => '0'
-			]
-		],
-		'primary' => [
-			'product_identifier_id'
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',

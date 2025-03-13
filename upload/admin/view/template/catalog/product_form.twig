@@ -164,6 +164,57 @@
                     <div id="error-model" class="invalid-feedback"></div>
                   </div>
                 </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_product_code }}</label>
+                  <div class="col-sm-10">
+
+                    <div class="input-group">
+                      <select name="stock_status_id" id="input-stock-status" class="form-select">
+                        {% for product_code in product_codes %}
+                          <option value="{{ product_code.product_code_id }}" selected{% endif %}>{{ product_code.name }}</option>
+                        {% endfor %}
+                      </select>
+
+                      <input type="text" name="value" value="" placeholder="{{ entry_product_code }}" id="input-download" data-oc-target="autocomplete-download" class="form-control" autocomplete="off"/>
+
+                      <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button>
+                    </div>
+
+                    <div class="input-group">
+                      <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                        <table id="product-code" class="table m-0">
+                          <tbody>
+
+                            {% for product_code in product_codes %}
+                              <tr id="product-code-{{ product_code.code }}">
+                                <td>{{ product_code.name }}
+
+                                  <input type="hidden" name="product_code[]" value="{{ product_code.code }}"/>
+
+
+                                </td>
+                                <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              </tr>
+                            {% endfor %}
+
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {% if master_id %}
+                        <div class="input-group-text">
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="override[product_download]" value="1" id="input-variant-download" data-oc-toggle="switch" data-oc-target="#input-download, #product-download" class="form-check-input"{% if override.product_download %} checked{% endif %}/> <label for="input-variant-download" class="form-check-label"></label>
+                          </div>
+                        </div>
+                      {% endif %}
+
+                    </div>
+                    <div class="form-text">{{ help_product_code }}</div>
+                  </div>
+                </div>
+
                 <div class="row mb-3">
                   <label for="input-sku" class="col-sm-2 col-form-label">{{ entry_sku }}</label>
                   <div class="col-sm-10">
@@ -180,6 +231,9 @@
                     <div class="form-text">{{ help_sku }}</div>
                   </div>
                 </div>
+
+
+
                 <div class="row mb-3">
                   <label for="input-upc" class="col-sm-2 col-form-label">{{ entry_upc }}</label>
                   <div class="col-sm-10">

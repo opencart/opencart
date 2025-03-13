@@ -69,12 +69,15 @@ $_['entry_meta_description']     = 'Meta Tag Description';
 $_['entry_store']                = 'Stores';
 $_['entry_keyword']              = 'Keyword';
 $_['entry_model']                = 'Model';
+$_['entry_product_code']         = 'Product Codes';
+
 $_['entry_sku']                  = 'SKU';
 $_['entry_upc']                  = 'UPC';
 $_['entry_ean']                  = 'EAN';
 $_['entry_jan']                  = 'JAN';
 $_['entry_isbn']                 = 'ISBN';
 $_['entry_mpn']                  = 'MPN';
+
 $_['entry_location']             = 'Location';
 $_['entry_shipping']             = 'Requires Shipping';
 $_['entry_manufacturer']         = 'Manufacturer';

@@ -263,7 +263,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('localisation/country');
 	 *
-	 * $this->model_catalog_category->addDescription($country_id, $language_id, $country_data);
+	 * $this->model_localisation_country->addDescription($country_id, $language_id, $country_data);
 	 */
 	public function addDescription(int $country_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "country_description` SET `country_id` = '" . (int)$country_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");

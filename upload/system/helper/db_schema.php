@@ -7824,7 +7824,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'country_id',
+			'zone_id',
 			'language_id'
 		],
 		'foreign' => [

@@ -3413,7 +3413,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'name',
-				'type' => 'varchar(96)'
+				'type' => 'varchar(64)'
 			],
 			[
 				'name' => 'description',

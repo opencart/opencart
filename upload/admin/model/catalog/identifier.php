@@ -11,26 +11,26 @@ class Identifier extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Identifier
 	 *
-	 * Create a new review record in the database.
+	 * Create a new identifier record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
-	 * @return int returns the primary key of the new review record
+	 * @return int returns the primary key of the new identifier record
 	 *
 	 * @example
 	 *
-	 * $review_data = [
+	 * $identifier_data = [
 	 *     'author'     => 'Author Name',
 	 *     'product_id' => 1,
-	 *     'text'       => 'Review Text',
+	 *     'text'       => 'identifier Text',
 	 *     'rating'     => 4,
 	 *     'status'     => 0,
 	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
-	 * $this->load->model('catalog/review');
+	 * $this->load->model('catalog/identifier');
 	 *
-	 * $review_id = $this->model_catalog_review->addReview($review_data);
+	 * $identifier_id = $this->model_catalog_identifier->addIdentifier($identifier_data);
 	 */
 	public function addIdentifier(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
@@ -43,11 +43,11 @@ class Identifier extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Review
+	 * Edit Identifier
 	 *
-	 * Edit review record in the database.
+	 * Edit identifier record in the database.
 	 *
-	 * @param int                  $review_id primary key of the review record
+	 * @param int                  $identifier_id primary key of the identifier record
 	 * @param array<string, mixed> $data      array of data
 	 *
 	 * @return void
@@ -57,15 +57,15 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 * $review_data = [
 	 *     'author'     => 'Author Name',
 	 *     'product_id' => 1,
-	 *     'text'       => 'Review Text',
+	 *     'text'       => 'Identifier Text',
 	 *     'rating'     => 4,
 	 *     'status'     => 1,
 	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
-	 * $this->load->model('catalog/review');
+	 * $this->load->model('catalog/identifier');
 	 *
-	 * $this->model_catalog_review->editReview($review_id, $review_data);
+	 * $this->model_catalog_identifier->editIdentifier($identifier_id, $identifier_data);
 	 */
 	public function editIdentifier(int $identifier_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `identifier_id` = '" . (int)$identifier_id . "'");
@@ -74,19 +74,19 @@ class Identifier extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Review
+	 * Delete Identifier
 	 *
-	 * Delete review record in the database.
+	 * Delete identifier record in the database.
 	 *
-	 * @param int $review_id primary key of the review record
+	 * @param int $identifier_id primary key of the identifier record
 	 *
 	 * @return void
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/review');
+	 * $this->load->model('catalog/identifier');
 	 *
-	 * $this->model_catalog_review->deleteReview($review_id);
+	 * $this->model_catalog_identifier->deleteIdentifier($identifier_id);
 	 */
 	public function deleteIdentifier(int $identifier_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "identifier` WHERE `identifier_id` = '" . (int)$identifier_id . "'");
@@ -95,19 +95,19 @@ class Identifier extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Review
+	 * Get Identifier
 	 *
-	 * Get the record of the review record in the database.
+	 * Get the record of the identifier record in the database.
 	 *
-	 * @param int $review_id primary key of the review record
+	 * @param int $identifier_id primary key of the identifier record
 	 *
-	 * @return array<string, mixed> review record that has review ID
+	 * @return array<string, mixed> identifier record that has identifier ID
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/review');
+	 * $this->load->model('catalog/identifier');
 	 *
-	 * $review_info = $this->model_catalog_review->getReview($review_id);
+	 * $identifier_info = $this->model_catalog_identifier->getIdentifier($identifier_id);
 	 */
 	public function getIdentifier(int $identifier_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "identifier` WHERE `identifier_id` = '" . (int)$identifier_id . "'");
@@ -116,31 +116,24 @@ class Identifier extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Reviews
+	 * Get Identifiers
 	 *
-	 * Get the record of the review records in the database.
+	 * Get the record of the identifier records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return array<int, array<string, mixed>> review records
+	 * @return array<int, array<string, mixed>> identifier records
 	 *
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'filter_product'   => 'Product Name',
-	 *     'filter_author'    => 'Author Name',
-	 *     'filter_status'    => 1,
-	 *     'filter_date_from' => '2021-01-01',
-	 *     'filter_date_to'   => '2021-01-31',
-	 *     'sort'             => 'DESC',
-	 *     'order'            => 'r.date_added',
-	 *     'start'            => 0,
-	 *     'limit'            => 10
+	 *     'start' => 0,
+	 *     'limit' => 10
 	 * ];
 	 *
-	 * $this->load->model('catalog/review');
+	 * $this->load->model('catalog/identifier');
 	 *
-	 * $results = $this->model_catalog_review->getReviews($filter_data);
+	 * $results = $this->model_catalog_identifier->getIdentifiers($filter_data);
 	 */
 	public function getIdentifiers(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "identifier` ORDER BY `name` ASC";
@@ -163,33 +156,21 @@ class Identifier extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Reviews
+	 * Get Total Identifiers
 	 *
-	 * Get the total number of review records in the database.
+	 * Get the total number of identifier records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 * @return int total number of review records
+	 * @return int total number of identifier records
 	 *
 	 * @example
 	 *
-	 * $filter_data = [
-	 *     'filter_product'   => 'Product Name',
-	 *     'filter_author'    => 'Author Name',
-	 *     'filter_status'    => 1,
-	 *     'filter_date_from' => '2021-01-01',
-	 *     'filter_date_to'   => '2021-01-31',
-	 *     'sort'             => 'DESC',
-	 *     'order'            => 'r.date_added',
-	 *     'start'            => 0,
-	 *     'limit'            => 10
-	 * ];
+	 * $this->load->model('catalog/identifier');
 	 *
-	 * $this->load->model('catalog/review');
-	 *
-	 * $review_total = $this->model_catalog_review->getTotalReviews($filter_data);
+	 * $identifier_total = $this->model_catalog_identifier->getTotalIdentifiers();
 	 */
-	public function getTotalIdentifiers(array $data = []): int {
+	public function getTotalIdentifiers(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "identifier`");
 
 		return (int)$query->row['total'];

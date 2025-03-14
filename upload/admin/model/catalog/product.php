@@ -1390,6 +1390,30 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Code
+	 *
+	 * Create a new product code record in the database.
+	 *
+	 * @param int                  $product_id primary key of the product record
+	 * @param array<string, mixed> $data       array of data
+	 *
+	 * @return void
+	 */
+	public function addCode(int $product_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . (int)$product_id . "', `code` = '" . (int)$this->db->escape($data['code']) . "', `value` = '" . $this->db->escape($data['value']) . "'");
+	}
+
+	public function deleteCodes(int $product_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_code` WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
+	public function getCodes(int $product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_code` WHERE `product_id` = '" . (int)$product_id . "'");
+
+		return $query->rows;
+	}
+
+	/**
 	 * Add Category
 	 *
 	 * Create a new product category record in the database.

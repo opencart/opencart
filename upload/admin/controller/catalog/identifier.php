@@ -201,29 +201,25 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
-			'country_id'          => 0,
-			'status'              => 0,
-			'country_description' => [],
-		];
-
-		$post_info = oc_filter_data($filter_data, $this->request->post);
-
-		if (oc_strlen($this->request->post['iso_code_2']) != 2) {
-			$json['error']['iso_code_2'] = $this->language->get('error_iso_code_2');
+		if (!oc_validate_length($this->request->post['name'], 1, 64)) {
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (oc_strlen($this->request->post['iso_code_3']) != 3) {
-			$json['error']['iso_code_3'] = $this->language->get('error_iso_code_3');
+		if (!oc_validate_length($this->request->post['description'], 1, 255)) {
+			$json['error']['description'] = $this->language->get('error_description');
+		}
+
+		if (!oc_validate_length($this->request->post['code'], 3, 48)) {
+			$json['error']['code'] = $this->language->get('error_code');
 		}
 
 		if (!$json) {
-			$this->load->model('catalog/country');
+			$this->load->model('catalog/identifier');
 
-			if (!$this->request->post['country_id']) {
-				$json['country_id'] = $this->model_catalog_country->addCountry($this->request->post);
+			if (!$this->request->post['identifier_id']) {
+				$json['identifier_id'] = $this->model_catalog_identifier->addIdentifier($this->request->post);
 			} else {
-				$this->model_catalog_country->editCountry($this->request->post['country_id'], $this->request->post);
+				$this->model_catalog_identifier->editIdentifier($this->request->post['identifier_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -239,7 +235,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function delete(): void {
-		$this->load->language('catalog/country');
+		$this->load->language('catalog/identifier');
 
 		$json = [];
 
@@ -249,57 +245,30 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
-		if (!$this->user->hasPermission('modify', 'catalog/country')) {
+		if (!$this->user->hasPermission('modify', 'catalog/identifier')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Store
-		$this->load->model('setting/store');
+		$this->load->model('catalog/identifier');
+		$this->load->model('catalog/product');
 
-		// Customer
-		$this->load->model('customer/customer');
+		foreach ($selected as $identifier_id) {
+			$identifier_info = $this->model_catalog_identifier->getIdentifier($identifier_id);
 
-		// Zone
-		$this->load->model('catalog/zone');
+			if ($identifier_info) {
+				$identifier_total = $this->model_catalog_product->getCodeByCode($identifier_info['code']);
 
-		// Geo Zone
-		$this->load->model('catalog/geo_zone');
-
-		foreach ($selected as $country_id) {
-			if ($this->config->get('config_country_id') == $country_id) {
-				$json['error'] = $this->language->get('error_default');
-			}
-
-			$store_total = $this->model_setting_store->getTotalStoresByCountryId($country_id);
-
-			if ($store_total) {
-				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
-			}
-
-			$address_total = $this->model_customer_customer->getTotalAddressesByCountryId($country_id);
-
-			if ($address_total) {
-				$json['error'] = sprintf($this->language->get('error_address'), $address_total);
-			}
-
-			$zone_total = $this->model_catalog_zone->getTotalZonesByCountryId($country_id);
-
-			if ($zone_total) {
-				$json['error'] = sprintf($this->language->get('error_zone'), $zone_total);
-			}
-
-			$zone_to_geo_zone_total = $this->model_catalog_geo_zone->getTotalZoneToGeoZoneByCountryId($country_id);
-
-			if ($zone_to_geo_zone_total) {
-				$json['error'] = sprintf($this->language->get('error_zone_to_geo_zone'), $zone_to_geo_zone_total);
+				if ($identifier_total) {
+					$json['error'] = sprintf($this->language->get('error_identifier'), $identifier_total);
+				}
 			}
 		}
 
 		if (!$json) {
-			$this->load->model('catalog/country');
+			$this->load->model('catalog/identifier');
 
-			foreach ($selected as $country_id) {
-				$this->model_catalog_country->deleteCountry($country_id);
+			foreach ($selected as $identifier_id) {
+				$this->model_catalog_identifier->deleteIdentifier($identifier_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

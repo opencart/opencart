@@ -682,40 +682,16 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['model'] = '';
 		}
 
-		if (!empty($product_info)) {
-			$data['sku'] = $product_info['sku'];
-		} else {
-			$data['sku'] = '';
-		}
+		// Product Identifiers
+		$this->load->model('catalog/identifier');
 
-		if (!empty($product_info)) {
-			$data['upc'] = $product_info['upc'];
-		} else {
-			$data['upc'] = '';
-		}
+		$data['identifiers'] = $this->model_catalog_identifier->getIdentifiers();
 
+		// Filter
 		if (!empty($product_info)) {
-			$data['ean'] = $product_info['ean'];
+			$data['product_codes'] = $this->model_catalog_product->getCodes($product_id);
 		} else {
-			$data['ean'] = '';
-		}
-
-		if (!empty($product_info)) {
-			$data['jan'] = $product_info['jan'];
-		} else {
-			$data['jan'] = '';
-		}
-
-		if (!empty($product_info)) {
-			$data['isbn'] = $product_info['isbn'];
-		} else {
-			$data['isbn'] = '';
-		}
-
-		if (!empty($product_info)) {
-			$data['mpn'] = $product_info['mpn'];
-		} else {
-			$data['mpn'] = '';
+			$data['product_codes'] = [];
 		}
 
 		if (!empty($product_info)) {

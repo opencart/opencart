@@ -358,7 +358,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $zone_total = $this->model_localisation_zone->getTotalZones();
 	 */
 	public function getTotalZones(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z`";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id = `zd`.`zone_id`)";
 
 		if (!empty($data['filter_country'])) {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`z`.`country_id` = `c`.`country_id`)";
@@ -377,6 +377,8 @@ class Zone extends \Opencart\System\Engine\Model {
 		if (!empty($data['filter_code'])) {
 			$implode[] = "LCASE(`z`.`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code']) . '%') . "'";
 		}
+
+		$implode[] = "`cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);

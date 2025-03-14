@@ -60,6 +60,12 @@ $_['text_customer_telephone']    = 'Customer Telephone';
 $_['text_missing']               = 'Missing Orders';
 $_['text_default']               = 'Default';
 $_['text_picklist']              = 'Dispatch Note';
+$_['text_sku']                   = 'SKU';
+$_['text_upc']                   = 'UPC';
+$_['text_ean']                   = 'EAN';
+$_['text_jan']                   = 'JAN';
+$_['text_isbn']                  = 'ISBN';
+$_['text_mpn']                   = 'MPN';
 
 // Column
 $_['column_order_id']            = 'Order ID';
@@ -115,12 +121,6 @@ $_['entry_date_from']            = 'Date From';
 $_['entry_date_to']              = 'Date To';
 $_['entry_date_modified_from']   = 'Modified Date From';
 $_['entry_date_modified_to']     = 'Modified Date To';
-$_['text_sku']                   = 'SKU';
-$_['text_upc']                   = 'UPC';
-$_['text_ean']                   = 'EAN';
-$_['text_jan']                   = 'JAN';
-$_['text_isbn']                  = 'ISBN';
-$_['text_mpn']                   = 'MPN';
 
 // Help
 $_['help_override']              = 'If the customers order is being blocked from changing the order status due to an anti-fraud extension enable override.';

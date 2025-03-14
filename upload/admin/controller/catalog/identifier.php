@@ -163,12 +163,6 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($identifier_id_info)) {
-			$data['description'] = $identifier_id_info['description'];
-		} else {
-			$data['description'] = '';
-		}
-
-		if (!empty($identifier_id_info)) {
 			$data['code'] = $identifier_id_info['code'];
 		} else {
 			$data['code'] = '';
@@ -203,10 +197,6 @@ class Identifier extends \Opencart\System\Engine\Controller {
 
 		if (!oc_validate_length($this->request->post['name'], 1, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
-		}
-
-		if (!oc_validate_length($this->request->post['description'], 1, 255)) {
-			$json['error']['description'] = $this->language->get('error_description');
 		}
 
 		if (!oc_validate_length($this->request->post['code'], 3, 48)) {

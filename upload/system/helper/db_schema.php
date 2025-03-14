@@ -3416,10 +3416,6 @@ function oc_db_schema() {
 				'type' => 'varchar(64)'
 			],
 			[
-				'name' => 'description',
-				'type' => 'varchar(255)'
-			],
-			[
 				'name' => 'code',
 				'type' => 'varchar(48)'
 			],

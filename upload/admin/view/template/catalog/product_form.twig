@@ -174,25 +174,22 @@
                         {% endfor %}
                       </select>
                       <input type="text" value="" placeholder="{{ entry_product_code }}" id="input-code" class="form-control"/>
-                      <button type="button" id="button-code-add" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button>
+                      <button type="button" id="button-code" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button>
                     </div>
 
                     <div class="input-group">
                       <div class="form-control p-0" style="height: 150px; overflow: auto;">
                         <table id="product-code" class="table m-0">
                           <tbody>
-
+                            {% set code_row = 0 %}
                             {% for product_code in product_codes %}
                               <tr id="product-code-{{ product_code.code }}">
-                                <td>{{ product_code.name }}
-
-                                  <input type="hidden" name="product_code[]" value="{{ product_code.code }}"/>
-
-                                </td>
+                                <td>{{ product_code.code }}<input type="hidden" name="product_code[{{ code_row }}][code]" value="{{ product_code.code }}"/></td>
+                                <td>{{ product_code.value }}<input type="hidden" name="product_code[{{ code_row }}][value]" value="{{ product_code.value }}"/></td>
                                 <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                               </tr>
+                              {% set code_row = code_row + 1 %}
                             {% endfor %}
-
                           </tbody>
                         </table>
                       </div>
@@ -1401,6 +1398,24 @@
 <script type="text/javascript"><!--
 $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
     language: '{{ ckeditor }}'
+});
+
+var code_row = {{ code_row }};
+
+$('#button-code').on('click', function() {
+    var html = '';
+
+    html += '<tr id="product-code-' + code_row + '">';
+    html += '  <td>{{ product_code.code }}<input type="hidden" name="product_code[' + code_row + '][code]" value="{{ product_code.code }}"/></td>';
+    html += '  <td>{{ product_code.value }}<input type="hidden" name="product_code[' + code_row + '][value]" value="{{ product_code.value }}"/></td>';
+    html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+
+    $('#product-code').append(html);
+});
+
+$('#product-code').on('click', '.btn', function() {
+    $(this).parent().parent().remove();
 });
 
 // Manufacturer

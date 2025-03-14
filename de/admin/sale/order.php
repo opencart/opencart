@@ -60,6 +60,12 @@ $_['text_customer_telephone']    = 'Kundentelefon';
 $_['text_missing']               = 'Fehlende Bestellungen';
 $_['text_default']               = 'Standard';
 $_['text_picklist']              = 'Versandschein';
+$_['text_sku']                   = 'Artikelnummer';
+$_['text_upc']                   = 'UPC';
+$_['text_ean']                   = 'EAN';
+$_['text_jan']                   = 'JAN';
+$_['text_isbn']                  = 'ISBN';
+$_['text_mpn']                   = 'MPN';
 
 // Column
 $_['column_order_id']            = 'Bestellnummer';
@@ -115,12 +121,6 @@ $_['entry_date_from']            = 'Stammen aus';
 $_['entry_date_to']              = 'Datum bis';
 $_['entry_date_modified_from']   = 'Modified Date From';
 $_['entry_date_modified_to']     = 'Modified Date To';
-$_['text_sku']                   = 'Artikelnummer';
-$_['text_upc']                   = 'UPC';
-$_['text_ean']                   = 'EAN';
-$_['text_jan']                   = 'JAN';
-$_['text_isbn']                  = 'ISBN';
-$_['text_mpn']                   = 'MPN';
 
 // Help
 $_['help_override']              = 'Wenn die Änderung des Bestellstatus der Kundenbestellung aufgrund einer Betrugsschutzerweiterung blockiert ist, aktivieren Sie die Überschreibung.';

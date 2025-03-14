@@ -10,6 +10,8 @@ namespace Opencart\Admin\Model\Localisation;
 class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Stock Status
+	 * 
+	 * Create a new stock status record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -45,6 +47,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Stock Status
+	 * 
+	 * Edit stock status record in the database. 
 	 *
 	 * @param int                  $stock_status_id primary key of the stock status record
 	 * @param array<string, mixed> $data            array of data
@@ -73,6 +77,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Stock Status
+	 * 
+	 * Delete stock status record in the database.
 	 *
 	 * @param int $stock_status_id primary key of the stock status record
 	 *
@@ -92,6 +98,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Stock Statuses By Language ID
+	 * 
+	 * Delete stock statuses by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -111,6 +119,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stock Status
+	 * 
+	 * Get the record of the stock status record in the database.
 	 *
 	 * @param int $stock_status_id primary key of the stock status record
 	 *
@@ -130,6 +140,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stock Statuses
+	 * 
+	 * Get the record of the stock status records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -186,6 +198,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 * 
+	 * Create a new stock status description record in the database.
 	 *
 	 * @param int                  $stock_status_id primary key of the stock status record
 	 * @param int                  $language_id     primary key of the language record
@@ -211,6 +225,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 * 
+	 * Get the record of the stock status description records in the database.
 	 *
 	 * @param int $stock_status_id primary key of the stock status record
 	 *
@@ -236,6 +252,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
+	 * 
+	 * Get the record of the stock status descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -255,6 +273,8 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Stock Statuses
+	 * 
+	 * Get the total number of stock status records in the database.
 	 *
 	 * @return int total number of stock status records
 	 *

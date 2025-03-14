@@ -10,6 +10,8 @@ namespace Opencart\Admin\Model\Localisation;
 class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Location
+	 * 
+	 * Create a new location record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -39,6 +41,8 @@ class Location extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Location
+	 * 
+	 * Edit location record in the database.
 	 *
 	 * @param int                  $location_id primary key of the location record
 	 * @param array<string, mixed> $data        array of data
@@ -67,6 +71,8 @@ class Location extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Location
+	 * 
+	 * Delete location record in the database.
 	 *
 	 * @param int $location_id primary key of the location record
 	 *
@@ -84,6 +90,8 @@ class Location extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Location
+	 * 
+	 * Get the record of the location record in the database.
 	 *
 	 * @param int $location_id primary key of the location record
 	 *
@@ -103,6 +111,8 @@ class Location extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Locations
+	 * 
+	 * Get the record of the location records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -160,6 +170,8 @@ class Location extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Locations
+	 * 
+	 * Get the total number of location records in the database.
 	 *
 	 * @return int total number of location records
 	 *

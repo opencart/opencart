@@ -10,6 +10,8 @@ namespace Opencart\Admin\Model\Localisation;
 class ReturnStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return Status
+	 * 
+	 * Create a new return status record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -45,6 +47,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Return Status
+	 * 
+	 * Edit return status record in the database.
 	 *
 	 * @param int                  $return_status_id primary key of the return status record
 	 * @param array<string, mixed> $data             array of data
@@ -73,6 +77,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Return Status
+	 * 
+	 * Delete return status record in the database.
 	 *
 	 * @param int $return_status_id primary key of the return status record
 	 *
@@ -92,6 +98,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Return Statuses By Language ID
+	 * 
+	 * Delete return statuses by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -111,6 +119,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Return Status
+	 * 
+	 * Get the record of the return status record in the database.
 	 *
 	 * @param int $return_status_id primary key of the return status record
 	 *
@@ -130,6 +140,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Return Statuses
+	 * 
+	 * Get the record of the return status records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -186,6 +198,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 * 
+	 * Create a new return status description record in the database.
 	 *
 	 * @param int                  $return_status_id primary key of the return status record
 	 * @param int                  $language_id      primary key of the language record
@@ -211,6 +225,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 * 
+	 * Get the record of the return status description records in the database.
 	 *
 	 * @param int $return_status_id primary key of the return status record
 	 *
@@ -236,6 +252,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
+	 * 
+	 * Get the record of the return status descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -255,6 +273,8 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Return Statuses
+	 * 
+	 * Get the total number of return status records in the database.
 	 *
 	 * @return int total number of return status records
 	 *

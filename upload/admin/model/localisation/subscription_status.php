@@ -10,6 +10,8 @@ namespace Opencart\Admin\Model\Localisation;
 class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription Status
+	 * 
+	 * Create a new subscription status record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -45,6 +47,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Subscription Status
+	 * 
+	 * Edit subscription status record in the database.
 	 *
 	 * @param int                  $subscription_status_id primary key of the subscription status record
 	 * @param array<string, mixed> $data                   array of data
@@ -73,6 +77,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Subscription Status
+	 * 
+	 * Delete subscription status record in the database.
 	 *
 	 * @param int $subscription_status_id primary key of the subscription status record
 	 *
@@ -92,6 +98,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Subscription Statuses By Language ID
+	 * 
+	 * Delete subscription statuses by language record in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -111,6 +119,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription Status
+	 * 
+	 * Get the record of the subscription status record in the database.
 	 *
 	 * @param int $subscription_status_id primary key of the subscription status record
 	 *
@@ -130,6 +140,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription Statuses
+	 * 
+	 * Get the record of the subscription status records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -186,6 +198,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
+	 * 
+	 * Create a new subscription status description record in the database.
 	 *
 	 * @param int                  $subscription_status_id primary key of the subscription status record
 	 * @param int                  $language_id            primary key of the language record
@@ -211,6 +225,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 * 
+	 * Get the record of the subscription status description records in the database.
 	 *
 	 * @param int $subscription_status_id primary key of the subscription status record
 	 *
@@ -236,6 +252,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
+	 * 
+	 * Get the record of the subscription status descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -255,6 +273,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Subscription Statuses
+	 * 
+	 * Get the total number of subscription status records in the database.
 	 *
 	 * @return int total number of subscription status records
 	 *

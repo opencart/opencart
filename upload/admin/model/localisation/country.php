@@ -10,6 +10,8 @@ namespace Opencart\Admin\Model\Localisation;
 class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Country
+	 * 
+	 * Create a new country record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -45,6 +47,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Country
+	 * 
+	 * Edit country record in the database.
 	 *
 	 * @param int                  $country_id primary key of the country record
 	 * @param array<string, mixed> $data       array of data
@@ -79,6 +83,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Country
+	 * 
+	 * Delete country record in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
@@ -100,6 +106,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Country
+	 * 
+	 * Get the record of the country record in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
@@ -119,6 +127,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Country By Iso Code 2
+	 * 
+	 * Get the record of the country iso code 2 record in the database.
 	 *
 	 * @param string $iso_code_2
 	 *
@@ -138,6 +148,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Country By Iso Code 3
+	 * 
+	 * Get the record of the country iso code 3 record in the database.
 	 *
 	 * @param string $iso_code_3
 	 *
@@ -157,6 +169,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Countries
+	 * 
+	 * Get the record of the country records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -357,6 +371,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Countries
+	 * 
+	 * Get the total number of country records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -406,6 +422,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Countries By Address Format ID
+	 * 
+	 * Get the total number of countries by address format records in the database.
 	 *
 	 * @param int $address_format_id primary key of the address format record
 	 *

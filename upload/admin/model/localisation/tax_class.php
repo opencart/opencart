@@ -10,6 +10,8 @@ namespace Opencart\Admin\Model\Localisation;
 class TaxClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Tax Class
+	 * 
+	 * Create a new tax class record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -44,6 +46,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Tax Class
+	 * 
+	 * Edit tax class record in the database.
 	 *
 	 * @param int                  $tax_class_id primary key of the tax class record
 	 * @param array<string, mixed> $data         array of data
@@ -77,6 +81,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Tax Class
+	 * 
+	 * Delete tax class record in the database.
 	 *
 	 * @param int $tax_class_id primary key of the tax class record
 	 *
@@ -98,6 +104,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Tax Class
+	 * 
+	 * Get the record of the tax class record in the database.
 	 *
 	 * @param int $tax_class_id primary key of the tax class record
 	 *
@@ -117,6 +125,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Tax Classes
+	 * 
+	 * Get the record of the tax class records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -173,6 +183,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Tax Classes
+	 * 
+	 * Get the total number of tax class records in the database.
 	 *
 	 * @return int total number of tax class records
 	 *
@@ -190,6 +202,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Tax Rule
+	 * 
+	 * Create a new tax rule record in the database.
 	 *
 	 * @param int                  $tax_class_id primary key of the tax class record
 	 * @param array<string, mixed> $data         array of data
@@ -214,6 +228,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Tax Rules
+	 * 
+	 * Delete tax rule records in the database.
 	 *
 	 * @param int $tax_class_id primary key of the tax class record
 	 *
@@ -231,6 +247,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Tax Rules
+	 * 
+	 * Get the record of the tax rule records in the database.
 	 *
 	 * @param int $tax_class_id primary key of the tax class record
 	 *
@@ -250,6 +268,8 @@ class TaxClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Tax Rules By Tax Rate ID
+	 * 
+	 * Get the total number of tax rule records in the database.
 	 *
 	 * @param int $tax_rate_id primary key of the tax rate record
 	 *

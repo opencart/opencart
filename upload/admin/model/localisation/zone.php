@@ -10,6 +10,8 @@ namespace Opencart\Admin\Model\Localisation;
 class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Zone
+	 * 
+	 * Create a new zone record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -42,7 +44,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Zone
+	 * Edit zone record in the database.
 	 *
 	 * @param int                  $zone_id primary key of the zone record
 	 * @param array<string, mixed> $data    array of data
@@ -75,6 +77,8 @@ class Zone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Zone
+	 * 
+	 * Delete zone record in the database.
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
@@ -96,6 +100,8 @@ class Zone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Zone
+	 * 
+	 * Get the record of the zone record in the database.
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
@@ -115,6 +121,8 @@ class Zone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Zones
+	 * 
+	 * Get the record of the country records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -194,6 +202,8 @@ class Zone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Zones By Country ID
+	 * 
+	 * Get the record of zones by country records in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
@@ -336,6 +346,8 @@ class Zone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Zones
+	 * 
+	 * Get the total number of total zone records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -391,6 +403,8 @@ class Zone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Zones By Country ID
+	 * 
+	 * Get the total number of total zones by country records in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *

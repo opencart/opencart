@@ -44,6 +44,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Zone
+	 * 
 	 * Edit zone record in the database.
 	 *
 	 * @param int                  $zone_id primary key of the zone record

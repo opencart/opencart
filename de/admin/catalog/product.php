@@ -70,14 +70,6 @@ $_['entry_store']                = 'Online-Shop (Store)';
 $_['entry_keyword']              = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_model']                = 'Modell';
 $_['entry_product_code']         = 'Product Codes';
-
-$_['entry_sku']                  = 'Artikelnummer';
-$_['entry_upc']                  = 'UPC';
-$_['entry_ean']                  = 'EAN';
-$_['entry_jan']                  = 'JAN';
-$_['entry_isbn']                 = 'ISBN';
-$_['entry_mpn']                  = 'MPN';
-
 $_['entry_location']             = 'Standort';
 $_['entry_shipping']             = 'Erfordert Versand';
 $_['entry_manufacturer']         = 'Hersteller';
@@ -123,12 +115,6 @@ $_['entry_subscription']         = 'Abonnementplan';
 
 // Help
 $_['help_tag']                   = 'Durch Komma getrennt';
-$_['help_sku']                   = 'Lagerhaltungseinheit';
-$_['help_upc']                   = 'Universeller Produktcode';
-$_['help_ean']                   = 'Europäische Artikelnummer';
-$_['help_jan']                   = 'Japanische Artikelnummer';
-$_['help_isbn']                  = 'Internationale Standardbuchnummer';
-$_['help_mpn']                   = 'Herstellerteilenummer';
 $_['help_minimum']               = 'Erzwingen Sie eine Mindestbestellmenge';
 $_['help_stock_status']          = 'Status, der angezeigt wird, wenn ein Produkt nicht vorrätig ist';
 $_['help_manufacturer']          = '(Autovervollständigung)';

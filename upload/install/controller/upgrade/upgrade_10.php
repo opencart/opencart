@@ -70,10 +70,10 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product' AND COLUMN_NAME = '" . $field . "'");
 
 				if ($query->num_rows) {
-					$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `" . $field . "` != ''");
+					$product_query = $this->db->query("SELECT " . $field . " FROM `" . DB_PREFIX . "product` WHERE `" . $field . "` != ''");
 
 					foreach ($product_query->rows as $product) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `code` = '" . $this->db->escape($field) . "', `value` = '" . $this->db->escape($product[$field]) . "'");
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . $this->db->escape($product['product_id']) . "', `code` = '" . $this->db->escape($field) . "', `value` = '" . $this->db->escape($product[$field]) . "'");
 					}
 
 					$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` DROP `" . $field . "`");

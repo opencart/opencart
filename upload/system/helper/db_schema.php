@@ -3409,7 +3409,8 @@ function oc_db_schema() {
 		'field' => [
 			[
 				'name' => 'identifier_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'auto_increment' => true
 			],
 			[
 				'name' => 'name',

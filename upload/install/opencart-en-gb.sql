@@ -1617,6 +1617,20 @@ VALUES (3, 'UK VAT Zone', 'UK VAT'),
 -----------------------------------------------------------
 
 --
+-- Dumping data for table `oc_identifier`
+--
+
+INSERT INTO `oc_identifier` (`identifier_id`, `name`, `code`, `status`)
+VALUES (1, 'Stock Keeping Unit', 'SKU', 1),
+       (2, 'Universal Product Code', 'UPC', 1),
+       (3, 'European Article Number', 'EAN', 1),
+       (4, 'Japanese Article Number', 'JAN', 1),
+       (5, 'International Standard Book Number', 'ISBN', 1),
+       (6, 'Manufacturer Part Number', 'MPN', 1);
+
+-----------------------------------------------------------
+
+--
 -- Dumping data for table `oc_information`
 --
 

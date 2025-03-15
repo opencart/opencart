@@ -170,7 +170,7 @@
                     <div class="input-group">
                       <select id="input-code" class="form-select">
                         {% for identifier in identifiers %}
-                          <option value="{{ identifier.code }}">{{ identifier.name }}</option>
+                          <option value="{{ identifier.code }}">{{ identifier.code }}</option>
                         {% endfor %}
                       </select>
                       <input type="text" value="" placeholder="{{ entry_product_code }}" id="input-value" class="form-control w-75"/>
@@ -182,7 +182,7 @@
                           <tbody>
                             {% set code_row = 0 %}
                             {% for product_code in product_codes %}
-                              <tr id="product-code-{{ product_code.code }}">
+                              <tr id="code-row-{{ product_code.code }}">
                                 <td style="width: 1px;">{{ product_code.code }}<input type="hidden" name="product_code[{{ code_row }}][code]" value="{{ product_code.code }}"/></td>
                                 <td>{{ product_code.value }}<input type="hidden" name="product_code[{{ code_row }}][value]" value="{{ product_code.value }}"/></td>
                                 <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
@@ -1302,13 +1302,15 @@ $('#button-code').on('click', function() {
     let code = $('#input-code').val();
     let value = $('#input-value').val();
 
-    html += '<tr id="product-code-' + code_row + '">';
-    html += '  <td>{{ product_code.code }}<input type="hidden" name="product_code[' + code_row + '][code]" value="' + code + '"/></td>';
-    html += '  <td>{{ product_code.value }}<input type="hidden" name="product_code[' + code_row + '][value]" value="' + value + '"/></td>';
+    html += '<tr id="code-row-' + code_row + '">';
+    html += '  <td>' + code + '<input type="hidden" name="product_code[' + code_row + '][code]" value="' + code + '"/></td>';
+    html += '  <td>' + value + '<input type="hidden" name="product_code[' + code_row + '][value]" value="' + value + '"/></td>';
     html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#product-code').append(html);
+
+    code_row++;
 });
 
 $('#product-code').on('click', '.btn', function() {

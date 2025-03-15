@@ -11,6 +11,8 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Language
 	 *
+	 * Create a new language record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new language record
@@ -262,6 +264,8 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Language
 	 *
+	 * Edit language record in the database.
+	 *
 	 * @param int                  $language_id primary key of the language record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -290,6 +294,8 @@ class Language extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Language
+	 *
+	 * Delete language record in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -418,6 +424,8 @@ class Language extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Language
 	 *
+	 * Get the record of the language record in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed> language record that has language ID
@@ -483,6 +491,8 @@ class Language extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Languages
+	 *
+	 * Get the record of the language records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -582,6 +592,8 @@ class Language extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Languages
+	 *
+	 * Get the total number of language records in the database.
 	 *
 	 * @return int total number of language records
 	 *

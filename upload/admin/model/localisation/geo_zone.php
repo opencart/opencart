@@ -11,6 +11,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Geo Zone
 	 *
+	 * Create a new geo zone record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new geo zone record
@@ -45,6 +47,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Geo Zone
 	 *
+	 * Edit geo zone record in the database.
+	 *
 	 * @param int                  $geo_zone_id primary key of the geo zone record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -78,6 +82,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Geo Zone
 	 *
+	 * Delete geo zone record in the database.
+	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return void
@@ -99,6 +105,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Geo Zone
 	 *
+	 * Get the record of the geo zone record in the database.
+	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return array<string, mixed> geo zone record that has geo zone ID
@@ -117,6 +125,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Geo Zones
+	 *
+	 * Get the record of the geo zone records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -185,6 +195,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Geo Zones
 	 *
+	 * Get the total number of geo zone records in the database.
+	 *
 	 * @return int total number of geo zone records
 	 *
 	 * @example
@@ -208,6 +220,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Zone
+	 *
+	 * Create a new zone to geo zone record in the database.
 	 *
 	 * @param int                  $geo_zone_id primary key of the geo zone record
 	 * @param array<string, mixed> $data        array of data
@@ -233,6 +247,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Zones
 	 *
+	 * Delete zone to geo zone record in the database.
+	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return void
@@ -249,6 +265,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Zones
+	 *
+	 * Get the record of the zone to geo zone records in the database.
 	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
@@ -269,6 +287,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones
 	 *
+	 * Get the total number of zone to geo zone records in the database.
+	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 *
 	 * @return int total number of zone records
@@ -288,6 +308,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones By Country ID
 	 *
+	 * Get the total number of zone to geo zone by country records in the database.
+	 *
 	 * @param int $country_id primary key of the country record
 	 *
 	 * @return int total number of zone records that have country ID
@@ -306,6 +328,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Zones By Zone ID
+	 *
+	 * Get the total number of zone to geo zone by zone records in the database.
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *

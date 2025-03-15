@@ -3420,8 +3420,8 @@ function oc_db_schema() {
 				'type' => 'varchar(48)'
 			],
 			[
-				'name' => 'status',
-				'type' => 'tinyint(1)',
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
 				'default' => '0'
 			]
 		],

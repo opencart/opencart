@@ -11,6 +11,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Address Format
 	 *
+	 * Create a new address format record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -35,6 +37,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Address Format
 	 *
+	 * Edit address format record in the database.
+	 *
 	 * @param int                  $address_format_id primary key of the address format record
 	 * @param array<string, mixed> $data              array of data
 	 *
@@ -58,6 +62,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Address Format
 	 *
+	 * Delete address format record in the database.
+	 *
 	 * @param int $address_format_id primary key of the address format record
 	 *
 	 * @return void
@@ -74,6 +80,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Address Format
+	 *
+	 * Get the record of the address format record in the database.
 	 *
 	 * @param int $address_format_id primary key of the address format record
 	 *
@@ -93,6 +101,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Address Formats
+	 *
+	 * Get the record of the address format records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -131,6 +141,8 @@ class AddressFormat extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Address Formats
+	 *
+	 * Get the total number of address format records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *

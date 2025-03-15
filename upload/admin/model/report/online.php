@@ -11,6 +11,8 @@ class Online extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Online
 	 *
+	 * Get the record of the customer online record in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> online records
@@ -64,6 +66,8 @@ class Online extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Online
+	 *
+	 * Get the total number of total customer online records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *

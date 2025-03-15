@@ -1,9 +1,8 @@
 <?php
 namespace Aws;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
 
 //-----------------------------------------------------------------------------
@@ -273,7 +272,7 @@ function describe_type($input)
  */
 function default_http_handler()
 {
-    return new \Aws\Handler\GuzzleV6\GuzzleHandler();
+    return new \Aws\Handler\Guzzle\GuzzleHandler();
 }
 
 /**
@@ -283,7 +282,7 @@ function default_http_handler()
  */
 function default_user_agent()
 {
-    return \GuzzleHttp\default_user_agent();
+    return Utils::defaultUserAgent();
 }
 
 /**

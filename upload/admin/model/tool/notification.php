@@ -11,6 +11,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Notification
 	 *
+	 * Create a new notification record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -36,6 +38,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
+	 * Edit notification status record in the database.
+	 *
 	 * @param int  $notification_id primary key of the notification record
 	 * @param bool $status
 	 *
@@ -54,6 +58,8 @@ class Notification extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Notification
 	 *
+	 * Delete notification record in the database.
+	 *
 	 * @param int $notification_id primary key of the notification record
 	 *
 	 * @return void
@@ -70,6 +76,8 @@ class Notification extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Notification
+	 *
+	 * Get the record of the notification record in the database.
 	 *
 	 * @param int $notification_id primary key of the notification record
 	 *
@@ -89,6 +97,8 @@ class Notification extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Notifications
+	 *
+	 * Get the record of the notification records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -134,6 +144,8 @@ class Notification extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Notifications
+	 *
+	 * Get the total number of total notification records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *

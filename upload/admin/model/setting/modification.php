@@ -11,6 +11,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Modification
 	 *
+	 * Create a new modification record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
@@ -40,6 +42,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Modification
 	 *
+	 * Delete modification record in the database.
+	 *
 	 * @param int $modification_id primary key of the modification record
 	 *
 	 * @return void
@@ -57,6 +61,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Modifications By Extension Install ID
 	 *
+	 * Delete modifications by extension install records in the database.
+	 *
 	 * @param int $extension_install_id primary key of the extension install record
 	 *
 	 * @return void
@@ -73,6 +79,8 @@ class Modification extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Status
+	 *
+	 * Edit modification status record in the database.
 	 *
 	 * @param int  $modification_id primary key of the modification record
 	 * @param bool $status
@@ -92,6 +100,8 @@ class Modification extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Modification
 	 *
+	 * Get the record of the modification record in the database.
+	 *
 	 * @param int $modification_id primary key of the modification record
 	 *
 	 * @return array<string, mixed> modification record that has modification ID
@@ -110,6 +120,8 @@ class Modification extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Modifications
+	 *
+	 * Get the record of the modification records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -171,6 +183,8 @@ class Modification extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Modifications
+	 *
+	 * Get the total number of total modification records in the database.
 	 *
 	 * @return int total number of modification records
 	 *

@@ -11,6 +11,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription
 	 *
+	 * Delete subscription record in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return void
@@ -32,6 +34,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Remaining
 	 *
+	 * Edit subscription remaining record in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 * @param int $remaining
 	 *
@@ -49,6 +53,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Date Next
+	 *
+	 * Edit date next by subscription record in the database.
 	 *
 	 * @param int    $subscription_id primary key of the subscription record
 	 * @param string $date_next
@@ -68,6 +74,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription By Customer Payment ID
 	 *
+	 * Delete subscription by customer payment record in the database.
+	 *
 	 * @param int $customer_payment_id primary key of the customer payment record
 	 *
 	 * @return void
@@ -84,6 +92,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription
+	 *
+	 * Get the record of the subscription record in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
@@ -111,6 +121,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription By Order Product ID
 	 *
+	 * Get the record of the subscriptions by order product records in the database.
+	 *
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
 	 *
@@ -137,6 +149,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscriptions
+	 *
+	 * Get the record of the subscription records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -251,6 +265,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscriptions
 	 *
+	 * Get the total number of total subscription records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of subscription records
@@ -319,6 +335,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscriptions By Store ID
 	 *
+	 * Get the total number of total subscriptions by store status records in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return int total number of subscription records that have store ID
@@ -337,6 +355,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Subscriptions By Subscription Status ID
+	 *
+	 * Get the total number of total subscriptions by subscription status records in the database.
 	 *
 	 * @param int $subscription_status_id primary key of the subscription_status record
 	 *
@@ -357,6 +377,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Product
 	 *
+	 * Delete subscription product records in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return void
@@ -373,6 +395,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscribed Products
+	 *
+	 * Get the record of the subscribed product records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
@@ -392,6 +416,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Options
+	 *
+	 * Get the record of the subscription option records in the database.
 	 *
 	 * @param int $subscription_id         primary key of the subscription record
 	 * @param int $subscription_product_id primary key of the subscription product record
@@ -415,6 +441,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Options
 	 *
+	 * Delete subscription option records in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return void
@@ -431,6 +459,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add History
+	 *
+	 * Create a new subscription history record in the database.
 	 *
 	 * @param int    $subscription_id        primary key of the subscription record
 	 * @param int    $subscription_status_id primary key of the subscription status record
@@ -454,6 +484,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Histories
 	 *
+	 * Delete subscription history records in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return void
@@ -470,6 +502,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Histories
+	 *
+	 * Get the record of the subscription history records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 * @param int $start
@@ -500,6 +534,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
+	 * Get the total number of total subscription history records in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return int total number of history records that have subscription ID
@@ -518,6 +554,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Histories By Subscription Status ID
+	 *
+	 * Get the total number of total subscription histories by subscription status records in the database.
 	 *
 	 * @param int $subscription_status_id primary key of the subscription status record
 	 *
@@ -538,6 +576,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Logs
 	 *
+	 * Delete subscription log records in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return void
@@ -554,6 +594,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Logs
+	 *
+	 * Get the record of the subscription log records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 * @param int $start
@@ -583,6 +625,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Logs
+	 *
+	 * Get the total number of total subscription log records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *

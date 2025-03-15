@@ -11,6 +11,8 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Api
 	 *
+	 * Create a new api record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new api record
@@ -46,6 +48,8 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Api
 	 *
+	 * Edit api record in the database.
+	 *
 	 * @param int                  $api_id primary key of the Api record
 	 * @param array<string, mixed> $data   array of data
 	 *
@@ -80,6 +84,8 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Api
 	 *
+	 * Delete api record in the database.
+	 *
 	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return void
@@ -99,6 +105,8 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Api
 	 *
+	 * Get the record of the api record in the database.
+	 *
 	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<string, mixed> api record that has api ID
@@ -117,6 +125,8 @@ class Api extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Apis
+	 *
+	 * Get the record of the api records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -177,6 +187,8 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Apis
 	 *
+	 * Get the total number of total api records in the database.
+	 *
 	 * @return int total number of api records
 	 *
 	 * @example
@@ -193,6 +205,8 @@ class Api extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Ip
+	 *
+	 * Create a new api ip record in the database.
 	 *
 	 * @param int    $api_id primary key of the Api record
 	 * @param string $ip
@@ -212,6 +226,8 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Ips
 	 *
+	 * Delete api ip records in the database.
+	 *
 	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return void
@@ -228,6 +244,8 @@ class Api extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Ips
+	 *
+	 * Get the record of the api ip records in the database.
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *
@@ -253,6 +271,8 @@ class Api extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Histories
+	 *
+	 * Get the record of the api history records in the database.
 	 *
 	 * @param int $api_id primary key of the Api record
 	 * @param int $start
@@ -282,6 +302,8 @@ class Api extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Histories
+	 *
+	 * Get the total number of total api history records in the database.
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *

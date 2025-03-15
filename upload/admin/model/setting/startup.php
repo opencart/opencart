@@ -11,6 +11,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Startup
 	 *
+	 * Create a new startup record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -37,6 +39,8 @@ class Startup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Startup
+	 *
+	 * Delete startup record in the database.
 	 *
 	 * @param int $startup_id primary key of the startup record
 	 *
@@ -72,6 +76,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
+	 * Edit startup status record in the database.
+	 *
 	 * @param int  $startup_id primary key of the startup record
 	 * @param bool $status
 	 *
@@ -89,6 +95,8 @@ class Startup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Startup
+	 *
+	 * Get the record of the startup record in the database.
 	 *
 	 * @param int $startup_id primary key of the startup record
 	 *
@@ -127,6 +135,8 @@ class Startup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Startups
+	 *
+	 * Get the record of the startup records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -187,6 +197,8 @@ class Startup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Startups
+	 *
+	 * Get the total number of total startup records in the database.
 	 *
 	 * @return int total number of startup records
 	 *

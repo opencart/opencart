@@ -11,6 +11,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Upload
 	 *
+	 * Create a new upload record in the database.
+	 *
 	 * @param string $name
 	 * @param string $filename
 	 *
@@ -33,6 +35,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Upload
 	 *
+	 * Delete upload record in the database.
+	 *
 	 * @param int $upload_id primary key of the upload record
 	 *
 	 * @return void
@@ -49,6 +53,8 @@ class Upload extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Upload
+	 *
+	 * Get the record of the upload record in the database.
 	 *
 	 * @param int $upload_id primary key of the upload record
 	 *
@@ -87,6 +93,8 @@ class Upload extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Uploads
+	 *
+	 * Get the record of the upload records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -170,6 +178,8 @@ class Upload extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Uploads
+	 *
+	 * Get the total number of total upload records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *

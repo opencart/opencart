@@ -182,13 +182,7 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 
 			if (!empty($data['filter_search'])) {
-				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
-				$sql .= " OR LCASE(`p`.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "' OR pc.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
 			}
 
 			$sql .= ")";

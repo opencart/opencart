@@ -48,7 +48,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 * Edit identifier record in the database.
 	 *
 	 * @param int                  $identifier_id primary key of the identifier record
-	 * @param array<string, mixed> $data      array of data
+	 * @param array<string, mixed> $data          array of data
 	 *
 	 * @return void
 	 *

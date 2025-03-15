@@ -182,7 +182,7 @@
                           <tbody>
                             {% set code_row = 0 %}
                             {% for product_code in product_codes %}
-                              <tr id="code-row-{{ product_code.code }}">
+                              <tr id="code-row-{{ code_row }}">
                                 <td style="width: 1px;">{{ product_code.code }}<input type="hidden" name="product_code[{{ code_row }}][code]" value="{{ product_code.code }}"/></td>
                                 <td>{{ product_code.value }}<input type="hidden" name="product_code[{{ code_row }}][value]" value="{{ product_code.value }}"/></td>
                                 <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
@@ -1303,7 +1303,7 @@ $('#button-code').on('click', function() {
     let value = $('#input-value').val();
 
     html += '<tr id="code-row-' + code_row + '">';
-    html += '  <td>' + code + '<input type="hidden" name="product_code[' + code_row + '][code]" value="' + code + '"/></td>';
+    html += '  <td style="width: 1px;">' + code + '<input type="hidden" name="product_code[' + code_row + '][code]" value="' + code + '"/></td>';
     html += '  <td>' + value + '<input type="hidden" name="product_code[' + code_row + '][value]" value="' + value + '"/></td>';
     html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';

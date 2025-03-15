@@ -5333,7 +5333,8 @@ function oc_db_schema() {
 		'field' => [
 			[
 				'name' => 'product_code_id',
-				'type' => 'int(11)'
+				'type' => 'int(11)',
+				'auto_increment' => true
 			],
 			[
 				'name' => 'product_id',

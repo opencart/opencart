@@ -17,39 +17,66 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
+			$query = $this->db->query("SELECT * FROM '" . DB_PREFIX . "identifier'");
+
+			if (!$query->num_rows) {
+				$identifiers = [];
+
+				$identifiers[] = [
+					'name'   => 'Stock Keeping Unit',
+					'code'   => 'SKU'
+				];
+
+				$identifiers[] = [
+					'name'   => 'Universal Product Code',
+					'code'   => 'UPC'
+				];
+
+				$identifiers[] = [
+					'name'   => 'European Article Number',
+					'code'   => 'EAN'
+				];
+
+				$identifiers[] = [
+					'name'   => 'Japanese Article Number',
+					'code'   => 'JAN'
+				];
+
+				$identifiers[] = [
+					'name'   => 'International Standard Book Number',
+					'code'   => 'ISBN'
+				];
+
+				$identifiers[] = [
+					'name'   => 'Manufacturer Part Number',
+					'code'   => 'MPN'
+				];
+
+				foreach ($identifiers as $identifier) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape($identifier['name']) . "',  `code` = '" . $this->db->escape($identifier['code']) . "', `status` = '1'");
+				}
+			}
+
 			// Drop Fields
-			$remove = [];
-
-			$remove[] = [
-				'table' => 'product',
-				'field' => 'sku'
+			$remove = [
+				'sku',
+				'upc',
+				'ean',
+				'jan',
+				'isbn'
 			];
 
-			$remove[] = [
-				'table' => 'product',
-				'field' => 'upc'
-			];
-
-			$remove[] = [
-				'table' => 'product',
-				'field' => 'ean'
-			];
-
-			$remove[] = [
-				'table' => 'product',
-				'field' => 'jan'
-			];
-
-			$remove[] = [
-				'table' => 'product',
-				'field' => 'isbn'
-			];
-
-			foreach ($remove as $result) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
+			foreach ($remove as $field) {
+				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product' AND COLUMN_NAME = '" . $field . "'");
 
 				if ($query->num_rows) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $result['table'] . "` DROP `" . $result['field'] . "`");
+					$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `" . $field . "` != ''");
+
+					foreach ($product_query->rows as $product) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `code` = '" . $this->db->escape($field) . "', `value` = '" . $this->db->escape($product[$field]) . "'");
+					}
+
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` DROP `" . $field . "`");
 				}
 			}
 		} catch (\ErrorException $exception) {

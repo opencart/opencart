@@ -1172,57 +1172,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
-			'product_id'           => 0,
-			'master_id'            => 0,
-			'model'                => '',
-			'sku'                  => '',
-			'upc'                  => '',
-			'ean'                  => '',
-			'jan'                  => '',
-			'isbn'                 => '',
-			'mpn'                  => '',
-			'location'             => '',
-			'variant'              => '',
-			'override'             => '',
-			'quantity'             => 0,
-			'stock_status_id'      => 0,
-			'image'                => '',
-			'manufacturer_id'      => 0,
-			'shipping'             => 0,
-			'price'                => 0,
-			'points'               => 0,
-			'tax_class_id'         => 0,
-			'date_available'       => 0,
-			'weight'               => 0,
-			'weight_class_id'      => 0,
-			'length'               => 0,
-			'width'                => 0,
-			'height'               => 0,
-			'length_class_id'      => 0,
-			'subtract'             => 0,
-			'minimum'              => 0,
-			'rating'               => 0,
-			'sort_order'           => 0,
-			'status'               => 0,
-			'product_attribute'    => [],
-			'product_description'  => [],
-			'product_discount'     => [],
-			'product_filter'       => [],
-			'product_image'        => [],
-			'product_option'       => [],
-			'product_option_value' => [],
-			'product_related'      => [],
-			'product_reward'       => [],
-			'product_subscription' => [],
-			'product_category'     => [],
-			'product_download'     => [],
-			'product_layout'       => [],
-			'product_store'        => [],
-			'product_seo_url'      => []
-		];
-
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post;
 
 		foreach ($post_info['product_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 255)) {

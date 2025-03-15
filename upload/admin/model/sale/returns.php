@@ -11,6 +11,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return
 	 *
+	 * Create a new return record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data to be inserted
 	 *
 	 * @return int
@@ -48,6 +50,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return
 	 *
+	 * Edit return record in the database.
+	 *
 	 * @param int                  $return_id primary key of the return record
 	 * @param array<string, mixed> $data      array of data
 	 *
@@ -84,6 +88,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return Status ID
 	 *
+	 * Edit return statuses by return_status record in the database.
+	 *
 	 * @param int $return_id        primary key of the return record
 	 * @param int $return_status_id primary key of the return status record
 	 *
@@ -101,6 +107,8 @@ class Returns extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Return
+	 *
+	 * Delete return record in the database.
 	 *
 	 * @param int $return_id primary key of the return record
 	 *
@@ -121,6 +129,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return
 	 *
+	 * Get the record of the return record in the database.
+	 *
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<string, mixed> return record that has return ID
@@ -139,6 +149,8 @@ class Returns extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Returns
+	 *
+	 * Get the record of the return records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -245,6 +257,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Returns
 	 *
+	 * Get the total number of total return records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of return records
@@ -315,6 +329,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Returns By Return Status ID
 	 *
+	 * Get the total number of total returns by return status records in the database.
+	 *
 	 * @param int $return_status_id primary key of the return status record
 	 *
 	 * @return int total number of return records that have return status ID
@@ -333,6 +349,8 @@ class Returns extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Returns By Return Reason ID
+	 *
+	 * Get the total number of total returns by return reason records in the database.
 	 *
 	 * @param int $return_reason_id primary key of the return reason record
 	 *
@@ -353,6 +371,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Returns By Return Action ID
 	 *
+	 * Get the total number of total returns by return action records in the database.
+	 *
 	 * @param int $return_action_id primary key of the return action record
 	 *
 	 * @return int total number of return records that have return action ID
@@ -371,6 +391,8 @@ class Returns extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add History
+	 *
+	 * Create a new return history record in the database.
 	 *
 	 * @param int    $return_id        primary key of the return record
 	 * @param int    $return_status_id primary key of the return status record
@@ -394,6 +416,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Return Histories
 	 *
+	 * Delete return history records in the database.
+	 *
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return void
@@ -410,6 +434,8 @@ class Returns extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Histories
+	 *
+	 * Get the record of the return history records in the database.
 	 *
 	 * @param int $return_id primary key of the return record
 	 * @param int $start
@@ -440,6 +466,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
+	 * Get the total number of total return history records in the database.
+	 *
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return int total number of history records that have return ID
@@ -458,6 +486,8 @@ class Returns extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Histories By Return Status ID
+	 *
+	 * Get the total number of total return histories by return status records in the database.
 	 *
 	 * @param int $return_status_id primary key of the return status record
 	 *

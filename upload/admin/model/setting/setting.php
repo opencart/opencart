@@ -11,6 +11,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Settings
 	 *
+	 * Get the record of the setting records in the database.
+	 *
 	 * @param int $store_id
 	 *
 	 * @return array<int, array<string, mixed>> setting records that have store ID
@@ -137,6 +139,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Value
 	 *
+	 * Get the record of the setting value record in the database.
+	 *
 	 * @param string $key
 	 * @param int    $store_id
 	 *
@@ -160,6 +164,8 @@ class Setting extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Value
+	 *
+	 * Edit setting value record in the database.
 	 *
 	 * @param string              $code
 	 * @param string              $key

@@ -10,7 +10,7 @@ namespace Opencart\Admin\Model\Localisation;
 class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return Reason
-	 * 
+	 *
 	 * Create a new return reason record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
@@ -47,7 +47,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Return Reason
-	 * 
+	 *
 	 * Edit return reason record in the database.
 	 *
 	 * @param int                  $return_reason_id primary key of the return reason record
@@ -77,7 +77,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Return Reason
-	 * 
+	 *
 	 * Delete return reason record in the database.
 	 *
 	 * @param int $return_reason_id primary key of the return reason record
@@ -98,7 +98,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Return Reasons By Language ID
-	 * 
+	 *
 	 * Delete return reasons by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
@@ -119,7 +119,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Return Reason
-	 * 
+	 *
 	 * Get the record of the return reason record in the database.
 	 *
 	 * @param int $return_reason_id primary key of the return reason record
@@ -140,7 +140,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Return Reasons
-	 * 
+	 *
 	 * Get the record of the return reason records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
@@ -198,7 +198,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
-	 * 
+	 *
 	 * Create a new return reason description record in the database.
 	 *
 	 * @param int                  $return_reason_id primary key of the return reason record
@@ -225,7 +225,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
-	 * 
+	 *
 	 * Get the record of the return reason description records in the database.
 	 *
 	 * @param int $return_reason_id primary key of the return reason record
@@ -252,7 +252,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
-	 * 
+	 *
 	 * Get the record of the return reason descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
@@ -273,7 +273,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Return Reasons
-	 * 
+	 *
 	 * Get the total number of return reason records in the database.
 	 *
 	 * @return int total number of return reason records

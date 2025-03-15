@@ -11,6 +11,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Affiliate
 	 *
+	 * Create a new customer affiliate record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
@@ -46,6 +48,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Affiliate
+	 *
+	 * Edit customer affiliate record in the database.
 	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
@@ -84,6 +88,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Balance
 	 *
+	 * Edit customer affiliate balance by customer record in the database.
+	 *
 	 * @param int   $customer_id primary key of the customer record
 	 * @param float $amount
 	 *
@@ -101,6 +107,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Affiliate
+	 *
+	 * Delete customer affiliate in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -120,6 +128,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Affiliate
+	 *
+	 * Get the record of the customer affiliate record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -166,6 +176,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Affiliates
+	 *
+	 * Get the record of the customer affiliate records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -274,6 +286,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Affiliates
 	 *
+	 * Get the total number of total customer affiliate records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of affiliate records
@@ -343,6 +357,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Reports
 	 *
+	 * Get the record of the customer affiliate reports by customer records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $start
 	 * @param int $limit
@@ -372,6 +388,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reports
 	 *
+	 * Delete customer affiliate report records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -388,6 +406,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Reports
+	 *
+	 * Get the total number of total customer affiliate report records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

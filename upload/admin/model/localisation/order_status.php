@@ -10,7 +10,7 @@ namespace Opencart\Admin\Model\Localisation;
 class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Order Status
-	 * 
+	 *
 	 * Create a new order status record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
@@ -47,7 +47,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Order Status
-	 * 
+	 *
 	 * Edit order status record in the database.
 	 *
 	 * @param int                  $order_status_id primary key of the order status record
@@ -77,7 +77,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Order Status
-	 * 
+	 *
 	 * Delete order status record in the database.
 	 *
 	 * @param int $order_status_id primary key of the order status record
@@ -98,7 +98,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Order Statuses By Language ID
-	 * 
+	 *
 	 * Delete order statuses by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
@@ -119,7 +119,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Order Status
-	 * 
+	 *
 	 * Get the record of the order status record in the database.
 	 *
 	 * @param int $order_status_id primary key of the order status record
@@ -140,7 +140,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Order Statuses
-	 * 
+	 *
 	 * Get the record of the order status records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
@@ -198,7 +198,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
-	 * 
+	 *
 	 * Create a new order status description record in the database.
 	 *
 	 * @param int                  $order_status_id primary key of the order status record
@@ -223,7 +223,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
-	 * 
+	 *
 	 * Get the record of the order status description records in the database.
 	 *
 	 * @param int $order_status_id primary key of the order status record
@@ -250,7 +250,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
-	 * 
+	 *
 	 * Get the record of the order status descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
@@ -271,7 +271,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Order Statuses
-	 * 
+	 *
 	 * Get the total number of order status records in the database.
 	 *
 	 * @return int total number of order status records

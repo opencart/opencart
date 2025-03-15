@@ -10,7 +10,7 @@ namespace Opencart\Admin\Model\Localisation;
 class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Currency
-	 * 
+	 *
 	 * Create a new currency record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
@@ -43,7 +43,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Currency
-	 * 
+	 *
 	 * Edit currency record in the database.
 	 *
 	 * @param int                  $currency_id primary key of the currency record
@@ -95,7 +95,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Currency
-	 * 
+	 *
 	 * Delete currency record in the database.
 	 *
 	 * @param int $currency_id primary key of the currency record
@@ -116,7 +116,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Currency
-	 * 
+	 *
 	 * Get the record of the currency record in the database.
 	 *
 	 * @param int $currency_id primary key of the currency record
@@ -137,7 +137,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Currency By Code
-	 * 
+	 *
 	 * @param string $currency primary key of the currency record
 	 *
 	 * @return array<string, mixed>
@@ -156,7 +156,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Currencies
-	 * 
+	 *
 	 * Get the record of the currency records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
@@ -231,7 +231,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Currencies
-	 * 
+	 *
 	 * Get the total number of currency records in the database.
 	 *
 	 * @return int total number of currency records

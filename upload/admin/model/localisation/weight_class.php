@@ -10,7 +10,7 @@ namespace Opencart\Admin\Model\Localisation;
 class WeightClass extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Weight Class
-	 * 
+	 *
 	 * Create a new weight class record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
@@ -43,7 +43,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Weight Class
-	 * 
+	 *
 	 * Edit weight class record in the database.
 	 *
 	 * @param int                  $weight_class_id primary key of the weight class record
@@ -75,7 +75,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Weight Class
-	 * 
+	 *
 	 * Delete weight class record in the database.
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
@@ -98,7 +98,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Weight Classes
-	 * 
+	 *
 	 * Get the record of the weight class records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
@@ -168,7 +168,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Weight Class
-	 * 
+	 *
 	 * Get the record of the weight class record in the database.
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
@@ -189,7 +189,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Weight Classes
-	 * 
+	 *
 	 * Get the total number of weight class records in the database.
 	 *
 	 * @return int total number of weight class records
@@ -208,7 +208,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Description
-	 * 
+	 *
 	 * Create a new weight class description record in the database.
 	 *
 	 * @param int                  $weight_class_id primary key of the weight class record
@@ -236,7 +236,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Descriptions
-	 * 
+	 *
 	 * Delete weight class description records in the database.
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
@@ -255,7 +255,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Descriptions By Language ID
-	 * 
+	 *
 	 * Delete weight class descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
@@ -274,7 +274,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
-	 * 
+	 *
 	 * Get the record of the weight class description records in the database.
 	 *
 	 * @param int $weight_class_id primary key of the weight class record
@@ -301,7 +301,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions By Language ID
-	 * 
+	 *
 	 * Get the record of the weight class descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record

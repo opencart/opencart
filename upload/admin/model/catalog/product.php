@@ -69,6 +69,14 @@ class Product extends \Opencart\System\Engine\Model {
 			$this->model_catalog_product->addDescription($product_id, $language_id, $value);
 		}
 
+		// Code
+		if (isset($data['product_code'])) {
+			foreach ($data['product_code'] as $product_code) {
+				$this->model_catalog_product->addCode($product_id, $product_code);
+
+			}
+		}
+
 		// Categories
 		if (isset($data['product_category'])) {
 			foreach ($data['product_category'] as $category_id) {
@@ -240,6 +248,16 @@ class Product extends \Opencart\System\Engine\Model {
 			$this->model_catalog_product->addDescription($product_id, $language_id, $value);
 		}
 
+		// Code
+		$this->model_catalog_product->deleteCodes($product_id);
+
+		if (isset($data['product_code'])) {
+			foreach ($data['product_code'] as $product_code) {
+				$this->model_catalog_product->addCode($product_id, $product_code);
+
+			}
+		}
+
 		// Categories
 		$this->model_catalog_product->deleteCategories($product_id);
 
@@ -400,6 +418,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['status'] = '0';
 
 			$product_data['product_attribute'] = $this->model_catalog_product->getAttributes($product_id);
+			$product_data['product_code'] = $this->model_catalog_product->getCodes($product_id);
 			$product_data['product_category'] = $this->model_catalog_product->getCategories($product_id);
 			$product_data['product_description'] = $this->model_catalog_product->getDescriptions($product_id);
 			$product_data['product_discount'] = $this->model_catalog_product->getDiscounts($product_id);
@@ -448,6 +467,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		$this->model_catalog_product->deleteAttributes($product_id);
+		$this->model_catalog_product->deleteCodes($product_id);
 		$this->model_catalog_product->deleteCategories($product_id);
 		$this->model_catalog_product->deleteDescriptions($product_id);
 		$this->model_catalog_product->deleteDiscounts($product_id);

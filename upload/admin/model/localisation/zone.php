@@ -95,8 +95,6 @@ class Zone extends \Opencart\System\Engine\Model {
 	public function deleteZone(int $zone_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
-		$this->model_localisation_country->deleteDescriptions($zone_id);
-
 		$this->cache->delete('zone');
 	}
 
@@ -284,6 +282,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * Delete zone descriptions by language records in the database.
 	 *
+	 * @param int $country_id
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -294,7 +293,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_localisation_zone->deleteDescriptionsByLanguageId($language_id);
 	 */
-	public function deleteDescriptionsByLanguageId(int $language_id): void {
+	public function deleteDescriptionsByLanguageId(int $country_id, int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 

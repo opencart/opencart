@@ -99,8 +99,6 @@ class Country extends \Opencart\System\Engine\Model {
 	public function deleteCountry(int $country_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
 
-		$this->model_localisation_country->deleteDescriptions($country_id);
-
 		$this->cache->delete('country');
 	}
 
@@ -272,7 +270,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $country_data['country_description'] = [
-	 *     'name'             => 'Country Name',
+	 *     'name'             => 'Country Name'
 	 * ];
 	 *
 	 * $this->load->model('localisation/country');
@@ -307,6 +305,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * Delete country descriptions by language records in the database.
 	 *
+	 * @param int $country_id
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void
@@ -317,8 +316,8 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_localisation_country->deleteDescriptionsByLanguageId($language_id);
 	 */
-	public function deleteDescriptionsByLanguageId(int $language_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	public function deleteDescriptionsByLanguageId(int $country_id, int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$country_id . "', `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**

@@ -456,10 +456,31 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Zone
 			$this->load->model('localisation/zone');
 
+			// Language
+			$this->load->model('localisation/language');
+
 			foreach ($selected as $zone_id) {
-				$this->model_localisation_zone->deleteZone($zone_id);
+				$zone_description = $this->model_localisation_zone->getDescriptions($zone_id);
+
+				$count = 0;
+
+				foreach ($zone_description as $language_id => $value) {
+					$language_info = $this->model_localisation_language->getLanguage($language_id);
+
+					// Keeps the default zone
+					if ($language_info && $language_info['code'] != 'en-gb') {
+						$this->model_localisation_zone->deleteDescriptionsByLanguageId($zone_id, $language_id);
+					} else {
+						$count++;
+					}
+				}
+
+				if (!$count) {
+					$this->model_localisation_zone->deleteZone($zone_id);
+				}
 			}
 
 			$json['success'] = $this->language->get('text_success');

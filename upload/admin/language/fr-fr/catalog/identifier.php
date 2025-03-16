@@ -23,7 +23,7 @@ $_['entry_status']     = 'Statut';
 // Help
 $_['help_name']        = 'Exemple: l\'Unité de Gestion des Stocks, le Code Universel des Produits, le Code-Barres EAN, le Numéro d\'Article Japonais, le Numéro International Normalisé du Livre (ISBN) ou le Numéro de Pièce du Fabriquant (MPN)';
 $_['help_code']        = 'Exemple: GDT, CUP, EAN, JAN, ISBN or MPN';
-$_['help_regex']       = 'Utilisez regex. E.g: /[^a-zA-Z0-9_-]/';
+$_['help_regex']       = 'Utilisez regex. Exemple: /[^a-zA-Z0-9_-]/';
 $_['help_status']      = 'Activer les identifiants de produits sur la page de détails de produit';
 
 // Error

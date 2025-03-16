@@ -10,7 +10,7 @@ namespace Opencart\Catalog\Model\Localisation;
 class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Zone
-	 * 
+	 *
 	 * Get the record of the zone record in the database.
 	 *
 	 * @param int $zone_id primary key of the zone record
@@ -31,7 +31,7 @@ class Zone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Zones By Country ID
-	 * 
+	 *
 	 * Get the record of the zones by country record in the database.
 	 *
 	 * @param int $country_id primary key of the country record

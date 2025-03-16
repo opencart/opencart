@@ -29,7 +29,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Report
-	 * 
+	 *
 	 * Create a new marketing report record in the database.
 	 *
 	 * @param int    $marketing_id primary key of the marketing record

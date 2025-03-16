@@ -10,7 +10,7 @@ namespace Opencart\Catalog\Model\Localisation;
 class StockStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Stock Status
-	 * 
+	 *
 	 * Get the record of the stock status record in the database.
 	 *
 	 * @param int $stock_status_id primary key of the stock status record
@@ -31,7 +31,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stock Statuses
-	 * 
+	 *
 	 * Get the record of the stock status records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters

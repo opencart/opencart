@@ -10,7 +10,7 @@ namespace Opencart\Catalog\Model\Cms;
 class Article extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Article
-	 * 
+	 *
 	 * Get the record of the article record in the database.
 	 *
 	 * @param int $article_id primary key of the article record
@@ -31,7 +31,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Articles
-	 * 
+	 *
 	 * Get the record of the article records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
@@ -132,7 +132,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Rating
-	 * 
+	 *
 	 * Edit article rating record in the database.
 	 *
 	 * @param int $article_id primary key of the article record
@@ -152,7 +152,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Articles
-	 * 
+	 *
 	 * Get the total number of total article records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
@@ -214,7 +214,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layout ID
-	 * 
+	 *
 	 * Get the record of the article layout record in the database.
 	 *
 	 * @param int $article_id primary key of the article record
@@ -239,7 +239,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Comment
-	 * 
+	 *
 	 * Create a new article comment record in the database.
 	 *
 	 * @param int                  $article_id primary key of the article record
@@ -271,7 +271,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Comment Rating
-	 * 
+	 *
 	 * Edit article comment rating record in the database.
 	 *
 	 * @param int $article_id         primary key of the article record
@@ -292,7 +292,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Comment
-	 * 
+	 *
 	 * Get the record of the article comment record in the database.
 	 *
 	 * @param int $article_comment_id primary key of the article comment record
@@ -313,7 +313,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Comments
-	 * 
+	 *
 	 * Get the record of the article comment records in the database.
 	 *
 	 * @param int                  $article_id primary key of the article record
@@ -394,7 +394,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Comments
-	 * 
+	 *
 	 * Get the total number of total article comment records in the database.
 	 *
 	 * @param int                  $article_id primary key of the article record
@@ -436,7 +436,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Rating
-	 * 
+	 *
 	 * Create a new article rating record in the database.
 	 *
 	 * @param int  $article_id         primary key of the article record
@@ -457,7 +457,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Rating
-	 * 
+	 *
 	 * Delete article rating record in the database.
 	 *
 	 * @param int $article_id         primary key of the article record
@@ -477,7 +477,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Ratings
-	 * 
+	 *
 	 * Get the record of the article rating records in the database.
 	 *
 	 * @param int $article_id         primary key of the article record

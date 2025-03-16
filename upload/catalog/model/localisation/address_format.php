@@ -10,7 +10,7 @@ namespace Opencart\Catalog\Model\Localisation;
 class AddressFormat extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Address Format
-	 * 
+	 *
 	 * Get the record of the address format record in the database.
 	 *
 	 * @param int $address_format_id primary key of the address format record

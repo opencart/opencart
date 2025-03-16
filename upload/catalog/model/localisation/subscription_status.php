@@ -10,7 +10,7 @@ namespace Opencart\Catalog\Model\Localisation;
 class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Status
-	 * 
+	 *
 	 * Get the record of the subscription status record in the database.
 	 *
 	 * @param int $subscription_status_id primary key of the subscription status record
@@ -31,7 +31,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription Statuses
-	 * 
+	 *
 	 * Get the record of the subscription status records in the database.
 	 *
 	 * @return array<int, array<string, mixed>> subscription status records

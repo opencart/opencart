@@ -114,7 +114,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Products
-	 * 
+	 *
 	 * Get the record of the coupon product records in the database.
 	 *
 	 * @param int $coupon_id primary key of the coupon record
@@ -141,7 +141,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Categories
-	 * 
+	 *
 	 * Get the record of the coupon category records in the database.
 	 *
 	 * @param int $coupon_id primary key of the coupon record
@@ -168,7 +168,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add History
-	 * 
+	 *
 	 * Create a new coupon history record in the database.
 	 *
 	 * @param int   $coupon_id   primary key of the coupon record
@@ -190,7 +190,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Coupon Histories By Order ID
-	 * 
+	 *
 	 * Delete coupon history by order records in the database.
 	 *
 	 * @param int $order_id primary key of the order record
@@ -209,7 +209,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Histories
-	 * 
+	 *
 	 * Get the total number of total coupon history records in the database.
 	 *
 	 * @param string $coupon_id primary key of the coupon record
@@ -230,7 +230,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Histories By Customer ID
-	 * 
+	 *
 	 * Get the total number of total coupon history by customer records in the database.
 	 *
 	 * @param int $coupon_id   primary key of the coupon record

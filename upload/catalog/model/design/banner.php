@@ -10,7 +10,7 @@ namespace Opencart\Catalog\Model\Design;
 class Banner extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Banner
-	 * 
+	 *
 	 * Get the record of the banner record in the database.
 	 *
 	 * @param int $banner_id primary key of the banner record

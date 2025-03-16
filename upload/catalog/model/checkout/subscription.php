@@ -10,7 +10,7 @@ namespace Opencart\Catalog\Model\Checkout;
 class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Subscription
-	 * 
+	 *
 	 * Create a new subscription record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
@@ -86,7 +86,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Subscription
-	 * 
+	 *
 	 * Edit subscription record in the database.
 	 *
 	 * @param int                  $subscription_id primary key of the subscription record
@@ -161,7 +161,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Subscription Status
-	 * 
+	 *
 	 * Edit subscription status record in the database.
 	 *
 	 * @param int  $subscription_id        primary key of the subscription record
@@ -181,7 +181,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Remaining
-	 * 
+	 *
 	 * Edit subscription remaining record in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
@@ -201,7 +201,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Trial Remaining
-	 * 
+	 *
 	 * Edit subscription trial remaining record in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
@@ -221,7 +221,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Date Next
-	 * 
+	 *
 	 * Edit date next record in the database.
 	 *
 	 * @param int    $subscription_id primary key of the subscription record
@@ -241,7 +241,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Subscription By Order ID
-	 * 
+	 *
 	 * Delete subscription by order record in the database.
 	 *
 	 * @param int $order_id primary key of the order record
@@ -260,7 +260,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription
-	 * 
+	 *
 	 * Get the record of the subscription record in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
@@ -288,7 +288,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscriptions
-	 * 
+	 *
 	 * Get the record of the subscription records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
@@ -390,7 +390,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Product
-	 * 
+	 *
 	 * Create a new subscription product record in the database.
 	 *
 	 * @param int                  $subscription_id primary key of the subscription record
@@ -431,7 +431,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Subscription Products
-	 * 
+	 *
 	 * Delete subscription product records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
@@ -452,7 +452,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Products
-	 * 
+	 *
 	 * Get the record of the subscription product records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
@@ -473,7 +473,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Product By Order Product ID
-	 * 
+	 *
 	 * Get the record of the subscription products by order product records in the database.
 	 *
 	 * @param int $order_id         primary key of the order record
@@ -495,7 +495,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Option
-	 * 
+	 *
 	 * Create a new subscription option record in the database.
 	 *
 	 * @param int                  $subscription_id         primary key of the subscription record
@@ -524,7 +524,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Options
-	 * 
+	 *
 	 * Delete subscription option records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
@@ -543,7 +543,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Option
-	 * 
+	 *
 	 * Get the record of the subscription option record in the database.
 	 *
 	 * @param int $subscription_id         primary key of the subscription record
@@ -566,7 +566,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Options
-	 * 
+	 *
 	 * Get the record of the subscription option records in the database.
 	 *
 	 * @param int $subscription_id         primary key of the subscription record
@@ -588,7 +588,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add History
-	 * 
+	 *
 	 * Create a new subscription history record in the database.
 	 *
 	 * @param int    $subscription_id        primary key of the subscription record
@@ -612,7 +612,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Log
-	 * 
+	 *
 	 * Create a new subscription log record in the database.
 	 *
 	 * @param int    $subscription_id primary key of the subscription record

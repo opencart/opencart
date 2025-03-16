@@ -11,6 +11,8 @@ class Setting extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Settings
 	 *
+	 * Get the record of the setting records in the database.
+	 *
 	 * @param int $store_id
 	 *
 	 * @return array<int, array<string, mixed>>

@@ -10,7 +10,7 @@ namespace Opencart\Catalog\Model\Localisation;
 class OrderStatus extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Order Status
-	 * 
+	 *
 	 * Get the record of the order status record in the database.
 	 *
 	 * @param int $order_status_id primary key of the order status record
@@ -31,7 +31,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Order Statuses
-	 * 
+	 *
 	 * Get the record of the order status records in the database.
 	 *
 	 * @return array<int, array<string, mixed>> order status records

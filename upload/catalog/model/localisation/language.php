@@ -15,7 +15,7 @@ class Language extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Language
-	 * 
+	 *
 	 * Get the record of the language record in the database.
 	 *
 	 * @param int $language_id primary key of the language record
@@ -95,7 +95,7 @@ class Language extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Languages
-	 * 
+	 *
 	 * Get the record of the language records in the database.
 	 *
 	 * @return array<string, array<string, mixed>> language records

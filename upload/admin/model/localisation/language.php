@@ -75,6 +75,15 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_catalog_category->addDescription($category['category_id'], $language_id, $category);
 		}
 
+		// Country
+		$this->load->model('localisation/country');
+
+		$results = $this->model_localisation_country->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+
+		foreach ($results as $country) {
+			$this->model_localisation_country->addDescription($country['country_id'], $language_id, $country);
+		}
+
 		// Customer Group
 		$this->load->model('customer/customer_group');
 
@@ -258,6 +267,16 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_design_seo_url->addSeoUrl($seo_url['key'], $seo_url['value'], $seo_url['keyword'], $seo_url['store_id'], $language_id, $seo_url['sort_order']);
 		}
 
+		// Zone
+		$this->load->model('localisation/zone');
+
+		$results = $this->model_localisation_zone->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+
+		foreach ($results as $zone) {
+			$this->model_localisation_country->addDescription($zone['zone_id'], $language_id, $zone);
+		}
+
+
 		return $language_id;
 	}
 
@@ -331,6 +350,11 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->load->model('catalog/category');
 
 		$this->model_catalog_category->deleteDescriptionsByLanguageId($language_id);
+
+		// Country
+		$this->load->model('localisation/country');
+
+		$this->model_localisation_country->deleteDescriptionsByLanguageId($language_id);
 
 		// Customer Group
 		$this->load->model('customer/customer_group');

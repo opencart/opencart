@@ -273,9 +273,8 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_zone->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $zone) {
-			$this->model_localisation_country->addDescription($zone['zone_id'], $language_id, $zone);
+			$this->model_localisation_zone->addDescription($zone['zone_id'], $language_id, $zone);
 		}
-
 
 		return $language_id;
 	}
@@ -443,6 +442,11 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByLanguageId($language_id);
+
+		// Zone
+		$this->load->model('localisation/zone');
+
+		$this->model_localisation_zone->deleteDescriptionsByLanguageId($language_id);
 	}
 
 	/**

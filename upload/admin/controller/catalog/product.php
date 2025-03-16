@@ -1194,7 +1194,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$identifier_info = $this->model_catalog_identifier->getIdentifierByCode($product_code['code']);
 
 			if ($identifier_info && $identifier_info['validation'] && !oc_validate_regex($product_code['value'], $identifier_info['validation'])) {
-				$json['error']['option_' . $key] = $this->language->get('error_validation');
+				$json['error']['code_' . $key] = sprintf($this->language->get('error_regex'), $product_code['code']);
 			}
 		}
 		

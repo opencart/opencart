@@ -237,12 +237,10 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'field' => 'status'
 			];
 
-			foreach ($remove as $result) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
+			$this->load->model('upgrade/upgrade');
 
-				if ($query->num_rows) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $result['table'] . "` DROP `" . $result['field'] . "`");
-				}
+			foreach ($remove as $result) {
+				$this->model_upgrade_upgrade->dropField($result['table'], $result['field']);
 			}
 
 			// Drop Tables
@@ -261,11 +259,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			foreach ($remove as $table) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "'");
-
-				if ($query->num_rows) {
-					$this->db->query("DROP TABLE `" . DB_PREFIX . $table . "`");
-				}
+				$this->model_upgrade_upgrade->dropTable($table);
 			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());

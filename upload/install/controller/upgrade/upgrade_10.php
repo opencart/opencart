@@ -23,33 +23,33 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 				$identifiers = [];
 
 				$identifiers[] = [
-					'name'   => 'Stock Keeping Unit',
-					'code'   => 'SKU'
+					'name' => 'Stock Keeping Unit',
+					'code' => 'SKU'
 				];
 
 				$identifiers[] = [
-					'name'   => 'Universal Product Code',
-					'code'   => 'UPC'
+					'name' => 'Universal Product Code',
+					'code' => 'UPC'
 				];
 
 				$identifiers[] = [
-					'name'   => 'European Article Number',
-					'code'   => 'EAN'
+					'name' => 'European Article Number',
+					'code' => 'EAN'
 				];
 
 				$identifiers[] = [
-					'name'   => 'Japanese Article Number',
-					'code'   => 'JAN'
+					'name'  > 'Japanese Article Number',
+					'code' => 'JAN'
 				];
 
 				$identifiers[] = [
-					'name'   => 'International Standard Book Number',
-					'code'   => 'ISBN'
+					'name' => 'International Standard Book Number',
+					'code' => 'ISBN'
 				];
 
 				$identifiers[] = [
-					'name'   => 'Manufacturer Part Number',
-					'code'   => 'MPN'
+					'name' => 'Manufacturer Part Number',
+					'code' => 'MPN'
 				];
 
 				foreach ($identifiers as $identifier) {

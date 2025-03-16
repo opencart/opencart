@@ -17,12 +17,6 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-			// Fix https://github.com/opencart/opencart/issues/11594
-			$this->db->query("UPDATE `" . DB_PREFIX . "layout_route` SET `route` = REPLACE(`route`, '|', '.')");
-			$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '|', '.') WHERE `key` = 'route'");
-			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = REPLACE(`trigger`, '|', '.'), `action` = REPLACE(`action`, '|', '.')");
-			$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `link` = REPLACE(`link`, '|', '.')");
-
 			// order
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'payment_code'");
 
@@ -69,12 +63,10 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 					'field' => 'shipping_code'
 				];
 
-				foreach ($remove as $result) {
-					$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
+				$this->load->model('upgrade/upgrade');
 
-					if ($query->num_rows) {
-						$this->db->query("ALTER TABLE `" . DB_PREFIX . $result['table'] . "` DROP `" . $result['field'] . "`");
-					}
+				foreach ($remove as $result) {
+					$this->model_upgrade_upgrade->dropField($result['table'], $result['field']);
 				}
 			}
 		} catch (\ErrorException $exception) {

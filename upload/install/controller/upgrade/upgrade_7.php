@@ -77,12 +77,6 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 				'field' => 'title'
 			];
 
-			// country
-			$remove[] = [
-				'table' => 'country',
-				'field' => 'name'
-			];
-
 			// custom_field
 			$remove[] = [
 				'table' => 'custom_field',
@@ -155,18 +149,10 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 				'field' => 'date_modified'
 			];
 
-			// zone
-			$remove[] = [
-				'table' => 'zone',
-				'field' => 'name'
-			];
+			$this->load->model('upgrade/upgrade');
 
 			foreach ($remove as $result) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
-
-				if ($query->num_rows) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $result['table'] . "` DROP `" . $result['field'] . "`");
-				}
+				$this->model_upgrade_upgrade->dropField($result['table'], $result['field']);
 			}
 
 			// Drop Tables
@@ -176,11 +162,7 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 			];
 
 			foreach ($remove as $table) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "'");
-
-				if ($query->num_rows) {
-					$this->db->query("DROP TABLE `" . DB_PREFIX . $table . "`");
-				}
+				$this->model_upgrade_upgrade->dropTable($table);
 			}
 
 			// Sort the categories to take advantage of the nested set model

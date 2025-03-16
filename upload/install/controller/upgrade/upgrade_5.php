@@ -267,6 +267,12 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 			// Rename subscription to mail_subscription
 			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = 'mail_subscription' WHERE `code` = 'subscription'");
+
+			// Fix https://github.com/opencart/opencart/issues/11594
+			$this->db->query("UPDATE `" . DB_PREFIX . "layout_route` SET `route` = REPLACE(`route`, '|', '.')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '|', '.') WHERE `key` = 'route'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = REPLACE(`trigger`, '|', '.'), `action` = REPLACE(`action`, '|', '.')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `link` = REPLACE(`link`, '|', '.')");
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

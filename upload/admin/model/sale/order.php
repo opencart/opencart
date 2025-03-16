@@ -11,6 +11,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Order
 	 *
+	 * Delete order record in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
@@ -31,6 +33,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Order
+	 *
+	 * Get the record of the order record in the database.
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
@@ -142,6 +146,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Orders
+	 *
+	 * Get the record of the order records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -287,6 +293,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders
 	 *
+	 * Get the total number of total order records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of order records
@@ -385,6 +393,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Orders By Subscription ID
 	 *
+	 * Get the record of the orders by subscription records in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 * @param int $start
 	 * @param int $limit
@@ -414,6 +424,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Language ID
 	 *
+	 * Get the total number of total orders by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return int total number of order records that have language ID
@@ -432,6 +444,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Orders By Currency ID
+	 *
+	 * Get the total number of total orders by currency records in the database.
 	 *
 	 * @param int $currency_id primary key of the currency record
 	 *
@@ -452,6 +466,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Subscription ID
 	 *
+	 * Get the total number of total orders by subscription records in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return int total number of order records that have subscription ID
@@ -470,6 +486,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Orders By Store ID
+	 *
+	 * Get the total number of total orders by store records in the database.
 	 *
 	 * @param int $store_id primary key of the store record
 	 *
@@ -490,6 +508,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Order Status ID
 	 *
+	 * Get the total number of total orders by order status records in the database.
+	 *
 	 * @param int $order_status_id primary key of the order status record
 	 *
 	 * @return int total number of order records that have order status ID
@@ -508,6 +528,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Orders By Processing Status
+	 *
+	 * Get the total number of total orders by processing status records in the database.
 	 *
 	 * @return int total number of order processing status records
 	 *
@@ -538,6 +560,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Complete Status
 	 *
+	 * Get the total number of total orders by complete status records in the database.
+	 *
 	 * @return int total number of order complete status records
 	 *
 	 * @example
@@ -567,6 +591,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Products
 	 *
+	 * Delete product records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
@@ -586,6 +612,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Product
+	 *
+	 * Get the record of the product record in the database.
 	 *
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
@@ -607,6 +635,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Products
 	 *
+	 * Get the record of the product records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return array<int, array<string, mixed>> product records that have order ID
@@ -625,6 +655,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Products By Product ID
+	 *
+	 * Get the total number of total products by product records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -645,6 +677,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Options
 	 *
+	 * Delete order option records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
@@ -661,6 +695,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Options
+	 *
+	 * Get the record of the order option records in the database.
 	 *
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
@@ -682,6 +718,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Subscription
 	 *
+	 * Delete order subscription record in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
@@ -698,6 +736,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription
+	 *
+	 * Get the record of the order subscription record in the database.
 	 *
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
@@ -719,6 +759,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Totals
 	 *
+	 * Delete order total records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @example
@@ -733,6 +775,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Totals
+	 *
+	 * Get the record of the order total records in the database.
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
@@ -753,6 +797,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Totals By Code
 	 *
+	 * Get the record of the order total by codes by order records in the database.
+	 *
 	 * @param int   $order_id primary key of the order record
 	 * @param mixed $code
 	 *
@@ -772,6 +818,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Sales
+	 *
+	 * Get the total number of total sales records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -845,6 +893,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Create Invoice No
 	 *
+	 * Edit order invoice record in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return string
@@ -897,6 +947,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Order History
 	 *
+	 * Delete order history records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
@@ -913,6 +965,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Histories
+	 *
+	 * Get the record of the order history records in the database.
 	 *
 	 * @param int $order_id primary key of the order record
 	 * @param int $start
@@ -943,6 +997,8 @@ class Order extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Histories
 	 *
+	 * Get the total number of total order history records in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return int total number of history records
@@ -961,6 +1017,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Histories By Order Status ID
+	 *
+	 * Get the total number of total order history by order status records in the database.
 	 *
 	 * @param int $order_status_id primary key of the order status record
 	 *

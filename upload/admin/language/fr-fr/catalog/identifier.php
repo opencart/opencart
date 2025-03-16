@@ -7,6 +7,7 @@ $_['text_success']     = 'Succès: Vous avez modifié les identifiants!';
 $_['text_list']        = 'Liste des Identifiants';
 $_['text_add']         = 'Ajouter des Identifiants';
 $_['text_edit']        = 'Modifier des Identifiants';
+$_['text_regex']       = 'Regex';
 
 // Column
 $_['column_name']      = 'Nom de l\'Identifiant';
@@ -16,11 +17,13 @@ $_['column_action']    = 'Action';
 // Entry
 $_['entry_name']       = 'Nom de l\'Identifiant';
 $_['entry_code']       = 'Code';
+$_['entry_validation'] = 'Validation';
 $_['entry_status']     = 'Statut';
 
 // Help
 $_['help_name']        = 'Exemple: l\'Unité de Gestion des Stocks, le Code Universel des Produits, le Code-Barres EAN, le Numéro d\'Article Japonais, le Numéro International Normalisé du Livre (ISBN) ou le Numéro de Pièce du Fabriquant (MPN)';
 $_['help_code']        = 'Exemple: GDT, CUP, EAN, JAN, ISBN or MPN';
+$_['help_regex']       = 'Utilisez regex. Exemple: /[^a-zA-Z0-9_-]/';
 $_['help_status']      = 'Activer les identifiants de produits sur la page de détails de produit';
 
 // Error

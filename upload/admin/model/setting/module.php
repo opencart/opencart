@@ -11,6 +11,8 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Module
 	 *
+	 * Create a new module record in the database.
+	 *
 	 * @param string               $code
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -39,6 +41,8 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Module
 	 *
+	 * Edit module record in the database.
+	 *
 	 * @param int                  $module_id primary key of the module record
 	 * @param array<string, mixed> $data      array of data
 	 *
@@ -62,6 +66,8 @@ class Module extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Module
+	 *
+	 * Delete module record in the database.
 	 *
 	 * @param int $module_id primary key of the module record
 	 *
@@ -102,6 +108,8 @@ class Module extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Module
 	 *
+	 * Get the record of the module record in the database.
+	 *
 	 * @param int $module_id primary key of the module record
 	 *
 	 * @return array<mixed> module record that has module ID
@@ -124,6 +132,8 @@ class Module extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Modules
+	 *
+	 * Get the record of the module records in the database.
 	 *
 	 * @return array<int, array<string, mixed>> module records
 	 *

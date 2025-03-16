@@ -36,6 +36,8 @@ class Backup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Records
 	 *
+	 * Get the record of the database table records in the database.
+	 *
 	 * @param string $table
 	 * @param int    $start
 	 * @param int    $limit
@@ -68,6 +70,8 @@ class Backup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Records
+	 *
+	 * Get the total number of total database table records in the database.
 	 *
 	 * @param string $table
 	 *

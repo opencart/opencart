@@ -11,6 +11,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Add User
 	 *
+	 * Create a new user record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -40,6 +42,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit User
+	 *
+	 * Edit user status record in the database.
 	 *
 	 * @param int                  $user_id primary key of the user record
 	 * @param array<string, mixed> $data    array of data
@@ -74,6 +78,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Password
 	 *
+	 * Edit user password record in the database.
+	 *
 	 * @param int    $user_id  primary key of the user record
 	 * @param string $password
 	 *
@@ -91,6 +97,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete User
+	 *
+	 * Delete user record in the database.
 	 *
 	 * @param int $user_id primary key of the user record
 	 *
@@ -111,6 +119,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get User
+	 *
+	 * Get the record of the user record in the database.
 	 *
 	 * @param int $user_id primary key of the user record
 	 *
@@ -187,6 +197,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Users
+	 *
+	 * Get the record of the user records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -286,6 +298,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Users
 	 *
+	 * Get the total number of total user records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of user records
@@ -350,6 +364,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Users By Group ID
 	 *
+	 * Get the total number of total users by group records in the database.
+	 *
 	 * @param int $user_group_id primary key of the user group record
 	 *
 	 * @return int total number of user records that have user group ID
@@ -388,6 +404,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Login
 	 *
+	 * Create a new user login record in the database.
+	 *
 	 * @param int                  $user_id primary key of the user record
 	 * @param array<string, mixed> $data    array of data
 	 *
@@ -411,6 +429,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete User Logins
 	 *
+	 * Delete user login records in the database.
+	 *
 	 * @param int $user_id primary key of the user record
 	 *
 	 * @return void
@@ -427,6 +447,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Logins
+	 *
+	 * Get the record of the user login records in the database.
 	 *
 	 * @param int $user_id primary key of the user record
 	 * @param int $start
@@ -461,6 +483,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Logins
 	 *
+	 * Get the total number of total user login records in the database.
+	 *
 	 * @param int $user_id primary key of the user record
 	 *
 	 * @return int total number of login records that have user ID
@@ -483,6 +507,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Authorize
+	 *
+	 * Create a new user authorize record in the database.
 	 *
 	 * @param int                  $user_id primary key of the user record
 	 * @param array<string, mixed> $data    array of data
@@ -508,6 +534,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Authorize Status
 	 *
+	 * Edit user authorize status record in the database.
+	 *
 	 * @param int  $user_authorize_id primary key of the user authorize record
 	 * @param bool $status
 	 *
@@ -525,6 +553,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Authorize Total
+	 *
+	 * Edit user authorize total record in the database.
 	 *
 	 * @param int $user_authorize_id primary key of the user authorize record
 	 * @param int $total
@@ -544,6 +574,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Authorize Total By User ID
 	 *
+	 * Edit user authorize total by user record in the database.
+	 *
 	 * @param int $user_id primary key of the user record
 	 * @param int $total
 	 *
@@ -561,6 +593,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete User Authorizes
+	 *
+	 * Delete user authorize records in the database.
 	 *
 	 * @param int $user_id           primary key of the user record
 	 * @param int $user_authorize_id primary key of the user authorize record
@@ -585,6 +619,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Authorize
+	 *
+	 * Get the record of the user authorize record in the database.
 	 *
 	 * @param int $user_authorize_id primary key of the user authorize record
 	 *
@@ -625,6 +661,8 @@ class User extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Authorizes
 	 *
+	 * Get the record of the user authorize records in the database.
+	 *
 	 * @param int $user_id
 	 * @param int $start
 	 * @param int $limit
@@ -659,6 +697,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Authorizes
+	 *
+	 * Get the total number of total user authorize records in the database.
 	 *
 	 * @param int $user_id primary key of the user record
 	 *
@@ -715,6 +755,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Token
+	 *
+	 * Create a new user token record in the database.
 	 *
 	 * @param int    $user_id primary key of the user record
 	 * @param string $type

@@ -1,0 +1,9 @@
+{
+    "phpdoc-generator.comparisonOfShortTypes": {
+
+        "int": "integer",
+        "bool": "boolean"
+    },
+    "editor.formatOnType": true,
+    "phpdoc-generator.useNamesInTop": true
+}

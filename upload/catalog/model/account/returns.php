@@ -11,6 +11,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return
 	 *
+	 * Create a new return record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -47,6 +49,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return
 	 *
+	 * Get the record of the return reason record in the database.
+	 *
 	 * @param int $return_id primary key of the return record
 	 *
 	 * @return array<string, mixed> return record that has return ID
@@ -65,6 +69,8 @@ class Returns extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Returns
+	 *
+	 * Get the record of the return reason records in the database.
 	 *
 	 * @param int $start
 	 * @param int $limit
@@ -94,6 +100,8 @@ class Returns extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Returns
 	 *
+	 * Get the total number of total return records in the database.
+	 *
 	 * @return int total number of return records
 	 *
 	 * @example
@@ -110,6 +118,8 @@ class Returns extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Return Histories
+	 *
+	 * Get the record of the return history records in the database.
 	 *
 	 * @param int $return_id primary key of the return record
 	 *
@@ -129,6 +139,8 @@ class Returns extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Histories
+	 *
+	 * Get the total number of total return history records in the database.
 	 *
 	 * @param int $return_id primary key of the return record
 	 *

@@ -11,6 +11,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Plan
 	 *
+	 * Get the record of the subscription plan record in the database.
+	 *
 	 * @param int $subscription_plan_id primary key of the subscription plan record
 	 *
 	 * @return array<string, mixed> subscription plan record that have subscription plan ID
@@ -29,6 +31,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription Plans
+	 *
+	 * Get the record of the subscription plan records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -83,6 +87,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Subscription Plans
+	 *
+	 * Get the total number of total subscription plan records in the database.
 	 *
 	 * @return int total number of subscription plan records
 	 *

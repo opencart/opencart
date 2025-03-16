@@ -11,6 +11,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Affiliate
 	 *
+	 * Create a new customer affiliate record in the database.
+	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -50,6 +52,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Affiliate
 	 *
+	 * Edit customer affiliate record in the database.
+	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -83,6 +87,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Affiliate
 	 *
+	 * Delete customer affiliate record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -101,6 +107,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Affiliate
+	 *
+	 * Get the record of the customer affiliate record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -148,6 +156,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Report
 	 *
+	 * Create a new customer affiliate report record in the database.
+	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $ip
 	 * @param string $country
@@ -166,6 +176,8 @@ class Affiliate extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Customer Affiliate Reports
+	 *
+	 * Delete customer affiliate report records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

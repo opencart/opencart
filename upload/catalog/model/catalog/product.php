@@ -31,6 +31,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Product Quantity
 	 *
+	 * Edit product quantity record in the database.
+	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param int                  $quantity
 	 * @param array<string, mixed> $data       array of data
@@ -49,6 +51,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Product
+	 *
+	 * Get the record of the product record in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -80,6 +84,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Products
+	 *
+	 * Get the record of the product records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -254,6 +260,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Products
 	 *
+	 * Get the total number of total product records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of product records
@@ -375,6 +383,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Categories
 	 *
+	 * Get the record of the product category records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> category records that have product ID
@@ -392,7 +402,9 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Categories By Category ID
+	 * Get Categories By Category ID
+	 *
+	 * Get the record of the product categories by category records in the database.
 	 *
 	 * @param int $product_id  primary key of the product record
 	 * @param int $category_id primary key of the category record
@@ -414,6 +426,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Categories By Category ID
 	 *
+	 * Get the total number of total product categories by category records in the database.
+	 *
 	 * @param int $product_id  primary key of the product record
 	 * @param int $category_id primary key of the category record
 	 *
@@ -433,6 +447,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Attributes
+	 *
+	 * Get the record of the product attribute records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -461,6 +477,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Option Quantity
 	 *
+	 * Edit product option record in the database.
+	 *
 	 * @param int $product_id              primary key of the product record
 	 * @param int $product_option_id       primary key of the product option record
 	 * @param int $product_option_value_id primary key of the product option value record
@@ -481,6 +499,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option
 	 *
+	 * Get the record of the product option record in the database.
+	 *
 	 * @param int $product_id        primary key of the product record
 	 * @param int $product_option_id primary key of the product option record
 	 *
@@ -500,6 +520,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Options
+	 *
+	 * Get the record of the product option records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -526,6 +548,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Option Value
 	 *
+	 * Get the record of the product option value record in the database.
+	 *
 	 * @param int $product_id              primary key of the product record
 	 * @param int $product_option_value_id primary key of the product option value record
 	 *
@@ -545,6 +569,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Option Values
+	 *
+	 * Get the record of the product option value records in the database.*
 	 *
 	 * @param int $product_id        primary key of the product record
 	 * @param int $product_option_id primary key of the product option record
@@ -566,6 +592,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Discounts
 	 *
+	 * Get the record of the product discount records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> discount records that have product ID
@@ -585,6 +613,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Images
 	 *
+	 * Get the record of the product image records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> image records that have product ID
@@ -603,6 +633,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription
+	 *
+	 * Get the record of the product subscription record in the database.
 	 *
 	 * @param int $product_id           primary key of the product record
 	 * @param int $subscription_plan_id primary key of the subscription plan record
@@ -624,6 +656,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscriptions
 	 *
+	 * Get the record of the product subscription records in the database.
+	 *
 	 * @param int $product_id primary key of the product record
 	 *
 	 * @return array<int, array<string, mixed>> subscription records that have product ID
@@ -642,6 +676,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layout ID
+	 *
+	 * Get the record of the product layout record in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -665,6 +701,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Related
+	 *
+	 * Get the record of the product related record in the database.*
 	 *
 	 * @param int $product_id primary key of the product record
 	 *
@@ -696,6 +734,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Specials
+	 *
+	 * Get the record of the product special records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -766,6 +806,8 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Specials
 	 *
+	 * Get the total number of total product special records in the database.
+	 *
 	 * @return int total number of special records
 	 *
 	 * @example
@@ -786,6 +828,8 @@ class Product extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Report
+	 *
+	 * Create a new product report record in the database.
 	 *
 	 * @param int    $product_id primary key of the product record
 	 * @param string $ip

@@ -11,6 +11,8 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Wishlist
 	 *
+	 * Create a new customer wishlist record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $product_id  primary key of the product record
 	 *
@@ -29,6 +31,8 @@ class Wishlist extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Wishlist
+	 *
+	 * Delete customer wishlist record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $product_id  primary key of the product record
@@ -54,6 +58,8 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Wishlist
 	 *
+	 * Get the record of the customer wishlist record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<int, array<string, mixed>> wishlist records that have customer ID
@@ -72,6 +78,8 @@ class Wishlist extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Wishlist
+	 *
+	 * Get the total number of total customer wishlist records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

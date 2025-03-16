@@ -10,6 +10,8 @@ namespace Opencart\Catalog\Model\Localisation;
 class ReturnReason extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Reasons
+	 * 
+	 * Get the record of the return reason records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *

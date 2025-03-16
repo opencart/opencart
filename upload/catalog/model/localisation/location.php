@@ -10,6 +10,8 @@ namespace Opencart\Catalog\Model\Localisation;
 class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Location
+	 * 
+	 * Get the record of the location record in the database.
 	 *
 	 * @param int $location_id primary key of the location record
 	 *

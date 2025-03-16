@@ -10,6 +10,8 @@ namespace Opencart\Catalog\Model\Report;
 class Statistics extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Statistics
+	 * 
+	 * Get the record of the statistics records in the database.
 	 *
 	 * @return array<int, array<string, mixed>> statistic records
 	 *

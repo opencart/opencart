@@ -10,6 +10,8 @@ namespace Opencart\Catalog\Model\Cms;
 class Antispam extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Spam
+	 * 
+	 * Get the record of the antispam record in the database.
 	 *
 	 * @param string $comment
 	 *

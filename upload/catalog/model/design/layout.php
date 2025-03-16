@@ -10,6 +10,8 @@ namespace Opencart\Catalog\Model\Design;
 class Layout extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Layout
+	 * 
+	 * Get the record of the layout record in the database.
 	 *
 	 * @param string $route
 	 *
@@ -33,6 +35,8 @@ class Layout extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Modules
+	 * 
+	 * Get the record of the layout module records in the database.
 	 *
 	 * @param int    $layout_id
 	 * @param string $position

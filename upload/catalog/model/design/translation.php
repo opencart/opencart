@@ -10,6 +10,8 @@ namespace Opencart\Catalog\Model\Design;
 class Translation extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Translations
+	 * 
+	 * Get the record of the translation records in the database.
 	 *
 	 * @param string $route
 	 *

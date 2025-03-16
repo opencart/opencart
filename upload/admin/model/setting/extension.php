@@ -11,6 +11,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Extensions
 	 *
+	 * Get the record of the extension records in the database.
+	 *
 	 * @return array<int, array<string, mixed>> extension records
 	 *
 	 * @example
@@ -67,6 +69,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Extensions By Extension
 	 *
+	 * Get the total number of total extensions by extension records in the database.
+	 *
 	 * @param string $extension
 	 *
 	 * @return int total number of extension records that have extension ID
@@ -85,6 +89,8 @@ class Extension extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Install
+	 *
+	 * Create a new extension record in the database.
 	 *
 	 * @param string $type
 	 * @param string $extension
@@ -111,6 +117,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Uninstall
 	 *
+	 * Delete extension record in the database.
+	 *
 	 * @param string $type
 	 * @param string $code
 	 *
@@ -133,6 +141,8 @@ class Extension extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Install
+	 *
+	 * Create a new extension install record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -165,6 +175,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Install
 	 *
+	 * Delete extension install record in the database.
+	 *
 	 * @param int $extension_install_id primary key of the extension install record
 	 *
 	 * @return void
@@ -181,6 +193,10 @@ class Extension extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Status
+	 *
+	 * Edit extension install record in the database.
+	 *
+	 * Edit extension install status record in the database.
 	 *
 	 * @param int  $extension_install_id primary key of the extension install record
 	 * @param bool $status
@@ -200,6 +216,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Install
 	 *
+	 * Get the record of the extension install record in the database.
+	 *
 	 * @param int $extension_install_id primary key of the extension install record
 	 *
 	 * @return array<string, mixed> install record that has extension install ID
@@ -218,6 +236,8 @@ class Extension extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Install By Extension Download ID
+	 *
+	 * Get the record of the extension install by download record in the database.
 	 *
 	 * @param int $extension_download_id primary key of the extension download record
 	 *
@@ -256,6 +276,8 @@ class Extension extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Installs
+	 *
+	 * Get the record of the extension install records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -320,6 +342,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Installs
 	 *
+	 * Get the total number of total extension install records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of install records
@@ -353,6 +377,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Path
 	 *
+	 * Create a new extension path record in the database.
+	 *
 	 * @param int    $extension_install_id primary key of the extension install record
 	 * @param string $path
 	 *
@@ -371,6 +397,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Path
 	 *
+	 * Delete extension path record in the database.
+	 *
 	 * @param int $extension_path_id primary key of the extension path record
 	 *
 	 * @return void
@@ -387,6 +415,8 @@ class Extension extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Paths By Extension Install ID
+	 *
+	 * Get the record of the extension paths by install records in the database.
 	 *
 	 * @param int $extension_install_id primary key of the extension install record
 	 *
@@ -407,6 +437,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Paths
 	 *
+	 * Get the record of the extension path records in the database.
+	 *
 	 * @param string $path
 	 *
 	 * @return array<int, array<string, mixed>>
@@ -425,6 +457,8 @@ class Extension extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Paths
+	 *
+	 * Get the total number of total extension path records in the database.
 	 *
 	 * @param string $path
 	 *

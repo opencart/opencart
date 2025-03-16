@@ -74,7 +74,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 9, 9, 10);
+			$json['text'] = sprintf($this->language->get('text_patch'), 9, 9, 11);
 
 			$url = '';
 

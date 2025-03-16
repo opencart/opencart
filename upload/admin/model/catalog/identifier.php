@@ -54,7 +54,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $review_data = [
+	 * $identifier_data = [
 	 *     'author'     => 'Author Name',
 	 *     'product_id' => 1,
 	 *     'text'       => 'Identifier Text',
@@ -111,6 +111,12 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 */
 	public function getIdentifier(int $identifier_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "identifier` WHERE `identifier_id` = '" . (int)$identifier_id . "'");
+
+		return $query->row;
+	}
+
+	public function getIdentifierByCode(string $code): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "identifier` WHERE `code` = '" . $this->db->escape((string)$code) . "'");
 
 		return $query->row;
 	}

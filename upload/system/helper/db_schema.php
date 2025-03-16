@@ -3421,6 +3421,10 @@ function oc_db_schema() {
 				'type' => 'varchar(48)'
 			],
 			[
+				'name' => 'validation',
+				'type' => 'varchar(255)'
+			],
+			[
 				'name'    => 'status',
 				'type'    => 'tinyint(1)',
 				'default' => '0'

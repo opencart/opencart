@@ -1188,6 +1188,16 @@ class Product extends \Opencart\System\Engine\Controller {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
+		$this->load->model('catalog/identifier');
+
+		foreach ($post_info['product_code'] as $key => $product_code) {
+			$identifier_info = $this->model_catalog_identifier->getIdentifierByCode($product_code['code']);
+
+			if ($identifier_info && $identifier_info['validation'] && !oc_validate_regex($product_code['value'], $identifier_info['validation'])) {
+				$json['error']['option_' . $key] = $this->language->get('error_validation');
+			}
+		}
+		
 		$this->load->model('catalog/product');
 
 		if ($post_info['master_id']) {

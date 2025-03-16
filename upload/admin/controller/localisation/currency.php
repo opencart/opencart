@@ -309,9 +309,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
-		if (!$json) {
-			$this->load->model('localisation/currency');
+		$this->load->model('localisation/currency');
 
+		$currency_info = $this->model_localisation_currency->getCurrencyByCode($this->request->post['code']);
+
+		if ($currency_info && !$this->request->post['language_id'] || ($currency_info['language_id'] != $this->request->post['language_id'])) {
+			$json['error']['code'] = $this->language->get('error_exists');
+		}
+
+		if (!$json) {
 			if (!$this->request->post['currency_id']) {
 				$json['currency_id'] = $this->model_localisation_currency->addCurrency($this->request->post);
 			} else {

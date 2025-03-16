@@ -687,14 +687,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($this->request->post['email']);
 
-		if (!$this->request->post['customer_id']) {
-			if ($customer_info) {
-				$json['error']['warning'] = $this->language->get('error_exists');
-			}
-		} else {
-			if ($customer_info && ($this->request->post['customer_id'] != $customer_info['customer_id'])) {
-				$json['error']['warning'] = $this->language->get('error_exists');
-			}
+		if ($customer_info && !$this->request->post['customer_id'] && ($this->request->post['customer_id'] != $customer_info['customer_id'])) {
+			$json['error']['warning'] = $this->language->get('error_exists');
 		}
 
 		if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {

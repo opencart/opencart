@@ -374,12 +374,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$coupon_info = $this->model_marketing_coupon->getCouponByCode($this->request->post['code']);
 
-		if ($coupon_info) {
-			if (!isset($this->request->post['coupon_id'])) {
-				$json['error']['warning'] = $this->language->get('error_exists');
-			} elseif ($coupon_info['coupon_id'] != (int)$this->request->post['coupon_id']) {
-				$json['error']['warning'] = $this->language->get('error_exists');
-			}
+		if ($coupon_info && !isset($this->request->post['coupon_id']) || ($coupon_info['coupon_id'] != (int)$this->request->post['coupon_id'])) {
+			$json['error']['code'] = $this->language->get('error_exists');
 		}
 
 		if (!$json) {

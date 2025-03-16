@@ -289,21 +289,15 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error']['locale'] = $this->language->get('error_locale');
 		}
 
+		$this->load->model('localisation/language');
+
 		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
 
-		if (!$this->request->post['language_id']) {
-			if ($language_info) {
-				$json['error']['warning'] = $this->language->get('error_exists');
-			}
-		} else {
-			if ($language_info && ($this->request->post['language_id'] != $language_info['language_id'])) {
-				$json['error']['warning'] = $this->language->get('error_exists');
-			}
+		if ($language_info && !$this->request->post['language_id'] || ($language_info['language_id'] != $this->request->post['language_id'])) {
+			$json['error']['code'] = $this->language->get('error_exists');
 		}
 
 		if (!$json) {
-			$this->load->model('localisation/language');
-
 			if (!$this->request->post['language_id']) {
 				$json['language_id'] = $this->model_localisation_language->addLanguage($this->request->post);
 			} else {

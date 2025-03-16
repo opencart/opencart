@@ -294,7 +294,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $this->model_localisation_zone->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $country_id, int $language_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_description` WHERE `language_id` = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_description` WHERE `country_id` = '" . (int)$country_id . "' AND `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**
@@ -340,7 +340,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_zone->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_description` WHERE `zone_id` = '" . (int)$zone_id . "', `language_id` = '" . (int)$language_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
 	}

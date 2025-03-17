@@ -240,8 +240,8 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$antispam_info = $this->model_cms_antispam->getAntispam($this->request->get['antispam_id']);
 		}
 
-		if (isset($this->request->get['antispam_id'])) {
-			$data['antispam_id'] = (int)$this->request->get['antispam_id'];
+		if (!empty($antispam_info)) {
+			$data['antispam_id'] = $antispam_info['antispam_id'];
 		} else {
 			$data['antispam_id'] = 0;
 		}

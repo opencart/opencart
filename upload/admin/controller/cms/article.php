@@ -216,11 +216,11 @@ class Article extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['article_id'])) {
 			$this->load->model('cms/article');
 
-			$article_info = $this->model_cms_article->getArticle($this->request->get['article_id']);
+			$article_info = $this->model_cms_article->getArticle((int)$this->request->get['article_id']);
 		}
 
-		if (isset($this->request->get['article_id'])) {
-			$data['article_id'] = (int)$this->request->get['article_id'];
+		if (!empty($article_info)) {
+			$data['article_id'] = $article_info['article_id'];
 		} else {
 			$data['article_id'] = 0;
 		}
@@ -237,8 +237,8 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['article_description'] = [];
 
-		if (isset($this->request->get['article_id'])) {
-			$results = $this->model_cms_article->getDescriptions($this->request->get['article_id']);
+		if (!empty($article_info)) {
+			$results = $this->model_cms_article->getDescriptions($article_info['article_id']);
 
 			foreach ($results as $key => $result) {
 				$data['article_description'][$key] = $result;
@@ -283,8 +283,8 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['stores'][] = $result;
 		}
 
-		if (isset($this->request->get['article_id'])) {
-			$data['article_store'] = $this->model_cms_article->getStores($this->request->get['article_id']);
+		if (!empty($article_info)) {
+			$data['article_store'] = $this->model_cms_article->getStores($article_info['article_id']);
 		} else {
 			$data['article_store'] = [0];
 		}
@@ -295,10 +295,10 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
-		if (isset($this->request->get['article_id'])) {
+		if (!empty($article_info)) {
 			$this->load->model('design/seo_url');
 
-			$data['article_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('article_id', $this->request->get['article_id']);
+			$data['article_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('article_id', $article_info['article_id']);
 		} else {
 			$data['article_seo_url'] = [];
 		}
@@ -308,8 +308,8 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
-		if (isset($this->request->get['article_id'])) {
-			$data['article_layout'] = $this->model_cms_article->getLayouts($this->request->get['article_id']);
+		if (!empty($article_info)) {
+			$data['article_layout'] = $this->model_cms_article->getLayouts($article_info['article_id']);
 		} else {
 			$data['article_layout'] = [];
 		}

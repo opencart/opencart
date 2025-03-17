@@ -218,7 +218,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['download_id'])) {
 			$this->load->model('catalog/download');
 
-			$download_info = $this->model_catalog_download->getDownload($this->request->get['download_id']);
+			$download_info = $this->model_catalog_download->getDownload((int)$this->request->get['download_id']);
 		}
 
 		if (!empty($download_info)) {
@@ -232,8 +232,8 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['download_id'])) {
-			$data['download_description'] = $this->model_catalog_download->getDescriptions($this->request->get['download_id']);
+		if (!empty($download_info)) {
+			$data['download_description'] = $this->model_catalog_download->getDescriptions($download_info['download_id']);
 		} else {
 			$data['download_description'] = [];
 		}

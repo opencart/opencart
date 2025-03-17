@@ -152,8 +152,8 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 			$address_format_info = $this->model_localisation_address_format->getAddressFormat($this->request->get['address_format_id']);
 		}
 
-		if (isset($this->request->get['address_format_id'])) {
-			$data['address_format_id'] = (int)$this->request->get['address_format_id'];
+		if (!empty($address_format_info)) {
+			$data['address_format_id'] = $address_format_info['address_format_id'];
 		} else {
 			$data['address_format_id'] = 0;
 		}

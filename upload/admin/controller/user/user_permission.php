@@ -209,8 +209,8 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$user_group_info = $this->model_user_user_group->getUserGroup($this->request->get['user_group_id']);
 		}
 
-		if (isset($this->request->get['user_group_id'])) {
-			$data['user_group_id'] = (int)$this->request->get['user_group_id'];
+		if (!empty($user_group_info)) {
+			$data['user_group_id'] = $user_group_info['user_group_id'];
 		} else {
 			$data['user_group_id'] = 0;
 		}

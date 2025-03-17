@@ -161,8 +161,8 @@ class Store extends \Opencart\System\Engine\Controller {
 			$store_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
 		}
 
-		if (isset($this->request->get['store_id'])) {
-			$data['store_id'] = (int)$this->request->get['store_id'];
+		if (isset($store_info['store_id'])) {
+			$data['store_id'] = (int)$store_info['store_id'];
 		} else {
 			$data['store_id'] = 0;
 		}

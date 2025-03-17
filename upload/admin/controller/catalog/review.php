@@ -391,11 +391,11 @@ class Review extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['review_id'])) {
 			$this->load->model('catalog/review');
 
-			$review_info = $this->model_catalog_review->getReview($this->request->get['review_id']);
+			$review_info = $this->model_catalog_review->getReview((int)$this->request->get['review_id']);
 		}
 
-		if (isset($this->request->get['review_id'])) {
-			$data['review_id'] = (int)$this->request->get['review_id'];
+		if (!empty($review_info)) {
+			$data['review_id'] = $review_info['review_id'];
 		} else {
 			$data['review_id'] = 0;
 		}

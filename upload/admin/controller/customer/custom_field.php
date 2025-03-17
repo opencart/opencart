@@ -252,8 +252,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$custom_field_info = $this->model_customer_custom_field->getCustomField($this->request->get['custom_field_id']);
 		}
 
-		if (isset($this->request->get['custom_field_id'])) {
-			$data['custom_field_id'] = (int)$this->request->get['custom_field_id'];
+		if (!empty($custom_field_info)) {
+			$data['custom_field_id'] = $custom_field_info['custom_field_id'];
 		} else {
 			$data['custom_field_id'] = 0;
 		}
@@ -263,8 +263,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['custom_field_id'])) {
-			$data['custom_field_description'] = $this->model_customer_custom_field->getDescriptions($this->request->get['custom_field_id']);
+		if (!empty($custom_field_info)) {
+			$data['custom_field_description'] = $this->model_customer_custom_field->getDescriptions($custom_field_info['custom_field_id']);
 		} else {
 			$data['custom_field_description'] = [];
 		}
@@ -305,8 +305,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
-		if (isset($this->request->get['custom_field_id'])) {
-			$custom_field_values = $this->model_customer_custom_field->getValueDescriptions($this->request->get['custom_field_id']);
+		if (!empty($custom_field_info)) {
+			$custom_field_values = $this->model_customer_custom_field->getValueDescriptions($custom_field_info['custom_field_id']);
 		} else {
 			$custom_field_values = [];
 		}
@@ -314,16 +314,12 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$data['custom_field_values'] = [];
 
 		foreach ($custom_field_values as $custom_field_value) {
-			$data['custom_field_values'][] = [
-				'custom_field_value_id'          => $custom_field_value['custom_field_value_id'],
-				'custom_field_value_description' => $custom_field_value['custom_field_value_description'],
-				'sort_order'                     => $custom_field_value['sort_order']
-			];
+			$data['custom_field_values'][] = $custom_field_value;
 		}
 
 		// Customer Group
-		if (isset($this->request->get['custom_field_id'])) {
-			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($this->request->get['custom_field_id']);
+		if (!empty($custom_field_info)) {
+			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($custom_field_info['custom_field_id']);
 		} else {
 			$custom_field_customer_groups = [];
 		}

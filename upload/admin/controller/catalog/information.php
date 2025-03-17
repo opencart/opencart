@@ -212,7 +212,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['information_id'])) {
 			$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
+			$information_info = $this->model_catalog_information->getInformation((int)$this->request->get['information_id']);
 		}
 
 		if (!empty($information_info)) {
@@ -226,8 +226,8 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['information_id'])) {
-			$data['information_description'] = $this->model_catalog_information->getDescriptions($this->request->get['information_id']);
+		if (!empty($information_info)) {
+			$data['information_description'] = $this->model_catalog_information->getDescriptions($information_info['information_id']);
 		} else {
 			$data['information_description'] = [];
 		}
@@ -248,8 +248,8 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['stores'][] = $result;
 		}
 
-		if (isset($this->request->get['information_id'])) {
-			$data['information_store'] = $this->model_catalog_information->getStores($this->request->get['information_id']);
+		if (!empty($information_info)) {
+			$data['information_store'] = $this->model_catalog_information->getStores($information_info['information_id']);
 		} else {
 			$data['information_store'] = [0];
 		}
@@ -266,10 +266,10 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
-		if (isset($this->request->get['information_id'])) {
+		if (!empty($information_info)) {
 			$this->load->model('design/seo_url');
 
-			$data['information_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('information_id', $this->request->get['information_id']);
+			$data['information_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('information_id', $information_info['information_id']);
 		} else {
 			$data['information_seo_url'] = [];
 		}
@@ -279,8 +279,8 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
-		if (isset($this->request->get['information_id'])) {
-			$data['information_layout'] = $this->model_catalog_information->getLayouts($this->request->get['information_id']);
+		if (!empty($information_info)) {
+			$data['information_layout'] = $this->model_catalog_information->getLayouts($information_info['information_id']);
 		} else {
 			$data['information_layout'] = [];
 		}

@@ -223,8 +223,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			$api_info = $this->model_user_api->getApi($this->request->get['api_id']);
 		}
 
-		if (isset($this->request->get['api_id'])) {
-			$data['api_id'] = (int)$this->request->get['api_id'];
+		if (!empty($api_info)) {
+			$data['api_id'] = $api_info['api_id'];
 		} else {
 			$data['api_id'] = 0;
 		}

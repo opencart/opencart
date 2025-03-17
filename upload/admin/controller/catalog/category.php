@@ -284,7 +284,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['category_id'])) {
 			$this->load->model('catalog/category');
 
-			$category_info = $this->model_catalog_category->getCategory($this->request->get['category_id']);
+			$category_info = $this->model_catalog_category->getCategory((int)$this->request->get['category_id']);
 		}
 
 		if (!empty($category_info)) {

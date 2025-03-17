@@ -210,11 +210,11 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['subscription_plan_id'])) {
 			$this->load->model('catalog/subscription_plan');
 
-			$subscription_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($this->request->get['subscription_plan_id']);
+			$subscription_info = $this->model_catalog_subscription_plan->getSubscriptionPlan((int)$this->request->get['subscription_plan_id']);
 		}
 
-		if (isset($this->request->get['subscription_plan_id'])) {
-			$data['subscription_plan_id'] = (int)$this->request->get['subscription_plan_id'];
+		if (!empty($subscription_info)) {
+			$data['subscription_plan_id'] = $subscription_info['subscription_plan_id'];
 		} else {
 			$data['subscription_plan_id'] = 0;
 		}
@@ -224,8 +224,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['subscription_plan_id'])) {
-			$data['subscription_plan_description'] = $this->model_catalog_subscription_plan->getDescriptions($this->request->get['subscription_plan_id']);
+		if (!empty($subscription_info)) {
+			$data['subscription_plan_description'] = $this->model_catalog_subscription_plan->getDescriptions($subscription_info['subscription_plan_id']);
 		} else {
 			$data['subscription_plan_description'] = [];
 		}

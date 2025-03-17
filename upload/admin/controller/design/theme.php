@@ -163,8 +163,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$theme_info = $this->model_design_theme->getTheme($this->request->get['theme_id']);
 		}
 
-		if (isset($this->request->get['theme_id'])) {
-			$data['theme_id'] = (int)$this->request->get['theme_id'];
+		if (!empty($theme_info)) {
+			$data['theme_id'] = $theme_info['theme_id'];
 		} else {
 			$data['theme_id'] = 0;
 		}

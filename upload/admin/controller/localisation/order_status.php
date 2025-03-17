@@ -220,7 +220,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order_status_id'])) {
 			$this->load->model('localisation/order_status');
 
-			$data['order_status'] = $this->model_localisation_order_status->getDescriptions($this->request->get['order_status_id']);
+			$data['order_status'] = $this->model_localisation_order_status->getDescriptions((int)$this->request->get['order_status_id']);
 		} else {
 			$data['order_status'] = [];
 		}

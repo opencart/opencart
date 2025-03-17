@@ -214,7 +214,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_id'])) {
 			$this->load->model('catalog/filter');
 
-			$filter_info = $this->model_catalog_filter->getFilter($this->request->get['filter_id']);
+			$filter_info = $this->model_catalog_filter->getFilter((int)$this->request->get['filter_id']);
 		}
 
 		if (isset($filter_info)) {
@@ -228,8 +228,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['filter_id'])) {
-			$data['filter_description'] = $this->model_catalog_filter->getDescriptions($this->request->get['filter_id']);
+		if (!empty($filter_info)) {
+			$data['filter_description'] = $this->model_catalog_filter->getDescriptions($filter_info['filter_id']);
 		} else {
 			$data['filter_description'] = [];
 		}

@@ -213,7 +213,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_group_id'])) {
 			$this->load->model('catalog/filter_group');
 
-			$filter_group_info = $this->model_catalog_filter_group->getFilterGroup($this->request->get['filter_group_id']);
+			$filter_group_info = $this->model_catalog_filter_group->getFilterGroup((int)$this->request->get['filter_group_id']);
 		}
 
 		if (!empty($filter_group_info)) {
@@ -227,8 +227,8 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['filter_group_id'])) {
-			$data['filter_group_description'] = $this->model_catalog_filter_group->getDescriptions($this->request->get['filter_group_id']);
+		if (!empty($filter_group_info)) {
+			$data['filter_group_description'] = $this->model_catalog_filter_group->getDescriptions($filter_group_info['filter_group_id']);
 		} else {
 			$data['filter_group_description'] = [];
 		}

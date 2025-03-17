@@ -211,11 +211,11 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['length_class_id'])) {
 			$this->load->model('localisation/length_class');
 
-			$length_class_info = $this->model_localisation_length_class->getLengthClass($this->request->get['length_class_id']);
+			$length_class_info = $this->model_localisation_length_class->getLengthClass((int)$this->request->get['length_class_id']);
 		}
 
-		if (isset($this->request->get['length_class_id'])) {
-			$data['length_class_id'] = (int)$this->request->get['length_class_id'];
+		if (!empty($length_class_info)) {
+			$data['length_class_id'] = $length_class_info['length_class_id'];
 		} else {
 			$data['length_class_id'] = 0;
 		}
@@ -226,7 +226,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (!empty($length_class_info)) {
-			$data['length_class_description'] = $this->model_localisation_length_class->getDescriptions($this->request->get['length_class_id']);
+			$data['length_class_description'] = $this->model_localisation_length_class->getDescriptions($length_class_info['length_class_id']);
 		} else {
 			$data['length_class_description'] = [];
 		}

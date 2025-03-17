@@ -207,11 +207,11 @@ class Location extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['location_id'])) {
 			$this->load->model('localisation/location');
 
-			$location_info = $this->model_localisation_location->getLocation($this->request->get['location_id']);
+			$location_info = $this->model_localisation_location->getLocation((int)$this->request->get['location_id']);
 		}
 
-		if (isset($this->request->get['location_id'])) {
-			$data['location_id'] = (int)$this->request->get['location_id'];
+		if (!empty($location_info)) {
+			$data['location_id'] = $location_info['location_id'];
 		} else {
 			$data['location_id'] = 0;
 		}

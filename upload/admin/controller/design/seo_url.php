@@ -412,8 +412,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$seo_url_info = $this->model_design_seo_url->getSeoUrl($this->request->get['seo_url_id']);
 		}
 
-		if (isset($this->request->get['seo_url_id'])) {
-			$data['seo_url_id'] = (int)$this->request->get['seo_url_id'];
+		if (!empty($seo_url_info)) {
+			$data['seo_url_id'] = $seo_url_info['seo_url_id'];
 		} else {
 			$data['seo_url_id'] = 0;
 		}
@@ -433,7 +433,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		if (!empty($seo_url_info)) {
 			$data['store_id'] = $seo_url_info['store_id'];
 		} else {
-			$data['store_id'] = '';
+			$data['store_id'] = 0;
 		}
 
 		// Language

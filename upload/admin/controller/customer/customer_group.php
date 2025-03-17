@@ -213,8 +213,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($this->request->get['customer_group_id']);
 		}
 
-		if (isset($this->request->get['customer_group_id'])) {
-			$data['customer_group_id'] = (int)$this->request->get['customer_group_id'];
+		if (!empty($customer_group_info)) {
+			$data['customer_group_id'] = $customer_group_info['customer_group_id'];
 		} else {
 			$data['customer_group_id'] = 0;
 		}
@@ -224,8 +224,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['customer_group_id'])) {
-			$data['customer_group_description'] = $this->model_customer_customer_group->getDescriptions($this->request->get['customer_group_id']);
+		if (!empty($customer_group_info)) {
+			$data['customer_group_description'] = $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id']);
 		} else {
 			$data['customer_group_description'] = [];
 		}

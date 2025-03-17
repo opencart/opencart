@@ -211,11 +211,11 @@ class Language extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['language_id'])) {
 			$this->load->model('localisation/language');
 
-			$language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);
+			$language_info = $this->model_localisation_language->getLanguage((int)$this->request->get['language_id']);
 		}
 
-		if (isset($this->request->get['language_id'])) {
-			$data['language_id'] = (int)$this->request->get['language_id'];
+		if (!empty($language_info)) {
+			$data['language_id'] = $language_info['language_id'];
 		} else {
 			$data['language_id'] = 0;
 		}

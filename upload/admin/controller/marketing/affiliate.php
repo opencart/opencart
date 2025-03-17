@@ -544,8 +544,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->get['customer_id']);
 		}
 
-		if (isset($this->request->get['customer_id'])) {
-			$data['customer_id'] = (int)$this->request->get['customer_id'];
+		if (!empty($affiliate_info)) {
+			$data['customer_id'] = $affiliate_info['customer_id'];
 		} else {
 			$data['customer_id'] = 0;
 		}
@@ -661,15 +661,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['status']) {
-				$data['custom_fields'][] = [
-					'custom_field_id'    => $custom_field['custom_field_id'],
-					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
-					'name'               => $custom_field['name'],
-					'value'              => $custom_field['value'],
-					'type'               => $custom_field['type'],
-					'location'           => $custom_field['location'],
-					'sort_order'         => $custom_field['sort_order']
-				];
+				$data['custom_fields'][] = ['custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id'])] + $custom_field;
 			}
 		}
 

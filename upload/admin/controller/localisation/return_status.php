@@ -220,7 +220,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['return_status_id'])) {
 			$this->load->model('localisation/return_status');
 
-			$data['return_status'] = $this->model_localisation_return_status->getDescriptions($this->request->get['return_status_id']);
+			$data['return_status'] = $this->model_localisation_return_status->getDescriptions((int)$this->request->get['return_status_id']);
 		} else {
 			$data['return_status'] = [];
 		}

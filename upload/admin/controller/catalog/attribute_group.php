@@ -208,7 +208,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['attribute_group_id'])) {
 			$this->load->model('catalog/attribute_group');
 
-			$attribute_group_info = $this->model_catalog_attribute_group->getAttributeGroup($this->request->get['attribute_group_id']);
+			$attribute_group_info = $this->model_catalog_attribute_group->getAttributeGroup((int)$this->request->get['attribute_group_id']);
 		}
 
 		if (!empty($attribute_group_info)) {
@@ -263,10 +263,10 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			'sort_order'            => 0
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post;
 
 		foreach ($post_info['attribute_group_description'] as $language_id => $value) {
-			if (!oc_validate_length($value['name'], 1, 64)) {
+			if (!oc_validate_length((string)$value['name'], 1, 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
@@ -281,7 +281,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			if (!$post_info['attribute_group_id']) {
 				$json['attribute_group_id'] = $this->model_catalog_attribute_group->addAttributeGroup($post_info);
 			} else {
-				$this->model_catalog_attribute_group->editAttributeGroup($post_info['attribute_group_id'], $post_info);
+				$this->model_catalog_attribute_group->editAttributeGroup((int)$post_info['attribute_group_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

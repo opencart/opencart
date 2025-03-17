@@ -350,8 +350,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$marketing_info = $this->model_marketing_marketing->getMarketing($this->request->get['marketing_id']);
 		}
 
-		if (isset($this->request->get['marketing_id'])) {
-			$data['marketing_id'] = (int)$this->request->get['marketing_id'];
+		if (!empty($marketing_info)) {
+			$data['marketing_id'] = $marketing_info['marketing_id'];
 		} else {
 			$data['marketing_id'] = 0;
 		}

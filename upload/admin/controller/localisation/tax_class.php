@@ -206,11 +206,11 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['tax_class_id'])) {
 			$this->load->model('localisation/tax_class');
 
-			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);
+			$tax_class_info = $this->model_localisation_tax_class->getTaxClass((int)$this->request->get['tax_class_id']);
 		}
 
-		if (isset($this->request->get['tax_class_id'])) {
-			$data['tax_class_id'] = (int)$this->request->get['tax_class_id'];
+		if (!empty($tax_class_info)) {
+			$data['tax_class_id'] = $tax_class_info['tax_class_id'];
 		} else {
 			$data['tax_class_id'] = 0;
 		}
@@ -232,8 +232,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$data['tax_rates'] = $this->model_localisation_tax_rate->getTaxRates();
 
-		if (isset($this->request->get['tax_class_id'])) {
-			$data['tax_rules'] = $this->model_localisation_tax_class->getTaxRules($this->request->get['tax_class_id']);
+		if (!empty($tax_class_info)) {
+			$data['tax_rules'] = $this->model_localisation_tax_class->getTaxRules($tax_class_info['tax_class_id']);
 		} else {
 			$data['tax_rules'] = [];
 		}

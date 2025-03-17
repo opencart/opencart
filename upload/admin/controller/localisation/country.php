@@ -302,11 +302,11 @@ class Country extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['country_id'])) {
 			$this->load->model('localisation/country');
 
-			$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->get['country_id']);
 		}
 
-		if (isset($this->request->get['country_id'])) {
-			$data['country_id'] = (int)$this->request->get['country_id'];
+		if (!empty($country_info)) {
+			$data['country_id'] = $country_info['country_id'];
 		} else {
 			$data['country_id'] = 0;
 		}
@@ -316,8 +316,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['country_id'])) {
-			$data['country_description'] = $this->model_localisation_country->getDescriptions($this->request->get['country_id']);
+		if (!empty($country_info)) {
+			$data['country_description'] = $this->model_localisation_country->getDescriptions($country_info['country_id']);
 		} else {
 			$data['country_description'] = [];
 		}

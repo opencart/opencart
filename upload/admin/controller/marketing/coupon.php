@@ -216,8 +216,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon_info = $this->model_marketing_coupon->getCoupon($this->request->get['coupon_id']);
 		}
 
-		if (isset($this->request->get['coupon_id'])) {
-			$data['coupon_id'] = (int)$this->request->get['coupon_id'];
+		if (!empty($coupon_info)) {
+			$data['coupon_id'] = $coupon_info['coupon_id'];
 		} else {
 			$data['coupon_id'] = 0;
 		}
@@ -265,7 +265,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($coupon_info)) {
-			$products = $this->model_marketing_coupon->getProducts($this->request->get['coupon_id']);
+			$products = $this->model_marketing_coupon->getProducts($coupon_info['coupon_id']);
 		} else {
 			$products = [];
 		}
@@ -287,7 +287,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		// Category
 		if (!empty($coupon_info)) {
-			$categories = $this->model_marketing_coupon->getCategories($this->request->get['coupon_id']);
+			$categories = $this->model_marketing_coupon->getCategories($coupon_info['coupon_id']);
 		} else {
 			$categories = [];
 		}

@@ -227,11 +227,11 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['currency_id'])) {
 			$this->load->model('localisation/currency');
 
-			$currency_info = $this->model_localisation_currency->getCurrency($this->request->get['currency_id']);
+			$currency_info = $this->model_localisation_currency->getCurrency((int)$this->request->get['currency_id']);
 		}
 
-		if (isset($this->request->get['currency_id'])) {
-			$data['currency_id'] = (int)$this->request->get['currency_id'];
+		if (!empty($currency_info)) {
+			$data['currency_id'] = $currency_info['currency_id'];
 		} else {
 			$data['currency_id'] = 0;
 		}

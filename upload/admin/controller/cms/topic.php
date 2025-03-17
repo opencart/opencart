@@ -212,8 +212,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$topic_info = $this->model_cms_topic->getTopic($this->request->get['topic_id']);
 		}
 
-		if (isset($this->request->get['topic_id'])) {
-			$data['topic_id'] = (int)$this->request->get['topic_id'];
+		if (!empty($topic_info)) {
+			$data['topic_id'] = $topic_info['topic_id'];
 		} else {
 			$data['topic_id'] = 0;
 		}
@@ -230,8 +230,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['topic_description'] = [];
 
-		if (isset($this->request->get['topic_id'])) {
-			$results = $this->model_cms_topic->getDescriptions($this->request->get['topic_id']);
+		if (!empty($topic_info)) {
+			$results = $this->model_cms_topic->getDescriptions($topic_info['topic_id']);
 
 			foreach ($results as $key => $result) {
 				$data['topic_description'][$key] = $result;
@@ -259,8 +259,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['stores'][] = $result;
 		}
 
-		if (isset($this->request->get['topic_id'])) {
-			$data['topic_store'] = $this->model_cms_topic->getStores($this->request->get['topic_id']);
+		if (!empty($topic_info)) {
+			$data['topic_store'] = $this->model_cms_topic->getStores($topic_info['topic_id']);
 		} else {
 			$data['topic_store'] = [0];
 		}
@@ -277,10 +277,10 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
-		if (isset($this->request->get['topic_id'])) {
+		if (!empty($topic_info)) {
 			$this->load->model('design/seo_url');
 
-			$data['topic_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('topic_id', $this->request->get['topic_id']);
+			$data['topic_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('topic_id', $topic_info['topic_id']);
 		} else {
 			$data['topic_seo_url'] = [];
 		}
@@ -290,8 +290,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
-		if (isset($this->request->get['topic_id'])) {
-			$data['topic_layout'] = $this->model_cms_topic->getLayouts($this->request->get['topic_id']);
+		if (!empty($topic_info)) {
+			$data['topic_layout'] = $this->model_cms_topic->getLayouts($topic_info['topic_id']);
 		} else {
 			$data['topic_layout'] = [];
 		}

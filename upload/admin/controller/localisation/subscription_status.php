@@ -220,7 +220,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['subscription_status_id'])) {
 			$this->load->model('localisation/subscription_status');
 
-			$data['subscription_status'] = $this->model_localisation_subscription_status->getDescriptions($this->request->get['subscription_status_id']);
+			$data['subscription_status'] = $this->model_localisation_subscription_status->getDescriptions((int)$this->request->get['subscription_status_id']);
 		} else {
 			$data['subscription_status'] = [];
 		}

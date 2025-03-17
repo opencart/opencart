@@ -511,8 +511,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_info = $this->model_customer_customer->getCustomer((int)$this->request->get['customer_id']);
 		}
 
-		if (isset($this->request->get['customer_id'])) {
-			$data['customer_id'] = (int)$this->request->get['customer_id'];
+		if (!empty($customer_info)) {
+			$data['customer_id'] = $customer_info['customer_id'];
 		} else {
 			$data['customer_id'] = 0;
 		}

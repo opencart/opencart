@@ -394,7 +394,11 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $country_total = $this->model_localisation_country->getTotalCountries($filter_data);
 	 */
 	public function getTotalCountries(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c`";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		}
 
 		$implode = [];
 

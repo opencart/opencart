@@ -673,7 +673,7 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Paths By Level
 	 *
-	 * Delete category path records by level in the database.
+	 * Delete category path record by levels in the database.
 	 *
 	 * @param int $category_id primary key of the category record
 	 * @param int $level

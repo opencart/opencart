@@ -11,6 +11,8 @@ class Extension extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Extensions
 	 *
+	 * Get the record of the extension records in the database.
+	 *
 	 * @return array<int, array<string, mixed>> extension records
 	 *
 	 * @example

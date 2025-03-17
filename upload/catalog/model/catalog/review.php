@@ -11,6 +11,8 @@ class Review extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Review
 	 *
+	 * Create a new review record in the database.
+	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
 	 *
@@ -38,6 +40,8 @@ class Review extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Reviews By Product ID
+	 *
+	 * Get the record of the reviews by product records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 * @param int $start
@@ -67,6 +71,8 @@ class Review extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Reviews By Product ID
+	 *
+	 * Get the total number of total review records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
 	 *

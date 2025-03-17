@@ -11,6 +11,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Customer Group
 	 *
+	 * Get the record of the customer group record in the database.
+	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return array<string, mixed> customer group record that has customer group ID
@@ -29,6 +31,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Customer Groups
+	 *
+	 * Get the record of the customer group records in the database.
 	 *
 	 * @return array<int, array<string, mixed>> customer group records
 	 *

@@ -11,6 +11,8 @@ class Approval extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer Approval
 	 *
+	 * Create a new customer approval record in the database.
+	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $type
 	 *
@@ -28,6 +30,8 @@ class Approval extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Customer Approvals
+	 *
+	 * Delete customer approval records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

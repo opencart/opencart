@@ -11,6 +11,8 @@ class Startup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Startups
 	 *
+	 * Get the record of the startup records in the database.
+	 *
 	 * @return array<int, array<string, mixed>> startup records
 	 *
 	 * @example

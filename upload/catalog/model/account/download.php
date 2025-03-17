@@ -11,6 +11,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Download
 	 *
+	 * Get the record of the download record in the database.
+	 *
 	 * @param int $download_id primary key of the download record
 	 *
 	 * @return array<string, mixed> download record that has download ID
@@ -41,6 +43,8 @@ class Download extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Downloads
+	 *
+	 * Get the record of the download records in the database.
 	 *
 	 * @param int $start
 	 * @param int $limit
@@ -82,6 +86,8 @@ class Download extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Downloads
 	 *
+	 * Get the total number of total download records in the database.
+	 *
 	 * @return int total number of download records
 	 *
 	 * @example
@@ -110,6 +116,8 @@ class Download extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Report
+	 *
+	 * Create a new download report record in the database.
 	 *
 	 * @param int    $download_id primary key of the download record
 	 * @param string $ip

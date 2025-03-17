@@ -3408,8 +3408,8 @@ function oc_db_schema() {
 		'name'  => 'identifier',
 		'field' => [
 			[
-				'name' => 'identifier_id',
-				'type' => 'int(11)',
+				'name'           => 'identifier_id',
+				'type'           => 'int(11)',
 				'auto_increment' => true
 			],
 			[
@@ -5336,8 +5336,8 @@ function oc_db_schema() {
 		'name'  => 'product_code',
 		'field' => [
 			[
-				'name' => 'product_code_id',
-				'type' => 'int(11)',
+				'name'           => 'product_code_id',
+				'type'           => 'int(11)',
 				'auto_increment' => true
 			],
 			[

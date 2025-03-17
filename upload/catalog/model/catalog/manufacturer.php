@@ -11,6 +11,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Manufacturer
 	 *
+	 * Get the record of the manufacturer record in the database.
+	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return array<string, mixed> manufacturer record that has manufacturer ID
@@ -29,6 +31,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Manufacturer(s)
+	 *
+	 * Get the record of the manufacturer records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -89,6 +93,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layout ID
+	 *
+	 * Get the record of the manufacturer layout record in the database.
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *

@@ -11,6 +11,8 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Events
 	 *
+	 * Get the record of the event records in the database.
+	 *
 	 * @return array<int, array<string, mixed>> event records
 	 *
 	 * @example

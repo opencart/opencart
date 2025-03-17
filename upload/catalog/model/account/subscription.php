@@ -11,6 +11,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription
 	 *
+	 * Get the record of the subscription record in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return array<string, mixed> subscription record that has subscription ID
@@ -36,6 +38,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscriptions
+	 *
+	 * Get the record of the subscription records in the database.
 	 *
 	 * @param int $start
 	 * @param int $limit
@@ -65,6 +69,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscriptions
 	 *
+	 * Get the total number of total subscription records in the database.
+	 *
 	 * @return int total number of subscription records
 	 *
 	 * @example
@@ -86,6 +92,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscription By Shipping Address ID
 	 *
+	 * Get the total number of total subscriptions by shipping address records in the database.
+	 *
 	 * @param int $address_id primary key of the address record
 	 *
 	 * @return int total number of subscription records that have address ID
@@ -105,6 +113,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Subscription By Payment Address ID
 	 *
+	 * Get the total number of total subscriptions by payment address records in the database.
+	 *
 	 * @param int $address_id primary key of the address record
 	 *
 	 * @return int total number of subscription records that have address ID
@@ -123,6 +133,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Subscription By Order Product ID
+	 *
+	 * Get the total number of total order products by order records in the database.
 	 *
 	 * @param int $order_id         primary key of the order record
 	 * @param int $order_product_id primary key of the order product record
@@ -144,6 +156,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Subscription Products
 	 *
+	 * Get the record of the subscription products records in the database.
+	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
 	 * @return array<int, array<string, mixed>> subscription records that have subscription ID
@@ -162,6 +176,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Products
+	 *
+	 * Get the total number of total subscription product records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *
@@ -182,6 +198,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Options
 	 *
+	 * Get the record of the subscription option records in the database.
+	 *
 	 * @param int $subscription_id         primary key of the subscription record
 	 * @param int $subscription_product_id primary key of the subscription product record
 	 *
@@ -201,6 +219,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Histories
+	 *
+	 * Get the record of the subscription history records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 * @param int $start
@@ -230,6 +250,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Histories
+	 *
+	 * Get the total number of total subscription history records in the database.
 	 *
 	 * @param int $subscription_id primary key of the subscription record
 	 *

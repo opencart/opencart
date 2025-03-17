@@ -11,6 +11,8 @@ class Search extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer Search
 	 *
+	 * Create a new customer search record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void

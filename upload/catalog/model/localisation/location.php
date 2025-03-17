@@ -11,6 +11,8 @@ class Location extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Location
 	 *
+	 * Get the record of the location record in the database.
+	 *
 	 * @param int $location_id primary key of the location record
 	 *
 	 * @return array<string, mixed> location record that has location ID

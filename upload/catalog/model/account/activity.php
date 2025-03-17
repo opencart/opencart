@@ -11,6 +11,8 @@ class Activity extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Activity
 	 *
+	 * Create a new activity record in the database.
+	 *
 	 * @param string               $key
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -40,6 +42,8 @@ class Activity extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Activities
+	 *
+	 * Delete activities records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

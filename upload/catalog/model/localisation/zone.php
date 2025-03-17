@@ -24,7 +24,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $zone_info = $this->model_localisation_zone->getZone($zone_id);
 	 */
 	public function getZone(int $zone_id): array {
-		$query = $this->db->query("SELECT `z`.*, `zd`.`name` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`zone_id` = '" . (int)$zone_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `z`.`status` = '1'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`zone_id` = '" . (int)$zone_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `z`.`status` = '1'");
 
 		return $query->row;
 	}
@@ -45,7 +45,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $zones = $this->model_localisation_zone->getZonesByCountryId($country_id);
 	 */
 	public function getZonesByCountryId(int $country_id): array {
-		$sql = "SELECT `z`.*, `zd`.`name` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`country_id` = '" . (int)$country_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `z`.`status` = '1' ORDER BY `zd`.`name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`country_id` = '" . (int)$country_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `z`.`status` = '1' ORDER BY `zd`.`name`";
 
 		$key = md5($sql);
 

@@ -147,7 +147,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_zone->getZones($filter_data);
 	 */
 	public function getZones(array $data = []): array {
-		$sql = "SELECT *, `zd`.`name`, `z`.`status`, (SELECT `cd`.`name` FROM `" . DB_PREFIX . "country_description` `cd` WHERE `z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id` AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
+		$sql = "SELECT *, (SELECT `cd`.`name` FROM `" . DB_PREFIX . "country_description` `cd` WHERE `z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id` AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
 
 		$implode = [];
 
@@ -218,7 +218,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $zones = $this->model_localisation_zone->getZonesByCountryId($country_id);
 	 */
 	public function getZonesByCountryId(int $country_id): array {
-		$sql = "SELECT `z`.*, `zd`.`name` FROM `" . DB_PREFIX . "zone` WHERE `zd`.`country_id` = '" . (int)$country_id . "' AND `z`.`status` = '1' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `zd`.`name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`country_id` = '" . (int)$country_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `z`.`status` = '1' ORDER BY `zd`.`name`";
 
 		$key = md5($sql);
 

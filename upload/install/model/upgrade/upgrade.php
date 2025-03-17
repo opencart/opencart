@@ -14,24 +14,26 @@ class Upgrade extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		foreach ($data as $key => $value) {
+			$key = $this->db->escape((string)$key);
+
 			switch (gettype($value)) {
-				case 'boolean';
-					$implode[] = "`" . $this->db->escape((string)$key) . "` = '" . (boolean)$value . "'";
+				case 'boolean':
+					$implode[] = "`" . $key . "` = '" . (boolean)$value . "'";
 					break;
-				case 'integer';
-					$implode[] = "`" . $this->db->escape((string)$key) . "` = '" . (int)$value . "'";
+				case 'integer':
+					$implode[] = "`" . $key . "` = '" . (int)$value . "'";
 					break;
-				case 'double';
-					$implode[] = "`" . $this->db->escape((string)$key). "` = '" . (float)$value . "'";
+				case 'double':
+					$implode[] = "`" . $key. "` = '" . (float)$value . "'";
 					break;
-				case 'string';
-					$implode[] = "`" . $this->db->escape((string)$key) . "` = '" . $this->db->escape((string)$value) . "'";
+				case 'string':
+					$implode[] = "`" . $key . "` = '" . $this->db->escape((string)$value) . "'";
 					break;
-				case 'array';
-					$implode[] = "`" . $this->db->escape((string)$key) . "` = '" . $this->db->escape((array)json_encode($value)) . "'";
+				case 'array':
+					$implode[] = "`" . $key . "` = '" . $this->db->escape((array)json_encode($value)) . "'";
 					break;
-				case 'object';
-					$implode[] = "`" . $this->db->escape((string)$key) . "` = '" . $this->db->escape((array)json_encode($value)) . "'";
+				case 'object':
+					$implode[] = "`" . $key . "` = '" . $this->db->escape((array)json_encode($value)) . "'";
 					break;
 			}
 		}
@@ -40,7 +42,7 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	}
 
 	public function getRecords(string $table) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . $table . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . $table . "`");
 
 		return $query->rows;
 	}
@@ -68,5 +70,4 @@ class Upgrade extends \Opencart\System\Engine\Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . $table . "` DROP `" . $field . "`");
 		}
 	}
-
 }

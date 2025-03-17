@@ -695,12 +695,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($product_info)) {
-			$data['location'] = $product_info['location'];
-		} else {
-			$data['location'] = '';
-		}
-
-		if (!empty($product_info)) {
 			$data['price'] = $product_info['price'];
 		} else {
 			$data['price'] = '';
@@ -744,6 +738,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['stock_status_id'] = $product_info['stock_status_id'];
 		} else {
 			$data['stock_status_id'] = 0;
+		}
+
+		if (!empty($product_info)) {
+			$data['location'] = $product_info['location'];
+		} else {
+			$data['location'] = '';
 		}
 
 		if (!empty($product_info)) {

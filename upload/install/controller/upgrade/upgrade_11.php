@@ -40,12 +40,12 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 			if ($this->model_upgrade_upgrade->hasField('zone', 'name')) {
 				$zones = $this->model_upgrade_upgrade->getRecords('zone');
 
-				foreach ($zones as $country) {
+				foreach ($zones as $zone) {
 					foreach ($languages as $language) {
 						$zone_description_data = [
-							'zone_id'  => $country['zone_id'],
+							'zone_id'     => $zone['zone_id'],
 							'language_id' => $language['language_id'],
-							'name'        => $country['name']
+							'name'        => $zone['name']
 						];
 
 						$this->model_upgrade_upgrade->addRecord('zone_description', $zone_description_data);

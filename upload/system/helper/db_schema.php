@@ -1434,10 +1434,6 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'name',
-				'type' => 'varchar(128)'
-			],
-			[
 				'name' => 'iso_code_2',
 				'type' => 'varchar(2)'
 			],
@@ -7860,10 +7856,6 @@ function oc_db_schema() {
 			[
 				'name' => 'country_id',
 				'type' => 'int(11)'
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(128)'
 			],
 			[
 				'name' => 'code',

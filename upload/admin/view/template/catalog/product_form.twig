@@ -206,21 +206,6 @@
                     <div class="form-text">{{ help_product_code }}</div>
                   </div>
                 </div>
-                <div class="row mb-3">
-                  <label for="input-location" class="col-sm-2 col-form-label">{{ entry_location }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-location" class="form-control"/>
-                      {% if master_id %}
-                        <div class="input-group-text">
-                          <div class="form-check form-switch">
-                            <input type="checkbox" name="override[location]" value="1" id="input-variant-location" data-oc-toggle="switch" data-oc-target="#input-location" class="form-check-input"{% if override.location %} checked{% endif %}/> <label for="input-variant-location" class="form-check-label"></label>
-                          </div>
-                        </div>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
               </fieldset>
               <fieldset>
                 <legend>{{ text_price }}</legend>
@@ -319,6 +304,21 @@
                       {% endif %}
                     </div>
                     <div class="form-text">{{ help_stock_status }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-location" class="col-sm-2 col-form-label">{{ entry_location }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-location" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-text">
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="override[location]" value="1" id="input-variant-location" data-oc-toggle="switch" data-oc-target="#input-location" class="form-check-input"{% if override.location %} checked{% endif %}/> <label for="input-variant-location" class="form-check-label"></label>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
                 <div class="row mb-3">

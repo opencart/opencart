@@ -150,8 +150,8 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			$identifier_info = $this->model_catalog_identifier->getIdentifier($this->request->get['identifier_id']);
 		}
 
-		if (isset($this->request->get['identifier_id'])) {
-			$data['identifier_id'] = (int)$this->request->get['identifier_id'];
+		if (!empty($identifier_info)) {
+			$data['identifier_id'] = $identifier_info['identifier_id'];
 		} else {
 			$data['identifier_id'] = 0;
 		}

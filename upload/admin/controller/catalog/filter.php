@@ -217,8 +217,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$filter_info = $this->model_catalog_filter->getFilter($this->request->get['filter_id']);
 		}
 
-		if (isset($this->request->get['filter_id'])) {
-			$data['filter_id'] = (int)$this->request->get['filter_id'];
+		if (isset($filter_info)) {
+			$data['filter_id'] = $filter_info['filter_id'];
 		} else {
 			$data['filter_id'] = 0;
 		}

@@ -216,8 +216,8 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			$filter_group_info = $this->model_catalog_filter_group->getFilterGroup($this->request->get['filter_group_id']);
 		}
 
-		if (isset($this->request->get['filter_group_id'])) {
-			$data['filter_group_id'] = (int)$this->request->get['filter_group_id'];
+		if (!empty($filter_group_info)) {
+			$data['filter_group_id'] = $filter_group_info['filter_group_id'];
 		} else {
 			$data['filter_group_id'] = 0;
 		}

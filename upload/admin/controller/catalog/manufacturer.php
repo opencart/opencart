@@ -222,8 +222,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
 		}
 
-		if (isset($this->request->get['manufacturer_id'])) {
-			$data['manufacturer_id'] = (int)$this->request->get['manufacturer_id'];
+		if (!empty($manufacturer_info)) {
+			$data['manufacturer_id'] = $manufacturer_info['manufacturer_id'];
 		} else {
 			$data['manufacturer_id'] = 0;
 		}

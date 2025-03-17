@@ -99,6 +99,8 @@ class Country extends \Opencart\System\Engine\Model {
 	public function deleteCountry(int $country_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
 
+		$this->model_localisation_country->deleteDescriptions($country_id);
+
 		$this->cache->delete('country');
 	}
 
@@ -191,7 +193,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $countries = $this->model_localisation_country->getCountries($filter_data);
 	 */
 	public function getCountries(array $data = []): array {
-		$sql = "SELECT `c`.* FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$implode = [];
 
@@ -397,21 +399,21 @@ class Country extends \Opencart\System\Engine\Model {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c`";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
 		}
 
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_iso_code_2'])) {
-			$implode[] = "LCASE(`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
+			$implode[] = "LCASE(`c`.`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_iso_code_3'])) {
-			$implode[] = "LCASE(`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
+			$implode[] = "LCASE(`c`.`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
 		}
 
 		if ($implode) {

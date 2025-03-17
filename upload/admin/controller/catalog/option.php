@@ -212,8 +212,8 @@ class Option extends \Opencart\System\Engine\Controller {
 			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
 		}
 
-		if (isset($this->request->get['option_id'])) {
-			$data['option_id'] = (int)$this->request->get['option_id'];
+		if (!empty($option_info)) {
+			$data['option_id'] = $option_info['option_id'];
 		} else {
 			$data['option_id'] = 0;
 		}
@@ -223,7 +223,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['option_id'])) {
+		if (!empty($option_info)) {
 			$data['option_description'] = $this->model_catalog_option->getDescriptions($this->request->get['option_id']);
 		} else {
 			$data['option_description'] = [];

@@ -221,8 +221,8 @@ class Download extends \Opencart\System\Engine\Controller {
 			$download_info = $this->model_catalog_download->getDownload($this->request->get['download_id']);
 		}
 
-		if (isset($this->request->get['download_id'])) {
-			$data['download_id'] = (int)$this->request->get['download_id'];
+		if (!empty($download_info)) {
+			$data['download_id'] = $download_info['download_id'];
 		} else {
 			$data['download_id'] = 0;
 		}

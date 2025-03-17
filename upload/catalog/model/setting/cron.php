@@ -11,6 +11,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Cron
 	 *
+	 * Edit cron record in the database.
+	 *
 	 * @param int $cron_id primary key of the cron record
 	 *
 	 * @return void
@@ -27,6 +29,8 @@ class Cron extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Status
+	 *
+	 * Edit cron status record in the database.
 	 *
 	 * @param int  $cron_id primary key of the cron record
 	 * @param bool $status
@@ -45,6 +49,8 @@ class Cron extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Cron
+	 *
+	 * Get the record of the cron record in the database.
 	 *
 	 * @param int $cron_id primary key of the cron record
 	 *
@@ -84,6 +90,8 @@ class Cron extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Cron(s)
 	 *
+	 * Get the record of the cron records in the database.
+	 *
 	 * @return array<int, array<string, mixed>> cron records
 	 *
 	 * @example
@@ -100,6 +108,8 @@ class Cron extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Cron(s)
+	 *
+	 * Get the total number of total cron records in the database.
 	 *
 	 * @return int total number of cron records
 	 *

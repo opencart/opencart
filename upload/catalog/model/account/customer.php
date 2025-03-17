@@ -11,6 +11,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer
 	 *
+	 * Create a new customer record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new customer record
@@ -63,6 +65,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Customer
 	 *
+	 * Edit customer record in the database.
+	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -107,6 +111,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Newsletter
 	 *
+	 * Edit customer newsletter record in the database.
+	 *
 	 * @param int  $customer_id primary key of the customer record
 	 * @param bool $newsletter
 	 *
@@ -124,6 +130,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Customer
+	 *
+	 * Delete customer record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -180,6 +188,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Customer
+	 *
+	 * Get the record of the customer record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -246,6 +256,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer History
 	 *
+	 * Delete customer history record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -263,6 +275,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Ip
 	 *
+	 * Delete customer ip record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -279,6 +293,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Ips
+	 *
+	 * Get the record of the customer ip records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -299,6 +315,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Ips
 	 *
+	 * Get the total number of total customer ip records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int total number of ip records that have customer ID
@@ -317,6 +335,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Login
+	 *
+	 * Create a new login record in the database.
 	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $ip
@@ -396,6 +416,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Authorize
 	 *
+	 * Create a new customer authorize record in the database.
+	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -420,6 +442,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Authorize Status
+	 *
+	 * Edit customer authorize status record in the database.
 	 *
 	 * @param int  $customer_authorize_id primary key of the customer authorize record
 	 * @param bool $status
@@ -457,6 +481,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Authorize
 	 *
+	 * Delete customer authorize record in the database.
+	 *
 	 * @param int $customer_id           primary key of the customer record
 	 * @param int $customer_authorize_id primary key of the customer authorize record
 	 *
@@ -481,6 +507,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Authorizes
 	 *
+	 * Delete customer authorize records in the database.
+	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $token
 	 *
@@ -498,6 +526,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Authorize By Token
+	 *
+	 * Get the record of the customer authorize by token record in the database.
 	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $token
@@ -535,6 +565,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Token
+	 *
+	 * Create a new customer token record in the database.
 	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $type

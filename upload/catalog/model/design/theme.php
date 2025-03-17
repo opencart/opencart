@@ -11,6 +11,8 @@ class Theme extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Theme
 	 *
+	 * Get the record of the theme record in the database.
+	 *
 	 * @param string $route
 	 *
 	 * @return array<string, mixed>

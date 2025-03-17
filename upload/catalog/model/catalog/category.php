@@ -11,6 +11,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Category
 	 *
+	 * Get the record of the category record in the database.
+	 *
 	 * @param int $category_id primary key of the category record
 	 *
 	 * @return array<string, mixed> category record that has category ID
@@ -30,6 +32,8 @@ class Category extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Categories
 	 *
+	 * Get the record of the category records in the database.
+	 *
 	 * @param int $parent_id primary key of the parent category record
 	 *
 	 * @return array<int, array<string, mixed>> category records that have parent ID
@@ -48,6 +52,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Filters
+	 *
+	 * Get the record of the category filter records in the database.
 	 *
 	 * @param int $category_id primary key of the category record
 	 *
@@ -87,6 +93,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Layout ID
+	 *
+	 * Get the record of the category layout record in the database.
 	 *
 	 * @param int $category_id primary key of the category record
 	 *

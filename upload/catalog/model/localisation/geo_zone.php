@@ -11,6 +11,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Geo Zone
 	 *
+	 * Get the record of the geo zone record in the database.
+	 *
 	 * @param int $geo_zone_id primary key of the geo zone record
 	 * @param int $country_id  primary key of the country record
 	 * @param int $zone_id     primary key of the zone record
@@ -31,6 +33,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Geo Zones
+	 *
+	 * Get the record of the geo zone records in the database.
 	 *
 	 * @return array<string, mixed> geo zone records
 	 *

@@ -31,6 +31,8 @@ class Currency extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Currency
 	 *
+	 * Get the record of the currency record in the database.
+	 *
 	 * @param int $currency_id primary key of the currency record
 	 *
 	 * @return array<string, mixed> currency record that has currency ID
@@ -68,6 +70,8 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Currencies
+	 *
+	 * Get the record of the currency records in the database.
 	 *
 	 * @return array<string, array<string, mixed>> currency records
 	 *

@@ -11,6 +11,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Transaction
 	 *
+	 * Create a new transaction record in the database.
+	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param int    $order_id    primary key of the order record
 	 * @param string $description
@@ -30,6 +32,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Transaction
+	 *
+	 * Delete customer transaction record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $order_id    primary key of the order record
@@ -55,6 +59,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Transaction By Order ID
 	 *
+	 * Delete customer transaction by order id record in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
@@ -71,6 +77,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Transactions
+	 *
+	 * Get the record of the customer transaction records in the database.
 	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of filters
@@ -131,6 +139,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Transactions
 	 *
+	 * Get the total number of total customer transaction records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int total number of transaction records that have customer ID
@@ -149,6 +159,8 @@ class Transaction extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Transactions By Order ID
+	 *
+	 * Get the total number of total customer transactions by order records in the database.
 	 *
 	 * @param int $order_id primary key of the order record
 	 *

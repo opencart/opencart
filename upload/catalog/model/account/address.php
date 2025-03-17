@@ -11,6 +11,8 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Address
 	 *
+	 * Create a new address record in the database.
+	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -51,6 +53,8 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Address
 	 *
+	 * Edit address record in the database.
+	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param int                  $address_id  primary key of the address record
 	 * @param array<string, mixed> $data        array of data
@@ -88,6 +92,8 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Address
 	 *
+	 * Delete address record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $address_id  primary key of the address record
 	 *
@@ -111,6 +117,8 @@ class Address extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Address
+	 *
+	 * Get the record of the address record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $address_id  primary key of the address record
@@ -185,6 +193,8 @@ class Address extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Addresses
 	 *
+	 * Get the record of the address records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return array<int, array<string, mixed>> address records that have customer ID
@@ -258,6 +268,8 @@ class Address extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Addresses
+	 *
+	 * Get the total number of total address records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

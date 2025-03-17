@@ -11,6 +11,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Zone
 	 *
+	 * Get the record of the zone record in the database.
+	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
 	 * @return array<string, mixed> zone record that has zone ID
@@ -29,6 +31,8 @@ class Zone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Zones By Country ID
+	 *
+	 * Get the record of the zones by country record in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *

@@ -11,6 +11,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Gdpr
 	 *
+	 * Create a new gdpr record in the database.
+	 *
 	 * @param string $code
 	 * @param string $email
 	 * @param string $action
@@ -30,6 +32,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Status
 	 *
+	 * Edit gdpr status record in the database.
+	 *
 	 * @param int  $gdpr_id primary key of the gdpr record
 	 * @param bool $status
 	 *
@@ -47,6 +51,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Gdpr
+	 *
+	 * Get the record of the zone record in the database.
 	 *
 	 * @param int $gdpr_id primary key of the gdpr record
 	 *

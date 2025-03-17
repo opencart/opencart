@@ -122,7 +122,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Zones
 	 *
-	 * Get the record of the country records in the database.
+	 * Get the record of the zone records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *

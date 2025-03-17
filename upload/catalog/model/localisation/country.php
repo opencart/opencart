@@ -11,6 +11,8 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Country
 	 *
+	 * Get the record of the country record in the database.
+	 *
 	 * @param int $country_id primary key of the country record
 	 *
 	 * @return array<string, mixed> country record that has country ID
@@ -91,6 +93,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Countries
+	 *
+	 * Get the record of the country records in the database.
 	 *
 	 * @return array<int, array<string, mixed>> country records
 	 *

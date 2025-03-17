@@ -59,7 +59,6 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 				'field' => 'name'
 			];
 
-
 			// zone
 			$remove[] = [
 				'table' => 'zone',

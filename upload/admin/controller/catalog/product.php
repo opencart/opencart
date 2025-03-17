@@ -1197,7 +1197,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$json['error']['code_' . $key] = sprintf($this->language->get('error_regex'), $product_code['code']);
 			}
 		}
-		
+
 		$this->load->model('catalog/product');
 
 		if ($post_info['master_id']) {

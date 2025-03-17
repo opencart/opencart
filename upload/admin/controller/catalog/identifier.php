@@ -213,9 +213,9 @@ class Identifier extends \Opencart\System\Engine\Controller {
 
 		$identifier_info = $this->model_catalog_identifier->getIdentifierByCode($this->request->post['code']);
 
-        if ($identifier_info && !ísset($this->request->post['identifier_id']) || ($identifier_info['identifier_id'] != $this->request->post['identifier_id'])) {
-	        $json['error']['code'] = $this->language->get('error_exists');
-        }
+		if ($identifier_info && !ísset($this->request->post['identifier_id']) || ($identifier_info['identifier_id'] != $this->request->post['identifier_id'])) {
+			$json['error']['code'] = $this->language->get('error_exists');
+		}
 
 		if (!$json) {
 			if (!$this->request->post['identifier_id']) {

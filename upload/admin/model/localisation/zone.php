@@ -128,7 +128,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
-	 *  @return array<int, array<string, mixed>> zone records
+	 * @return array<int, array<string, mixed>> zone records
 	 *
 	 * @example
 	 *

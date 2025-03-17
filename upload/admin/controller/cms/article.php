@@ -337,31 +337,19 @@ class Article extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
-			'article_id'          => 0,
-			'article_description' => [],
-			'topic_id'            => 0,
-			'author'              => '',
-			'rating'              => 0,
-			'status'              => 0,
-			'article_store'       => [],
-			'article_seo_url'     => [],
-			'article_layout'      => []
-		];
-
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post;
 
 		foreach ($post_info['article_description'] as $language_id => $value) {
-			if (!oc_validate_length($value['name'], 1, 255)) {
-				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+			if (!oc_validate_length((string)$value['name'], 1, 255)) {
+				$json['error']['name_' . (int)$language_id] = $this->language->get('error_name');
 			}
 
-			if (!oc_validate_length($value['meta_title'], 1, 255)) {
-				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
+			if (!oc_validate_length((string)$value['meta_title'], 1, 255)) {
+				$json['error']['meta_title_' . (int)$language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
-		if (!oc_validate_length($post_info['author'], 3, 64)) {
+		if (!oc_validate_length((string)$post_info['author'], 3, 64)) {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
@@ -370,18 +358,18 @@ class Article extends \Opencart\System\Engine\Controller {
 
 			foreach ($post_info['article_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if (!oc_validate_length($keyword, 1, 64)) {
-						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
+					if (!oc_validate_length((string)$keyword, 1, 64)) {
+						$json['error']['keyword_' . (int)$store_id . '_' . (int)$language_id] = $this->language->get('error_keyword');
 					}
 
-					if (!oc_validate_path($keyword)) {
-						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword_character');
+					if (!oc_validate_path((string)$keyword)) {
+						$json['error']['keyword_' . (int)$store_id . '_' . (int)$language_id] = $this->language->get('error_keyword_character');
 					}
 
-					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id);
+					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword((string)$keyword, $store_id);
 
 					if ($seo_url_info && (!isset($this->request->post['article_id']) || $seo_url_info['key'] != 'article_id' || $seo_url_info['value'] != (int)$this->request->post['article_id'])) {
-						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword_exists');
+						$json['error']['keyword_' . (int)$store_id . '_' . (int)$language_id] = $this->language->get('error_keyword_exists');
 					}
 				}
 			}

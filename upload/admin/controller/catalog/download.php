@@ -271,18 +271,18 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (!$this->user->hasPermission('modify', 'catalog/download')) {
+			$json['error']['warning'] = $this->language->get('error_permission');
+		}
+
+		$post_info = $this->request->post;
+
 		$filter_data = [
 			'download_id'          => 0,
 			'download_description' => [],
 			'filename'             => '',
 			'mask'                 => ''
 		];
-
-		$post_info = oc_filter_data($filter_data, $this->request->post);
-
-		if (!$this->user->hasPermission('modify', 'catalog/download')) {
-			$json['error']['warning'] = $this->language->get('error_permission');
-		}
 
 		foreach ($post_info['download_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 64)) {

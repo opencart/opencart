@@ -260,17 +260,11 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
-			'filter_group_id'          => 0,
-			'filter_group_description' => [],
-			'sort_order'               => 0
-		];
+		$post_info = $this->request->post;
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
-
-		foreach ($post_info['filter_group_description'] as $language_id => $value) {
-			if (!oc_validate_length($value['name'], 1, 64)) {
-				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+		foreach ((array)$post_info['filter_group_description'] as $language_id => $value) {
+			if (!oc_validate_length((string)$value['name'], 1, 64)) {
+				$json['error']['name_' . (int)$language_id] = $this->language->get('error_name');
 			}
 		}
 

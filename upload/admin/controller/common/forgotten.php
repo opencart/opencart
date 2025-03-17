@@ -59,11 +59,11 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$post_info = oc_filter_data(['email' => ''], $this->request->post);
+			$post_info = ['email' => ''] + $this->request->post;
 
 			$this->load->model('user/user');
 
-			$user_info = $this->model_user_user->getUserByEmail($post_info['email']);
+			$user_info = $this->model_user_user->getUserByEmail((string)$post_info['email']);
 
 			if (!$user_info) {
 				$json['error'] = $this->language->get('error_email');
@@ -191,17 +191,12 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$filter_data = [
-				'password' => '',
-				'confirm'  => ''
-			];
+			$post_info = $this->request->post;
 
-			$post_info = oc_filter_data($filter_data, $this->request->post);
+			$password = html_entity_decode((string)$post_info['password'], ENT_QUOTES, 'UTF-8');
 
-			$password = html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8');
-
-			if (!oc_validate_length($password, $this->config->get('config_user_password_length'), 40)) {
-				$json['error']['password'] = sprintf($this->language->get('error_password_length'), $this->config->get('config_user_password_length'));
+			if (!oc_validate_length($password, (int)$this->config->get('config_user_password_length'), 40)) {
+				$json['error']['password'] = sprintf($this->language->get('error_password_length'), (int)$this->config->get('config_user_password_length'));
 			}
 
 			$required = [];

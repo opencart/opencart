@@ -292,25 +292,38 @@ class Location extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 3, 32)) {
+		$required = [
+			'location_id' => 0,
+			'name'        => '',
+			'address'     => '',
+			'geocode'     => '',
+			'telephone'   => '',
+			'image'       => '',
+			'open'        => '',
+			'comment'     => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 3, 32)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!oc_validate_length($this->request->post['address'], 3, 128)) {
+		if (!oc_validate_length($post_info['address'], 3, 128)) {
 			$json['error']['address'] = $this->language->get('error_address');
 		}
 
-		if (!oc_validate_length($this->request->post['telephone'], 3, 32)) {
+		if (!oc_validate_length($post_info['telephone'], 3, 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		if (!$json) {
 			$this->load->model('localisation/location');
 
-			if (!$this->request->post['location_id']) {
-				$json['location_id'] = $this->model_localisation_location->addLocation($this->request->post);
+			if (!$post_info['location_id']) {
+				$json['location_id'] = $this->model_localisation_location->addLocation($post_info);
 			} else {
-				$this->model_localisation_location->editLocation($this->request->post['location_id'], $this->request->post);
+				$this->model_localisation_location->editLocation($post_info['location_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

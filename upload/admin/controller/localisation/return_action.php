@@ -243,7 +243,14 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['return_action'] as $language_id => $value) {
+		$required = [
+			'return_action_id' => 0,
+			'name'             => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['return_action'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -252,10 +259,10 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/return_action');
 
-			if (!$this->request->post['return_action_id']) {
-				$json['return_action_id'] = $this->model_localisation_return_action->addReturnAction($this->request->post);
+			if (!$post_info['return_action_id']) {
+				$json['return_action_id'] = $this->model_localisation_return_action->addReturnAction($post_info);
 			} else {
-				$this->model_localisation_return_action->editReturnAction($this->request->post['return_action_id'], $this->request->post);
+				$this->model_localisation_return_action->editReturnAction($post_info['return_action_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -248,7 +248,14 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['order_status'] as $language_id => $value) {
+		$required = [
+			'order_status_id' => 0,
+            'name'            => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['order_status'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 32)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -257,10 +264,10 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/order_status');
 
-			if (!$this->request->post['order_status_id']) {
-				$json['order_status_id'] = $this->model_localisation_order_status->addOrderStatus($this->request->post);
+			if (!$post_info['order_status_id']) {
+				$json['order_status_id'] = $this->model_localisation_order_status->addOrderStatus($post_info);
 			} else {
-				$this->model_localisation_order_status->editOrderStatus($this->request->post['order_status_id'], $this->request->post);
+				$this->model_localisation_order_status->editOrderStatus($post_info['order_status_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

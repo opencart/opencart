@@ -1029,6 +1029,10 @@ class Product extends \Opencart\System\Engine\Model {
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
+		
+		if (!empty($data['filter_product_code'])) {
+			$sql .= " AND `p`.`product_id` IN (SELECT `p2code`.`product_id` FROM `" . DB_PREFIX . "product_code` `p2code` WHERE `p2code`.`value` LIKE '" . $this->db->escape(oc_strtolower($data['filter_product_code']) . '%') . "')";
+		}
 
 		if (!empty($data['filter_model'])) {
 			$sql .= " AND LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";

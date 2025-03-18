@@ -165,9 +165,9 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">{{ entry_product_code }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_product_codes }}</label>
                   <div class="col-sm-10">
-                    <div class="input-group">
+                    <div class="input-group mb-3">
                       <select id="input-code" class="form-select">
                         {% for identifier in identifiers %}
                           <option value="{{ identifier.code }}">{{ identifier.code }}</option>

@@ -21,6 +21,12 @@ class Product extends \Opencart\System\Engine\Controller {
 		} else {
 			$filter_name = '';
 		}
+		
+		if (isset($this->request->get['filter_product_code'])) {
+			$filter_product_code = $this->request->get['filter_product_code'];
+		} else {
+			$filter_product_code = '';
+		}
 
 		if (isset($this->request->get['filter_model'])) {
 			$filter_model = $this->request->get['filter_model'];
@@ -89,6 +95,10 @@ class Product extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
+		
+		if (isset($this->request->get['filter_product_code'])) {
+			$url .= '&filter_product_code=' . urlencode(html_entity_decode($this->request->get['filter_product_code'], ENT_QUOTES, 'UTF-8'));
+		}
 
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
@@ -153,6 +163,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['list'] = $this->load->controller('catalog/product.getList');
 
 		$data['filter_name'] = $filter_name;
+		$data['filter_product_code'] = $filter_product_code;
 		$data['filter_model'] = $filter_model;
 		$data['filter_category_id'] = $filter_category_id;
 		$data['filter_manufacturer_id'] = $filter_manufacturer_id;
@@ -208,6 +219,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
 			$filter_name = '';
+		}
+		
+		if (isset($this->request->get['filter_product_code'])) {
+			$filter_product_code = $this->request->get['filter_product_code'];
+		} else {
+			$filter_product_code = '';
 		}
 
 		if (isset($this->request->get['filter_model'])) {
@@ -281,6 +298,10 @@ class Product extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
+		
+		if (isset($this->request->get['filter_product_code'])) {
+			$url .= '&filter_product_code=' . urlencode(html_entity_decode($this->request->get['filter_product_code'], ENT_QUOTES, 'UTF-8'));
+		}
 
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
@@ -325,6 +346,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$filter_data = [
 			'filter_name'            => $filter_name,
+			'filter_product_code'    => $filter_product_code,
 			'filter_model'           => $filter_model,
 			'filter_category_id'     => $filter_category_id,
 			'filter_manufacturer_id' => $filter_manufacturer_id,

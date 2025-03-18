@@ -28,6 +28,10 @@
                 <ul id="autocomplete-name" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
+                <label for="input-product-code" class="form-label">{{ entry_product_code }}</label> 
+                <input type="text" name="filter_product_code" value="{{ filter_product_code }}" placeholder="{{ entry_product_code }}" id="input-product-code" class="form-control"/>
+              </div>
+              <div class="mb-3">
                 <label for="input-model" class="form-label">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" data-oc-target="autocomplete-model" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-model" class="dropdown-menu"></ul>
               </div>
@@ -103,6 +107,12 @@ $('#button-filter').on('click', function() {
 
     if (filter_name) {
         url += '&filter_name=' + encodeURIComponent(filter_name);
+    }
+
+    var filter_product_code = $('#input-product-code').val();
+
+    if (filter_product_code) {
+        url += '&filter_product_code=' + encodeURIComponent(filter_product_code);
     }
 
     var filter_model = $('#input-model').val();

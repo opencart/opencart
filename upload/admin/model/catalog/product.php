@@ -73,7 +73,6 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_code'])) {
 			foreach ($data['product_code'] as $product_code) {
 				$this->model_catalog_product->addCode($product_id, $product_code);
-
 			}
 		}
 
@@ -81,7 +80,6 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_category'])) {
 			foreach ($data['product_category'] as $category_id) {
 				$this->model_catalog_product->addCategory($product_id, $category_id);
-
 			}
 		}
 

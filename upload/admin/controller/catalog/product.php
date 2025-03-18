@@ -1196,6 +1196,14 @@ class Product extends \Opencart\System\Engine\Controller {
 			if ($identifier_info && $identifier_info['validation'] && !oc_validate_regex($product_code['value'], $identifier_info['validation'])) {
 				$json['error']['code_' . $key] = sprintf($this->language->get('error_regex'), $product_code['code']);
 			}
+
+			$smilar_product_code = array_filter($post_info['product_code'], function($v, $k) use ($product_code)  {
+				return $v['code'] == $product_code['code'] && $v['value'] == $product_code['value'];
+			}, ARRAY_FILTER_USE_BOTH);
+
+			if(count($smilar_product_code)>1){
+				$json['error']['code_' . $key] = sprintf($this->language->get('error_unique_constraint'), $product_code['value']);
+			}
 		}
 		
 		$this->load->model('catalog/product');

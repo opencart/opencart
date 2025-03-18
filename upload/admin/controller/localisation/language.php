@@ -277,31 +277,43 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 1, 32)) {
+		$required = [
+			'language_id' => 0,
+			'name'        => '',
+			'code'        => '',
+			'locale'      => '',
+			'extension'   => '',
+			'sort_order'  => 0,
+			'status'      => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 1, 32)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!oc_validate_length($this->request->post['code'], 2, 5)) {
+		if (!oc_validate_length($post_info['code'], 2, 5)) {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
-		if (!oc_validate_length($this->request->post['locale'], 2, 255)) {
+		if (!oc_validate_length($post_info['locale'], 2, 255)) {
 			$json['error']['locale'] = $this->language->get('error_locale');
 		}
 
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
+		$language_info = $this->model_localisation_language->getLanguageByCode($post_info['code']);
 
-		if ($language_info && !$this->request->post['language_id'] || ($language_info['language_id'] != $this->request->post['language_id'])) {
+		if ($language_info && !$post_info['language_id'] || ($language_info['language_id'] != $post_info['language_id'])) {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
 
 		if (!$json) {
-			if (!$this->request->post['language_id']) {
-				$json['language_id'] = $this->model_localisation_language->addLanguage($this->request->post);
+			if (!$post_info['language_id']) {
+				$json['language_id'] = $this->model_localisation_language->addLanguage($post_info);
 			} else {
-				$this->model_localisation_language->editLanguage($this->request->post['language_id'], $this->request->post);
+				$this->model_localisation_language->editLanguage($post_info['language_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

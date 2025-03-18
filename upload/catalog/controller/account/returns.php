@@ -337,7 +337,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$filter_data = [
+			$required = [
 				'order_id'         => 0,
 				'firstname'        => '',
 				'lastname'         => '',
@@ -349,7 +349,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				'agree'            => 0
 			];
 
-			$post_info = oc_filter_data($filter_data, $this->request->post);
+			$post_info = $this->request->post + $required;
 
 			if (!$post_info['order_id']) {
 				$json['error']['order_id'] = $this->language->get('error_order_id');

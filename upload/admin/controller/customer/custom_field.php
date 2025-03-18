@@ -367,19 +367,30 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['custom_field_description'] as $language_id => $value) {
+		$required = [
+			'type'       => '',
+			'value'      => '',
+			'validation' => '',
+			'location'   => '',
+			'status'     => 0,
+			'sort_order' => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['custom_field_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 128)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
-		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox')) {
-			if (!isset($this->request->post['custom_field_value'])) {
+		if (($post_info['type'] == 'select' || $post_info['type'] == 'radio' || $post_info['type'] == 'checkbox')) {
+			if (!isset($post_info['custom_field_value'])) {
 				$json['error']['warning'] = $this->language->get('error_type');
 			}
 
-			if (isset($this->request->post['custom_field_value'])) {
-				foreach ($this->request->post['custom_field_value'] as $custom_field_value_id => $custom_field_value) {
+			if (isset($post_info['custom_field_value'])) {
+				foreach ($post_info['custom_field_value'] as $custom_field_value_id => $custom_field_value) {
 					foreach ($custom_field_value['custom_field_value_description'] as $language_id => $custom_field_value_description) {
 						if (!oc_validate_length($custom_field_value_description['name'], 1, 128)) {
 							$json['error']['custom_field_value_' . $custom_field_value_id . '_' . $language_id] = $this->language->get('error_custom_value');
@@ -392,10 +403,10 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/custom_field');
 
-			if (!$this->request->post['custom_field_id']) {
-				$json['custom_field_id'] = $this->model_customer_custom_field->addCustomField($this->request->post);
+			if (!$post_info['custom_field_id']) {
+				$json['custom_field_id'] = $this->model_customer_custom_field->addCustomField($post_info);
 			} else {
-				$this->model_customer_custom_field->editCustomField($this->request->post['custom_field_id'], $this->request->post);
+				$this->model_customer_custom_field->editCustomField($post_info['custom_field_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

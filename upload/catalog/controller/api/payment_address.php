@@ -19,54 +19,50 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$output = [];
 
 		// Add keys for missing post vars
-		$keys = [
-			'payment_firstname',
-			'payment_lastname',
-			'payment_company',
-			'payment_address_1',
-			'payment_address_2',
-			'payment_postcode',
-			'payment_city',
-			'payment_zone_id',
-			'payment_country_id'
+		$required = [
+			'payment_firstname'  => '',
+			'payment_lastname'   => '',
+			'payment_company'    => '',
+			'payment_address_1'  => '',
+			'payment_address_2'  => '',
+			'payment_postcode'   => '',
+			'payment_city'       => '',
+			'payment_zone_id'    => 0,
+			'payment_country_id' => 0
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
-		if (!oc_validate_length($this->request->post['payment_firstname'], 1, 32)) {
+		if (!oc_validate_length((string)$post_info['payment_firstname'], 1, 32)) {
 			$output['error']['payment_firstname'] = $this->language->get('error_firstname');
 		}
 
-		if (!oc_validate_length($this->request->post['payment_lastname'], 1, 32)) {
+		if (!oc_validate_length((string)$post_info['payment_lastname'], 1, 32)) {
 			$output['error']['payment_lastname'] = $this->language->get('error_lastname');
 		}
 
-		if (!oc_validate_length($this->request->post['payment_address_1'], 3, 128)) {
+		if (!oc_validate_length((string)$post_info['payment_address_1'], 3, 128)) {
 			$output['error']['payment_address_1'] = $this->language->get('error_address_1');
 		}
 
-		if (!oc_validate_length($this->request->post['payment_city'], 2, 128)) {
+		if (!oc_validate_length((string)$post_info['payment_city'], 2, 128)) {
 			$output['error']['payment_city'] = $this->language->get('error_city');
 		}
 
 		// Country
 		$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
+		$country_info = $this->model_localisation_country->getCountry((int)$post_info['payment_country_id']);
 
-		if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['payment_postcode'], 2, 10)) {
+		if ($country_info && $country_info['postcode_required'] && !oc_validate_length((string)$post_info['payment_postcode'], 2, 10)) {
 			$output['error']['payment_postcode'] = $this->language->get('error_postcode');
 		}
 
-		if (!$country_info || $this->request->post['payment_country_id'] == '') {
+		if (!$country_info || $post_info['payment_country_id'] == '') {
 			$output['error']['payment_country'] = $this->language->get('error_country');
 		}
 
-		if ($this->request->post['payment_zone_id'] == '') {
+		if ($post_info['payment_zone_id'] == '') {
 			$output['error']['payment_zone'] = $this->language->get('error_zone');
 		}
 
@@ -77,9 +73,9 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {
-				if ($custom_field['required'] && empty($this->request->post['payment_custom_field'][$custom_field['custom_field_id']])) {
+				if ($custom_field['required'] && empty($post_info['payment_custom_field'][$custom_field['custom_field_id']])) {
 					$output['error']['payment_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['payment_custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($post_info['payment_custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
 					$output['error']['payment_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
@@ -112,7 +108,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			// Zone
 			$this->load->model('localisation/zone');
 
-			$zone_info = $this->model_localisation_zone->getZone($this->request->post['payment_zone_id']);
+			$zone_info = $this->model_localisation_zone->getZone($post_info['payment_zone_id']);
 
 			if ($zone_info) {
 				$zone = $zone_info['name'];
@@ -123,23 +119,23 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->session->data['payment_address'] = [
-				'address_id'     => $this->request->post['payment_address_id'],
-				'firstname'      => $this->request->post['payment_firstname'],
-				'lastname'       => $this->request->post['payment_lastname'],
-				'company'        => $this->request->post['payment_company'],
-				'address_1'      => $this->request->post['payment_address_1'],
-				'address_2'      => $this->request->post['payment_address_2'],
-				'postcode'       => $this->request->post['payment_postcode'],
-				'city'           => $this->request->post['payment_city'],
-				'zone_id'        => $this->request->post['payment_zone_id'],
+				'address_id'     => $post_info['payment_address_id'],
+				'firstname'      => $post_info['payment_firstname'],
+				'lastname'       => $post_info['payment_lastname'],
+				'company'        => $post_info['payment_company'],
+				'address_1'      => $post_info['payment_address_1'],
+				'address_2'      => $post_info['payment_address_2'],
+				'postcode'       => $post_info['payment_postcode'],
+				'city'           => $post_info['payment_city'],
+				'zone_id'        => $post_info['payment_zone_id'],
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
-				'country_id'     => (int)$this->request->post['payment_country_id'],
+				'country_id'     => (int)$post_info['payment_country_id'],
 				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => $this->request->post['payment_custom_field'] ?? []
+				'custom_field'   => $post_info['payment_custom_field'] ?? []
 			];
 
 			$output['success'] = $this->language->get('text_success');
@@ -158,7 +154,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		if (!isset($this->request->post['payment_address_id'])) {
+		if (isset($this->request->post['payment_address_id'])) {
 			$address_id = (int)$this->request->post['payment_address_id'];
 		} else {
 			$address_id = 0;

@@ -187,6 +187,12 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
+		if (isset($this->request->post['comment'])) {
+			$comment = (string)$this->request->post['comment'];
+		} else {
+			$comment = '';
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if (!$order_info) {
@@ -194,9 +200,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['comment'] = $this->request->post['comment'];
+			$this->session->data['comment'] = $comment;
 
-			$this->model_checkout_order->editComment($order_id, $this->request->post['comment']);
+			$this->model_checkout_order->editComment($order_id, $comment);
 
 			$json['success'] = $this->language->get('text_comment');
 		}

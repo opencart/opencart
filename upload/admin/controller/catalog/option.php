@@ -301,7 +301,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
+		$required = [
 			'option_id'          => 0,
 			'type'               => '',
 			'sort_order'         => 0,
@@ -309,7 +309,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			'option_value'       => []
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		foreach ($post_info['option_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 128)) {

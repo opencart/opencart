@@ -671,34 +671,52 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+		 $required = [
+		     'store_id'          => 0,
+		     'language_id'       => 0,
+		     'customer_group_id' => 0,
+		     'firstname'         => '',
+		     'lastname'          => '',
+		     'email'             => '',
+		     'telephone'         => '',
+		     'custom_field'      => [],
+		     'newsletter'        => 0,
+		     'password'          => '',
+		     'status'            => 0,
+		     'safe'              => 0,
+		     'commenter'         => 0
+		 ];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['firstname'], 1, 32)) {
 			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+		if (!oc_validate_length($post_info['lastname'], 1, 32)) {
 			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if (!oc_validate_email($this->request->post['email'])) {
+		if (!oc_validate_email($post_info['email'])) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		$this->load->model('customer/customer');
 
-		$customer_info = $this->model_customer_customer->getCustomerByEmail($this->request->post['email']);
+		$customer_info = $this->model_customer_customer->getCustomerByEmail($post_info['email']);
 
-		if ($customer_info && !$this->request->post['customer_id'] && ($this->request->post['customer_id'] != $customer_info['customer_id'])) {
+		if ($customer_info && !$post_info['customer_id'] && ($post_info['customer_id'] != $customer_info['customer_id'])) {
 			$json['error']['warning'] = $this->language->get('error_exists');
 		}
 
-		if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
+		if ($this->config->get('config_telephone_required') && !oc_validate_length($post_info['telephone'], 3, 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		// Custom field validation
 		$filter_data = [
 			'filter_location'          => 'account',
-			'filter_customer_group_id' => $this->request->post['customer_group_id'],
+			'filter_customer_group_id' => $post_info['customer_group_id'],
 			'filter_status'            => 1
 		];
 
@@ -707,15 +725,15 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+			if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
 				$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-			} elseif ($custom_field['type'] == 'text' && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+			} elseif ($custom_field['type'] == 'text' && !empty($custom_field['validation']) && !oc_validate_regex($post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
 				$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 			}
 		}
 
-		if ($this->request->post['password'] || !isset($this->request->post['customer_id'])) {
-			$password = html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8');
+		if ($post_info['password'] || !isset($post_info['customer_id'])) {
+			$password = html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8');
 
 			if (!oc_validate_length($password, $this->config->get('config_password_length'), 40)) {
 				$json['error']['password'] = sprintf($this->language->get('error_password_length'), $this->config->get('config_password_length'));
@@ -743,7 +761,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$json['error']['password'] = sprintf($this->language->get('error_password'), implode(', ', $required), $this->config->get('config_password_length'));
 			}
 
-			if ($this->request->post['password'] != $this->request->post['confirm']) {
+			if ($post_info['password'] != $post_info['confirm']) {
 				$json['error']['confirm'] = $this->language->get('error_confirm');
 			}
 		}
@@ -753,10 +771,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (!$this->request->post['customer_id']) {
-				$json['customer_id'] = $this->model_customer_customer->addCustomer($this->request->post);
+			if (!$post_info['customer_id']) {
+				$json['customer_id'] = $this->model_customer_customer->addCustomer($post_info);
 			} else {
-				$this->model_customer_customer->editCustomer($this->request->post['customer_id'], $this->request->post);
+				$this->model_customer_customer->editCustomer($post_info['customer_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -1149,6 +1167,13 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$required = [
+			'description' => '',
+			'amount'      => 0.0
+		];
+
+		$post_info = $this->request->post + $required;
+
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
@@ -1160,7 +1185,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->addTransaction($customer_id, (string)$this->request->post['description'], (float)$this->request->post['amount']);
+			$this->model_customer_customer->addTransaction($customer_id, (string)$post_info['description'], (float)$post_info['amount']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

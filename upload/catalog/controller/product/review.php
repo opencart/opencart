@@ -135,17 +135,13 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_token');
 		}
 
-		$keys = [
+		$required = [
 			'author',
 			'text',
 			'rating'
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		if (!$this->config->get('config_review_status')) {
 			$json['error']['warning'] = $this->language->get('error_status');
@@ -160,15 +156,15 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_product');
 		}
 
-		if (!oc_validate_length($this->request->post['author'], 3, 25)) {
+		if (!oc_validate_length($post_info['author'], 3, 25)) {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
-		if (!oc_validate_length($this->request->post['text'], 25, 1000)) {
+		if (!oc_validate_length($post_info['text'], 25, 1000)) {
 			$json['error']['text'] = $this->language->get('error_text');
 		}
 
-		if ($this->request->post['rating'] < 1 || $this->request->post['rating'] > 5) {
+		if ($post_info['rating'] < 1 || $post_info['rating'] > 5) {
 			$json['error']['rating'] = $this->language->get('error_rating');
 		}
 

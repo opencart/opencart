@@ -243,7 +243,14 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['stock_status'] as $language_id => $value) {
+		$required = [
+			'stock_status_id' => 0,
+			'stock_status'    => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['stock_status'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 32)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -252,10 +259,10 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/stock_status');
 
-			if (!$this->request->post['stock_status_id']) {
-				$json['stock_status_id'] = $this->model_localisation_stock_status->addStockStatus($this->request->post);
+			if (!$post_info['stock_status_id']) {
+				$json['stock_status_id'] = $this->model_localisation_stock_status->addStockStatus($post_info);
 			} else {
-				$this->model_localisation_stock_status->editStockStatus($this->request->post['stock_status_id'], $this->request->post);
+				$this->model_localisation_stock_status->editStockStatus($post_info['stock_status_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

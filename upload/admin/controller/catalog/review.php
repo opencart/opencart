@@ -465,7 +465,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
+		$required = [
 			'review_id'  => 0,
 			'author'     => '',
 			'product_id' => 0,
@@ -474,7 +474,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'status'     => 0
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		if (!oc_validate_length($post_info['author'], 3, 64)) {
 			$json['error']['author'] = $this->language->get('error_author');

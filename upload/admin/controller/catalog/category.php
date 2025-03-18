@@ -443,7 +443,16 @@ class Category extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$post_info = $this->request->post;
+		$required = [
+			'category_id'          => 0,
+			'category_description' => [],
+			'image'                => '',
+			'parent_id'            => 0,
+			'sort_order'           => 0,
+			'status'               => 0
+		];
+
+		$post_info = $this->request->post + $required;
 
 		foreach ((array)$post_info['category_description'] as $language_id => $value) {
 			if (!oc_validate_length((string)$value['name'], 1, 255)) {

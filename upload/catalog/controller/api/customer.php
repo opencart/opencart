@@ -18,7 +18,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		$keys = [
+		$required = [
 			'customer_id'       => 0,
 			'customer_group_id' => 0,
 			'firstname'         => '',
@@ -28,17 +28,13 @@ class Customer extends \Opencart\System\Engine\Controller {
 			'custom_field'      => []
 		];
 
-		foreach ($keys as $key => $Value) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = $Value;
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		// Customer
-		if ($this->request->post['customer_id']) {
+		if ($post_info['customer_id']) {
 			$this->load->model('account/customer');
 
-			$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
+			$customer_info = $this->model_account_customer->getCustomer($post_info['customer_id']);
 
 			if (!$customer_info) {
 				$output['error']['warning'] = $this->language->get('error_customer');
@@ -46,8 +42,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Customer Group
-		if ($this->request->post['customer_group_id']) {
-			$customer_group_id = (int)$this->request->post['customer_group_id'];
+		if ($post_info['customer_group_id']) {
+			$customer_group_id = (int)$post_info['customer_group_id'];
 		} else {
 			$customer_group_id = (int)$this->config->get('config_customer_group_id');
 		}
@@ -60,19 +56,19 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$output['error']['customer_group'] = $this->language->get('error_customer_group');
 		}
 
-		if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+		if (!oc_validate_length($post_info['firstname'], 1, 32)) {
 			$output['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+		if (!oc_validate_length($post_info['lastname'], 1, 32)) {
 			$output['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if (!oc_validate_email($this->request->post['email'])) {
+		if (!oc_validate_email($post_info['email'])) {
 			$output['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
+		if ($this->config->get('config_telephone_required') && !oc_validate_length($post_info['telephone'], 3, 32)) {
 			$output['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
@@ -83,9 +79,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account') {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+				if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
 					$output['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
 					$output['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
@@ -93,16 +89,16 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if (!$output) {
 			// Log the customer in
-			$this->customer->login($this->request->post['email'], '', true);
+			$this->customer->login($post_info['email'], '', true);
 
 			$this->session->data['customer'] = [
-				'customer_id'       => $this->request->post['customer_id'],
-				'customer_group_id' => $this->request->post['customer_group_id'],
-				'firstname'         => $this->request->post['firstname'],
-				'lastname'          => $this->request->post['lastname'],
-				'email'             => $this->request->post['email'],
-				'telephone'         => $this->request->post['telephone'],
-				'custom_field'      => $this->request->post['custom_field'] ?? []
+				'customer_id'       => $post_info['customer_id'],
+				'customer_group_id' => $post_info['customer_group_id'],
+				'firstname'         => $post_info['firstname'],
+				'lastname'          => $post_info['lastname'],
+				'email'             => $post_info['email'],
+				'telephone'         => $post_info['telephone'],
+				'custom_field'      => $post_info['custom_field'] ?? []
 			];
 
 			$output['success'] = $this->language->get('text_success');

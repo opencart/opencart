@@ -70,27 +70,23 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$keys = [
-			'code',
-			'redirect'
+		$required = [
+			'code'     => '',
+			'redirect' => ''
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		$this->load->model('localisation/currency');
 
-		$currency_info = $this->model_localisation_currency->getCurrencyByCode($this->request->post['code']);
+		$currency_info = $this->model_localisation_currency->getCurrencyByCode($post_info['code']);
 
 		if (!$currency_info) {
 			$json['error'] = $this->language->get('error_currency');
 		}
 
 		if (!$json) {
-			$this->session->data['currency'] = $this->request->post['code'];
+			$this->session->data['currency'] = $post_info['code'];
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
@@ -103,8 +99,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 			setcookie('currency', $this->session->data['currency'], $option);
 
-			if ($this->request->post['redirect']) {
-				$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
+			if ($post_info['redirect']) {
+				$redirect = urldecode(html_entity_decode($post_info['redirect'], ENT_QUOTES, 'UTF-8'));
 			} else {
 				$redirect = '';
 			}

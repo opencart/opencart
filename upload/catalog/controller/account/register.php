@@ -127,7 +127,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$filter_data = [
+		$required = [
 			'customer_group_id' => 0,
 			'firstname'         => '',
 			'lastname'          => '',
@@ -138,7 +138,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			'agree'             => 0
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		if (!isset($this->request->get['register_token']) || !isset($this->session->data['register_token']) || ($this->session->data['register_token'] != $this->request->get['register_token'])) {
 			$json['redirect'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'), true);

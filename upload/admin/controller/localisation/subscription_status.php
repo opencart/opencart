@@ -248,7 +248,14 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['subscription_status'] as $language_id => $value) {
+		$required = [
+			'subscription_status_id' => 0,
+			'subscription_status'    => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['subscription_status'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 32)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -257,10 +264,10 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/subscription_status');
 
-			if (!$this->request->post['subscription_status_id']) {
-				$json['subscription_status_id'] = $this->model_localisation_subscription_status->addSubscriptionStatus($this->request->post);
+			if (!$post_info['subscription_status_id']) {
+				$json['subscription_status_id'] = $this->model_localisation_subscription_status->addSubscriptionStatus($post_info);
 			} else {
-				$this->model_localisation_subscription_status->editSubscriptionStatus($this->request->post['subscription_status_id'], $this->request->post);
+				$this->model_localisation_subscription_status->editSubscriptionStatus($post_info['subscription_status_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

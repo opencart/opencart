@@ -334,13 +334,28 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['subscription_plan_description'] as $language_id => $value) {
+		$required = [
+			'subscription_plan_id'          => 0,
+		    'subscription_plan_description' => [],
+	        'trial_frequency'               => '',
+	        'trial_duration'                => 0,
+	        'trial_cycle'                   => 0,
+	        'trial_status'                  => 0,
+	        'frequency'                     => 0,
+	        'cycle'                         => 0,
+	        'status'                        => 0,
+	        'sort_order'                    => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['subscription_plan_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
-		if ($this->request->post['trial_duration'] && (int)$this->request->post['trial_duration'] < 1) {
+		if ($post_info['trial_duration'] && (int)$post_info['trial_duration'] < 1) {
 			$json['error']['trial_duration'] = $this->language->get('error_trial_duration');
 		}
 
@@ -351,10 +366,10 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/subscription_plan');
 
-			if (!$this->request->post['subscription_plan_id']) {
-				$json['subscription_plan_id'] = $this->model_catalog_subscription_plan->addSubscriptionPlan($this->request->post);
+			if (!$post_info['subscription_plan_id']) {
+				$json['subscription_plan_id'] = $this->model_catalog_subscription_plan->addSubscriptionPlan($post_info);
 			} else {
-				$this->model_catalog_subscription_plan->editSubscriptionPlan($this->request->post['subscription_plan_id'], $this->request->post);
+				$this->model_catalog_subscription_plan->editSubscriptionPlan($post_info['subscription_plan_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -1172,7 +1172,34 @@ class Product extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$post_info = $this->request->post;
+		$required = [
+			'product_id'          => 0,
+			'master_id'           => 0,
+			'product_description' => [],
+			'model'               => '',
+			'product_code'        => [],
+			'location'            => '',
+		    'variant'             => [],
+		    'override'            => [],
+		    'quantity'            => 0,
+		    'minimum'             => 0,
+		    'subtract'            => 0,
+		    'stock_status_id'     => 0,
+		    'date_available'      => '',
+		    'manufacturer_id'     => 0,
+		    'shipping'            => 0,
+		    'price'               => 0.0,
+		    'points'              => 0,
+		    'weight'              => 0.0,
+		    'weight_class_id'     => 0,
+		    'length'              => 0.0,
+		    'length_class_id'     => 0,
+		    'status'              => 0,
+		    'tax_class_id'        => 0,
+		    'sort_order'          => 0
+		];
+
+		$post_info = $this->request->post + $required;
 
 		foreach ($post_info['product_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 255)) {
@@ -1246,7 +1273,7 @@ class Product extends \Opencart\System\Engine\Controller {
 					$json['product_id'] = $this->model_catalog_product->addVariant($post_info['master_id'], $post_info);
 				}
 			} else {
-				if (!$this->request->post['master_id']) {
+				if (!$post_info['master_id']) {
 					// Normal product edit
 					$this->model_catalog_product->editProduct($post_info['product_id'], $post_info);
 				} else {
@@ -1255,7 +1282,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 
 				// Variant products edit if master product is edited
-				$this->model_catalog_product->editVariants($post_info['product_id'], $this->request->post);
+				$this->model_catalog_product->editVariants($post_info['product_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

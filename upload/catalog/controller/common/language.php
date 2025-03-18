@@ -72,20 +72,16 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$keys = [
-			'code',
-			'redirect'
+		$required = [
+			'code'     => '',
+			'redirect' => ''
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
+		$language_info = $this->model_localisation_language->getLanguageByCode($post_info['code']);
 
 		if (!$language_info) {
 			$json['error'] = $this->language->get('error_language');
@@ -95,8 +91,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 
-			if ($this->request->post['redirect']) {
-				$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
+			if ($post_info['redirect']) {
+				$redirect = urldecode(html_entity_decode($post_info['redirect'], ENT_QUOTES, 'UTF-8'));
 
 				// Build the url
 				$url_info = parse_url($redirect);
@@ -111,7 +107,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 				unset($query['route']);
 
-				$query['language'] = $this->request->post['code'];
+				$query['language'] = $post_info['code'];
 
 				$redirect = $this->url->link($route, $query, true);
 			} else {
@@ -121,7 +117,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			if (str_starts_with($redirect, $this->config->get('config_url'))) {
 				$json['redirect'] = $redirect;
 			} else {
-				$json['redirect'] = $this->url->link($this->config->get('action_default'), 'language=' . $this->request->post['code'], true);
+				$json['redirect'] = $this->url->link($this->config->get('action_default'), 'language=' . $post_info['code'], true);
 			}
 		}
 

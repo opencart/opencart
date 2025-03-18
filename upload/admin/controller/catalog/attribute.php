@@ -270,18 +270,14 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$post_info = $this->request->post;
-
 		$required = [
-			'attribute_id',
-			'attribute_group_id',
-			'attribute_description',
-			'sort_order'
+			'attribute_id'          => 0,
+			'attribute_group_id'    => 0,
+			'attribute_description' => [],
+			'sort_order'            => 0
 		];
 
-		if (array_keys($post_info) != $required) {
-			$json['error']['warning'] = $this->language->get('error_required');
-		}
+		$post_info = $this->request->post + $required;
 
 		if (!$post_info['attribute_group_id']) {
 			$json['error']['attribute_group'] = $this->language->get('error_attribute_group');
@@ -289,7 +285,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		foreach ($post_info['attribute_description'] as $language_id => $value) {
 			if (!oc_validate_length((string)$value['name'], 1, 64)) {
-				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+				$json['error']['name_' . (int)$language_id] = $this->language->get('error_name');
 			}
 		}
 

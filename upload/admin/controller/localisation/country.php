@@ -378,7 +378,14 @@ class Country extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$post_info = $this->request->post;
+		$required = [
+			'country_id'          => 0,
+			'country_description' => [],
+			'iso_code_2'          => '',
+			'iso_code_3'          => ''
+		];
+
+		$post_info = $this->request->post + $required;
 
 		foreach ($post_info['country_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 128)) {

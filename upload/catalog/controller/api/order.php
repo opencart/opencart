@@ -354,6 +354,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			return $output;
 		}
 
+		$required = [
+			'order_id'        => 0,
+			'affiliate_id'    => 0,
+			'comment'         => '',
+			'order_status_id' => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');
@@ -542,8 +551,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				$points += $product['reward'];
 			}
 
-			if (isset($this->request->post['comment'])) {
-				$order_data['comment'] = (string)$this->request->post['comment'];
+			if (isset($post_info['comment'])) {
+				$order_data['comment'] = (string)$post_info['comment'];
 			} else {
 				$order_data['comment'] = '';
 			}
@@ -616,8 +625,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['accept_language'] = '';
 			}
 
-			if (isset($this->request->post['order_id'])) {
-				$order_id = (int)$this->request->post['order_id'];
+			if (isset($post_info['order_id'])) {
+				$order_id = (int)$post_info['order_id'];
 			} else {
 				$order_id = 0;
 			}
@@ -637,8 +646,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$output['order_id'] = $order_id;
 
 			// Set the order history
-			if (isset($this->request->post['order_status_id'])) {
-				$order_status_id = (int)$this->request->post['order_status_id'];
+			if (isset($post_info['order_status_id'])) {
+				$order_status_id = (int)$post_info['order_status_id'];
 			} else {
 				$order_status_id = (int)$this->config->get('config_order_status_id');
 			}

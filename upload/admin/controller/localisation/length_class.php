@@ -258,7 +258,15 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['length_class_description'] as $language_id => $value) {
+		$required = [
+			'length_class_id'          => 0,
+			'length_class_description' => [],
+			'value'                    => 0.0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['length_class_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['title'], 3, 32)) {
 				$json['error']['title_' . $language_id] = $this->language->get('error_title');
 			}
@@ -271,10 +279,10 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/length_class');
 
-			if (!$this->request->post['length_class_id']) {
-				$json['length_class_id'] = $this->model_localisation_length_class->addLengthClass($this->request->post);
+			if (!$post_info['length_class_id']) {
+				$json['length_class_id'] = $this->model_localisation_length_class->addLengthClass($post_info);
 			} else {
-				$this->model_localisation_length_class->editLengthClass($this->request->post['length_class_id'], $this->request->post);
+				$this->model_localisation_length_class->editLengthClass($post_info['length_class_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

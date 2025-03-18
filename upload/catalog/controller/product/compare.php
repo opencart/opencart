@@ -210,7 +210,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// If already in array remove the product_id so it will be added to the back of the array
-			$key = array_search($this->request->post['product_id'], $this->session->data['compare']);
+			$key = array_search($product_info['product_id'], $this->session->data['compare']);
 
 			if ($key !== false) {
 				unset($this->session->data['compare'][$key]);
@@ -221,9 +221,9 @@ class Compare extends \Opencart\System\Engine\Controller {
 				array_shift($this->session->data['compare']);
 			}
 
-			$this->session->data['compare'][] = $this->request->post['product_id'];
+			$this->session->data['compare'][] = $product_info['product_id'];
 
-			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('product/compare', 'language=' . $this->config->get('config_language')));
+			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('product/compare', 'language=' . $this->config->get('config_language')));
 
 			$json['total'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 		}

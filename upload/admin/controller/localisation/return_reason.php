@@ -243,7 +243,14 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['return_reason'] as $language_id => $value) {
+		$required = [
+			'return_reason_id' => 0,
+			'return_reason'    => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['return_reason'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 128)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -252,10 +259,10 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/return_reason');
 
-			if (!$this->request->post['return_reason_id']) {
-				$json['return_reason_id'] = $this->model_localisation_return_reason->addReturnReason($this->request->post);
+			if (!$post_info['return_reason_id']) {
+				$json['return_reason_id'] = $this->model_localisation_return_reason->addReturnReason($post_info);
 			} else {
-				$this->model_localisation_return_reason->editReturnReason($this->request->post['return_reason_id'], $this->request->post);
+				$this->model_localisation_return_reason->editReturnReason($post_info['return_reason_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

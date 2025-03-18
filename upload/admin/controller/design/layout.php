@@ -325,17 +325,26 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 3, 64)) {
+		$required = [
+			'layout_id'     => 0,
+			'name'          => '',
+			'layout_route'  => [],
+			'layout_module' => [],
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 3, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!$json) {
 			$this->load->model('design/layout');
 
-			if (!$this->request->post['layout_id']) {
-				$json['layout_id'] = $this->model_design_layout->addLayout($this->request->post);
+			if (!$post_info['layout_id']) {
+				$json['layout_id'] = $this->model_design_layout->addLayout($post_info);
 			} else {
-				$this->model_design_layout->editLayout($this->request->post['layout_id'], $this->request->post);
+				$this->model_design_layout->editLayout($post_info['layout_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

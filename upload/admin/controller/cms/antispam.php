@@ -273,17 +273,24 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['keyword'], 1, 64)) {
+		$required = [
+			'antispam_id' => 0,
+	        'keyword'     => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['keyword'], 1, 64)) {
 			$json['error']['keyword'] = $this->language->get('error_keyword');
 		}
 
 		if (!$json) {
 			$this->load->model('cms/antispam');
 
-			if (!$this->request->post['antispam_id']) {
-				$json['antispam_id'] = $this->model_cms_antispam->addAntispam($this->request->post);
+			if (!$post_info['antispam_id']) {
+				$json['antispam_id'] = $this->model_cms_antispam->addAntispam($post_info);
 			} else {
-				$this->model_cms_antispam->editAntispam($this->request->post['antispam_id'], $this->request->post);
+				$this->model_cms_antispam->editAntispam($post_info['antispam_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -73,7 +73,7 @@ class Newsletter extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('account/customer');
 
-			$this->model_account_customer->editNewsletter($this->customer->getId(), $this->request->post['newsletter']);
+			$this->model_account_customer->editNewsletter($this->customer->getId(), !empty($this->request->post['newsletter']));
 
 			$json['success'] = $this->language->get('text_success');
 		}

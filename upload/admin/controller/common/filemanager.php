@@ -368,21 +368,23 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$directory = $base;
 		}
 
-		// Check its a directory
+		if (isset($this->request->post['folder'])) {
+			// Sanitize the folder name
+			$folder = preg_replace('/[\/\\\?%*&:|"<>]/', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
+		} else {
+			$folder = '';
+		}
+
+		// Check it's a directory
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)) . '/', 0, strlen($base)) != $base) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			// Sanitize the folder name
-			$folder = preg_replace('/[\/\\\?%*&:|"<>]/', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
-
-			// Validate the filename length
-			if (!oc_validate_length($folder, 3, 128)) {
-				$json['error'] = $this->language->get('error_folder');
-			} elseif (is_dir($directory . $folder)) {
-				$json['error'] = $this->language->get('error_exists');
-			}
+		// Validate the filename length
+		if (!oc_validate_length($folder, 3, 128)) {
+			$json['error'] = $this->language->get('error_folder');
+		} elseif (is_dir($directory . $folder)) {
+			$json['error'] = $this->language->get('error_exists');
 		}
 
 		if (!$json) {

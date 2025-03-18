@@ -246,7 +246,14 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['return_status'] as $language_id => $value) {
+		$required = [
+			'return_status_id' => 0,
+			'return_status'    => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['return_status'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 32)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -255,10 +262,10 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/return_status');
 
-			if (!$this->request->post['return_status_id']) {
-				$json['return_status_id'] = $this->model_localisation_return_status->addReturnStatus($this->request->post);
+			if (!$post_info['return_status_id']) {
+				$json['return_status_id'] = $this->model_localisation_return_status->addReturnStatus($post_info);
 			} else {
-				$this->model_localisation_return_status->editReturnStatus($this->request->post['return_status_id'], $this->request->post);
+				$this->model_localisation_return_status->editReturnStatus($post_info['return_status_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -290,7 +297,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/returns');
 
-		foreach ($this->request->post['selected'] as $return_status_id) {
+		foreach ($selected as $return_status_id) {
 			if ($this->config->get('config_return_status_id') == $return_status_id) {
 				$json['error'] = $this->language->get('error_default');
 			}

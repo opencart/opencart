@@ -319,7 +319,19 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['topic_description'] as $language_id => $value) {
+		$required = [
+			'topic_id'          => 0,
+			'topic_description' => [],
+			'sort_order'        => 0,
+			'status'            => 1,
+			'topic_store'       => [],
+			'topic_seo_url'     => [],
+			'topic_layout'      => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['topic_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -329,10 +341,10 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->request->post['topic_seo_url']) {
+		if ($post_info['topic_seo_url']) {
 			$this->load->model('design/seo_url');
 
-			foreach ($this->request->post['topic_seo_url'] as $store_id => $language) {
+			foreach ($post_info['topic_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if (!oc_validate_length($keyword, 1, 64)) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
@@ -344,7 +356,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id);
 
-					if ($seo_url_info && (!isset($this->request->post['topic_id']) || $seo_url_info['key'] != 'topic_id' || $seo_url_info['value'] != (int)$this->request->post['topic_id'])) {
+					if ($seo_url_info && (!$post_info['topic_id'] || $seo_url_info['key'] != 'topic_id' || $seo_url_info['value'] != (int)$post_info['topic_id'])) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword_exists');
 					}
 				}
@@ -358,10 +370,10 @@ class Topic extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('cms/topic');
 
-			if (!$this->request->post['topic_id']) {
-				$json['topic_id'] = $this->model_cms_topic->addTopic($this->request->post);
+			if (!$post_info['topic_id']) {
+				$json['topic_id'] = $this->model_cms_topic->addTopic($post_info);
 			} else {
-				$this->model_cms_topic->editTopic($this->request->post['topic_id'], $this->request->post);
+				$this->model_cms_topic->editTopic($post_info['topic_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

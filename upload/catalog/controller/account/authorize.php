@@ -137,6 +137,13 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$required = [
+			'code'     => '',
+			'redirect' => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
 		if (isset($this->request->cookie['customer_authorize'])) {
 			$token = $this->request->cookie['customer_authorize'];
 		} else {
@@ -154,7 +161,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 				$json['redirect'] = $this->url->link('account/authorize', 'language=' . $this->config->get('config_language'), true);
 			} elseif ($token_info['total'] > 2) {
 				$json['redirect'] = $this->url->link('account/authorize.reset', 'language=' . $this->config->get('config_language'), true);
-			} elseif (!isset($this->request->post['code']) || !isset($this->session->data['code']) || $this->request->post['code'] != $this->session->data['code']) {
+			} elseif (!isset($post_info['code']) || !isset($this->session->data['code']) || $post_info['code'] != $this->session->data['code']) {
 				$total = $token_info['total'] + 1;
 
 				if ($total <= 2) {
@@ -171,15 +178,15 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		if (!$json) {
+  		if (!$json) {
 			unset($this->session->data['code']);
 
 			// On success we need to reset the attempts and status.
 			$this->model_account_customer->editAuthorizeStatus($token_info['customer_authorize_id'], true);
 			$this->model_account_customer->editAuthorizeTotal($token_info['customer_authorize_id'], 0);
 
-			if (isset($this->request->post['redirect'])) {
-				$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
+			if (isset($post_info['redirect'])) {
+				$redirect = urldecode(html_entity_decode($post_info['redirect'], ENT_QUOTES, 'UTF-8'));
 			} else {
 				$redirect = '';
 			}

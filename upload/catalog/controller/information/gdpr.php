@@ -94,20 +94,16 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->post['email'])) {
-			$email = (string)$this->request->post['email'];
-		} else {
-			$email = '';
-		}
+		// Add keys for missing post vars
+		$required = [
+			'email'  => '',
+			'action' => '',
+		];
 
-		if (isset($this->request->post['action'])) {
-			$action = (string)$this->request->post['action'];
-		} else {
-			$action = '';
-		}
+		$post_info = $this->request->post + $required;
 
 		// Validate E-Mail
-		if (!oc_validate_email($email)) {
+		if (!oc_validate_email($post_info['email'])) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
@@ -117,7 +113,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			'remove'
 		];
 
-		if (!in_array($action, $allowed)) {
+		if (!in_array($post_info['action'], $allowed)) {
 			$json['error']['action'] = $this->language->get('error_action');
 		}
 
@@ -127,10 +123,10 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('account/gdpr');
 
-			$results = $this->model_account_gdpr->getGdprsByEmail($email);
+			$results = $this->model_account_gdpr->getGdprsByEmail($post_info['email']);
 
 			foreach ($results as $result) {
-				if ($result['action'] == $action) {
+				if ($result['action'] == $post_info['action']) {
 					$status = false;
 
 					break;
@@ -138,7 +134,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($status) {
-				$this->model_account_gdpr->addGdpr(oc_token(32), $email, $action);
+				$this->model_account_gdpr->addGdpr(oc_token(32), $post_info['email'], $post_info['action']);
 			}
 
 			$json['success'] = $this->language->get('text_success');

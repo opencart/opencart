@@ -33,19 +33,19 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
-		if (!oc_validate_length($post_info['payment_firstname'], 1, 32)) {
+		if (!oc_validate_length((string)$post_info['payment_firstname'], 1, 32)) {
 			$output['error']['payment_firstname'] = $this->language->get('error_firstname');
 		}
 
-		if (!oc_validate_length($post_info['payment_lastname'], 1, 32)) {
+		if (!oc_validate_length((string)$post_info['payment_lastname'], 1, 32)) {
 			$output['error']['payment_lastname'] = $this->language->get('error_lastname');
 		}
 
-		if (!oc_validate_length($post_info['payment_address_1'], 3, 128)) {
+		if (!oc_validate_length((string)$post_info['payment_address_1'], 3, 128)) {
 			$output['error']['payment_address_1'] = $this->language->get('error_address_1');
 		}
 
-		if (!oc_validate_length($post_info['payment_city'], 2, 128)) {
+		if (!oc_validate_length((string)$post_info['payment_city'], 2, 128)) {
 			$output['error']['payment_city'] = $this->language->get('error_city');
 		}
 
@@ -54,7 +54,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$country_info = $this->model_localisation_country->getCountry((int)$post_info['payment_country_id']);
 
-		if ($country_info && $country_info['postcode_required'] && !oc_validate_length($post_info['payment_postcode'], 2, 10)) {
+		if ($country_info && $country_info['postcode_required'] && !oc_validate_length((string)$post_info['payment_postcode'], 2, 10)) {
 			$output['error']['payment_postcode'] = $this->language->get('error_postcode');
 		}
 
@@ -154,7 +154,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		if (!isset($this->request->post['payment_address_id'])) {
+		if (isset($this->request->post['payment_address_id'])) {
 			$address_id = (int)$this->request->post['payment_address_id'];
 		} else {
 			$address_id = 0;

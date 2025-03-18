@@ -259,6 +259,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
+			'length_class_id'          => 0,
 			'length_class_description' => [],
 			'value'                    => 0.0
 		];

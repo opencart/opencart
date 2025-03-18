@@ -250,7 +250,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'order_status_id' => 0,
-            'name'            => ''
+            'order_status'    => []
 		];
 
 		$post_info = $this->request->post + $required;

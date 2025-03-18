@@ -245,7 +245,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'return_action_id' => 0,
-			'name'             => ''
+			'return_action'    => []
 		];
 
 		$post_info = $this->request->post + $required;

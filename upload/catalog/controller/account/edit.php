@@ -107,14 +107,14 @@ class Edit extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$filter_data = [
+			$required = [
 				'firstname' => '',
 				'lastname'  => '',
 				'email'     => '',
 				'telephone' => ''
 			];
 
-			$post_info = oc_filter_data($filter_data, $this->request->post);
+			$post_info = $this->request->post + $required;
 
 			if (!oc_validate_length($post_info['firstname'], 1, 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');

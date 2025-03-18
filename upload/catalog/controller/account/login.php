@@ -111,13 +111,13 @@ class Login extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Stop any undefined index messages.
-		$filter_data = [
+		$required = [
 			'email'    => '',
 			'password' => '',
 			'redirect' => ''
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		$this->customer->logout();
 

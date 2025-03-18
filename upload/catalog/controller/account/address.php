@@ -311,6 +311,19 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$required = [
+			'firstname'  => '',
+			'lastname'   => '',
+			'address_1'  => '',
+			'address_2'  => '',
+			'city'       => '',
+			'postcode'   => '',
+			'country_id' => 0,
+			'zone_id'    => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
 		if (!$this->load->controller('account/login.validate')) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
@@ -318,8 +331,6 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$post_info = $this->request->post;
-
 			if (!oc_validate_length((string)$post_info['firstname'], 1, 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}

@@ -405,30 +405,26 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$output = [];
 
 		// Add keys for missing post vars
-		$keys = [
-			'subscription_id',
-			'subscription_status_id',
-			'comment',
-			'notify'
+		$required = [
+			'subscription_id'        => 0,
+			'subscription_status_id' => 0,
+			'comment'                => '',
+			'notify'                 => ''
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		// Subscription
 		$this->load->model('checkout/subscription');
 
-		$subscription_info = $this->model_checkout_subscription->getSubscription((int)$this->request->post['subscription_id']);
+		$subscription_info = $this->model_checkout_subscription->getSubscription((int)$post_info['subscription_id']);
 
 		if (!$subscription_info) {
 			$output['error'] = $this->language->get('error_subscription');
 		}
 
 		if (!$output) {
-			$this->model_checkout_order->addHistory((int)$this->request->post['subscription_id'], (int)$this->request->post['subscription_status_id'], (string)$this->request->post['comment'], (bool)$this->request->post['notify']);
+			$this->model_checkout_order->addHistory((int)$post_info['subscription_id'], (int)$post_info['subscription_status_id'], (string)$post_info['comment'], (bool)$post_info['notify']);
 
 			$output['success'] = $this->language->get('text_success');
 		}

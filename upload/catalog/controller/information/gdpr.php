@@ -95,13 +95,13 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['email'])) {
-			$email = $this->request->post['email'];
+			$email = (string)$this->request->post['email'];
 		} else {
 			$email = '';
 		}
 
 		if (isset($this->request->post['action'])) {
-			$action = $this->request->post['action'];
+			$action = (string)$this->request->post['action'];
 		} else {
 			$action = '';
 		}

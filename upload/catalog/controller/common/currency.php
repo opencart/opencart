@@ -70,16 +70,12 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$keys = [
-			'code',
-			'redirect'
+		$required = [
+			'code'     => '',
+			'redirect' => ''
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		$this->load->model('localisation/currency');
 

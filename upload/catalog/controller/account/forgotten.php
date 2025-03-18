@@ -65,7 +65,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$post_info = oc_filter_data(['email' => ''], $this->request->post);
+			$post_info = $this->request->post + ['email' => ''];
 
 			$this->load->model('account/customer');
 
@@ -207,12 +207,12 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$filter_data = [
+			$required = [
 				'password' => '',
 				'confirm'  => ''
 			];
 
-			$post_info = oc_filter_data($filter_data, $this->request->post);
+			$post_info = $this->request->post + $required;
 
 			$password = html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8');
 

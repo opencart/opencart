@@ -272,6 +272,12 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
+		$filter_data = [
+			'filter_id'          => 0,
+			'filter_description' => [],
+			'filter_group_id'    => 0
+		];
+
 		$post_info = $this->request->post;
 
 		foreach ($post_info['filter_description'] as $language_id => $value) {

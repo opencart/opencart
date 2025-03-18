@@ -286,16 +286,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$parent_id = 0;
 		}
 
-		$keys = [
-			'author',
-			'comment'
+		$required = [
+			'author'  => '',
+			'comment' => ''
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		if (!isset($this->request->get['comment_token']) || !isset($this->session->data['comment_token']) || $this->request->get['comment_token'] != $this->session->data['comment_token']) {
 			$json['error']['warning'] = $this->language->get('error_token');
@@ -314,11 +310,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_article');
 		}
 
-		if (!oc_validate_length($this->request->post['author'], 3, 25)) {
+		if (!oc_validate_length($post_info['author'], 3, 25)) {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
-		if (!oc_validate_length($this->request->post['comment'], 2, 1000)) {
+		if (!oc_validate_length($post_info['comment'], 2, 1000)) {
 			$json['error']['comment'] = $this->language->get('error_comment');
 		}
 
@@ -363,7 +359,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			// Anti-Spam
 			$this->load->model('cms/antispam');
 
-			$spam = $this->model_cms_antispam->getSpam($this->request->post['comment']);
+			$spam = $this->model_cms_antispam->getSpam($post_info['comment']);
 
 			// If customer has been approved to make comments without moderation
 			if ($this->customer->isCommenter()) {
@@ -375,7 +371,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$status = 0;
 			}
 
-			$comment_data = $this->request->post + [
+			$comment_data = $post_info + [
 				'parent_id' => $parent_id,
 				'status'    => $status
 			];

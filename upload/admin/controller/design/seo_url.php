@@ -492,25 +492,36 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['key'], 1, 64)) {
+		$required = [
+			'seo_url_id'  => 0,
+			'store_id'    => 0,
+			'language_id' => 0,
+			'key'         => '',
+			'value'       => '',
+			'keyword'     => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['key'], 1, 64)) {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
-		if (!oc_validate_length($this->request->post['value'], 1, 255)) {
+		if (!oc_validate_length($post_info['value'], 1, 255)) {
 			$json['error']['value'] = $this->language->get('error_value');
 		}
 
 		$this->load->model('design/seo_url');
 
 		// Check if there is already a key value pair on the same store using the same language
-		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($this->request->post['key'], $this->request->post['value'], $this->request->post['store_id'], $this->request->post['language_id']);
+		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($post_info['key'], $post_info['value'], $post_info['store_id'], $post_info['language_id']);
 
-		if ($seo_url_info && (!isset($this->request->post['seo_url_id']) || $seo_url_info['seo_url_id'] != (int)$this->request->post['seo_url_id'])) {
+		if ($seo_url_info && (!isset($post_info['seo_url_id']) || $seo_url_info['seo_url_id'] != (int)$post_info['seo_url_id'])) {
 			$json['error']['value'] = $this->language->get('error_value_exists');
 		}
 
 		// Split keywords by / so we can validate each keyword
-		$keywords = explode('/', $this->request->post['keyword']);
+		$keywords = explode('/', $post_info['keyword']);
 
 		foreach ($keywords as $keyword) {
 			if (!oc_validate_length($keyword, 1, 64)) {
@@ -523,17 +534,17 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		// Check if keyword already exists and on the same store as long as the keyword matches the key / value pair
-		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($this->request->post['keyword'], $this->request->post['store_id']);
+		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($post_info['keyword'], $post_info['store_id']);
 
-		if ($seo_url_info && (($seo_url_info['key'] != $this->request->post['key']) || ($seo_url_info['value'] != $this->request->post['value']))) {
+		if ($seo_url_info && (($seo_url_info['key'] != $post_info['key']) || ($seo_url_info['value'] != $post_info['value']))) {
 			$json['error']['keyword'] = $this->language->get('error_keyword_exists');
 		}
 
 		if (!$json) {
-			if (!$this->request->post['seo_url_id']) {
-				$json['seo_url_id'] = $this->model_design_seo_url->addSeoUrl($this->request->post['key'], $this->request->post['value'], $this->request->post['keyword'], $this->request->post['store_id'], $this->request->post['language_id'], (int)$this->request->post['sort_order']);
+			if (!$post_info['seo_url_id']) {
+				$json['seo_url_id'] = $this->model_design_seo_url->addSeoUrl($post_info['key'], $post_info['value'], $post_info['keyword'], $post_info['store_id'], $post_info['language_id'], (int)$post_info['sort_order']);
 			} else {
-				$this->model_design_seo_url->editSeoUrl($this->request->post['seo_url_id'], $this->request->post['key'], $this->request->post['value'], $this->request->post['keyword'], $this->request->post['store_id'], $this->request->post['language_id'], (int)$this->request->post['sort_order']);
+				$this->model_design_seo_url->editSeoUrl($post_info['seo_url_id'], $post_info['key'], $post_info['value'], $post_info['keyword'], $post_info['store_id'], $post_info['language_id'], (int)$post_info['sort_order']);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -275,14 +275,14 @@ class Download extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$post_info = $this->request->post;
-
-		$filter_data = [
+		$required = [
 			'download_id'          => 0,
 			'download_description' => [],
 			'filename'             => '',
 			'mask'                 => ''
 		];
+
+		$post_info = $this->request->post + $required;
 
 		foreach ($post_info['download_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 64)) {

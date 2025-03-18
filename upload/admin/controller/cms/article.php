@@ -337,7 +337,15 @@ class Article extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$post_info = $this->request->post;
+		$required = [
+			'article_id'          => 0,
+			'article_description' => [],
+		    'author'              => '',
+		    'status'              => 0,
+			'article_seo_url'     => []
+		];
+
+		$post_info = $this->request->post + $required;
 
 		foreach ($post_info['article_description'] as $language_id => $value) {
 			if (!oc_validate_length((string)$value['name'], 1, 255)) {
@@ -368,7 +376,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword((string)$keyword, $store_id);
 
-					if ($seo_url_info && (!isset($this->request->post['article_id']) || $seo_url_info['key'] != 'article_id' || $seo_url_info['value'] != (int)$this->request->post['article_id'])) {
+					if ($seo_url_info && (!$post_info['article_id'] || $seo_url_info['key'] != 'article_id' || $seo_url_info['value'] != (int)$post_info['article_id'])) {
 						$json['error']['keyword_' . (int)$store_id . '_' . (int)$language_id] = $this->language->get('error_keyword_exists');
 					}
 				}

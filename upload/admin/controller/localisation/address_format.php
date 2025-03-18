@@ -191,17 +191,25 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 1, 128)) {
+		$required = [
+			'address_format_id' => 0,
+			'name'              => '',
+			'address_format'    => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 1, 128)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!$json) {
 			$this->load->model('localisation/address_format');
 
-			if (!$this->request->post['address_format_id']) {
-				$json['address_format_id'] = $this->model_localisation_address_format->addAddressFormat($this->request->post);
+			if (!$post_info['address_format_id']) {
+				$json['address_format_id'] = $this->model_localisation_address_format->addAddressFormat($post_info);
 			} else {
-				$this->model_localisation_address_format->editAddressFormat($this->request->post['address_format_id'], $this->request->post);
+				$this->model_localisation_address_format->editAddressFormat($post_info['address_format_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

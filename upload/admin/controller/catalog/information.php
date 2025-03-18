@@ -308,7 +308,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
+		$required = [
 			'information_id'          => 0,
 			'sort_order'              => 0,
 			'status'                  => 0,
@@ -318,7 +318,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			'information_seo_url'     => []
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		foreach ($post_info['information_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['title'], 1, 64)) {

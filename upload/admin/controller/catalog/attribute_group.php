@@ -257,13 +257,13 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
+		$required = [
 			'attribute_group_id'    => 0,
 			'attribute_description' => [],
 			'sort_order'            => 0
 		];
 
-		$post_info = $this->request->post;
+		$post_info = $this->request->post + $required;
 
 		foreach ($post_info['attribute_group_description'] as $language_id => $value) {
 			if (!oc_validate_length((string)$value['name'], 1, 64)) {

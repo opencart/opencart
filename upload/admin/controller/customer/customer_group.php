@@ -263,7 +263,15 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['customer_group_description'] as $language_id => $value) {
+		$required = [
+			'customer_group_description' => [],
+	        'approval'                   => 0,
+	        'sort_order'                 => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['customer_group_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 32)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -272,10 +280,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/customer_group');
 
-			if (!$this->request->post['customer_group_id']) {
-				$json['customer_group_id'] = $this->model_customer_customer_group->addCustomerGroup($this->request->post);
+			if (!$post_info['customer_group_id']) {
+				$json['customer_group_id'] = $this->model_customer_customer_group->addCustomerGroup($post_info);
 			} else {
-				$this->model_customer_customer_group->editCustomerGroup($this->request->post['customer_group_id'], $this->request->post);
+				$this->model_customer_customer_group->editCustomerGroup($post_info['customer_group_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

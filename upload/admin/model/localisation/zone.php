@@ -376,7 +376,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z`";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id = `zd`.`zone_id`) AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}
 
 		if (!empty($data['filter_country'])) {

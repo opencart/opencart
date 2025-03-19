@@ -1179,24 +1179,24 @@ class Product extends \Opencart\System\Engine\Controller {
 			'model'               => '',
 			'product_code'        => [],
 			'location'            => '',
-		    'variant'             => [],
-		    'override'            => [],
-		    'quantity'            => 0,
-		    'minimum'             => 0,
-		    'subtract'            => 0,
-		    'stock_status_id'     => 0,
-		    'date_available'      => '',
-		    'manufacturer_id'     => 0,
-		    'shipping'            => 0,
-		    'price'               => 0.0,
-		    'points'              => 0,
-		    'weight'              => 0.0,
-		    'weight_class_id'     => 0,
-		    'length'              => 0.0,
-		    'length_class_id'     => 0,
-		    'status'              => 0,
-		    'tax_class_id'        => 0,
-		    'sort_order'          => 0
+			'variant'             => [],
+			'override'            => [],
+			'quantity'            => 0,
+			'minimum'             => 0,
+			'subtract'            => 0,
+			'stock_status_id'     => 0,
+			'date_available'      => '',
+			'manufacturer_id'     => 0,
+			'shipping'            => 0,
+			'price'               => 0.0,
+			'points'              => 0,
+			'weight'              => 0.0,
+			'weight_class_id'     => 0,
+			'length'              => 0.0,
+			'length_class_id'     => 0,
+			'status'              => 0,
+			'tax_class_id'        => 0,
+			'sort_order'          => 0
 		];
 
 		$post_info = $this->request->post + $required;
@@ -1224,7 +1224,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$json['error']['code_' . $key] = sprintf($this->language->get('error_regex'), $product_code['code']);
 			}
 		}
-		
+
 		$this->load->model('catalog/product');
 
 		if ($post_info['master_id']) {

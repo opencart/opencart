@@ -265,8 +265,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'customer_group_description' => [],
-	        'approval'                   => 0,
-	        'sort_order'                 => 0
+			'approval'                   => 0,
+			'sort_order'                 => 0
 		];
 
 		$post_info = $this->request->post + $required;

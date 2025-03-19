@@ -671,21 +671,21 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		 $required = [
-		     'store_id'          => 0,
-		     'language_id'       => 0,
-		     'customer_group_id' => 0,
-		     'firstname'         => '',
-		     'lastname'          => '',
-		     'email'             => '',
-		     'telephone'         => '',
-		     'custom_field'      => [],
-		     'newsletter'        => 0,
-		     'password'          => '',
-		     'status'            => 0,
-		     'safe'              => 0,
-		     'commenter'         => 0
-		 ];
+		$required = [
+			'store_id'          => 0,
+			'language_id'       => 0,
+			'customer_group_id' => 0,
+			'firstname'         => '',
+			'lastname'          => '',
+			'email'             => '',
+			'telephone'         => '',
+			'custom_field'      => [],
+			'newsletter'        => 0,
+			'password'          => '',
+			'status'            => 0,
+			'safe'              => 0,
+			'commenter'         => 0
+		];
 
 		$post_info = $this->request->post + $required;
 

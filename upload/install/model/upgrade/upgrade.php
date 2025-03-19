@@ -10,7 +10,7 @@ namespace Opencart\Install\Model\Upgrade;
  * @package Opencart\Install\Model\Install
  */
 class Upgrade extends \Opencart\System\Engine\Model {
-	public function addRecord($table, $data) {
+	public function addRecord($table, $data): void {
 		$implode = [];
 
 		foreach ($data as $key => $value) {
@@ -18,13 +18,13 @@ class Upgrade extends \Opencart\System\Engine\Model {
 
 			switch (gettype($value)) {
 				case 'boolean':
-					$implode[] = "`" . $key . "` = '" . (boolean)$value . "'";
+					$implode[] = "`" . $key . "` = '" . (bool)$value . "'";
 					break;
 				case 'integer':
 					$implode[] = "`" . $key . "` = '" . (int)$value . "'";
 					break;
 				case 'double':
-					$implode[] = "`" . $key. "` = '" . (float)$value . "'";
+					$implode[] = "`" . $key . "` = '" . (float)$value . "'";
 					break;
 				case 'string':
 					$implode[] = "`" . $key . "` = '" . $this->db->escape((string)$value) . "'";

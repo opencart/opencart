@@ -340,8 +340,8 @@ class Article extends \Opencart\System\Engine\Controller {
 		$required = [
 			'article_id'          => 0,
 			'article_description' => [],
-		    'author'              => '',
-		    'status'              => 0,
+			'author'              => '',
+			'status'              => 0,
 			'article_seo_url'     => []
 		];
 

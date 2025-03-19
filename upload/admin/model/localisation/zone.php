@@ -20,9 +20,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $zone_data = [
-	 *     'code'       => 'Zone Code',
-	 *     'country_id' => 1,
-	 *     'status'     => 0
+	 *     'zone_description' => [],
+	 *     'code'             => 'Zone Code',
+	 *     'country_id'       => 1,
+	 *     'status'           => 0
 	 * ];
 	 *
 	 * $this->load->model('localisation/zone');
@@ -56,9 +57,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $zone_data = [
-	 *     'code'       => 'Zone Code',
-	 *     'country_id' => 1,
-	 *     'status'     => 1
+	 *     'zone_description' => [],
+	 *     'code'             => 'Zone Code',
+	 *     'country_id'       => 1,
+	 *     'status'           => 1
 	 * ];
 	 *
 	 * $this->load->model('localisation/zone');

@@ -20,8 +20,9 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $information_data = [
-	 *     'sort_order' => 0,
-	 *     'status'     => 0
+	 *     'information_description' => [],
+	 *     'sort_order'              => 0,
+	 *     'status'                  => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/information');
@@ -78,8 +79,9 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $information_data = [
-	 *     'sort_order' => 0,
-	 *     'status'     => 1
+	 *     'information_description' => [],
+	 *     'sort_order'              => 0,
+	 *     'status'                  => 1
 	 * ];
 	 *
 	 * $this->load->model('catalog/information');

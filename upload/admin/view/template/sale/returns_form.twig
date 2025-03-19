@@ -236,11 +236,7 @@
           <div class="mb-3 required">
             <label for="input-return" class="form-label">{{ entry_product }}</label>
             <select name="product_id" id="input-return" class="form-select">
-              {% if product_id %}
-                <option value="{{ product_id }}">{{ product }}</option>
-              {% else %}
-                <option value="0">{{ text_select }}</option>
-              {% endif %}
+              <option value="{{ product_id }}">{{ product }}</option>
             </select>
             <input type="hidden" name="product" value="{{ product }}" id="input-product"/>
             <div id="error-product" class="invalid-feedback"></div>

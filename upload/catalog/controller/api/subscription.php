@@ -417,7 +417,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'subscription_id'        => 0,
 			'subscription_status_id' => 0,
 			'comment'                => '',
-			'notify'                 => ''
+			'notify'                 => 0
 		];
 
 		$post_info = $this->request->post + $required;

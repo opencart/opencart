@@ -937,7 +937,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -1040,6 +1040,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$required = [
+			'subscription_status_id' => 0,
+			'comment'                => '',
+			'notify'                 => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
 		// Subscription
 		$this->load->model('sale/subscription');
 
@@ -1052,14 +1060,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Subscription Status
 		$this->load->model('localisation/subscription_status');
 
-		$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($this->request->post['subscription_status_id']);
+		$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($post_info['subscription_status_id']);
 
 		if (!$subscription_status_info) {
 			$json['error'] = $this->language->get('error_subscription_status');
 		}
 
 		if (!$json) {
-			$this->model_sale_subscription->addHistory($subscription_id, $this->request->post['subscription_status_id'], $this->request->post['comment'], $this->request->post['notify']);
+			$this->model_sale_subscription->addHistory($subscription_id, $post_info['subscription_status_id'], $post_info['comment'], $post_info['notify']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

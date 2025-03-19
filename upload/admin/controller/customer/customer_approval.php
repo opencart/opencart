@@ -226,7 +226,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			$approvals = [];
 
 			if (isset($this->request->post['selected'])) {
-				$approvals = $this->request->post['selected'];
+				$approvals = (array)$this->request->post['selected'];
 			}
 
 			if (isset($this->request->get['customer_approval_id'])) {
@@ -274,7 +274,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			$denials = [];
 
 			if (isset($this->request->post['selected'])) {
-				$denials = $this->request->post['selected'];
+				$denials = (array)$this->request->post['selected'];
 			}
 
 			if (isset($this->request->get['customer_approval_id'])) {

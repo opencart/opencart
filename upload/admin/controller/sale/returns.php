@@ -616,65 +616,85 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
+		$required = [
+			'order_id'         => 0,
+			'product_id'       => 0,
+			'customer_id'      => 0,
+			'firstname'        => '',
+			'lastname'         => '',
+			'email'            => ''
+			'telephone'        => '',
+			'product'          => '',
+			'model'            => '',
+			'quantity'         => 0,
+			'opened'           => 0,
+			'return_reason_id' => 0,
+			'return_action_id' => 0,
+			'comment'          => '',
+			'date_ordered'     => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
 		// Order
 		$this->load->model('sale/order');
 
-		$order_info = $this->model_sale_order->getOrder($this->request->post['order_id']);
+		$order_info = $this->model_sale_order->getOrder($post_info['order_id']);
 
 		if (!$order_info) {
 			$json['error']['order'] = $this->language->get('error_order_id');
 		}
 
-		if ($this->request->post['customer_id']) {
+		if ($post_info['customer_id']) {
 			$this->load->model('customer/customer');
 
-			$customer_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
+			$customer_info = $this->model_customer_customer->getCustomer($post_info['customer_id']);
 
 			if (!$customer_info) {
 				$json['error']['customer'] = $this->language->get('error_customer');
 			}
 		}
 
-		if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+		if (!oc_validate_length($post_info['firstname'], 1, 32)) {
 			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+		if (!oc_validate_length($post_info['lastname'], 1, 32)) {
 			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if (!oc_validate_email($this->request->post['email'])) {
+		if (!oc_validate_email($post_info['email'])) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ($this->config->get('config_telephone_required') && !oc_validate_length($this->request->post['telephone'], 3, 32)) {
+		if ($this->config->get('config_telephone_required') && !oc_validate_length($post_info['telephone'], 3, 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		$this->load->model('catalog/product');
 
-		$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
+		$product_info = $this->model_catalog_product->getProduct($post_info['product_id']);
 
 		if (!$product_info) {
 			$json['error']['product'] = $this->language->get('error_product');
 		}
 
-		if (!oc_validate_length($this->request->post['product'], 1, 255)) {
+		if (!oc_validate_length($post_info['product'], 1, 255)) {
 			$json['error']['product'] = $this->language->get('error_name');
 		}
 
-		if (!oc_validate_length($this->request->post['model'], 1, 64)) {
+		if (!oc_validate_length($post_info['model'], 1, 64)) {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
-		if ((int)$this->request->post['quantity'] < 1) {
+		if ((int)$post_info['quantity'] < 1) {
 			$json['error']['quantity'] = $this->language->get('error_quantity');
 		}
 
 		// Return Reason
 		$this->load->model('localisation/return_reason');
 
-		$return_reason_info = $this->model_localisation_return_reason->getReturnReason($this->request->post['return_reason_id']);
+		$return_reason_info = $this->model_localisation_return_reason->getReturnReason($post_info['return_reason_id']);
 
 		if (!$return_reason_info) {
 			$json['error']['reason'] = $this->language->get('error_reason');
@@ -683,7 +703,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		// Return Action
 		$this->load->model('localisation/return_action');
 
-		$return_action_info = $this->model_localisation_return_action->getReturnAction($this->request->post['return_action_id']);
+		$return_action_info = $this->model_localisation_return_action->getReturnAction($post_info['return_action_id']);
 
 		if (!$return_action_info) {
 			$json['error']['action'] = $this->language->get('error_action');
@@ -696,12 +716,12 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('sale/returns');
 
-			if (!$this->request->post['return_id']) {
+			if (!$post_info['return_id']) {
 				$json['return_id'] = $this->model_sale_returns->addReturn($this->request->post);
 
-				$this->model_sale_returns->addHistory($json['return_id'], $this->request->post['return_status_id']);
+				$this->model_sale_returns->addHistory($json['return_id'], $post_info['return_status_id']);
 			} else {
-				$this->model_sale_returns->editReturn($this->request->post['return_id'], $this->request->post);
+				$this->model_sale_returns->editReturn($post_info['return_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -722,7 +742,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -824,6 +844,14 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$required = [
+			'return_status_id'  => 0,
+			'comment'           => '',
+			'notify'            => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
 		$this->load->model('sale/returns');
 
 		$return_info = $this->model_sale_returns->getReturn($return_id);
@@ -833,7 +861,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->model_sale_returns->addHistory($return_id, $this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);
+			$this->model_sale_returns->addHistory($return_id, $post_info['return_status_id'], $post_info['comment'], $post_info['notify']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -1296,7 +1296,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -1359,7 +1359,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$orders = [];
 
 		if (isset($this->request->post['selected'])) {
-			$orders = $this->request->post['selected'];
+			$orders = (array)$this->request->post['selected'];
 		}
 
 		if (isset($this->request->get['order_id'])) {
@@ -1608,7 +1608,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$orders = [];
 
 		if (isset($this->request->post['selected'])) {
-			$orders = $this->request->post['selected'];
+			$orders = (array)$this->request->post['selected'];
 		}
 
 		if (isset($this->request->get['order_id'])) {

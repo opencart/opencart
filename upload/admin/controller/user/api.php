@@ -279,25 +279,34 @@ class Api extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['username'], 3, 64)) {
+		$required = [
+			'api_id'   => 0,
+			'username' => '',
+			'key'      => '',
+			'status'   => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['username'], 3, 64)) {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
-		if (!oc_validate_length($this->request->post['key'], 64, 256)) {
+		if (!oc_validate_length($post_info['key'], 64, 256)) {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
-		if (!isset($json['error']['warning']) && !isset($this->request->post['api_ip'])) {
+		if (!isset($json['error']['warning']) && !isset($post_info['api_ip'])) {
 			$json['error']['warning'] = $this->language->get('error_ip');
 		}
 
 		if (!$json) {
 			$this->load->model('user/api');
 
-			if (!$this->request->post['api_id']) {
+			if (!$post_info['api_id']) {
 				$json['api_id'] = $this->model_user_api->addApi($this->request->post);
 			} else {
-				$this->model_user_api->editApi($this->request->post['api_id'], $this->request->post);
+				$this->model_user_api->editApi($post_info['api_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -318,7 +327,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

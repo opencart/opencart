@@ -698,9 +698,30 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
+		$required = [
+			'customer_id'         => 0,
+			'company'             => '',
+			'website'             => '',
+			'tracking'            => '',
+			'commission'          => 0.00,
+			'tax'                 => '',
+			'payment_method'      => '',
+			'cheque'              => '',
+			'paypal'              => '',
+			'bank_name'           => '',
+			'bank_branch_number'  => '',
+			'bank_swift_code'     => '',
+			'bank_account_name'   => '',
+			'bank_account_number' => '',
+			'custom_field'        => [],
+			'status'              => 1
+		];
+
+		$post_info = $this->request->post + $required;
+
 		$this->load->model('customer/customer');
 
-		$customer_info = $this->model_customer_customer->getCustomer((int)$this->request->post['customer_id']);
+		$customer_info = $this->model_customer_customer->getCustomer((int)$post_info['customer_id']);
 
 		if (!$customer_info) {
 			$json['error']['customer'] = $this->language->get('error_customer');
@@ -709,37 +730,37 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		// Check to see if customer is already an affiliate
 		$this->load->model('marketing/affiliate');
 
-		$affiliate_info = $this->model_marketing_affiliate->getAffiliate((int)$this->request->post['customer_id']);
+		$affiliate_info = $this->model_marketing_affiliate->getAffiliate((int)$post_info['customer_id']);
 
-		if ($affiliate_info && (!isset($this->request->post['customer_id']) || ($this->request->post['customer_id'] != $affiliate_info['customer_id']))) {
+		if ($affiliate_info && (!$post_info['customer_id'] || ($post_info['customer_id'] != $affiliate_info['customer_id']))) {
 			$json['error']['warning'] = $this->language->get('error_already');
 		}
 
-		if (!$this->request->post['tracking']) {
+		if (!$post_info['tracking']) {
 			$json['error']['tracking'] = $this->language->get('error_tracking');
 		}
 
-		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByTracking($this->request->post['tracking']);
+		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByTracking($post_info['tracking']);
 
-		if ($affiliate_info && !isset($this->request->post['customer_id']) || ($this->request->post['customer_id'] != $affiliate_info['customer_id'])) {
+		if ($affiliate_info && !isset($post_info['customer_id']) || ($post_info['customer_id'] != $affiliate_info['customer_id'])) {
 			$json['error']['tracking'] = $this->language->get('error_exists');
 		}
 
 		// Payment validation
-		if (empty($this->request->post['payment_method'])) {
+		if (empty($post_info['payment_method'])) {
 			$json['error']['payment_method'] = $this->language->get('error_payment_method');
 		}
 
-		if ($this->request->post['payment_method'] == 'cheque' && $this->request->post['cheque'] == '') {
+		if ($post_info['payment_method'] == 'cheque' && $post_info['cheque'] == '') {
 			$json['error']['cheque'] = $this->language->get('error_cheque');
-		} elseif ($this->request->post['payment_method'] == 'paypal' && ((oc_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
+		} elseif ($post_info['payment_method'] == 'paypal' && ((oc_strlen($post_info['paypal']) > 96) || !filter_var($post_info['paypal'], FILTER_VALIDATE_EMAIL))) {
 			$json['error']['paypal'] = $this->language->get('error_paypal');
-		} elseif ($this->request->post['payment_method'] == 'bank') {
-			if ($this->request->post['bank_account_name'] == '') {
+		} elseif ($post_info['payment_method'] == 'bank') {
+			if ($post_info['bank_account_name'] == '') {
 				$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
 			}
 
-			if ($this->request->post['bank_account_number'] == '') {
+			if ($post_info['bank_account_number'] == '') {
 				$json['error']['bank_account_number'] = $this->language->get('error_bank_account_number');
 			}
 		}
@@ -748,7 +769,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if ($customer_info) {
 			$filter_data = [
 				'filter_location'          => 'account',
-				'filter_customer_group_id' => $this->request->post['customer_group_id'],
+				'filter_customer_group_id' => $post_info['customer_group_id'],
 				'filter_status'            => 1
 			];
 
@@ -758,9 +779,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['status']) {
-					if (($custom_field['location'] == 'affiliate') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					if (($custom_field['location'] == 'affiliate') && $custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['location'] == 'affiliate') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($this->request->post['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+					} elseif (($custom_field['location'] == 'affiliate') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
 						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
@@ -774,9 +795,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Use affiliate
 			if (!$affiliate_info) {
-				$this->model_marketing_affiliate->addAffiliate($this->request->post);
+				$this->model_marketing_affiliate->addAffiliate($post_info);
 			} else {
-				$this->model_marketing_affiliate->editAffiliate($this->request->post['customer_id'], $this->request->post);
+				$this->model_marketing_affiliate->editAffiliate($post_info['customer_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -797,7 +818,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -863,7 +884,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->load->language('marketing/affiliate');
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -922,7 +943,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

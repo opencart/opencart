@@ -362,27 +362,42 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 3, 128)) {
+		$required = [
+			'coupon_id'  => 0,
+			'name'       => '',
+			'code'       => '',
+			'discount'   => 0.0,
+			'type'       => '',
+			'total'      => 0.0,
+			'logged'     => 0,
+			'shipping'   => 0,
+			'date_start' => '',
+			'date_end'   => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 3, 128)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!oc_validate_length($this->request->post['code'], 3, 20)) {
+		if (!oc_validate_length($post_info['code'], 3, 20)) {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
 		$this->load->model('marketing/coupon');
 
-		$coupon_info = $this->model_marketing_coupon->getCouponByCode($this->request->post['code']);
+		$coupon_info = $this->model_marketing_coupon->getCouponByCode($post_info['code']);
 
-		if ($coupon_info && !isset($this->request->post['coupon_id']) || ($coupon_info['coupon_id'] != (int)$this->request->post['coupon_id'])) {
+		if ($coupon_info && !isset($post_info['coupon_id']) || ($coupon_info['coupon_id'] != (int)$post_info['coupon_id'])) {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
 
 		if (!$json) {
-			if (!$this->request->post['coupon_id']) {
-				$json['coupon_id'] = $this->model_marketing_coupon->addCoupon($this->request->post);
+			if (!$post_info['coupon_id']) {
+				$json['coupon_id'] = $this->model_marketing_coupon->addCoupon($post_info);
 			} else {
-				$this->model_marketing_coupon->editCoupon($this->request->post['coupon_id'], $this->request->post);
+				$this->model_marketing_coupon->editCoupon($post_info['coupon_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -403,7 +418,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

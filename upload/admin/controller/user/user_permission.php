@@ -338,17 +338,26 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 3, 64)) {
+		$required = [
+			'user_group_id' => 0,
+			'name'          => '',
+			'permission'    => [],
+			'sort_order'    => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 3, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!$json) {
 			$this->load->model('user/user_group');
 
-			if (!$this->request->post['user_group_id']) {
-				$json['user_group_id'] = $this->model_user_user_group->addUserGroup($this->request->post);
+			if (!$post_info['user_group_id']) {
+				$json['user_group_id'] = $this->model_user_user_group->addUserGroup($post_info);
 			} else {
-				$this->model_user_user_group->editUserGroup($this->request->post['user_group_id'], $this->request->post);
+				$this->model_user_user_group->editUserGroup($post_info['user_group_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -369,7 +378,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

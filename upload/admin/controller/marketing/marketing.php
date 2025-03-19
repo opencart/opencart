@@ -401,27 +401,36 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 1, 32)) {
+		$required = [
+			'marketing_id'  => 0,
+			'name'        => '',
+			'description' => '',
+			'code'        => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 1, 32)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!$this->request->post['code']) {
+		if (!$post_info['code']) {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
 		$this->load->model('marketing/marketing');
 
-		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->post['code']);
+		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($post_info['code']);
 
-		if ($marketing_info && (!isset($this->request->post['marketing_id']) || ($this->request->post['marketing_id'] != $marketing_info['marketing_id']))) {
+		if ($marketing_info && (!$post_info['marketing_id'] || ($post_info['marketing_id'] != $marketing_info['marketing_id']))) {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
 
 		if (!$json) {
-			if (!$this->request->post['marketing_id']) {
-				$json['marketing_id'] = $this->model_marketing_marketing->addMarketing($this->request->post);
+			if (!$post_info['marketing_id']) {
+				$json['marketing_id'] = $this->model_marketing_marketing->addMarketing($post_info);
 			} else {
-				$this->model_marketing_marketing->editMarketing($this->request->post['marketing_id'], $this->request->post);
+				$this->model_marketing_marketing->editMarketing($post_info['marketing_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -442,7 +451,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

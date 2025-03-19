@@ -516,7 +516,16 @@ class User extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$post_info = $this->request->post;
+		$required = [
+			'user_id'   => 0,
+			'username'  => '',
+			'firstname' => '',
+			'lastname'  => '',
+			'email'     => '',
+			'password'  => '',
+		];
+
+		$post_info = $this->request->post + $required;
 
 		if (!oc_validate_length($post_info['username'], 3, 20)) {
 			$json['error']['username'] = $this->language->get('error_username');
@@ -607,7 +616,7 @@ class User extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

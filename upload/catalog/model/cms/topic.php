@@ -71,4 +71,29 @@ class Topic extends \Opencart\System\Engine\Model {
 
 		return $topic_data;
 	}
+
+	/**
+	 * Get Layout ID
+	 *
+	 * Get the record of the article layout record in the database.
+	 *
+	 * @param int $article_id primary key of the article record
+	 *
+	 * @return int total number of layout records that have article ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('cms/article');
+	 *
+	 * $layout_id = $this->model_cms_article->getLayoutId($article_id);
+	 */
+	public function getLayoutId(int $topic_id): int {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "topic_to_layout` WHERE `topic_id` = '" . (int)$topic_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'");
+
+		if ($query->num_rows) {
+			return (int)$query->row['layout_id'];
+		} else {
+			return 0;
+		}
+	}
 }

@@ -603,7 +603,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
 			$data['seo_urls'] = [];
 
 			$filter_data = [
@@ -623,9 +622,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
 			foreach ($results as $result) {
-
 				$this->model_design_seo_url->deleteSeoUrl($seo_url_id);
-
 			}
 
 			$this->load->model('localisation/language');
@@ -633,9 +630,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$results = $this->model_design_seo_url->getSeoUrls($filter_data);
 
 			foreach ($results as $result) {
-
 				$this->model_design_seo_url->deleteSeoUrl($seo_url_id);
-
 			}
 
 			$email_total = $this->model_design_seo_url->getTotalEmailsByProductsOrdered($this->request->post['product']);

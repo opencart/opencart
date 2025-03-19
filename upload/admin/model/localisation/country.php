@@ -58,11 +58,12 @@ class Country extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $country_data = [
-	 *     'iso_code_2'        => 'Country ISO Code 2',
-	 *     'iso_code_3'        => 'Country ISO Code 3',
-	 *     'address_format_id' => 1,
-	 *     'postcode_required' => 0,
-	 *     'status'            => 1
+	 *     'country_description' => [],
+	 *     'iso_code_2'           => 'Country ISO Code 2',
+	 *     'iso_code_3'           => 'Country ISO Code 3',
+	 *     'address_format_id'    => 1,
+	 *     'postcode_required'    => 0,
+	 *     'status'               => 1
 	 * ];
 	 *
 	 * $this->load->model('localisation/country');

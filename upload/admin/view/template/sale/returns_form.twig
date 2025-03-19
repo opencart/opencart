@@ -63,17 +63,11 @@
             </tr>
           </thead>
           <tbody id="return-product">
-            {% if product_id %}
-              <tr>
-                <td><a href="{{ product_edit }}" target="_blank">{{ product }}</a></td>
-                <td>{{ model }}</td>
-                <td class="text-end">{{ quantity }}</td>
-              </tr>
-            {% else %}
-              <tr>
-                <td colspan="3" class="text-center">{{ text_no_results }}</td>
-              </tr>
-            {% endif %}
+            <tr>
+              <td><a href="{{ product_edit }}" target="_blank">{{ product }}</a></td>
+              <td>{{ model }}</td>
+              <td class="text-end">{{ quantity }}</td>
+            </tr>
           </tbody>
           <tfoot>
             <tr>

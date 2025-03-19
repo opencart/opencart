@@ -544,14 +544,14 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		// Product
 		if (!empty($return_info)) {
-			$data['product'] = $return_info['product'];
 			$data['product_id'] = $return_info['product_id'];
+			$data['product'] = $return_info['product'];
 			$data['model'] = $return_info['model'];
 			$data['quantity'] = $return_info['quantity'];
 			$data['product_edit'] = $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $return_info['product_id']);
 		} else {
+			$data['product_id'] = 0;
 			$data['product'] = '';
-			$data['product_id'] = '';
 			$data['model'] = '';
 			$data['quantity'] = 1;
 			$data['product_edit'] = '';
@@ -566,7 +566,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['return_reason_id'] = 0;
 			$data['return_action_id'] = 0;
-			$data['opened'] = '';
+			$data['opened'] = 0;
 			$data['comment'] = '';
 		}
 
@@ -622,7 +622,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'customer_id'      => 0,
 			'firstname'        => '',
 			'lastname'         => '',
-			'email'            => ''
+			'email'            => '',
 			'telephone'        => '',
 			'product'          => '',
 			'model'            => '',

@@ -41,7 +41,7 @@ class Upgrade extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . $table . "` SET " . implode(", ", $implode));
 	}
 
-	public function getRecords(string $table) {
+	public function getRecords(string $table): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . $table . "`");
 
 		return $query->rows;

@@ -38,7 +38,7 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 				];
 
 				$identifiers[] = [
-					'name' > 'Japanese Article Number',
+					'name' => 'Japanese Article Number',
 					'code' => 'JAN'
 				];
 

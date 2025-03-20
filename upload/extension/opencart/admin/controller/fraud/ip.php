@@ -169,21 +169,27 @@ class Ip extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (!empty($this->request->post['ip'])) {
+			$ip = $this->request->post['ip'];
+		} else {
+			$ip = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (empty($this->request->post['ip'])) {
+		if (empty($ip)) {
 			$json['error'] = $this->language->get('error_required');
-		} elseif (!filter_var($this->request->post['ip'], FILTER_VALIDATE_IP)) {
+		} elseif (!filter_var($ip, FILTER_VALIDATE_IP)) {
 			$json['error'] = $this->language->get('error_invalid');
 		}
 
 		if (!$json) {
 			$this->load->model('extension/opencart/fraud/ip');
 
-			if (!$this->model_extension_opencart_fraud_ip->getTotalIpsByIp($this->request->post['ip'])) {
-				$this->model_extension_opencart_fraud_ip->addIp($this->request->post['ip']);
+			if (!$this->model_extension_opencart_fraud_ip->getTotalIpsByIp($ip)) {
+				$this->model_extension_opencart_fraud_ip->addIp($ip);
 			}
 
 			$json['success'] = $this->language->get('text_success');

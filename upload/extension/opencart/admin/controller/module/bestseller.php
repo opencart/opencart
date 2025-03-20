@@ -121,6 +121,15 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
+		$required = [
+			'module_id' => 0,
+			'name'      => '',
+			'width'     => 0,
+			'height'    => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
 		if (!oc_validate_length($this->request->post['name'], 3, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}

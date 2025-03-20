@@ -257,11 +257,15 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['address_postcode'] = $this->language->get('error_postcode');
 			}
 
-			if (!$country_info || $post_info['country_id'] == '') {
+			if (!$country_info) {
 				$json['error']['address_country'] = $this->language->get('error_country');
 			}
 
-			if ($post_info['zone_id'] == '') {
+			$this->load->model('localisation/zone');
+
+			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
+
+			if ($zone_total && !$post_info['zone_id']) {
 				$json['error']['address_zone'] = $this->language->get('error_zone');
 			}
 

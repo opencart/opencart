@@ -275,7 +275,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'antispam_id' => 0,
-	        'keyword'     => ''
+			'keyword'     => ''
 		];
 
 		$post_info = $this->request->post + $required;

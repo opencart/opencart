@@ -20,7 +20,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'sort_order' => 0
+	 *     'filter_description' => [],
+	 *     'sort_order'         => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/filter');
@@ -52,7 +53,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'sort_order' => 0
+	 *     'filter_description' => [],
+	 *     'sort_order'         => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/filter');

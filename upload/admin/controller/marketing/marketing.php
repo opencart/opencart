@@ -402,10 +402,10 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'marketing_id'  => 0,
-			'name'        => '',
-			'description' => '',
-			'code'        => ''
+			'marketing_id' => 0,
+			'name'         => '',
+			'description'  => '',
+			'code'         => ''
 		];
 
 		$post_info = $this->request->post + $required;

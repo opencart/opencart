@@ -845,9 +845,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'return_status_id'  => 0,
-			'comment'           => '',
-			'notify'            => 0
+			'return_status_id' => 0,
+			'comment'          => '',
+			'notify'           => 0
 		];
 
 		$post_info = $this->request->post + $required;

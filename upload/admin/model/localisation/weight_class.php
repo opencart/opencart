@@ -20,7 +20,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $weight_class_data = [
-	 *     'value' => 0.00000000
+	 *     'weight_class_description' => [],
+	 *     'value'                    => 0.00000000
 	 * ];
 	 *
 	 * $this->load->model('localisation/weight_class');
@@ -54,7 +55,8 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $weight_class_data = [
-	 *     'value' => 0.00000000
+	 *     'weight_class_description' => [],
+	 *     'value'                    => 0.00000000
 	 * ];
 	 *
 	 * $this->load->model('localisation/weight_class');

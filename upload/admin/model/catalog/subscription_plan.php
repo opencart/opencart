@@ -20,14 +20,15 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $subscription_data = [
-	 *     'trial_frequency' => 'month',
-	 *     'trial_duration'  => 1,
-	 *     'trial_cycle'     => 5,
-	 *     'trial_status'    => 1,
-	 *     'frequency'       => 1,
-	 *     'cycle'           => 5,
-	 *     'status'          => 0,
-	 *     'sort_order'      => 0
+	 *     'subscription_plan_description' => [],
+	 *     'trial_frequency'               => 'month',
+	 *     'trial_duration'                => 1,
+	 *     'trial_cycle'                   => 5,
+	 *     'trial_status'                  => 1,
+	 *     'frequency'                     => 1,
+	 *     'cycle'                         => 5,
+	 *     'status'                        => 0,
+	 *     'sort_order'                    => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/subscription_plan');
@@ -59,14 +60,15 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $subscription_plan_data = [
-	 *     'trial_frequency' => 'month',
-	 *     'trial_duration'  => 1,
-	 *     'trial_cycle'     => 5,
-	 *     'trial_status'    => 1,
-	 *     'frequency'       => 1,
-	 *     'cycle'           => 5,
-	 *     'status'          => 0,
-	 *     'sort_order'      => 0
+	 *     'subscription_plan_description' => [],
+	 *     'trial_frequency'               => 'month',
+	 *     'trial_duration'                => 1,
+	 *     'trial_cycle'                   => 5,
+	 *     'trial_status'                  => 1,
+	 *     'frequency'                     => 1,
+	 *     'cycle'                         => 5,
+	 *     'status'                        => 1,
+	 *     'sort_order'                    => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/subscription_plan');

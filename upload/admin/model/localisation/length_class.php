@@ -20,7 +20,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $length_class_data = [
-	 *     'value' => 0.00000000
+	 *     'length_class_description' => [],
+	 *     'value'                    => 0.00000000
 	 * ];
 	 *
 	 * $this->load->model('localisation/length_class');
@@ -54,7 +55,8 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $length_class_data = [
-	 *     'value' => 0.00000000
+	 *     'length_class_description' => [],
+	 *     'value'                    => 0.00000000
 	 * ];
 	 *
 	 * $this->load->model('localisation/length_class');

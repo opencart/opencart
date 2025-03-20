@@ -178,7 +178,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-  		if (!$json) {
+		if (!$json) {
 			unset($this->session->data['code']);
 
 			// On success we need to reset the attempts and status.

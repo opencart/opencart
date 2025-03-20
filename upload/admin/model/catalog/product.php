@@ -1416,14 +1416,14 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
+	 * 
+	 * @return void
 	 *
 	 * @example
 	 *
 	 * $this->load->model('catalog/product');
 	 *
 	 * $results = $this->model_catalog_product->addCode($product_id, $data);
-	 *
-	 * @return void
 	 */
 	public function addCode(int $product_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . (int)$product_id . "', `code` = '" . $this->db->escape($data['code']) . "', `value` = '" . $this->db->escape($data['value']) . "'");
@@ -1435,14 +1435,14 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Delete product code records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
+	 * 
+	 * @return void
 	 *
 	 * @example
 	 *
 	 * $this->load->model('catalog/product');
 	 *
 	 * $results = $this->model_catalog_product->deleteCodes($product_id);
-	 *
-	 * @return void
 	 */
 	public function deleteCodes(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_code` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -1454,14 +1454,14 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Get the record of the product code records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
+	 * 
+	 * @return array<int, array<string, mixed>>
 	 *
 	 * @example
 	 *
 	 * $this->load->model('catalog/product');
 	 *
 	 * $results = $this->model_catalog_product->getCodes($product_id);
-	 *
-	 * @return void
 	 */
 	public function getCodes(int $product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_code` WHERE `product_id` = '" . (int)$product_id . "'");

@@ -68,23 +68,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * Get the total number of zones by country records in the database.
 	 *
 	 * @param int                  $country_id
-	 * @param array<string, mixed> $data       array of data
 	 *
-	 * @return int returns the primary key of the new identifier record
-	 *
-	 * @example
-	 *
-	 * $identifier_data = [
-	 *     'author'     => 'Author Name',
-	 *     'product_id' => 1,
-	 *     'text'       => 'identifier Text',
-	 *     'rating'     => 4,
-	 *     'status'     => 0,
-	 * ];
-	 *
-	 * $this->load->model('catalog/identifier');
-	 *
-	 * $identifier_id = $this->model_catalog_identifier->addIdentifier($identifier_data);
+	 * @return int
 	 */
 	public function getTotalZonesByCountryId(int $country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "' AND `status` = '1'");

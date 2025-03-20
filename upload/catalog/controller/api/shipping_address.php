@@ -63,7 +63,11 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$output['error']['shipping_country'] = $this->language->get('error_country');
 			}
 
-			if ($post_info['shipping_zone_id'] == '') {
+			$this->load->model('localisation/zone');
+
+			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['shipping_country_id']);
+
+			if ($zone_total && !$post_info['shipping_zone_id']) {
 				$output['error']['shipping_zone'] = $this->language->get('error_zone');
 			}
 

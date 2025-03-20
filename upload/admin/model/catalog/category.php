@@ -34,7 +34,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $category_id = $this->model_catalog_category->addCategory($category_data);
 	 */
 	public function addCategory(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW(), `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `parent_id` = '" . (int)$data['parent_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
 
 		$category_id = $this->db->getLastId();
 

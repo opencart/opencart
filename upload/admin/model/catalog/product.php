@@ -1421,6 +1421,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
+	 * $data['product_code'] = [
+	 *     'product_id' => 1,
+	 *     'code'       => 'Product Code',
+	 *     'value'      => 'Product Value'
+	 * ];
+	 *
 	 * $this->load->model('catalog/product');
 	 *
 	 * $results = $this->model_catalog_product->addCode($product_id, $data);

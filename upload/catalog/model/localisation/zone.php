@@ -67,7 +67,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the total number of zones by country records in the database.
 	 *
-	 * @param int                  $country_id
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return int
 	 */

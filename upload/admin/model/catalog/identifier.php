@@ -25,7 +25,6 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *     'text'       => 'identifier Text',
 	 *     'rating'     => 4,
 	 *     'status'     => 0,
-	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
 	 * $this->load->model('catalog/identifier');
@@ -60,7 +59,6 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *     'text'       => 'Identifier Text',
 	 *     'rating'     => 4,
 	 *     'status'     => 1,
-	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
 	 * $this->load->model('catalog/identifier');
@@ -115,6 +113,22 @@ class Identifier extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	/**
+	 * Get Identifier By Code
+	 *
+	 * Get the record of the identifier record in the database.
+	 *
+	 * @param string $code
+	 * @param int    $identifier_id primary key of the identifier record
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/identifier');
+	 *
+	 * $identifier_info = $this->model_catalog_identifier->getIdentifier($identifier_id);
+	 */
 	public function getIdentifierByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "identifier` WHERE `code` = '" . $this->db->escape((string)$code) . "'");
 

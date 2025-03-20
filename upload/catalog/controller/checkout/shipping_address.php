@@ -136,7 +136,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
-			if (!$country_info || $post_info['country_id'] == '') {
+			if (!$country_info) {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 

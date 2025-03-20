@@ -1416,7 +1416,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int                  $product_id primary key of the product record
 	 * @param array<string, mixed> $data       array of data
-	 * 
+	 *
 	 * @return void
 	 *
 	 * @example
@@ -1435,7 +1435,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Delete product code records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
-	 * 
+	 *
 	 * @return void
 	 *
 	 * @example
@@ -1454,7 +1454,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * Get the record of the product code records in the database.
 	 *
 	 * @param int $product_id primary key of the product record
-	 * 
+	 *
 	 * @return array<int, array<string, mixed>>
 	 *
 	 * @example

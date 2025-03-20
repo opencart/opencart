@@ -122,12 +122,6 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 * @param int    $identifier_id primary key of the identifier record
 	 *
 	 * @return array<string, mixed>
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/identifier');
-	 *
-	 * $identifier_info = $this->model_catalog_identifier->getIdentifier($identifier_id);
 	 */
 	public function getIdentifierByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "identifier` WHERE `code` = '" . $this->db->escape((string)$code) . "'");

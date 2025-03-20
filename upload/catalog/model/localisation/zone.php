@@ -61,4 +61,10 @@ class Zone extends \Opencart\System\Engine\Model {
 
 		return $zone_data;
 	}
+
+	public function getTotalZonesByCountryId(int $country_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "' AND `status` = '1'");
+
+		return (int)$query->row['total'];
+	}
 }

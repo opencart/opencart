@@ -20,12 +20,13 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $category_data = [
-	 *     'image'         => 'category_image',
-	 *     'parent_id'     => 0,
-	 *     'sort_order'    => 0,
-	 *     'status'        => 0,
-	 *     'date_added'    => '2021-01-01',
-	 *     'date_modified' => '2021-01-31'
+	 *     'category_description' => [],
+	 *     'image'                => 'category_image',
+	 *     'parent_id'            => 0,
+	 *     'sort_order'           => 0,
+	 *     'status'               => 0,
+	 *     'date_added'           => '2021-01-01',
+	 *     'date_modified'        => '2021-01-31'
 	 * ];
 	 *
 	 * $this->load->model('catalog/category');
@@ -114,11 +115,12 @@ class Category extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $category_data = [
-	 *     'image'         => 'category_image',
-	 *     'parent_id'     => 0,
-	 *     'sort_order'    => 0,
-	 *     'status'        => 1,
-	 *     'date_modified' => '2021-01-01'
+	 *     'category_description' => [],
+	 *     'image'                => 'category_image',
+	 *     'parent_id'            => 0,
+	 *     'sort_order'           => 0,
+	 *     'status'               => 1,
+	 *     'date_modified'        => '2021-01-01'
 	 * ];
 	 *
 	 * $this->load->model('catalog/category');

@@ -20,7 +20,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_group_data = [
-	 *     'sort_order' => 0
+	 *     'filter_group_description' => [],
+	 *     'sort_order'               => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/filter_group');
@@ -54,7 +55,8 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_group_data = [
-	 *     'sort_order' => 0
+	 *     'filter_group_description' => [],
+	 *     'sort_order'               => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/filter_group');

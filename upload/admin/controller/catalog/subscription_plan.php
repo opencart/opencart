@@ -336,15 +336,15 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'subscription_plan_id'          => 0,
-		    'subscription_plan_description' => [],
-	        'trial_frequency'               => '',
-	        'trial_duration'                => 0,
-	        'trial_cycle'                   => 0,
-	        'trial_status'                  => 0,
-	        'frequency'                     => 0,
-	        'cycle'                         => 0,
-	        'status'                        => 0,
-	        'sort_order'                    => 0
+			'subscription_plan_description' => [],
+			'trial_frequency'               => '',
+			'trial_duration'                => 0,
+			'trial_cycle'                   => 0,
+			'trial_status'                  => 0,
+			'frequency'                     => 0,
+			'cycle'                         => 0,
+			'status'                        => 0,
+			'sort_order'                    => 0
 		];
 
 		$post_info = $this->request->post + $required;

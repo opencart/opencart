@@ -20,8 +20,9 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $topic_data = [
-	 *     'sort_order' => 0,
-	 *     'status'     => 0
+	 *     'topic_description' => [],
+	 *     'sort_order'        => 0,
+	 *     'status'            => 0
 	 * ];
 	 *
 	 * $this->load->model('cms/topic');
@@ -81,8 +82,9 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $topic_data = [
-	 *     'sort_order' => 0,
-	 *     'status'     => 1
+	 *     'topic_description' => [],
+	 *     'sort_order'        => 0,
+	 *     'status'            => 1
 	 * ];
 	 *
 	 * $this->load->model('cms/topic');

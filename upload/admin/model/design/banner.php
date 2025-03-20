@@ -20,8 +20,9 @@ class Banner extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $banner_data = [
-	 *     'name'   => 'Banner Name',
-	 *     'status' => 0
+	 *     'banner_image_description' => [],
+	 *     'name'                     => 'Banner Name',
+	 *     'status'                   => 0
 	 * ];
 	 *
 	 * $this->load->model('design/banner');
@@ -57,8 +58,9 @@ class Banner extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $banner_data = [
-	 *     'name'   => 'Banner Name',
-	 *     'status' => 1
+	 *     'banner_image_description' => [],
+	 *     'name'                     => 'Banner Name',
+	 *     'status'                   => 1
 	 * ];
 	 *
 	 * $this->load->model('design/banner');

@@ -20,7 +20,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $attribute_group_data = [
-	 *     'sort_order' => 0,
+	 *     'attribute_group_description => [],
+	 *     'sort_order'                 => 0,
 	 * ];
 	 *
 	 * $this->load->model('catalog/attribute_group');
@@ -52,7 +53,8 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $attribute_group_data = [
-	 *     'sort_order' => 0
+	 *     'attribute_group_description' => [],
+	 *     'sort_order'                  => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/attribute_group');

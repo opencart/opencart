@@ -324,11 +324,15 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['payment_postcode'] = $this->language->get('error_postcode');
 				}
 
-				if ($post_info['payment_country_id'] == '') {
+				if (!$payment_country_info) {
 					$json['error']['payment_country'] = $this->language->get('error_country');
 				}
 
-				if ($post_info['payment_zone_id'] == '') {
+				$this->load->model('localisation/zone');
+
+				$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['payment_country_id']);
+
+				if ($zone_total && !$post_info['zone_id']) {
 					$json['error']['payment_zone'] = $this->language->get('error_zone');
 				}
 
@@ -373,11 +377,15 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
 				}
 
-				if ($post_info['shipping_country_id'] == '') {
+				if (!$shipping_country_info) {
 					$json['error']['shipping_country'] = $this->language->get('error_country');
 				}
 
-				if ($post_info['shipping_zone_id'] == '') {
+				$this->load->model('localisation/zone');
+
+				$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
+
+				if ($zone_total && !$post_info['zone_id']) {
 					$json['error']['shipping_zone'] = $this->language->get('error_zone');
 				}
 

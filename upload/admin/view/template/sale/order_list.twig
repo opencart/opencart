@@ -18,10 +18,7 @@
         {% if orders %}
           {% for order in orders %}
             <tr>
-              <td class="text-center">
-                <input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/>
-                <input type="hidden" name="shipping_method[]" value="{% if order.shipping_method %}1{% else %}0{% endif %}"/>
-              </td>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/><input type="hidden" name="shipping_method[]" value="{% if order.shipping_method %}1{% else %}0{% endif %}"/></td>
               <td class="text-end">{{ order.order_id }}</td>
               <td>{{ order.store_name }}</td>
               <td>{{ order.customer }}</td>

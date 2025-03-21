@@ -23,8 +23,6 @@ class Article extends \Opencart\System\Engine\Model {
 	 *     'article_description' => [],
 	 *     'author'              => 'Author Name',
 	 *     'status'              => 0,
-	 *     'date_added'          => '2021-01-01',
-	 *     'date_modified'       => '2021-01-31'
 	 * ];
 	 *
 	 * $this->load->model('cms/article');
@@ -87,8 +85,6 @@ class Article extends \Opencart\System\Engine\Model {
 	 *     'article_description' => [],
 	 *     'author'              => 'Author Name',
 	 *     'status'              => 1,
-	 *     'date_added'          => '2021-01-01',
-	 *     'date_modified'       => '2021-01-31'
 	 * ];
 	 *
 	 * $this->load->model('cms/article');

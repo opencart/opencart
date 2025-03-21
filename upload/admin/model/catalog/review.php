@@ -65,7 +65,6 @@ class Review extends \Opencart\System\Engine\Model {
 	 *     'text'       => 'Review Text',
 	 *     'rating'     => 4,
 	 *     'status'     => 1,
-	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
 	 * $this->load->model('catalog/review');

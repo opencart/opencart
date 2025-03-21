@@ -3,11 +3,15 @@ namespace Opencart\Install\Model\Upgrade;
 /**
  * Class Install
  *
- * @example $install_model = $this->model_install_install;
- *
- * Can be called from $this->load->model('install/install');
+ * Can be called from $this->load->model('upgrade/upgrade');
  *
  * @package Opencart\Install\Model\Install
+ *
+ * @example
+ *
+ * $data = [];
+ *
+ * $install_model = $this->model_upgrade_upgrade($table, $data);
  */
 class Upgrade extends \Opencart\System\Engine\Model {
 	public function addRecord($table, $data): void {

@@ -17,7 +17,7 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-			$query = $this->db->query("SELECT * FROM '" . DB_PREFIX . "identifier'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "identifier`");
 
 			if (!$query->num_rows) {
 				$identifiers = [];

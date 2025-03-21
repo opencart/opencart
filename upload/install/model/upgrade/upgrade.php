@@ -66,7 +66,7 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	}
 
 	public function dropField($table, $field): void {
-		if ($this->hasTable($table, $field)) {
+		if ($this->hasField($table, $field)) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . $table . "` DROP `" . $field . "`");
 		}
 	}

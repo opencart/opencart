@@ -109,6 +109,28 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if (!$install_info) {
 				// Unzip the files
 				$zip = new \ZipArchive();
+				
+				// Zip error codes
+				$ZIP_ERROR = [
+					\ZipArchive::ER_EXISTS => 'File already exists.',
+					\ZipArchive::ER_INCONS => 'Zip archive inconsistent.',
+					\ZipArchive::ER_INVAL => 'Invalid argument.',
+					\ZipArchive::ER_MEMORY => 'Malloc failure.',
+					\ZipArchive::ER_NOENT => 'No such file.',
+					\ZipArchive::ER_NOZIP => 'Not a zip archive.',
+					\ZipArchive::ER_OPEN => "Can't open file.",
+					\ZipArchive::ER_READ => 'Read error.',
+					\ZipArchive::ER_SEEK => 'Seek error.',
+				];
+
+				// Check zip for errors
+				$result_code = $zip->open($file);
+				if ($result_code !== true) {
+					if (file_exists($file)) {
+						unlink($file);
+					}
+					continue;
+				}
 
 				if ($zip->open($file, \ZipArchive::RDONLY)) {
 					$install_info = json_decode($zip->getFromName('install.json'), true);

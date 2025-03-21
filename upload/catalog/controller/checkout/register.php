@@ -332,7 +332,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['payment_country_id']);
 
-				if ($zone_total && !$post_info['zone_id']) {
+				if ($zone_total && !$post_info['payment_zone_id']) {
 					$json['error']['payment_zone'] = $this->language->get('error_zone');
 				}
 
@@ -383,9 +383,9 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$this->load->model('localisation/zone');
 
-				$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
+				$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['shipping_country_id']);
 
-				if ($zone_total && !$post_info['zone_id']) {
+				if ($zone_total && !$post_info['shipping_zone_id']) {
 					$json['error']['shipping_zone'] = $this->language->get('error_zone');
 				}
 

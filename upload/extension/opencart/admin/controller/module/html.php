@@ -107,17 +107,24 @@ class HTML extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 3, 64)) {
+		$required = [
+			'module_id' => 0,
+			'name'      => '',
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 3, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!$json) {
 			$this->load->model('setting/module');
 
-			if (!$this->request->post['module_id']) {
-				$json['module_id'] = $this->model_setting_module->addModule('opencart.html', $this->request->post);
+			if (!$post_info['module_id']) {
+				$json['module_id'] = $this->model_setting_module->addModule('opencart.html', $post_info);
 			} else {
-				$this->model_setting_module->editModule($this->request->post['module_id'], $this->request->post);
+				$this->model_setting_module->editModule($post_info['module_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

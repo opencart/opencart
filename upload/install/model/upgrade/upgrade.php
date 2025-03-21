@@ -10,6 +10,8 @@ namespace Opencart\Install\Model\Upgrade;
  * @example
  *
  * $data = [];
+ * 
+ * $this->load->model('upgrade/upgrade');
  *
  * $install_model = $this->model_upgrade_upgrade($table, $data);
  */

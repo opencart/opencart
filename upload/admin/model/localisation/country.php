@@ -324,6 +324,25 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Country Descriptions By Country ID
+	 *
+	 * Delete country descriptions by country records in the database.
+	 *
+	 * @param int $country_id primary key of the country record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $this->model_localisation_country->deleteCountryDescriptionsByCountryId($country_id);
+	 */
+	public function deleteCountryDescriptionsByCountryId(int $country_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$country_id . "'");
+	}
+
+	/**
 	 * Get Descriptions
 	 *
 	 * Get the record of the country description records in the database.

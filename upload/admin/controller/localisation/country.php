@@ -496,7 +496,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 					// Keeps the default country
 					if ($language_info && $language_info['code'] != 'en-gb') {
-						$this->model_localisation_country->deleteDescriptionsByLanguageId($country_id, $language_id);
+						$this->model_localisation_country->deleteCountryDescriptionsByCountryId($country_id);
 					} else {
 						$count++;
 					}

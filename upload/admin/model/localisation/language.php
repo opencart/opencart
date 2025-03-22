@@ -264,7 +264,9 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_design_seo_url->getSeoUrlsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $seo_url) {
-			$this->model_design_seo_url->addSeoUrl($seo_url['key'], $seo_url['value'], $seo_url['keyword'], $seo_url['store_id'], $language_id, $seo_url['sort_order']);
+			if ($seo_url['key'] != 'language') {
+				$this->model_design_seo_url->addSeoUrl($seo_url['key'], $seo_url['value'], $seo_url['keyword'], $seo_url['store_id'], $language_id, $seo_url['sort_order']);
+			}
 		}
 
 		// Setup new SEO URL language keyword

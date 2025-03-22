@@ -14,15 +14,9 @@
       <tbody>
         {% if custom_fields %}
           {% for custom_field in custom_fields %}
-            <tr>
+            <tr{% if not custom_field.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" class="form-check-input"/></td>
-              <td>{{ custom_field.name }}
-              <br/>
-              {% if custom_field.status %}
-                <span class="badge text-bg-success">{{ text_enabled }}</span>
-              {% else %}
-                <span class="badge text-bg-danger">{{ text_disabled }}</span>
-              {% endif %}</td>
+              <td>{{ custom_field.name }}</td>
               <td>{{ custom_field.location }}</td>
               <td>{{ custom_field.type }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ custom_field.sort_order }}</td>

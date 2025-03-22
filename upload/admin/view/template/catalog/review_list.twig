@@ -14,15 +14,9 @@
       <tbody>
         {% if reviews %}
           {% for review in reviews %}
-            <tr>
+            <tr{% if not review.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ review.review_id }}" class="form-check-input"/></td>
-              <td>{{ review.name }}
-                <br/>
-                {% if review.status %}
-                  <span class="badge text-bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
-                {% endif %}</td>
+              <td>{{ review.name }}</td>
               <td>{{ review.author }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ review.rating }}</td>
               <td>{{ review.date_added }}</td>

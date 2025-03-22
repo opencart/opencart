@@ -322,14 +322,16 @@ class Country extends \Opencart\System\Engine\Model {
 	public function deleteCountryDescriptionsByCountryId(int $country_id): void {
 		$country_description = $this->model_localisation_country->getDescriptions($country_id);
 
-		// Language
-		$this->load->model('localisation/language');
+		if ($country_description) {
+			// Language
+			$this->load->model('localisation/language');
 
-		foreach ($country_description as $language_id => $value) {
-			$language_info = $this->model_localisation_language->getLanguage($language_id);
+			foreach ($country_description as $language_id => $value) {
+				$language_info = $this->model_localisation_language->getLanguage($language_id);
 
-			if ($language_info && $language_info['code'] != 'en-gb') {
-				$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$value['country_id'] . "' AND `language_id` = '" . (int)$language_info['language_id'] . "'");
+				if ($language_info && $language_info['code'] != 'en-gb') {
+					$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$value['country_id'] . "' AND `language_id` = '" . (int)$language_info['language_id'] . "'");
+				}
 			}
 		}
 	}

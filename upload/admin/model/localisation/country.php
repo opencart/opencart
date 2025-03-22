@@ -309,7 +309,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * Delete country descriptions by country records in the database.
 	 *
-	 * @param int $country_id primary key of the country_id record
+	 * @param int $country_id primary key of the country record
 	 *
 	 * @return void
 	 *

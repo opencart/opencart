@@ -5,6 +5,11 @@ $autoloader->register('Opencart\\' . APPLICATION, DIR_APPLICATION);
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 
+// Register OCMOD
+$this->autoloader->register('Opencart\Catalog\Controller\Extension\Ocmod', DIR_EXTENSION . 'ocmod/catalog/controller/');
+$this->autoloader->register('Opencart\Catalog\Model\Extension\Ocmod', DIR_EXTENSION . 'ocmod/catalog/model/');
+$this->autoloader->register('Opencart\System\Library\Extension\Ocmod', DIR_EXTENSION . 'ocmod/system/library/');
+
 //require_once(DIR_SYSTEM . 'helper/vendor.php');
 //oc_generate_vendor();
 
@@ -201,11 +206,11 @@ $args = [];
 // Action error object to execute if any other actions cannot be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
+$middleware = new \Opencart\System\Engine\Middleware($registry);
+
 // Pre Actions
 foreach ($config->get('action_pre_action') as $pre_action) {
-	$pre_action = new \Opencart\System\Engine\Action($pre_action);
-
-	$result = $pre_action->execute($registry, $args);
+	$result = $middleware->execute($pre_action);
 
 	if ($result instanceof \Opencart\System\Engine\Action) {
 		$action = $result;

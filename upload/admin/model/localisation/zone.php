@@ -149,7 +149,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_zone->getZones($filter_data);
 	 */
 	public function getZones(array $data = []): array {
-		$sql = "SELECT *, (SELECT `cd`.`name` FROM `" . DB_PREFIX . "country_description` `cd` WHERE `z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id` AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
+		$sql = "SELECT *, `cd`.`name` AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id` AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
 
 		$implode = [];
 
@@ -158,7 +158,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_country'])) {
-			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
+			$implode[] = "`cd`.`name` LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
@@ -382,7 +382,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_country'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`z`.`country_id` = `c`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
 		}
 
 		$implode = [];
@@ -392,7 +392,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_country'])) {
-			$implode[] = "LCASE(`c`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
+			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {

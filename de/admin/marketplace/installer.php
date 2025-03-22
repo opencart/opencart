@@ -44,3 +44,15 @@ $_['error_directory']        = 'Installationsverzeichnis %s konnte nicht gefunde
 $_['error_directory_exists'] = 'Pfad %s existiert bereits!';
 $_['error_unzip']            = 'Zip-Datei konnte nicht geöffnet werden!';
 $_['error_upload']           = 'Datei konnte nicht hochgeladen werden!';
+$_['error_unknown']           = 'An unknown error occurred!';
+
+// Zip errors
+$_['zip_error_exists']       = 'File already exists!';
+$_['zip_error_incons']       = 'Zip archive inconsistent!';
+$_['zip_error_inval']        = 'Invalid argument!';
+$_['zip_error_memory']       = 'Memory allocation failure!';
+$_['zip_error_noent']        = 'No such file!';
+$_['zip_error_nozip']        = 'Not a zip archive!';
+$_['zip_error_open']         = 'Can not open file!';
+$_['zip_error_read']         = 'Read error!';
+$_['zip_error_seek']         = 'Seek error!';

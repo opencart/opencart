@@ -267,6 +267,21 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_design_seo_url->addSeoUrl($seo_url['key'], $seo_url['value'], $seo_url['keyword'], $seo_url['store_id'], $language_id, $seo_url['sort_order']);
 		}
 
+		// Setup new SEO URL language keyword
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($stores as $store) {
+			foreach ($languages as $language) {
+				$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], $store['store_id'], $language['language_id']);
+			}
+		}
+
 		// Zone
 		$this->load->model('localisation/zone');
 
@@ -326,6 +341,8 @@ class Language extends \Opencart\System\Engine\Model {
 	 * $this->model_localisation_language->deleteLanguage($language_id);
 	 */
 	public function deleteLanguage(int $language_id): void {
+		$language_info = $this->getLanguage($language_id);
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		$this->cache->delete('language');
@@ -442,6 +459,8 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByLanguageId($language_id);
+
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('language', $language_info['code']);
 
 		// Zone
 		$this->load->model('localisation/zone');

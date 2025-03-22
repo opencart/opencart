@@ -539,10 +539,6 @@ div.required .col-form-label:not(span):before, div.required .form-label:before, 
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.card-body {
-
-}
-
 .bootstrap-datetimepicker-widget {
     position: absolute;
     float: right;

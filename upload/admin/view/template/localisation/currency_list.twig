@@ -14,15 +14,9 @@
       <tbody>
         {% if currencies %}
           {% for currency in currencies %}
-            <tr>
+            <tr{% if not currency.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" class="form-check-input"/></td>
-              <td>{{ currency.title }}
-                <br/>
-                {% if currency.status %}
-                  <span class="badge text-bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
-                {% endif %}</td>
+              <td>{{ currency.title }}</td>
               <td>{{ currency.code }}</td>
               <td class="text-end">{{ currency.value }}</td>
               <td class="d-none d-lg-table-cell">{{ currency.date_modified }}</td>

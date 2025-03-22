@@ -15,7 +15,7 @@
       <tbody>
         {% if crons %}
           {% for cron in crons %}
-            <tr>
+            <tr{% if not cron.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ cron.cron_id }}" class="form-check-input"/></td>
               <td>{{ cron.code }}</td>
               <td>{{ cron.cycle }}</td>

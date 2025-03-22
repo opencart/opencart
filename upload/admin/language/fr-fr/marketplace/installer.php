@@ -44,7 +44,7 @@ $_['error_directory']        = 'Le répertoire d\'installation %s est introuvabl
 $_['error_directory_exists'] = 'Le chemin %s existe déjà!';
 $_['error_unzip']            = 'Impossible d\'ouvrir le fichier .zip!';
 $_['error_upload']           = 'Le fichier n\'a pu être téléchargé!';
-$_['error_unknown']           = 'Une erreur inconnue s’est produite!';
+$_['error_unknown']          = 'Une erreur inconnue s’est produite!';
 
 // Zip erreur
 $_['zip_error_exists']       = 'Le fichier existe déjà!';

@@ -13,15 +13,9 @@
       <tbody>
         {% if countries %}
           {% for country in countries %}
-            <tr>
+            <tr{% if not country.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ country.country_id }}" class="form-check-input"/></td>
-              <td>{{ country.name }}
-                <br/>
-                {% if country.status %}
-                  <span class="badge text-bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
-                {% endif %}</td>
+              <td>{{ country.name }}</td>
               <td>{{ country.iso_code_2 }}</td>
               <td>{{ country.iso_code_3 }}</td>
               <td class="text-end"><a href="{{ country.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>

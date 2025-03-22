@@ -7,22 +7,14 @@
       <thead>
         <tr>
           <th>{{ column_name }}</th>
-          <th>{{ column_status }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
         {% if extensions %}
           {% for extension in extensions %}
-            <tr>
+            <tr{% if not extension.module and not extension.status %} class="table-active opacity-50"{% endif %}>
               <td><b>{{ extension.name }}</b></td>
-              <td>{% if not extension.module %}
-                {% if extension.status %}
-                  <span class="badge text-bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
-                {% endif %}
-                {% endif %}</td>
               <td class="text-end text-nowrap">
                 {% if extension.installed %}
                   {% if extension.module %}
@@ -37,23 +29,19 @@
                   <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
                 {% else %}
                   <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
-                {% endif %}</td>
+                {% endif %}
+              </td>
             </tr>
             {% for module in extension.module %}
-              <tr>
+              <tr{% if not module.status %} class="table-active opacity-50"{% endif %}>
                 <td>&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-folder-open"></i>&nbsp;&nbsp;&nbsp;{{ module.name }}</td>
-                <td>{% if module.status %}
-                  <span class="badge text-bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
-                {% endif %}</td>
                 <td class="text-end text-nowrap"><a href="{{ module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a> <a href="{{ module.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fa-regular fa-trash-can"></i></a></td>
               </tr>
             {% endfor %}
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="3">{{ text_no_results }}</td>
+            <td class="text-center" colspan="2">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

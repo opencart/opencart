@@ -15,15 +15,9 @@
       <tbody>
         {% if affiliates %}
           {% for affiliate in affiliates %}
-            <tr>
+            <tr{% if not affiliate.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ affiliate.customer_id }}" class="form-check-input"/></td>
-              <td><a href="{{ affiliate.customer }}">{{ affiliate.name }}</a>
-                <br/>
-                {% if affiliate.status %}
-                  <span class="badge text-bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
-                {% endif %}</td>
+              <td><a href="{{ affiliate.customer }}">{{ affiliate.name }}</a></td>
               <td class="d-none d-lg-table-cell">{{ affiliate.tracking }}</td>
               <td class="text-end">{{ affiliate.commission }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ affiliate.balance }}</td>

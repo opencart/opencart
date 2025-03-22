@@ -30,7 +30,7 @@
       <tbody>
         {% if modifications %}
           {% for modification in modifications %}
-            <tr>
+            <tr{% if not modification.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ modification.modification_id }}" class="form-check-input"/></td>
               <td>{{ modification.name }}</td>
               <td>{{ modification.author }}</td>

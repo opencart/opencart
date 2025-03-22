@@ -12,7 +12,7 @@
       <tbody>
         {% if events %}
           {% for event in events %}
-            <tr>
+            <tr{% if not event.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ event.event_id }}" class="form-check-input"/></td>
               <td>{{ event.code }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ event.sort_order }}</td>

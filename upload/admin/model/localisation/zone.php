@@ -286,7 +286,6 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * Delete zone descriptions by language records in the database.
 	 *
-	 * @param int $country_id
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return void

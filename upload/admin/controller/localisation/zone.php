@@ -450,7 +450,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 				$json['error'] = sprintf($this->language->get('error_address'), $address_total);
 			}
 
-			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByZoneId((int)$zone_id);
+			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZonesByZoneId((int)$zone_id);
 
 			if ($zone_to_geo_zone_total) {
 				$json['error'] = sprintf($this->language->get('error_zone_to_geo_zone'), $zone_to_geo_zone_total);

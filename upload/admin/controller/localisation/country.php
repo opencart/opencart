@@ -472,7 +472,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				$json['error'] = sprintf($this->language->get('error_zone'), $zone_total);
 			}
 
-			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByCountryId($country_id);
+			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZonesByCountryId($country_id);
 
 			if ($zone_to_geo_zone_total) {
 				$json['error'] = sprintf($this->language->get('error_zone_to_geo_zone'), $zone_to_geo_zone_total);
@@ -496,7 +496,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 					// Keeps the default country
 					if ($language_info && $language_info['code'] != 'en-gb') {
-						$this->model_localisation_country->deleteDescriptionsByLanguageId($country_id, $language_id);
+						$this->model_localisation_country->deleteDescriptionsByLanguageId($language_id, $country_id);
 					} else {
 						$count++;
 					}

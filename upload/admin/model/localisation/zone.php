@@ -297,8 +297,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_localisation_zone->deleteDescriptionsByLanguageId($language_id);
 	 */
-	public function deleteDescriptionsByLanguageId(int $country_id, int $language_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_description` WHERE `country_id` = '" . (int)$country_id . "' AND `language_id` = '" . (int)$language_id . "'");
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
 	/**

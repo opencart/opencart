@@ -705,7 +705,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($post_info['email']);
 
-		if ($customer_info && !$post_info['customer_id'] && ($post_info['customer_id'] != $customer_info['customer_id'])) {
+		if ($customer_info && (!$post_info['customer_id'] && ($post_info['customer_id'] != $customer_info['customer_id']))) {
 			$json['error']['warning'] = $this->language->get('error_exists');
 		}
 

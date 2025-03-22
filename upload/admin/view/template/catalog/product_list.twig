@@ -15,7 +15,7 @@
       <tbody>
         {% if products %}
           {% for product in products %}
-            <tr class="{% if not product.variant %}table-warning{% endif %} {% if not product.status %}table-active opacity-50{% endif %}">
+            <tr class="{% if not product.variant %}table-warning{% endif %} {% if not product.status %}opacity-50{% endif %}">
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ product.product_id }}" class="form-check-input"/></td>
               <td class="text-center"><img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail"/></td>
               <td>{{ product.name }}</td>

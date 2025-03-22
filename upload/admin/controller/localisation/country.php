@@ -483,28 +483,9 @@ class Country extends \Opencart\System\Engine\Controller {
 			// Country
 			$this->load->model('localisation/country');
 
-			// Language
-			$this->load->model('localisation/language');
-
 			foreach ($selected as $country_id) {
-				$country_description = $this->model_localisation_country->getDescriptions($country_id);
-
-				$count = 0;
-
-				foreach ($country_description as $language_id => $value) {
-					$language_info = $this->model_localisation_language->getLanguage($language_id);
-
-					// Keeps the default country
-					if ($language_info && $language_info['code'] != 'en-gb') {
-						$this->model_localisation_country->deleteDescriptionsByLanguageId($country_id, $language_id);
-					} else {
-						$count++;
-					}
-				}
-
-				if (!$count) {
-					$this->model_localisation_country->deleteCountry($country_id);
-				}
+				$this->model_localisation_country->deleteCountryDescriptionsByCountryId($country_id);
+				$this->model_localisation_country->deleteCountry($country_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

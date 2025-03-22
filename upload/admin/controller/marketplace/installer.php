@@ -109,28 +109,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if (!$install_info) {
 				// Unzip the files
 				$zip = new \ZipArchive();
-				
-				// Zip error codes
-				$ZIP_ERROR = [
-					\ZipArchive::ER_EXISTS => 'File already exists.',
-					\ZipArchive::ER_INCONS => 'Zip archive inconsistent.',
-					\ZipArchive::ER_INVAL => 'Invalid argument.',
-					\ZipArchive::ER_MEMORY => 'Malloc failure.',
-					\ZipArchive::ER_NOENT => 'No such file.',
-					\ZipArchive::ER_NOZIP => 'Not a zip archive.',
-					\ZipArchive::ER_OPEN => "Can't open file.",
-					\ZipArchive::ER_READ => 'Read error.',
-					\ZipArchive::ER_SEEK => 'Seek error.',
-				];
-
-				// Check zip for errors
-				$result_code = $zip->open($file);
-				if ($result_code !== true) {
-					if (file_exists($file)) {
-						unlink($file);
-					}
-					continue;
-				}
 
 				if ($zip->open($file, \ZipArchive::RDONLY)) {
 					$install_info = json_decode($zip->getFromName('install.json'), true);
@@ -250,6 +228,41 @@ class Installer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->files['file']['name'])) {
 			$filename = basename($this->request->files['file']['name']);
 			$code = basename($filename, '.ocmod.zip');
+			
+			// Use the temporary upload path
+			$temp_file = $this->request->files['file']['tmp_name'];
+
+			// Initialise ZipArchive
+			$zip = new \ZipArchive();
+
+			// Zip error codes
+			$zip_errors = [
+				\ZipArchive::ER_EXISTS => $this->language->get('zip_error_exists'),
+				\ZipArchive::ER_INCONS => $this->language->get('zip_error_incons'),
+				\ZipArchive::ER_INVAL => $this->language->get('zip_error_inval'),
+				\ZipArchive::ER_MEMORY => $this->language->get('zip_error_memory'),
+				\ZipArchive::ER_NOENT => $this->language->get('zip_error_noent'),
+				\ZipArchive::ER_NOZIP => $this->language->get('zip_error_nozip'),
+				\ZipArchive::ER_OPEN => $this->language->get('zip_error_open'),
+				\ZipArchive::ER_READ => $this->language->get('zip_error_read'),
+				\ZipArchive::ER_SEEK => $this->language->get('zip_error_seek'),
+			];
+
+			// Check if the zip is valid
+			$result_code = $zip->open($temp_file);
+			if ($result_code !== true) {
+
+				$json['error'] = isset($zip_errors[$result_code]) ? $zip_errors[$result_code] : $this->language->get('error_unknown');
+
+				if (is_file($temp_file)) {
+					unlink($temp_file);
+				}
+
+				$this->response->setOutput(json_encode($json));
+				return;
+			}
+
+			$zip->close();
 
 			// 2. Validate the filename.
 			if (!oc_validate_length($filename, 1, 128)) {

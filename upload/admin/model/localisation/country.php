@@ -330,7 +330,7 @@ class Country extends \Opencart\System\Engine\Model {
 				$language_info = $this->model_localisation_language->getLanguage($language_id);
 
 				if ($language_info && $language_info['code'] != 'en-gb') {
-					$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$value['country_id'] . "' AND `language_id` = '" . (int)$language_info['language_id'] . "'");
+					$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$country_id . "' AND `language_id` = '" . (int)$language_id . "'");
 				}
 			}
 		}

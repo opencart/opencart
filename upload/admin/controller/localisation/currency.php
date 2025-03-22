@@ -326,7 +326,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$currency_info = $this->model_localisation_currency->getCurrencyByCode($post_info['code']);
 
-		if ($currency_info && !$post_info['currency_id'] || ($currency_info['currency_id'] != $post_info['currency_id'])) {
+		if ($currency_info && (!$post_info['currency_id'] || ($currency_info['currency_id'] != $post_info['currency_id']))) {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
 

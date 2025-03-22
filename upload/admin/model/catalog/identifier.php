@@ -119,7 +119,6 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 * Get the record of the identifier record in the database.
 	 *
 	 * @param string $code
-	 * @param int    $identifier_id primary key of the identifier record
 	 *
 	 * @return array<string, mixed>
 	 */

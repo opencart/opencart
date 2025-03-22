@@ -11,7 +11,7 @@
     <tbody>
       {% if extensions %}
         {% for extension in extensions %}
-          <tr>
+          <tr{% if not extension.status %} class="table-active opacity-50"{% endif %}>
             <td>
               {% if extension.link %}
                 <a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a>

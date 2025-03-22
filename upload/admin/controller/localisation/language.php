@@ -305,7 +305,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$language_info = $this->model_localisation_language->getLanguageByCode($post_info['code']);
 
-		if ($language_info && !$post_info['language_id'] || ($language_info['language_id'] != $post_info['language_id'])) {
+		if ($language_info && (!$post_info['language_id'] || ($language_info['language_id'] != $post_info['language_id']))) {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
 

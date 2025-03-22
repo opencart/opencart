@@ -13,7 +13,7 @@
       <tbody>
         {% if categories %}
           {% for category in categories %}
-            <tr{% if not category.status %} class="table-secondary"{% endif %}>
+            <tr{% if not category.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ category.category_id }}" class="form-check-input"/></td>
               <td class="text-center"><img src="{{ category.image }}" alt="{{ category.name }}" class="img-thumbnail"/></td>
               <td>{{ category.name }}</td>

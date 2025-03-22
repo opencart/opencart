@@ -14,15 +14,9 @@
       <tbody>
         {% if customers %}
           {% for customer in customers %}
-            <tr>
+            <tr{% if not customer.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" class="form-check-input"/></td>
-              <td>{{ customer.name }}
-                <br/>
-                {% if customer.status %}
-                  <span class="badge text-bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
-                {% endif %}</td>
+              <td>{{ customer.name }}</td>
               <td>{{ customer.email }}</td>
               <td>{{ customer.customer_group }}</td>
               <td class="d-none d-lg-table-cell">{{ customer.date_added }}</td>

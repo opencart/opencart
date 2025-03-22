@@ -4,7 +4,6 @@
       <tr>
         <th>{{ column_ip }}</th>
         <th>{{ column_user_agent }}</th>
-        <th>{{ column_status }}</th>
         <th>{{ column_date_added }}</th>
         <th>{{ column_date_expire }}</th>
         <th class="text-end">{{ column_action }}</th>
@@ -13,14 +12,9 @@
     <tbody>
       {% if authorizes %}
         {% for authorize in authorizes %}
-          <tr>
+          <tr{% if not authorize.status %} class="table-active opacity-50"{% endif %}>
             <td><a href="https://whatismyipaddress.com/ip/{{ user_login.ip }}" target="_blank">{{ authorize.ip }}</a></td>
             <td>{{ authorize.user_agent }}</td>
-            <td>{% if authorize.status %}
-                <span class="badge text-bg-success">{{ text_enabled }}</span>
-              {% else %}
-                <span class="badge text-bg-danger">{{ text_disabled }}</span>
-              {% endif %}</td>
             <td>{{ authorize.date_added }}</td>
             <td>{{ authorize.date_expire }}</td>
             <td class="text-end"><a href="{{ authorize.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a></td>
@@ -28,7 +22,7 @@
         {% endfor %}
       {% else %}
         <tr>
-          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+          <td class="text-center" colspan="5">{{ text_no_results }}</td>
         </tr>
       {% endif %}
     </tbody>

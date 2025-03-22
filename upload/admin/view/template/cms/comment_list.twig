@@ -9,17 +9,12 @@
     <tbody>
       {% if comments %}
         {% for comment in comments %}
-          <tr>
+          <tr{% if not comment.status %} class="table-active opacity-50"{% endif %}>
             <td class="text-center" rowspan="2"><input type="checkbox" name="selected[]" value="{{ comment.article_comment_id }}" class="form-check-input"/></td>
             <td><a href="{{ comment.article_edit }}" target="_blank">{{ comment.article }}</a>
               <p>
-                {% if comment.status %}
-                  <span class="badge text-bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
-                {% endif %}
                 {% if comment.customer_edit %}
-                  <small> - {{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></small>
+                  <small>{{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></small>
                 {% else %}
                   <small> - {{ text_by }} {{ comment.author }}</small>
                 {% endif %}

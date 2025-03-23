@@ -11,7 +11,7 @@ class ShippingMethod extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Methods
 	 *
-	 * @param array<string, mixed> $shipping_address
+	 * @param array<string, mixed> $shipping_address array of data
 	 *
 	 * @return array<string, array<string, mixed>>
 	 */

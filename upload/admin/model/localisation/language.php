@@ -287,7 +287,7 @@ class Language extends \Opencart\System\Engine\Model {
 		// Topic Status
 		$this->load->model('cms/topic');
 
-		$results = $this->model_cms_topic->getSeoUrlsByLanguageId($this->config->get('config_language_id'));
+		$results = $this->model_cms_topic->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $topic) {
 			$this->model_cms_topic->addDescription($topic['topic_id'], $language_id, $topic);
@@ -481,7 +481,7 @@ class Language extends \Opencart\System\Engine\Model {
 		// Topic Status
 		$this->load->model('cms/topic');
 
-		$this->model_cms_topic->deleteTopicsByLanguageId($language_id);
+		$this->model_cms_topic->deleteDescriptionsByLanguageId($language_id);
 
 		// Zone
 		$this->load->model('localisation/zone');

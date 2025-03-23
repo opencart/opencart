@@ -65,6 +65,7 @@ class Account extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('config_affiliate_status')) {
 			$data['affiliate'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
+			// Affiliate
 			$this->load->model('account/affiliate');
 
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());

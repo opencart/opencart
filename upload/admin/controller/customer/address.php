@@ -37,6 +37,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$data['addresses'] = [];
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$results = $this->model_customer_customer->getAddresses($customer_id);
@@ -223,6 +224,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
@@ -261,6 +263,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['address_country'] = $this->language->get('error_country');
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
@@ -275,6 +278,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				'filter_status'            => 1
 			];
 
+			// Custom Field
 			$this->load->model('customer/custom_field');
 
 			$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
@@ -324,6 +328,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$address_info = $this->model_customer_customer->getAddress($address_id);
@@ -358,6 +363,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$address_id = 0;
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$address_info = $this->model_customer_customer->getAddress($address_id);

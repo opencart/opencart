@@ -671,6 +671,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($post_info['product_id']);
@@ -796,6 +797,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Histories
 		$data['histories'] = [];
 
 		$this->load->model('sale/returns');
@@ -852,6 +854,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
+		// Return
 		$this->load->model('sale/returns');
 
 		$return_info = $this->model_sale_returns->getReturn($return_id);

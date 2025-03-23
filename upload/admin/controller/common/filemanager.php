@@ -103,8 +103,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('tool/image');
-
 		$total = count($paths);
 		$limit = 16;
 		$start = ($page - 1) * $limit;
@@ -113,6 +111,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		// Image
 		$data['images'] = [];
+
+		$this->load->model('tool/image');
 
 		if ($paths) {
 			$url = '';

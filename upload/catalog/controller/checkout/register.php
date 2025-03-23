@@ -328,6 +328,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['payment_country'] = $this->language->get('error_country');
 				}
 
+				// Zone
 				$this->load->model('localisation/zone');
 
 				$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['payment_country_id']);
@@ -381,6 +382,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_country'] = $this->language->get('error_country');
 				}
 
+				// Zone
 				$this->load->model('localisation/zone');
 
 				$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['shipping_country_id']);
@@ -484,9 +486,9 @@ class Register extends \Opencart\System\Engine\Controller {
 				$this->session->data['customer'] = $customer_data;
 			}
 
+			// Payment Address
 			$this->load->model('account/address');
 
-			// Payment Address
 			if ($this->config->get('config_checkout_payment_address')) {
 				if (isset($this->session->data['payment_address']['address_id'])) {
 					$address_id = $this->session->data['payment_address']['address_id'];

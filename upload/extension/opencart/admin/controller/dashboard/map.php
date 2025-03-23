@@ -101,6 +101,7 @@ class Map extends \Opencart\System\Engine\Controller {
 	public function map(): void {
 		$json = [];
 
+		// Extension
 		$this->load->model('extension/opencart/dashboard/map');
 
 		$results = $this->model_extension_opencart_dashboard_map->getTotalOrdersByCountry();

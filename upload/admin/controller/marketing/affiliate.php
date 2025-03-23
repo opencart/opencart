@@ -719,6 +719,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer((int)$post_info['customer_id']);

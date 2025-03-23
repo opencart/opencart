@@ -1215,6 +1215,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
+		// Identifier
 		$this->load->model('catalog/identifier');
 
 		foreach ($post_info['product_code'] as $key => $product_code) {

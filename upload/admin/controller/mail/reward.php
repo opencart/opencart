@@ -44,6 +44,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
@@ -51,6 +52,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 		if ($customer_info) {
 			$this->load->language('mail/reward');
 
+			// Store
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);

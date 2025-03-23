@@ -218,6 +218,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$data['weight_class_id'] = 0;
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -309,6 +310,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $weight_class_id) {

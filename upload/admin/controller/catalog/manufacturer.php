@@ -234,6 +234,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['name'] = '';
 		}
 
+		// Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -399,6 +400,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $manufacturer_id) {

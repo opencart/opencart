@@ -82,6 +82,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		// Order Status
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();

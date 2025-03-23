@@ -255,6 +255,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['shipping_address'] = str_replace($pattern_1, '<br/>', preg_replace($pattern_2, '<br/>', trim(str_replace($find, $replace, $format))));
 
+		// Upload
 		$this->load->model('tool/upload');
 
 		// Products
@@ -520,6 +521,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['order_status'] = '';
 			}
 
+			// Upload
 			$this->load->model('tool/upload');
 
 			$data['products'] = [];

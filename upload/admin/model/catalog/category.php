@@ -74,6 +74,7 @@ class Category extends \Opencart\System\Engine\Model {
 			$path = $parent_path . '_' . $category_id;
 		}
 
+		// SEO URL
 		$this->load->model('design/seo_url');
 
 		foreach ($data['category_seo_url'] as $store_id => $language) {

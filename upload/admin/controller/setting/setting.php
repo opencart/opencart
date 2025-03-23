@@ -62,6 +62,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_theme'] = $this->config->get('config_theme');
 
+		// Layout
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -246,6 +247,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_invoice_prefix'] = 'INV-' . date('Y') . '-00';
 		}
 
+		// Order Status
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -364,7 +366,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			'value' => 'contact'
 		];
 
-		// Images
+		// Image
 		$data['config_logo'] = $this->config->get('config_logo');
 
 		$this->load->model('tool/image');

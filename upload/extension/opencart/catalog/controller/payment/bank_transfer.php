@@ -58,6 +58,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 			$comment .= $this->config->get('payment_bank_transfer_bank_' . $this->config->get('config_language_id')) . "\n\n";
 			$comment .= $this->language->get('text_payment');
 
+			// Order
 			$this->load->model('checkout/order');
 
 			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_bank_transfer_order_status_id'), $comment, true);

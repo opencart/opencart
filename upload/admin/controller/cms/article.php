@@ -257,6 +257,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['author'] = $this->user->getFirstName() . ' ' . $this->user->getLastName();
 		}
 
+		// Topic
 		$this->load->model('cms/topic');
 
 		$data['topics'] = $this->model_cms_topic->getTopics();
@@ -467,6 +468,7 @@ class Article extends \Opencart\System\Engine\Controller {
 				'limit' => $limit
 			];
 
+			// Article
 			$this->load->model('cms/article');
 
 			$results = $this->model_cms_article->getArticles($filter_data);

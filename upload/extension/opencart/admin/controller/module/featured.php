@@ -60,6 +60,7 @@ class Featured extends \Opencart\System\Engine\Controller {
 			$data['name'] = '';
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$data['products'] = [];

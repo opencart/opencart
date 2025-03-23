@@ -333,6 +333,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$extension_data = [
 				'extension_id'          => 0,
 				'extension_download_id' => 0,

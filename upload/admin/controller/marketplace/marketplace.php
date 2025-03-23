@@ -930,6 +930,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 					fclose($handle);
 
+					// Extension
 					$extension_data = [
 						'extension_id'          => $extension_id,
 						'extension_download_id' => $extension_download_id,

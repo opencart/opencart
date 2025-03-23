@@ -62,6 +62,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$output['error']['payment_country'] = $this->language->get('error_country');
 		}
 
+		// Zone
 		$this->load->model('localisation/zone');
 
 		$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['payment_country_id']);
@@ -158,6 +159,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
+		// Payment Address
 		if (isset($this->request->post['payment_address_id'])) {
 			$address_id = (int)$this->request->post['payment_address_id'];
 		} else {

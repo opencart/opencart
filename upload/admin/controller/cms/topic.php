@@ -107,6 +107,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Topic
 		$data['topics'] = [];
 
 		$filter_data = [
@@ -244,6 +245,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [

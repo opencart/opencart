@@ -93,7 +93,7 @@ class Header extends \Opencart\System\Engine\Controller {
 				$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
 			}
 
-			// Stores
+			// Store
 			$data['stores'] = [];
 
 			$data['stores'][] = [

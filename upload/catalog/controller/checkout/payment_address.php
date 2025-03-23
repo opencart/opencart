@@ -21,6 +21,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token']);
 
+		// Address
 		$this->load->model('account/address');
 
 		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
@@ -131,6 +132,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
@@ -156,7 +158,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// If no default address add it
+			// If no default address has been found, add it
 			$address_id = $this->customer->getAddressId();
 
 			if (!$address_id) {
@@ -220,6 +222,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Payment Address
 			$this->load->model('account/address');
 
 			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $address_id);

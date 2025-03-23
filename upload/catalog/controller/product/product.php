@@ -37,6 +37,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 			];
 
+			// Category
 			$this->load->model('catalog/category');
 
 			if (isset($this->request->get['path'])) {

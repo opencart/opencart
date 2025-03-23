@@ -67,6 +67,7 @@ class Promotion extends \Opencart\System\Engine\Controller {
 		$data['extensions'] = [];
 
 		if (isset($promotion['extensions'])) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			foreach ($promotion['extensions'] as $result) {

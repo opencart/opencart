@@ -217,12 +217,14 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['save'] = $this->url->link('account/returns.save', 'language=' . $this->config->get('config_language') . '&return_token=' . $this->session->data['return_token']);
 
+		// Order
 		$this->load->model('account/order');
 
 		if (isset($this->request->get['order_id'])) {
 			$order_info = $this->model_account_order->getOrder($this->request->get['order_id']);
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		if (isset($this->request->get['product_id'])) {
@@ -397,6 +399,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->config->get('config_return_id')) {
+				// Information
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_return_id'));

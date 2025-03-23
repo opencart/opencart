@@ -136,6 +136,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['comments'] = [];
 
+		// Article
 		$filter_data = [
 			'filter_keyword'   => $filter_keyword,
 			'filter_article'   => $filter_article,
@@ -362,6 +363,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Article
 			$this->load->model('cms/article');
 
 			foreach ($selected as $article_comment_id) {
@@ -398,6 +400,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$limit = 100;
 
+			// Article
 			$filter_data = [
 				'sort'  => 'date_added',
 				'order' => 'ASC',

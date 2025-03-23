@@ -105,6 +105,7 @@ class Tracking extends \Opencart\System\Engine\Controller {
 				'limit'         => 5
 			];
 
+			// Product
 			$this->load->model('catalog/product');
 
 			$results = $this->model_catalog_product->getProducts($filter_data);

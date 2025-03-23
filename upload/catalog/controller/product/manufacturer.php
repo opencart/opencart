@@ -158,6 +158,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				'limit'                  => $limit
 			];
 
+			// Product
 			$this->load->model('catalog/product');
 
 			// Image

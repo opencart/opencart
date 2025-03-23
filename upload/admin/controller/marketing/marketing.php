@@ -194,6 +194,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$data['marketings'] = [];
 
+		// Marketing
 		$filter_data = [
 			'filter_name'      => $filter_name,
 			'filter_code'      => $filter_code,
@@ -573,6 +574,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$filter_code = '';
 		}
 
+		// Marketing
 		$filter_data = [
 			'filter_name' => $filter_name,
 			'filter_code' => $filter_code,

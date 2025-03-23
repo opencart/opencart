@@ -508,6 +508,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			return '';
 		}
 
+		// Histories
 		$data['histories'] = [];
 
 		$this->load->model('account/subscription');

@@ -48,6 +48,7 @@ class Featured extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
+		// Extension
 		if (isset($this->request->get['module_id'])) {
 			$this->load->model('setting/module');
 
@@ -60,6 +61,7 @@ class Featured extends \Opencart\System\Engine\Controller {
 			$data['name'] = '';
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		$data['products'] = [];
@@ -156,6 +158,7 @@ class Featured extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/module');
 
 			if (!$post_info['module_id']) {

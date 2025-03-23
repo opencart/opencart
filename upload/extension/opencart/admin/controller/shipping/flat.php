@@ -39,16 +39,16 @@ class Flat extends \Opencart\System\Engine\Controller {
 		$data['shipping_flat_cost'] = $this->config->get('shipping_flat_cost');
 
 		// Tax Class
-		$data['shipping_flat_tax_class_id'] = (int)$this->config->get('shipping_flat_tax_class_id');
-
 		$this->load->model('localisation/tax_class');
+
+		$data['shipping_flat_tax_class_id'] = (int)$this->config->get('shipping_flat_tax_class_id');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
 		// Geo Zone
-		$data['shipping_flat_geo_zone_id'] = $this->config->get('shipping_flat_geo_zone_id');
-
 		$this->load->model('localisation/geo_zone');
+
+		$data['shipping_flat_geo_zone_id'] = $this->config->get('shipping_flat_geo_zone_id');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
@@ -77,6 +77,7 @@ class Flat extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('shipping_flat', $this->request->post);

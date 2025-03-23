@@ -323,6 +323,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		if (isset($post_info['option_value'])) {
 			if (isset($post_info['option_id'])) {
+				// Product
 				$this->load->model('catalog/product');
 
 				$option_value_data = [];
@@ -393,6 +394,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $option_id) {

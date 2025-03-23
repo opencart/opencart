@@ -69,6 +69,7 @@ class Map extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('dashboard_map', $this->request->post);
@@ -101,6 +102,7 @@ class Map extends \Opencart\System\Engine\Controller {
 	public function map(): void {
 		$json = [];
 
+		// Extension
 		$this->load->model('extension/opencart/dashboard/map');
 
 		$results = $this->model_extension_opencart_dashboard_map->getTotalOrdersByCountry();

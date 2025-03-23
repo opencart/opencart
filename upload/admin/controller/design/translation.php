@@ -107,6 +107,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Language
 		$this->load->model('localisation/language');
 
 		// Translation

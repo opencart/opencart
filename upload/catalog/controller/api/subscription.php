@@ -359,6 +359,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$output) {
+			// Subscription
 			$subscription_product_data = [];
 
 			$products = $this->cart->getSubscriptions();

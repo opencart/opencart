@@ -26,6 +26,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $store_name);
 
+		// Customer Group
 		$this->load->model('account/customer_group');
 
 		if ($this->customer->isLogged()) {

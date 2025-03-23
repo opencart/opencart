@@ -234,6 +234,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['name'] = '';
 		}
 
+		// Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -283,6 +284,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
+		// SEO
 		if (!empty($manufacturer_info)) {
 			$this->load->model('design/seo_url');
 
@@ -337,6 +339,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
+		// SEO
 		if ($post_info['manufacturer_seo_url']) {
 			$this->load->model('design/seo_url');
 
@@ -399,6 +402,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $manufacturer_id) {

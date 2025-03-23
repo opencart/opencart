@@ -272,16 +272,12 @@ class Language extends \Opencart\System\Engine\Model {
 		// Setup new SEO URL language keyword
 		$this->load->model('setting/store');
 
+		$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], 0, $language_id, -2);
+
 		$stores = $this->model_setting_store->getStores();
 
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
 		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], $store['store_id'], $language['language_id']);
-			}
+			$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], $store['store_id'], $language_id, -2);
 		}
 
 		// Topic Status

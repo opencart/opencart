@@ -9,7 +9,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @param array<string, mixed> $setting
+	 * @param array<string, mixed> $setting array of data
 	 *
 	 * @return string
 	 */

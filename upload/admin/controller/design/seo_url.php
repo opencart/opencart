@@ -295,8 +295,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$data['sort_key'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url);
 		$data['sort_value'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
 		$data['sort_sort_order'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
-		$data['sort_store'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=store' . $url);
-		$data['sort_language'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=language' . $url);
+		$data['sort_store'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=store_id' . $url);
+		$data['sort_language'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=language_id' . $url);
 
 		$url = '';
 

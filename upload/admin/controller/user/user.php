@@ -535,7 +535,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$user_info = $this->model_user_user->getUserByUsername($post_info['username']);
 
-		if ($user_info && !$post_info['user_id'] || ($post_info['user_id'] != $user_info['user_id'])) {
+		if ($user_info && (!$post_info['user_id'] || ($post_info['user_id'] != $user_info['user_id']))) {
 			$json['error']['warning'] = $this->language->get('error_username_exists');
 		}
 
@@ -560,7 +560,7 @@ class User extends \Opencart\System\Engine\Controller {
 		if ($post_info['password'] || (!isset($post_info['user_id']))) {
 			$password = html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8');
 
-			if (!oc_validate_length($password, $this->config->get('config_user_password_length'), 40)) {
+			if (!oc_validate_length($password, (int)$this->config->get('config_user_password_length'), 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 

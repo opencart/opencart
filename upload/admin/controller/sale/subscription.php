@@ -949,6 +949,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Subscription
 			$this->load->model('sale/subscription');
 
 			foreach ($selected as $subscription_id) {

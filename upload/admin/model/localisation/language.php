@@ -258,7 +258,7 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_localisation_subscription_status->addDescription($subscription['subscription_status_id'], $language_id, $subscription);
 		}
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$results = $this->model_design_seo_url->getSeoUrlsByLanguageId($this->config->get('config_language_id'));
@@ -467,7 +467,7 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$this->model_localisation_subscription_status->deleteStockStatusesByLanguageId($language_id);
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByLanguageId($language_id);

@@ -53,6 +53,7 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$customer_id = $this->db->getLastId();
 
+		// Approval
 		if ($customer_group_info['approval']) {
 			$this->load->model('account/approval');
 

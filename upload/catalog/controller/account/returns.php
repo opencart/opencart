@@ -399,6 +399,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->config->get('config_return_id')) {
+				// Information
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_return_id'));

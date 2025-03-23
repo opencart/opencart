@@ -193,6 +193,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Customer
 			$this->load->model('account/customer');
 
 			$customer_info = $this->model_account_customer->getTokenByCode($code);

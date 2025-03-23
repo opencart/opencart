@@ -81,6 +81,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
 		$data['upload'] = $this->url->link('tool/upload.upload', 'user_token=' . $this->session->data['user_token']);
 
+		// Customer
 		if (isset($this->request->get['address_id'])) {
 			$this->load->model('customer/customer');
 
@@ -293,6 +294,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			if (!$post_info['address_id']) {

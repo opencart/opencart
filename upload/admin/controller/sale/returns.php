@@ -646,6 +646,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($post_info['customer_id']) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			$customer_info = $this->model_customer_customer->getCustomer($post_info['customer_id']);

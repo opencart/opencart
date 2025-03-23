@@ -323,6 +323,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		if (isset($post_info['option_value'])) {
 			if (isset($post_info['option_id'])) {
+				// Product
 				$this->load->model('catalog/product');
 
 				$option_value_data = [];

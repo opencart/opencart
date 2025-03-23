@@ -41,7 +41,7 @@ class Store extends \Opencart\System\Engine\Model {
 			$this->model_design_layout->addRoute($result['layout_id'], ['store_id' => $store_id] + $result);
 		}
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$results = $this->model_design_seo_url->getSeoUrlsByStoreId(0);
@@ -139,7 +139,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		$this->model_design_translation->deleteTranslationsByStoreId($store_id);
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByStoreId($store_id);

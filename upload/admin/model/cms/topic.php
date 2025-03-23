@@ -46,7 +46,7 @@ class Topic extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		foreach ($data['topic_seo_url'] as $store_id => $language) {
@@ -110,7 +110,7 @@ class Topic extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('topic_id', $topic_id);
@@ -156,7 +156,7 @@ class Topic extends \Opencart\System\Engine\Model {
 		$this->model_cms_topic->deleteDescriptions($topic_id);
 		$this->model_cms_topic->deleteStores($topic_id);
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('topic_id', $topic_id);

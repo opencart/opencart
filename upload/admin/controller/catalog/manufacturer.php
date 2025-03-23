@@ -284,6 +284,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
+		// SEO
 		if (!empty($manufacturer_info)) {
 			$this->load->model('design/seo_url');
 
@@ -338,6 +339,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
+		// SEO
 		if ($post_info['manufacturer_seo_url']) {
 			$this->load->model('design/seo_url');
 

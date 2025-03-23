@@ -227,6 +227,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Shipping Address
 			$this->load->model('account/address');
 
 			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $address_id);

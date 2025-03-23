@@ -363,6 +363,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Article
 			$this->load->model('cms/article');
 
 			foreach ($selected as $article_comment_id) {

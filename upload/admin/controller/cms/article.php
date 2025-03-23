@@ -296,6 +296,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
+		// SEO
 		if (!empty($article_info)) {
 			$this->load->model('design/seo_url');
 
@@ -362,6 +363,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
+		// SEO
 		if ($post_info['article_seo_url']) {
 			$this->load->model('design/seo_url');
 

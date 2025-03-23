@@ -984,6 +984,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Subscription
 			$this->load->model('sale/subscription');
 
 			$this->model_sale_subscription->deleteSubscriptionByCustomerPaymentId($customer_payment_id);

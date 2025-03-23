@@ -158,6 +158,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('shipping', $this->request->get['code']);

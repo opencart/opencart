@@ -165,7 +165,7 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// SEO URL
+		// SEO
 		if (isset($data['product_seo_url'])) {
 			$this->load->model('design/seo_url');
 
@@ -366,7 +366,7 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// SEO URL
+		// SEO
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', $product_id);
 
 		if (isset($data['product_seo_url'])) {
@@ -487,7 +487,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_review->deleteReviewsByProductId($product_id);
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', $product_id);

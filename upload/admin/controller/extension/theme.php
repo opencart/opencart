@@ -180,6 +180,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('theme', $this->request->get['code']);

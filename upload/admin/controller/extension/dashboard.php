@@ -177,6 +177,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('dashboard', $this->request->get['code']);

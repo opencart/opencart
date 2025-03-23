@@ -860,6 +860,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Addresses
 		if (!empty($order_info)) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			$data['addresses'] = $this->model_customer_customer->getAddresses($order_info['customer_id']);
@@ -1308,6 +1309,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Order
 			$this->load->model('sale/order');
 
 			foreach ($selected as $order_id) {
@@ -1945,6 +1947,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->deleteRewardsByOrderId($order_id);
@@ -1982,6 +1985,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
 		if ($order_info) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			$customer_info = $this->model_customer_customer->getCustomer($order_info['affiliate_id']);
@@ -2039,6 +2043,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->deleteTransactionsByOrderId($order_id);

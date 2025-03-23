@@ -35,6 +35,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_order');
 		}
 
+		// Order
 		if (isset($this->session->data['order_id'])) {
 			$this->load->model('checkout/order');
 

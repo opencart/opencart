@@ -142,6 +142,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
 		if (!$affiliate_info && $this->config->get('config_affiliate_id')) {
+			// Information
 			$this->load->model('catalog/information');
 
 			$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_affiliate_id'));
@@ -241,6 +242,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
 			if (!$affiliate_info) {
+				// Information
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_affiliate_id'));

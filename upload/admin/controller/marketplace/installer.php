@@ -539,6 +539,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$zip = new \ZipArchive();
 
 			if ($zip->open($file, \ZipArchive::RDONLY)) {
+				// Modification
 				$this->load->model('setting/modification');
 
 				// If xml file, just put it straight into the DB

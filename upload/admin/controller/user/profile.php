@@ -145,7 +145,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 		if ($post_info['password']) {
 			$password = html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8');
 
-			if (!oc_validate_length($password, $this->config->get('config_user_password_length'), 40)) {
+			if (!oc_validate_length($password, (int)$this->config->get('config_user_password_length'), 40)) {
 				$json['error']['password'] = sprintf($this->language->get('error_password_length'), $this->config->get('config_user_password_length'));
 			}
 

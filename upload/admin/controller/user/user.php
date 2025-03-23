@@ -553,7 +553,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$user_info = $this->model_user_user->getUserByEmail($post_info['email']);
 
-		if ($user_info && !$post_info['user_id'] || ($post_info['user_id'] != $user_info['user_id'])) {
+		if ($user_info && (!$post_info['user_id'] || ($post_info['user_id'] != $user_info['user_id']))) {
 			$json['error']['warning'] = $this->language->get('error_email_exists');
 		}
 

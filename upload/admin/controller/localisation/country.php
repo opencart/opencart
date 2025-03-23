@@ -494,23 +494,25 @@ class Country extends \Opencart\System\Engine\Controller {
 
 					$this->model_localisation_country->deleteCountry($country_id);
 
-					foreach ($country_description as $language_id => $value) {
-						$language_info = $this->model_localisation_language->getLanguage($language_id);
+					if ($country_info) {
+						foreach ($country_description as $language_id => $value) {
+							$language_info = $this->model_localisation_language->getLanguage($language_id);
 
-						if ($country_info && $language_info && $language_info['code'] == 'en-gb') {
-							$country_data = [
-								'iso_code_2'        => $country_info['iso_code_2'],
-								'iso_code_3'        => $country_info['iso_code_3'],
-								'address_format_id' => $country_info['address_format_id'],
-								'postcode_required' => $country_info['postcode_required'],
-								'status'            => $country_info['status']
-							];
+							if ($language_info && $language_info['code'] == 'en-gb') {
+								$country_data = [
+									'iso_code_2'        => $country_info['iso_code_2'],
+									'iso_code_3'        => $country_info['iso_code_3'],
+									'address_format_id' => $country_info['address_format_id'],
+									'postcode_required' => $country_info['postcode_required'],
+									'status'            => $country_info['status']
+								];
 
-							$country_data['country_description'][$language_id] = [
-								'name' => $value['name']
-							];
+								$country_data['country_description'][$language_id] = [
+									'name' => $value['name']
+								];
 
-							$this->model_localisation_country->addCountry($country_data);
+								$this->model_localisation_country->addCountry($country_data);
+							}
 						}
 					}
 				}

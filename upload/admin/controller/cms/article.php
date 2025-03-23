@@ -257,6 +257,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['author'] = $this->user->getFirstName() . ' ' . $this->user->getLastName();
 		}
 
+		// Topic
 		$this->load->model('cms/topic');
 
 		$data['topics'] = $this->model_cms_topic->getTopics();
@@ -295,6 +296,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
+		// SEO
 		if (!empty($article_info)) {
 			$this->load->model('design/seo_url');
 
@@ -361,6 +363,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
+		// SEO
 		if ($post_info['article_seo_url']) {
 			$this->load->model('design/seo_url');
 
@@ -467,6 +470,7 @@ class Article extends \Opencart\System\Engine\Controller {
 				'limit' => $limit
 			];
 
+			// Article
 			$this->load->model('cms/article');
 
 			$results = $this->model_cms_article->getArticles($filter_data);

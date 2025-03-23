@@ -631,6 +631,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_id = 0;
 			}
 
+			// Order
 			$this->load->model('checkout/order');
 
 			if (!$order_id) {

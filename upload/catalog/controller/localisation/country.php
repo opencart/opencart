@@ -25,6 +25,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$country_info = $this->model_localisation_country->getCountry($country_id);
 
 		if ($country_info) {
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$json = ['zone' => $this->model_localisation_zone->getZonesByCountryId($country_id)] + $country_info;

@@ -984,6 +984,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Subscription
 			$this->load->model('sale/subscription');
 
 			$this->model_sale_subscription->deleteSubscriptionByCustomerPaymentId($customer_payment_id);
@@ -1546,6 +1547,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_group_id = (int)$this->config->get('config_customer_group_id');
 		}
 
+		// Custom Field
 		$this->load->model('customer/custom_field');
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_id]);

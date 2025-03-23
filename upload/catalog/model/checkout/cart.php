@@ -22,6 +22,7 @@ class Cart extends \Opencart\System\Engine\Model {
 	public function getProducts(): array {
 		$this->load->language('checkout/cart');
 
+		// Upload
 		$this->load->model('tool/upload');
 
 		// Products

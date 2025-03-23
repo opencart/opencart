@@ -99,6 +99,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$store_info = $this->model_setting_store->getStore($order_info['store_id']);
 
 		if ($store_info) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $store_info['store_id']), ENT_QUOTES, 'UTF-8');
@@ -255,6 +256,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['shipping_address'] = str_replace($pattern_1, '<br/>', preg_replace($pattern_2, '<br/>', trim(str_replace($find, $replace, $format))));
 
+		// Upload
 		$this->load->model('tool/upload');
 
 		// Products
@@ -520,6 +522,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['order_status'] = '';
 			}
 
+			// Upload
 			$this->load->model('tool/upload');
 
 			$data['products'] = [];

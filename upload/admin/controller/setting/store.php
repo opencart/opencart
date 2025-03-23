@@ -79,6 +79,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('setting/store.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Stores
 		$data['stores'] = [];
 
 		$store_total = 0;
@@ -293,6 +294,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_location'] = [];
 		}
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -320,6 +322,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_language_catalog'] = $this->config->get('config_language_catalog');
 		}
 
+		// Currency
 		$this->load->model('localisation/currency');
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();

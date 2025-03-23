@@ -131,6 +131,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function forgotten(string &$route, array &$args, &$output): void {
+		// Customer
 		if (isset($this->request->get['route']) && $this->request->get['route'] == 'account/forgotten' && $this->config->get('config_customer_activity')) {
 			$this->load->model('account/customer');
 
@@ -161,6 +162,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addTransaction(string &$route, array &$args, &$output): void {
+		// Customer
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/customer');
 

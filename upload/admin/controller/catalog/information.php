@@ -266,6 +266,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
+		// SEO
 		if (!empty($information_info)) {
 			$this->load->model('design/seo_url');
 
@@ -330,6 +331,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// SEO
 		if ($post_info['information_seo_url']) {
 			$this->load->model('design/seo_url');
 

@@ -41,6 +41,7 @@ class Ddos extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('extension/opencart/fraud/ddos.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud');
 
+		// Order Status
 		$this->load->model('localisation/order_status');
 
 		$data['fraud_ddos_status'] = $this->config->get('fraud_ddos_status');
@@ -69,6 +70,7 @@ class Ddos extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('fraud_ddos', $this->request->post);

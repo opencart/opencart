@@ -292,6 +292,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Returns
 		$this->load->model('sale/returns');
 
 		foreach ($selected as $return_action_id) {

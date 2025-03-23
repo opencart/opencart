@@ -105,6 +105,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['logo'] = '';
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($gdpr_info['email']);
@@ -288,6 +289,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['logo'] = '';
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($gdpr_info['email']);
@@ -386,6 +388,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$data['text_request'] = $this->language->get('mail_text_' . $gdpr_info['action']);
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($gdpr_info['email']);
@@ -480,6 +483,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['logo'] = '';
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($gdpr_info['email']);

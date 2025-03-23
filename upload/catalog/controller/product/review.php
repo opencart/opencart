@@ -175,6 +175,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->customer->isLogged() && $this->config->get('config_review_purchased')) {
+			// Order
 			$this->load->model('account/order');
 
 			if (!$this->model_account_order->getTotalOrdersByProductId($product_id)) {

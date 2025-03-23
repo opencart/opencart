@@ -61,6 +61,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('report_marketing', $this->request->post);

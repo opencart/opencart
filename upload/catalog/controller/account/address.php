@@ -360,6 +360,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
+			// Zone
 			$this->load->model('localisation/zone');
 
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);

@@ -435,6 +435,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			return '';
 		}
 
+		// Order
 		$this->load->model('account/order');
 
 		$order_info = $this->model_account_order->getOrder($order_id);

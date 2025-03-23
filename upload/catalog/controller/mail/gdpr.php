@@ -121,6 +121,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
 
 			if ($store_info) {
+				// Setting
 				$this->load->model('setting/setting');
 
 				$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $store_info['store_id']), ENT_QUOTES, 'UTF-8');

@@ -107,6 +107,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Coupon
 		$data['coupons'] = [];
 
 		$filter_data = [
@@ -264,6 +265,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$data['total'] = '';
 		}
 
+		// Product
 		if (!empty($coupon_info)) {
 			$products = $this->model_marketing_coupon->getProducts($coupon_info['coupon_id']);
 		} else {

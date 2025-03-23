@@ -24,6 +24,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$products = [];
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($products as $key => $product) {

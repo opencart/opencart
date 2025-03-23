@@ -439,6 +439,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$data['username'] = '';
 		}
 
+		// User Group
 		$this->load->model('user/user_group');
 
 		$data['user_groups'] = $this->model_user_user_group->getUserGroups();

@@ -97,6 +97,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		// Store
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -236,7 +237,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			'limit'              => $this->config->get('config_pagination_admin')
 		];
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		// Language
@@ -629,6 +630,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				$this->model_design_seo_url->deleteSeoUrl($seo_url_id);
 			}
 
+			// Language
 			$this->load->model('localisation/language');
 
 			$results = $this->model_design_seo_url->getSeoUrls($filter_data);

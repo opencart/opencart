@@ -74,6 +74,7 @@ class Category extends \Opencart\System\Engine\Model {
 			$path = $parent_path . '_' . $category_id;
 		}
 
+		// SEO
 		$this->load->model('design/seo_url');
 
 		foreach ($data['category_seo_url'] as $store_id => $language) {
@@ -306,7 +307,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$this->model_marketing_coupon->deleteCategoriesByCategoryId($category_id);
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$path = $this->model_catalog_category->getPath($category_id);

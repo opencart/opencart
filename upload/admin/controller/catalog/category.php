@@ -389,6 +389,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
+		// SEO
 		$data['category_seo_url'] = [];
 
 		if (!empty($category_info)) {
@@ -478,6 +479,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// SEO
 		if ($post_info['category_seo_url']) {
 			$this->load->model('design/seo_url');
 

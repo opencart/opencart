@@ -32,6 +32,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 				$this->model_marketing_marketing->addReport($marketing_info['marketing_id'], oc_get_ip());
 			}
 
+			// Affiliate
 			if ($this->config->get('config_affiliate_status')) {
 				$this->load->model('account/affiliate');
 

@@ -164,6 +164,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['filter_category'] = '';
 		$data['filter_manufacturer'] = '';
 
+		// Category
 		if (!empty($filter_category_id)) {
 			$this->load->model('catalog/category');
 
@@ -172,6 +173,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['filter_category'] = !empty($category_info['name']) ? (!empty($category_info['path']) ? implode(' > ', [$category_info['path'], $category_info['name']]) : $category_info['name']) : '';
 		}
 
+		// Manufacturer
 		if (!empty($filter_manufacturer_id)) {
 			$this->load->model('catalog/manufacturer');
 
@@ -1215,6 +1217,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
+		// Identifier
 		$this->load->model('catalog/identifier');
 
 		foreach ($post_info['product_code'] as $key => $product_code) {
@@ -1237,6 +1240,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// SEO
 		if ($post_info['product_seo_url']) {
 			$this->load->model('design/seo_url');
 
@@ -1313,6 +1317,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Product
 			$this->load->model('catalog/product');
 
 			foreach ($selected as $product_id) {

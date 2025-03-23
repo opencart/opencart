@@ -107,6 +107,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		// Subscription Status
 		$this->load->model('localisation/subscription_status');
 
 		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
@@ -875,6 +876,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// API
 		$this->load->model('user/api');
 
 		$api_info = $this->model_user_api->getApi((int)$this->config->get('config_api_id'));
@@ -947,6 +949,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Subscription
 			$this->load->model('sale/subscription');
 
 			foreach ($selected as $subscription_id) {

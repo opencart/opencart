@@ -125,10 +125,12 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('dashboard', $extension, $code);
 
+			// User Group
 			$this->load->model('user/user_group');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/dashboard/' . $code);
@@ -175,6 +177,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('dashboard', $this->request->get['code']);

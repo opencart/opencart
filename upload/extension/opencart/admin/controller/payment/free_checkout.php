@@ -68,6 +68,7 @@ class FreeCheckout extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('payment_free_checkout', $this->request->post);

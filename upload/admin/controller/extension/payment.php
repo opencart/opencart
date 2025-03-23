@@ -33,6 +33,7 @@ class Payment extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('payment');
@@ -114,6 +115,7 @@ class Payment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('payment', $extension, $code);
@@ -164,6 +166,7 @@ class Payment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('payment', $this->request->get['code']);

@@ -59,6 +59,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_checkout_order->getOrder($args[0]);
 
 		if ($order_info) {
+			// Stats
 			$this->load->model('report/statistics');
 
 			$old_status_id = $order_info['order_status_id'];

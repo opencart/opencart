@@ -273,7 +273,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $country_data['country_description'] = [
+	 * $country_data['country_description'][1] = [
 	 *     'name'             => 'Country Name'
 	 * ];
 	 *

@@ -53,7 +53,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $attribute_data['attribute_description'] = [
+	 * $attribute_data['attribute_description'][1] = [
 	 *     'attribute_description' => [],
 	 *     'attribute_group_id'    => 1,
 	 *     'sort_order'            => 0

@@ -484,7 +484,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/country');
 
 			foreach ($selected as $country_id) {
-				$this->model_localisation_country->deleteDescriptionsByCountryId($country_id);
 				$this->model_localisation_country->deleteCountry($country_id);
 			}
 

@@ -98,7 +98,7 @@ class Cloud extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Reports
 	 *
-	 * @return int
+	 * @return int total number of product bestseller report records
 	 */
 	public function getTotalReports(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_bestseller`");

@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
 /**
- * Class BankTransfer
+ * Class Bank Transfer
  *
- * @package Opencart\Catalog\Controller\Extension\Opencart\Module
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Payment
  */
 class BankTransfer extends \Opencart\System\Engine\Controller {
 	/**

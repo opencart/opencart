@@ -11,7 +11,7 @@ class PaymentMethod extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Methods
 	 *
-	 * @param array<string, mixed> $payment_address
+	 * @param array<string, mixed> $payment_address array of data
 	 *
 	 * @return array<string, mixed>
 	 */

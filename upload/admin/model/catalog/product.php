@@ -1020,7 +1020,13 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_product->getProducts($filter_data);
 	 */
 	public function getProducts(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
+
+		if (!empty($data['filter_model'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
+		}
+
+		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
 			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
@@ -1031,7 +1037,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
+			$sql .= " AND (LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "' OR LCASE(`pc`.`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "')";
 		}
 
 		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
@@ -1141,7 +1147,13 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $product_total = $this->model_catalog_product->getTotalProducts();
 	 */
 	public function getTotalProducts(array $data = []): int {
-		$sql = "SELECT COUNT(DISTINCT `p`.`product_id`) AS `total` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(DISTINCT `p`.`product_id`) AS `total` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
+
+		if (!empty($data['filter_model'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
+		}
+
+		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
 			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
@@ -1152,7 +1164,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'";
+			$sql .= " AND (LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "' OR LCASE(`pc`.`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "')";
 		}
 
 		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {

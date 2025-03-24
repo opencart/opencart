@@ -266,6 +266,17 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['manufacturers'] = $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $product_info['manufacturer_id']);
 			$data['model'] = $product_info['model'];
+
+			$data['product_codes'] = [];
+
+			$results = $this->model_catalog_product->getCodes($product_id);
+
+			foreach ($results as $result) {
+				if ($result['status']) {
+					$data['product_codes'] = $result;
+				}
+			}
+
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');

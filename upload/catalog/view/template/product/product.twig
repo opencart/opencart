@@ -33,7 +33,7 @@
             {% endif %}
             <li>{{ text_model }} {{ model }}</li>
             {% for product_code in product_codes %}
-              <li>{{ product_code.code }} {{ product_code.value }}</li>
+              <li>{{ product_code.code }}: {{ product_code.value }}</li>
             {% endfor %}
             {% if reward %}
               <li>{{ text_reward }} {{ reward }}</li>

@@ -11,6 +11,7 @@ $_['text_add']           = 'Your address has been successfully added';
 $_['text_edit']          = 'Your address has been successfully updated';
 $_['text_delete']        = 'Your address has been successfully deleted';
 $_['text_no_results']    = 'You have no addresses in your account.';
+$_['text_default']       = 'Default';
 
 // Entry
 $_['entry_firstname']    = 'First Name';

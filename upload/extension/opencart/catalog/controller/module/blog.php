@@ -9,7 +9,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @param array<string, mixed> $setting
+	 * @param array<string, mixed> $setting array of filters
 	 *
 	 * @return string
 	 */

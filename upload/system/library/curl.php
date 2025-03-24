@@ -10,6 +10,9 @@ class Curl {
 	 * @var string
 	 */
 	private string $url = '';
+	/**
+	 * @var array<string, mixed>
+	 */
 	private array $option = [];
 
 	/**
@@ -25,7 +28,7 @@ class Curl {
 	 * Set Option
 	 *
 	 * @param string $key
-	 * @param array  $data<array, mixed> array of data
+	 * @param array  $data<string, mixed> array of data
 	 *
 	 * @return void
 	 */

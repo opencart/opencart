@@ -264,29 +264,25 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_design_seo_url->getSeoUrlsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $seo_url) {
-			//if ($seo_url['key'] != $this->config->get('config_language_id')) {
-				$this->model_design_seo_url->addSeoUrl($seo_url['key'], $seo_url['value'], $seo_url['keyword'], $seo_url['store_id'], $language_id, $seo_url['sort_order']);
-			//}
+			$this->model_design_seo_url->addSeoUrl($seo_url['key'], $seo_url['value'], $seo_url['keyword'], $seo_url['store_id'], $language_id, $seo_url['sort_order']);
 		}
 
 		// Setup new SEO URL language keyword
-		$this->load->model('setting/store');
-
-		$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], 0, $language_id, -2);
-
 		$languages = $this->getLanguages();
 
 		foreach ($languages as $language) {
-		//	$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], 0, $language_id, -2);
+			// Set default store
+			$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], 0, $language['language_id'], -2);
 		}
+
+		// Set default store
+		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				if ($language['language_id'] != $this->config->get('config_language_id')) {
-					$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], $store['store_id'], $language['language_id'], -2);
-				}
+				$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], $store['store_id'], $language['language_id'], -2);
 			}
 		}
 

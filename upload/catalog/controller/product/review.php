@@ -88,7 +88,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$limit = 5;
 
-		// Review
+		// Reviews
 		$data['reviews'] = [];
 
 		$this->load->model('catalog/review');
@@ -174,8 +174,8 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_login');
 		}
 
+		// Order
 		if ($this->customer->isLogged() && $this->config->get('config_review_purchased')) {
-			// Order
 			$this->load->model('account/order');
 
 			if (!$this->model_account_order->getTotalOrdersByProductId($product_id)) {
@@ -197,6 +197,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Review
 			$this->load->model('catalog/review');
 
 			$this->model_catalog_review->addReview($product_id, $this->request->post);

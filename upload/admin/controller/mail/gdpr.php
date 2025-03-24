@@ -86,7 +86,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+		// Load the language for any mails using a different country code and prefixing it, so it does not pollute the main data pool.
 		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/gdpr_export', 'mail', $language_code);
 
@@ -149,7 +149,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Order
+		// Orders
 		$this->load->model('sale/order');
 
 		$results = $this->model_sale_order->getOrders(['filter_email' => $gdpr_info['email']]);
@@ -267,7 +267,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+		// Load the language for any mails using a different country code and prefixing it, so it does not pollute the main data pool.
 		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/gdpr_approve', 'mail', $language_code);
 
@@ -336,7 +336,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deny(array $gdpr_info): void {
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -364,7 +364,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+		// Load the language for any mails using a different country code and prefixing it, so it does not pollute the main data pool.
 		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/gdpr_deny', 'mail', $language_code);
 
@@ -433,7 +433,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function remove(array $gdpr_info): void {
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -461,7 +461,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+		// Load the language for any mails using a different country code and prefixing it, so it does not pollute the main data pool.
 		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/gdpr_delete', 'mail', $language_code);
 

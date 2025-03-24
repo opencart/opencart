@@ -107,6 +107,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Layouts
 		$data['layouts'] = [];
 
 		$filter_data = [
@@ -116,7 +117,6 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		// Layout
 		$this->load->model('design/layout');
 
 		$results = $this->model_design_layout->getLayouts($filter_data);
@@ -222,7 +222,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$data['name'] = '';
 		}
 
-		// Store
+		// Stores
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();

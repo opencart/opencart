@@ -133,6 +133,7 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination')
 		];
 
+		// Extension
 		$this->load->model('extension/opencart/report/coupon');
 
 		$coupon_total = $this->model_extension_opencart_report_coupon->getTotalCoupons($filter_data);

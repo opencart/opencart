@@ -120,7 +120,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Currency
+		// Currencies
 		$data['currencies'] = [];
 
 		$filter_data = [
@@ -224,6 +224,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/currency.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Currency
 		if (isset($this->request->get['currency_id'])) {
 			$this->load->model('localisation/currency');
 
@@ -322,6 +323,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
+		// Currency
 		$this->load->model('localisation/currency');
 
 		$currency_info = $this->model_localisation_currency->getCurrencyByCode($post_info['code']);

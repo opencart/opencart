@@ -159,7 +159,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		// Store
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -175,7 +175,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['stores'][] = $result;
 		}
 
-		// Order Status
+		// Order Statuses
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -362,7 +362,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Order
+		// Orders
 		$data['orders'] = [];
 
 		$filter_data = [
@@ -628,6 +628,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['upload'] = $this->url->link('tool/upload.upload', 'user_token=' . $this->session->data['user_token']);
 		$data['customer_add'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token']);
 
+		// Order
 		if ($order_id) {
 			$this->load->model('sale/order');
 
@@ -720,7 +721,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['custom_fields'][] = ['custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id'])] + $custom_field;
 		}
 
-		// Store
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -742,7 +743,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = (int)$this->config->get('config_store_id');
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -753,7 +754,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['language_code'] = $this->config->get('config_language');
 		}
 
-		// Currency
+		// Currencies
 		$this->load->model('localisation/currency');
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
@@ -858,9 +859,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_totals'][] = ['text' => $this->currency->format($total['value'], $data['currency_code'], $currency_value)] + $total;
 		}
 
-		// Addresses
+		// Customers
 		if (!empty($order_info)) {
-			// Customer
 			$this->load->model('customer/customer');
 
 			$data['addresses'] = $this->model_customer_customer->getAddresses($order_info['customer_id']);
@@ -899,12 +899,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
-		// Country
+		// Countries
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		// Zone
+		// Zones
 		$this->load->model('localisation/zone');
 
 		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
@@ -1045,7 +1045,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Order Status
+		// Order Statuses
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -1236,7 +1236,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// API
+		// Api
 		$this->load->model('user/api');
 
 		$api_info = $this->model_user_api->getApi((int)$this->config->get('config_api_id'));
@@ -1278,7 +1278,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// 7. Clean up data by clearing cart.
 			$store->cart->clear();
 
-			// 8. Deleting the current session so we are not creating infinite sessions.
+			// 8. Deleting the current session, so we are not creating infinite sessions.
 			$store->session->destroy();
 		} else {
 			$output = json_encode($json);
@@ -1898,7 +1898,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_order');
 		}
 
-		// Customer
+		// Total Rewards
 		$this->load->model('customer/customer');
 
 		$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
@@ -1984,8 +1984,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
+		// Customer
 		if ($order_info) {
-			// Customer
 			$this->load->model('customer/customer');
 
 			$customer_info = $this->model_customer_customer->getCustomer($order_info['affiliate_id']);

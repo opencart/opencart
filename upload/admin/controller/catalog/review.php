@@ -215,7 +215,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Review
+		// Reviews
 		$data['reviews'] = [];
 
 		$filter_data = [
@@ -388,6 +388,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/review.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Review
 		if (isset($this->request->get['review_id'])) {
 			$this->load->model('catalog/review');
 

@@ -99,13 +99,13 @@ class Tracking extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Products
 			$filter_data = [
 				'filter_search' => $search,
 				'start'         => 0,
 				'limit'         => 5
 			];
 
-			// Product
 			$this->load->model('catalog/product');
 
 			$results = $this->model_catalog_product->getProducts($filter_data);

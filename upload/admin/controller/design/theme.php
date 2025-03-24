@@ -85,7 +85,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$data['themes'] = [];
 
-		// Theme
+		// Themes
 		$this->load->model('design/theme');
 
 		// Store
@@ -157,6 +157,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('design/theme.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Theme
 		if (isset($this->request->get['theme_id'])) {
 			$this->load->model('design/theme');
 
@@ -169,7 +170,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$data['theme_id'] = 0;
 		}
 
-		// Store
+		// Stores
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();

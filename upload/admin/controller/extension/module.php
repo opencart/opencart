@@ -35,7 +35,7 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('module');

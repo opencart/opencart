@@ -107,7 +107,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/subscription_status.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Subscription Status
+		// Subscription Statuses
 		$data['subscription_statuses'] = [];
 
 		$filter_data = [
@@ -206,13 +206,14 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/subscription_status.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/subscription_status', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Subscription Status
 		if (isset($this->request->get['subscription_status_id'])) {
 			$data['subscription_status_id'] = (int)$this->request->get['subscription_status_id'];
 		} else {
 			$data['subscription_status_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

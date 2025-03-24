@@ -107,7 +107,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('user/user_permission.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// User Group
+		// User Groups
 		$data['user_groups'] = [];
 
 		$filter_data = [
@@ -203,6 +203,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('user/user_permission.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// User Group
 		if (isset($this->request->get['user_group_id'])) {
 			$this->load->model('user/user_group');
 

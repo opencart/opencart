@@ -144,7 +144,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = $this->load->controller('api/shipping_method');
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -201,7 +201,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = $this->load->controller('api/payment_method');
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -239,7 +239,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -282,7 +282,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -323,7 +323,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_method');
 		$this->load->controller('api/payment_method');
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');

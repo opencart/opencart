@@ -20,6 +20,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$data['code'] = $this->request->get['language'] ?? $this->config->get('config_language');
 
+		// Languages
 		$data['languages'] = [];
 
 		$this->load->model('localisation/language');
@@ -79,6 +80,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguageByCode($post_info['code']);

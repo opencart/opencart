@@ -107,7 +107,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		// User Group
+		// User Groups
 		$this->load->model('user/user_group');
 
 		$data['user_groups'] = $this->model_user_user_group->getUserGroups();
@@ -239,7 +239,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// User
+		// Users
 		$data['users'] = [];
 
 		$filter_data = [
@@ -421,6 +421,7 @@ class User extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('user/user.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// User
 		if (isset($this->request->get['user_id'])) {
 			$this->load->model('user/user');
 
@@ -439,7 +440,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$data['username'] = '';
 		}
 
-		// User Group
+		// User Groups
 		$this->load->model('user/user_group');
 
 		$data['user_groups'] = $this->model_user_user_group->getUserGroups();
@@ -532,6 +533,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
+		// User
 		$this->load->model('user/user');
 
 		$user_info = $this->model_user_user->getUserByUsername($post_info['username']);
@@ -677,6 +679,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Authorizes
 		$data['authorizes'] = [];
 
 		$this->load->model('user/user');
@@ -732,6 +735,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// User
 		$this->load->model('user/user');
 
 		$authorize_info = $this->model_user_user->getAuthorize($user_authorize_id);
@@ -788,6 +792,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// User
 		$data['logins'] = [];
 
 		$this->load->model('user/user');
@@ -839,6 +844,7 @@ class User extends \Opencart\System\Engine\Controller {
 				$filter_email = '';
 			}
 
+			// User
 			$filter_data = [
 				'filter_username' => $filter_username,
 				'filter_name'     => $filter_name,

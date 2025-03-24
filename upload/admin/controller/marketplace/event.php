@@ -106,7 +106,7 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Event
+		// Events
 		$data['events'] = [];
 
 		$filter_data = [
@@ -186,6 +186,7 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Event
 			$this->load->model('setting/event');
 
 			$this->model_setting_event->editStatus($event_id, true);
@@ -218,6 +219,7 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Event
 			$this->load->model('setting/event');
 
 			$this->model_setting_event->editStatus($event_id, false);

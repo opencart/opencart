@@ -246,6 +246,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('customer/custom_field.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Custom Field
 		if (isset($this->request->get['custom_field_id'])) {
 			$this->load->model('customer/custom_field');
 
@@ -258,7 +259,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$data['custom_field_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -317,7 +318,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$data['custom_field_values'][] = $custom_field_value;
 		}
 
-		// Customer Group
+		// Customer Groups
 		if (!empty($custom_field_info)) {
 			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($custom_field_info['custom_field_id']);
 		} else {

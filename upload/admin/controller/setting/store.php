@@ -161,7 +161,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 			$store_info = $this->model_setting_store->getStore($this->request->get['store_id']);
 
-			// Setting
 			$this->load->model('setting/setting');
 
 			$setting_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
@@ -187,7 +186,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['themes'] = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
@@ -207,7 +206,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_theme'] = '';
 		}
 
-		// Layout
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -283,7 +282,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_comment'] = '';
 		}
 
-		// Location
+		// Locations
 		$this->load->model('localisation/location');
 
 		$data['locations'] = $this->model_localisation_location->getLocations();
@@ -294,7 +293,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_location'] = [];
 		}
 
-		// Country
+		// Countries
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -311,7 +310,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_zone_id'] = $this->config->get('config_zone_id');
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -322,7 +321,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_language_catalog'] = $this->config->get('config_language_catalog');
 		}
 
-		// Currency
+		// Currencies
 		$this->load->model('localisation/currency');
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
@@ -382,7 +381,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_tax_customer'] = '';
 		}
 
-		// Customer Group
+		// Customer Groups
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();

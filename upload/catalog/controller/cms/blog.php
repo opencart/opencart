@@ -153,7 +153,7 @@ class Blog extends \Opencart\System\Engine\Controller {
 
 		$limit = $this->config->get('config_pagination');
 
-		// Article
+		// Articles
 		$data['articles'] = [];
 
 		$filter_data = [

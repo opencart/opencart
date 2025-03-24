@@ -127,7 +127,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		// Return Status
+		// Return Statuses
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
@@ -498,6 +498,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('sale/returns.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Return
 		if (isset($this->request->get['return_id'])) {
 			$this->load->model('sale/returns');
 
@@ -570,17 +571,17 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['comment'] = '';
 		}
 
-		// Return Reason
+		// Return Reasons
 		$this->load->model('localisation/return_reason');
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
 
-		// Return Action
+		// Return Actions
 		$this->load->model('localisation/return_action');
 
 		$data['return_actions'] = $this->model_localisation_return_action->getReturnActions();
 
-		// Return Status
+		// Return Statuses
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
@@ -645,8 +646,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['order'] = $this->language->get('error_order_id');
 		}
 
+		// Customer
 		if ($post_info['customer_id']) {
-			// Customer
 			$this->load->model('customer/customer');
 
 			$customer_info = $this->model_customer_customer->getCustomer($post_info['customer_id']);

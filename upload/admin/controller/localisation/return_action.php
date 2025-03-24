@@ -107,7 +107,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/return_action.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Return Action
+		// Return Actions
 		$data['return_actions'] = [];
 
 		$filter_data = [
@@ -203,13 +203,14 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/return_action.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Return Action
 		if (isset($this->request->get['return_action_id'])) {
 			$data['return_action_id'] = (int)$this->request->get['return_action_id'];
 		} else {
 			$data['return_action_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

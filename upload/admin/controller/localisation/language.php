@@ -107,7 +107,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Language
+		// Languages
 		$data['languages'] = [];
 
 		$filter_data = [
@@ -208,6 +208,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/language.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Language
 		if (isset($this->request->get['language_id'])) {
 			$this->load->model('localisation/language');
 
@@ -301,6 +302,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error']['locale'] = $this->language->get('error_locale');
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguageByCode($post_info['code']);

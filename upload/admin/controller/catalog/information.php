@@ -209,6 +209,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/information.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Information
 		if (isset($this->request->get['information_id'])) {
 			$this->load->model('catalog/information');
 
@@ -221,7 +222,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['information_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -232,7 +233,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['information_description'] = [];
 		}
 
-		// Store
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -275,7 +276,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['information_seo_url'] = [];
 		}
 
-		// Layout
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();

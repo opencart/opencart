@@ -38,7 +38,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
 
 			if ($store_info) {
-				// Setting
 				$this->load->model('setting/setting');
 
 				$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $store_info['store_id']), ENT_QUOTES, 'UTF-8');
@@ -61,7 +60,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			// Load the language for any mails using a different country code and prefixing it, so it does not pollute the main data pool.
 			$this->load->language('default', 'mail', $language_code);
 			$this->load->language('mail/customer_approve', 'mail', $language_code);
 
@@ -166,7 +165,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			// Load the language for any mails using a different country code and prefixing it, so it does not pollute the main data pool.
 			$this->load->language('default', 'mail', $language_code);
 			$this->load->language('mail/customer_deny', 'mail', $language_code);
 

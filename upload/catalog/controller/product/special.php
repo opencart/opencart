@@ -74,7 +74,7 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 
-		// Product
+		// Products
 		$data['products'] = [];
 
 		$filter_data = [

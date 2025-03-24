@@ -98,7 +98,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				$payment_address = $this->session->data['shipping_address'];
 			}
 
-			// Payment method
+			// Payment methods
 			$this->load->model('checkout/payment_method');
 
 			$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);

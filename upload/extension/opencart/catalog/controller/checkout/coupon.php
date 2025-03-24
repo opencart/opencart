@@ -41,6 +41,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Coupon
 		if (isset($this->request->post['coupon'])) {
 			$coupon = $this->request->post['coupon'];
 		} else {

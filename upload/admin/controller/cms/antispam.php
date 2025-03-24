@@ -125,7 +125,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Anti-Spam
+		// Anti-Spams
 		$data['antispams'] = [];
 
 		$filter_data = [
@@ -234,6 +234,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('cms/antispam.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('cms/antispam', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Anti-spam
 		if (isset($this->request->get['antispam_id'])) {
 			$this->load->model('cms/antispam');
 

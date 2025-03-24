@@ -66,6 +66,7 @@ class Credit extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function unconfirm(array $order_info): void {
+		// Transaction
 		$this->load->model('account/transaction');
 
 		$this->model_account_transaction->deleteTransactionByOrderId($order_info['order_id']);

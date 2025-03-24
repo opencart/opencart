@@ -170,6 +170,7 @@ class Category extends \Opencart\System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			// Categories
 			$data['categories'] = [];
 
 			// Product

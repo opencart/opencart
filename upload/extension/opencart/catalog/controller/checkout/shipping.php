@@ -31,7 +31,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$data['code'] = '';
 			}
 
-			// Country
+			// Countries
 			$this->load->model('localisation/country');
 
 			$data['countries'] = $this->model_localisation_country->getCountries();
@@ -83,6 +83,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$json['error']['country'] = $this->language->get('error_country');
 		}
 
+		// Zones
 		$this->load->model('localisation/zone');
 
 		$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);

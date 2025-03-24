@@ -179,7 +179,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['modules'] = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');

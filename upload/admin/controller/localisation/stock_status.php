@@ -107,7 +107,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Stock Status
+		// Stock Statuses
 		$data['stock_statuses'] = [];
 
 		$filter_data = [
@@ -209,7 +209,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$data['stock_status_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

@@ -102,7 +102,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_payment_address');
 			}
 
-			// Validate if shipping is not required. If not, the customer should not have reached this page.
+			// Validate if shipping is required. If not, the customer should not have reached this page.
 			if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address']['address_id'])) {
 				$json['error'] = $this->language->get('error_shipping_address');
 			}

@@ -255,7 +255,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$error .= 'ERROR: E-Mail Address does not appear to be valid!' . "\n";
 		}
 
-		// Make sure there is a SQL file to load sample data
+		// Making sure there is a SQL file to load sample data
 		$file = DIR_APPLICATION . 'opencart-' . basename($option['language']) . '.sql';
 
 		if (!is_file($file)) {

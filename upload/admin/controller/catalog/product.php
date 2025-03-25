@@ -203,6 +203,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Get List
+	 * 
 	 * @return string
 	 */
 	public function getList(): string {

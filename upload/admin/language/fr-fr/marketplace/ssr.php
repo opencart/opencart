@@ -1,9 +1,9 @@
 <?php
 // En-tête
-$_['heading_title']        = 'Génération de Site Statique';
+$_['heading_title']        = 'Générateur de Site Statique';
 
 // Texte
-$_['text_success']         = 'Succès: Vous avez modifié la génération de site statique!';
+$_['text_success']         = 'Succès: Vous avez modifié le générateur de site statique!';
 
 $_['text_progress']        = 'Progression de l\'installation';
 $_['text_installed']       = 'Extensions installées';
@@ -26,4 +26,4 @@ $_['entry_description']    = 'Description';
 $_['entry_code']           = 'Code';
 
 // Erreur
-$_['error_permission']     = 'Attention: Vous n\'avez pas la permission de modifier la génération de site statique!';
+$_['error_permission']     = 'Attention: Vous n\'avez pas la permission de modifier le générateur de site statique!';

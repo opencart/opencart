@@ -306,42 +306,42 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Zones By Country ID
+	 * Get Total Zone To Geo Zone By Country ID
 	 *
 	 * Get the total number of zone to geo zone by country records in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
-	 * @return int total number of zone records that have country ID
+	 * @return int total number of zone to geo zone records that have country ID
 	 *
 	 * @example
 	 *
 	 * $this->load->model('localisation/geo_zone');
 	 *
-	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZonesByCountryId($country_id);
+	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByCountryId($country_id);
 	 */
-	public function getTotalZonesByCountryId(int $country_id): int {
+	public function getTotalZoneToGeoZoneByCountryId(int $country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		return (int)$query->row['total'];
 	}
 
 	/**
-	 * Get Total Zones By Zone ID
+	 * Get Total Zone To Geo Zone By Zone ID
 	 *
 	 * Get the total number of zone to geo zone by zone records in the database.
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
-	 * @return int total number of zone records that have zone ID
+	 * @return int total number of zone to geo zone records that have zone ID
 	 *
 	 * @example
 	 *
 	 * $this->load->model('localisation/geo_zone');
 	 *
-	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZonesByZoneId($zone_id);
+	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByZoneId($zone_id);
 	 */
-	public function getTotalZonesByZoneId(int $zone_id): int {
+	public function getTotalZoneToGeoZoneByZoneId(int $zone_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		return (int)$query->row['total'];

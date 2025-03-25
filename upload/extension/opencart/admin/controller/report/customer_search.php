@@ -154,6 +154,7 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination')
 		];
 
+		// Extension
 		$this->load->model('extension/opencart/report/customer');
 
 		// Category

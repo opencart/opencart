@@ -83,7 +83,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/modification.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Modification
+		// Modifications
 		$data['modifications'] = [];
 
 		$filter_data = [
@@ -192,6 +192,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// Modifications
 			$this->load->model('setting/modification');
 
 			$results = $this->model_setting_modification->getModifications();
@@ -610,6 +611,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Modification
 			$this->load->model('setting/modification');
 
 			$this->model_setting_modification->editStatus($modification_id, true);
@@ -642,6 +644,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Modification
 			$this->load->model('setting/modification');
 
 			$this->model_setting_modification->editStatus($modification_id, false);

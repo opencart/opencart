@@ -53,6 +53,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
 		];
 
+		// Returns
 		$data['returns'] = [];
 
 		$this->load->model('account/returns');
@@ -109,6 +110,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
+		// Returns
 		$this->load->model('account/returns');
 
 		$return_info = $this->model_account_returns->getReturn($return_id);
@@ -285,7 +287,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['model'] = '';
 		}
 
-		// Return Reason
+		// Return Reasons
 		$this->load->model('localisation/return_reason');
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
@@ -411,6 +413,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Return
 			$this->load->model('account/returns');
 
 			$this->model_account_returns->addReturn($post_info);
@@ -500,6 +503,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			return '';
 		}
 
+		// Histories
 		$data['histories'] = [];
 
 		$this->load->model('account/returns');

@@ -109,7 +109,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Filter Group
+		// Filter Groups
 		$data['filter_groups'] = [];
 
 		$filter_data = [
@@ -210,6 +210,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/filter_group.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/filter_group', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Filter Group
 		if (isset($this->request->get['filter_group_id'])) {
 			$this->load->model('catalog/filter_group');
 
@@ -222,7 +223,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			$data['filter_group_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -348,6 +349,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
+			// Filter Groups
 			$filter_data = [
 				'filter_name' => $this->request->get['filter_name'] . '%',
 				'start'       => 0,

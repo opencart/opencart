@@ -122,7 +122,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['bank_account_number'] = '';
 		}
 
-		// Custom Field
+		// Custom Fields
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
@@ -221,7 +221,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Custom field validation
+			// Custom fields validation
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));

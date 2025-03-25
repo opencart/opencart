@@ -22,7 +22,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token']);
 
-		// Address
+		// Shipping Address
 		$this->load->model('account/address');
 
 		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
@@ -43,12 +43,12 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$data['zone_id'] = '';
 		}
 
-		// Country
+		// Countries
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		// Zone
+		// Zones
 		$this->load->model('localisation/zone');
 
 		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
@@ -141,7 +141,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			// Zone
+			// Total Zones
 			$this->load->model('localisation/zone');
 
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
@@ -150,7 +150,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
-			// Custom field validation
+			// Custom fields validation
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
@@ -174,10 +174,12 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$post_info['default'] = 1;
 			}
 
+			// Address
 			$this->load->model('account/address');
 
 			$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $post_info);
 
+			// Addresses
 			$json['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
 
 			$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getId(), $json['address_id']);

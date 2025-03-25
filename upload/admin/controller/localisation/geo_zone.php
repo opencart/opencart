@@ -107,7 +107,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Geo Zone
+		// Geo Zones
 		$data['geo_zones'] = [];
 
 		$filter_data = [
@@ -204,6 +204,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/geo_zone.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Geo Zone
 		if (isset($this->request->get['geo_zone_id'])) {
 			$this->load->model('localisation/geo_zone');
 
@@ -228,7 +229,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$data['description'] = '';
 		}
 
-		// Country
+		// Countries
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();

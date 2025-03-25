@@ -18,6 +18,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function getTotal(array &$totals, array &$taxes, float &$total): void {
+		// Coupon
 		if (isset($this->session->data['coupon'])) {
 			$this->load->language('extension/opencart/total/coupon', 'coupon');
 
@@ -171,6 +172,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function unconfirm(array $order_info): void {
+		// Histories
 		$this->load->model('marketing/coupon');
 
 		$this->model_marketing_coupon->deleteHistoriesByOrderId($order_info['order_id']);

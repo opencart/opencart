@@ -345,6 +345,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('marketing/marketing.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Marketing
 		if (isset($this->request->get['marketing_id'])) {
 			$this->load->model('marketing/marketing');
 
@@ -419,6 +420,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
+		// Marketing
 		$this->load->model('marketing/marketing');
 
 		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($post_info['code']);

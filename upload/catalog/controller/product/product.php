@@ -14,6 +14,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function index(): ?\Opencart\System\Engine\Action {
 		$this->load->language('product/product');
 
+		// Product
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];
 		} else {
@@ -400,7 +401,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Subscriptions
+			// Subscription Plans
 			$data['subscription_plans'] = [];
 
 			$results = $this->model_catalog_product->getSubscriptions($product_id);
@@ -438,10 +439,13 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['share'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . (int)$this->request->get['product_id']);
 
+			// Attribute Groups
 			$data['attribute_groups'] = $this->model_catalog_product->getAttributes($product_id);
 
+			// Related
 			$data['related'] = $this->load->controller('product/related');
 
+			// Tag
 			$data['tags'] = [];
 
 			if ($product_info['tag']) {

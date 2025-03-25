@@ -78,7 +78,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Startup
+		// Startups
 		$data['startups'] = [];
 
 		$filter_data = [
@@ -132,6 +132,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Startup
 			$this->load->model('setting/startup');
 
 			$this->model_setting_startup->editStatus($startup_id, true);
@@ -164,6 +165,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Startup
 			$this->load->model('setting/startup');
 
 			$this->model_setting_startup->editStatus($startup_id, false);

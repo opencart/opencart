@@ -107,7 +107,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/weight_class.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Weight Class
+		// Weight Classes
 		$data['weight_classes'] = [];
 
 		$filter_data = [
@@ -208,19 +208,21 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/weight_class.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Weight Class
 		if (isset($this->request->get['weight_class_id'])) {
 			$this->load->model('localisation/weight_class');
 
 			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($this->request->get['weight_class_id']);
 		}
 
+		// Weight Class
 		if (!empty($weight_class_info)) {
 			$data['weight_class_id'] = $weight_class_info['weight_class_id'];
 		} else {
 			$data['weight_class_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

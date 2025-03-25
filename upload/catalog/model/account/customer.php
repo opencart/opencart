@@ -147,12 +147,12 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function deleteCustomer(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		// Activity
+		// Activities
 		$this->load->model('account/activity');
 
 		$this->model_account_activity->deleteActivities($customer_id);
 
-		// Address
+		// Addresses
 		$this->load->model('account/address');
 
 		$this->model_account_address->deleteAddresses($customer_id);
@@ -162,22 +162,22 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$this->model_account_affiliate->deleteAffiliate($customer_id);
 
-		// Customer Approval
+		// Customer Approvals
 		$this->load->model('account/approval');
 
 		$this->model_account_approval->deleteApprovals($customer_id);
 
-		// Reward
+		// Rewards
 		$this->load->model('account/reward');
 
 		$this->model_account_reward->deleteRewards($customer_id);
 
-		// Transaction
+		// Transactions
 		$this->load->model('account/transaction');
 
 		$this->model_account_transaction->deleteTransactions($customer_id);
 
-		// Wishlist
+		// Wishlists
 		$this->load->model('account/wishlist');
 
 		$this->model_account_wishlist->deleteWishlists($customer_id);

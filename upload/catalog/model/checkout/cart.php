@@ -100,7 +100,7 @@ class Cart extends \Opencart\System\Engine\Model {
 	public function getTotals(array &$totals, array &$taxes, int &$total): void {
 		$sort_order = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$results = $this->model_setting_extension->getExtensionsByType('total');

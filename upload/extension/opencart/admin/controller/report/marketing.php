@@ -83,7 +83,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
-		// Order Status
+		// Order Statuses
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -144,6 +144,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination')
 		];
 
+		// Extension
 		$this->load->model('extension/opencart/report/marketing');
 
 		$marketing_total = $this->model_extension_opencart_report_marketing->getTotalMarketing($filter_data);

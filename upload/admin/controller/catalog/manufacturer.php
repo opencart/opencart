@@ -109,7 +109,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Manufacturer
+		// Manufacturers
 		$data['manufacturers'] = [];
 
 		$filter_data = [
@@ -216,6 +216,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/manufacturer.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Manufacturer
 		if (isset($this->request->get['manufacturer_id'])) {
 			$this->load->model('catalog/manufacturer');
 
@@ -234,7 +235,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['name'] = '';
 		}
 
-		// Store
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -279,7 +280,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -293,7 +294,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['manufacturer_seo_url'] = [];
 		}
 
-		// Layout
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();

@@ -140,7 +140,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		// Customer
+		// Customers
 		$data['customers'] = [];
 
 		$filter_data = [

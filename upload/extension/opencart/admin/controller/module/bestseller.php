@@ -213,6 +213,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Reports
 		$data['reports'] = [];
 
 		// Bestseller

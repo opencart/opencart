@@ -83,11 +83,12 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
-		// Order Status
+		// Order Statuses
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
+		// Groups
 		$data['groups'] = [];
 
 		$data['groups'][] = [
@@ -174,6 +175,7 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination')
 		];
 
+		// Extension
 		$this->load->model('extension/opencart/report/sale');
 
 		$order_total = $this->model_extension_opencart_report_sale->getTotalShipping($filter_data);

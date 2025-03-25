@@ -30,9 +30,9 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Topics
 		$data['topics'] = [];
 
-		// Topic
 		$this->load->model('cms/topic');
 
 		// Article

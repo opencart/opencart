@@ -36,6 +36,7 @@ class ECB extends \Opencart\System\Engine\Controller {
 
 				$cube = $dom->getElementsByTagName('Cube')->item(0);
 
+				// Compile all the rates into an array
 				$currencies = [];
 
 				$currencies['EUR'] = 1.0000;
@@ -46,6 +47,7 @@ class ECB extends \Opencart\System\Engine\Controller {
 					}
 				}
 
+				// Currencies
 				if (count($currencies) > 1) {
 					$this->load->model('localisation/currency');
 

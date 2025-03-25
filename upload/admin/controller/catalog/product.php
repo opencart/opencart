@@ -322,7 +322,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Product
+		// Products
 		$data['products'] = [];
 
 		$filter_data = [
@@ -667,7 +667,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['master_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -702,7 +702,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['price'] = '';
 		}
 
-		// Tax Class
+		// Tax Classes
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
@@ -731,7 +731,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['subtract'] = 1;
 		}
 
-		// Stock Status
+		// Stock Statuses
 		$this->load->model('localisation/stock_status');
 
 		$data['stock_statuses'] = $this->model_localisation_stock_status->getStockStatuses();
@@ -778,7 +778,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['height'] = '';
 		}
 
-		// Length Class
+		// Length Classes
 		$this->load->model('localisation/length_class');
 
 		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
@@ -789,7 +789,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['length_class_id'] = (int)$this->config->get('config_length_class_id');
 		}
 
-		// Weight Class
+		// Weight Classes
 		if (!empty($product_info)) {
 			$data['weight'] = $product_info['weight'];
 		} else {
@@ -877,7 +877,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Store
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -954,7 +954,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Customer Group
+		// Customer Groups
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -1047,7 +1047,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Subscription Plan
+		// Subscription Plans
 		$this->load->model('catalog/subscription_plan');
 
 		$data['subscription_plans'] = $this->model_catalog_subscription_plan->getSubscriptionPlans();
@@ -1138,7 +1138,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_seo_url'] = [];
 		}
 
-		// Layout
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -1474,7 +1474,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'limit'        => $limit
 		];
 
-		// Product
+		// Products
 		$this->load->model('catalog/product');
 
 		// Option

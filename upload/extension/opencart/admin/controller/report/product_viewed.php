@@ -217,12 +217,12 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 				$this->model_extension_opencart_report_product_viewed->clear();
 			}
 
+			// Products
 			$filter_data = [
 				'start' => ($page - 1) * $limit,
 				'limit' => $limit
 			];
 
-			// Product
 			$this->load->model('catalog/product');
 
 			$product_total = $this->model_catalog_product->getTotalProducts();

@@ -12,8 +12,5 @@ $_['column_code']       = 'Startcode';
 $_['column_sort_order'] = 'Sortierreihenfolge';
 $_['column_action']     = 'Aktionen';
 
-// Entry
-$_['entry_description'] = 'Beschreibung';
-
 // Error
 $_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, den Start zu ändern!';

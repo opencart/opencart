@@ -80,7 +80,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$output['error'] = $this->language->get('error_customer');
 		}
 
-		// 2. Validate shipping if required
+		// 2. Validate shipping, if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
 				$output['error'] = $this->language->get('error_shipping_address');

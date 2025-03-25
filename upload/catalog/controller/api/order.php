@@ -388,12 +388,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$output['error']['product'] = $this->language->get('error_stock');
 		}
 
-		// 4. Validate payment address if required
+		// 4. Validate payment address, if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$output['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
-		// 5. Validate shipping address and method if required
+		// 5. Validate shipping address and method, if required
 		if ($this->cart->hasShipping()) {
 			// Shipping Address
 			if (!isset($this->session->data['shipping_address'])) {

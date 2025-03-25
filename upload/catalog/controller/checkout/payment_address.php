@@ -97,7 +97,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate if payment address is set if required in settings
+		// Validate if payment address is set if required, in settings
 		if (!$this->config->get('config_checkout_payment_address')) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
@@ -218,7 +218,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate if payment address is set if required in settings
+		// Validate if payment address is set if required, in settings
 		if (!$this->config->get('config_checkout_payment_address')) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}

@@ -35,7 +35,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$output['error'] = $this->language->get('error_product');
 		}
 
-		// 3. Validate shipping address and method if required
+		// 3. Validate shipping address and method, if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
 				$output['error'] = $this->language->get('error_shipping_address');
@@ -46,7 +46,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// 4. Validate payment address if required
+		// 4. Validate payment address, if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$output['error'] = $this->language->get('error_payment_address');
 		}
@@ -83,7 +83,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$output['error'] = $this->language->get('error_product');
 		}
 
-		// 3. Validate shipping address and method if required
+		// 3. Validate shipping address and method, if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
 				$output['error'] = $this->language->get('error_shipping_address');
@@ -94,7 +94,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// 4. Validate payment address if required
+		// 4. Validate payment address, if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$output['error'] = $this->language->get('error_payment_address');
 		}

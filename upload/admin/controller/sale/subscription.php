@@ -711,7 +711,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 
-		// Shipping method
+		// Shipping Method
 		if (!empty($subscription_info['shipping_method'])) {
 			$data['shipping_method_name'] = $subscription_info['shipping_method']['name'];
 			$data['shipping_method_code'] = $subscription_info['shipping_method']['code'];

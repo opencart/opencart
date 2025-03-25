@@ -55,7 +55,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		$base = DIR_IMAGE . 'catalog/';
 
-		// Making sure we have the correct directory
+		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
 			$directory = $base . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
@@ -270,7 +270,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Making sure we have the correct directory
+		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
 			$directory = $base . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
@@ -361,7 +361,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Making sure we have the correct directory
+		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
 			$directory = $base . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {

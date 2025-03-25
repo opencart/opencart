@@ -60,7 +60,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$status = false;
 		}
 
-		// Validate payment methods
+		// Validate payment method
 		if (!isset($this->session->data['payment_method'])) {
 			$status = false;
 		}

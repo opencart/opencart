@@ -20,7 +20,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token = '';
 		}
 
-		// Making sure the customer is logged in.
+		// Make sure the customer is logged in.
 		if (!$this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
@@ -150,7 +150,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token = '';
 		}
 
-		// Making sure the customer is logged in.
+		// Make sure the customer is logged in.
 		if ($this->customer->isLogged()) {
 			// If token already exists check its valid
 			$this->load->model('account/customer');

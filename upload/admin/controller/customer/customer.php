@@ -932,6 +932,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Payment Methods
 		$data['payment_methods'] = [];
 
 		// Subscriptions

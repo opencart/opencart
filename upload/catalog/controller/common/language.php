@@ -57,7 +57,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$url .= '&' . urldecode(http_build_query($url_data, '', '&'));
 		}
 
-		// Making sure we are not using SEO urls
+		// Make sure we are not using SEO urls
 		$data['redirect'] = HTTP_SERVER . 'index.php?route=' . $route . $url;
 
 		return $this->load->view('common/language', $data);

@@ -23,7 +23,7 @@ class Session extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_api->cleanSessions();
 
-			// Making sure the IP is allowed
+			// Make sure the IP is allowed
 			$api_info = $this->model_setting_api->getApiByToken($this->request->get['api_token']);
 
 			if ($api_info) {

@@ -955,7 +955,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 
-		// Shipping method
+		// Shipping Method
 		if (!empty($order_info['shipping_method'])) {
 			$data['shipping_method_name'] = $order_info['shipping_method']['name'];
 			$data['shipping_method_code'] = $order_info['shipping_method']['code'];
@@ -1622,7 +1622,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		foreach ($orders as $order_id) {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 
-			// Making sure there is a shipping method
+			// Make sure there is a shipping method
 			if ($order_info && $order_info['shipping_method']) {
 				$store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 

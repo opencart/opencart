@@ -55,12 +55,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 		}
 
-		// Validate has payment address if required
+		// Validate has payment address, if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$status = false;
 		}
 
-		// Validate payment methods
+		// Validate payment method
 		if (!isset($this->session->data['payment_method'])) {
 			$status = false;
 		}

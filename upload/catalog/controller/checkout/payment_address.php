@@ -21,7 +21,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token']);
 
-		// Address
+		// Payment Address
 		$this->load->model('account/address');
 
 		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
@@ -32,14 +32,14 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$data['address_id'] = 0;
 		}
 
-		// Country
+		// Countries
 		$data['country_id'] = (int)$this->config->get('config_country_id');
 
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		// Zone
+		// Zones
 		$this->load->model('localisation/zone');
 
 		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
@@ -97,7 +97,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate if payment address is set if required in settings
+		// Validate if payment address is set if required, in settings
 		if (!$this->config->get('config_checkout_payment_address')) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
@@ -141,7 +141,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
-			// Custom field validation
+			// Custom fields validation
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
@@ -165,10 +165,12 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$post_info['default'] = 1;
 			}
 
+			// Address
 			$this->load->model('account/address');
 
 			$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $post_info);
 
+			// Addresses
 			$json['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
 
 			$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getId(), $json['address_id']);
@@ -216,7 +218,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate if payment address is set if required in settings
+		// Validate if payment address is set if required, in settings
 		if (!$this->config->get('config_checkout_payment_address')) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}

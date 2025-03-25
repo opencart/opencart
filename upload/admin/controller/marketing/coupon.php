@@ -107,7 +107,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Coupon
+		// Coupons
 		$data['coupons'] = [];
 
 		$filter_data = [
@@ -211,6 +211,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('marketing/coupon.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Coupon
 		if (isset($this->request->get['coupon_id'])) {
 			$this->load->model('marketing/coupon');
 
@@ -387,6 +388,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
+		// Coupon
 		$this->load->model('marketing/coupon');
 
 		$coupon_info = $this->model_marketing_coupon->getCouponByCode($post_info['code']);

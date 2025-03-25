@@ -109,7 +109,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Attribute
+		// Attributes
 		$data['attributes'] = [];
 
 		$filter_data = [
@@ -207,6 +207,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/attribute.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Attribute
 		if (isset($this->request->get['attribute_id'])) {
 			$this->load->model('catalog/attribute');
 
@@ -219,7 +220,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$data['attribute_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -230,7 +231,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$data['attribute_description'] = [];
 		}
 
-		// Attribute Group
+		// Attribute Groups
 		$this->load->model('catalog/attribute_group');
 
 		$data['attribute_groups'] = $this->model_catalog_attribute_group->getAttributeGroups();

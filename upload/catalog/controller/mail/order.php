@@ -94,12 +94,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store_url = HTTP_CATALOG;
 		}
 
+		// Setting
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($order_info['store_id']);
 
 		if ($store_info) {
-			// Setting
 			$this->load->model('setting/setting');
 
 			$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $store_info['store_id']), ENT_QUOTES, 'UTF-8');
@@ -438,7 +438,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['store'] = $store_name;
 		$data['store_url'] = $store_url;
 
-		// Setting
 		$this->load->model('setting/setting');
 
 		$from = $this->model_setting_setting->getValue('config_email', $order_info['store_id']);

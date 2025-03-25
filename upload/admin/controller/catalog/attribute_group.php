@@ -108,7 +108,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Attribute Group
+		// Attribute Groups
 		$data['attribute_groups'] = [];
 
 		$filter_data = [
@@ -205,6 +205,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/attribute_group.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Attribute Group
 		if (isset($this->request->get['attribute_group_id'])) {
 			$this->load->model('catalog/attribute_group');
 

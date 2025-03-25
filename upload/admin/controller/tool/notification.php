@@ -68,7 +68,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		// Notification
+		// Notifications
 		$data['notifications'] = [];
 
 		$filter_data = [
@@ -130,6 +130,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function info(): void {
+		// Notification
 		if (isset($this->request->get['notification_id'])) {
 			$notification_id = $this->request->get['notification_id'];
 		} else {

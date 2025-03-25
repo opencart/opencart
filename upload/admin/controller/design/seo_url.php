@@ -97,12 +97,12 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		// Store
+		// Stores
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -223,6 +223,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// SEO
 		$data['seo_urls'] = [];
 
 		$filter_data = [
@@ -237,7 +238,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			'limit'              => $this->config->get('config_pagination_admin')
 		];
 
-		// SEO
 		$this->load->model('design/seo_url');
 
 		// Language
@@ -407,6 +407,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('design/seo_url.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// SEO
 		if (isset($this->request->get['seo_url_id'])) {
 			$this->load->model('design/seo_url');
 
@@ -419,7 +420,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$data['seo_url_id'] = 0;
 		}
 
-		// Store
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -441,7 +442,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -546,6 +547,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SEO
 			if (!$post_info['seo_url_id']) {
 				$json['seo_url_id'] = $this->model_design_seo_url->addSeoUrl($post_info['key'], $post_info['value'], $post_info['keyword'], $post_info['store_id'], $post_info['language_id'], (int)$post_info['sort_order']);
 			} else {
@@ -608,6 +610,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SEO
 			$data['seo_urls'] = [];
 
 			$filter_data = [

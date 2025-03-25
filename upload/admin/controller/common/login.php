@@ -103,6 +103,7 @@ class Login extends \Opencart\System\Engine\Controller {
 				'user_agent' => $this->request->server['HTTP_USER_AGENT']
 			];
 
+			// User
 			$this->load->model('user/user');
 
 			$this->model_user_user->addLogin($this->user->getId(), $login_data);

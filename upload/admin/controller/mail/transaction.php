@@ -44,6 +44,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);

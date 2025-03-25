@@ -107,7 +107,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Topic
+		// Topics
 		$data['topics'] = [];
 
 		$filter_data = [
@@ -207,6 +207,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('cms/topic.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('cms/topic', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Topic
 		if (isset($this->request->get['topic_id'])) {
 			$this->load->model('cms/topic');
 
@@ -219,7 +220,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['topic_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -245,7 +246,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Store
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -279,6 +280,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
+		// SEO
 		if (!empty($topic_info)) {
 			$this->load->model('design/seo_url');
 
@@ -287,7 +289,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['topic_seo_url'] = [];
 		}
 
-		// Layout
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -343,6 +345,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// SEO
 		if ($post_info['topic_seo_url']) {
 			$this->load->model('design/seo_url');
 

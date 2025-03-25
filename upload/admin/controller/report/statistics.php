@@ -56,6 +56,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		// Stats
 		$data['statistics'] = [];
 
 		$this->load->model('report/statistics');
@@ -88,7 +89,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Statistics
+			// Stats
 			$this->load->model('report/statistics');
 
 			// Order
@@ -118,7 +119,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Statistics
+			// Stats
 			$this->load->model('report/statistics');
 
 			// Order
@@ -148,7 +149,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Statistics
+			// Stats
 			$this->load->model('report/statistics');
 
 			// Order
@@ -221,7 +222,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Statistics
+			// Stats
 			$this->load->model('report/statistics');
 
 			// Returns
@@ -251,7 +252,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Statistics
+			// Stats
 			$this->load->model('report/statistics');
 
 			// Product
@@ -281,7 +282,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Statistics
+			// Stats
 			$this->load->model('report/statistics');
 
 			// Review

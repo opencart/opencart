@@ -323,7 +323,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Affiliate
+		// Affiliates
 		$data['affiliates'] = [];
 
 		$filter_data = [
@@ -766,7 +766,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Custom field validation
+		// Custom fields validation
 		if ($customer_info) {
 			$filter_data = [
 				'filter_location'          => 'account',
@@ -1076,6 +1076,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$filter_email = '';
 		}
 
+		// Affiliate
 		$filter_data = [
 			'filter_name'  => $filter_name,
 			'filter_email' => $filter_email,

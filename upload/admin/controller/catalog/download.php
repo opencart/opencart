@@ -109,7 +109,7 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Download
+		// Downloads
 		$data['downloads'] = [];
 
 		$filter_data = [
@@ -215,6 +215,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['upload'] = $this->url->link('catalog/download.upload', 'user_token=' . $this->session->data['user_token']);
 
+		// Download
 		if (isset($this->request->get['download_id'])) {
 			$this->load->model('catalog/download');
 
@@ -227,7 +228,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$data['download_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -410,6 +411,7 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Reports
 		$data['reports'] = [];
 
 		// Download

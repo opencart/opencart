@@ -119,7 +119,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		// Customer Group
+		// Customer Groups
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -262,12 +262,12 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('customer/customer.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Store
+		// Stores
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
 
-		// Customer
+		// Customers
 		$data['customers'] = [];
 
 		$filter_data = [
@@ -505,6 +505,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['orders'] = '';
 		}
 
+		// Customer
 		if (isset($this->request->get['customer_id'])) {
 			$this->load->model('customer/customer');
 
@@ -517,7 +518,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['customer_id'] = 0;
 		}
 
-		// Store
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -539,7 +540,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -550,7 +551,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['language_id'] = 0;
 		}
 
-		// Customer Group
+		// Customer Groups
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -640,7 +641,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['commenter'] = 0;
 		}
 
-		// Country
+		// Countries
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -705,6 +706,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($post_info['email']);
@@ -717,7 +719,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
-		// Custom field validation
+		// Custom fields validation
 		$filter_data = [
 			'filter_location'          => 'account',
 			'filter_customer_group_id' => $post_info['customer_group_id'],
@@ -807,6 +809,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->deleteLoginAttempts($this->request->get['email']);
@@ -864,6 +867,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
@@ -928,9 +932,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Payment Methods
 		$data['payment_methods'] = [];
 
-		// Subscription
+		// Subscriptions
 		$this->load->model('sale/subscription');
 
 		$results = $this->model_sale_subscription->getSubscriptions(['filter_customer_id' => $customer_id]);
@@ -1027,6 +1032,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Histories
 		$data['histories'] = [];
 
 		$this->load->model('customer/customer');
@@ -1074,6 +1080,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
@@ -1123,6 +1130,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Transactions
 		$data['transactions'] = [];
 
 		$this->load->model('customer/customer');
@@ -1179,6 +1187,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
@@ -1230,6 +1239,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Rewards
 		$data['rewards'] = [];
 
 		$this->load->model('customer/customer');
@@ -1283,6 +1293,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
+		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
@@ -1336,7 +1347,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['ips'] = [];
 
-		// Customer
+		// Customers
 		$this->load->model('customer/customer');
 
 		// Store
@@ -1408,6 +1419,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Authorizes
 		$data['authorizes'] = [];
 
 		$this->load->model('customer/customer');
@@ -1462,6 +1474,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Authorize
 		$this->load->model('customer/customer');
 
 		$authorize_info = $this->model_customer_customer->getAuthorize($customer_authorize_id);
@@ -1501,6 +1514,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$filter_email = '';
 			}
 
+			// Customers
 			$filter_data = [
 				'filter_name'  => $filter_name,
 				'filter_email' => $filter_email,
@@ -1547,7 +1561,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_group_id = (int)$this->config->get('config_customer_group_id');
 		}
 
-		// Custom Field
+		// Custom Fields
 		$this->load->model('customer/custom_field');
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_id]);

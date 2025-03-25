@@ -159,7 +159,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Zone
+		// Zones
 		$data['zones'] = [];
 
 		$filter_data = [
@@ -299,6 +299,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/zone.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Zone
 		if (isset($this->request->get['zone_id'])) {
 			$this->load->model('localisation/zone');
 
@@ -311,7 +312,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$data['zone_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -340,7 +341,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$data['code'] = '';
 		}
 
-		// Country
+		// Countries
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();

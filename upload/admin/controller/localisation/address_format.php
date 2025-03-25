@@ -79,7 +79,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/address_format.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Address Format
+		// Address Formats
 		$data['address_formats'] = [];
 
 		$filter_data = [
@@ -146,6 +146,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/address_format.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/address_format', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Address Format
 		if (isset($this->request->get['address_format_id'])) {
 			$this->load->model('localisation/address_format');
 

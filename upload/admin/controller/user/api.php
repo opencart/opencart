@@ -107,7 +107,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// API
+		// Api
 		$data['apis'] = [];
 
 		$filter_data = [
@@ -217,6 +217,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('user/api.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Api
 		if (isset($this->request->get['api_id'])) {
 			$this->load->model('user/api');
 
@@ -381,8 +382,10 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Histories
 		$data['histories'] = [];
 
+		// Api
 		$this->load->model('user/api');
 
 		$results = $this->model_user_api->getHistories($api_id, ($page - 1) * $limit, $limit);

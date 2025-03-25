@@ -14,6 +14,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$time = time();
 
+		// Crons
 		$this->load->model('setting/cron');
 
 		$results = $this->model_setting_cron->getCrons();

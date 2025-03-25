@@ -47,6 +47,7 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
+		// Downloads
 		$data['downloads'] = [];
 
 		$this->load->model('account/download');
@@ -125,6 +126,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
+		// Download
 		$this->load->model('account/download');
 
 		$download_info = $this->model_account_download->getDownload($download_id);

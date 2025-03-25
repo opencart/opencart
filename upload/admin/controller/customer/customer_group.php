@@ -107,7 +107,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('customer/customer_group.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Customer Group
+		// Customer Groups
 		$data['customer_groups'] = [];
 
 		$filter_data = [
@@ -207,6 +207,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('customer/customer_group.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Customer Group
 		if (isset($this->request->get['customer_group_id'])) {
 			$this->load->model('customer/customer_group');
 
@@ -219,7 +220,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$data['customer_group_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

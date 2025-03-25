@@ -17,6 +17,7 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
+			// Upgrade
 			$this->load->model('upgrade/upgrade');
 
 			$languages = $this->model_upgrade_upgrade->getRecords('language');

@@ -109,7 +109,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Option
+		// Options
 		$data['options'] = [];
 
 		$filter_data = [
@@ -206,6 +206,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/option.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Option
 		if (isset($this->request->get['option_id'])) {
 			$this->load->model('catalog/option');
 
@@ -218,7 +219,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			$data['option_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

@@ -447,7 +447,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function generate() {
+	public function generate(): void {
 		$this->load->language('localisation/currency');
 
 		$json = [];

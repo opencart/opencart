@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 /**
- * Class Country
+ * Class Identifier
  *
  * @package Opencart\Admin\Controller\Catalog
  */

@@ -14,6 +14,8 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('localisation/weight_class');
 
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {

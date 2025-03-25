@@ -6573,6 +6573,49 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'ssr',
+		'field' => [
+			[
+				'name'           => 'ssr_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(128)'
+			],
+			[
+				'name' => 'description',
+				'type' => 'text'
+			],
+			[
+				'name' => 'action',
+				'type' => 'text'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
+			],
+			[
+				'name' => 'date_modified',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'ssr_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'stock_status',
 		'field' => [
 			[

@@ -346,6 +346,9 @@ class Language extends \Opencart\System\Engine\Controller {
 		// Store
 		$this->load->model('setting/store');
 
+		// Language
+		$this->load->model('localisation/language');
+
 		// Order
 		$this->load->model('sale/order');
 
@@ -376,13 +379,43 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('localisation/language');
-
 			foreach ($selected as $language_id) {
 				$this->model_localisation_language->deleteLanguage($language_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Generate
+	 *
+	 * @return void
+	 */
+	public function generate() {
+		$this->load->language('localisation/language');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'localisation/language')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$file = DIR_CATALOG . 'view/data/localisation/language.json';
+
+			$this->load->model('localisation/language');
+
+			$output = json_encode($this->model_localisation_language->getLanguages());
+
+			if (file_put_contents($file, $output)) {
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				$json['error'] = $this->language->get('error_file');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

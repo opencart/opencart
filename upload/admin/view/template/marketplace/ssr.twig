@@ -3,9 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" id="button-generate" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button>
-        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-        <button type="submit" form="form-language" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+        <button type="submit" form="form-ssr" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -18,22 +16,22 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="language" class="card-body">{{ list }}</div>
+      <div id="ssr" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#language').on('click', 'thead a, .pagination a', function(e) {
+$('#ssr').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#language').load(this.href);
+    $('#ssr').load(this.href);
 });
 
-$('#button-generate').on('click', function() {
+$('#ssr').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=localisation/language.generate&user_token={{ user_token }}',
+        url: $(element).val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -45,11 +43,13 @@ $('#button-generate').on('click', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#ssr').load($('#form-ssr').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

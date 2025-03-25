@@ -12,8 +12,5 @@ $_['column_code']       = 'Startup Code';
 $_['column_sort_order'] = 'Sort Order';
 $_['column_action']     = 'Action';
 
-// Entry
-$_['entry_description'] = 'Description';
-
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify startup!';

@@ -172,15 +172,15 @@ $_['error_format_mb']				= 'Warning: The uploaded file exceeds the max file size
 $_['error_format_gb']				= 'Warning: The uploaded file exceeds the max file size: %s gigabytes!';
 
 // Zip errors
-$_['error_zip_exists']       = 'File already exists!';
-$_['error_zip_incons']       = 'Zip archive inconsistent!';
-$_['error_zip_inval']        = 'Invalid argument!';
-$_['error_zip_memory']       = 'Memory allocation failure!';
-$_['error_zip_noent']        = 'No such file!';
-$_['error_zip_nozip']        = 'Not a zip archive!';
-$_['error_zip_open']         = 'Can not open file!';
-$_['error_zip_read']         = 'Read error!';
-$_['error_zip_seek']         = 'Seek error!';
+$_['error_zip_exists']       		= 'File already exists!';
+$_['error_zip_incons']       		= 'Zip archive inconsistent!';
+$_['error_zip_inval']        		= 'Invalid argument!';
+$_['error_zip_memory']       		= 'Memory allocation failure!';
+$_['error_zip_noent']        		= 'No such file!';
+$_['error_zip_nozip']        		= 'Not a zip archive!';
+$_['error_zip_open']         		= 'Can not open file!';
+$_['error_zip_read']        		= 'Read error!';
+$_['error_zip_seek']         		= 'Seek error!';
 
 // When doing translations only include the matching language code
 

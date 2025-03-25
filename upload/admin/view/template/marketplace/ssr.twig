@@ -14,9 +14,30 @@
     </div>
   </div>
   <div class="container-fluid">
+    <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_event }}</div>
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="ssr" class="card-body">{{ list }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_progress }}</legend>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
+            <div class="col-sm-10 mt-2">
+              <div class="progress">
+                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+              </div>
+              <div id="progress-text"></div>
+            </div>
+          </div>
+          <div class="text-end">
+            <button type="button" id="button-generate" class="btn btn-primary"><i class="fa-solid fa-sync"></i> {{ button_generate }}</button>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_task }}</legend>
+          <div id="ssr">{{ list }}</div>
+        </fieldset>
+      </div>
     </div>
   </div>
 </div>

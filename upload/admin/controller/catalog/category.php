@@ -584,6 +584,39 @@ class Category extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Status
+	 *
+	 * @return void
+	 */
+	public function status(): void {
+		$this->load->language('catalog/category');
+
+		$json = [];
+
+		if (isset($this->request->get['category_id'])) {
+			$category_id = (int)$this->request->get['category_id'];
+		} else {
+			$category_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/category')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Modification
+			$this->load->model('catalog/category');
+
+			$this->model_setting_modification->editStatus($category_id, true);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
 	 * Autocomplete
 	 *
 	 * @return void

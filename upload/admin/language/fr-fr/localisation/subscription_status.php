@@ -18,5 +18,5 @@ $_['entry_name']         = 'Nom du Statut d\'Abonnement';
 // Erreur
 $_['error_permission']   = 'Attention: Vous n\'êtes pas autorisé à modifier les statuts d\'abonnement!';
 $_['error_name']         = 'Le nom du statut d\'abonnement doit comporter entre 3 et 32 caractères!';
-$_['error_default']      = 'Attention: Ce statut d\'abonnement ne peut pas être supprimé car il est actuellement assigné comme statut d\'abonnement par défaut du magasin!';
+$_['error_default']      = 'Attention: Ce statut d\'abonnement ne peut pas être supprimé car il est actuellement assigné comme statut d\'abonnement par défaut de la boutique!';
 $_['error_subscription'] = 'Attention: Ce statut d\'abonnement ne peut pas être supprimé car il est actuellement assigné à %s abonnements!';

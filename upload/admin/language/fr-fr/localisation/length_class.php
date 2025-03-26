@@ -26,5 +26,5 @@ $_['help_value']       = 'La valeur de votre longueur par défaut dans l\'unité
 $_['error_permission'] = 'Attention: Vous n\'avez pas la permission de modifier les classes de longueur!';
 $_['error_title']      = 'Le titre de la longueur doit contenir entre 3 et 32 caractères!';
 $_['error_unit']       = 'L\'unité de longueur doit contenir entre 1 et 4 caractères!';
-$_['error_default']    = 'Attention: Cette classe de longueur ne peut pas être supprimée car elle est actuellement définie comme classe de longueur par défaut du magasin!';
+$_['error_default']    = 'Attention: Cette classe de longueur ne peut pas être supprimée car elle est actuellement définie comme classe de longueur par défaut de la boutique!';
 $_['error_product']    = 'Attention: Cette classe de longueur ne peut pas être supprimée car elle est actuellement attribuée à %s produits!';

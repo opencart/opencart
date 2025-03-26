@@ -26,5 +26,5 @@ $_['help_value']       = 'La valeur de votre poids par défaut dans l\'unité de
 $_['error_permission'] = 'Attention: Vous n\'êtes pas autorisé à modifier les classes de poids!';
 $_['error_title']      = 'Le titre du poids doit comporter entre 3 et 32 caractères!';
 $_['error_unit']       = 'L\'unité de poids doit comporter entre 1 et 4 caractères!';
-$_['error_default']    = 'Attention: Cette classe de poids ne peut pas être supprimée car elle est actuellement définie comme la classe de poids par défaut du magasin!';
+$_['error_default']    = 'Attention: Cette classe de poids ne peut pas être supprimée car elle est actuellement définie comme la classe de poids par défaut de la boutique!';
 $_['error_product']    = 'Attention: Cette classe de poids ne peut pas être supprimée car elle est actuellement assignée à %s produits!';

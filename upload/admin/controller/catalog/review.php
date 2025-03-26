@@ -498,6 +498,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Review
 			$this->load->model('catalog/review');
 
 			if (!$post_info['review_id']) {
@@ -534,6 +535,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Review
 			$this->load->model('catalog/review');
 
 			foreach ($selected as $review_id) {

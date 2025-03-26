@@ -339,6 +339,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Layout
 			$this->load->model('design/layout');
 
 			if (!$post_info['layout_id']) {
@@ -436,6 +437,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Layout
 			$this->load->model('design/layout');
 
 			foreach ($selected as $layout_id) {

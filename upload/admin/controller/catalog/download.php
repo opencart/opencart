@@ -320,6 +320,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Download
 			$this->load->model('catalog/download');
 
 			if (!$post_info['download_id']) {
@@ -367,6 +368,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Download
 			$this->load->model('catalog/download');
 
 			foreach ($selected as $download_id) {

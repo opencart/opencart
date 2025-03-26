@@ -296,6 +296,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Translation
 			$this->load->model('design/translation');
 
 			if (!$this->request->post['translation_id']) {
@@ -332,6 +333,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Translation
 			$this->load->model('design/translation');
 
 			foreach ($selected as $translation_id) {

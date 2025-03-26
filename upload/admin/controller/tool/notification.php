@@ -175,6 +175,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Notification
 			$this->load->model('tool/notification');
 
 			foreach ($selected as $notification_id) {

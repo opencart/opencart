@@ -353,6 +353,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// User Group
 			$this->load->model('user/user_group');
 
 			if (!$post_info['user_group_id']) {
@@ -399,6 +400,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// User Group
 			$this->load->model('user/user_group');
 
 			foreach ($selected as $user_group_id) {

@@ -5084,30 +5084,6 @@ function oc_db_schema() {
 				'type' => 'varchar(64)'
 			],
 			[
-				'name' => 'sku',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'upc',
-				'type' => 'varchar(12)'
-			],
-			[
-				'name' => 'ean',
-				'type' => 'varchar(14)'
-			],
-			[
-				'name' => 'jan',
-				'type' => 'varchar(13)'
-			],
-			[
-				'name' => 'isbn',
-				'type' => 'varchar(17)'
-			],
-			[
-				'name' => 'mpn',
-				'type' => 'varchar(64)'
-			],
-			[
 				'name' => 'location',
 				'type' => 'varchar(128)'
 			],

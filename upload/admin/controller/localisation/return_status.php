@@ -261,6 +261,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Return Status
 			$this->load->model('localisation/return_status');
 
 			if (!$post_info['return_status_id']) {
@@ -318,6 +319,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Return Status
 			$this->load->model('localisation/return_status');
 
 			foreach ($selected as $return_status_id) {

@@ -620,6 +620,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Vendor
 			$this->load->helper('vendor');
 
 			oc_generate_vendor();

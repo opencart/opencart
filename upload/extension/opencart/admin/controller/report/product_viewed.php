@@ -211,6 +211,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Report
 			$this->load->model('extension/opencart/report/product_viewed');
 
 			if ($page == 1) {

@@ -582,6 +582,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SEO
 			$this->load->model('design/seo_url');
 
 			foreach ($selected as $seo_url_id) {

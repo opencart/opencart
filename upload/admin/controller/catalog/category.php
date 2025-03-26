@@ -570,6 +570,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Category
 			$this->load->model('catalog/category');
 
 			foreach ($selected as $category_id) {

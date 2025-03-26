@@ -496,7 +496,7 @@ class Product extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Option Quantity
 	 *
-	 * Edit product option record in the database.
+	 * Edit product option quantity record in the database.
 	 *
 	 * @param int $product_id              primary key of the product record
 	 * @param int $product_option_id       primary key of the product option record

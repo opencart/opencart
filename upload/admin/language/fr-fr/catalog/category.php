@@ -14,6 +14,7 @@ $_['text_keyword']            = 'N\'utilisez pas d\'espaces, remplacez plutôt l
 // Colonne
 $_['column_image']            = 'Image';
 $_['column_name']             = 'Nom de la Catégorie';
+$_['column_status']           = 'Statut';
 $_['column_sort_order']       = 'Ordre de Tri';
 $_['column_action']           = 'Action';
 

@@ -390,7 +390,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Zone
 			$this->load->model('localisation/zone');
 
 			if (!$post_info['zone_id']) {

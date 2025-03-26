@@ -277,7 +277,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Tax Class
 			$this->load->model('localisation/tax_class');
 
 			if (!$post_info['tax_class_id']) {
@@ -325,7 +324,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Tax Class
 			$this->load->model('localisation/tax_class');
 
 			foreach ($selected as $tax_class_id) {

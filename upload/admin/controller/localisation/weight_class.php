@@ -279,7 +279,6 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Weight Class
 			$this->load->model('localisation/weight_class');
 
 			if (!$post_info['weight_class_id']) {
@@ -331,7 +330,6 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Weight Class
 			$this->load->model('localisation/weight_class');
 
 			foreach ($selected as $weight_class_id) {

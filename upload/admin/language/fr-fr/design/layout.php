@@ -8,7 +8,7 @@ $_['text_list']           = 'Liste des mises en page';
 $_['text_add']            = 'Ajouter une mise en page';
 $_['text_edit']           = 'Modifier une mise en page';
 $_['text_remove']         = 'Supprimer';
-$_['text_route']          = 'Choisissez la boutique et les itinéraires à utiliser avec cette mise en page';
+$_['text_route']          = 'Choisissez le magasin et les itinéraires à utiliser avec cette mise en page';
 $_['text_module']         = 'Choisissez la position des modules';
 $_['text_default']        = 'Par défaut';
 $_['text_content_top']    = 'Contenu haut';
@@ -22,7 +22,7 @@ $_['column_action']       = 'Action';
 
 // Entrée
 $_['entry_name']          = 'Nom de la mise en page';
-$_['entry_store']         = 'Boutique';
+$_['entry_store']         = 'Magasin';
 $_['entry_route']         = 'Itinéraire';
 $_['entry_module']        = 'Module';
 
@@ -30,8 +30,8 @@ $_['entry_module']        = 'Module';
 $_['error_permission']    = 'Attention: Vous n\'avez pas la permission de modifier les mises en page!';
 $_['error_name']          = 'Le nom de la mise en page doit contenir entre 3 et 64 caractères!';
 $_['error_module']        = 'Module requis!';
-$_['error_default']       = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée comme mise en page par défaut de la boutique!';
-$_['error_store']         = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s boutiques!';
+$_['error_default']       = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée comme mise en page par défaut du magasin!';
+$_['error_store']         = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s magasins!';
 $_['error_product']       = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s produits!';
 $_['error_category']      = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s catégories!';
 $_['error_manufacturer']  = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s fabricants!';

@@ -432,7 +432,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Coupon
 			$this->load->model('marketing/coupon');
 
 			foreach ($selected as $coupon_id) {

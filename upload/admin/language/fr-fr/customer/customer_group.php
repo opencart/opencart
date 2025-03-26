@@ -25,6 +25,6 @@ $_['help_approval']     = 'Les clients doivent être approuvés par un administr
 // Erreur
 $_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier les groupes de clients!';
 $_['error_name']        = 'Le nom du groupe de clients doit contenir entre 3 et 32 caractères!';
-$_['error_default']     = 'Attention: Ce groupe de clients ne peut pas être supprimé car il est actuellement défini comme groupe de clients par défaut de la boutique!';
-$_['error_store']       = 'Attention: Ce groupe de clients ne peut pas être supprimé car il est actuellement attribué à %s boutiques!';
+$_['error_default']     = 'Attention: Ce groupe de clients ne peut pas être supprimé car il est actuellement défini comme groupe de clients par défaut du magasin!';
+$_['error_store']       = 'Attention: Ce groupe de clients ne peut pas être supprimé car il est actuellement attribué à %s magasins!';
 $_['error_customer']    = 'Attention: Ce groupe de clients ne peut pas être supprimé car il est actuellement attribué à %s clients!';

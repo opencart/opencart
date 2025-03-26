@@ -257,7 +257,6 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Stock Status
 			$this->load->model('localisation/stock_status');
 
 			if (!$post_info['stock_status_id']) {
@@ -305,7 +304,6 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Stock Status
 			$this->load->model('localisation/stock_status');
 
 			foreach ($selected as $stock_status_id) {

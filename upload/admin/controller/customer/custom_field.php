@@ -402,7 +402,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Custom Field
 			$this->load->model('customer/custom_field');
 
 			if (!$post_info['custom_field_id']) {
@@ -439,7 +438,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Custom Field
 			$this->load->model('customer/custom_field');
 
 			foreach ($selected as $custom_field_id) {

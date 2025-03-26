@@ -403,7 +403,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Country
 			$this->load->model('localisation/country');
 
 			if (!$post_info['country_id']) {

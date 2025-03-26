@@ -365,7 +365,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription Plan
 			$this->load->model('catalog/subscription_plan');
 
 			if (!$post_info['subscription_plan_id']) {
@@ -402,7 +401,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription Plan
 			$this->load->model('catalog/subscription_plan');
 
 			foreach ($selected as $subscription_plan_id) {
@@ -448,7 +446,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription Plan
 			$this->load->model('catalog/subscription_plan');
 
 			foreach ($selected as $subscription_plan_id) {

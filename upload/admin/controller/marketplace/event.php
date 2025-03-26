@@ -198,7 +198,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			foreach ($selected as $event_id) {

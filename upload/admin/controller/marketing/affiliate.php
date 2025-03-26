@@ -829,7 +829,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Affiliate
 			$this->load->model('marketing/affiliate');
 
 			foreach ($selected as $affiliate_id) {

@@ -188,7 +188,7 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
             <div class="col-sm-10">
-              <div class="form-check form-switch form-switch-lg">
+              <div class="form-switch form-switch-lg">
                 <input type="hidden" name="newsletter" value="0"/>
                 <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
               </div>
@@ -198,7 +198,7 @@
         {{ captcha }}
         <div class="text-end">
           {% if text_agree %}
-            <div class="form-check form-switch form-switch-lg form-check-reverse form-check-inline">
+            <div class="form-switch form-switch-lg form-check-reverse form-check-inline">
               <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
             </div>
           {% endif %}

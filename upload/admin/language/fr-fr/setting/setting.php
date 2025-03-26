@@ -192,17 +192,17 @@ $_['entry_error_filename']                = 'Nom du Fichier Journal des Erreurs'
 $_['entry_status']                        = 'Statut';
 
 // Aide
-$_['help_geocode']                        = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre boutique.';
+$_['help_geocode']                        = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre magasin.';
 $_['help_icon']                           = 'L\'icône devrait être sous format PNG d\'une taille de 16px par 16px.';
-$_['help_open']                           = 'Indiquez les horaires d\'ouverture de votre boutique.';
-$_['help_comment']                        = 'Ce champ est destiné à des notes spéciales que vous souhaitez communiquer au client, par exemple: la boutique n\'accepte pas les chèques.';
-$_['help_location']                       = 'Les différents emplacements de boutiques que vous souhaitez afficher sur le formulaire de contact.';
+$_['help_open']                           = 'Indiquez les horaires d\'ouverture de votre magasin.';
+$_['help_comment']                        = 'Ce champ est destiné à des notes spéciales que vous souhaitez communiquer au client, par exemple: le magasin n\'accepte pas les chèques.';
+$_['help_location']                       = 'Les différents emplacements de magasins que vous souhaitez afficher sur le formulaire de contact.';
 $_['help_currency']                       = 'Changez la devise par défaut. Effacez le cache de votre navigateur pour voir le changement et réinitialisez votre cookie existant.';
-$_['help_currency_auto']                  = 'Configurez votre boutique pour mettre à jour automatiquement les devises quotidiennement.';
+$_['help_currency_auto']                  = 'Configurez votre magasin pour mettre à jour automatiquement les devises quotidiennement.';
 $_['help_product_description_length']     = 'Dans la vue liste, limite de caractères pour la description courte (catégories, promotions, etc.)';
 $_['help_pagination']                     = 'Détermine combien d\'articles de catalogue sont affichés par page (produits, catégories, etc.)';
 $_['help_autocomplete_limit']             = 'Détermine combien de lignes sont affichées par la saisie de données automatiques (filtrrs, produits, catégories, etc)';
-$_['help_product_count']                  = 'Affiche le nombre de produits dans les sous-catégories dans le menu d\'en-tête de la vitrine. Attention, cela peut entraîner une baisse de performance significative pour les boutiques avec beaucoup de sous-catégories!';
+$_['help_product_count']                  = 'Affiche le nombre de produits dans les sous-catégories dans le menu d\'en-tête de la vitrine. Attention, cela peut entraîner une baisse de performance significative pour les magasins avec beaucoup de sous-catégories!';
 $_['help_product_category']               = 'Afficher les produits dans chaque catégorie parente.';
 $_['help_product_report']                 = 'Rapporte combien de fois un produit est visualisé. Cela peut consommer beaucoup de stockage sur des sites à fort trafic.';
 $_['help_review']                         = 'Activer/Désactiver l\'entrée de nouveaux avis et l\'affichage des avis existants.';
@@ -216,7 +216,7 @@ $_['help_comment_interval']               = 'Le nombre de minutes avant qu\'un u
 $_['help_cookie']                         = 'Afficher la politique de cookies conformément à la loi européenne.';
 $_['help_gdpr']                           = 'Activer les fonctionnalités GDPR et lier à la politique GDPR.';
 $_['help_gdpr_limit']                     = 'Limite le nombre de jours avant qu\'une demande de suppression de données personnelles ne soit effectuée après son approbation. Requis pour les retours, rétrofacturations et prévention des fraudes.';
-$_['help_tax_default']                    = 'Utiliser l\'adresse de la boutique pour calculer les taxes si le client n\'est pas connecté. Vous pouvez choisir d\'utiliser l\'adresse de la boutique pour l\'adresse d\'expédition ou de paiement du client.';
+$_['help_tax_default']                    = 'Utiliser l\'adresse du magasin pour calculer les taxes si le client n\'est pas connecté. Vous pouvez choisir d\'utiliser l\'adresse du magasin pour l\'adresse d\'expédition ou de paiement du client.';
 $_['help_tax_customer']                   = 'Utilisez l\'adresse par défaut du client lorsqu\'il se connecte pour calculer les taxes. Vous pouvez choisir d\'utiliser l\'adresse par défaut pour l\'adresse d\'expédition ou de paiement du client.';
 $_['help_customer_online']                = 'Suivre les clients en ligne via la section rapports des clients.';
 $_['help_customer_online_expire']         = 'Indiquez la durée pendant laquelle les visiteurs de votre site apparaîtront dans la liste des clients en ligne.';
@@ -260,11 +260,11 @@ $_['help_mail_parameter']                 = 'Lorsque "Mail" est utilisé, des pa
 $_['help_mail_smtp_hostname']             = 'Ajoutez le préfixe "tls://" ou "ssl://" si une connexion sécurisée est requise (par exemple: tls://smtp.gmail.com, ssl://smtp.gmail.com).';
 $_['help_mail_smtp_password']             = 'Pour Gmail, vous pourriez avoir besoin de configurer un mot de passe spécifique à l\'application ici: <a href="https://security.google.com/settings/security/apppasswords" target="_blank">https://security.google.com/settings/security/apppasswords</a>.';
 $_['help_mail_alert']                     = 'Sélectionnez les fonctionnalités pour lesquelles vous souhaitez recevoir un mail d\'alerte lorsqu\'un client les utilise.';
-$_['help_mail_alert_email']               = 'Ajoutez des adresses e-mails supplémentaires pour recevoir les alertes, en plus de l\'email principal de la boutique (séparées par des virgules).';
+$_['help_mail_alert_email']               = 'Ajoutez des adresses e-mails supplémentaires pour recevoir les alertes, en plus de l\'email principal du magasin (séparées par des virgules).';
 $_['help_session_expire']                 = 'Définir la durée de vie de la session PHP en secondes (par exemple: 3600 = 1 heure).';
 $_['help_session_samesite']               = 'Définir le cookie Samesite pour la session PHP.';
 $_['help_user_2fa']                       = 'Authentification à Deux Facteurs pour les utilisateurs administrateurs.';
-$_['help_shared']                         = 'Essayez de partager le cookie de session entre les boutiques pour que le panier puisse être transmis entre différents domaines.';
+$_['help_shared']                         = 'Essayez de partager le cookie de session entre les magasins pour que le panier puisse être transmis entre différents domaines.';
 $_['help_robots']                         = 'Liste des agents utilisateurs de crawlers web pour lesquels les sessions partagées ne seront pas utilisées. Utilisez une ligne distincte pour chaque agent utilisateur.';
 $_['help_seo_url']                        = 'Pour utiliser les URLs SEO, le module apache mod-rewrite doit être installé et vous devez renommer le fichier htaccess.txt en .htaccess.';
 $_['help_file_max_size']                  = 'La taille maximale des fichiers que les clients peuvent télécharger. Indiquez la taille en mégaoctets.';

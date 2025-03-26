@@ -4,13 +4,13 @@ $_['heading_title']  = 'Contactez-nous';
 
 // Texte
 $_['text_location']  = 'Nos emplacements';
-$_['text_store']     = 'Nos boutiques';
+$_['text_store']     = 'Nos magasins';
 $_['text_contact']   = 'Formulaire de contact';
 $_['text_address']   = 'Adresse';
 $_['text_telephone'] = 'Téléphone';
 $_['text_open']      = 'Horaires d\'ouverture';
 $_['text_comment']   = 'Commentaires';
-$_['text_message']   = '<p>Votre demande a été envoyée avec succès au propriétaire de la boutique!</p>';
+$_['text_message']   = '<p>Votre demande a été envoyée avec succès au propriétaire du magasin!</p>';
 
 // Entrée
 $_['entry_name']     = 'Votre nom';

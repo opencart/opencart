@@ -373,7 +373,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Topic
 			$this->load->model('cms/topic');
 
 			if (!$post_info['topic_id']) {
@@ -410,7 +409,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Topic
 			$this->load->model('cms/topic');
 
 			foreach ($selected as $topic_id) {

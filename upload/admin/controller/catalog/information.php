@@ -360,7 +360,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Information
 			$this->load->model('catalog/information');
 
 			if (!$post_info['information_id']) {
@@ -424,7 +423,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Information
 			$this->load->model('catalog/information');
 
 			foreach ($selected as $information_id) {

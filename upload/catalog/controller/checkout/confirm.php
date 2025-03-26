@@ -50,6 +50,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$status = false;
 			}
 		} else {
+			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

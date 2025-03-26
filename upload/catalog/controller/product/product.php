@@ -291,6 +291,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$stock_status_id = 0;
 			}
 
+			// Stock Status
 			$this->load->model('localisation/stock_status');
 
 			$stock_status_info = $this->model_localisation_stock_status->getStockStatus($stock_status_id);

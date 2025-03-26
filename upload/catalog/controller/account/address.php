@@ -391,7 +391,6 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Address
 			$this->load->model('account/address');
 
 			// Add Address
@@ -411,6 +410,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				if (isset($this->session->data['shipping_address']) && ($this->session->data['shipping_address']['address_id'] == (int)$this->request->get['address_id'])) {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getId(), (int)$this->request->get['address_id']);
 
+					unset($this->session->data['order_id']);
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);
 					unset($this->session->data['payment_method']);
@@ -421,6 +421,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				if (isset($this->session->data['payment_address']) && ($this->session->data['payment_address']['address_id'] == (int)$this->request->get['address_id'])) {
 					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getId(), (int)$this->request->get['address_id']);
 
+					unset($this->session->data['order_id']);
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);
 					unset($this->session->data['payment_method']);
@@ -491,6 +492,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			// Delete address from session.
 			if (isset($this->session->data['shipping_address']['address_id']) && ($this->session->data['shipping_address']['address_id'] == $address_id)) {
+				unset($this->session->data['order_id']);
 				unset($this->session->data['shipping_address']);
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
@@ -500,6 +502,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			// Delete address from session.
 			if (isset($this->session->data['payment_address']['address_id']) && ($this->session->data['payment_address']['address_id'] == $address_id)) {
+				unset($this->session->data['order_id']);
 				unset($this->session->data['payment_address']);
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);

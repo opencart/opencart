@@ -33,7 +33,7 @@ $_['help_sort_order']         = 'L\'ordre de tri des mots-clés dans l\'URL.';
 
 // Erreur
 $_['error_permission']        = 'Attention: Vous n\'avez pas la permission de modifier les URL SEO!';
-$_['error_exists']            = 'Attention: La combinaison de la boutique, langue, clé, valeur et mot-clé existe déjà!';
+$_['error_exists']            = 'Attention: La combinaison de magasin, langue, clé, valeur et mot-clé existe déjà!';
 $_['error_key']               = 'La clé doit contenir entre 1 et 64 caractères!';
 $_['error_value']             = 'La valeur doit contenir entre 1 et 255 caractères!';
 $_['error_value_exists']      = 'La valeur est déjà utilisée!';

@@ -677,7 +677,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Modification
 			$this->load->model('setting/modification');
 
 			foreach ($selected as $modification_id) {

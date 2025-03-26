@@ -130,7 +130,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			}
 
 			// Split the array based on current page number and max number of items per page of 10
-			foreach ((array_slice(array_merge($directories, $files), $start, $limit) as $path) {
+			foreach (array_slice(array_merge($directories, $files), $start, $limit) as $path) {
 				if (substr($path, 0, strlen($base)) == $base) {
 					$name = basename($path);
 

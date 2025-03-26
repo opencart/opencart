@@ -16,7 +16,7 @@ use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Node;
 
-abstract class AbstractBinary extends AbstractExpression
+abstract class AbstractBinary extends AbstractExpression implements BinaryInterface
 {
     /**
      * @param AbstractExpression $left

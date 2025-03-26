@@ -14,8 +14,8 @@ namespace Twig\Node;
 use Twig\Attribute\YieldReady;
 use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
-use Twig\Node\Expression\NameExpression;
 use Twig\Node\Expression\Variable\AssignTemplateVariable;
+use Twig\Node\Expression\Variable\ContextVariable;
 
 /**
  * Represents an import node.
@@ -44,7 +44,7 @@ class ImportNode extends Node
     {
         $compiler->subcompile($this->getNode('var'));
 
-        if ($this->getNode('expr') instanceof NameExpression && '_self' === $this->getNode('expr')->getAttribute('name')) {
+        if ($this->getNode('expr') instanceof ContextVariable && '_self' === $this->getNode('expr')->getAttribute('name')) {
             $compiler->raw('$this');
         } else {
             $compiler

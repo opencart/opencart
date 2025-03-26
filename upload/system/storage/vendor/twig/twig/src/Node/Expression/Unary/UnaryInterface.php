@@ -9,10 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Twig\Node\Expression\Variable;
+namespace Twig\Node\Expression\Unary;
 
-use Twig\Node\Expression\NameExpression;
+use Twig\Node\Expression\AbstractExpression;
 
-class ContextVariable extends NameExpression
+/**
+ * @internal
+ */
+interface UnaryInterface
 {
+    public function __construct(AbstractExpression $node, int $lineno);
 }

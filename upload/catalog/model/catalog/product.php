@@ -358,10 +358,10 @@ class Product extends \Opencart\System\Engine\Model {
 				if ($implode) {
 					$sql .= " (" . implode(" OR ", $implode) . ")";
 				}
+			}
 
-				if (!empty($data['filter_search'])) {
-					$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "' OR pc.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
-				}
+			if (!empty($data['filter_search'])) {
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "' OR `pc`.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
 			}
 
 			$sql .= ")";

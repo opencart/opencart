@@ -14,6 +14,7 @@ $_['text_keyword']            = 'Do not use spaces, instead replace spaces with 
 // Column
 $_['column_image']            = 'Image';
 $_['column_name']             = 'Category Name';
+$_['column_status']           = 'Status';
 $_['column_sort_order']       = 'Sort Order';
 $_['column_action']           = 'Action';
 

@@ -282,6 +282,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$this->model_account_customer->deleteLoginAttempts($post_info['email']);
 
 			// Clear old session data
+			unset($this->session->data['order_id']);
 			unset($this->session->data['guest']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

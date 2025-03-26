@@ -90,6 +90,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 

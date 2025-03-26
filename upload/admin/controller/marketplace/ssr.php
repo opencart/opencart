@@ -134,21 +134,21 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('setting/cron');
+			$this->load->model('setting/ssr');
 
-			$cron_info = $this->model_setting_cron->getCron($ssr_id);
+			$ssr_info = $this->model_setting_ssr->getSsrs($ssr_id);
 
-			if ($cron_info) {
+			if ($ssr_info) {
 				// Create a store instance using loader class to call controllers, models, views, libraries
 				$this->load->model('setting/store');
 
 				$store = $this->model_setting_store->createStoreInstance(0, $this->config->get('config_language'));
 
-				$store->load->controller($cron_info['action'], $ssr_id, $cron_info['code'], $cron_info['cycle'], $cron_info['date_added'], $cron_info['date_modified']);
+				$store->load->controller($ssr_info['action'], $ssr_id, $ssr_info['code'], $ssr_info['date_added'], $ssr_info['date_modified']);
 
 				$store->session->destroy();
 
-				$this->model_setting_cron->editCron($cron_info['cron_id']);
+				$this->model_setting_cron->editCron($ssr_info['cron_id']);
 			}
 
 			$json['success'] = $this->language->get('text_success');

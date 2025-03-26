@@ -22,7 +22,6 @@
               <td class="d-none d-lg-table-cell">{{ ssr.date_modified }}</td>
               <td class="text-end text-nowrap">
 
-
                 {% if ssr.description %}
                   <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ssr-{{ ssr.ssr_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% else %}
@@ -30,7 +29,6 @@
                 {% endif %}
 
                 <button type="button" value="{{ ssr.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
-
 
                 {% if not ssr.status %}
                   <button type="button" value="{{ ssr.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>

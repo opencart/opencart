@@ -297,6 +297,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Filter
 			$this->load->model('catalog/filter');
 
 			if (!$post_info['filter_id']) {
@@ -333,6 +334,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Filter
 			$this->load->model('catalog/filter');
 
 			foreach ($selected as $filter_id) {

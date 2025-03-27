@@ -319,6 +319,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Location
 			$this->load->model('localisation/location');
 
 			if (!$post_info['location_id']) {
@@ -355,6 +356,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Location
 			$this->load->model('localisation/location');
 
 			foreach ($selected as $location_id) {

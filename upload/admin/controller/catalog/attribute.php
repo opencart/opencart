@@ -295,6 +295,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Attribute
 			$this->load->model('catalog/attribute');
 
 			if (!$post_info['attribute_id']) {
@@ -342,6 +343,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Attribute
 			$this->load->model('catalog/attribute');
 
 			foreach ($selected as $attribute_id) {

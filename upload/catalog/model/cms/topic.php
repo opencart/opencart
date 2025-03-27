@@ -77,8 +77,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the article layout record in the database.
 	 *
-	 * @param int $topic_id
-	 * @param int $article_id primary key of the article record
+	 * @param int $topic_id primary key of the topic record
 	 *
 	 * @return int total number of layout records that have article ID
 	 *

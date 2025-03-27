@@ -88,7 +88,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		// Themes
 		$this->load->model('design/theme');
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$results = $this->model_design_theme->getThemes(($page - 1) * $this->config->get('config_pagination_admin'), $this->config->get('config_pagination_admin'));

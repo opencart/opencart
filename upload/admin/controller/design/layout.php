@@ -268,7 +268,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Modules layout
+		// Modules Layout
 		if (!empty($layout_info)) {
 			$layout_modules = $this->model_design_layout->getModules($layout_info['layout_id']);
 		} else {

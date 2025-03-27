@@ -230,6 +230,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
+		// Topic Descriptions
 		$data['topic_description'] = [];
 
 		if (!empty($topic_info)) {

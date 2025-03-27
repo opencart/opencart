@@ -231,6 +231,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$data['subscription_plan_description'] = [];
 		}
 
+		// Frequencies
 		$data['frequencies'] = [];
 
 		$data['frequencies'][] = [

@@ -236,6 +236,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
+		// Article Descriptions
 		$data['article_description'] = [];
 
 		if (!empty($article_info)) {

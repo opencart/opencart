@@ -51,7 +51,6 @@ class Module extends \Opencart\System\Engine\Controller {
 		$data['extensions'] = [];
 
 		if ($results) {
-			// Extension
 			$this->load->model('setting/module');
 
 			foreach ($results as $result) {

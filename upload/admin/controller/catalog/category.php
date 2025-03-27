@@ -153,7 +153,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Category
+		// Categories
 		$data['categories'] = [];
 
 		$filter_data = [
@@ -168,7 +168,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		// Image
 		$this->load->model('tool/image');
 
-		// Categories
 		$this->load->model('catalog/category');
 
 		$results = $this->model_catalog_category->getCategories($filter_data);
@@ -318,7 +317,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['parent_id'] = 0;
 		}
 
-		// Filter
+		// Category Filters
 		$this->load->model('catalog/filter');
 
 		if (!empty($category_info)) {

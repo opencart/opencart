@@ -57,7 +57,6 @@ class Analytics extends \Opencart\System\Engine\Controller {
 
 		$stores = $this->model_setting_store->getStores();
 
-		// Extension
 		$data['extensions'] = [];
 
 		$this->load->model('setting/extension');

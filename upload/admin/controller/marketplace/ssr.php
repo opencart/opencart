@@ -206,7 +206,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$ssr_id = 0;
 		}
 
-		if (!$this->user->hasPermission('modify', 'marketplace/cron')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

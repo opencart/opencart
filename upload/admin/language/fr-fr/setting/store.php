@@ -1,13 +1,13 @@
 <?php
 // En-tête
-$_['heading_title']                    = 'Boutiques';
+$_['heading_title']                    = 'Magasins';
 
 // Texte
 $_['text_settings']                    = 'Paramètres';
-$_['text_success']                     = 'Succès: Vous avez modifié les boutiques!';
-$_['text_list']                        = 'Liste des boutiques';
-$_['text_add']                         = 'Ajouter une boutique';
-$_['text_edit']                        = 'Modifier une boutique';
+$_['text_success']                     = 'Succès: Vous avez modifié les magasins!';
+$_['text_list']                        = 'Liste des magasins';
+$_['text_add']                         = 'Ajouter un magasin';
+$_['text_edit']                        = 'Modifier un magasin';
 $_['text_site']                        = 'Détails du Site';
 $_['text_meta']                        = 'Méta-Tags';
 $_['text_items']                       = 'Articles';
@@ -25,19 +25,19 @@ $_['text_language']                    = 'Langage';
 $_['text_currency']                    = 'Devise';
 
 // Colonne
-$_['column_name']                      = 'Nom de la boutique';
-$_['column_url']                       = 'URL de la boutique';
+$_['column_name']                      = 'Nom du magasin';
+$_['column_url']                       = 'URL du magasin';
 $_['column_action']                    = 'Action';
 
 // Entrée
-$_['entry_url']                        = 'URL de la boutique';
+$_['entry_url']                        = 'URL du magasin';
 $_['entry_meta_title']                 = 'Titre Meta';
 $_['entry_meta_description']           = 'Description Meta';
 $_['entry_meta_keyword']               = 'Mots-clés Meta';
 $_['entry_layout']                     = 'Disposition par défaut';
 $_['entry_theme']                      = 'Thème';
-$_['entry_name']                       = 'Nom de la boutique';
-$_['entry_owner']                      = 'Propriétaire de la boutique';
+$_['entry_name']                       = 'Nom du magasin';
+$_['entry_owner']                      = 'Propriétaire du magasin';
 $_['entry_address']                    = 'Adresse';
 $_['entry_geocode']                    = 'Code géographique';
 $_['entry_email']                      = 'E-Mail';
@@ -45,7 +45,7 @@ $_['entry_telephone']                  = 'Téléphone';
 $_['entry_image']                      = 'Image';
 $_['entry_open']                       = 'Horaires d\'ouverture';
 $_['entry_comment']                    = 'Commentaire';
-$_['entry_location']                   = 'Emplacement de la boutique';
+$_['entry_location']                   = 'Emplacement du magasin';
 $_['entry_country']                    = 'Pays';
 $_['entry_zone']                       = 'Région / État';
 $_['entry_language']                   = 'Langue';
@@ -56,7 +56,7 @@ $_['entry_product_count']              = 'Nombre de produits par catégorie';
 $_['entry_cookie']                     = 'Politique de cookies';
 $_['entry_gdpr']                       = 'Politique GDPR';
 $_['entry_tax']                        = 'Afficher les prix avec taxes';
-$_['entry_tax_default']                = 'Utiliser l\'adresse fiscale de la boutique';
+$_['entry_tax_default']                = 'Utiliser l\'adresse fiscale du magasin';
 $_['entry_tax_customer']               = 'Utiliser l\'adresse fiscale du client';
 $_['entry_customer_group']             = 'Groupe de clients';
 $_['entry_customer_group_display']     = 'Groupes de clients';
@@ -67,7 +67,7 @@ $_['entry_checkout_guest']             = 'Paiement en tant qu\'invité';
 $_['entry_checkout']                   = 'Conditions de paiement';
 $_['entry_stock_display']              = 'Afficher le stock';
 $_['entry_stock_checkout']             = 'Commande en rupture de stock';
-$_['entry_logo']                       = 'Logo de la boutique';
+$_['entry_logo']                       = 'Logo du magasin';
 $_['entry_icon']                 	   = 'Icône';
 $_['entry_image_category']             = 'Taille d\'image de catégorie (L x H)';
 $_['entry_image_thumb']                = 'Taille d\'image miniature du produit (L x H)';
@@ -85,18 +85,18 @@ $_['entry_width']                      = 'Largeur';
 $_['entry_height']                     = 'Hauteur';
 
 // Aide
-$_['help_url']                         = 'Incluez l\'URL complète de votre boutique. Assurez-vous d\'ajouter \'/\' à la fin. Exemple: http://www.votredomaine.com/chemin/<br/><br/>N\'utilisez pas de répertoires pour créer une nouvelle boutique. Vous devez toujours pointer un autre domaine ou sous-domaine vers votre hébergement.';
+$_['help_url']                         = 'Incluez l\'URL complète de votre magasin. Assurez-vous d\'ajouter \'/\' à la fin. Exemple: http://www.votredomaine.com/chemin/<br/><br/>N\'utilisez pas de répertoires pour créer un nouveau magasin. Vous devez toujours pointer un autre domaine ou sous-domaine vers votre hébergement.';
 $_['help_icon']                        = 'L\'icône devrait être sous format PNG d\'une taille de 16px par 16px.';
-$_['help_geocode']                     = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre boutique.';
-$_['help_open']                        = 'Remplissez les horaires d\'ouverture de votre boutique.';
-$_['help_comment']                     = 'Ce champ est destiné à des notes spéciales que vous souhaitez communiquer au client, par exemple: la boutique n\'accepte pas les chèques.';
-$_['help_location']                    = 'Les différents emplacements de boutiques que vous souhaitez afficher sur le formulaire de contact.';
+$_['help_geocode']                     = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre magasin.';
+$_['help_open']                        = 'Remplissez les horaires d\'ouverture de votre magasin.';
+$_['help_comment']                     = 'Ce champ est destiné à des notes spéciales que vous souhaitez communiquer au client, par exemple: le magasin n\'accepte pas les chèques.';
+$_['help_location']                    = 'Les différents emplacements de magasins que vous souhaitez afficher sur le formulaire de contact.';
 $_['help_currency']                    = 'Changez la devise par défaut. Effacez le cache de votre navigateur pour voir le changement et réinitialisez votre cookie existant.';
 $_['help_pagination']                  = 'Détermine combien d\'articles de catalogue sont affichés par page (produits, catégories, etc.).';
 $_['help_product_description_length']  = 'Dans la vue liste, limite de caractères pour la description courte (catégories, promotions, etc.).';
 $_['help_cookie']                      = 'Afficher la politique de cookies conformément à la législation européenne.';
 $_['help_gdpr']                        = 'Activer les fonctionnalités GDPR, comme la possibilité pour les clients de demander la suppression de leur compte.';
-$_['help_tax_default']                 = 'Utiliser l\'adresse de la boutique pour calculer les taxes si le client n\'est pas connecté. Vous pouvez choisir d\'utiliser l\'adresse de la boutique pour l\'adresse d\'expédition ou de facturation du client.';
+$_['help_tax_default']                 = 'Utiliser l\'adresse du magasin pour calculer les taxes si le client n\'est pas connecté. Vous pouvez choisir d\'utiliser l\'adresse du magasin pour l\'adresse d\'expédition ou de facturation du client.';
 $_['help_tax_customer']                = 'Utilisez l\'adresse par défaut du client lorsqu\'il se connecte pour calculer les taxes. Vous pouvez choisir d\'utiliser l\'adresse par défaut pour l\'adresse d\'expédition ou de facturation du client.';
 $_['help_customer_group']              = 'Groupe de clients par défaut.';
 $_['help_customer_group_display']      = 'Afficher les groupes de clients que les nouveaux clients peuvent sélectionner, comme les clients grossistes ou professionnels.';
@@ -106,23 +106,23 @@ $_['help_checkout_guest']              = 'Permettre aux clients de payer sans cr
 $_['help_checkout']                    = 'Oblige les utilisateurs à accepter les conditions générales avant de finaliser leur achat.';
 $_['help_stock_display']               = 'Afficher la quantité de stock sur la page produit.';
 $_['help_stock_checkout']              = 'Permettre aux clients de finaliser leurs achats même si les produits commandés ne sont pas en stock.';
-$_['help_product_count']               = 'Affiche le nombre de produits dans les sous-catégories dans le menu d\'en-tête de la vitrine. Attention, cela peut entraîner une baisse de performance significative pour les boutiques avec beaucoup de sous-catégories!';
+$_['help_product_count']               = 'Affiche le nombre de produits dans les sous-catégories dans le menu d\'en-tête de la vitrine. Attention, cela peut entraîner une baisse de performance significative pour les magasins avec beaucoup de sous-catégories!';
 
 // Erreur
 $_['error_warning']                    = 'Attention: Veuillez vérifier soigneusement le formulaire pour détecter les erreurs!';
-$_['error_permission']                 = 'Attention: Vous n\'avez pas la permission de modifier les boutiques!';
-$_['error_url']                        = 'L\'URL de la boutique est requise!';
+$_['error_permission']                 = 'Attention: Vous n\'avez pas la permission de modifier les magasins!';
+$_['error_url']                        = 'L\'URL du magasin est requise!';
 $_['error_meta_title']                 = 'Le titre doit comporter entre 3 et 32 caractères!';
-$_['error_name']                       = 'Le nom de la boutique doit comporter entre 3 et 32 caractères!';
-$_['error_owner']                      = 'Le propriétaire de la boutique doit comporter entre 3 et 64 caractères!';
-$_['error_address']                    = 'L\'adresse de la boutique doit comporter entre 10 et 256 caractères!';
+$_['error_name']                       = 'Le nom du magasin doit comporter entre 3 et 32 caractères!';
+$_['error_owner']                      = 'Le propriétaire du magasin doit comporter entre 3 et 64 caractères!';
+$_['error_address']                    = 'L\'adresse du magasin doit comporter entre 10 et 256 caractères!';
 $_['error_email']                      = 'L\'adresse e-mail semble invalide!';
 $_['error_product_description_length'] = 'La longueur de la description du produit est requise!';
 $_['error_pagination']                 = 'La pagination est requise!';
 $_['error_customer_group_display']     = 'Vous devez inclure le groupe de clients par défaut si vous utilisez cette fonctionnalité!';
-$_['error_default']                    = 'Attention: Vous ne pouvez pas supprimer votre boutique par défaut!';
-$_['error_order']                      = 'Attention: Cette boutique ne peut pas être supprimée car elle est actuellement assignée à %s commandes!';
-$_['error_subscription']               = 'Attention: Cette boutique ne peut pas être supprimée car elle est actuellement assignée à %s abonnements!';
+$_['error_default']                    = 'Attention: Vous ne pouvez pas supprimer votre magasin par défaut!';
+$_['error_order']                      = 'Attention: ce magasin ne peut pas être supprimée car elle est actuellement assignée à %s commandes!';
+$_['error_subscription']               = 'Attention: ce magasin ne peut pas être supprimée car elle est actuellement assignée à %s abonnements!';
 $_['error_image_thumb']                = 'Les dimensions de l\'image miniature du produit sont requises!';
 $_['error_image_popup']                = 'Les dimensions de l\'image popup du produit sont requises!';
 $_['error_image_product']              = 'Les dimensions de la liste des produits sont requises!';

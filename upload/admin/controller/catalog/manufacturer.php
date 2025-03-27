@@ -368,6 +368,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Manufacturer
 			$this->load->model('catalog/manufacturer');
 
 			if (!$post_info['manufacturer_id']) {
@@ -415,6 +416,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Manufacturer
 			$this->load->model('catalog/manufacturer');
 
 			foreach ($selected as $manufacturer_id) {

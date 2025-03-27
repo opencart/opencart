@@ -251,7 +251,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Cron
 			$this->load->model('setting/cron');
 
 			foreach ($selected as $cron_id) {

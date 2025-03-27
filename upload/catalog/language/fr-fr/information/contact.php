@@ -4,7 +4,7 @@ $_['heading_title']  = 'Contactez-nous';
 
 // Texte
 $_['text_location']  = 'Nos emplacements';
-$_['text_store']     = 'Nos Boutiques';
+$_['text_store']     = 'Nos magasins';
 $_['text_contact']   = 'Formulaire de contact';
 $_['text_address']   = 'Adresse';
 $_['text_telephone'] = 'Téléphone';

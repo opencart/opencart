@@ -134,9 +134,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Articles
 		$data['comments'] = [];
 
+		// Article
 		$filter_data = [
 			'filter_keyword'   => $filter_keyword,
 			'filter_article'   => $filter_article,

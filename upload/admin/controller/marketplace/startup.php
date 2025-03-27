@@ -198,7 +198,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Startup
 			$this->load->model('setting/startup');
 
 			foreach ($selected as $startup_id) {

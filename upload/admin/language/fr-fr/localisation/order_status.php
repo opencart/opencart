@@ -18,6 +18,6 @@ $_['entry_name']       = 'Nom du Statut de Commande';
 // Erreur
 $_['error_permission'] = 'Attention: Vous n\'êtes pas autorisé à modifier les statuts des commandes!';
 $_['error_name']       = 'Le nom du statut de commande doit contenir entre 3 et 32 caractères!';
-$_['error_default']    = 'Attention: Ce statut de commande ne peut pas être supprimé car il est actuellement défini comme le statut de commande par défaut du magasin!';
+$_['error_default']    = 'Attention: Ce statut de commande ne peut pas être supprimé car il est actuellement défini comme le statut de commande par défaut de la boutique!';
 $_['error_download']   = 'Attention: Ce statut de commande ne peut pas être supprimé car il est actuellement défini comme le statut de téléchargement par défaut!';
 $_['error_order']      = 'Attention: Ce statut de commande ne peut pas être supprimé car il est actuellement assigné à %s commandes!';

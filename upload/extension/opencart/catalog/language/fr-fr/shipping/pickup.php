@@ -3,4 +3,4 @@
 $_['heading_title']    = 'Récupération en Magasin';
 
 // Texte
-$_['text_description'] = 'Récupération à partir du magasin';
+$_['text_description'] = 'Récupération à partir de la boutique';

@@ -995,7 +995,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			] + $product_option;
 		}
 
-		// Option Values
 		$data['option_values'] = [];
 
 		foreach ($data['product_options'] as $product_option) {
@@ -1061,7 +1060,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_subscriptions'] = [];
 		}
 
-		// Discounts
+		// Discount
 		if ($product_id) {
 			$product_discounts = $this->model_catalog_product->getDiscounts($product_id);
 		} else {
@@ -1152,7 +1151,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_layout'] = [];
 		}
 
-		// Report
 		$data['report'] = $this->getReport();
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -1356,7 +1354,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Product
 			$this->load->model('catalog/product');
 
 			foreach ($selected as $product_id) {
@@ -1406,7 +1403,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Product
 		$this->load->model('catalog/product');
 
-		// Setting
+		// Store
 		$this->load->model('setting/store');
 
 		$results = $this->model_catalog_product->getReports($product_id, ($page - 1) * $limit, $limit);

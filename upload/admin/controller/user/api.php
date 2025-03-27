@@ -302,7 +302,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Api
 			$this->load->model('user/api');
 
 			if (!$post_info['api_id']) {
@@ -339,7 +338,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Api
 			$this->load->model('user/api');
 
 			foreach ($selected as $api_id) {

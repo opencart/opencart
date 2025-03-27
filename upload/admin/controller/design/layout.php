@@ -268,7 +268,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Modules Layout
+		// Modules layout
 		if (!empty($layout_info)) {
 			$layout_modules = $this->model_design_layout->getModules($layout_info['layout_id']);
 		} else {
@@ -339,7 +339,6 @@ class Layout extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Layout
 			$this->load->model('design/layout');
 
 			if (!$post_info['layout_id']) {
@@ -437,7 +436,6 @@ class Layout extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Layout
 			$this->load->model('design/layout');
 
 			foreach ($selected as $layout_id) {

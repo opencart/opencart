@@ -247,7 +247,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// GDPR
 			$this->load->model('customer/gdpr');
 
 			foreach ($gdprs as $gdpr_id) {
@@ -296,7 +295,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// GDPR
 			$this->load->model('customer/gdpr');
 
 			foreach ($gdprs as $gdpr_id) {
@@ -335,7 +333,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// GDPR
 			$this->load->model('customer/gdpr');
 
 			foreach ($gdprs as $gdpr_id) {

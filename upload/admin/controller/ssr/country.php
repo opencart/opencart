@@ -11,7 +11,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function index(): void {
 		$this->load->language('ssr/country');
 
 		$json = [];
@@ -21,10 +21,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Country
 			$this->load->model('localisation/country');
-
-			// Zone
 			$this->load->model('localisation/zone');
 
 			$results = $this->model_localisation_country->getCountries();
@@ -38,9 +35,6 @@ class Country extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
-
-
 
 			$output = json_encode($results);
 

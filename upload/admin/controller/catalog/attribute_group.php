@@ -277,7 +277,6 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Attribute Group
 			$this->load->model('catalog/attribute_group');
 
 			if (!$post_info['attribute_group_id']) {
@@ -325,7 +324,6 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Attribute Group
 			$this->load->model('catalog/attribute_group');
 
 			foreach ($selected as $attribute_group_id) {

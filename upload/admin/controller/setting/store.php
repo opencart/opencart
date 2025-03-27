@@ -781,7 +781,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		// Order
 		$this->load->model('sale/order');
 
-		// Total Subscriptions
+		// Subscription
 		$this->load->model('sale/subscription');
 
 		foreach ($selected as $store_id) {

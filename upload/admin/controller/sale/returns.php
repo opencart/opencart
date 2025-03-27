@@ -717,7 +717,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Returns
 			$this->load->model('sale/returns');
 
 			if (!$post_info['return_id']) {
@@ -756,7 +755,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Returns
 			$this->load->model('sale/returns');
 
 			foreach ($selected as $return_id) {

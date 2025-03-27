@@ -842,7 +842,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer
 			$this->load->model('customer/customer');
 
 			foreach ($selected as $customer_id) {
@@ -1198,7 +1197,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->addTransaction($customer_id, (string)$post_info['description'], (float)$post_info['amount']);
@@ -1305,7 +1303,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->addReward($customer_id, (string)$post_info['description'], (int)$post_info['points']);

@@ -215,7 +215,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('extension/opencart/fraud/ip');
 
 			$this->model_extension_opencart_fraud_ip->removeIp($this->request->post['ip']);

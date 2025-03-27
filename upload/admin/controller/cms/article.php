@@ -236,7 +236,6 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 
-		// Article Descriptions
 		$data['article_description'] = [];
 
 		if (!empty($article_info)) {
@@ -393,7 +392,6 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Article
 			$this->load->model('cms/article');
 
 			if (!$post_info['article_id']) {
@@ -430,7 +428,6 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Article
 			$this->load->model('cms/article');
 
 			foreach ($selected as $article_id) {

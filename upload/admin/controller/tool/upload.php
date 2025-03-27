@@ -253,7 +253,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Upload
 			$this->load->model('tool/upload');
 
 			foreach ($selected as $upload_id) {

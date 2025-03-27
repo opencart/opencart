@@ -320,7 +320,6 @@ class Download extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Download
 			$this->load->model('catalog/download');
 
 			if (!$post_info['download_id']) {
@@ -368,7 +367,6 @@ class Download extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Download
 			$this->load->model('catalog/download');
 
 			foreach ($selected as $download_id) {
@@ -422,7 +420,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		// Customer
 		$this->load->model('customer/customer');
 
-		// Setting
+		// Store
 		$this->load->model('setting/store');
 
 		$results = $this->model_catalog_download->getReports($download_id, ($page - 1) * $limit, $limit);

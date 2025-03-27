@@ -270,16 +270,16 @@ $_['help_seo_url']                        = 'Pour utiliser les URLs SEO, le modu
 $_['help_file_max_size']                  = 'La taille maximale des fichiers que les clients peuvent télécharger. Indiquez la taille en mégaoctets.';
 $_['help_file_ext_allowed']               = 'Ajoutez les extensions de fichiers autorisées pour le téléchargement. Utilisez une ligne distincte pour chaque extension.';
 $_['help_file_mime_allowed']              = 'Ajoutez les types MIME autorisés pour le téléchargement. Utilisez une ligne distincte pour chaque type MIME.';
-$_['help_maintenance']                    = 'Empêche les clients de naviguer sur votre magasin. Ils verront à la place un message de maintenance. Si vous êtes connecté en tant qu\'administrateur, vous verrez le magasin normalement.';
+$_['help_maintenance']                    = 'Empêche les clients de naviguer sur votre boutique. Ils verront à la place un message de maintenance. Si vous êtes connecté en tant qu\'administrateur, vous verrez la boutique normalement.';
 $_['help_compression']                    = 'GZIP pour un transfert plus efficace vers les clients demandeurs. Le niveau de compression doit être compris entre 0 et 9.';
 
 // Erreur
 $_['error_warning']                       = 'Attention: Veuillez vérifier soigneusement le formulaire pour détecter les erreurs!';
 $_['error_permission']                    = 'Attention: Vous n\'avez pas la permission de modifier les paramètres!';
 $_['error_meta_title']                    = 'Le titre doit comporter entre 1 et 64 caractères!';
-$_['error_name']                          = 'Le nom du magasin doit comporter entre 3 et 32 caractères!';
-$_['error_owner']                         = 'Le propriétaire du magasin doit comporter entre 3 et 64 caractères!';
-$_['error_address']                       = 'L\'adresse du magasin doit comporter entre 3 et 256 caractères!';
+$_['error_name']                          = 'Le nom de la boutique doit comporter entre 3 et 32 caractères!';
+$_['error_owner']                         = 'Le propriétaire de la boutique doit comporter entre 3 et 64 caractères!';
+$_['error_address']                       = 'L\'adresse de la boutique doit comporter entre 3 et 256 caractères!';
 $_['error_email']                         = 'L\'adresse e-mail semble invalide!';
 $_['error_product_description_length']    = 'La longueur de la description du produit est requise!';
 $_['error_pagination']                    = 'La pagination est requise!';

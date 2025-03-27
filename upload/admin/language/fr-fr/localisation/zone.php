@@ -24,7 +24,7 @@ $_['entry_status']           = 'Statut';
 // Erreur
 $_['error_permission']       = 'Attention: Vous n\'êtes pas autorisé à modifier les zones!';
 $_['error_name']             = 'Le nom de la zone doit comporter entre 1 et 128 caractères!';
-$_['error_default']          = 'Attention: Cette zone ne peut pas être supprimée car elle est actuellement définie comme zone par défaut de la boutique!';
-$_['error_store']            = 'Attention: Cette zone ne peut pas être supprimée car elle est actuellement assignée à %s boutiques!';
+$_['error_default']          = 'Attention: Cette zone ne peut pas être supprimée car elle est actuellement définie comme zone par défaut du magasin!';
+$_['error_store']            = 'Attention: Cette zone ne peut pas être supprimée car elle est actuellement assignée à %s magasins!';
 $_['error_address']          = 'Attention: Cette zone ne peut pas être supprimée car elle est actuellement assignée à %s entrées du carnet d\'adresses!';
 $_['error_zone_to_geo_zone'] = 'Attention: Cette zone ne peut pas être supprimée car elle est actuellement assignée à %s zones géographiques!';

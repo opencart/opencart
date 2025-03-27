@@ -31,6 +31,6 @@ $_['help_comment']     = 'Ce champ est pour toutes les notes spéciales que vous
 
 // Erreur
 $_['error_permission'] = 'Attention: Vous n\'avez pas la permission de modifier les emplacements des magasins!';
-$_['error_name']       = 'Le nom de la boutique doit contenir entre 3 et 32 caractères!';
+$_['error_name']       = 'Le nom du magasin doit contenir entre 3 et 32 caractères!';
 $_['error_address']    = 'L\'adresse doit contenir entre 3 et 128 caractères!';
 $_['error_telephone']  = 'Le numéro de téléphone doit contenir entre 3 et 32 caractères!';

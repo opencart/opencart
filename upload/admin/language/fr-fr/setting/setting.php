@@ -202,7 +202,7 @@ $_['help_currency_auto']                  = 'Configurez votre magasin pour mettr
 $_['help_product_description_length']     = 'Dans la vue liste, limite de caractères pour la description courte (catégories, promotions, etc.)';
 $_['help_pagination']                     = 'Détermine combien d\'articles de catalogue sont affichés par page (produits, catégories, etc.)';
 $_['help_autocomplete_limit']             = 'Détermine combien de lignes sont affichées par la saisie de données automatiques (filtrrs, produits, catégories, etc)';
-$_['help_product_count']                  = 'Affiche le nombre de produits dans les sous-catégories dans le menu d\'en-tête de la vitrine. Attention, cela peut entraîner une baisse de performance significative pour les boutiques avec beaucoup de sous-catégories!';
+$_['help_product_count']                  = 'Affiche le nombre de produits dans les sous-catégories dans le menu d\'en-tête de la vitrine. Attention, cela peut entraîner une baisse de performance significative pour les magasins avec beaucoup de sous-catégories!';
 $_['help_product_category']               = 'Afficher les produits dans chaque catégorie parente.';
 $_['help_product_report']                 = 'Rapporte combien de fois un produit est visualisé. Cela peut consommer beaucoup de stockage sur des sites à fort trafic.';
 $_['help_review']                         = 'Activer/Désactiver l\'entrée de nouveaux avis et l\'affichage des avis existants.';
@@ -264,22 +264,22 @@ $_['help_mail_alert_email']               = 'Ajoutez des adresses e-mails suppl�
 $_['help_session_expire']                 = 'Définir la durée de vie de la session PHP en secondes (par exemple: 3600 = 1 heure).';
 $_['help_session_samesite']               = 'Définir le cookie Samesite pour la session PHP.';
 $_['help_user_2fa']                       = 'Authentification à Deux Facteurs pour les utilisateurs administrateurs.';
-$_['help_shared']                         = 'Essayez de partager le cookie de session entre les boutiques pour que le panier puisse être transmis entre différents domaines.';
+$_['help_shared']                         = 'Essayez de partager le cookie de session entre les magasins pour que le panier puisse être transmis entre différents domaines.';
 $_['help_robots']                         = 'Liste des agents utilisateurs de crawlers web pour lesquels les sessions partagées ne seront pas utilisées. Utilisez une ligne distincte pour chaque agent utilisateur.';
 $_['help_seo_url']                        = 'Pour utiliser les URLs SEO, le module apache mod-rewrite doit être installé et vous devez renommer le fichier htaccess.txt en .htaccess.';
 $_['help_file_max_size']                  = 'La taille maximale des fichiers que les clients peuvent télécharger. Indiquez la taille en mégaoctets.';
 $_['help_file_ext_allowed']               = 'Ajoutez les extensions de fichiers autorisées pour le téléchargement. Utilisez une ligne distincte pour chaque extension.';
 $_['help_file_mime_allowed']              = 'Ajoutez les types MIME autorisés pour le téléchargement. Utilisez une ligne distincte pour chaque type MIME.';
-$_['help_maintenance']                    = 'Empêche les clients de naviguer sur votre boutique. Ils verront à la place un message de maintenance. Si vous êtes connecté en tant qu\'administrateur, vous verrez la boutique normalement.';
+$_['help_maintenance']                    = 'Empêche les clients de naviguer sur votre magasin. Ils verront à la place un message de maintenance. Si vous êtes connecté en tant qu\'administrateur, vous verrez le magasin normalement.';
 $_['help_compression']                    = 'GZIP pour un transfert plus efficace vers les clients demandeurs. Le niveau de compression doit être compris entre 0 et 9.';
 
 // Erreur
 $_['error_warning']                       = 'Attention: Veuillez vérifier soigneusement le formulaire pour détecter les erreurs!';
 $_['error_permission']                    = 'Attention: Vous n\'avez pas la permission de modifier les paramètres!';
 $_['error_meta_title']                    = 'Le titre doit comporter entre 1 et 64 caractères!';
-$_['error_name']                          = 'Le nom de la boutique doit comporter entre 3 et 32 caractères!';
-$_['error_owner']                         = 'Le propriétaire de la boutique doit comporter entre 3 et 64 caractères!';
-$_['error_address']                       = 'L\'adresse de la boutique doit comporter entre 3 et 256 caractères!';
+$_['error_name']                          = 'Le nom du magasin doit comporter entre 3 et 32 caractères!';
+$_['error_owner']                         = 'Le propriétaire du magasin doit comporter entre 3 et 64 caractères!';
+$_['error_address']                       = 'L\'adresse du magasin doit comporter entre 3 et 256 caractères!';
 $_['error_email']                         = 'L\'adresse e-mail semble invalide!';
 $_['error_product_description_length']    = 'La longueur de la description du produit est requise!';
 $_['error_pagination']                    = 'La pagination est requise!';

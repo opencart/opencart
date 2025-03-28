@@ -44,6 +44,9 @@ class FunctionExpression extends CallExpression
         $this->deprecateAttribute('dynamic_name', new NameDeprecation('twig/twig', '3.12'));
     }
 
+    /**
+     * @return void
+     */
     public function compile(Compiler $compiler)
     {
         $name = $this->getAttribute('name');

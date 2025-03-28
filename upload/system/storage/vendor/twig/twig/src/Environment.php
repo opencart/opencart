@@ -44,10 +44,10 @@ use Twig\TokenParser\TokenParserInterface;
  */
 class Environment
 {
-    public const VERSION = '3.18.0';
-    public const VERSION_ID = 31800;
+    public const VERSION = '3.20.0';
+    public const VERSION_ID = 32000;
     public const MAJOR_VERSION = 3;
-    public const MINOR_VERSION = 18;
+    public const MINOR_VERSION = 20;
     public const RELEASE_VERSION = 0;
     public const EXTRA_VERSION = '';
 
@@ -155,6 +155,8 @@ class Environment
 
     /**
      * Enables debugging mode.
+     *
+     * @return void
      */
     public function enableDebug()
     {
@@ -164,6 +166,8 @@ class Environment
 
     /**
      * Disables debugging mode.
+     *
+     * @return void
      */
     public function disableDebug()
     {
@@ -183,6 +187,8 @@ class Environment
 
     /**
      * Enables the auto_reload option.
+     *
+     * @return void
      */
     public function enableAutoReload()
     {
@@ -191,6 +197,8 @@ class Environment
 
     /**
      * Disables the auto_reload option.
+     *
+     * @return void
      */
     public function disableAutoReload()
     {
@@ -209,6 +217,8 @@ class Environment
 
     /**
      * Enables the strict_variables option.
+     *
+     * @return void
      */
     public function enableStrictVariables()
     {
@@ -218,6 +228,8 @@ class Environment
 
     /**
      * Disables the strict_variables option.
+     *
+     * @return void
      */
     public function disableStrictVariables()
     {
@@ -267,6 +279,8 @@ class Environment
      * @param CacheInterface|string|false $cache A Twig\Cache\CacheInterface implementation,
      *                                           an absolute path to the compiled templates,
      *                                           or false to disable cache
+     *
+     * @return void
      */
     public function setCache($cache)
     {
@@ -503,6 +517,9 @@ class Environment
         throw new LoaderError(\sprintf('Unable to find one of the following templates: "%s".', implode('", "', $names)));
     }
 
+    /**
+     * @return void
+     */
     public function setLexer(Lexer $lexer)
     {
         $this->lexer = $lexer;
@@ -520,6 +537,9 @@ class Environment
         return $this->lexer->tokenize($source);
     }
 
+    /**
+     * @return void
+     */
     public function setParser(Parser $parser)
     {
         $this->parser = $parser;
@@ -539,6 +559,9 @@ class Environment
         return $this->parser->parse($stream);
     }
 
+    /**
+     * @return void
+     */
     public function setCompiler(Compiler $compiler)
     {
         $this->compiler = $compiler;
@@ -573,6 +596,9 @@ class Environment
         }
     }
 
+    /**
+     * @return void
+     */
     public function setLoader(LoaderInterface $loader)
     {
         $this->loader = $loader;
@@ -583,6 +609,9 @@ class Environment
         return $this->loader;
     }
 
+    /**
+     * @return void
+     */
     public function setCharset(string $charset)
     {
         if ('UTF8' === $charset = strtoupper($charset ?: '')) {
@@ -603,6 +632,9 @@ class Environment
         return $this->extensionSet->hasExtension($class);
     }
 
+    /**
+     * @return void
+     */
     public function addRuntimeLoader(RuntimeLoaderInterface $loader)
     {
         $this->runtimeLoaders[] = $loader;
@@ -650,6 +682,9 @@ class Environment
         throw new RuntimeError(\sprintf('Unable to load the "%s" runtime.', $class));
     }
 
+    /**
+     * @return void
+     */
     public function addExtension(ExtensionInterface $extension)
     {
         $this->extensionSet->addExtension($extension);
@@ -658,6 +693,8 @@ class Environment
 
     /**
      * @param ExtensionInterface[] $extensions An array of extensions
+     *
+     * @return void
      */
     public function setExtensions(array $extensions)
     {
@@ -673,6 +710,9 @@ class Environment
         return $this->extensionSet->getExtensions();
     }
 
+    /**
+     * @return void
+     */
     public function addTokenParser(TokenParserInterface $parser)
     {
         $this->extensionSet->addTokenParser($parser);
@@ -696,11 +736,17 @@ class Environment
         return $this->extensionSet->getTokenParser($name);
     }
 
+    /**
+     * @param callable(string): (TokenParserInterface|false) $callable
+     */
     public function registerUndefinedTokenParserCallback(callable $callable): void
     {
         $this->extensionSet->registerUndefinedTokenParserCallback($callable);
     }
 
+    /**
+     * @return void
+     */
     public function addNodeVisitor(NodeVisitorInterface $visitor)
     {
         $this->extensionSet->addNodeVisitor($visitor);
@@ -716,6 +762,9 @@ class Environment
         return $this->extensionSet->getNodeVisitors();
     }
 
+    /**
+     * @return void
+     */
     public function addFilter(TwigFilter $filter)
     {
         $this->extensionSet->addFilter($filter);
@@ -729,6 +778,9 @@ class Environment
         return $this->extensionSet->getFilter($name);
     }
 
+    /**
+     * @param callable(string): (TwigFilter|false) $callable
+     */
     public function registerUndefinedFilterCallback(callable $callable): void
     {
         $this->extensionSet->registerUndefinedFilterCallback($callable);
@@ -750,6 +802,9 @@ class Environment
         return $this->extensionSet->getFilters();
     }
 
+    /**
+     * @return void
+     */
     public function addTest(TwigTest $test)
     {
         $this->extensionSet->addTest($test);
@@ -773,6 +828,9 @@ class Environment
         return $this->extensionSet->getTest($name);
     }
 
+    /**
+     * @return void
+     */
     public function addFunction(TwigFunction $function)
     {
         $this->extensionSet->addFunction($function);
@@ -786,6 +844,9 @@ class Environment
         return $this->extensionSet->getFunction($name);
     }
 
+    /**
+     * @param callable(string): (TwigFunction|false) $callable
+     */
     public function registerUndefinedFunctionCallback(callable $callable): void
     {
         $this->extensionSet->registerUndefinedFunctionCallback($callable);
@@ -814,6 +875,8 @@ class Environment
      * but after, you can only update existing globals.
      *
      * @param mixed $value The global value
+     *
+     * @return void
      */
     public function addGlobal(string $name, $value)
     {

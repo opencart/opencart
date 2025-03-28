@@ -6,12 +6,6 @@ parameters:
 			count: 1
 			path: src/Extension/CoreExtension.php
 
-		- # Avoid BC-break
-			message: '#^Constructor of class Twig\\Node\\ForNode has an unused parameter \$ifexpr\.$#'
-			identifier: constructor.unusedParameter
-			count: 1
-			path: src/Node/ForNode.php
-
 		- # 2 parameters will be required
 			message: '#^Method Twig\\Node\\IncludeNode\:\:addGetTemplate\(\) invoked with 2 parameters, 1 required\.$#'
 			identifier: arguments.count

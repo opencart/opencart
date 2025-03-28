@@ -27,6 +27,7 @@ class Transfer implements PromisorInterface
     private $concurrency;
     private $mupThreshold;
     private $before;
+    private $after;
     private $s3Args = [];
     private $addContentMD5;
 
@@ -53,6 +54,11 @@ class Transfer implements PromisorInterface
      *   callback accepts a single argument: Aws\CommandInterface $command.
      *   The provided command will be either a GetObject, PutObject,
      *   InitiateMultipartUpload, or UploadPart command.
+     * - after: (callable) A callback to invoke after each transfer promise is fulfilled.
+     *   The function is invoked with three arguments: the fulfillment value, the index
+     *   position from the iterable list of the promise, and the aggregate
+     *   promise that manages all the promises. The aggregate promise may
+     *   be resolved from within the callback to short-circuit the promise.
      * - mup_threshold: (int) Size in bytes in which a multipart upload should
      *   be used instead of PutObject. Defaults to 20971520 (20 MB).
      * - concurrency: (int, default=5) Number of files to upload concurrently.
@@ -124,6 +130,14 @@ class Transfer implements PromisorInterface
             $this->before = $options['before'];
             if (!is_callable($this->before)) {
                 throw new \InvalidArgumentException('before must be a callable.');
+            }
+        }
+
+        // Handle "after" callback option.
+        if (isset($options['after'])) {
+            $this->after = $options['after'];
+            if (!is_callable($this->after)) {
+                throw new \InvalidArgumentException('after must be a callable.');
             }
         }
 
@@ -290,6 +304,7 @@ class Transfer implements PromisorInterface
         return (new Aws\CommandPool($this->client, $commands, [
             'concurrency' => $this->concurrency,
             'before'      => $this->before,
+            'fulfill'     => $this->after,
             'rejected'    => function ($reason, $idx, Promise\PromiseInterface $p) {
                 $p->reject($reason);
             }
@@ -307,7 +322,7 @@ class Transfer implements PromisorInterface
 
         // Create an EachPromise, that will concurrently handle the upload
         // operations' yielded promises from the iterator.
-        return Promise\Each::ofLimitAll($files, $this->concurrency);
+        return Promise\Each::ofLimitAll($files, $this->concurrency, $this->after);
     }
 
     /** @return Iterator */

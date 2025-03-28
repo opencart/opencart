@@ -17,6 +17,7 @@ use Twig\Error\Error;
 use Twig\Extension\ExtensionInterface;
 use Twig\Loader\ArrayLoader;
 use Twig\RuntimeLoader\RuntimeLoaderInterface;
+use Twig\TokenParser\TokenParserInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
@@ -85,7 +86,33 @@ abstract class IntegrationTestCase extends TestCase
     }
 
     /**
+     * @return array<callable(string): (TwigFilter|false)>
+     */
+    protected function getUndefinedFilterCallbacks(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<callable(string): (TwigFunction|false)>
+     */
+    protected function getUndefinedFunctionCallbacks(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<callable(string): (TokenParserInterface|false)>
+     */
+    protected function getUndefinedTokenParserCallbacks(): array
+    {
+        return [];
+    }
+
+    /**
      * @dataProvider getTests
+     *
+     * @return void
      */
     public function testIntegration($file, $message, $condition, $templates, $exception, $outputs, $deprecation = '')
     {
@@ -96,6 +123,8 @@ abstract class IntegrationTestCase extends TestCase
      * @dataProvider getLegacyTests
      *
      * @group legacy
+     *
+     * @return void
      */
     public function testLegacyIntegration($file, $message, $condition, $templates, $exception, $outputs, $deprecation = '')
     {
@@ -103,6 +132,8 @@ abstract class IntegrationTestCase extends TestCase
     }
 
     /**
+     * @return iterable
+     *
      * @final since Twig 3.13
      */
     public function getTests($name, $legacyTests = false)
@@ -159,12 +190,17 @@ abstract class IntegrationTestCase extends TestCase
 
     /**
      * @final since Twig 3.13
+     *
+     * @return iterable
      */
     public function getLegacyTests()
     {
         return $this->getTests('testLegacyIntegration', true);
     }
 
+    /**
+     * @return void
+     */
     protected function doIntegrationTest($file, $message, $condition, $templates, $exception, $outputs, $deprecation = '')
     {
         if (!$outputs) {
@@ -209,6 +245,18 @@ abstract class IntegrationTestCase extends TestCase
 
             foreach ($this->getTwigFunctions() as $function) {
                 $twig->addFunction($function);
+            }
+
+            foreach ($this->getUndefinedFilterCallbacks() as $callback) {
+                $twig->registerUndefinedFilterCallback($callback);
+            }
+
+            foreach ($this->getUndefinedFunctionCallbacks() as $callback) {
+                $twig->registerUndefinedFunctionCallback($callback);
+            }
+
+            foreach ($this->getUndefinedTokenParserCallbacks() as $callback) {
+                $twig->registerUndefinedTokenParserCallback($callback);
             }
 
             $deprecations = [];
@@ -275,6 +323,9 @@ abstract class IntegrationTestCase extends TestCase
         }
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected static function parseTemplates($test)
     {
         $templates = [];

@@ -23,6 +23,22 @@ class Proxy {
 	protected array $data = [];
 
 	/**
+	 * @var object
+	 */
+	protected $object;
+
+	/**
+	 * setObject
+	 *
+	 * @param object $object
+	 *
+	 * @return void
+	 */
+	public function setObject(object $object): void {
+		$this->object = $object;
+	}
+
+	/**
 	 * __get
 	 *
 	 * @param string $key
@@ -32,6 +48,8 @@ class Proxy {
 	public function &__get(string $key) {
 		if (isset($this->data[$key])) {
 			return $this->data[$key];
+		} else if (isset($this->object->$key)) {
+			return $this->object->$key;
 		} else {
 			throw new \Exception('Error: Could not call proxy key ' . $key . '!');
 		}
@@ -41,12 +59,16 @@ class Proxy {
 	 * __set
 	 *
 	 * @param string $key
-	 * @param object $value
+	 * @param mixed $value
 	 *
 	 * @return void
 	 */
-	public function __set(string $key, object $value): void {
-		$this->data[$key] = $value;
+	public function __set(string $key, mixed $value): void {
+		if (is_object($value)) {
+			$this->data[$key] = $value;
+		} else {
+			$this->object->$key = $value;
+		}
 	}
 
 	/**

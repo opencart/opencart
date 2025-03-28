@@ -280,6 +280,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Geo Zone
 			$this->load->model('localisation/geo_zone');
 
 			if (!$post_info['geo_zone_id']) {
@@ -327,6 +328,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Geo Zone
 			$this->load->model('localisation/geo_zone');
 
 			foreach ($selected as $geo_zone_id) {

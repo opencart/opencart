@@ -65,7 +65,7 @@ class Node implements \Countable, \IteratorAggregate
         }
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $repr = static::class;
 
@@ -105,6 +105,13 @@ class Node implements \Countable, \IteratorAggregate
         return $repr;
     }
 
+    public function __clone()
+    {
+        foreach ($this->nodes as $name => $node) {
+            $this->nodes[$name] = clone $node;
+        }
+    }
+
     /**
      * @return void
      */
@@ -142,6 +149,9 @@ class Node implements \Countable, \IteratorAggregate
         return \array_key_exists($name, $this->attributes);
     }
 
+    /**
+     * @return mixed
+     */
     public function getAttribute(string $name)
     {
         if (!\array_key_exists($name, $this->attributes)) {

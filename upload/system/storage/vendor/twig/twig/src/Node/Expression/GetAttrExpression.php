@@ -14,6 +14,7 @@ namespace Twig\Node\Expression;
 
 use Twig\Compiler;
 use Twig\Extension\SandboxExtension;
+use Twig\Node\Expression\Variable\ContextVariable;
 use Twig\Template;
 
 class GetAttrExpression extends AbstractExpression
@@ -28,7 +29,7 @@ class GetAttrExpression extends AbstractExpression
             $nodes['arguments'] = $arguments;
         }
 
-        if ($arguments && !$arguments instanceof ArrayExpression && !$arguments instanceof NameExpression) {
+        if ($arguments && !$arguments instanceof ArrayExpression && !$arguments instanceof ContextVariable) {
             trigger_deprecation('twig/twig', '3.15', \sprintf('Not passing a "%s" instance as the "arguments" argument of the "%s" constructor is deprecated ("%s" given).', ArrayExpression::class, static::class, $arguments::class));
         }
 

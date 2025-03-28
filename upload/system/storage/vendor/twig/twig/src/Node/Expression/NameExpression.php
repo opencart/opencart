@@ -39,7 +39,7 @@ class NameExpression extends AbstractExpression
         $compiler->addDebugInfo($this);
 
         if ($this->getAttribute('is_defined_test')) {
-            if (isset($this->specialVars[$name])) {
+            if (isset($this->specialVars[$name]) || $this->getAttribute('always_defined')) {
                 $compiler->repr(true);
             } elseif (\PHP_VERSION_ID >= 70400) {
                 $compiler

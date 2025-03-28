@@ -263,6 +263,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Order Status
 			$this->load->model('localisation/order_status');
 
 			if (!$post_info['order_status_id']) {
@@ -323,6 +324,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Order Status
 			$this->load->model('localisation/order_status');
 
 			foreach ($selected as $order_status_id) {

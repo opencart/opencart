@@ -279,6 +279,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Customer Group
 			$this->load->model('customer/customer_group');
 
 			if (!$post_info['customer_group_id']) {
@@ -339,6 +340,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Customer Group
 			$this->load->model('customer/customer_group');
 
 			foreach ($selected as $customer_group_id) {

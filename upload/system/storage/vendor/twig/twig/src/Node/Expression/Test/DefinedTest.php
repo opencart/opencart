@@ -22,8 +22,8 @@ use Twig\Node\Expression\FunctionExpression;
 use Twig\Node\Expression\GetAttrExpression;
 use Twig\Node\Expression\MacroReferenceExpression;
 use Twig\Node\Expression\MethodCallExpression;
-use Twig\Node\Expression\NameExpression;
 use Twig\Node\Expression\TestExpression;
+use Twig\Node\Expression\Variable\ContextVariable;
 use Twig\Node\Node;
 use Twig\TwigTest;
 
@@ -49,7 +49,7 @@ class DefinedTest extends TestExpression
             trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "node" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($node));
         }
 
-        if ($node instanceof NameExpression) {
+        if ($node instanceof ContextVariable) {
             $node->setAttribute('is_defined_test', true);
         } elseif ($node instanceof GetAttrExpression) {
             $node->setAttribute('is_defined_test', true);
@@ -75,7 +75,7 @@ class DefinedTest extends TestExpression
         parent::__construct($node, $name, $arguments, $lineno);
     }
 
-    private function changeIgnoreStrictCheck(GetAttrExpression $node)
+    private function changeIgnoreStrictCheck(GetAttrExpression $node): void
     {
         $node->setAttribute('optimizable', false);
         $node->setAttribute('ignore_strict_check', true);

@@ -258,6 +258,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Return Action
 			$this->load->model('localisation/return_action');
 
 			if (!$post_info['return_action_id']) {
@@ -305,6 +306,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Return Action
 			$this->load->model('localisation/return_action');
 
 			foreach ($selected as $return_action_id) {

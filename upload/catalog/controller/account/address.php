@@ -391,6 +391,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Address
 			$this->load->model('account/address');
 
 			// Add Address

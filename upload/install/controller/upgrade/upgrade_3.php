@@ -52,7 +52,6 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_file');
 		}
 
-
 		$total = 0;
 		$limit = 200;
 

@@ -14,7 +14,7 @@ $_['text_user']         = 'Allez dans Admin -> Utilisateurs -> Groupes d\'utilis
 $_['text_setting']      = 'Allez dans Admin et modifiez les paramètres principaux du système. Mettez à jour tous les champs et cliquez sur enregistrer, même si rien n\'a changé.';
 $_['text_store']        = 'Chargez l\'interface du magasin et appuyez deux fois sur Ctrl+F5 pour forcer le navigateur à mettre à jour les modifications CSS.';
 $_['text_success']      = 'Félicitations ! Vous avez réussi à mettre à niveau votre installation OpenCart !';
-$_['text_patch']        = 'Patch %s a été appliqué (%s sur %s)';
+$_['text_patch']        = 'Correctif %s sur %s a été appliqué';
 
 // Entrée
 $_['entry_admin']       = 'Nom de l\'administrateur';

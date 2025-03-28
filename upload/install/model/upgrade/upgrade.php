@@ -19,12 +19,9 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Record
 	 * 
-	 * @param string $table
-	 * @param array  $data
-	 * 
 	 * @return void
 	 */
-	public function addRecord(string $table, array $data): void {
+	public function addRecord($table, $data): void {
 		$implode = [];
 
 		foreach ($data as $key => $value) {

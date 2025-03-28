@@ -53,13 +53,13 @@ class Upgrade extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function hasTable(string $table): bool {
+	public function hasTable(string $table): int {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "'");
 
 		return $query->num_rows;
 	}
 
-	public function hasField(string $table, string $field): bool {
+	public function hasField(string $table, string $field): int {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "' AND COLUMN_NAME = '" . $field . "'");
 
 		return $query->num_rows;

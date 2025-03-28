@@ -3,6 +3,8 @@ namespace Opencart\Install\Controller\Upgrade;
 /**
  * Class Upgrade6
  *
+ * Extension setting changes and default values
+ *
  * @package Opencart\Install\Controller\Upgrade
  */
 class Upgrade6 extends \Opencart\System\Engine\Controller {
@@ -16,67 +18,73 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Fixes the serialisation from serialise to json
+		// Adds any missing setting keys or default values that need changing or removed
 		try {
-			// customer
-			$query = $this->db->query("SELECT `customer_id`, `custom_field` FROM `" . DB_PREFIX . "customer` WHERE `custom_field` LIKE 'a:%'");
+			// Get all setting columns from extension table
+			$this->load->language('upgrade/upgrade');
 
-			foreach ($query->rows as $result) {
-				if (preg_match('/^(a:)/', $result['custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+			$extensions = $this->model_upgrade_upgrade->getRecords('extension');
+
+			foreach ($extensions as $extension) {
+				//get all setting from setting table
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($extension['code']) . "'");
+
+				if ($query->num_rows) {
+					foreach ($query->rows as $result) {
+						//update old column name to adding prefix before the name
+						if ($result['code'] == $extension['code'] && $result['code'] != $extension['type'] . '_' . $extension['code']) {
+							$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = '" . $this->db->escape($extension['type'] . '_' . $extension['code']) . "', `key` = '" . $this->db->escape($extension['type'] . '_' . $result['key']) . "', `value` = '" . $this->db->escape($result['value']) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
+						}
+					}
 				}
 			}
 
-			// customer_activity
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity` WHERE `data` LIKE 'a:%'");
+			// List of default extension to add the opencart extension code to.
+			$default = [
+				'cod',
+				'shipping',
+				'sub_total',
+				'tax',
+				'total',
+				'banner',
+				'credit',
+				'flat',
+				'handling',
+				'low_order_fee',
+				'coupon',
+				'category',
+				'account',
+				'reward',
+				'free_checkout',
+				'featured',
+				'basic',
+				'activity',
+				'sale',
+				'order',
+				'online',
+				'map',
+				'customer',
+				'chart',
+				'sale_coupon',
+				'customer_search',
+				'customer_transaction',
+				'product_purchased',
+				'product_viewed',
+				'sale_return',
+				'sale_order',
+				'sale_shipping',
+				'sale_tax',
+				'customer_activity',
+				'customer_order',
+				'customer_reward',
+				'ecb'
+			];
 
-			foreach ($query->rows as $result) {
-				if (preg_match('/^(a:)/', $result['data'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
-				}
-			}
+			$extensions = $this->model_upgrade_upgrade->getRecords('extension');
 
-			// address
-			$query = $this->db->query("SELECT `address_id`, `custom_field` FROM `" . DB_PREFIX . "address` WHERE `custom_field` LIKE 'a:%'");
-
-			foreach ($query->rows as $result) {
-				if (preg_match('/^(a:)/', $result['custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `address_id` = '" . (int)$result['address_id'] . "'");
-				}
-			}
-
-			// module
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module`");
-
-			foreach ($query->rows as $result) {
-				if (preg_match('/^(a:)/', $result['setting'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `setting` = '" . $this->db->escape(json_encode(unserialize($result['setting']))) . "' WHERE `module_id` = '" . (int)$result['module_id'] . "'");
-				}
-			}
-
-			// order
-			$query = $this->db->query("SELECT `order_id`, `custom_field`, `payment_custom_field`, `shipping_custom_field` FROM `" . DB_PREFIX . "order` WHERE `custom_field` LIKE 'a:%' OR `payment_custom_field` LIKE 'a:%' OR `shipping_custom_field` LIKE 'a:%'");
-
-			foreach ($query->rows as $result) {
-				if (preg_match('/^(a:)/', $result['custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
-				}
-
-				if (preg_match('/^(a:)/', $result['payment_custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode(unserialize($result['payment_custom_field']))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
-				}
-
-				if (preg_match('/^(a:)/', $result['shipping_custom_field'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_custom_field` = '" . $this->db->escape(json_encode(unserialize($result['shipping_custom_field']))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
-				}
-			}
-
-			// user_group
-			$query = $this->db->query("SELECT `user_group_id`, `permission` FROM `" . DB_PREFIX . "user_group`");
-
-			foreach ($query->rows as $result) {
-				if (preg_match('/^(a:)/', $result['permission'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode(unserialize($result['permission']))) . "' WHERE `user_group_id` = '" . (int)$result['user_group_id'] . "'");
+			foreach ($extensions as $extension) {
+				if (!$extension['extension'] && in_array($extension['code'], $default)) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "extension` SET `extension` = 'opencart' WHERE `code` = '" . $this->db->escape($extension['code']) . "'");
 				}
 			}
 		} catch (\ErrorException $exception) {
@@ -84,7 +92,7 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 6, 6, 11);
+			$json['text'] = sprintf($this->language->get('text_patch'), 6, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
 

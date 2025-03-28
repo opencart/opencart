@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
- * Class Upgrade9
+ * Class Upgrade8
  *
  * @package Opencart\Install\Controller\Upgrade
  */
-class Upgrade9 extends \Opencart\System\Engine\Controller {
+class Upgrade8 extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -17,64 +17,78 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-			// order
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'payment_code'");
+			$ssrs = [];
 
-			if ($query->num_rows) {
-				$query = $this->db->query("SELECT `order_id`, `payment_code`, `payment_method`, `shipping_method`, `shipping_code` FROM `" . DB_PREFIX . "order`");
+			$ssrs[] = [
+				'code'   => 'article',
+				'action' => 'ssr/article'
+			];
 
-				foreach ($query->rows as $result) {
-					if (isset($result['payment_code'])) {
-						$payment_method = [
-							'name' => $result['payment_method'],
-							'code' => $result['payment_code']
-						];
+			$ssrs[] = [
+				'code'   => 'article',
+				'action' => 'ssr/article.template'
+			];
 
-						$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode($payment_method)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
-					}
+			$ssrs[] = [
+				'code'   => 'article',
+				'action' => 'ssr/article.image'
+			];
 
-					if (isset($result['shipping_code'])) {
-						$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$result['order_id'] . "' AND `code` = 'shipping'");
+			$ssrs[] = [
+				'code'   => 'category',
+				'action' => 'ssr/category'
+			];
 
-						if ($order_total_query->num_rows) {
-							$shipping_method = [
-								'name' => $result['shipping_method'],
-								'code' => $result['shipping_code'],
-								'cost' => $order_total_query->row['value'],
-								'text' => $result['shipping_method']
-							];
+			$ssrs[] = [
+				'code'   => 'country',
+				'action' => 'ssr/country'
+			];
 
-							$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_method` = '" . $this->db->escape(json_encode($shipping_method)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
-						}
-					}
-				}
+			$ssrs[] = [
+				'code'   => 'currency',
+				'action' => 'ssr/currency'
+			];
 
-				// Drop Fields
-				$remove = [];
+			$ssrs[] = [
+				'code'   => 'information',
+				'action' => 'ssr/information'
+			];
 
-				$remove[] = [
-					'table' => 'order',
-					'field' => 'payment_code'
-				];
+			$ssrs[] = [
+				'code'   => 'language',
+				'action' => 'ssr/language'
+			];
 
-				// custom_field
-				$remove[] = [
-					'table' => 'order',
-					'field' => 'shipping_code'
-				];
+			$ssrs[] = [
+				'code'   => 'manufacturer',
+				'action' => 'ssr/manufacturer'
+			];
 
-				$this->load->model('upgrade/upgrade');
+			$ssrs[] = [
+				'code'   => 'product',
+				'action' => 'ssr/product'
+			];
 
-				foreach ($remove as $result) {
-					$this->model_upgrade_upgrade->dropField($result['table'], $result['field']);
+			$ssrs[] = [
+				'code'   => 'topic',
+				'action' => 'ssr/topic'
+			];
+
+			foreach ($ssrs as $ssr) {
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ssr` WHERE `code` = '" . $this->db->escape($ssr['code']) . "'");
+
+				if (!$query->num_rows) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ssr` SET `code` = '" . $this->db->escape($ssr['code']) . "', `action` = '" . $this->db->escape($ssr['action']) . "', `status` = '1', `sort_order` = '0', date_modified = NOW()");
 				}
 			}
+
+
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 9, 9, 11);
+			$json['text'] = sprintf($this->language->get('text_patch'), 8, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
 
@@ -86,7 +100,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['next'] = $this->url->link('upgrade/upgrade_10', $url, true);
+			$json['next'] = $this->url->link('upgrade/upgrade_9', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

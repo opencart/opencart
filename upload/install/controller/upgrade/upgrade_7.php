@@ -3,6 +3,8 @@ namespace Opencart\Install\Controller\Upgrade;
 /**
  * Class Upgrade7
  *
+ * Convert any old versions of opencart that used php serialised function to store data.
+ *
  * @package Opencart\Install\Controller\Upgrade
  */
 class Upgrade7 extends \Opencart\System\Engine\Controller {
@@ -16,163 +18,75 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Fixes the serialisation from serialise to json
 		try {
-			// Set Product Meta Title default to product name if empty
-			$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `meta_title` = `name` WHERE `meta_title` = ''");
-			$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `meta_title` = `name` WHERE `meta_title` = ''");
-			$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `meta_title` = `title` WHERE `meta_title` = ''");
+			// customer
+			$query = $this->db->query("SELECT `customer_id`, `custom_field` FROM `" . DB_PREFIX . "customer` WHERE `custom_field` LIKE 'a:%'");
 
-			//  Option
-			$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = 'radio' WHERE `type` = 'image'");
-
-			// product_option
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_option' AND COLUMN_NAME = 'option_value'");
-
-			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "product_option` SET `option_value` = 'value'");
-			}
-
-			// tags
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_tag'");
-
-			if ($query->num_rows) {
-				$language_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language`");
-
-				foreach ($language_query->rows as $language) {
-					// Get old tags
-					$product_query = $this->db->query("SELECT p.`product_id`, GROUP_CONCAT(DISTINCT pt.`tag` order by pt.`tag` ASC SEPARATOR ',') as `tags` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_tag` pt ON (p.`product_id` = pt.`product_id`) WHERE pt.`language_id` = '" . (int)$language['language_id'] . "' GROUP BY p.`product_id`");
-
-					if ($product_query->num_rows) {
-						foreach ($product_query->rows as $product) {
-							$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `tag` = '" . $this->db->escape(strtolower($product['tags'])) . "' WHERE `product_id` = '" . (int)$product['product_id'] . "' AND `language_id` = '" . (int)$language['language_id'] . "'");
-							$this->db->query("DELETE FROM `" . DB_PREFIX . "product_tag` WHERE `product_id` = '" . (int)$product['product_id'] . "' AND `language_id` = '" . (int)$language['language_id'] . "'");
-						}
-					}
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['custom_field'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
 				}
 			}
 
-			// Banner
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image_description'");
+			// customer_activity
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity` WHERE `data` LIKE 'a:%'");
 
-			if ($query->num_rows) {
-				$banner_image_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image`");
-
-				foreach ($banner_image_query->rows as $banner_image) {
-					$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `banner_image_id` = '" . (int)$banner_image['banner_image_id'] . "'");
-
-					$banner_image_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image_description` WHERE `banner_image_id` = '" . (int)$banner_image['banner_image_id'] . "'");
-
-					foreach ($banner_image_description_query->rows as $banner_image_description) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "banner_image` SET `banner_id` = '" . (int)$banner_image['banner_id'] . "', `language_id` = '" . (int)$banner_image_description['language_id'] . "', `title` = '" . $this->db->escape($banner_image_description['title']) . "', `link` = '" . $this->db->escape($banner_image['link']) . "', `image` = '" . $this->db->escape($banner_image['image']) . "', `sort_order` = '" . (int)$banner_image['sort_order'] . "'");
-					}
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['data'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
 				}
 			}
 
-			// Drop Fields
-			$remove = [];
+			// address
+			$query = $this->db->query("SELECT `address_id`, `custom_field` FROM `" . DB_PREFIX . "address` WHERE `custom_field` LIKE 'a:%'");
 
-			// banner_image_description
-			$remove[] = [
-				'table' => 'banner_image_description',
-				'field' => 'title'
-			];
-
-			// custom_field
-			$remove[] = [
-				'table' => 'custom_field',
-				'field' => 'required'
-			];
-
-			$remove[] = [
-				'table' => 'custom_field',
-				'field' => 'position'
-			];
-
-			$remove[] = [
-				'table' => 'custom_field',
-				'field' => 'required'
-			];
-
-			$remove[] = [
-				'table' => 'custom_field',
-				'field' => 'required'
-			];
-
-			// download
-			$remove[] = [
-				'table' => 'download',
-				'field' => 'remaining'
-			];
-
-			// extension_path
-			$remove[] = [
-				'table' => 'extension_path',
-				'field' => 'date_added'
-			];
-
-			// geo_zone
-			$remove[] = [
-				'table' => 'geo_zone',
-				'field' => 'date_added'
-			];
-
-			$remove[] = [
-				'table' => 'geo_zone',
-				'field' => 'date_modified'
-			];
-
-			// product_option
-			$remove[] = [
-				'table' => 'product_option',
-				'field' => 'option_value'
-			];
-
-			// tax_class
-			$remove[] = [
-				'table' => 'tax_class',
-				'field' => 'date_added'
-			];
-
-			$remove[] = [
-				'table' => 'tax_class',
-				'field' => 'date_modified'
-			];
-
-			// tax_rate
-			$remove[] = [
-				'table' => 'tax_rate',
-				'field' => 'date_added'
-			];
-
-			$remove[] = [
-				'table' => 'tax_rate',
-				'field' => 'date_modified'
-			];
-
-			$this->load->model('upgrade/upgrade');
-
-			foreach ($remove as $result) {
-				$this->model_upgrade_upgrade->dropField($result['table'], $result['field']);
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['custom_field'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `address_id` = '" . (int)$result['address_id'] . "'");
+				}
 			}
 
-			// Drop Tables
-			$remove = [
-				'product_tag',
-				'banner_image_description'
-			];
+			// module
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module`");
 
-			foreach ($remove as $table) {
-				$this->model_upgrade_upgrade->dropTable($table);
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['setting'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `setting` = '" . $this->db->escape(json_encode(unserialize($result['setting']))) . "' WHERE `module_id` = '" . (int)$result['module_id'] . "'");
+				}
 			}
 
-			// Sort the categories to take advantage of the nested set model
-			$this->repairCategories(0);
+			// order
+			$query = $this->db->query("SELECT `order_id`, `custom_field`, `payment_custom_field`, `shipping_custom_field` FROM `" . DB_PREFIX . "order` WHERE `custom_field` LIKE 'a:%' OR `payment_custom_field` LIKE 'a:%' OR `shipping_custom_field` LIKE 'a:%'");
+
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['custom_field'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+				}
+
+				if (preg_match('/^(a:)/', $result['payment_custom_field'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode(unserialize($result['payment_custom_field']))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+				}
+
+				if (preg_match('/^(a:)/', $result['shipping_custom_field'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_custom_field` = '" . $this->db->escape(json_encode(unserialize($result['shipping_custom_field']))) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+				}
+			}
+
+			// user_group
+			$query = $this->db->query("SELECT `user_group_id`, `permission` FROM `" . DB_PREFIX . "user_group`");
+
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['permission'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode(unserialize($result['permission']))) . "' WHERE `user_group_id` = '" . (int)$result['user_group_id'] . "'");
+				}
+			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 7, 7, 11);
+			$json['text'] = sprintf($this->language->get('text_patch'), 7, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
 
@@ -189,38 +103,5 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Repair Categories
-	 *
-	 * Repair any erroneous categories that are not in the category path table.
-	 *
-	 * @param int $parent_id primary key of the parent category record
-	 *
-	 * @return void
-	 */
-	private function repairCategories(int $parent_id = 0): void {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
-
-		foreach ($query->rows as $category) {
-			// Delete the path below the current one
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category['category_id'] . "'");
-
-			// Fix for records with no paths
-			$level = 0;
-
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$parent_id . "' ORDER BY `level` ASC");
-
-			foreach ($query->rows as $result) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
-
-				$level++;
-			}
-
-			$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$category['category_id'] . "', `level` = '" . (int)$level . "'");
-
-			$this->repairCategories($category['category_id']);
-		}
 	}
 }

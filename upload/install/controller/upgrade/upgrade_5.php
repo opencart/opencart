@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
- * Class Upgrade4
+ * Class Upgrade5
+ *
+ * Setting changes and default values
  *
  * @package Opencart\Install\Controller\Upgrade
  */
@@ -16,269 +18,396 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Adds missing events
+		// Adds any missing setting keys or default values that need changing or removed
 		try {
-			// Add missing default events
-			$events = [];
-
-			$events[] = [
-				'code'    => 'activity_customer_add',
-				'trigger' => 'catalog/model/account/customer.addCustomer/after',
-				'action'  => 'event/activity.addCustomer'
-			];
-
-			$events[] = [
-				'code'    => 'activity_customer_edit',
-				'trigger' => 'catalog/model/account/customer.editCustomer/after',
-				'action'  => 'event/activity.editCustomer'
-			];
-
-			$events[] = [
-				'code'    => 'activity_customer_password',
-				'trigger' => 'catalog/model/account/customer.editPassword/after',
-				'action'  => 'event/activity.editPassword'
-			];
-
-			$events[] = [
-				'code'    => 'activity_customer_forgotten',
-				'trigger' => 'catalog/model/account/customer.addToken/after',
-				'action'  => 'event/activity.forgotten'
-			];
-
-			$events[] = [
-				'code'    => 'activity_transaction',
-				'trigger' => 'catalog/model/account/customer.addTransaction/after',
-				'action'  => 'event/activity.addTransaction'
-			];
-
-			$events[] = [
-				'code'    => 'activity_customer_login',
-				'trigger' => 'catalog/model/account/customer.deleteLoginAttempts/after',
-				'action'  => 'event/activity.login'
-			];
-
-			$events[] = [
-				'code'    => 'activity_address_add',
-				'trigger' => 'catalog/model/account/address.addAddress/after',
-				'action'  => 'event/activity.addAddress'
-			];
-
-			$events[] = [
-				'code'    => 'activity_address_edit',
-				'trigger' => 'catalog/model/account/address.editAddress/after',
-				'action'  => 'event/activity.editAddress'
-			];
-
-			$events[] = [
-				'code'    => 'activity_address_delete',
-				'trigger' => 'catalog/model/account/address.deleteAddress/after',
-				'action'  => 'event/activity.deleteAddress'
-			];
-
-			$events[] = [
-				'code'    => 'activity_affiliate_add',
-				'trigger' => 'catalog/model/account/customer.addAffiliate/after',
-				'action'  => 'event/activity.addAffiliate'
-			];
-
-			$events[] = [
-				'code'    => 'activity_affiliate_edit',
-				'trigger' => 'catalog/model/account/customer.editAffiliate/after',
-				'action'  => 'event/activity.editAffiliate'
-			];
-
-			$events[] = [
-				'code'    => 'activity_order_add',
-				'trigger' => 'catalog/model/checkout/order.addHistory/before',
-				'action'  => 'event/activity.addHistory'
-			];
-
-			$events[] = [
-				'code'    => 'activity_return_add',
-				'trigger' => 'catalog/model/account/returns.addReturn/after',
-				'action'  => 'event/activity.addReturn'
-			];
-
-			$events[] = [
-				'code'    => 'mail_transaction',
-				'trigger' => 'catalog/model/account/customer.addTransaction/after',
-				'action'  => 'mail/transaction'
-			];
-
-			$events[] = [
-				'code'    => 'mail_forgotten',
-				'trigger' => 'catalog/model/account/customer.addToken/after',
-				'action'  => 'mail/forgotten'
-			];
-
-			$events[] = [
-				'code'    => 'mail_customer_add',
-				'trigger' => 'catalog/model/account/customer.addCustomer/after',
-				'action'  => 'mail/register'
-			];
-
-			$events[] = [
-				'code'    => 'mail_customer_alert',
-				'trigger' => 'catalog/model/account/customer.addCustomer/after',
-				'action'  => 'mail/register.alert'
-			];
-
-			$events[] = [
-				'code'    => 'mail_affiliate_add',
-				'trigger' => 'catalog/model/account/customer.addAffiliate/after',
-				'action'  => 'mail/affiliate'
-			];
-
-			$events[] = [
-				'code'    => 'mail_affiliate_alert',
-				'trigger' => 'catalog/model/account/customer.addAffiliate/after',
-				'action'  => 'mail/affiliate.alert'
-			];
-
-			$events[] = [
-				'code'    => 'mail_order_add',
-				'trigger' => 'catalog/model/checkout/order.addHistory/before',
-				'action'  => 'mail/order'
-			];
-
-			$events[] = [
-				'code'    => 'mail_order_alert',
-				'trigger' => 'catalog/model/checkout/order.addHistory/before',
-				'action'  => 'mail/order.alert'
-			];
-
-			$events[] = [
-				'code'    => 'statistics_review_add',
-				'trigger' => 'catalog/model/catalog/review.addReview/after',
-				'action'  => 'event/statistics.addReview'
-			];
-
-			$events[] = [
-				'code'    => 'statistics_return_add',
-				'trigger' => 'catalog/model/account/returns.addReturn/after',
-				'action'  => 'event/statistics.addReturn'
-			];
-
-			$events[] = [
-				'code'    => 'statistics_order_history',
-				'trigger' => 'catalog/model/checkout/order.addHistory/after',
-				'action'  => 'event/statistics.addHistory'
-			];
-
-			$events[] = [
-				'code'    => 'admin_mail_affiliate_approve',
-				'trigger' => 'admin/model/customer/customer_approval.approveAffiliate/after',
-				'action'  => 'mail/affiliate.approve'
-			];
-
-			$events[] = [
-				'code'    => 'admin_mail_affiliate_deny',
-				'trigger' => 'admin/model/customer/customer_approval.denyAffiliate/after',
-				'action'  => 'mail/affiliate.deny'
-			];
-
-			$events[] = [
-				'code'    => 'admin_mail_customer_approve',
-				'trigger' => 'admin/model/customer/customer_approval.approveCustomer/after',
-				'action'  => 'mail/customer.approve'
-			];
-
-			$events[] = [
-				'code'    => 'admin_mail_customer_deny',
-				'trigger' => 'admin/model/customer/customer_approval.denyCustomer/after',
-				'action'  => 'mail/customer.deny'
-			];
-
-			$events[] = [
-				'code'    => 'admin_mail_reward',
-				'trigger' => 'admin/model/customer/customer.addReward/after',
-				'action'  => 'mail/reward'
-			];
-
-			$events[] = [
-				'code'    => 'admin_mail_transaction',
-				'trigger' => 'admin/model/customer/customer.addTransaction/after',
-				'action'  => 'mail/transaction'
-			];
-
-			$events[] = [
-				'code'    => 'admin_mail_return',
-				'trigger' => 'admin/model/sale/return.addReturn/after',
-				'action'  => 'mail/returns'
-			];
-
-			$events[] = [
-				'code'    => 'admin_mail_forgotten',
-				'trigger' => 'admin/model/user/user.addToken/after',
-				'action'  => 'mail/forgotten'
-			];
-
-			$events[] = [
-				'code'    => 'admin_currency_add',
-				'trigger' => 'admin/model/currency.addCurrency/after',
-				'action'  => 'event/currency'
-			];
-
-			$events[] = [
-				'code'    => 'admin_currency_edit',
-				'trigger' => 'admin/model/currency.editCurrency/after',
-				'action'  => 'event/currency'
-			];
-
-			$events[] = [
-				'code'    => 'admin_setting',
-				'trigger' => 'admin/model/setting/setting.editSetting/after',
-				'action'  => 'event/currency'
-			];
-
-			foreach ($events as $event) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($event['code']) . "'");
-
-				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($event['code']) . "', `trigger` = '" . $this->db->escape($event['trigger']) . "', `action` = '" . $this->db->escape($event['action']) . "', `status` = '1', `sort_order` = '0'");
-				}
-			}
-
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event`");
-
-			foreach ($query->rows as $result) {
-				if (!str_contains($result['trigger'], '.')) {
-					$parts = explode('/', $result['trigger']);
-
-					$string_1 = implode('/', array_slice($parts, 0, -2));
-					$string_2 = implode('/', array_slice($parts, -2));
-
-					$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = '" . $this->db->escape($string_1 . '.' . $string_2) . "' WHERE `event_id` = '" . (int)$result['event_id'] . "'");
-				}
-			}
-
-			// Alter events table
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "event' AND COLUMN_NAME = 'date_added'");
+			// Alter setting table
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "setting' AND COLUMN_NAME = 'group'");
 
 			if ($query->num_rows) {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "event` DROP COLUMN `date_added`");
+				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = `group` WHERE `code` IS NULL or `code` = ''");
+
+				// Remove the `group` field
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` DROP `group`");
 			}
 
-			// Update current keys
-			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/returns.addHistory/after' WHERE `code` = 'admin_mail_return'");
+			// Un-serialize values and change to JSON
+			$query = $this->db->query("SELECT `setting_id`, `value` FROM `" . DB_PREFIX . "setting` WHERE `serialized` = '1' AND `value` LIKE 'a:%'");
 
-			// Event - Remove admin promotion from OC 3.x, since it is no longer required to have in OC v4.x releases.
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `action` = 'extension/extension/promotion.getList'");
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['value'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode(unserialize($result['value']))) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
+				}
+			}
 
-			// Rename subscription to mail_subscription
-			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = 'mail_subscription' WHERE `code` = 'subscription'");
+			// Get all settings
+			$settings = [];
 
-			// Fix https://github.com/opencart/opencart/issues/11594
-			$this->db->query("UPDATE `" . DB_PREFIX . "layout_route` SET `route` = REPLACE(`route`, '|', '.')");
-			$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '|', '.') WHERE `key` = 'route'");
-			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = REPLACE(`trigger`, '|', '.'), `action` = REPLACE(`action`, '|', '.')");
-			$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `link` = REPLACE(`link`, '|', '.')");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0'");
+
+			foreach ($query->rows as $setting) {
+				if (!$setting['serialized']) {
+					$settings[$setting['key']] = $setting['value'];
+				} else {
+					$settings[$setting['key']] = json_decode($setting['value'], true);
+				}
+			}
+
+			// Add missing keys and values
+			$missing = [];
+
+			if (!isset($settings['config_description'])) {
+				if (isset($settings['config_meta_title'])) {
+					$meta_title = $settings['config_meta_title'];
+				} else {
+					$meta_title = $settings['config_name'];
+				}
+
+				if (isset($settings['config_meta_description'])) {
+					$meta_description = $settings['config_meta_description'];
+				} else {
+					$meta_description = '';
+				}
+
+				if (isset($settings['config_meta_keyword'])) {
+					$meta_keyword = $settings['config_meta_keyword'];
+				} else {
+					$meta_keyword = '';
+				}
+
+				$description_data = [];
+
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language`");
+
+				foreach ($query->rows as $language) {
+					$description_data[$language['language_id']] = [
+						'meta_title'       => $meta_title,
+						'meta_description' => $meta_description,
+						'meta_keyword'     => $meta_keyword
+					];
+				}
+
+				$missing[] = [
+					'key'        => 'config_description',
+					'value'      => $description_data,
+					'code'       => 'config',
+					'serialized' => 1
+				];
+			}
+
+			// Add config_theme if missing and still using config_template
+			if (isset($settings['config_template'])) {
+				$missing[] = [
+					'key'        => 'config_theme',
+					'value'      => 'basic',
+					'code'       => 'config',
+					'serialized' => 0
+				];
+			}
+
+			$missing[] = [
+				'key'        => 'config_product_description_length',
+				'value'      => 100,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_pagination',
+				'value'      => 10,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			if (isset($settings['config_admin_language'])) {
+				$missing[] = [
+					'key'        => 'config_language_admin',
+					'value'      => $settings['config_admin_language'],
+					'code'       => 'config',
+					'serialized' => 0
+				];
+			}
+
+			if (isset($settings['config_limit_admin'])) {
+				$missing[] = [
+					'key'        => 'config_pagination_admin',
+					'value'      => $settings['config_limit_admin'],
+					'code'       => 'config',
+					'serialized' => 0
+				];
+			}
+
+			$missing[] = [
+				'key'        => 'config_fraud_status_id',
+				'value'      => 8,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_api_id',
+				'value'      => 1,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			if (isset($settings['config_smtp_host'])) {
+				$missing[] = [
+					'key'        => 'config_mail_smtp_hostname',
+					'value'      => $settings['config_smtp_host'],
+					'code'       => 'config',
+					'serialized' => 0
+				];
+			}
+
+			if (isset($settings['config_smtp_username'])) {
+				$missing[] = [
+					'key'        => 'config_mail_smtp_username',
+					'value'      => $settings['config_smtp_username'],
+					'code'       => 'config',
+					'serialized' => 0
+				];
+			}
+
+			if (isset($settings['config_smtp_password'])) {
+				$missing[] = [
+					'key'        => 'config_mail_smtp_password',
+					'value'      => $settings['config_smtp_password'],
+					'code'       => 'config',
+					'serialized' => 0
+				];
+			}
+
+			if (isset($settings['config_smtp_port'])) {
+				$missing[] = [
+					'key'        => 'config_mail_smtp_port',
+					'value'      => $settings['config_smtp_port'],
+					'code'       => 'config',
+					'serialized' => 0
+				];
+			}
+
+			if (isset($settings['config_smtp_timeout'])) {
+				$missing[] = [
+					'key'        => 'config_mail_smtp_timeout',
+					'value'      => $settings['config_smtp_timeout'],
+					'code'       => 'config',
+					'serialized' => 0
+				];
+			}
+
+			$missing[] = [
+				'key'        => 'config_article_description_length',
+				'value'      => 100,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_default_width',
+				'value'      => 300,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_default_height',
+				'value'      => 300,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_article_width',
+				'value'      => 1140,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_article_height',
+				'value'      => 380,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_topic_width',
+				'value'      => 1140,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_image_topic_height',
+				'value'      => 380,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_session_expire',
+				'value'      => 3600000000,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_cookie_id',
+				'value'      => 0,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_gdpr_id',
+				'value'      => 0,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_gdpr_limit',
+				'value'      => 180,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_affiliate_status',
+				'value'      => 1,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_affiliate_expire',
+				'value'      => 3600000000,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			// Subscriptions
+			$missing[] = [
+				'key'        => 'config_subscription_status_id',
+				'value'      => 1,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_subscription_active_status_id',
+				'value'      => 2,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_subscription_expired_status_id',
+				'value'      => 6,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_subscription_canceled_status_id',
+				'value'      => 4,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_subscription_failed_status_id',
+				'value'      => 3,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_subscription_denied_status_id',
+				'value'      => 5,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_fraud_status_id',
+				'value'      => 8,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			// Serialized
+			$missing[] = [
+				'key'        => 'config_complete_status',
+				'value'      => [5],
+				'code'       => 'config',
+				'serialized' => 1
+			];
+
+			$missing[] = [
+				'key'        => 'config_processing_status',
+				'value'      => [2],
+				'code'       => 'config',
+				'serialized' => 1
+			];
+
+			$missing[] = [
+				'key'        => 'config_2fa_expire',
+				'value'      => 90,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_password_length',
+				'value'      => 6,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			// Add missing keys and serialized values
+			foreach ($missing as $setting) {
+				$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = '" . $this->db->escape($setting['key']) . "'");
+
+				if (!$query->num_rows && !isset($settings[$setting['key']])) {
+					if (!$setting['serialized']) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = '" . $this->db->escape($setting['key']) . "', `value` = '" . $this->db->escape($setting['value']) . "', `code` = '" . $this->db->escape($setting['code']) . "', `serialized` = '0', `store_id` = '0'");
+					} else {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = '" . $this->db->escape($setting['key']) . "', `value` = '" . $this->db->escape(json_encode($setting['value'])) . "', `code` = '" . $this->db->escape($setting['code']) . "', `serialized` = '1', `store_id` = '0'");
+					}
+				}
+			}
+
+			// Remove some setting keys
+			$remove = [
+				'config_meta_title',
+				'config_meta_description',
+				'config_meta_keywords',
+				'config_template',
+				'config_limit_admin',
+				'config_smtp_host',
+				'config_smtp_username',
+				'config_smtp_password',
+				'config_smtp_port',
+				'config_smtp_timeout'
+			];
+
+			foreach ($remove as $key) {
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = '" . $this->db->escape($key) . "'");
+			}
+
+			// Update some language settings
+			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language' AND `value` = 'en'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language_admin' AND `value` = 'en'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_language_catalog' WHERE `key` = 'config_language'");
+
+			$this->cache->delete('language');
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 5, 5, 11);
+			$json['text'] = sprintf($this->language->get('text_patch'), 5, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
 

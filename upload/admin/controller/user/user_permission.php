@@ -296,7 +296,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$data['extensions'] = [];
 
 		// Extension permissions
-		$results = glob(DIR_EXTENSION . '*/admin/controller/*/*.php');
+		$results = $this->rglob(DIR_EXTENSION . '*/admin/controller/*/*.php');
 
 		foreach ($results as $result) {
 			$path = substr($result, strlen(DIR_EXTENSION));
@@ -353,6 +353,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// User Group
 			$this->load->model('user/user_group');
 
 			if (!$post_info['user_group_id']) {
@@ -399,6 +400,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// User Group
 			$this->load->model('user/user_group');
 
 			foreach ($selected as $user_group_id) {
@@ -411,4 +413,16 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+    private function rglob($pattern, $flags = 0)
+    {
+        $files = glob($pattern, $flags);
+        foreach (glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir) {
+            $files = array_merge(
+                [],
+                ...[$files, $this->rglob($dir . "/" . basename($pattern), $flags)]
+            );
+        }
+        return $files;
+    }
 }

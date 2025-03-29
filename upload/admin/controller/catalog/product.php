@@ -513,6 +513,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
+		// Product
 		if (isset($this->request->get['master_id'])) {
 			$this->load->model('catalog/product');
 

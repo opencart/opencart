@@ -894,6 +894,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
+		// Affiliate
 		if ($this->user->hasPermission('modify', 'marketing/affiliate')) {
 			$this->load->model('marketing/affiliate');
 

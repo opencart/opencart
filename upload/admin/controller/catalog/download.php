@@ -613,6 +613,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
+			// Downloads
 			$this->load->model('catalog/download');
 
 			$filter_data = [

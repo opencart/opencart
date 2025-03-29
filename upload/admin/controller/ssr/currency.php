@@ -21,6 +21,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Currency
 			$this->load->model('localisation/currency');
 
 			$currencies = $this->model_localisation_currency->getCurrencies();

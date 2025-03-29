@@ -370,6 +370,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
+			// Attributes
 			$this->load->model('catalog/attribute');
 
 			$filter_data = [

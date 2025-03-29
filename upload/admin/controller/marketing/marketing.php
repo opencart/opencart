@@ -347,7 +347,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('marketing/marketing.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Marketing
 		if (isset($this->request->get['marketing_id'])) {
 			$this->load->model('marketing/marketing');
 

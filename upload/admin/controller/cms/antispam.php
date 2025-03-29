@@ -288,6 +288,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Anti-Spam
 			$this->load->model('cms/antispam');
 
 			if (!$post_info['antispam_id']) {

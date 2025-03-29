@@ -218,7 +218,6 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($this->request->get['weight_class_id']);
 		}
 
-		// Weight Class
 		if (!empty($weight_class_info)) {
 			$data['weight_class_id'] = $weight_class_info['weight_class_id'];
 		} else {

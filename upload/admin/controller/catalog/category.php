@@ -628,6 +628,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	public function autocomplete(): void {
 		$json = [];
 
+		// Categories
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('catalog/category');
 

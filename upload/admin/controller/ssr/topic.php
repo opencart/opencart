@@ -27,6 +27,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Languages
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();

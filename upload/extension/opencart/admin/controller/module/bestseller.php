@@ -169,6 +169,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			// Extension
 			$this->load->model('extension/opencart/module/bestseller');
 
 			$this->model_extension_opencart_module_bestseller->install();
@@ -182,6 +183,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			// Extension
 			$this->load->model('extension/opencart/module/bestseller');
 
 			$this->model_extension_opencart_module_bestseller->uninstall();

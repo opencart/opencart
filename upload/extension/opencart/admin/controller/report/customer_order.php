@@ -83,7 +83,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
-		// Order Status
+		// Order Statuses
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();

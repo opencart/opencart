@@ -12,7 +12,6 @@
 namespace Twig\Node\Expression;
 
 use Twig\Compiler;
-use Twig\Node\Expression\Variable\ContextVariable;
 
 class MethodCallExpression extends AbstractExpression
 {
@@ -22,7 +21,7 @@ class MethodCallExpression extends AbstractExpression
 
         parent::__construct(['node' => $node, 'arguments' => $arguments], ['method' => $method, 'safe' => false, 'is_defined_test' => false], $lineno);
 
-        if ($node instanceof ContextVariable) {
+        if ($node instanceof NameExpression) {
             $node->setAttribute('always_defined', true);
         }
     }

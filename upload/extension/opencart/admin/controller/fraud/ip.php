@@ -132,6 +132,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 
 		$data['ips'] = [];
 
+		// Extension
 		$this->load->model('extension/opencart/fraud/ip');
 
 		// Customer

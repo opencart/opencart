@@ -55,7 +55,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['orders'] = [];
 
-		// Order
+		// Orders
 		$this->load->model('account/order');
 
 		// Order Status

@@ -218,7 +218,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		// Reports
 		$data['reports'] = [];
 
-		// Bestseller
+		// Extension
 		$this->load->model('extension/opencart/module/bestseller');
 
 		// Product

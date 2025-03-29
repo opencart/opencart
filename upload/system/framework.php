@@ -6,9 +6,9 @@ $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 
 // Register OCMOD
-$this->autoloader->register('Opencart\Catalog\Controller\Extension\Ocmod', DIR_EXTENSION . 'ocmod/catalog/controller/');
-$this->autoloader->register('Opencart\Catalog\Model\Extension\Ocmod', DIR_EXTENSION . 'ocmod/catalog/model/');
-$this->autoloader->register('Opencart\System\Library\Extension\Ocmod', DIR_EXTENSION . 'ocmod/system/library/');
+$autoloader->register('Opencart\\' . APPLICATION . '\Controller\Extension\Ocmod', DIR_EXTENSION . 'ocmod/catalog/controller/');
+$autoloader->register('Opencart\\' . APPLICATION . '\Model\Extension\Ocmod', DIR_EXTENSION . 'ocmod/catalog/model/');
+$autoloader->register('Opencart\System\Library\Extension\Ocmod', DIR_EXTENSION . 'ocmod/system/library/');
 
 //require_once(DIR_SYSTEM . 'helper/vendor.php');
 //oc_generate_vendor();

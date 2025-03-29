@@ -48,10 +48,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function model(string &$route, array &$args): void {
-		$pos = strrpos($route, '.');
-
-		if ($pos !== false) {
-			$class = substr($route, 0, $pos);
+		if (str_contains($route, '.')) {
+			$class = preg_replace('/\.[^.]*$/', '', $route);
 		} else {
 			$class = $route;
 		}

@@ -41,14 +41,20 @@ class Modification extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function model(string &$route, array &$args): void {
+		if (str_contains($route, '.')) {
+			$class = preg_replace('/\.[^.]*$/', '', $route);
+		} else {
+			$class = $route;
+		}
+
 		if (substr($route, 0, 16) == 'extension/ocmod/') {
 			return;
 		}
 
 		if (substr($route, 0, 10) !== 'extension/') {
-			$class = 'Opencart\Admin\Model\Extension\Ocmod\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+			$class = 'Opencart\Admin\Model\Extension\Ocmod\\' . str_replace(['_', '/'], ['', '\\'], ucwords($class, '_/'));
 		} else {
-			$class = 'Opencart\Admin\Model\Extension\Ocmod\Extension\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($route, 10), '_/'));
+			$class = 'Opencart\Admin\Model\Extension\Ocmod\Extension\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($class, 10), '_/'));
 		}
 
 		if (class_exists($class)) {

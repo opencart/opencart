@@ -296,7 +296,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$data['extensions'] = [];
 
 		// Extension permissions
-		$results = glob(DIR_EXTENSION . '*/admin/controller/*/*.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/{,*/,*/*/,*/*/*/}*.php', GLOB_BRACE);
 
 		foreach ($results as $result) {
 			$path = substr($result, strlen(DIR_EXTENSION));

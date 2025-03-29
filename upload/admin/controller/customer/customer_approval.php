@@ -192,6 +192,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
+		// Total Approvals
 		$customer_approval_total = $this->model_customer_customer_approval->getTotalCustomerApprovals($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [

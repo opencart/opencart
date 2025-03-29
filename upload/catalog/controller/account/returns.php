@@ -67,8 +67,10 @@ class Returns extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Returns
 		$return_total = $this->model_account_returns->getTotalReturns();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_total,
 			'page'  => $page,
@@ -517,8 +519,10 @@ class Returns extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Histories
 		$return_total = $this->model_account_returns->getTotalHistories($return_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_total,
 			'page'  => $page,

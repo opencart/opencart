@@ -57,7 +57,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		if ($subscriptions) {
 			foreach ($subscriptions as $subscription) {
-				// Subscription histories
+				// Total Histories
 				$history_total = $this->model_sale_subscription->getTotalHistoriesBySubscriptionStatusId($subscription_status_id);
 
 				// The charge() method handles the subscription statuses in the cron/subscription
@@ -69,7 +69,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_status_id);
 
 					if ($subscription_status_info) {
-						// Customer payment
+						// Customer Payment
 						$customer_payment_info = $this->model_sale_subscription->getSubscriptions(['filter_customer_id' => $subscription['customer_id'], 'filter_customer_payment_id' => $subscription['customer_payment_id']]);
 
 						if ($customer_payment_info) {
@@ -235,6 +235,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$this->load->model('customer/customer');
 
 			foreach ($subscriptions as $subscription) {
+				// Total Transactions
 				$transaction_total = $this->model_customer_customer->getTotalTransactionsByOrderId($subscription['order_id']);
 
 				if ($transaction_total) {

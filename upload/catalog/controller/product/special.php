@@ -237,8 +237,10 @@ class Special extends \Opencart\System\Engine\Controller {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
+		// Total Specials
 		$product_total = $this->model_catalog_product->getTotalSpecials();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,
 			'page'  => $page,

@@ -178,6 +178,7 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 		// Extension
 		$this->load->model('extension/opencart/report/sale');
 
+		// Total Orders
 		$order_total = $this->model_extension_opencart_report_sale->getTotalShipping($filter_data);
 
 		$results = $this->model_extension_opencart_report_sale->getShipping($filter_data);
@@ -210,6 +211,7 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,
 			'page'  => $page,

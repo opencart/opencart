@@ -18,7 +18,7 @@ namespace Twig\Sandbox;
  */
 final class SecurityNotAllowedFilterError extends SecurityError
 {
-    private string $filterName;
+    private $filterName;
 
     public function __construct(string $message, string $functionName)
     {

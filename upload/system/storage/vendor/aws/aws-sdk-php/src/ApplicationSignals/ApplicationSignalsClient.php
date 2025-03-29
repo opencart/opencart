@@ -7,8 +7,6 @@ use Aws\AwsClient;
  * This client is used to interact with the **Amazon CloudWatch Application Signals** service.
  * @method \Aws\Result batchGetServiceLevelObjectiveBudgetReport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetServiceLevelObjectiveBudgetReportAsync(array $args = [])
- * @method \Aws\Result batchUpdateExclusionWindows(array $args = [])
- * @method \GuzzleHttp\Promise\Promise batchUpdateExclusionWindowsAsync(array $args = [])
  * @method \Aws\Result createServiceLevelObjective(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createServiceLevelObjectiveAsync(array $args = [])
  * @method \Aws\Result deleteServiceLevelObjective(array $args = [])
@@ -21,8 +19,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listServiceDependenciesAsync(array $args = [])
  * @method \Aws\Result listServiceDependents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listServiceDependentsAsync(array $args = [])
- * @method \Aws\Result listServiceLevelObjectiveExclusionWindows(array $args = [])
- * @method \GuzzleHttp\Promise\Promise listServiceLevelObjectiveExclusionWindowsAsync(array $args = [])
  * @method \Aws\Result listServiceLevelObjectives(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listServiceLevelObjectivesAsync(array $args = [])
  * @method \Aws\Result listServiceOperations(array $args = [])

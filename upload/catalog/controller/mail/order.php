@@ -381,7 +381,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store_url = HTTP_CATALOG;
 		}
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($order_info['store_id']);

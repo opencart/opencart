@@ -30,9 +30,6 @@ abstract class RestSerializer
     /** @var Uri */
     private $endpoint;
 
-    /** @var bool */
-    private $isUseEndpointV2;
-
     /**
      * @param Service $api      Service API description
      * @param string  $endpoint Endpoint to connect to
@@ -60,7 +57,6 @@ abstract class RestSerializer
         $headers = isset($opts['headers']) ? $opts['headers'] : [];
 
         if ($endpoint instanceof RulesetEndpoint) {
-            $this->isUseEndpointV2 = true;
             $this->setEndpointV2RequestOptions($endpoint, $headers);
         }
 
@@ -200,6 +196,7 @@ abstract class RestSerializer
 
     private function buildEndpoint(Operation $operation, array $args, array $opts)
     {
+        $isModifiedModel = $this->api->isModifiedModel();
         $serviceName = $this->api->getServiceName();
         // Create an associative array of variable definitions used in expansions
         $varDefinitions = $this->getVarDefinitions($operation, $args);
@@ -229,7 +226,7 @@ abstract class RestSerializer
 
         $path = $this->endpoint->getPath();
 
-        if ($this->isUseEndpointV2 && $serviceName === 's3') {
+        if ($isModifiedModel && $serviceName === 's3') {
             if (substr($path, -1) === '/' && $relative[0] === '/') {
                 $path = rtrim($path, '/');
             }
@@ -247,7 +244,8 @@ abstract class RestSerializer
         }
 
         if ((!empty($relative) && $relative !== '/')
-            && !$this->isUseEndpointV2
+            && !$isModifiedModel
+            && $serviceName !== 's3'
         ) {
             $this->normalizePath($path);
         }
@@ -259,7 +257,7 @@ abstract class RestSerializer
 
         //Append path to endpoint when leading '//...'
         // present as uri cannot be properly resolved
-        if ($this->isUseEndpointV2 && strpos($relative, '//') === 0) {
+        if ($isModifiedModel && strpos($relative, '//') === 0) {
             return new Uri($this->endpoint . $relative);
         }
 

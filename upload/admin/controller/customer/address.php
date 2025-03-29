@@ -264,9 +264,10 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['address_country'] = $this->language->get('error_country');
 			}
 
-			// Total Zones
+			// Zones
 			$this->load->model('localisation/zone');
 
+			// Total Zones
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
 
 			if ($zone_total && !$post_info['zone_id']) {

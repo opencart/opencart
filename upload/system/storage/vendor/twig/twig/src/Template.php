@@ -318,7 +318,6 @@ abstract class Template
 
     /**
      * @internal
-     *
      * @return $this
      */
     public function unwrap(): self
@@ -493,7 +492,7 @@ abstract class Template
         return $parent->hasMacro($name, $context);
     }
 
-    protected function getTemplateForMacro(string $name, array $context, int $line, Source $source): self
+    protected function getTemplateForMacro(string $name, array $context, int $line, Source $source): Template
     {
         if (method_exists($this, $name)) {
             return $this;

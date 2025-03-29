@@ -99,8 +99,10 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total SSRs
 		$ssr_total = $this->model_setting_ssr->getTotalSsrs();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $ssr_total,
 			'page'  => $page,

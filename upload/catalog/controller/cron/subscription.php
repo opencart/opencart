@@ -33,7 +33,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Subscriptions
 		$this->load->model('checkout/subscription');
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		// Language

@@ -99,8 +99,10 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Address Formats
 		$address_format_total = $this->model_localisation_address_format->getTotalAddressFormats($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $address_format_total,
 			'page'  => $page,
@@ -241,7 +243,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Country
+		// Countries
 		$this->load->model('localisation/country');
 
 		foreach ($selected as $address_format_id) {
@@ -249,6 +251,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Countries
 			$country_total = $this->model_localisation_country->getTotalCountriesByAddressFormatId($address_format_id);
 
 			if ($country_total) {

@@ -105,6 +105,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$store_total += $this->model_setting_store->getTotalStores();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $store_total,
 			'page'  => $page,
@@ -738,7 +739,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			// Setting
 			$this->load->model('setting/setting');
 
-			// Store
+			// Setting
 			$this->load->model('setting/store');
 
 			if (!$this->request->post['store_id']) {
@@ -778,7 +779,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Order
+		// Orders
 		$this->load->model('sale/order');
 
 		// Total Subscriptions
@@ -789,12 +790,14 @@ class Store extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Orders
 			$order_total = $this->model_sale_order->getTotalOrdersByStoreId($store_id);
 
 			if ($order_total) {
 				$json['error'] = sprintf($this->language->get('error_store'), $order_total);
 			}
 
+			// Total Subscriptions
 			$subscription_total = $this->model_sale_subscription->getTotalSubscriptionsByStoreId($store_id);
 
 			if ($subscription_total) {
@@ -803,10 +806,9 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Store
+			// Setting
 			$this->load->model('setting/store');
 
-			// Setting
 			$this->load->model('setting/setting');
 
 			foreach ($selected as $store_id) {

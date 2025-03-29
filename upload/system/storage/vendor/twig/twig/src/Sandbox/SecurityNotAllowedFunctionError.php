@@ -18,7 +18,7 @@ namespace Twig\Sandbox;
  */
 final class SecurityNotAllowedFunctionError extends SecurityError
 {
-    private string $functionName;
+    private $functionName;
 
     public function __construct(string $message, string $functionName)
     {

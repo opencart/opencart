@@ -131,8 +131,10 @@ class Online extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 		}
 
+		// Total Online
 		$customer_total = $this->model_report_online->getTotalOnline($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,
 			'page'  => $page,

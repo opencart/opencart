@@ -185,6 +185,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_code'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
 		$data['sort_date_added'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
@@ -211,8 +212,10 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Uploads
 		$upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $upload_total,
 			'page'  => $page,

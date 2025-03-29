@@ -139,6 +139,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=fgd.name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=fg.sort_order' . $url);
 
@@ -152,8 +153,10 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Filter Groups
 		$filter_group_total = $this->model_catalog_filter_group->getTotalFilterGroups();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $filter_group_total,
 			'page'  => $page,
@@ -320,6 +323,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/filter');
 
 		foreach ($selected as $filter_group_id) {
+			// Total Filters
 			$filter_total = $this->model_catalog_filter->getTotalFiltersByFilterGroupId($filter_group_id);
 
 			if ($filter_total) {

@@ -240,8 +240,10 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		// Total Reports
 		$report_total = $this->model_extension_opencart_module_bestseller->getTotalReports();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $report_total,
 			'page'  => $page,
@@ -298,6 +300,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			$results = $this->model_catalog_product->getProducts($product_data);
 
 			foreach ($results as $result) {
+				// Total Products
 				$product_total = $this->model_sale_order->getTotalProductsByProductId($result['product_id']);
 
 				if ($product_total) {

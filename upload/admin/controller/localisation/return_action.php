@@ -133,6 +133,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sort
 		$data['sort_name'] = $this->url->link('localisation/return_action.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
@@ -145,8 +146,10 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Return Actions
 		$return_action_total = $this->model_localisation_return_action->getTotalReturnActions();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_action_total,
 			'page'  => $page,
@@ -298,6 +301,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$this->load->model('sale/returns');
 
 		foreach ($selected as $return_action_id) {
+			// Total Returns
 			$return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId($return_action_id);
 
 			if ($return_total) {

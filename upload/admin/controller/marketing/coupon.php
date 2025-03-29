@@ -137,6 +137,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_code'] = $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
 		$data['sort_discount'] = $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . '&sort=discount' . $url);
@@ -153,8 +154,10 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Coupons
 		$coupon_total = $this->model_marketing_coupon->getTotalCoupons();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $coupon_total,
 			'page'  => $page,
@@ -492,8 +495,10 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		// Total Histories
 		$history_total = $this->model_marketing_coupon->getTotalHistories($coupon_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
 			'page'  => $page,

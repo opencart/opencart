@@ -176,6 +176,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $marketing_total,
 			'page'  => $page,

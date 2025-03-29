@@ -140,8 +140,10 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination')
 		];
 
+		// Extension
 		$this->load->model('extension/opencart/report/customer_transaction');
 
+		// Total Customers
 		$customer_total = $this->model_extension_opencart_report_customer_transaction->getTotalTransactions($filter_data);
 
 		$results = $this->model_extension_opencart_report_customer_transaction->getTransactions($filter_data);
@@ -171,6 +173,7 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,
 			'page'  => $page,

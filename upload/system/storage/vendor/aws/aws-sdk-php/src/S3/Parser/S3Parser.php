@@ -10,6 +10,7 @@ use Aws\Api\StructureShape;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\ResultInterface;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -100,10 +101,9 @@ final class S3Parser extends AbstractParser
     {
         // This error parsing should be just for 200 error responses
         // and operations where its output shape does not have a streaming
-        // member and the body of the response is seekable.
+        // member.
         if (200 !== $response->getStatusCode()
-            || !$this->shouldBeConsidered200Error($command->getName())
-            || !$response->getBody()->isSeekable()) {
+            || !$this->shouldBeConsidered200Error($command->getName())) {
             return;
         }
 

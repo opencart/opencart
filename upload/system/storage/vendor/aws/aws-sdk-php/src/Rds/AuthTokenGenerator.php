@@ -14,6 +14,7 @@ use Aws;
  */
 class AuthTokenGenerator
 {
+
     private $credentialProvider;
 
     /**

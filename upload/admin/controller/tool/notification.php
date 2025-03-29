@@ -110,8 +110,10 @@ class Notification extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Notifications
 		$notification_total = $this->model_tool_notification->getTotalNotifications();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $notification_total,
 			'page'  => $page,

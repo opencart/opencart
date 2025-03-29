@@ -97,7 +97,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		// Stores
+		// Setting
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -331,6 +331,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$seo_url_total = $this->model_design_seo_url->getTotalSeoUrls($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $seo_url_total,
 			'page'  => $page,

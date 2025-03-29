@@ -136,6 +136,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_title'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
 		$data['sort_unit'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=unit' . $url);
 		$data['sort_value'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
@@ -150,8 +151,10 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Length Classes
 		$length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $length_class_total,
 			'page'  => $page,
@@ -314,7 +317,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Product
+		// Products
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $length_class_id) {
@@ -322,6 +325,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Products
 			$product_total = $this->model_catalog_product->getTotalProductsByLengthClassId($length_class_id);
 
 			if ($product_total) {

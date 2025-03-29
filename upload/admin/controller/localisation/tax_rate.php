@@ -136,6 +136,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.name' . $url);
 		$data['sort_rate'] = $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.rate' . $url);
 		$data['sort_type'] = $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.type' . $url);
@@ -151,8 +152,10 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Tax Rates
 		$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRates();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $tax_rate_total,
 			'page'  => $page,
@@ -343,6 +346,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/tax_class');
 
 		foreach ($selected as $tax_rate_id) {
+			// Total Tax Rules
 			$tax_rule_total = $this->model_localisation_tax_class->getTotalTaxRulesByTaxRateId($tax_rate_id);
 
 			if ($tax_rule_total) {

@@ -361,9 +361,10 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			// Total Zones
+			// Zones
 			$this->load->model('localisation/zone');
 
+			// Total Zones
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
 
 			if ($zone_total && !$post_info['zone_id']) {
@@ -471,9 +472,10 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_delete');
 			}
 
-			// Total Subscriptions
+			// Subscriptions
 			$this->load->model('account/subscription');
 
+			// Total Subscriptions
 			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByShippingAddressId($address_id);
 
 			if ($subscription_total) {

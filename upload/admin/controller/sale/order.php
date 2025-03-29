@@ -456,6 +456,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_order'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.order_id' . $url);
 		$data['sort_store_name'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.store_name' . $url);
 		$data['sort_customer'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
@@ -518,8 +519,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Orders
 		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,
 			'page'  => $page,
@@ -1805,8 +1808,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Histories
 		$history_total = $this->model_sale_order->getTotalHistories($order_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
 			'page'  => $page,
@@ -1898,9 +1903,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_order');
 		}
 
-		// Total Rewards
+		// Customer
 		$this->load->model('customer/customer');
 
+		// Total Rewards
 		$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
 
 		if ($reward_total) {
@@ -1984,8 +1990,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
-		// Customer
 		if ($order_info) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			$customer_info = $this->model_customer_customer->getCustomer($order_info['affiliate_id']);
@@ -1994,6 +2000,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_affiliate');
 			}
 
+			// Total Transactions
 			$affiliate_total = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
 
 			if ($affiliate_total) {

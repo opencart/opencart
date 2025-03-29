@@ -103,8 +103,10 @@ class Review extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Reviews
 		$review_total = $this->model_catalog_review->getTotalReviewsByProductId($product_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $review_total,
 			'page'  => $page,

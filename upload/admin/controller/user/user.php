@@ -298,6 +298,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_username'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
 		$data['sort_name'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_email'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=u.email' . $url);
@@ -339,8 +340,10 @@ class User extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Users
 		$user_total = $this->model_user_user->getTotalUsers();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $user_total,
 			'page'  => $page,
@@ -696,8 +699,10 @@ class User extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Authorizes
 		$authorize_total = $this->model_user_user->getTotalAuthorizes($user_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $authorize_total,
 			'page'  => $page,
@@ -804,8 +809,10 @@ class User extends \Opencart\System\Engine\Controller {
 			$data['logins'][] = ['date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))] + $result;
 		}
 
+		// Total Logins
 		$login_total = $this->model_user_user->getTotalLogins($user_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $login_total,
 			'page'  => $page,

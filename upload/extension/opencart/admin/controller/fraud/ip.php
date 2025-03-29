@@ -146,8 +146,10 @@ class Ip extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		// Total Customers
 		$ip_total = $this->model_extension_opencart_fraud_ip->getTotalIps();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $ip_total,
 			'page'  => $page,

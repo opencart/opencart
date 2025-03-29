@@ -178,6 +178,7 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 		// Extension
 		$this->load->model('extension/opencart/report/returns');
 
+		// Total Returns
 		$return_total = $this->model_extension_opencart_report_returns->getTotalReturns($filter_data);
 
 		$results = $this->model_extension_opencart_report_returns->getReturns($filter_data);
@@ -208,6 +209,7 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_return_status_id=' . $this->request->get['filter_return_status_id'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_total,
 			'page'  => $page,

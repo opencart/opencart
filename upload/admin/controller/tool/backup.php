@@ -205,6 +205,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 			$position = array_search($table, $backup);
 
+			// Total Records
 			$record_total = $this->model_tool_backup->getTotalRecords($table);
 
 			if (($page * 200) >= $record_total) {

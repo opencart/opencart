@@ -31,6 +31,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 				$status = false;
 			}
 
+			// Total Coupons
 			$coupon_total = $this->model_marketing_coupon->getTotalHistories($coupon_info['coupon_id']);
 
 			if ($coupon_info['uses_total'] > 0 && ($coupon_total >= $coupon_info['uses_total'])) {
@@ -42,6 +43,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 			}
 
 			if ($this->customer->getId()) {
+				// Total Customers
 				$customer_total = $this->model_marketing_coupon->getTotalHistoriesByCustomerId($coupon_info['coupon_id'], $this->customer->getId());
 
 				if ($coupon_info['uses_customer'] > 0 && ($customer_total >= $coupon_info['uses_customer'])) {
@@ -68,6 +70,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 					}
 
 					foreach ($coupon_category_data as $category_id) {
+						// Total Products
 						$product_total = $this->model_catalog_product->getTotalCategoriesByCategoryId($product['product_id'], $category_id);
 
 						if ($product_total) {

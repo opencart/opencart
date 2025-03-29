@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
 /**
  * Class Cod
  *
- * @package Opencart\Catalog\Controller\Extension\Opencart\Module
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Payment
  */
 class Cod extends \Opencart\System\Engine\Controller {
 	/**
@@ -49,6 +49,7 @@ class Cod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Order
 			$this->load->model('checkout/order');
 
 			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_cod_order_status_id'));

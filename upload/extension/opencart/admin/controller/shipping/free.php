@@ -39,9 +39,9 @@ class Free extends \Opencart\System\Engine\Controller {
 		$data['shipping_free_total'] = $this->config->get('shipping_free_total');
 
 		// Geo Zone
-		$data['shipping_free_geo_zone_id'] = $this->config->get('shipping_free_geo_zone_id');
-
 		$this->load->model('localisation/geo_zone');
+
+		$data['shipping_free_geo_zone_id'] = $this->config->get('shipping_free_geo_zone_id');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
@@ -70,6 +70,7 @@ class Free extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('shipping_free', $this->request->post);

@@ -50,6 +50,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$limit = $this->config->get('config_pagination');
 		}
 
+		// Category
 		$parts = explode('_', $path);
 
 		$category_id = (int)array_pop($parts);
@@ -169,6 +170,7 @@ class Category extends \Opencart\System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			// Categories
 			$data['categories'] = [];
 
 			// Product

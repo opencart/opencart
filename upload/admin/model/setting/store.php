@@ -11,6 +11,8 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
+	 * Create a new store record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new store record
@@ -39,7 +41,7 @@ class Store extends \Opencart\System\Engine\Model {
 			$this->model_design_layout->addRoute($result['layout_id'], ['store_id' => $store_id] + $result);
 		}
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$results = $this->model_design_seo_url->getSeoUrlsByStoreId(0);
@@ -55,6 +57,8 @@ class Store extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Store
+	 *
+	 * Edit store record in the database.
 	 *
 	 * @param int                  $store_id primary key of the store record
 	 * @param array<string, mixed> $data     array of data
@@ -80,6 +84,8 @@ class Store extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Store
+	 *
+	 * Delete store record in the database.
 	 *
 	 * @param int $store_id primary key of the store record
 	 *
@@ -133,7 +139,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		$this->model_design_translation->deleteTranslationsByStoreId($store_id);
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByStoreId($store_id);
@@ -148,6 +154,8 @@ class Store extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Store
+	 *
+	 * Get the record of the store record in the database.
 	 *
 	 * @param int $store_id primary key of the store record
 	 *
@@ -167,6 +175,8 @@ class Store extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stores
+	 *
+	 * Get the record of the store records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -329,6 +339,8 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stores
 	 *
+	 * Get the total number of total store records in the database.
+	 *
 	 * @return int total number of store records
 	 *
 	 * @example
@@ -345,6 +357,8 @@ class Store extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Stores By Layout ID
+	 *
+	 * Get the total number of total stores by layout records in the database.
 	 *
 	 * @param int $layout_id primary key of the layout record
 	 *
@@ -403,6 +417,8 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stores By Country ID
 	 *
+	 * Get the total number of total stores by country records in the database.
+	 *
 	 * @param int $country_id primary key of the country record
 	 *
 	 * @return int total number of store records that have country ID
@@ -421,6 +437,8 @@ class Store extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Stores By Zone ID
+	 *
+	 * Get the total number of total stores by zone records in the database.
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
@@ -441,6 +459,8 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Stores By Customer Group ID
 	 *
+	 * Get the total number of total stores by customer group records in the database.
+	 *
 	 * @param int $customer_group_id primary key of the customer group record
 	 *
 	 * @return int total number of store records that have customer group ID
@@ -459,6 +479,8 @@ class Store extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Stores By Information ID
+	 *
+	 * Get the total number of total stores by information records in the database.
 	 *
 	 * @param int $information_id primary key of the information record
 	 *
@@ -480,6 +502,8 @@ class Store extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Stores By Order Status ID
+	 *
+	 * Get the total number of total stores by order status records in the database.
 	 *
 	 * @param int $order_status_id primary key of the order status record
 	 *

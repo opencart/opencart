@@ -107,7 +107,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/tax_class.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Tax Class
+		// Tax Classes
 		$data['tax_classes'] = [];
 
 		$filter_data = [
@@ -203,14 +203,15 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/tax_class.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Tax Class
 		if (isset($this->request->get['tax_class_id'])) {
 			$this->load->model('localisation/tax_class');
 
-			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);
+			$tax_class_info = $this->model_localisation_tax_class->getTaxClass((int)$this->request->get['tax_class_id']);
 		}
 
-		if (isset($this->request->get['tax_class_id'])) {
-			$data['tax_class_id'] = (int)$this->request->get['tax_class_id'];
+		if (!empty($tax_class_info)) {
+			$data['tax_class_id'] = $tax_class_info['tax_class_id'];
 		} else {
 			$data['tax_class_id'] = 0;
 		}
@@ -227,13 +228,13 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$data['description'] = '';
 		}
 
-		// Tax Rate
+		// Tax Rates
 		$this->load->model('localisation/tax_rate');
 
 		$data['tax_rates'] = $this->model_localisation_tax_rate->getTaxRates();
 
-		if (isset($this->request->get['tax_class_id'])) {
-			$data['tax_rules'] = $this->model_localisation_tax_class->getTaxRules($this->request->get['tax_class_id']);
+		if (!empty($tax_class_info)) {
+			$data['tax_rules'] = $this->model_localisation_tax_class->getTaxRules($tax_class_info['tax_class_id']);
 		} else {
 			$data['tax_rules'] = [];
 		}
@@ -259,21 +260,30 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['title'], 3, 32)) {
+		$required = [
+			'tax_class_id' => 0,
+			'title'        => '',
+			'description'  => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['title'], 3, 32)) {
 			$json['error']['title'] = $this->language->get('error_title');
 		}
 
-		if (!oc_validate_length($this->request->post['description'], 3, 255)) {
+		if (!oc_validate_length($post_info['description'], 3, 255)) {
 			$json['error']['description'] = $this->language->get('error_description');
 		}
 
 		if (!$json) {
+			// Tax Class
 			$this->load->model('localisation/tax_class');
 
-			if (!$this->request->post['tax_class_id']) {
-				$json['tax_class_id'] = $this->model_localisation_tax_class->addTaxClass($this->request->post);
+			if (!$post_info['tax_class_id']) {
+				$json['tax_class_id'] = $this->model_localisation_tax_class->addTaxClass($post_info);
 			} else {
-				$this->model_localisation_tax_class->editTaxClass($this->request->post['tax_class_id'], $this->request->post);
+				$this->model_localisation_tax_class->editTaxClass($post_info['tax_class_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -294,7 +304,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -303,6 +313,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $tax_class_id) {
@@ -314,6 +325,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Tax Class
 			$this->load->model('localisation/tax_class');
 
 			foreach ($selected as $tax_class_id) {

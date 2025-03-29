@@ -107,7 +107,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/order_status.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Order Status
+		// Order Statuses
 		$data['order_statuses'] = [];
 
 		$filter_data = [
@@ -206,13 +206,14 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/order_status.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/order_status', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Order Status
 		if (isset($this->request->get['order_status_id'])) {
 			$data['order_status_id'] = (int)$this->request->get['order_status_id'];
 		} else {
 			$data['order_status_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -220,7 +221,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order_status_id'])) {
 			$this->load->model('localisation/order_status');
 
-			$data['order_status'] = $this->model_localisation_order_status->getDescriptions($this->request->get['order_status_id']);
+			$data['order_status'] = $this->model_localisation_order_status->getDescriptions((int)$this->request->get['order_status_id']);
 		} else {
 			$data['order_status'] = [];
 		}
@@ -248,19 +249,27 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['order_status'] as $language_id => $value) {
+		$required = [
+			'order_status_id' => 0,
+			'order_status'    => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['order_status'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 32)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
 		if (!$json) {
+			// Order Status
 			$this->load->model('localisation/order_status');
 
-			if (!$this->request->post['order_status_id']) {
-				$json['order_status_id'] = $this->model_localisation_order_status->addOrderStatus($this->request->post);
+			if (!$post_info['order_status_id']) {
+				$json['order_status_id'] = $this->model_localisation_order_status->addOrderStatus($post_info);
 			} else {
-				$this->model_localisation_order_status->editOrderStatus($this->request->post['order_status_id'], $this->request->post);
+				$this->model_localisation_order_status->editOrderStatus($post_info['order_status_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -281,7 +290,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -315,6 +324,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Order Status
 			$this->load->model('localisation/order_status');
 
 			foreach ($selected as $order_status_id) {

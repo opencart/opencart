@@ -215,7 +215,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Review
+		// Reviews
 		$data['reviews'] = [];
 
 		$filter_data = [
@@ -388,14 +388,15 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/review.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Review
 		if (isset($this->request->get['review_id'])) {
 			$this->load->model('catalog/review');
 
-			$review_info = $this->model_catalog_review->getReview($this->request->get['review_id']);
+			$review_info = $this->model_catalog_review->getReview((int)$this->request->get['review_id']);
 		}
 
-		if (isset($this->request->get['review_id'])) {
-			$data['review_id'] = (int)$this->request->get['review_id'];
+		if (!empty($review_info)) {
+			$data['review_id'] = $review_info['review_id'];
 		} else {
 			$data['review_id'] = 0;
 		}
@@ -465,7 +466,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
+		$required = [
 			'review_id'  => 0,
 			'author'     => '',
 			'product_id' => 0,
@@ -474,7 +475,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'status'     => 0
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		if (!oc_validate_length($post_info['author'], 3, 64)) {
 			$json['error']['author'] = $this->language->get('error_author');
@@ -497,6 +498,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Review
 			$this->load->model('catalog/review');
 
 			if (!$post_info['review_id']) {
@@ -533,6 +535,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Review
 			$this->load->model('catalog/review');
 
 			foreach ($selected as $review_id) {

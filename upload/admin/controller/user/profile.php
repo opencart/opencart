@@ -98,42 +98,55 @@ class Profile extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['username'], 3, 20)) {
+		$required = [
+			'username'      => '',
+			'user_group_id' => 0,
+			'password'      => '',
+			'firstname'     => '',
+			'lastname'      => '',
+			'email'         => '',
+			'image'         => '',
+			'status'        => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['username'], 3, 20)) {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
 		// User
 		$this->load->model('user/user');
 
-		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
+		$user_info = $this->model_user_user->getUserByUsername($post_info['username']);
 
 		if ($user_info && ($this->user->getId() != $user_info['user_id'])) {
 			$json['error']['warning'] = $this->language->get('error_username_exists');
 		}
 
-		if (!oc_validate_length($this->request->post['firstname'], 1, 32)) {
+		if (!oc_validate_length($post_info['firstname'], 1, 32)) {
 			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if (!oc_validate_length($this->request->post['lastname'], 1, 32)) {
+		if (!oc_validate_length($post_info['lastname'], 1, 32)) {
 			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if (!oc_validate_email($this->request->post['email'])) {
+		if (!oc_validate_email($post_info['email'])) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
+		$user_info = $this->model_user_user->getUserByEmail($post_info['email']);
 
 		if ($user_info && ($this->user->getId() != $user_info['user_id'])) {
 			$json['error']['warning'] = $this->language->get('error_email_exists');
 		}
 
-		if ($this->request->post['password']) {
-			$password = html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8');
+		if ($post_info['password']) {
+			$password = html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8');
 
-			if (!oc_validate_length($password, $this->config->get('config_user_password_length'), 40)) {
-				$json['error']['password'] = sprintf($this->language->get('error_password_length'), $this->config->get('config_user_password_length'));
+			if (!oc_validate_length($password, (int)$this->config->get('config_user_password_length'), 40)) {
+				$json['error']['password'] = sprintf($this->language->get('error_password_length'), (int)$this->config->get('config_user_password_length'));
 			}
 
 			$required = [];
@@ -155,16 +168,16 @@ class Profile extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($required) {
-				$json['error']['password'] = sprintf($this->language->get('error_password'), implode(', ', $required), $this->config->get('config_user_password_length'));
+				$json['error']['password'] = sprintf($this->language->get('error_password'), implode(', ', $required), (int)$this->config->get('config_user_password_length'));
 			}
 
-			if ($this->request->post['password'] != $this->request->post['confirm']) {
+			if ($post_info['password'] != $post_info['confirm']) {
 				$json['error']['confirm'] = $this->language->get('error_confirm');
 			}
 		}
 
 		if (!$json) {
-			$user_data = array_merge($this->request->post, [
+			$user_data = array_merge($post_info, [
 				'user_group_id' => $this->user->getGroupId(),
 				'status'        => 1,
 			]);

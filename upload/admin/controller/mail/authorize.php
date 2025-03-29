@@ -92,7 +92,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		// User
+		// Authorize
 		$this->load->model('user/user');
 
 		$user_info = $this->model_user_user->getUser($user_id);

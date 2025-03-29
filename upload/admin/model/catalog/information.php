@@ -20,8 +20,9 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $information_data = [
-	 *     'sort_order' => 0,
-	 *     'status'     => 0
+	 *     'information_description' => [],
+	 *     'sort_order'              => 0,
+	 *     'status'                  => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/information');
@@ -43,7 +44,7 @@ class Information extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		foreach ($data['information_seo_url'] as $store_id => $language) {
@@ -78,8 +79,9 @@ class Information extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $information_data = [
-	 *     'sort_order' => 0,
-	 *     'status'     => 1
+	 *     'information_description' => [],
+	 *     'sort_order'              => 0,
+	 *     'status'                  => 1
 	 * ];
 	 *
 	 * $this->load->model('catalog/information');
@@ -103,7 +105,7 @@ class Information extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('information_id', $information_id);
@@ -149,7 +151,7 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->model_catalog_information->deleteStores($information_id);
 		$this->model_catalog_information->deleteLayouts($information_id);
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('information_id', $information_id);

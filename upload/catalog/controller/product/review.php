@@ -86,12 +86,14 @@ class Review extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		// Review
+		$limit = 5;
+
+		// Reviews
 		$data['reviews'] = [];
 
 		$this->load->model('catalog/review');
 
-		$results = $this->model_catalog_review->getReviewsByProductId($product_id, ($page - 1) * 5, 5);
+		$results = $this->model_catalog_review->getReviewsByProductId($product_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$data['reviews'][] = [
@@ -106,11 +108,11 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $review_total,
 			'page'  => $page,
-			'limit' => 5,
+			'limit' => $limit,
 			'url'   => $this->url->link('product/review.list', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($review_total - $limit)) ? $review_total : ((($page - 1) * $limit) + $limit), $review_total, ceil($review_total / $limit));
 
 		return $this->load->view('product/review_list', $data);
 	}
@@ -135,17 +137,13 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_token');
 		}
 
-		$keys = [
+		$required = [
 			'author',
 			'text',
 			'rating'
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		if (!$this->config->get('config_review_status')) {
 			$json['error']['warning'] = $this->language->get('error_status');
@@ -160,15 +158,15 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_product');
 		}
 
-		if (!oc_validate_length($this->request->post['author'], 3, 25)) {
+		if (!oc_validate_length($post_info['author'], 3, 25)) {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
-		if (!oc_validate_length($this->request->post['text'], 25, 1000)) {
+		if (!oc_validate_length($post_info['text'], 25, 1000)) {
 			$json['error']['text'] = $this->language->get('error_text');
 		}
 
-		if ($this->request->post['rating'] < 1 || $this->request->post['rating'] > 5) {
+		if ($post_info['rating'] < 1 || $post_info['rating'] > 5) {
 			$json['error']['rating'] = $this->language->get('error_rating');
 		}
 
@@ -176,6 +174,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_login');
 		}
 
+		// Order
 		if ($this->customer->isLogged() && $this->config->get('config_review_purchased')) {
 			$this->load->model('account/order');
 
@@ -198,6 +197,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Review
 			$this->load->model('catalog/review');
 
 			$this->model_catalog_review->addReview($product_id, $this->request->post);

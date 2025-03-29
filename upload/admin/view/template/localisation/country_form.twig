@@ -17,76 +17,60 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-country" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <ul class="nav nav-tabs">
-            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-            <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
-          </ul>
-          <div class="tab-content">
-            <div id="tab-general" class="tab-pane active">
-              <ul class="nav nav-tabs">
-                {% for language in languages %}
-                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
-                {% endfor %}
-              </ul>
-              <div class="tab-content">
-                {% for language in languages %}
-                  <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
-                    <div class="row mb-3 required">
-                      <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="country_description[{{ language.language_id }}][name]" value="{{ country_description[language.language_id] ? country_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
-                        <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
+          <div class="row mb-3 required">
+            <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              {% for language in languages %}
+                <div class="input-group">
+                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}" alt="{{ language.name }}"/></div>
+                  <input type="text" name="country_description[{{ language.language_id }}][name]" value="{{ country_description[language.language_id] ? country_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                </div>
+                <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+              {% endfor %}
             </div>
-            <div id="tab-data" class="tab-pane">
-              <div class="row mb-3 required">
-                <label for="input-iso-code-2" class="col-sm-2 col-form-label">{{ entry_iso_code_2 }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="iso_code_2" value="{{ iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control"/>
-                  <div id="error-iso-code-2" class="invalid-feedback"></div>
-                </div>
-              </div>
-              <div class="row mb-3 required">
-                <label for="input-iso-code-3" class="col-sm-2 col-form-label">{{ entry_iso_code_3 }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="iso_code_3" value="{{ iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
-                  <div id="error-iso-code-3" class="invalid-feedback"></div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="input-address-format" class="col-sm-2 col-form-label">{{ entry_address_format }}</label>
-                <div class="col-sm-10">
-                  <select name="address_format_id" id="input-address-format" class="form-select">
-                    {% for address_format in address_formats %}
-                      <option value="{{ address_format.address_format_id }}"{% if address_format.address_format_id == address_format_id %} selected{% endif %}>{{ address_format.name }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
-                <div class="col-sm-10">
-                  <div class="form-check form-switch form-switch-lg">
-                    <input type="hidden" name="postcode_required" value="0"/>
-                    <input type="checkbox" name="postcode_required" value="1" id="input-status" class="form-check-input"{% if postcode_required %} checked{% endif %}/>
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
-                <div class="col-sm-10">
-                  <div class="form-check form-switch form-switch-lg">
-                    <input type="hidden" name="status" value="0"/>
-                    <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
-                  </div>
-                </div>
+          </div>
+          <div class="row mb-3 required">
+            <label for="input-iso-code-2" class="col-sm-2 col-form-label">{{ entry_iso_code_2 }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="iso_code_2" value="{{ iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control"/>
+              <div id="error-iso-code-2" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3 required">
+            <label for="input-iso-code-3" class="col-sm-2 col-form-label">{{ entry_iso_code_3 }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="iso_code_3" value="{{ iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
+              <div id="error-iso-code-3" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-address-format" class="col-sm-2 col-form-label">{{ entry_address_format }}</label>
+            <div class="col-sm-10">
+              <select name="address_format_id" id="input-address-format" class="form-select">
+                {% for address_format in address_formats %}
+                  <option value="{{ address_format.address_format_id }}"{% if address_format.address_format_id == address_format_id %} selected{% endif %}>{{ address_format.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
+            <div class="col-sm-10">
+              <div class="form-switch form-switch-lg">
+                <input type="hidden" name="postcode_required" value="0"/> <input type="checkbox" name="postcode_required" value="1" id="input-status" class="form-check-input"{% if postcode_required %} checked{% endif %}/>
               </div>
             </div>
           </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <div class="form-switch form-switch-lg">
+                <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+              </div>
+            </div>
+          </div>
+
+
           <input type="hidden" name="country_id" value="{{ country_id }}" id="input-country-id"/>
         </form>
       </div>

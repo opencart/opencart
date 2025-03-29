@@ -44,3 +44,4 @@ $_['error_directory']        = 'Install directory %s could not be found!';
 $_['error_directory_exists'] = 'Path %s already exists!';
 $_['error_unzip']            = 'Zip file could not be opened!';
 $_['error_upload']           = 'File could not be uploaded!';
+$_['error_unknown']          = 'An unknown error occurred!';

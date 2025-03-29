@@ -6,13 +6,32 @@ namespace Opencart\System\Library\Cart;
  * @package Opencart\System\Library\Cart
  */
 class Curl {
+	/**
+	 * @var string
+	 */
 	private string $url = '';
+	/**
+	 * @var array<string, mixed>
+	 */
 	private array $option = [];
 
+	/**
+	 * Constructor
+	 *
+	 * @param string $url
+	 */
 	public function __construct(string $url) {
 		$this->url = $url;
 	}
 
+	/**
+	 * Set Option
+	 *
+	 * @param string $key
+	 * @param array  $data<string, mixed> array of data
+	 *
+	 * @return void
+	 */
 	public function setOption(string $key, array $data = []): void {
 		$this->option[$key] = $data;
 	}

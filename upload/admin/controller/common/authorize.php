@@ -127,13 +127,20 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$required = [
+			'code'     => '',
+			'redirect' => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
 		if (isset($this->request->cookie['admin_authorize'])) {
 			$token = $this->request->cookie['admin_authorize'];
 		} else {
 			$token = '';
 		}
 
-		// If token already exists, check if it's valid
+		// 3. If token already exists, check if it's valid
 		$this->load->model('user/user');
 
 		$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);
@@ -142,7 +149,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('common/authorize', 'user_token=' . $this->session->data['user_token'], true);
 		} elseif ($token_info['total'] > 2) {
 			$json['redirect'] = $this->url->link('common/authorize.reset', 'user_token=' . $this->session->data['user_token'], true);
-		} elseif (!isset($this->request->post['code']) || !isset($this->session->data['code']) || ($this->request->post['code'] != $this->session->data['code'])) {
+		} elseif (!isset($post_info['code']) || !isset($this->session->data['code']) || ($post_info['code'] != $this->session->data['code'])) {
 			$total = $token_info['total'] + 1;
 
 			if ($total <= 2) {
@@ -160,8 +167,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$this->model_user_user->editAuthorizeStatus($token_info['user_authorize_id'], true);
 			$this->model_user_user->editAuthorizeTotal($token_info['user_authorize_id'], 0);
 
-			if (isset($this->request->post['redirect'])) {
-				$redirect = urldecode(html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8'));
+			if (isset($post_info['redirect'])) {
+				$redirect = urldecode(html_entity_decode($post_info['redirect'], ENT_QUOTES, 'UTF-8'));
 			} else {
 				$redirect = '';
 			}
@@ -285,7 +292,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$data['text_unlock'] = $this->language->get('text_failed');
 		}
 
-		// Reset token so it cant be used again
+		// Reset token so it can't be used again
 		$this->model_user_user->deleteTokenByCode($code);
 
 		// Logout user

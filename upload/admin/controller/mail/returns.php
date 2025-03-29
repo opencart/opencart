@@ -45,11 +45,13 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($notify) {
+			// Return
 			$this->load->model('sale/returns');
 
 			$return_info = $this->model_sale_returns->getReturn($return_id);
 
 			if ($return_info) {
+				// Order
 				$this->load->model('sale/order');
 
 				$order_info = $this->model_sale_order->getOrder($return_info['order_id']);

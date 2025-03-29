@@ -110,7 +110,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Subscription Plan
+		// Subscription Plans
 		$data['subscription_plans'] = [];
 
 		$filter_data = [
@@ -207,25 +207,26 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/subscription_plan.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/subscription_plan', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Subscription Plan
 		if (isset($this->request->get['subscription_plan_id'])) {
 			$this->load->model('catalog/subscription_plan');
 
-			$subscription_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($this->request->get['subscription_plan_id']);
+			$subscription_info = $this->model_catalog_subscription_plan->getSubscriptionPlan((int)$this->request->get['subscription_plan_id']);
 		}
 
-		if (isset($this->request->get['subscription_plan_id'])) {
-			$data['subscription_plan_id'] = (int)$this->request->get['subscription_plan_id'];
+		if (!empty($subscription_info)) {
+			$data['subscription_plan_id'] = $subscription_info['subscription_plan_id'];
 		} else {
 			$data['subscription_plan_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['subscription_plan_id'])) {
-			$data['subscription_plan_description'] = $this->model_catalog_subscription_plan->getDescriptions($this->request->get['subscription_plan_id']);
+		if (!empty($subscription_info)) {
+			$data['subscription_plan_description'] = $this->model_catalog_subscription_plan->getDescriptions($subscription_info['subscription_plan_id']);
 		} else {
 			$data['subscription_plan_description'] = [];
 		}
@@ -334,13 +335,28 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['subscription_plan_description'] as $language_id => $value) {
+		$required = [
+			'subscription_plan_id'          => 0,
+			'subscription_plan_description' => [],
+			'trial_frequency'               => '',
+			'trial_duration'                => 0,
+			'trial_cycle'                   => 0,
+			'trial_status'                  => 0,
+			'frequency'                     => 0,
+			'cycle'                         => 0,
+			'status'                        => 0,
+			'sort_order'                    => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['subscription_plan_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
-		if ($this->request->post['trial_duration'] && (int)$this->request->post['trial_duration'] < 1) {
+		if ($post_info['trial_duration'] && (int)$post_info['trial_duration'] < 1) {
 			$json['error']['trial_duration'] = $this->language->get('error_trial_duration');
 		}
 
@@ -349,12 +365,13 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Subscription Plan
 			$this->load->model('catalog/subscription_plan');
 
-			if (!$this->request->post['subscription_plan_id']) {
-				$json['subscription_plan_id'] = $this->model_catalog_subscription_plan->addSubscriptionPlan($this->request->post);
+			if (!$post_info['subscription_plan_id']) {
+				$json['subscription_plan_id'] = $this->model_catalog_subscription_plan->addSubscriptionPlan($post_info);
 			} else {
-				$this->model_catalog_subscription_plan->editSubscriptionPlan($this->request->post['subscription_plan_id'], $this->request->post);
+				$this->model_catalog_subscription_plan->editSubscriptionPlan($post_info['subscription_plan_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -375,7 +392,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -385,6 +402,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Subscription Plan
 			$this->load->model('catalog/subscription_plan');
 
 			foreach ($selected as $subscription_plan_id) {
@@ -409,7 +427,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -418,6 +436,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $subscription_plan_id) {
@@ -429,6 +448,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Subscription Plan
 			$this->load->model('catalog/subscription_plan');
 
 			foreach ($selected as $subscription_plan_id) {

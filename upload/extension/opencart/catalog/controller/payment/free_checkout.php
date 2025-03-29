@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
 /**
- * Class FreeCheckout
+ * Class Free Checkout
  *
- * @package Opencart\Catalog\Controller\Extension\Opencart\Module
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Payment
  */
 class FreeCheckout extends \Opencart\System\Engine\Controller {
 	/**
@@ -49,6 +49,7 @@ class FreeCheckout extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Order
 			$this->load->model('checkout/order');
 
 			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_free_checkout_order_status_id'));

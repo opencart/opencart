@@ -24,6 +24,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$products = [];
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($products as $key => $product) {
@@ -61,7 +62,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 				// Validate that have been sent are part of the product
 				foreach ($option as $product_option_id => $value) {
-					$product_option_info = $this->model_catalog_product->getOption($product_id, $product_option_id);
+					$product_option_info = $this->model_catalog_product->getOption($product_id, (int)$product_option_id);
 
 					if ($product_option_info) {
 						if ($product_option_info['type'] == 'select' || $product_option_info['type'] == 'radio' || $product_option_info['type'] == 'checkbox') {
@@ -75,14 +76,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 								$product_option_value_info = $this->model_catalog_product->getOptionValue($product_id, $product_option_value_id);
 
 								if (!$product_option_value_info) {
-									$output['error']['product_' . $key . '_option_' . $product_option_id] = $this->language->get('error_option');
+									$output['error']['product_' . (int)$key . '_option_' . (int)$product_option_id] = $this->language->get('error_option');
 								} elseif ($product_option_value_info['subtract'] && (!$this->config->get('config_stock_checkout') && (!$product_option_value_info['quantity'] || ($product_option_value_info['quantity'] < $product['quantity'])))) {
-									$output['error']['product_' . $key . '_option_' . $product_option_id] = $this->language->get('error_option_stock');
+									$output['error']['product_' . (int)$key . '_option_' . (int)$product_option_id] = $this->language->get('error_option_stock');
 								}
 							}
 						}
 					} else {
-						$output['error']['product_' . $key . '_option_' . $product_option_id] = $this->language->get('error_option');
+						$output['error']['product_' . (int)$key . '_option_' . (int)$product_option_id] = $this->language->get('error_option');
 					}
 				}
 
@@ -91,9 +92,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 				foreach ($product_options as $product_option) {
 					if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-						$output['error']['product_' . $key . '_option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+						$output['error']['product_' . (int)$key . '_option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 					} elseif (($product_option['type'] == 'text') && !empty($product_option['validation']) && !oc_validate_regex($option[$product_option['product_option_id']], $product_option['validation'])) {
-						$output['error']['product_' . $key . '_option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_regex'), $product_option['name']);
+						$output['error']['product_' . (int)$key . '_option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_regex'), $product_option['name']);
 					}
 				}
 
@@ -107,22 +108,22 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 				// Stock
 				if (!$this->config->get('config_stock_checkout') && (!$product_info['quantity'] || ($product_info['quantity'] < $product_total))) {
-					$output['error']['product_' . $key . '_product'] = $this->language->get('error_stock');
+					$output['error']['product_' . (int)$key . '_product'] = $this->language->get('error_stock');
 				}
 
 				// Minimum quantity
 				if ($this->request->get['call'] == 'confirm' && ($product_info['minimum'] > $product_total)) {
-					$output['error']['product_' . $key . '_product'] = sprintf($this->language->get('error_minimum'), $product_info['name'], $product_info['minimum']);
+					$output['error']['product_' . (int)$key . '_product'] = sprintf($this->language->get('error_minimum'), $product_info['name'], $product_info['minimum']);
 				}
 
 				// Validate subscription plan
 				$subscriptions = $this->model_catalog_product->getSubscriptions($product['product_id']);
 
 				if ($subscriptions && (!$subscription_plan_id || !in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id')))) {
-					$output['error']['product_' . $key . '_subscription'] = $this->language->get('error_subscription');
+					$output['error']['product_' . (int)$key . '_subscription'] = $this->language->get('error_subscription');
 				}
 			} else {
-				$output['error']['product_' . $key . '_product'] = $this->language->get('error_product');
+				$output['error']['product_' . (int)$key . '_product'] = $this->language->get('error_product');
 			}
 
 			if (!$output) {

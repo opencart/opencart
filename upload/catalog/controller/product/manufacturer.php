@@ -99,6 +99,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$limit = (int)$this->config->get('config_pagination');
 		}
 
+		// Manufacturer
 		$this->load->model('catalog/manufacturer');
 
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
@@ -158,6 +159,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				'limit'                  => $limit
 			];
 
+			// Products
 			$this->load->model('catalog/product');
 
 			// Image

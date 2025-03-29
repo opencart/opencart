@@ -11,6 +11,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Return Action
 	 *
+	 * Create a new return action record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return ?int
@@ -46,6 +48,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Return Action
 	 *
+	 * Edit return action record in the database.
+	 *
 	 * @param int                  $return_action_id primary key of the return action record
 	 * @param array<string, mixed> $data             array of data
 	 *
@@ -74,6 +78,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Return Action
 	 *
+	 * Delete return action record in the database.
+	 *
 	 * @param int $return_action_id primary key of the return action record
 	 *
 	 * @return void
@@ -92,6 +98,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Return Actions By Language ID
+	 *
+	 * Delete return actions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -112,6 +120,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Return Action
 	 *
+	 * Get the record of the return action record in the database.
+	 *
 	 * @param int $return_action_id primary key of the return action record
 	 *
 	 * @return array<string, mixed> return action record that has return action ID
@@ -130,6 +140,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Return Actions
+	 *
+	 * Get the record of the return action records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -187,6 +199,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Description
 	 *
+	 * Create a new return action description record in the database.
+	 *
 	 * @param int                  $return_action_id primary key of the return action record
 	 * @param int                  $language_id      primary key of the language record
 	 * @param array<string, mixed> $data             array of data
@@ -211,6 +225,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Descriptions
+	 *
+	 * Get the record of the country description records in the database.
 	 *
 	 * @param int $return_action_id primary key of the return action record
 	 *
@@ -237,6 +253,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions By Language ID
 	 *
+	 * Get the record of the country descriptions by language records in the database.
+	 *
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<int, array<string, string>> description records that have language ID
@@ -255,6 +273,8 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Return Actions
+	 *
+	 * Get the total number of return action records in the database.
 	 *
 	 * @return int total number of return action records
 	 *

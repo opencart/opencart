@@ -106,27 +106,23 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$keys = [
-			'name',
-			'email',
-			'enquiry'
+		$required = [
+			'name'    => '',
+			'email'   => '',
+			'enquiry' => ''
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
-		if (!oc_validate_length($this->request->post['name'], 3, 32)) {
+		if (!oc_validate_length($post_info['name'], 3, 32)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!oc_validate_email($this->request->post['email'])) {
+		if (!oc_validate_email($post_info['email'])) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if (!oc_validate_length($this->request->post['enquiry'], 10, 3000)) {
+		if (!oc_validate_length($post_info['enquiry'], 10, 3000)) {
 			$json['error']['enquiry'] = $this->language->get('error_enquiry');
 		}
 
@@ -158,10 +154,10 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$mail->setTo($this->config->get('config_email'));
 				// Less spam and fix bug when using SMTP like sendgrid.
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setReplyTo($this->request->post['email']);
-				$mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));
-				$mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->post['name']), ENT_QUOTES, 'UTF-8'));
-				$mail->setText($this->request->post['enquiry']);
+				$mail->setReplyTo($post_info['email']);
+				$mail->setSender(html_entity_decode($post_info['name'], ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $post_info['name']), ENT_QUOTES, 'UTF-8'));
+				$mail->setText($post_info['enquiry']);
 				$mail->send();
 			}
 

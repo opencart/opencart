@@ -70,17 +70,13 @@ class Login extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Stop any undefined index messages.
-		$keys = [
-			'username',
-			'password',
-			'redirect'
+		$required = [
+			'username' => '',
+			'password' => '',
+			'redirect' => ''
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		if ($this->user->isLogged() && isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
@@ -92,7 +88,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 
-		if (!$json && !$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
+		if (!$json && !$this->user->login($post_info['username'], html_entity_decode($post_info['password'], ENT_QUOTES, 'UTF-8'))) {
 			$json['error'] = $this->language->get('error_login');
 		}
 
@@ -107,6 +103,7 @@ class Login extends \Opencart\System\Engine\Controller {
 				'user_agent' => $this->request->server['HTTP_USER_AGENT']
 			];
 
+			// User
 			$this->load->model('user/user');
 
 			$this->model_user_user->addLogin($this->user->getId(), $login_data);

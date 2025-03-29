@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 /**
- * Class Country
+ * Class Identifier
  *
  * @package Opencart\Admin\Controller\Catalog
  */
@@ -79,7 +79,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/identifier.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Country
+		// Identifiers
 		$data['identifiers'] = [];
 
 		$filter_data = [
@@ -144,32 +144,39 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/identifier.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/identifier', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Identifier
 		if (isset($this->request->get['identifier_id'])) {
 			$this->load->model('catalog/identifier');
 
-			$identifier_id_info = $this->model_catalog_identifier->getIdentifier($this->request->get['identifier_id']);
+			$identifier_info = $this->model_catalog_identifier->getIdentifier((int)$this->request->get['identifier_id']);
 		}
 
-		if (isset($this->request->get['identifier_id'])) {
-			$data['identifier_id'] = (int)$this->request->get['identifier_id'];
+		if (!empty($identifier_info)) {
+			$data['identifier_id'] = $identifier_info['identifier_id'];
 		} else {
 			$data['identifier_id'] = 0;
 		}
 
-		if (!empty($identifier_id_info)) {
-			$data['name'] = $identifier_id_info['name'];
+		if (!empty($identifier_info)) {
+			$data['name'] = $identifier_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (!empty($identifier_id_info)) {
-			$data['code'] = $identifier_id_info['code'];
+		if (!empty($identifier_info)) {
+			$data['code'] = $identifier_info['code'];
 		} else {
 			$data['code'] = '';
 		}
 
-		if (!empty($identifier_id_info)) {
-			$data['status'] = $identifier_id_info['status'];
+		if (!empty($identifier_info)) {
+			$data['validation'] = $identifier_info['validation'];
+		} else {
+			$data['validation'] = '';
+		}
+
+		if (!empty($identifier_info)) {
+			$data['status'] = $identifier_info['status'];
 		} else {
 			$data['status'] = 0;
 		}
@@ -195,21 +202,36 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 1, 64)) {
+		$required = [
+			'identifier_id' => 0,
+			'name'          => '',
+			'code'          => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 1, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!oc_validate_length($this->request->post['code'], 3, 48)) {
+		if (!oc_validate_length($post_info['code'], 3, 48)) {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
-		if (!$json) {
-			$this->load->model('catalog/identifier');
+		// Identifier
+		$this->load->model('catalog/identifier');
 
-			if (!$this->request->post['identifier_id']) {
+		$identifier_info = $this->model_catalog_identifier->getIdentifierByCode($post_info['code']);
+
+		if ($identifier_info && (!$post_info['identifier_id'] || ($identifier_info['identifier_id'] != $post_info['identifier_id']))) {
+			$json['error']['code'] = $this->language->get('error_exists');
+		}
+
+		if (!$json) {
+			if (!$post_info['identifier_id']) {
 				$json['identifier_id'] = $this->model_catalog_identifier->addIdentifier($this->request->post);
 			} else {
-				$this->model_catalog_identifier->editIdentifier($this->request->post['identifier_id'], $this->request->post);
+				$this->model_catalog_identifier->editIdentifier($post_info['identifier_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -230,7 +252,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -239,22 +261,8 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('catalog/identifier');
-		$this->load->model('catalog/product');
-
-		foreach ($selected as $identifier_id) {
-			$identifier_info = $this->model_catalog_identifier->getIdentifier($identifier_id);
-
-			if ($identifier_info) {
-				$identifier_total = $this->model_catalog_product->getCodeByCode($identifier_info['code']);
-
-				if ($identifier_total) {
-					$json['error'] = sprintf($this->language->get('error_identifier'), $identifier_total);
-				}
-			}
-		}
-
 		if (!$json) {
+			// Identifier
 			$this->load->model('catalog/identifier');
 
 			foreach ($selected as $identifier_id) {

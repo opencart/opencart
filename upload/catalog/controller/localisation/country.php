@@ -14,6 +14,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$json = [];
 
+		// Country
 		if (isset($this->request->get['country_id'])) {
 			$country_id = (int)$this->request->get['country_id'];
 		} else {
@@ -24,6 +25,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$country_info = $this->model_localisation_country->getCountry($country_id);
 
+		// Zones
 		if ($country_info) {
 			$this->load->model('localisation/zone');
 

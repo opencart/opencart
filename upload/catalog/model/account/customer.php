@@ -11,6 +11,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Customer
 	 *
+	 * Create a new customer record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new customer record
@@ -51,6 +53,7 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$customer_id = $this->db->getLastId();
 
+		// Approval
 		if ($customer_group_info['approval']) {
 			$this->load->model('account/approval');
 
@@ -62,6 +65,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Customer
+	 *
+	 * Edit customer record in the database.
 	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
@@ -107,6 +112,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Newsletter
 	 *
+	 * Edit customer newsletter record in the database.
+	 *
 	 * @param int  $customer_id primary key of the customer record
 	 * @param bool $newsletter
 	 *
@@ -125,6 +132,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer
 	 *
+	 * Delete customer record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -138,12 +147,12 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function deleteCustomer(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		// Activity
+		// Activities
 		$this->load->model('account/activity');
 
 		$this->model_account_activity->deleteActivities($customer_id);
 
-		// Address
+		// Addresses
 		$this->load->model('account/address');
 
 		$this->model_account_address->deleteAddresses($customer_id);
@@ -153,22 +162,22 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$this->model_account_affiliate->deleteAffiliate($customer_id);
 
-		// Customer Approval
+		// Customer Approvals
 		$this->load->model('account/approval');
 
 		$this->model_account_approval->deleteApprovals($customer_id);
 
-		// Reward
+		// Rewards
 		$this->load->model('account/reward');
 
 		$this->model_account_reward->deleteRewards($customer_id);
 
-		// Transaction
+		// Transactions
 		$this->load->model('account/transaction');
 
 		$this->model_account_transaction->deleteTransactions($customer_id);
 
-		// Wishlist
+		// Wishlists
 		$this->load->model('account/wishlist');
 
 		$this->model_account_wishlist->deleteWishlists($customer_id);
@@ -180,6 +189,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Customer
+	 *
+	 * Get the record of the customer record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -246,6 +257,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer History
 	 *
+	 * Delete customer history record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -263,6 +276,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Ip
 	 *
+	 * Delete customer ip record in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return void
@@ -279,6 +294,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Ips
+	 *
+	 * Get the record of the customer ip records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -299,6 +316,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Ips
 	 *
+	 * Get the total number of total customer ip records in the database.
+	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
 	 * @return int total number of ip records that have customer ID
@@ -317,6 +336,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Login
+	 *
+	 * Create a new login record in the database.
 	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $ip
@@ -396,6 +417,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Authorize
 	 *
+	 * Create a new customer authorize record in the database.
+	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of data
 	 *
@@ -420,6 +443,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Authorize Status
+	 *
+	 * Edit customer authorize status record in the database.
 	 *
 	 * @param int  $customer_authorize_id primary key of the customer authorize record
 	 * @param bool $status
@@ -457,6 +482,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Authorize
 	 *
+	 * Delete customer authorize record in the database.
+	 *
 	 * @param int $customer_id           primary key of the customer record
 	 * @param int $customer_authorize_id primary key of the customer authorize record
 	 *
@@ -481,6 +508,8 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Customer Authorizes
 	 *
+	 * Delete customer authorize records in the database.
+	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $token
 	 *
@@ -498,6 +527,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Authorize By Token
+	 *
+	 * Get the record of the customer authorize by token record in the database.
 	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $token
@@ -535,6 +566,8 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Token
+	 *
+	 * Create a new customer token record in the database.
 	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param string $type

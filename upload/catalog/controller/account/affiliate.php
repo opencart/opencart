@@ -122,7 +122,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['bank_account_number'] = '';
 		}
 
-		// Custom Field
+		// Custom Fields
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
@@ -142,6 +142,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
 		if (!$affiliate_info && $this->config->get('config_affiliate_id')) {
+			// Information
 			$this->load->model('catalog/information');
 
 			$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_affiliate_id'));
@@ -189,18 +190,18 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
-		$filter_data = [
-			'payment_method'      => '',
-			'cheque'              => '',
-			'paypal'              => '',
-			'bank_account_name'   => '',
-			'bank_account_number' => '',
-			'agree'               => 0
-		];
-
-		$post_info = oc_filter_data($filter_data, $this->request->post);
-
 		if (!$json) {
+			$required = [
+				'payment_method'      => '',
+				'cheque'              => '',
+				'paypal'              => '',
+				'bank_account_name'   => '',
+				'bank_account_number' => '',
+				'agree'               => 0
+			];
+
+			$post_info = $this->request->post + $required;
+
 			// Payment validation
 			if (empty($post_info['payment_method'])) {
 				$json['error']['payment_method'] = $this->language->get('error_payment_method');
@@ -220,7 +221,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Custom field validation
+			// Custom fields validation
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
@@ -241,6 +242,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
 			if (!$affiliate_info) {
+				// Information
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_affiliate_id'));

@@ -11,6 +11,8 @@ class Event extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Event
 	 *
+	 * Create a new event record in the database.
+	 *
 	 * @param array<string, mixed> $data array of of data
 	 *
 	 * @return int returns the primary key of the new event record
@@ -38,6 +40,8 @@ class Event extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Event
+	 *
+	 * Delete event record in the database.
 	 *
 	 * @param int $event_id primary key of the event record
 	 *
@@ -72,6 +76,8 @@ class Event extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Edit Status
+	 *
+	 * Edit event status record in the database.
 	 *
 	 * @param int  $event_id primary key of the event record
 	 * @param bool $status
@@ -108,6 +114,8 @@ class Event extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Event
+	 *
+	 * Get the record of the event record in the database.
 	 *
 	 * @param int $event_id primary key of the event record
 	 *
@@ -146,6 +154,8 @@ class Event extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Events
+	 *
+	 * Get the record of the event records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -207,6 +217,8 @@ class Event extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Events
+	 *
+	 * Get the total number of total event records in the database.
 	 *
 	 * @return int total number of event records
 	 *

@@ -20,12 +20,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $custom_field_data = [
-	 *     'type'       => 'radio',
-	 *     'value'      => 'Custom Field Value',
-	 *     'validation' => '',
-	 *     'location'   => 'account',
-	 *     'status'     => 0,
-	 *     'sort_order' => 0
+	 *     'custom_field_description' => [],
+	 *     'type'                     => 'radio',
+	 *     'value'                    => 'Custom Field Value',
+	 *     'validation'               => '',
+	 *     'location'                 => 'account',
+	 *     'status'                   => 0,
+	 *     'sort_order'               => 0
 	 * ];
 	 *
 	 * $this->load->model('customer/custom_field');
@@ -71,12 +72,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $custom_field_data = [
-	 *     'type'       => 'radio',
-	 *     'value'      => 'Custom Field Value',
-	 *     'validation' => '',
-	 *     'location'   => 'account',
-	 *     'status'     => 1,
-	 *     'sort_order' => 0
+	 *     'custom_field_description' => [],
+	 *     'type'                     => 'radio',
+	 *     'value'                    => 'Custom Field Value',
+	 *     'validation'               => '',
+	 *     'location'                 => 'account',
+	 *     'status'                   => 1,
+	 *     'sort_order'               => 0
 	 * ];
 	 *
 	 * $this->load->model('customer/custom_field');

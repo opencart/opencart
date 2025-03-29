@@ -107,7 +107,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('design/banner.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Banner
+		// Banners
 		$data['banners'] = [];
 
 		$filter_data = [
@@ -203,14 +203,15 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('design/banner.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Banner
 		if (isset($this->request->get['banner_id'])) {
 			$this->load->model('design/banner');
 
 			$banner_info = $this->model_design_banner->getBanner($this->request->get['banner_id']);
 		}
 
-		if (isset($this->request->get['banner_id'])) {
-			$data['banner_id'] = (int)$this->request->get['banner_id'];
+		if (!empty($banner_info)) {
+			$data['banner_id'] = $banner_info['banner_id'];
 		} else {
 			$data['banner_id'] = 0;
 		}
@@ -227,7 +228,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -288,12 +289,21 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 3, 64)) {
+		$required = [
+			'banner_id'    => 0,
+			'banner_image' => [],
+			'name'         => '',
+			'status'       => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 3, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (isset($this->request->post['banner_image'])) {
-			foreach ($this->request->post['banner_image'] as $language_id => $banner_image) {
+		if (isset($post_info['banner_image'])) {
+			foreach ($post_info['banner_image'] as $language_id => $banner_image) {
 				foreach ($banner_image as $key => $value) {
 					if (!oc_validate_length($value['title'], 2, 64)) {
 						$json['error']['image_' . $language_id . '_' . $key . '_title'] = $this->language->get('error_title');
@@ -303,12 +313,13 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Banner
 			$this->load->model('design/banner');
 
-			if (!$this->request->post['banner_id']) {
-				$json['banner_id'] = $this->model_design_banner->addBanner($this->request->post);
+			if (!$post_info['banner_id']) {
+				$json['banner_id'] = $this->model_design_banner->addBanner($post_info);
 			} else {
-				$this->model_design_banner->editBanner($this->request->post['banner_id'], $this->request->post);
+				$this->model_design_banner->editBanner($post_info['banner_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -329,7 +340,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -339,6 +350,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Banner
 			$this->load->model('design/banner');
 
 			foreach ($selected as $banner_id) {

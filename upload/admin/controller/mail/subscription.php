@@ -231,6 +231,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscriptions = $this->model_checkout_subscription->getSubscriptions($filter_data);
 
 		if ($subscriptions) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			foreach ($subscriptions as $subscription) {

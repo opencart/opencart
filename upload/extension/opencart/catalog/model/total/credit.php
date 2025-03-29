@@ -51,6 +51,7 @@ class Credit extends \Opencart\System\Engine\Model {
 		$this->load->language('extension/opencart/total/credit');
 
 		if ($order_info['customer_id']) {
+			// Transaction
 			$this->load->model('account/transaction');
 
 			$this->model_account_transaction->addTransaction($order_info['customer_id'], $order_info['order_id'], sprintf($this->language->get('text_order_id'), (int)$order_info['order_id']), (float)$order_total['value']);
@@ -65,6 +66,7 @@ class Credit extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function unconfirm(array $order_info): void {
+		// Transaction
 		$this->load->model('account/transaction');
 
 		$this->model_account_transaction->deleteTransactionByOrderId($order_info['order_id']);

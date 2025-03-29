@@ -18,7 +18,6 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-language" action="{{ save }}" method="post" data-oc-toggle="ajax">
-
           <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
@@ -26,7 +25,6 @@
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
-
           <div class="row mb-3 required">
             <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
             <div class="col-sm-10">
@@ -34,14 +32,12 @@
               <div id="error-code" class="invalid-feedback"></div>
             </div>
           </div>
-
           <div class="row mb-3">
             <label for="input-extension" class="col-sm-2 col-form-label">{{ entry_extension }}</label>
             <div class="col-sm-10">
               <input type="text" name="extension" value="{{ extension }}" id="input-extension" class="form-control" readonly/>
             </div>
           </div>
-
           <div class="row mb-3 required">
             <label for="input-locale" class="col-sm-2 col-form-label">{{ entry_locale }}</label>
             <div class="col-sm-10">
@@ -50,25 +46,22 @@
               <div id="error-locale" class="invalid-feedback"></div>
             </div>
           </div>
-
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <div class="form-check form-switch form-switch-lg">
+              <div class="form-switch form-switch-lg">
                 <input type="hidden" name="status" value="0"/>
                 <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
               <div class="form-text">{{ help_status }}</div>
             </div>
           </div>
-
           <div class="row mb-3">
             <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
-              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>
           </div>
-
           <input type="hidden" name="language_id" value="{{ language_id }}" id="input-language-id"/>
         </form>
       </div>

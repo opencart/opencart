@@ -50,6 +50,7 @@ class Fixer extends \Opencart\System\Engine\Controller {
 
 				$results = $this->model_localisation_currency->getCurrencies();
 
+				// Currencies
 				foreach ($results as $result) {
 					if (isset($currencies[$result['code']])) {
 						$from = $currencies['EUR'];

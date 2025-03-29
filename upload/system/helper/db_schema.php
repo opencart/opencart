@@ -1187,11 +1187,6 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
-				'name'    => 'column',
-				'type'    => 'int(11)',
-				'default' => '0'
-			],
-			[
 				'name'    => 'sort_order',
 				'type'    => 'int(3)',
 				'default' => '0'
@@ -1200,14 +1195,6 @@ function oc_db_schema() {
 				'name'    => 'status',
 				'type'    => 'tinyint(1)',
 				'default' => '0'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			],
-			[
-				'name' => 'date_modified',
-				'type' => 'datetime'
 			]
 		],
 		'primary' => [
@@ -1432,10 +1419,6 @@ function oc_db_schema() {
 				'name'           => 'country_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(128)'
 			],
 			[
 				'name' => 'iso_code_2',
@@ -3408,8 +3391,9 @@ function oc_db_schema() {
 		'name'  => 'identifier',
 		'field' => [
 			[
-				'name' => 'identifier_id',
-				'type' => 'int(11)'
+				'name'           => 'identifier_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
 			],
 			[
 				'name' => 'name',
@@ -3420,8 +3404,12 @@ function oc_db_schema() {
 				'type' => 'varchar(48)'
 			],
 			[
-				'name' => 'status',
-				'type' => 'tinyint(1)',
+				'name' => 'validation',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
 				'default' => '0'
 			]
 		],
@@ -5096,30 +5084,6 @@ function oc_db_schema() {
 				'type' => 'varchar(64)'
 			],
 			[
-				'name' => 'sku',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'upc',
-				'type' => 'varchar(12)'
-			],
-			[
-				'name' => 'ean',
-				'type' => 'varchar(14)'
-			],
-			[
-				'name' => 'jan',
-				'type' => 'varchar(13)'
-			],
-			[
-				'name' => 'isbn',
-				'type' => 'varchar(17)'
-			],
-			[
-				'name' => 'mpn',
-				'type' => 'varchar(64)'
-			],
-			[
 				'name' => 'location',
 				'type' => 'varchar(128)'
 			],
@@ -5331,8 +5295,9 @@ function oc_db_schema() {
 		'name'  => 'product_code',
 		'field' => [
 			[
-				'name' => 'product_code_id',
-				'type' => 'int(11)'
+				'name'           => 'product_code_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
 			],
 			[
 				'name' => 'product_id',
@@ -6577,6 +6542,49 @@ function oc_db_schema() {
 				'table' => 'store',
 				'field' => 'store_id'
 			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'ssr',
+		'field' => [
+			[
+				'name'           => 'ssr_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(128)'
+			],
+			[
+				'name' => 'description',
+				'type' => 'text'
+			],
+			[
+				'name' => 'action',
+				'type' => 'text'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
+			],
+			[
+				'name' => 'date_modified',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'ssr_id'
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -7854,10 +7862,6 @@ function oc_db_schema() {
 			[
 				'name' => 'country_id',
 				'type' => 'int(11)'
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(128)'
 			],
 			[
 				'name' => 'code',

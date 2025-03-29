@@ -31,7 +31,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		$data['approve'] = $this->url->link('customer/customer_approval.approve', 'user_token=' . $this->session->data['user_token'], true);
 		$data['deny'] = $this->url->link('customer/customer_approval.deny', 'user_token=' . $this->session->data['user_token'], true);
 
-		// Customer Group
+		// Customer Groups
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -138,7 +138,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('customer/customer_approval.list', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
-		// Customer Approval
+		// Customer Approvals
 		$data['customer_approvals'] = [];
 
 		$filter_data = [
@@ -221,12 +221,13 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Customer Approval
 			$this->load->model('customer/customer_approval');
 
 			$approvals = [];
 
 			if (isset($this->request->post['selected'])) {
-				$approvals = $this->request->post['selected'];
+				$approvals = (array)$this->request->post['selected'];
 			}
 
 			if (isset($this->request->get['customer_approval_id'])) {
@@ -269,12 +270,13 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Customer Approval
 			$this->load->model('customer/customer_approval');
 
 			$denials = [];
 
 			if (isset($this->request->post['selected'])) {
-				$denials = $this->request->post['selected'];
+				$denials = (array)$this->request->post['selected'];
 			}
 
 			if (isset($this->request->get['customer_approval_id'])) {

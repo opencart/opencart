@@ -31,7 +31,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$data['code'] = '';
 			}
 
-			// Country
+			// Countries
 			$this->load->model('localisation/country');
 
 			$data['countries'] = $this->model_localisation_country->getCountries();
@@ -54,17 +54,13 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$keys = [
+		$required = [
 			'postcode',
 			'country_id',
 			'zone_id'
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		if (!$this->cart->hasProducts()) {
 			$json['error']['warning'] = $this->language->get('error_product');
@@ -77,18 +73,23 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		// Country
 		$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
+		$country_info = $this->model_localisation_country->getCountry((int)$post_info['country_id']);
 
-		if ($country_info && $country_info['postcode_required'] && !oc_validate_length($this->request->post['postcode'], 2, 10)) {
+		if ($country_info && $country_info['postcode_required'] && !oc_validate_length($post_info['postcode'], 2, 10)) {
 			$json['error']['postcode'] = $this->language->get('error_postcode');
 		}
 
-		if (!$country_info || $this->request->post['country_id'] == '') {
+		if (!$country_info) {
 			$json['error']['country'] = $this->language->get('error_country');
 		}
 
-		if ($this->request->post['zone_id'] == '') {
-			$json['error']['zone'] = $this->language->get('error_zone');
+		// Zones
+		$this->load->model('localisation/zone');
+
+		$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
+
+		if ($zone_total && !$post_info['zone_id']) {
+			$json['error']['address_zone'] = $this->language->get('error_zone');
 		}
 
 		if (!$json) {
@@ -101,13 +102,13 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$country = '';
 				$iso_code_2 = '';
 				$iso_code_3 = '';
-				$address_format_id = '';
+				$address_format_id = 0;
 			}
 
 			// Zone
 			$this->load->model('localisation/zone');
 
-			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
+			$zone_info = $this->model_localisation_zone->getZone($post_info['zone_id']);
 
 			if ($zone_info) {
 				$zone = $zone_info['name'];
@@ -118,17 +119,17 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->session->data['shipping_address'] = [
-				'postcode'   => $this->request->post['postcode'],
-				'zone_id'    => $this->request->post['zone_id'],
+				'postcode'   => $post_info['postcode'],
+				'zone_id'    => $post_info['zone_id'],
 				'zone'       => $zone,
 				'zone_code'  => $zone_code,
-				'country_id' => $this->request->post['country_id'],
+				'country_id' => $post_info['country_id'],
 				'country'    => $country,
 				'iso_code_2' => $iso_code_2,
 				'iso_code_3' => $iso_code_3
 			];
 
-			$this->tax->setShippingAddress($this->request->post['country_id'], $this->request->post['zone_id']);
+			$this->tax->setShippingAddress($post_info['country_id'], $post_info['zone_id']);
 
 			// Shipping Methods
 			$this->load->model('checkout/shipping_method');

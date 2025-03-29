@@ -33,18 +33,26 @@ class Api extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['opencart_username']) {
+		$required = [
+			'opencart_username' => '',
+			'opencart_secret'   => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!$post_info['opencart_username']) {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
-		if (!$this->request->post['opencart_secret']) {
+		if (!$post_info['opencart_secret']) {
 			$json['error']['secret'] = $this->language->get('error_secret');
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editSetting('opencart', $this->request->post);
+			$this->model_setting_setting->editSetting('opencart', $post_info);
 
 			$json['success'] = $this->language->get('text_success');
 		}

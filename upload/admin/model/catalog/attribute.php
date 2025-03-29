@@ -20,8 +20,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $attribute_data = [
-	 *     'attribute_group_id' => 1,
-	 *     'sort_order'         => 0
+	 *     'attribute_description' => [],
+	 *     'attribute_group_id'    => 1,
+	 *     'sort_order'            => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/attribute');
@@ -52,9 +53,10 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $attribute_data['attribute_description'] = [
-	 *     'attribute_group_id' => 1,
-	 *     'sort_order'         => 0
+	 * $attribute_data = [
+	 *     'attribute_description' => [],
+	 *     'attribute_group_id'    => 1,
+	 *     'sort_order'            => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/attribute');

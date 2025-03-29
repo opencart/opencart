@@ -61,6 +61,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('report_product_purchased', $this->request->post);
@@ -82,6 +83,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		// Order Statuses
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -143,6 +145,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination')
 		];
 
+		// Extension
 		$this->load->model('extension/opencart/report/product_purchased');
 
 		$product_total = $this->model_extension_opencart_report_product_purchased->getTotalPurchased($filter_data);

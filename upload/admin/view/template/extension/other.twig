@@ -6,20 +6,14 @@
       <thead>
         <tr>
           <th>{{ column_name }}</th>
-          <th>{{ column_status }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
         {% if extensions %}
           {% for extension in extensions %}
-            <tr>
+            <tr{% if not extension.status %} class="table-active opacity-50"{% endif %}>
               <td>{{ extension.name }}</td>
-              <td>{% if extension.status %}
-                  <span class="badge text-bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge text-bg-danger">{{ text_disabled }}</span>
-                {% endif %}</td>
               <td class="text-end text-nowrap">{% if extension.installed %}
                 <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
               {% else %}
@@ -34,7 +28,7 @@
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="3">{{ text_no_results }}</td>
+            <td class="text-center" colspan="2">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

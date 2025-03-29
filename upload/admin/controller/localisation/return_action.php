@@ -107,7 +107,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/return_action.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Return Action
+		// Return Actions
 		$data['return_actions'] = [];
 
 		$filter_data = [
@@ -203,13 +203,14 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/return_action.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Return Action
 		if (isset($this->request->get['return_action_id'])) {
 			$data['return_action_id'] = (int)$this->request->get['return_action_id'];
 		} else {
 			$data['return_action_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -217,7 +218,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['return_action_id'])) {
 			$this->load->model('localisation/return_action');
 
-			$data['return_action'] = $this->model_localisation_return_action->getDescriptions($this->request->get['return_action_id']);
+			$data['return_action'] = $this->model_localisation_return_action->getDescriptions((int)$this->request->get['return_action_id']);
 		} else {
 			$data['return_action'] = [];
 		}
@@ -243,19 +244,27 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['return_action'] as $language_id => $value) {
+		$required = [
+			'return_action_id' => 0,
+			'return_action'    => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['return_action'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 3, 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
 		if (!$json) {
+			// Return Action
 			$this->load->model('localisation/return_action');
 
-			if (!$this->request->post['return_action_id']) {
-				$json['return_action_id'] = $this->model_localisation_return_action->addReturnAction($this->request->post);
+			if (!$post_info['return_action_id']) {
+				$json['return_action_id'] = $this->model_localisation_return_action->addReturnAction($post_info);
 			} else {
-				$this->model_localisation_return_action->editReturnAction($this->request->post['return_action_id'], $this->request->post);
+				$this->model_localisation_return_action->editReturnAction($post_info['return_action_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -276,7 +285,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -285,6 +294,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Returns
 		$this->load->model('sale/returns');
 
 		foreach ($selected as $return_action_id) {
@@ -296,6 +306,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Return Action
 			$this->load->model('localisation/return_action');
 
 			foreach ($selected as $return_action_id) {

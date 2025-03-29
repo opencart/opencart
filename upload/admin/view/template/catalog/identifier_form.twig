@@ -35,12 +35,21 @@
             </div>
           </div>
           <div class="row mb-3">
+            <label for="input-validation" class="col-sm-2 col-form-label">{{ entry_validation }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="validation" value="{{ validation }}" placeholder="{{ text_regex }}" id="input-validation" class="form-control"/>
+              <div class="form-text">{{ help_regex }}</div>
+              <div id="error-validation" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <div class="form-check form-switch form-switch-lg">
+              <div class="form-switch form-switch-lg">
                 <input type="hidden" name="status" value="0"/>
                 <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
+              <div class="form-text">{{ help_status }}</div>
             </div>
           </div>
           <input type="hidden" name="identifier_id" value="{{ identifier_id }}" id="input-identifier-id"/>

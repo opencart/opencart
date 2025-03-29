@@ -53,6 +53,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
 		];
 
+		// Returns
 		$data['returns'] = [];
 
 		$this->load->model('account/returns');
@@ -109,6 +110,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
+		// Returns
 		$this->load->model('account/returns');
 
 		$return_info = $this->model_account_returns->getReturn($return_id);
@@ -217,12 +219,14 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['save'] = $this->url->link('account/returns.save', 'language=' . $this->config->get('config_language') . '&return_token=' . $this->session->data['return_token']);
 
+		// Order
 		$this->load->model('account/order');
 
 		if (isset($this->request->get['order_id'])) {
 			$order_info = $this->model_account_order->getOrder($this->request->get['order_id']);
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		if (isset($this->request->get['product_id'])) {
@@ -283,7 +287,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['model'] = '';
 		}
 
-		// Return Reason
+		// Return Reasons
 		$this->load->model('localisation/return_reason');
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
@@ -337,7 +341,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$filter_data = [
+			$required = [
 				'order_id'         => 0,
 				'firstname'        => '',
 				'lastname'         => '',
@@ -349,7 +353,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				'agree'            => 0
 			];
 
-			$post_info = oc_filter_data($filter_data, $this->request->post);
+			$post_info = $this->request->post + $required;
 
 			if (!$post_info['order_id']) {
 				$json['error']['order_id'] = $this->language->get('error_order_id');
@@ -397,6 +401,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->config->get('config_return_id')) {
+				// Information
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_return_id'));
@@ -408,6 +413,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Return
 			$this->load->model('account/returns');
 
 			$this->model_account_returns->addReturn($post_info);
@@ -497,6 +503,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			return '';
 		}
 
+		// Histories
 		$data['histories'] = [];
 
 		$this->load->model('account/returns');

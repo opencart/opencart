@@ -14,6 +14,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function index(): ?\Opencart\System\Engine\Action {
 		$this->load->language('product/product');
 
+		// Product
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];
 		} else {
@@ -37,6 +38,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 			];
 
+			// Category
 			$this->load->model('catalog/category');
 
 			if (isset($this->request->get['path'])) {
@@ -265,6 +267,17 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['manufacturers'] = $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $product_info['manufacturer_id']);
 			$data['model'] = $product_info['model'];
+
+			$data['product_codes'] = [];
+
+			$results = $this->model_catalog_product->getCodes($product_id);
+
+			foreach ($results as $result) {
+				if ($result['status']) {
+					$data['product_codes'][] = $result;
+				}
+			}
+
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
@@ -278,7 +291,6 @@ class Product extends \Opencart\System\Engine\Controller {
 				$stock_status_id = 0;
 			}
 
-			// Stock Status
 			$this->load->model('localisation/stock_status');
 
 			$stock_status_info = $this->model_localisation_stock_status->getStockStatus($stock_status_id);
@@ -388,7 +400,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Subscriptions
+			// Subscription Plans
 			$data['subscription_plans'] = [];
 
 			$results = $this->model_catalog_product->getSubscriptions($product_id);
@@ -426,10 +438,13 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['share'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . (int)$this->request->get['product_id']);
 
+			// Attribute Groups
 			$data['attribute_groups'] = $this->model_catalog_product->getAttributes($product_id);
 
+			// Related
 			$data['related'] = $this->load->controller('product/related');
 
+			// Tag
 			$data['tags'] = [];
 
 			if ($product_info['tag']) {

@@ -11,6 +11,8 @@ class Store extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Store
 	 *
+	 * Get the record of the store record in the database.
+	 *
 	 * @param int $store_id primary key of the store record
 	 *
 	 * @return array<string, mixed> store record that has store ID
@@ -48,6 +50,8 @@ class Store extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Stores
+	 *
+	 * Get the record of the store records in the database.
 	 *
 	 * @return array<int, array<string, mixed>> store records
 	 *

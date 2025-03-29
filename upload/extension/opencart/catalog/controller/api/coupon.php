@@ -41,6 +41,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$output) {
+			// Setting
 			$this->load->model('marketing/coupon');
 
 			$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);

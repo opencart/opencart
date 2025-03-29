@@ -12,8 +12,5 @@ $_['column_code']       = 'Code de démarrage';
 $_['column_sort_order'] = 'Ordre de tri';
 $_['column_action']     = 'Action';
 
-// Entrée
-$_['entry_description'] = 'Description';
-
 // Erreur
 $_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier le démarrage!';

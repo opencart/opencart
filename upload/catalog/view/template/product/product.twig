@@ -32,6 +32,9 @@
               <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
             {% endif %}
             <li>{{ text_model }} {{ model }}</li>
+            {% for product_code in product_codes %}
+              <li>{{ product_code.code }}: {{ product_code.value }}</li>
+            {% endfor %}
             {% if reward %}
               <li>{{ text_reward }} {{ reward }}</li>
             {% endif %}
@@ -113,7 +116,9 @@
                           {% for option_value in option.product_option_value %}
                             <div class="form-check">
                               <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/>
-                              <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
+                              <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">
+                                {% if option_value.image %}
+                                  <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
                                 {{ option_value.name }}
                                 {% if option_value.price %}
                                   ({{ option_value.price_prefix }}{{ option_value.price }})

@@ -11,6 +11,8 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Country
 	 *
+	 * Create a new country record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -18,11 +20,12 @@ class Country extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $country_data = [
-	 *     'iso_code_2'        => 'Country ISO Code 2',
-	 *     'iso_code_3'        => 'Country ISO Code 3',
-	 *     'address_format_id' => 1,
-	 *     'postcode_required' => 0,
-	 *     'status'            => 0
+	 *     'country_description' => [],
+	 *     'iso_code_2'          => 'Country ISO Code 2',
+	 *     'iso_code_3'          => 'Country ISO Code 3',
+	 *     'address_format_id'   => 1,
+	 *     'postcode_required'   => 0,
+	 *     'status'              => 0
 	 * ];
 	 *
 	 * $this->load->model('localisation/country');
@@ -46,6 +49,8 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Country
 	 *
+	 * Edit country record in the database.
+	 *
 	 * @param int                  $country_id primary key of the country record
 	 * @param array<string, mixed> $data       array of data
 	 *
@@ -54,11 +59,12 @@ class Country extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $country_data = [
-	 *     'iso_code_2'        => 'Country ISO Code 2',
-	 *     'iso_code_3'        => 'Country ISO Code 3',
-	 *     'address_format_id' => 1,
-	 *     'postcode_required' => 0,
-	 *     'status'            => 1
+	 *     'country_description' => [],
+	 *     'iso_code_2'          => 'Country ISO Code 2',
+	 *     'iso_code_3'          => 'Country ISO Code 3',
+	 *     'address_format_id'   => 1,
+	 *     'postcode_required'   => 0,
+	 *     'status'              => 1
 	 * ];
 	 *
 	 * $this->load->model('localisation/country');
@@ -79,6 +85,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Country
+	 *
+	 * Delete country record in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
@@ -101,6 +109,8 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Country
 	 *
+	 * Get the record of the country record in the database.
+	 *
 	 * @param int $country_id primary key of the country record
 	 *
 	 * @return array<string, mixed> country record that has country ID
@@ -112,13 +122,15 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $country_info = $this->model_localisation_country->getCountry($country_id);
 	 */
 	public function getCountry(int $country_id): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `c`.`country_id` = '" . (int)$country_id . "' AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
 	/**
 	 * Get Country By Iso Code 2
+	 *
+	 * Get the record of the country iso code 2 record in the database.
 	 *
 	 * @param string $iso_code_2
 	 *
@@ -131,13 +143,15 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $country_info = $this->model_localisation_country->getCountryByIsoCode2($iso_code_2);
 	 */
 	public function getCountryByIsoCode2(string $iso_code_2): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($iso_code_2) . "' AND `status` = '1'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `c`.`iso_code_3` = '" . $this->db->escape($iso_code_2) . "' AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
 	/**
 	 * Get Country By Iso Code 3
+	 *
+	 * Get the record of the country iso code 3 record in the database.
 	 *
 	 * @param string $iso_code_3
 	 *
@@ -150,13 +164,15 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $country_info = $this->model_localisation_country->getCountryByIsoCode3($iso_code_3);
 	 */
 	public function getCountryByIsoCode3(string $iso_code_3): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_3` = '" . $this->db->escape($iso_code_3) . "' AND `status` = '1'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_3` = '" . $this->db->escape($iso_code_3) . "'");
 
 		return $query->row;
 	}
 
 	/**
 	 * Get Countries
+	 *
+	 * Get the record of the country records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -179,7 +195,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $countries = $this->model_localisation_country->getCountries($filter_data);
 	 */
 	public function getCountries(array $data = []): array {
-		$sql = "SELECT `c`.* FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$implode = [];
 
@@ -258,7 +274,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $country_data['country_description'] = [
-	 *     'name'             => 'Country Name',
+	 *     'name'             => 'Country Name'
 	 * ];
 	 *
 	 * $this->load->model('localisation/country');
@@ -358,6 +374,8 @@ class Country extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Countries
 	 *
+	 * Get the total number of country records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of country records
@@ -379,20 +397,24 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $country_total = $this->model_localisation_country->getTotalCountries($filter_data);
 	 */
 	public function getTotalCountries(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c`";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
+		}
 
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_iso_code_2'])) {
-			$implode[] = "LCASE(`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
+			$implode[] = "LCASE(`c`.`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_iso_code_3'])) {
-			$implode[] = "LCASE(`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
+			$implode[] = "LCASE(`c`.`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
 		}
 
 		if ($implode) {
@@ -406,6 +428,8 @@ class Country extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Countries By Address Format ID
+	 *
+	 * Get the total number of countries by address format records in the database.
 	 *
 	 * @param int $address_format_id primary key of the address format record
 	 *

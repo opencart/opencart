@@ -11,6 +11,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Zone
 	 *
+	 * Create a new zone record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -18,9 +20,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $zone_data = [
-	 *     'code'       => 'Zone Code',
-	 *     'country_id' => 1,
-	 *     'status'     => 0
+	 *     'zone_description' => [],
+	 *     'code'             => 'Zone Code',
+	 *     'country_id'       => 1,
+	 *     'status'           => 0
 	 * ];
 	 *
 	 * $this->load->model('localisation/zone');
@@ -44,6 +47,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Zone
 	 *
+	 * Edit zone record in the database.
+	 *
 	 * @param int                  $zone_id primary key of the zone record
 	 * @param array<string, mixed> $data    array of data
 	 *
@@ -52,9 +57,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $zone_data = [
-	 *     'code'       => 'Zone Code',
-	 *     'country_id' => 1,
-	 *     'status'     => 1
+	 *     'zone_description' => [],
+	 *     'code'             => 'Zone Code',
+	 *     'country_id'       => 1,
+	 *     'status'           => 1
 	 * ];
 	 *
 	 * $this->load->model('localisation/zone');
@@ -76,6 +82,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Zone
 	 *
+	 * Delete zone record in the database.
+	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
 	 * @return void
@@ -89,13 +97,15 @@ class Zone extends \Opencart\System\Engine\Model {
 	public function deleteZone(int $zone_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
-		$this->model_localisation_country->deleteDescriptions($zone_id);
+		$this->model_localisation_zone->deleteDescriptions($zone_id);
 
 		$this->cache->delete('zone');
 	}
 
 	/**
 	 * Get Zone
+	 *
+	 * Get the record of the zone record in the database.
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
@@ -108,13 +118,15 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $zone_info = $this->model_localisation_zone->getZone($zone_id);
 	 */
 	public function getZone(int $zone_id): array {
-		$query = $this->db->query("SELECT DISTINCT `z`.*, `zd`.`name` FROM `" . DB_PREFIX . "zone` WHERE `z`.`zone_id` = '" . (int)$zone_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`zone_id` = '" . (int)$zone_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
 	/**
 	 * Get Zones
+	 *
+	 * Get the record of the zone records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -137,7 +149,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_zone->getZones($filter_data);
 	 */
 	public function getZones(array $data = []): array {
-		$sql = "SELECT *, `z`.`name`, `z`.`status`, `cd`.`name` AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`z`.`country_id` = `c`.`country_id`) LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT *, `cd`.`name` AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id` AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
 
 		$implode = [];
 
@@ -146,7 +158,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_country'])) {
-			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
+			$implode[] = "`cd`.`name` LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
@@ -154,7 +166,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		if ($implode) {
-			$sql .= " AND " . implode(" AND ", $implode);
+			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
 
 		$sort_data = [
@@ -195,6 +207,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Zones By Country ID
 	 *
+	 * Get the record of zones by country records in the database.
+	 *
 	 * @param int $country_id primary key of the country record
 	 *
 	 * @return array<int, array<string, mixed>> zone records that have country ID
@@ -206,7 +220,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $zones = $this->model_localisation_zone->getZonesByCountryId($country_id);
 	 */
 	public function getZonesByCountryId(int $country_id): array {
-		$sql = "SELECT `z`.*, `zd`.`name` FROM `" . DB_PREFIX . "zone` WHERE `zd`.`country_id` = '" . (int)$country_id . "' AND `z`.`status` = '1' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `zd`.`name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`country_id` = '" . (int)$country_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `z`.`status` = '1' ORDER BY `zd`.`name`";
 
 		$key = md5($sql);
 
@@ -237,7 +251,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $zone_data['zone_description'] = [
-	 *     'name'             => 'Zone Name',
+	 *     'name' => 'Zone Name',
 	 * ];
 	 *
 	 * $this->load->model('localisation/zone');
@@ -280,7 +294,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('localisation/zone');
 	 *
-	 * $this->model_localisation_zone->deleteDescriptionsByLanguageId($language_id);
+	 * $this->model_localisation_zone->deleteDescriptionsByLanguageId($country_id, $language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -337,6 +351,8 @@ class Zone extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Zones
 	 *
+	 * Get the total number of total zone records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of zone records
@@ -358,27 +374,29 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $zone_total = $this->model_localisation_zone->getTotalZones();
 	 */
 	public function getTotalZones(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id = `zd`.`zone_id`)";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z`";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		}
 
 		if (!empty($data['filter_country'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`z`.`country_id` = `c`.`country_id`)";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
 		}
 
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(`z`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+			$implode[] = "LCASE(`zd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_country'])) {
-			$implode[] = "LCASE(`c`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
+			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
 			$implode[] = "LCASE(`z`.`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code']) . '%') . "'";
 		}
-
-		$implode[] = "`cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
@@ -391,6 +409,8 @@ class Zone extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Zones By Country ID
+	 *
+	 * Get the total number of total zones by country records in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *

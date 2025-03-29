@@ -61,6 +61,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('report_product_viewed', $this->request->post);
@@ -210,18 +211,19 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('extension/opencart/report/product_viewed');
 
 			if ($page == 1) {
 				$this->model_extension_opencart_report_product_viewed->clear();
 			}
 
+			// Products
 			$filter_data = [
 				'start' => ($page - 1) * $limit,
 				'limit' => $limit
 			];
 
-			// Product
 			$this->load->model('catalog/product');
 
 			$product_total = $this->model_catalog_product->getTotalProducts();

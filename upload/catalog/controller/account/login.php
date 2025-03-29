@@ -46,6 +46,7 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			$this->customer->logout();
 
+			unset($this->session->data['order_id']);
 			unset($this->session->data['customer']);
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
@@ -54,7 +55,6 @@ class Login extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['comment']);
-			unset($this->session->data['order_id']);
 			unset($this->session->data['coupon']);
 			unset($this->session->data['reward']);
 			unset($this->session->data['customer_token']);
@@ -111,13 +111,13 @@ class Login extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Stop any undefined index messages.
-		$filter_data = [
+		$required = [
 			'email'    => '',
 			'password' => '',
 			'redirect' => ''
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		$this->customer->logout();
 
@@ -261,7 +261,7 @@ class Login extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $customer_info['custom_field']
 			];
 
-			// Default Addresses
+			// Default Address
 			$this->load->model('account/address');
 
 			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $this->customer->getAddressId());

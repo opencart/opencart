@@ -179,7 +179,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['modules'] = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -225,7 +225,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['option'])) {
-			$option = array_filter($this->request->post['option']);
+			$option = array_filter((array)$this->request->post['option']);
 		} else {
 			$option = [];
 		}
@@ -288,6 +288,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
 			// Unset all shipping and payment methods
+			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -331,6 +332,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
+		unset($this->session->data['order_id']);
 		unset($this->session->data['shipping_method']);
 		unset($this->session->data['shipping_methods']);
 		unset($this->session->data['payment_method']);
@@ -366,6 +368,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
+		unset($this->session->data['order_id']);
 		unset($this->session->data['shipping_method']);
 		unset($this->session->data['shipping_methods']);
 		unset($this->session->data['payment_method']);

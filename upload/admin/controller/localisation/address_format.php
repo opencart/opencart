@@ -79,7 +79,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/address_format.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Address Format
+		// Address Formats
 		$data['address_formats'] = [];
 
 		$filter_data = [
@@ -146,14 +146,15 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/address_format.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/address_format', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Address Format
 		if (isset($this->request->get['address_format_id'])) {
 			$this->load->model('localisation/address_format');
 
 			$address_format_info = $this->model_localisation_address_format->getAddressFormat($this->request->get['address_format_id']);
 		}
 
-		if (isset($this->request->get['address_format_id'])) {
-			$data['address_format_id'] = (int)$this->request->get['address_format_id'];
+		if (!empty($address_format_info)) {
+			$data['address_format_id'] = $address_format_info['address_format_id'];
 		} else {
 			$data['address_format_id'] = 0;
 		}
@@ -191,17 +192,26 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!oc_validate_length($this->request->post['name'], 1, 128)) {
+		$required = [
+			'address_format_id' => 0,
+			'name'              => '',
+			'address_format'    => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 1, 128)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!$json) {
+			// Address Format
 			$this->load->model('localisation/address_format');
 
-			if (!$this->request->post['address_format_id']) {
-				$json['address_format_id'] = $this->model_localisation_address_format->addAddressFormat($this->request->post);
+			if (!$post_info['address_format_id']) {
+				$json['address_format_id'] = $this->model_localisation_address_format->addAddressFormat($post_info);
 			} else {
-				$this->model_localisation_address_format->editAddressFormat($this->request->post['address_format_id'], $this->request->post);
+				$this->model_localisation_address_format->editAddressFormat($post_info['address_format_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -222,7 +232,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -247,6 +257,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Address Format
 			$this->load->model('localisation/address_format');
 
 			foreach ($selected as $address_format_id) {

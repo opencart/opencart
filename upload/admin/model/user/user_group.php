@@ -11,6 +11,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Add User Group
 	 *
+	 * Create a new user group record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int
@@ -35,6 +37,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit User Group
 	 *
+	 * Edit user group record in the database.
+	 *
 	 * @param int                  $user_group_id primary key of the user group record
 	 * @param array<string, mixed> $data          array of data
 	 *
@@ -58,6 +62,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete User Group
 	 *
+	 * Delete user group record in the database.
+	 *
 	 * @param int $user_group_id primary key of the user group record
 	 *
 	 * @return void
@@ -75,6 +81,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get User Group
 	 *
+	 * Get the record of the user group record in the database.
+	 *
 	 * @param int $user_group_id primary key of the user group record
 	 *
 	 * @return array<string, mixed> user group record that has user group ID
@@ -88,14 +96,13 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	public function getUserGroup(int $user_group_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 
-		return [
-			'name'       => $query->row['name'],
-			'permission' => $query->row['permission'] ? json_decode($query->row['permission'], true) : []
-		];
+		return ['permission' => $query->row['permission'] ? json_decode($query->row['permission'], true) : []] + $query->row;
 	}
 
 	/**
 	 * Get User Groups
+	 *
+	 * Get the record of the user group records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -143,6 +150,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total User Groups
 	 *
+	 * Get the total number of total user group records in the database.
+	 *
 	 * @return int total number of user group records
 	 *
 	 * @example
@@ -159,6 +168,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Add Permission
+	 *
+	 * Create and edit new user permission record in the database.
 	 *
 	 * @param int    $user_group_id primary key of the user group record
 	 * @param string $type
@@ -186,6 +197,8 @@ class UserGroup extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Remove Permission
+	 *
+	 * Delete user permission record in the database.
 	 *
 	 * @param int    $user_group_id primary key of the user group record
 	 * @param string $type

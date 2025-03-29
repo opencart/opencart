@@ -85,7 +85,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$data['themes'] = [];
 
-		// Theme
+		// Themes
 		$this->load->model('design/theme');
 
 		// Store
@@ -157,19 +157,20 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('design/theme.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['theme_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		// Theme
+		if (isset($this->request->get['theme_id'])) {
 			$this->load->model('design/theme');
 
-			$theme_info = $this->model_design_theme->getTheme($this->request->get['theme_id']);
+			$theme_info = $this->model_design_theme->getTheme((int)$this->request->get['theme_id']);
 		}
 
-		if (isset($this->request->get['theme_id'])) {
-			$data['theme_id'] = (int)$this->request->get['theme_id'];
+		if (!empty($theme_info)) {
+			$data['theme_id'] = $theme_info['theme_id'];
 		} else {
 			$data['theme_id'] = 0;
 		}
 
-		// Store
+		// Stores
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -327,11 +328,14 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->post['route'])) {
-			$route = $this->request->post['route'];
-		} else {
-			$route = '';
-		}
+		$required = [
+			'theme_id' => 0,
+			'route'    => '',
+			'code'     => '',
+			'status'   => 0
+		];
+
+		$post_info = $this->request->post + $required;
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/theme')) {
@@ -339,15 +343,15 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_CATALOG . 'view/template';
-		$file = $directory . '/' . $route . '.twig';
+		$file = $directory . '/' . (string)$post_info['route'] . '.twig';
 
 		if (!is_file($file) || (substr(str_replace('\\', '/', realpath($file)), 0, strlen($directory)) != $directory)) {
 			$json['error'] = $this->language->get('error_file');
 		}
 
 		// Extension template load
-		if (substr($route, 0, 10) == 'extension/') {
-			$part = explode('/', $route);
+		if (substr($post_info['route'], 0, 10) == 'extension/') {
+			$part = explode('/', $post_info['route']);
 
 			$directory = DIR_EXTENSION . $part[1] . '/catalog/view/template';
 
@@ -364,12 +368,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Theme
 			$this->load->model('design/theme');
 
-			if (!$this->request->post['theme_id']) {
-				$json['theme_id'] = $this->model_design_theme->addTheme($this->request->post);
+			if (!$post_info['theme_id']) {
+				$json['theme_id'] = $this->model_design_theme->addTheme($post_info);
 			} else {
-				$this->model_design_theme->editTheme($this->request->post['theme_id'], $this->request->post);
+				$this->model_design_theme->editTheme($post_info['theme_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -390,7 +395,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -405,6 +410,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Theme
 			$this->load->model('design/theme');
 
 			foreach ($selected as $theme_id) {

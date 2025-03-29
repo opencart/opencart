@@ -137,7 +137,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Upload
+		// Uploads
 		$data['uploads'] = [];
 
 		$filter_data = [
@@ -243,7 +243,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -253,6 +253,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Upload
 			$this->load->model('tool/upload');
 
 			foreach ($selected as $upload_id) {
@@ -287,6 +288,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
+		// Upload
 		$this->load->model('tool/upload');
 
 		$upload_info = $this->model_tool_upload->getUploadByCode($code);

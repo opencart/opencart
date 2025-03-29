@@ -30,7 +30,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'limit'                         => 10
 		];
 
-		// Subscription
+		// Subscriptions
 		$this->load->model('checkout/subscription');
 
 		// Store

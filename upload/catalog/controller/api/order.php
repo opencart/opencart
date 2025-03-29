@@ -144,7 +144,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = $this->load->controller('api/shipping_method');
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -201,7 +201,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = $this->load->controller('api/payment_method');
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -239,7 +239,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -282,7 +282,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -323,7 +323,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_method');
 		$this->load->controller('api/payment_method');
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -354,6 +354,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			return $output;
 		}
 
+		$required = [
+			'order_id'        => 0,
+			'affiliate_id'    => 0,
+			'comment'         => '',
+			'order_status_id' => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 		$this->load->controller('api/shipping_method');
@@ -379,12 +388,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$output['error']['product'] = $this->language->get('error_stock');
 		}
 
-		// 4. Validate payment address if required
+		// 4. Validate payment address, if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$output['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
-		// 5. Validate shipping address and method if required
+		// 5. Validate shipping address and method, if required
 		if ($this->cart->hasShipping()) {
 			// Shipping Address
 			if (!isset($this->session->data['shipping_address'])) {
@@ -542,8 +551,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				$points += $product['reward'];
 			}
 
-			if (isset($this->request->post['comment'])) {
-				$order_data['comment'] = (string)$this->request->post['comment'];
+			if (isset($post_info['comment'])) {
+				$order_data['comment'] = (string)$post_info['comment'];
 			} else {
 				$order_data['comment'] = '';
 			}
@@ -616,12 +625,13 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['accept_language'] = '';
 			}
 
-			if (isset($this->request->post['order_id'])) {
-				$order_id = (int)$this->request->post['order_id'];
+			if (isset($post_info['order_id'])) {
+				$order_id = (int)$post_info['order_id'];
 			} else {
 				$order_id = 0;
 			}
 
+			// Order
 			$this->load->model('checkout/order');
 
 			if (!$order_id) {
@@ -637,8 +647,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$output['order_id'] = $order_id;
 
 			// Set the order history
-			if (isset($this->request->post['order_status_id'])) {
-				$order_status_id = (int)$this->request->post['order_status_id'];
+			if (isset($post_info['order_status_id'])) {
+				$order_status_id = (int)$post_info['order_status_id'];
 			} else {
 				$order_status_id = (int)$this->config->get('config_order_status_id');
 			}
@@ -672,31 +682,27 @@ class Order extends \Opencart\System\Engine\Controller {
 		$output = [];
 
 		// Add keys for missing post vars
-		$keys = [
-			'order_id',
-			'order_status_id',
-			'comment',
-			'notify',
-			'override'
+		$required = [
+			'order_id'        => 0,
+			'order_status_id' => 0,
+			'comment'         => '',
+			'notify'          => 0,
+			'override'        => 0,
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		// Order
 		$this->load->model('checkout/order');
 
-		$order_info = $this->model_checkout_order->getOrder((int)$this->request->post['order_id']);
+		$order_info = $this->model_checkout_order->getOrder((int)$post_info['order_id']);
 
 		if (!$order_info) {
 			$output['error'] = $this->language->get('error_order');
 		}
 
 		if (!$output) {
-			$this->model_checkout_order->addHistory((int)$this->request->post['order_id'], (int)$this->request->post['order_status_id'], (string)$this->request->post['comment'], (bool)$this->request->post['notify'], (bool)$this->request->post['override']);
+			$this->model_checkout_order->addHistory((int)$post_info['order_id'], (int)$post_info['order_status_id'], (string)$post_info['comment'], (bool)$post_info['notify'], (bool)$post_info['override']);
 
 			$output['success'] = $this->language->get('text_success');
 		}

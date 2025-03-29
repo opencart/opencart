@@ -107,9 +107,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Language
 		$this->load->model('localisation/language');
 
-		// Translation
+		// Translations
 		$data['translations'] = [];
 
 		$filter_data = [
@@ -214,19 +215,20 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('design/translation.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Translation
 		if (isset($this->request->get['translation_id'])) {
 			$this->load->model('design/translation');
 
 			$translation_info = $this->model_design_translation->getTranslation($this->request->get['translation_id']);
 		}
 
-		if (isset($this->request->get['translation_id'])) {
-			$data['translation_id'] = (int)$this->request->get['translation_id'];
+		if (!empty($translation_info)) {
+			$data['translation_id'] = $translation_info['translation_id'];
 		} else {
 			$data['translation_id'] = 0;
 		}
 
-		// Store
+		// Stores
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -234,10 +236,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 		if (!empty($translation_info)) {
 			$data['store_id'] = $translation_info['store_id'];
 		} else {
-			$data['store_id'] = '';
+			$data['store_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -294,6 +296,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Translation
 			$this->load->model('design/translation');
 
 			if (!$this->request->post['translation_id']) {
@@ -320,7 +323,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -330,6 +333,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Translation
 			$this->load->model('design/translation');
 
 			foreach ($selected as $translation_id) {

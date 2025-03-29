@@ -98,7 +98,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				$payment_address = $this->session->data['shipping_address'];
 			}
 
-			// Payment method
+			// Payment Methods
 			$this->load->model('checkout/payment_method');
 
 			$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
@@ -130,7 +130,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Validate has payment address if required
+			// Validate payment address, if required
 			if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 				$json['error'] = $this->language->get('error_payment_address');
 			}
@@ -187,6 +187,12 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
+		if (isset($this->request->post['comment'])) {
+			$comment = (string)$this->request->post['comment'];
+		} else {
+			$comment = '';
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if (!$order_info) {
@@ -194,9 +200,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['comment'] = $this->request->post['comment'];
+			$this->session->data['comment'] = $comment;
 
-			$this->model_checkout_order->editComment($order_id, $this->request->post['comment']);
+			$this->model_checkout_order->editComment($order_id, $comment);
 
 			$json['success'] = $this->language->get('text_comment');
 		}

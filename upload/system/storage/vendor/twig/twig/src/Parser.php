@@ -147,24 +147,24 @@ class Parser
         $lineno = $this->getCurrentToken()->getLine();
         $rv = [];
         while (!$this->stream->isEOF()) {
-            switch ($this->getCurrentToken()->getType()) {
-                case Token::TEXT_TYPE:
+            switch (true) {
+                case $this->stream->getCurrent()->test(Token::TEXT_TYPE):
                     $token = $this->stream->next();
                     $rv[] = new TextNode($token->getValue(), $token->getLine());
                     break;
 
-                case Token::VAR_START_TYPE:
+                case $this->stream->getCurrent()->test(Token::VAR_START_TYPE):
                     $token = $this->stream->next();
                     $expr = $this->expressionParser->parseExpression();
                     $this->stream->expect(Token::VAR_END_TYPE);
                     $rv[] = new PrintNode($expr, $token->getLine());
                     break;
 
-                case Token::BLOCK_START_TYPE:
+                case $this->stream->getCurrent()->test(Token::BLOCK_START_TYPE):
                     $this->stream->next();
                     $token = $this->getCurrentToken();
 
-                    if (Token::NAME_TYPE !== $token->getType()) {
+                    if (!$token->test(Token::NAME_TYPE)) {
                         throw new SyntaxError('A block must start with a tag name.', $token->getLine(), $this->stream->getSourceContext());
                     }
 
@@ -227,6 +227,9 @@ class Parser
         return $this->blockStack;
     }
 
+    /**
+     * @return string|null
+     */
     public function peekBlockStack()
     {
         return $this->blockStack[\count($this->blockStack) - 1] ?? null;
@@ -289,6 +292,9 @@ class Parser
         return \count($this->traits) > 0;
     }
 
+    /**
+     * @return void
+     */
     public function embedTemplate(ModuleNode $template)
     {
         $template->setIndex(mt_rand());
@@ -307,6 +313,9 @@ class Parser
         $this->importedSymbols[0][$type][$alias] = ['name' => $name, 'node' => $internalRef];
     }
 
+    /**
+     * @return array{name: string, node: AssignTemplateVariable|null}|null
+     */
     public function getImportedSymbol(string $type, string $alias)
     {
         // if the symbol does not exist in the current scope (0), try in the main/global scope (last index)
@@ -340,6 +349,9 @@ class Parser
         return $this->parent;
     }
 
+    /**
+     * @return bool
+     */
     public function hasInheritance()
     {
         return $this->parent || 0 < \count($this->traits);

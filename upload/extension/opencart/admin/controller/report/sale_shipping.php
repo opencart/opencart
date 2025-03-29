@@ -61,6 +61,7 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('report_sale_shipping', $this->request->post);
@@ -82,11 +83,12 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
-		// Order Status
+		// Order Statuses
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
+		// Groups
 		$data['groups'] = [];
 
 		$data['groups'][] = [
@@ -173,6 +175,7 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination')
 		];
 
+		// Extension
 		$this->load->model('extension/opencart/report/sale');
 
 		$order_total = $this->model_extension_opencart_report_sale->getTotalShipping($filter_data);

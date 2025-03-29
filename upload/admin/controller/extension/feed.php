@@ -38,7 +38,7 @@ class Feed extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('feed');
@@ -123,10 +123,12 @@ class Feed extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('feed', $extension, $code);
 
+			// User Group
 			$this->load->model('user/user_group');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/feed/' . $code);
@@ -173,6 +175,7 @@ class Feed extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('feed', $this->request->get['code']);

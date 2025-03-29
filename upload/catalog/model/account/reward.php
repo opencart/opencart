@@ -11,6 +11,8 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Reward
 	 *
+	 * Create a new customer reward record in the database.
+	 *
 	 * @param int    $customer_id primary key of the customer record
 	 * @param int    $order_id    primary key of the order record
 	 * @param string $description
@@ -30,6 +32,8 @@ class Reward extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete Reward
+	 *
+	 * Delete customer reward record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $order_id    primary key of the order record
@@ -55,6 +59,8 @@ class Reward extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Reward By Order ID
 	 *
+	 * Delete customer rewards by order record in the database.
+	 *
 	 * @param int $order_id primary key of the order record
 	 *
 	 * @return void
@@ -71,6 +77,8 @@ class Reward extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Rewards
+	 *
+	 * Get the record of the customer reward records in the database.
 	 *
 	 * @param int                  $customer_id primary key of the customer record
 	 * @param array<string, mixed> $data        array of filters
@@ -130,6 +138,8 @@ class Reward extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Rewards
+	 *
+	 * Get the total number of total cutomer reward records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *

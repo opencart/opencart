@@ -209,30 +209,31 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/information.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Information
 		if (isset($this->request->get['information_id'])) {
 			$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
+			$information_info = $this->model_catalog_information->getInformation((int)$this->request->get['information_id']);
 		}
 
-		if (isset($this->request->get['information_id'])) {
-			$data['information_id'] = (int)$this->request->get['information_id'];
+		if (!empty($information_info)) {
+			$data['information_id'] = $information_info['information_id'];
 		} else {
 			$data['information_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['information_id'])) {
-			$data['information_description'] = $this->model_catalog_information->getDescriptions($this->request->get['information_id']);
+		if (!empty($information_info)) {
+			$data['information_description'] = $this->model_catalog_information->getDescriptions($information_info['information_id']);
 		} else {
 			$data['information_description'] = [];
 		}
 
-		// Store
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -248,8 +249,8 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['stores'][] = $result;
 		}
 
-		if (isset($this->request->get['information_id'])) {
-			$data['information_store'] = $this->model_catalog_information->getStores($this->request->get['information_id']);
+		if (!empty($information_info)) {
+			$data['information_store'] = $this->model_catalog_information->getStores($information_info['information_id']);
 		} else {
 			$data['information_store'] = [0];
 		}
@@ -266,21 +267,22 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
-		if (isset($this->request->get['information_id'])) {
+		// SEO
+		if (!empty($information_info)) {
 			$this->load->model('design/seo_url');
 
-			$data['information_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('information_id', $this->request->get['information_id']);
+			$data['information_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('information_id', $information_info['information_id']);
 		} else {
 			$data['information_seo_url'] = [];
 		}
 
-		// Layout
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
-		if (isset($this->request->get['information_id'])) {
-			$data['information_layout'] = $this->model_catalog_information->getLayouts($this->request->get['information_id']);
+		if (!empty($information_info)) {
+			$data['information_layout'] = $this->model_catalog_information->getLayouts($information_info['information_id']);
 		} else {
 			$data['information_layout'] = [];
 		}
@@ -308,7 +310,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
+		$required = [
 			'information_id'          => 0,
 			'sort_order'              => 0,
 			'status'                  => 0,
@@ -318,7 +320,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			'information_seo_url'     => []
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		foreach ($post_info['information_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['title'], 1, 64)) {
@@ -330,6 +332,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// SEO
 		if ($post_info['information_seo_url']) {
 			$this->load->model('design/seo_url');
 
@@ -357,6 +360,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Information
 			$this->load->model('catalog/information');
 
 			if (!$post_info['information_id']) {
@@ -383,7 +387,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -420,6 +424,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Information
 			$this->load->model('catalog/information');
 
 			foreach ($selected as $information_id) {

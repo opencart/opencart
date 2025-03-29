@@ -18,6 +18,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
+		$post_info = $this->request->post;
+
 		if ($this->cart->hasShipping()) {
 			// 1. Validate customer data exists
 			if (!isset($this->session->data['customer'])) {
@@ -38,7 +40,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			];
 
 			foreach ($keys as $key) {
-				if (!isset($this->request->post['shipping_method'][$key])) {
+				if (!isset($post_info['shipping_method'][$key])) {
 					$output['error'] = $this->language->get('error_shipping_method');
 
 					break;
@@ -50,11 +52,11 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		if (!$output) {
 			$this->session->data['shipping_method'] = [
-				'name'         => $this->request->post['shipping_method']['name'],
-				'code'         => $this->request->post['shipping_method']['code'],
-				'cost'         => (float)$this->request->post['shipping_method']['cost'],
-				'tax_class_id' => (int)$this->request->post['shipping_method']['tax_class_id'],
-				'text'         => $this->currency->format($this->tax->calculate((float)$this->request->post['shipping_method']['cost'], (int)$this->request->post['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+				'name'         => $post_info['shipping_method']['name'],
+				'code'         => $post_info['shipping_method']['code'],
+				'cost'         => (float)$post_info['shipping_method']['cost'],
+				'tax_class_id' => (int)$post_info['shipping_method']['tax_class_id'],
+				'text'         => $this->currency->format($this->tax->calculate((float)$post_info['shipping_method']['cost'], (int)$post_info['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
 			];
 
 			$output['success'] = $this->language->get('text_success');
@@ -78,7 +80,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$output['error'] = $this->language->get('error_customer');
 		}
 
-		// 2. Validate shipping if required
+		// 2. Validate shipping, if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
 				$output['error'] = $this->language->get('error_shipping_address');
@@ -88,6 +90,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$output) {
+			// Shipping Methods
 			$this->load->model('checkout/shipping_method');
 
 			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);

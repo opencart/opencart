@@ -33,7 +33,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('language');
@@ -105,10 +105,12 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('language', $extension, $code);
 
+			// User Group
 			$this->load->model('user/user_group');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/language/' . $code);
@@ -154,7 +156,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$results = $this->model_localisation_language->getLanguagesByExtension($this->request->get['extension']);
@@ -168,6 +170,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('language', $this->request->get['code']);

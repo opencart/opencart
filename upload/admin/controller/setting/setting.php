@@ -46,7 +46,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['themes'] = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
@@ -62,6 +62,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_theme'] = $this->config->get('config_theme');
 
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -90,14 +91,14 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_open'] = $this->config->get('config_open');
 		$data['config_comment'] = $this->config->get('config_comment');
 
-		// Location
+		// Locations
 		$this->load->model('localisation/location');
 
 		$data['locations'] = $this->model_localisation_location->getLocations();
 
 		$data['config_location'] = (array)$this->config->get('config_location');
 
-		// Country
+		// Countries
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -123,7 +124,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -131,7 +132,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_language_catalog'] = $this->config->get('config_language_catalog');
 		$data['config_language_admin'] = $this->config->get('config_language_admin');
 
-		// Currency
+		// Currencies
 		$this->load->model('localisation/currency');
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
@@ -140,7 +141,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['currency_engines'] = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('currency');
@@ -159,14 +160,14 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_currency_engine'] = $this->config->get('config_currency_engine');
 		$data['config_currency_auto'] = $this->config->get('config_currency_auto');
 
-		// Length Class
+		// Length Classes
 		$this->load->model('localisation/length_class');
 
 		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
 
 		$data['config_length_class_id'] = $this->config->get('config_length_class_id');
 
-		// Weight Class
+		// Weight Classes
 		$this->load->model('localisation/weight_class');
 
 		$data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
@@ -208,7 +209,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_customer_activity'] = $this->config->get('config_customer_activity');
 		$data['config_customer_search'] = $this->config->get('config_customer_search');
 
-		// Customer Group
+		// Customer Groups
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -246,6 +247,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_invoice_prefix'] = 'INV-' . date('Y') . '-00';
 		}
 
+		// Order Statuses
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -257,7 +259,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_void_status_id'] = $this->config->get('config_void_status_id');
 		$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
 
-		// Subscription Status
+		// Subscription Statuses
 		$this->load->model('localisation/subscription_status');
 
 		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
@@ -277,7 +279,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_api_id'] = $this->config->get('config_api_id');
 
-		// Stock Status
+		// Stock Statuses
 		$this->load->model('localisation/stock_status');
 
 		$data['stock_statuses'] = $this->model_localisation_stock_status->getStockStatuses();
@@ -298,7 +300,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Affiliate terms
 		$data['config_affiliate_id'] = $this->config->get('config_affiliate_id');
 
-		// Return Status
+		// Return Statuses
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
@@ -364,7 +366,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			'value' => 'contact'
 		];
 
-		// Images
+		// Image
 		$data['config_logo'] = $this->config->get('config_logo');
 
 		$this->load->model('tool/image');
@@ -453,7 +455,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_session_expire'] = $this->config->get('config_session_expire');
 		$data['config_session_samesite'] = $this->config->get('config_session_samesite');
 		$data['config_seo_url'] = $this->config->get('config_seo_url');
-		$data['config_robots'] = $this->config->get('config_robots');
 		$data['config_compression'] = $this->config->get('config_compression');
 
 		// Security
@@ -667,6 +668,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('config', $this->request->post);

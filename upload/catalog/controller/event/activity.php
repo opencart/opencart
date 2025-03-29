@@ -131,6 +131,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function forgotten(string &$route, array &$args, &$output): void {
+		// Customer
 		if (isset($this->request->get['route']) && $this->request->get['route'] == 'account/forgotten' && $this->config->get('config_customer_activity')) {
 			$this->load->model('account/customer');
 
@@ -161,6 +162,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addTransaction(string &$route, array &$args, &$output): void {
+		// Customer
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/customer');
 
@@ -345,6 +347,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addHistory(string &$route, array &$args): void {
+		// Customer
 		if ($this->config->get('config_customer_activity')) {
 			// If the last order status id returns 0, and the new order status is not, then we record it as new order
 			$this->load->model('checkout/order');

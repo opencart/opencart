@@ -24,6 +24,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$affiliate_id = 0;
 		}
 
+		// Affiliate
 		if ($affiliate_id) {
 			$this->load->model('account/affiliate');
 
@@ -38,6 +39,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['order_id'])) {
 			$subtotal = 0;
 
+			// Order
 			$this->load->model('checkout/order');
 
 			$results = $this->model_checkout_order->getTotals($this->session->data['order_id']);

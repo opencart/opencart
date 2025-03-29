@@ -109,7 +109,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Attribute
+		// Attributes
 		$data['attributes'] = [];
 
 		$filter_data = [
@@ -207,30 +207,31 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/attribute.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Attribute
 		if (isset($this->request->get['attribute_id'])) {
 			$this->load->model('catalog/attribute');
 
-			$attribute_info = $this->model_catalog_attribute->getAttribute($this->request->get['attribute_id']);
+			$attribute_info = $this->model_catalog_attribute->getAttribute((int)$this->request->get['attribute_id']);
 		}
 
-		if (isset($this->request->get['attribute_id'])) {
-			$data['attribute_id'] = (int)$this->request->get['attribute_id'];
+		if (!empty($attribute_info)) {
+			$data['attribute_id'] = $attribute_info['attribute_id'];
 		} else {
 			$data['attribute_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['attribute_id'])) {
-			$data['attribute_description'] = $this->model_catalog_attribute->getDescriptions($this->request->get['attribute_id']);
+		if (!empty($attribute_info)) {
+			$data['attribute_description'] = $this->model_catalog_attribute->getDescriptions($attribute_info['attribute_id']);
 		} else {
 			$data['attribute_description'] = [];
 		}
 
-		// Attribute Group
+		// Attribute Groups
 		$this->load->model('catalog/attribute_group');
 
 		$data['attribute_groups'] = $this->model_catalog_attribute_group->getAttributeGroups();
@@ -270,22 +271,22 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
+		$required = [
 			'attribute_id'          => 0,
 			'attribute_group_id'    => 0,
 			'attribute_description' => [],
 			'sort_order'            => 0
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		if (!$post_info['attribute_group_id']) {
 			$json['error']['attribute_group'] = $this->language->get('error_attribute_group');
 		}
 
 		foreach ($post_info['attribute_description'] as $language_id => $value) {
-			if (!oc_validate_length($value['name'], 1, 64)) {
-				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+			if (!oc_validate_length((string)$value['name'], 1, 64)) {
+				$json['error']['name_' . (int)$language_id] = $this->language->get('error_name');
 			}
 		}
 
@@ -294,12 +295,13 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Attribute
 			$this->load->model('catalog/attribute');
 
 			if (!$post_info['attribute_id']) {
 				$json['attribute_id'] = $this->model_catalog_attribute->addAttribute($post_info);
 			} else {
-				$this->model_catalog_attribute->editAttribute($post_info['attribute_id'], $post_info);
+				$this->model_catalog_attribute->editAttribute((int)$post_info['attribute_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -320,7 +322,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -329,10 +331,11 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $attribute_id) {
-			$product_total = $this->model_catalog_product->getTotalAttributesByAttributeId($attribute_id);
+			$product_total = $this->model_catalog_product->getTotalAttributesByAttributeId((int)$attribute_id);
 
 			if ($product_total) {
 				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
@@ -340,10 +343,11 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Attribute
 			$this->load->model('catalog/attribute');
 
 			foreach ($selected as $attribute_id) {
-				$this->model_catalog_attribute->deleteAttribute($attribute_id);
+				$this->model_catalog_attribute->deleteAttribute((int)$attribute_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

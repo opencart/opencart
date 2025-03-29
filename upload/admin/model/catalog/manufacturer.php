@@ -41,7 +41,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
@@ -98,7 +98,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('manufacturer_id', $manufacturer_id);
@@ -146,7 +146,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		$this->model_catalog_manufacturer->deleteStores($manufacturer_id);
 		$this->model_catalog_manufacturer->deleteLayouts($manufacturer_id);
 
-		// SEO URL
+		// SEO
 		$this->load->model('design/seo_url');
 
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('manufacturer_id', $manufacturer_id);

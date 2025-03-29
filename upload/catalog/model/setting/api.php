@@ -50,6 +50,8 @@ class Api extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Sessions
 	 *
+	 * Get the record of the api session records in the database.
+	 *
 	 * @param int $api_id primary key of the Api record
 	 *
 	 * @return array<int, array<string, mixed>> session records that have api ID
@@ -68,6 +70,8 @@ class Api extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Delete API Sessions
+	 *
+	 * Delete api session records in the database.
 	 *
 	 * @param int $api_id primary key of the Api record
 	 *

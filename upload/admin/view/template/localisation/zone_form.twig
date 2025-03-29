@@ -18,58 +18,44 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-zone" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <ul class="nav nav-tabs">
-            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-            <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
-          </ul>
-          <div class="tab-content">
-            <div id="tab-general" class="tab-pane active">
-              <ul class="nav nav-tabs">
-                {% for language in languages %}
-                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
-                {% endfor %}
-              </ul>
-              <div class="tab-content">
-                {% for language in languages %}
-                  <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
-                    <div class="row mb-3 required">
-                      <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="country_description[{{ language.language_id }}][name]" value="{{ country_description[language.language_id] ? country_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
-                        <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-          <div id="tab-data" class="tab-pane">
-            <div class="row mb-3">
-              <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
-              <div class="col-sm-10">
-                <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
-              <div class="col-sm-10">
-                <select name="country_id" id="input-country" class="form-select">
-                  {% for country in countries %}
-                    <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
-              <div class="col-sm-10">
-                <div class="form-check form-switch form-switch-lg">
-                  <input type="hidden" name="status" value="0"/>
-                  <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+          <div class="row mb-3 required">
+            <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              {% for language in languages %}
+                <div class="input-group">
+                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                  <input type="text" name="zone_description[{{ language.language_id }}][name]" value="{{ zone_description[language.language_id] ? zone_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
                 </div>
+                <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
+            <div class="col-sm-10">
+              <select name="country_id" id="input-country" class="form-select">
+                {% for country in countries %}
+                  <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <div class="form-switch form-switch-lg">
+                <input type="hidden" name="status" value="0"/>
+                <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
             </div>
           </div>
+
           <input type="hidden" name="zone_id" value="{{ zone_id }}" id="input-zone-id"/>
         </form>
       </div>

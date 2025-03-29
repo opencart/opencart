@@ -107,6 +107,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Topics
 		$data['topics'] = [];
 
 		$filter_data = [
@@ -206,19 +207,20 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('cms/topic.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('cms/topic', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Topic
 		if (isset($this->request->get['topic_id'])) {
 			$this->load->model('cms/topic');
 
 			$topic_info = $this->model_cms_topic->getTopic($this->request->get['topic_id']);
 		}
 
-		if (isset($this->request->get['topic_id'])) {
-			$data['topic_id'] = (int)$this->request->get['topic_id'];
+		if (!empty($topic_info)) {
+			$data['topic_id'] = $topic_info['topic_id'];
 		} else {
 			$data['topic_id'] = 0;
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -230,8 +232,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['topic_description'] = [];
 
-		if (isset($this->request->get['topic_id'])) {
-			$results = $this->model_cms_topic->getDescriptions($this->request->get['topic_id']);
+		if (!empty($topic_info)) {
+			$results = $this->model_cms_topic->getDescriptions($topic_info['topic_id']);
 
 			foreach ($results as $key => $result) {
 				$data['topic_description'][$key] = $result;
@@ -244,6 +246,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Stores
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -259,8 +262,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['stores'][] = $result;
 		}
 
-		if (isset($this->request->get['topic_id'])) {
-			$data['topic_store'] = $this->model_cms_topic->getStores($this->request->get['topic_id']);
+		if (!empty($topic_info)) {
+			$data['topic_store'] = $this->model_cms_topic->getStores($topic_info['topic_id']);
 		} else {
 			$data['topic_store'] = [0];
 		}
@@ -277,21 +280,22 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
-		if (isset($this->request->get['topic_id'])) {
+		// SEO
+		if (!empty($topic_info)) {
 			$this->load->model('design/seo_url');
 
-			$data['topic_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('topic_id', $this->request->get['topic_id']);
+			$data['topic_seo_url'] = $this->model_design_seo_url->getSeoUrlsByKeyValue('topic_id', $topic_info['topic_id']);
 		} else {
 			$data['topic_seo_url'] = [];
 		}
 
-		// Layout
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
-		if (isset($this->request->get['topic_id'])) {
-			$data['topic_layout'] = $this->model_cms_topic->getLayouts($this->request->get['topic_id']);
+		if (!empty($topic_info)) {
+			$data['topic_layout'] = $this->model_cms_topic->getLayouts($topic_info['topic_id']);
 		} else {
 			$data['topic_layout'] = [];
 		}
@@ -319,7 +323,19 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['topic_description'] as $language_id => $value) {
+		$required = [
+			'topic_id'          => 0,
+			'topic_description' => [],
+			'sort_order'        => 0,
+			'status'            => 1,
+			'topic_store'       => [],
+			'topic_seo_url'     => [],
+			'topic_layout'      => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['topic_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
@@ -329,10 +345,11 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->request->post['topic_seo_url']) {
+		// SEO
+		if ($post_info['topic_seo_url']) {
 			$this->load->model('design/seo_url');
 
-			foreach ($this->request->post['topic_seo_url'] as $store_id => $language) {
+			foreach ($post_info['topic_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if (!oc_validate_length($keyword, 1, 64)) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
@@ -344,7 +361,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id);
 
-					if ($seo_url_info && (!isset($this->request->post['topic_id']) || $seo_url_info['key'] != 'topic_id' || $seo_url_info['value'] != (int)$this->request->post['topic_id'])) {
+					if ($seo_url_info && (!$post_info['topic_id'] || $seo_url_info['key'] != 'topic_id' || $seo_url_info['value'] != (int)$post_info['topic_id'])) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword_exists');
 					}
 				}
@@ -356,12 +373,13 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Topic
 			$this->load->model('cms/topic');
 
-			if (!$this->request->post['topic_id']) {
-				$json['topic_id'] = $this->model_cms_topic->addTopic($this->request->post);
+			if (!$post_info['topic_id']) {
+				$json['topic_id'] = $this->model_cms_topic->addTopic($post_info);
 			} else {
-				$this->model_cms_topic->editTopic($this->request->post['topic_id'], $this->request->post);
+				$this->model_cms_topic->editTopic($post_info['topic_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -382,7 +400,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -392,6 +410,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Topic
 			$this->load->model('cms/topic');
 
 			foreach ($selected as $topic_id) {

@@ -36,7 +36,7 @@ class Analytics extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('analytics');
@@ -50,10 +50,9 @@ class Analytics extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
-		// Setting
 		$this->load->model('setting/setting');
 
 		$stores = $this->model_setting_store->getStores();
@@ -132,10 +131,12 @@ class Analytics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('analytics', $extension, $code);
 
+			// User Group
 			$this->load->model('user/user_group');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/analytics/' . $code);
@@ -182,6 +183,7 @@ class Analytics extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('analytics', $this->request->get['code']);

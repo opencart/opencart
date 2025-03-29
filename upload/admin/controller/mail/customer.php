@@ -20,6 +20,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function approve(string &$route, array &$args, &$output): void {
+		// Customer
 		if (isset($args[0])) {
 			$customer_id = (int)$args[0];
 		} else {
@@ -31,6 +32,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 		if ($customer_info) {
+			// Store
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
@@ -58,7 +60,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			// Load the language for any mails using a different country code and prefixing it, so it does not pollute the main data pool.
 			$this->load->language('default', 'mail', $language_code);
 			$this->load->language('mail/customer_approve', 'mail', $language_code);
 
@@ -122,6 +124,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deny(string &$route, array &$args, &$output): void {
+		// Customer
 		if (isset($args[0])) {
 			$customer_id = (int)$args[0];
 		} else {
@@ -133,11 +136,13 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 		if ($customer_info) {
+			// Store
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
 
 			if ($store_info) {
+				// Setting
 				$this->load->model('setting/setting');
 
 				$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $customer_info['store_id']), ENT_QUOTES, 'UTF-8');
@@ -160,7 +165,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			// Load the language for any mails using a different country code and prefixing it, so it does not pollute the main data pool.
 			$this->load->language('default', 'mail', $language_code);
 			$this->load->language('mail/customer_deny', 'mail', $language_code);
 

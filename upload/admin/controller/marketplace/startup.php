@@ -18,14 +18,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -72,18 +64,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'code';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -92,26 +72,16 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['action'] = $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Startup
+		// Startups
 		$data['startups'] = [];
 
 		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
@@ -127,41 +97,16 @@ class Startup extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$url = '';
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		$data['sort_code'] = $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
-		$data['sort_action'] = $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . '&sort=action' . $url);
-		$data['sort_sort_order'] = $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
-
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
 		$startup_total = $this->model_setting_startup->getTotalStartups();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $startup_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($startup_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($startup_total - $this->config->get('config_pagination_admin'))) ? $startup_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $startup_total, ceil($startup_total / $this->config->get('config_pagination_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		return $this->load->view('marketplace/startup_list', $data);
 	}
@@ -187,6 +132,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Startup
 			$this->load->model('setting/startup');
 
 			$this->model_setting_startup->editStatus($startup_id, true);
@@ -219,6 +165,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Startup
 			$this->load->model('setting/startup');
 
 			$this->model_setting_startup->editStatus($startup_id, false);
@@ -251,6 +198,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Startup
 			$this->load->model('setting/startup');
 
 			foreach ($selected as $startup_id) {

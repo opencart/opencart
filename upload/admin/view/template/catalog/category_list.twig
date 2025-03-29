@@ -6,6 +6,7 @@
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th class="text-center col-1">{{ column_image }}</th>
           <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th class="text-center">{{ column_status }}</th>
           <th class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
           <th class="text-end col-1">{{ column_action }}</th>
         </tr>
@@ -13,10 +14,16 @@
       <tbody>
         {% if categories %}
           {% for category in categories %}
-            <tr{% if not category.status %} class="table-secondary"{% endif %}>
+            <tr{% if not category.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ category.category_id }}" class="form-check-input"/></td>
               <td class="text-center"><img src="{{ category.image }}" alt="{{ category.name }}" class="img-thumbnail"/></td>
               <td>{{ category.name }}</td>
+              <td class="text-center">
+                <div class="form-switch form-switch-lg">
+                  <input type="hidden" name="status" value="0"/>
+                  <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input text-center"{% if category.status %} checked{% endif %}/>
+                </div>
+              </td>
               <td class="text-end">{{ category.sort_order }}</td>
               <td class="text-end"><a href="{{ category.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>

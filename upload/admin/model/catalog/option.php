@@ -20,9 +20,10 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $option_data = [
-	 *     'type'       => 'radio',
-	 *     'validation' => '',
-	 *     'sort_order' => 0
+	 *     'option_description' => [],
+	 *     'type'               => 'radio',
+	 *     'validation'         => '',
+	 *     'sort_order'         => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/option');
@@ -60,9 +61,10 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $option_data = [
-	 *     'type'       => 'radio',
-	 *     'validation' => '',
-	 *     'sort_order' => 0
+	 *     'option_description' => [],
+	 *     'type'               => 'radio',
+	 *     'validation'         => '',
+	 *     'sort_order'         => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/option');
@@ -337,6 +339,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $option_value_data = [
+	 *     'option_value_description' => [],
 	 *     'option_value_id' => 0,
 	 *     'option_id'       => 1,
 	 *     'image'           => 'option_image',

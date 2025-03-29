@@ -18,6 +18,13 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
+		$required = [
+			'name' => '',
+			'code' => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
 			$output['error'] = $this->language->get('error_customer');
@@ -28,7 +35,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$output['error'] = $this->language->get('error_product');
 		}
 
-		// 3. Validate shipping address and method if required
+		// 3. Validate shipping address and method, if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
 				$output['error'] = $this->language->get('error_shipping_address');
@@ -39,29 +46,15 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// 4. Validate payment address if required
+		// 4. Validate payment address, if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$output['error'] = $this->language->get('error_payment_address');
 		}
 
-		// 5. Validate payment Method
-		$keys = [
-			'name',
-			'code'
-		];
-
-		foreach ($keys as $key) {
-			if (!isset($this->request->post['payment_method'][$key])) {
-				$output['error'] = $this->language->get('error_payment_method');
-
-				break;
-			}
-		}
-
 		if (!$output) {
 			$this->session->data['payment_method'] = [
-				'name' => $this->request->post['payment_method']['name'],
-				'code' => $this->request->post['payment_method']['code']
+				'name' => $post_info['payment_method']['name'],
+				'code' => $post_info['payment_method']['code']
 			];
 
 			$output['success'] = $this->language->get('text_success');
@@ -90,7 +83,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$output['error'] = $this->language->get('error_product');
 		}
 
-		// 3. Validate shipping address and method if required
+		// 3. Validate shipping address and method, if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
 				$output['error'] = $this->language->get('error_shipping_address');
@@ -101,7 +94,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// 4. Validate payment address if required
+		// 4. Validate payment address, if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$output['error'] = $this->language->get('error_payment_address');
 		}
@@ -113,6 +106,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				$payment_address = [];
 			}
 
+			// Payment Methods
 			$this->load->model('checkout/payment_method');
 
 			$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);

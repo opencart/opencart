@@ -20,8 +20,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $customer_group_data = [
-	 *     'approval'   => 0,
-	 *     'sort_order' => 0
+	 *     'customer_group_description' => [],
+	 *     'approval'                   => 0,
+	 *     'sort_order'                 => 0
 	 * ];
 	 *
 	 * $this->load->model('customer/customer_group');
@@ -53,8 +54,9 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $customer_group_data = [
-	 *     'approval'   => 0,
-	 *     'sort_order' => 0
+	 *     'customer_group_description' => [],
+	 *     'approval'                   => 0,
+	 *     'sort_order'                 => 0
 	 * ];
 	 *
 	 * $this->load->model('customer/customer_group');

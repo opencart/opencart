@@ -11,6 +11,8 @@ class Upload extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Upload
 	 *
+	 * Create a new upload record in the database.
+	 *
 	 * @param string $name
 	 * @param string $filename
 	 *

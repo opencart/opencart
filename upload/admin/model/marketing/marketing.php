@@ -11,6 +11,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Marketing
 	 *
+	 * Create a new marketing record in the database.
+	 *
 	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return int returns the primary key of the new coupon record
@@ -42,6 +44,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Edit Marketing
 	 *
+	 * Edit marketing record in the database.
+	 *
 	 * @param int                  $marketing_id primary key of the marketing record
 	 * @param array<string, mixed> $data         array of data
 	 *
@@ -66,6 +70,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Marketing
 	 *
+	 * Delete marketing record in the database.
+	 *
 	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return void
@@ -84,6 +90,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Marketing
+	 *
+	 * Get the record of the marketing record in the database.
 	 *
 	 * @param int $marketing_id primary key of the marketing record
 	 *
@@ -122,6 +130,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Marketing(s)
+	 *
+	 * Get the record of the marketing records in the database.
 	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
@@ -215,6 +225,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Marketing(s)
 	 *
+	 * Get the total number of total marketing records in the database.
+	 *
 	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return int total number of marketing records
@@ -269,6 +281,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Marketing Reports
 	 *
+	 * Delete marketing report records in the database.
+	 *
 	 * @param int $marketing_id primary key of the marketing record
 	 *
 	 * @return void
@@ -285,6 +299,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Reports
+	 *
+	 * Get the record of the marketing report records in the database.
 	 *
 	 * @param int $marketing_id primary key of the marketing record
 	 * @param int $start
@@ -314,6 +330,8 @@ class Marketing extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Total Reports
+	 *
+	 * Get the total number of total marketing report records in the database.
 	 *
 	 * @param int $marketing_id primary key of the marketing record
 	 *

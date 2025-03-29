@@ -54,6 +54,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token']);
 
+		// Customer Groups
 		$data['customer_groups'] = [];
 
 		if (is_array($this->config->get('config_customer_group_display'))) {
@@ -127,7 +128,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$filter_data = [
+		$required = [
 			'customer_group_id' => 0,
 			'firstname'         => '',
 			'lastname'          => '',
@@ -138,7 +139,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			'agree'             => 0
 		];
 
-		$post_info = oc_filter_data($filter_data, $this->request->post);
+		$post_info = $this->request->post + $required;
 
 		if (!isset($this->request->get['register_token']) || !isset($this->session->data['register_token']) || ($this->session->data['register_token'] != $this->request->get['register_token'])) {
 			$json['redirect'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'), true);
@@ -185,7 +186,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
-			// Customer
+			// Total Customers
 			$this->load->model('account/customer');
 
 			if ($this->model_account_customer->getTotalCustomersByEmail($post_info['email'])) {
@@ -196,7 +197,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
-			// Custom field validation
+			// Custom fields validation
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
@@ -281,6 +282,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$this->model_account_customer->deleteLoginAttempts($post_info['email']);
 
 			// Clear old session data
+			unset($this->session->data['order_id']);
 			unset($this->session->data['guest']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

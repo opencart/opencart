@@ -100,6 +100,15 @@ class Edit extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$required = [
+			'firstname' => '',
+			'lastname'  => '',
+			'email'     => '',
+			'telephone' => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
 		if (!$this->load->controller('account/login.validate')) {
 			$this->session->data['redirect'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
 
@@ -107,15 +116,6 @@ class Edit extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$filter_data = [
-				'firstname' => '',
-				'lastname'  => '',
-				'email'     => '',
-				'telephone' => ''
-			];
-
-			$post_info = oc_filter_data($filter_data, $this->request->post);
-
 			if (!oc_validate_length($post_info['firstname'], 1, 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
@@ -139,7 +139,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
-			// Custom field validation
+			// Custom fields validation
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
@@ -172,6 +172,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $post_info['custom_field'] ?? []
 			];
 
+			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);

@@ -47,7 +47,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
-		// Reward
+		// Rewards
 		$data['rewards'] = [];
 
 		$filter_data = [

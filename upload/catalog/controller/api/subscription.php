@@ -292,6 +292,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
+		// Add keys for missing post vars
+		$required = [
+			'subscription_id'      => 0,
+			'subscription_plan_id' => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
 		$this->setPaymentAddress();
 		$this->setShippingAddress();
 
@@ -308,7 +316,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Subscription Plan
 		$this->load->model('catalog/subscription_plan');
 
-		$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($this->request->post['subscription_plan_id']);
+		$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($post_info['subscription_plan_id']);
 
 		if (!$subscription_plan_info) {
 			$output['error']['subscription_plan'] = $this->language->get('error_subscription_plan');
@@ -329,7 +337,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$output['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
-		// 5. Validate shipping address and method if required
+		// 5. Validate shipping address and method, if required
 		if ($this->cart->hasShipping()) {
 			// Shipping Address
 			if (!isset($this->session->data['shipping_address'])) {
@@ -351,6 +359,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$output) {
+			// Subscription
 			$subscription_product_data = [];
 
 			$products = $this->cart->getSubscriptions();
@@ -379,10 +388,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('checkout/subscription');
 
-			if (!$this->request->post['subscription_id']) {
-				$output['subscription_id'] = $this->model_checkout_subscription->addSubscription($this->request->post + $subscription_data);
+			if (!$post_info['subscription_plan_id']) {
+				$output['subscription_id'] = $this->model_checkout_subscription->addSubscription($post_info + $subscription_data);
 			} else {
-				$this->model_checkout_subscription->editSubscription((int)$this->request->post['subscription_id'], $this->request->post + $subscription_data);
+				$this->model_checkout_subscription->editSubscription((int)$post_info['subscription_id'], $post_info + $subscription_data);
 			}
 
 			$output['success'] = $this->language->get('text_success');
@@ -405,30 +414,26 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$output = [];
 
 		// Add keys for missing post vars
-		$keys = [
-			'subscription_id',
-			'subscription_status_id',
-			'comment',
-			'notify'
+		$required = [
+			'subscription_id'        => 0,
+			'subscription_status_id' => 0,
+			'comment'                => '',
+			'notify'                 => 0
 		];
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
+		$post_info = $this->request->post + $required;
 
 		// Subscription
 		$this->load->model('checkout/subscription');
 
-		$subscription_info = $this->model_checkout_subscription->getSubscription((int)$this->request->post['subscription_id']);
+		$subscription_info = $this->model_checkout_subscription->getSubscription((int)$post_info['subscription_id']);
 
 		if (!$subscription_info) {
 			$output['error'] = $this->language->get('error_subscription');
 		}
 
 		if (!$output) {
-			$this->model_checkout_order->addHistory((int)$this->request->post['subscription_id'], (int)$this->request->post['subscription_status_id'], (string)$this->request->post['comment'], (bool)$this->request->post['notify']);
+			$this->model_checkout_order->addHistory((int)$post_info['subscription_id'], (int)$post_info['subscription_status_id'], (string)$post_info['comment'], (bool)$post_info['notify']);
 
 			$output['success'] = $this->language->get('text_success');
 		}

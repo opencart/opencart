@@ -69,6 +69,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('dashboard_activity', $this->request->post);
@@ -88,9 +89,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/activity');
 
+		// Activities
 		$data['activities'] = [];
 
-		// Activity
 		$this->load->model('extension/opencart/report/activity');
 
 		$results = $this->model_extension_opencart_report_activity->getActivities();

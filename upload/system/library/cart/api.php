@@ -16,6 +16,16 @@ class Api {
 	private int $store_id;
 	private string $language;
 
+	/**
+	 * Constructor
+	 *
+	 * @param string $domain
+	 * @param string $path
+	 * @param string $username
+	 * @param string $key
+	 * @param int    $store_id
+	 * @param string $language
+	 */
 	public function __construct(string $domain, string $path, string $username, string $key, int $store_id, string $language = 'en-gb') {
 		$this->domain = $domain;
 		$this->path = $path;

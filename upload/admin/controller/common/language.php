@@ -14,7 +14,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
-		// Language
+		// Languages
 		$data['languages'] = [];
 
 		$this->load->model('localisation/language');
@@ -70,13 +70,13 @@ class Language extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['code'])) {
-			$code = $this->request->post['code'];
+			$code = (string)$this->request->post['code'];
 		} else {
 			$code = '';
 		}
 
 		if (isset($this->request->post['redirect'])) {
-			$redirect = html_entity_decode($this->request->post['redirect'], ENT_QUOTES, 'UTF-8');
+			$redirect = html_entity_decode((string)$this->request->post['redirect'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$redirect = '';
 		}

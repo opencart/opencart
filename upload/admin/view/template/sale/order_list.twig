@@ -1,4 +1,4 @@
-<form id="form-order" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#order">
+<form id="form-order" method="post" data-oc-load="{{ action }}" data-oc-target="#order">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -18,11 +18,11 @@
         {% if orders %}
           {% for order in orders %}
             <tr>
-              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/><input type="hidden" name="shipping_method[]" value="{% if order.shipping_method %}1{{ else }}0{% endif %}"/></td>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/><input type="hidden" name="shipping_method[]" value="{% if order.shipping_method %}1{% else %}0{% endif %}"/></td>
               <td class="text-end">{{ order.order_id }}</td>
               <td>{{ order.store_name }}</td>
               <td>{{ order.customer }}</td>
-              <td><label>{{ order.order_status }}</label></td>
+              <td>{{ order.order_status }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ order.total }}</td>
               <td class="d-none d-lg-table-cell">{{ order.date_added }}</td>
               <td class="d-none d-xl-table-cell">{{ order.date_modified }}</td>

@@ -25,7 +25,6 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *     'text'       => 'identifier Text',
 	 *     'rating'     => 4,
 	 *     'status'     => 0,
-	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
 	 * $this->load->model('catalog/identifier');
@@ -33,7 +32,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 * $identifier_id = $this->model_catalog_identifier->addIdentifier($identifier_data);
 	 */
 	public function addIdentifier(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "'");
 
 		$identifier_id = $this->db->getLastId();
 
@@ -48,19 +47,18 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 * Edit identifier record in the database.
 	 *
 	 * @param int                  $identifier_id primary key of the identifier record
-	 * @param array<string, mixed> $data      array of data
+	 * @param array<string, mixed> $data          array of data
 	 *
 	 * @return void
 	 *
 	 * @example
 	 *
-	 * $review_data = [
+	 * $identifier_data = [
 	 *     'author'     => 'Author Name',
 	 *     'product_id' => 1,
 	 *     'text'       => 'Identifier Text',
 	 *     'rating'     => 4,
 	 *     'status'     => 1,
-	 *     'date_added' => '2021-01-01'
 	 * ];
 	 *
 	 * $this->load->model('catalog/identifier');
@@ -68,7 +66,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_identifier->editIdentifier($identifier_id, $identifier_data);
 	 */
 	public function editIdentifier(int $identifier_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `identifier_id` = '" . (int)$identifier_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `status` = '" . (bool)($data['status'] ?? 0) . "' WHERE `identifier_id` = '" . (int)$identifier_id . "'");
 
 		$this->cache->delete('identifier');
 	}
@@ -111,6 +109,21 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 */
 	public function getIdentifier(int $identifier_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "identifier` WHERE `identifier_id` = '" . (int)$identifier_id . "'");
+
+		return $query->row;
+	}
+
+	/**
+	 * Get Identifier By Code
+	 *
+	 * Get the record of the identifier record in the database.
+	 *
+	 * @param string $code
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getIdentifierByCode(string $code): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "identifier` WHERE `code` = '" . $this->db->escape((string)$code) . "'");
 
 		return $query->row;
 	}

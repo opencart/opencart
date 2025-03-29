@@ -18,7 +18,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addReview(string &$route, array &$args, &$output): void {
-		// Statistics
+		// Stats
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('review', 1);
@@ -36,7 +36,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addReturn(string &$route, array &$args, &$output): void {
-		// Statistics
+		// Stats
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('returns', 1);
@@ -59,6 +59,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_checkout_order->getOrder($args[0]);
 
 		if ($order_info) {
+			// Stats
 			$this->load->model('report/statistics');
 
 			$old_status_id = $order_info['order_status_id'];

@@ -44,3 +44,15 @@ $_['error_directory']        = 'Le répertoire d\'installation %s est introuvabl
 $_['error_directory_exists'] = 'Le chemin %s existe déjà!';
 $_['error_unzip']            = 'Impossible d\'ouvrir le fichier .zip!';
 $_['error_upload']           = 'Le fichier n\'a pu être téléchargé!';
+$_['error_unknown']          = 'Une erreur inconnue s’est produite!';
+
+// Zip erreur
+$_['error_zip_exists']       = 'Le fichier existe déjà!';
+$_['error_zip_incons']       = 'Archive zip incohérente!';
+$_['error_zip_inval']        = 'Argument invalide!';
+$_['error_zip_memory']       = 'Échec de l’allocation de mémoire!';
+$_['error_zip_noent']        = 'Aucun fichier trouvé!';
+$_['error_zip_nozip']        = 'Ce n’est pas une archive zip!';
+$_['error_zip_open']         = 'Impossible d’ouvrir le fichier!';
+$_['error_zip_read']         = 'Erreur de lecture!';
+$_['error_zip_seek']         = 'Erreur de positionnement!';

@@ -266,7 +266,6 @@ final class CoreExtension extends AbstractExtension
             // iteration and runtime
             new TwigFilter('default', [self::class, 'default'], ['node_class' => DefaultFilter::class]),
             new TwigFilter('keys', [self::class, 'keys']),
-            new TwigFilter('invoke', [self::class, 'invoke']),
         ];
     }
 
@@ -576,7 +575,7 @@ final class CoreExtension extends AbstractExtension
         if (ctype_digit($asString) || ('' !== $asString && '-' === $asString[0] && ctype_digit(substr($asString, 1)))) {
             $date = new \DateTime('@'.$date);
         } else {
-            $date = new \DateTime($date);
+            $date = new \DateTime($date, $this->getTimezone());
         }
 
         if (false !== $timezone) {
@@ -914,16 +913,6 @@ final class CoreExtension extends AbstractExtension
         }
 
         return array_keys($array);
-    }
-
-    /**
-     * Invokes a callable.
-     *
-     * @internal
-     */
-    public static function invoke(\Closure $arrow, ...$arguments): mixed
-    {
-        return $arrow(...$arguments);
     }
 
     /**
@@ -2151,7 +2140,7 @@ final class CoreExtension extends AbstractExtension
 
         $property = $class->getProperty($property);
 
-        if (!$property->isPublic() || $property->isStatic()) {
+        if (!$property->isPublic()) {
             static $false;
 
             return $false ??= static fn () => false;

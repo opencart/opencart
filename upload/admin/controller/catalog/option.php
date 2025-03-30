@@ -135,6 +135,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url);
 
@@ -148,8 +149,10 @@ class Option extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Options
 		$option_total = $this->model_catalog_option->getTotalOptions();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $option_total,
 			'page'  => $page,
@@ -399,6 +402,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		// Product
 		$this->load->model('catalog/product');
 
+		// Total Options
 		foreach ($selected as $option_id) {
 			$product_total = $this->model_catalog_product->getTotalOptionsByOptionId($option_id);
 

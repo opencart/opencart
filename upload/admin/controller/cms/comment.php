@@ -205,8 +205,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
+		// Total Comments
 		$comment_total = $this->model_cms_article->getTotalComments($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,
 			'page'  => $page,
@@ -431,6 +433,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$this->model_cms_article->editCommentRating($result['article_id'], $result['article_comment_id'], $like - $dislike);
 			}
 
+			// Total Comments
 			$comment_total = $this->model_cms_article->getTotalComments();
 
 			$start = ($page - 1) * $limit;

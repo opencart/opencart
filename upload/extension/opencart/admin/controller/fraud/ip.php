@@ -93,6 +93,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/fraud')) {
+			// Extension
 			$this->load->model('extension/opencart/fraud/ip');
 
 			$this->model_extension_opencart_fraud_ip->install();
@@ -106,6 +107,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/fraud')) {
+			// Extension
 			$this->load->model('extension/opencart/fraud/ip');
 
 			$this->model_extension_opencart_fraud_ip->uninstall();
@@ -130,6 +132,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 
 		$data['ips'] = [];
 
+		// Extension
 		$this->load->model('extension/opencart/fraud/ip');
 
 		// Customer
@@ -146,8 +149,10 @@ class Ip extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		// Total Customers
 		$ip_total = $this->model_extension_opencart_fraud_ip->getTotalIps();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $ip_total,
 			'page'  => $page,

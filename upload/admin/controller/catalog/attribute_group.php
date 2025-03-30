@@ -134,6 +134,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=agd.name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ag.sort_order' . $url);
 
@@ -147,8 +148,10 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Attribute Groups
 		$attribute_group_total = $this->model_catalog_attribute_group->getTotalAttributeGroups();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $attribute_group_total,
 			'page'  => $page,
@@ -317,6 +320,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/attribute');
 
 		foreach ($selected as $attribute_group_id) {
+			// Total Attributes
 			$attribute_total = $this->model_catalog_attribute->getTotalAttributesByAttributeGroupId($attribute_group_id);
 
 			if ($attribute_total) {

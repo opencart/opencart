@@ -170,8 +170,10 @@ class Comment extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Articles
 		$comment_total = $this->model_cms_article->getTotalComments($article_id, $filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,
 			'page'  => $page,
@@ -248,6 +250,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Articles
 		$reply_total = $this->model_cms_article->getTotalComments($article_id, $filter_data);
 
 		$data['refresh'] = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $parent_id . '&page=' . $page, true);

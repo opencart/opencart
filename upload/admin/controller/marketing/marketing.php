@@ -241,6 +241,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.name' . $url);
 		$data['sort_code'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.code' . $url);
 		$data['sort_date_added'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.date_added' . $url);
@@ -273,6 +274,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$marketing_total = $this->model_marketing_marketing->getTotalMarketings($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $marketing_total,
 			'page'  => $page,
@@ -345,7 +347,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('marketing/marketing.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Marketing
 		if (isset($this->request->get['marketing_id'])) {
 			$this->load->model('marketing/marketing');
 
@@ -516,7 +517,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		// Customer
 		$this->load->model('customer/customer');
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$results = $this->model_marketing_marketing->getReports($marketing_id, ($page - 1) * $limit, $limit);
@@ -542,8 +543,10 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		// Total Reports
 		$report_total = $this->model_marketing_marketing->getTotalReports($marketing_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $report_total,
 			'page'  => $page,

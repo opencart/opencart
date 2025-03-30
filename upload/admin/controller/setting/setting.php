@@ -141,7 +141,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['currency_engines'] = [];
 
-		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('currency');
@@ -313,7 +312,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Captcha
 		$data['config_captcha'] = $this->config->get('config_captcha');
 
-		// Extension
 		$this->load->model('setting/extension');
 
 		$data['captchas'] = [];

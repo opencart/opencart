@@ -150,6 +150,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_title'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
 		$data['sort_code'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
 		$data['sort_value'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
@@ -166,8 +167,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Currencies
 		$currency_total = $this->model_localisation_currency->getTotalCurrencies();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $currency_total,
 			'page'  => $page,
@@ -369,10 +372,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 		// Currency
 		$this->load->model('localisation/currency');
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
-		// Order
+		// Orders
 		$this->load->model('sale/order');
 
 		foreach ($selected as $currency_id) {
@@ -390,6 +393,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// Total Orders
 			$order_total = $this->model_sale_order->getTotalOrdersByCurrencyId($currency_id);
 
 			if ($order_total) {

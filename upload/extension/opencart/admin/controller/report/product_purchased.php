@@ -148,6 +148,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		// Extension
 		$this->load->model('extension/opencart/report/product_purchased');
 
+		// Total Products
 		$product_total = $this->model_extension_opencart_report_product_purchased->getTotalPurchased($filter_data);
 
 		$results = $this->model_extension_opencart_report_product_purchased->getPurchased($filter_data);
@@ -175,6 +176,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,
 			'page'  => $page,

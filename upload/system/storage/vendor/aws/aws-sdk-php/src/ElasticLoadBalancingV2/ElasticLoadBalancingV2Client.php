@@ -75,8 +75,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getTrustStoreRevocationContentAsync(array $args = [])
  * @method \Aws\Result modifyCapacityReservation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyCapacityReservationAsync(array $args = [])
- * @method \Aws\Result modifyIpPools(array $args = [])
- * @method \GuzzleHttp\Promise\Promise modifyIpPoolsAsync(array $args = [])
  * @method \Aws\Result modifyListener(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyListenerAsync(array $args = [])
  * @method \Aws\Result modifyListenerAttributes(array $args = [])

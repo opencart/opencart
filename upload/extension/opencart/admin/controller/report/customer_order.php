@@ -83,7 +83,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
-		// Order Status
+		// Order Statuses
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -154,6 +154,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('extension/opencart/report/customer');
 
+		// Total Customers
 		$customer_total = $this->model_extension_opencart_report_customer->getTotalOrders($filter_data);
 
 		$results = $this->model_extension_opencart_report_customer->getOrders($filter_data);
@@ -189,6 +190,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,
 			'page'  => $page,

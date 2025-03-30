@@ -97,8 +97,10 @@ class Event extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Events
 		$event_total = $this->model_setting_event->getTotalEvents();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $event_total,
 			'page'  => $page,

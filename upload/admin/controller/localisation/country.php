@@ -203,6 +203,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_iso_code_2'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_2' . $url);
 		$data['sort_iso_code_3'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
@@ -229,8 +230,10 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Countries
 		$country_total = $this->model_localisation_country->getTotalCountries($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $country_total,
 			'page'  => $page,
@@ -439,16 +442,16 @@ class Country extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		// Customer
 		$this->load->model('customer/customer');
 
-		// Zone
+		// Zones
 		$this->load->model('localisation/zone');
 
-		// Geo Zone
+		// Geo Zones
 		$this->load->model('localisation/geo_zone');
 
 		foreach ($selected as $country_id) {
@@ -462,18 +465,21 @@ class Country extends \Opencart\System\Engine\Controller {
 				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
+			// Total Customers
 			$address_total = $this->model_customer_customer->getTotalAddressesByCountryId($country_id);
 
 			if ($address_total) {
 				$json['error'] = sprintf($this->language->get('error_address'), $address_total);
 			}
 
+			// Total Zones
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId($country_id);
 
 			if ($zone_total) {
 				$json['error'] = sprintf($this->language->get('error_zone'), $zone_total);
 			}
 
+			// Total Geo Zones
 			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByCountryId($country_id);
 
 			if ($zone_to_geo_zone_total) {

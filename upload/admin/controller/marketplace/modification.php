@@ -103,6 +103,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Modifications
 		$modification_total = $this->model_setting_modification->getTotalModifications();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [

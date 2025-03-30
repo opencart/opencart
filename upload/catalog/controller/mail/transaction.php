@@ -28,7 +28,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_account_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-			// Store
+			// Setting
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);

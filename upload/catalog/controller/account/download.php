@@ -85,8 +85,10 @@ class Download extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Total Downloads
 		$download_total = $this->model_account_download->getTotalDownloads();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $download_total,
 			'page'  => $page,

@@ -167,8 +167,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Installs
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
 			'page'  => $page,

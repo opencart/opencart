@@ -27,11 +27,14 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Languages
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
 
 			$limit = 5;
+
+			// Total Articles
 			$article_total = $this->model_cms_article->getTotalArticles();
 
 			$start = ($page - 1) * $limit;

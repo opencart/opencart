@@ -143,7 +143,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 								$order_info = $this->model_checkout_order->getOrder($value['order_id']);
 
 								if ($order_info) {
-									// Store
+									// Setting
 									$this->load->model('setting/store');
 
 									// Setting

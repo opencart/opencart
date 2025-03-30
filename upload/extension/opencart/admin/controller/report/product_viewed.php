@@ -80,6 +80,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/report')) {
+			// Extension
 			$this->load->model('extension/opencart/report/product_viewed');
 
 			$this->model_extension_opencart_report_product_viewed->install();
@@ -93,6 +94,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/report')) {
+			// Extension
 			$this->load->model('extension/opencart/report/product_viewed');
 
 			$this->model_extension_opencart_report_product_viewed->uninstall();
@@ -147,6 +149,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 
 		$total = $this->model_extension_opencart_report_product_viewed->getTotal();
 
+		// Total Viewed
 		$viewed_total = $this->model_extension_opencart_report_product_viewed->getTotalViewed();
 
 		$results = $this->model_extension_opencart_report_product_viewed->getViewed(($page - 1) * $this->config->get('config_pagination'), $this->config->get('config_pagination'));
@@ -176,6 +179,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $viewed_total,
 			'page'  => $page,
@@ -226,6 +230,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('catalog/product');
 
+			// Total Products
 			$product_total = $this->model_catalog_product->getTotalProducts();
 
 			$products = $this->model_catalog_product->getProducts($filter_data);

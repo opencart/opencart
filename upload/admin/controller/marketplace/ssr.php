@@ -99,8 +99,10 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total SSRs
 		$ssr_total = $this->model_setting_ssr->getTotalSsrs();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $ssr_total,
 			'page'  => $page,
@@ -134,6 +136,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SSRs
 			$this->load->model('setting/ssr');
 
 			$ssr_info = $this->model_setting_ssr->getSsrs($ssr_id);
@@ -179,6 +182,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SSR
 			$this->load->model('setting/ssr');
 
 			$this->model_setting_ssr->editStatus($ssr_id, true);
@@ -211,6 +215,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SSR
 			$this->load->model('setting/ssr');
 
 			$this->model_setting_cron->editStatus($ssr_id, false);
@@ -243,6 +248,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SSR
 			$this->load->model('setting/ssr');
 
 			foreach ($selected as $ssr_id) {

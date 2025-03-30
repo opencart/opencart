@@ -97,8 +97,10 @@ class Startup extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Startups
 		$startup_total = $this->model_setting_startup->getTotalStartups();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $startup_total,
 			'page'  => $page,

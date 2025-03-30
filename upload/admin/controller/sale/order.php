@@ -794,7 +794,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 					if ($upload_info) {
 						$option_data[] = [
-							'filename' => $upload_info['mask'],
+							'filename' => $upload_info['name'],
 							'href'     => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
 						] + $option;
 					}

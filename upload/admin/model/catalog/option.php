@@ -340,10 +340,10 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * $option_value_data = [
 	 *     'option_value_description' => [],
-	 *     'option_value_id' => 0,
-	 *     'option_id'       => 1,
-	 *     'image'           => 'option_image',
-	 *     'sort_order'      => 0
+	 *     'option_value_id'          => 0,
+	 *     'option_id'                => 1,
+	 *     'image'                    => 'option_image',
+	 *     'sort_order'               => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/option');
@@ -447,7 +447,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $option_value_description_data = [
+	 * $option_value_description_data[1] = [
 	 *     'name' => 'Option Value Name'
 	 * ];
 	 *

@@ -32,7 +32,19 @@ class Article extends \Opencart\System\Engine\Controller {
 
 			$languages = $this->model_localisation_language->getLanguages();
 
+			$path = [];
+
+			$directories = DIR_CATALOG . 'view/data/cms/';
+
+
+			//foreach ($directory)
+
+
 			$limit = 5;
+
+
+			$this->load->model('cms/article');
+
 
 			// Total Articles
 			$article_total = $this->model_cms_article->getTotalArticles();
@@ -45,12 +57,13 @@ class Article extends \Opencart\System\Engine\Controller {
 				'limit' => $limit
 			];
 
-			$this->load->model('cms/article');
-
 			$articles = $this->model_cms_article->getArticles($filter_data);
 
 			foreach ($articles as $article) {
 				if ($article['status']) {
+
+					echo 'hi';
+
 					$descriptions = $this->model_cms_article->getDescriptions($article['article_id']);
 
 					foreach ($descriptions as $description) {
@@ -78,6 +91,8 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		print_r($json);
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

@@ -58,5 +58,4 @@ require_once(DIR_SYSTEM . 'engine/config.php');
 
 // Helper
 require_once(DIR_SYSTEM . 'helper/general.php');
-require_once(DIR_SYSTEM . 'helper/filter.php');
 require_once(DIR_SYSTEM . 'helper/validation.php');

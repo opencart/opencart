@@ -11,7 +11,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function index(): void {
 		$this->load->language('localisation/currency');
 
 		$json = [];

@@ -39,9 +39,6 @@ class Country extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
-
-
 			$output = json_encode($results);
 
 			$file = DIR_CATALOG . 'view/data/localisation/country.json';

@@ -282,11 +282,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *     'filter_author'    => 'Author Name',
 	 *     'filter_status'    => 1,
 	 *     'filter_date_from' => '2021-01-01',
-	 *     'filter_date_to'   => '2021-01-31',
-	 *     'sort'             => 'DESC',
-	 *     'order'            => 'r.date_added',
-	 *     'start'            => 0,
-	 *     'limit'            => 10
+	 *     'filter_date_to'   => '2021-01-31'
 	 * ];
 	 *
 	 * $this->load->model('catalog/review');

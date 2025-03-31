@@ -88,7 +88,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		// Themes
 		$this->load->model('design/theme');
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$results = $this->model_design_theme->getThemes(($page - 1) * $this->config->get('config_pagination_admin'), $this->config->get('config_pagination_admin'));
@@ -110,8 +110,10 @@ class Theme extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Themes
 		$theme_total = $this->model_design_theme->getTotalThemes();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $theme_total,
 			'page'  => $page,
@@ -170,7 +172,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$data['theme_id'] = 0;
 		}
 
-		// Stores
+		// Setting
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();

@@ -136,6 +136,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sort
 		$data['sort_name'] = $this->url->link('localisation/subscription_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
@@ -148,8 +149,10 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Subscription Statuses
 		$subscription_status_total = $this->model_localisation_subscription_status->getTotalSubscriptionStatuses();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $subscription_status_total,
 			'page'  => $page,
@@ -299,7 +302,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		// Subscription
@@ -310,12 +313,14 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Subscriptions
 			$subscription_total = $this->model_sale_subscription->getTotalSubscriptionsBySubscriptionStatusId($subscription_status_id);
 
 			if ($subscription_total) {
 				$json['error'] = sprintf($this->language->get('error_subscription'), $subscription_total);
 			}
 
+			// Total Histories
 			$subscription_total = $this->model_sale_subscription->getTotalHistoriesBySubscriptionStatusId($subscription_status_id);
 
 			if ($subscription_total) {

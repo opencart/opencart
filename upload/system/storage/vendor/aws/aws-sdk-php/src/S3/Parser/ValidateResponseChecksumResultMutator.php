@@ -17,23 +17,15 @@ use Psr\Http\Message\ResponseInterface;
 final class ValidateResponseChecksumResultMutator implements S3ResultMutator
 {
     use CalculatesChecksumTrait;
-
-    public const DEFAULT_VALIDATION_MODE = 'when_supported';
-
     /** @var Service $api */
     private $api;
 
-    /** @var array $api */
-    private $config;
-
     /**
      * @param Service $api
-     * @param array $config
      */
-    public function __construct(Service $api, array $config = [])
+    public function __construct(Service $api)
     {
         $this->api = $api;
-        $this->config = $config;
     }
 
     /**
@@ -50,40 +42,56 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
     ): ResultInterface
     {
         $operation = $this->api->getOperation($command->getName());
-
         // Skip this middleware if the operation doesn't have an httpChecksum
-        $checksumInfo = $operation['httpChecksum'] ?? null;
-        if (is_null($checksumInfo)) {
+        $checksumInfo = empty($operation['httpChecksum'])
+            ? null
+            : $operation['httpChecksum'];;
+        if (null === $checksumInfo) {
             return $result;
         }
 
-        $mode = $this->config['response_checksum_validation'] ?? self::DEFAULT_VALIDATION_MODE;
+        // Skip this middleware if the operation doesn't send back a checksum,
+        // or the user doesn't opt in
         $checksumModeEnabledMember = $checksumInfo['requestValidationModeMember'] ?? "";
-        $checksumModeEnabled = strtolower($command[$checksumModeEnabledMember] ?? "");
+        $checksumModeEnabled = $command[$checksumModeEnabledMember] ?? "";
         $responseAlgorithms = $checksumInfo['responseAlgorithms'] ?? [];
-        $shouldSkipValidation = $this->shouldSkipValidation(
-            $mode,
-            $checksumModeEnabled,
-            $responseAlgorithms
-        );
-
-        if ($shouldSkipValidation) {
+        if (empty($responseAlgorithms)
+            || strtolower($checksumModeEnabled) !== "enabled") {
             return $result;
         }
 
-        $checksumPriority = $this->getChecksumPriority();
-        $checksumsToCheck = array_intersect($responseAlgorithms, array_map(
-            'strtoupper',
-            array_keys($checksumPriority))
-        );
-        $checksumValidationInfo = $this->validateChecksum($checksumsToCheck, $response);
+        if (extension_loaded('awscrt')) {
+            $checksumPriority = ['CRC32C', 'CRC32', 'SHA1', 'SHA256'];
+        } else {
+            $checksumPriority = ['CRC32', 'SHA1', 'SHA256'];
+        }
 
-        if ($checksumValidationInfo['status'] === "SUCCEEDED") {
+        $checksumsToCheck = array_intersect(
+            $responseAlgorithms,
+            $checksumPriority
+        );
+        $checksumValidationInfo = $this->validateChecksum(
+            $checksumsToCheck,
+            $response
+        );
+        if ($checksumValidationInfo['status'] == "SUCCEEDED") {
             $result['ChecksumValidated'] = $checksumValidationInfo['checksum'];
-        } elseif ($checksumValidationInfo['status'] === "FAILED") {
-            if ($this->isMultipartGetObject($command, $checksumValidationInfo)) {
-                return $result;
+        } elseif ($checksumValidationInfo['status'] == "FAILED") {
+            // Ignore failed validations on GetObject if it's a multipart get
+            // which returned a full multipart object
+            if ($command->getName() === "GetObject"
+                && !empty($checksumValidationInfo['checksumHeaderValue'])
+            ) {
+                $headerValue = $checksumValidationInfo['checksumHeaderValue'];
+                $lastDashPos = strrpos($headerValue, '-');
+                $endOfChecksum = substr($headerValue, $lastDashPos + 1);
+                if (is_numeric($endOfChecksum)
+                    && intval($endOfChecksum) > 1
+                    && intval($endOfChecksum) < 10000) {
+                    return $result;
+                }
             }
+
             throw new S3Exception(
                 "Calculated response checksum did not match the expected value",
                 $command
@@ -111,10 +119,11 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
         $validationStatus = "SKIPPED";
         $checksumHeaderValue = null;
         if (!empty($checksumToValidate)) {
-            $checksumHeaderValue = $response->getHeaderLine(
+            $checksumHeaderValue = $response->getHeader(
                 'x-amz-checksum-' . $checksumToValidate
             );
-            if (!empty($checksumHeaderValue)) {
+            if (isset($checksumHeaderValue)) {
+                $checksumHeaderValue = $checksumHeaderValue[0];
                 $calculatedChecksumValue = $this->getEncodedValue(
                     $checksumToValidate,
                     $response->getBody()
@@ -150,58 +159,5 @@ final class ValidateResponseChecksumResultMutator implements S3ResultMutator
         }
 
         return null;
-    }
-
-    /**
-     * @param string $mode
-     * @param string $checksumModeEnabled
-     * @param array $responseAlgorithms
-     *
-     * @return bool
-     */
-    private function shouldSkipValidation(
-        string $mode,
-        string $checksumModeEnabled,
-        array $responseAlgorithms
-    ): bool
-    {
-        return empty($responseAlgorithms)
-            || ($mode === 'when_required' && $checksumModeEnabled !== 'enabled');
-    }
-
-    /**
-     * @return string[]
-     */
-    private function getChecksumPriority(): array
-    {
-        return extension_loaded('awscrt')
-            ? self::$supportedAlgorithms
-            : array_slice(self::$supportedAlgorithms, 1);
-    }
-
-    /**
-     * @param CommandInterface $command
-     * @param array $checksumValidationInfo
-     *
-     * @return bool
-     */
-    private function isMultipartGetObject(
-        CommandInterface $command,
-        array $checksumValidationInfo
-    ): bool
-    {
-        if ($command->getName() !== "GetObject"
-            || empty($checksumValidationInfo['checksumHeaderValue'])
-        ) {
-            return false;
-        }
-
-        $headerValue = $checksumValidationInfo['checksumHeaderValue'];
-        $lastDashPos = strrpos($headerValue, '-');
-        $endOfChecksum = substr($headerValue, $lastDashPos + 1);
-
-        return is_numeric($endOfChecksum)
-            && (int) $endOfChecksum > 1
-            && (int) $endOfChecksum < 10000;
     }
 }

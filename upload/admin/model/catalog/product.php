@@ -2214,7 +2214,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Discounts By Customer ID
+	 * Delete Discounts By Customer Group ID
 	 *
 	 * Delete discounts by customer group records in the database.
 	 *

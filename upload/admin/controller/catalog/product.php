@@ -422,6 +422,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=pd.name' . $url);
 		$data['sort_model'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.model' . $url);
 		$data['sort_price'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.price' . $url);
@@ -474,8 +475,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Products
 		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,
 			'page'  => $page,
@@ -510,6 +513,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
+		// Product
 		if (isset($this->request->get['master_id'])) {
 			$this->load->model('catalog/product');
 
@@ -1404,7 +1408,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Product
 		$this->load->model('catalog/product');
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$results = $this->model_catalog_product->getReports($product_id, ($page - 1) * $limit, $limit);
@@ -1428,8 +1432,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		// Total Reports
 		$report_total = $this->model_catalog_product->getTotalReports($product_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $report_total,
 			'page'  => $page,

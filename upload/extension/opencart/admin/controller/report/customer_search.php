@@ -160,6 +160,7 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 		// Category
 		$this->load->model('catalog/category');
 
+		// Total Searches
 		$search_total = $this->model_extension_opencart_report_customer->getTotalCustomerSearches($filter_data);
 
 		$results = $this->model_extension_opencart_report_customer->getCustomerSearches($filter_data);
@@ -211,6 +212,7 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $search_total,
 			'page'  => $page,

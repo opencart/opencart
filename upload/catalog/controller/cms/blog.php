@@ -220,8 +220,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Articles
 		$article_total = $this->model_cms_article->getTotalArticles($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $article_total,
 			'page'  => $page,

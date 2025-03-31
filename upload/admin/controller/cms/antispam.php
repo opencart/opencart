@@ -156,6 +156,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sort
 		$data['sort_keyword'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . '&sort=keyword' . $url);
 
 		$url = '';
@@ -172,6 +173,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Anti-Spams
 		$antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
@@ -286,6 +288,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Anti-Spam
 			$this->load->model('cms/antispam');
 
 			if (!$post_info['antispam_id']) {

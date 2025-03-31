@@ -185,8 +185,10 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
+		// Total GDPRs
 		$gdpr_total = $this->model_customer_gdpr->getTotalGdprs($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $gdpr_total,
 			'page'  => $page,

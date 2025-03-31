@@ -136,6 +136,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sort
 		$data['sort_name'] = $this->url->link('localisation/return_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
@@ -148,8 +149,10 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Return Statuses
 		$return_status_total = $this->model_localisation_return_status->getTotalReturnStatuses();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_status_total,
 			'page'  => $page,
@@ -305,12 +308,14 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Returns
 			$return_total = $this->model_sale_returns->getTotalReturnsByReturnStatusId($return_status_id);
 
 			if ($return_total) {
 				$json['error'] = sprintf($this->language->get('error_return'), $return_total);
 			}
 
+			// Total Histories
 			$return_total = $this->model_sale_returns->getTotalHistoriesByReturnStatusId($return_status_id);
 
 			if ($return_total) {

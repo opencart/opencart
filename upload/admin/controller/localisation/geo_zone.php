@@ -133,6 +133,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_description'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=description' . $url);
 
@@ -146,8 +147,10 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Geo Zones
 		$geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $geo_zone_total,
 			'page'  => $page,
@@ -319,6 +322,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		// Tax Rate
 		$this->load->model('localisation/tax_rate');
 
+		// Total Tax Rates
 		foreach ($selected as $geo_zone_id) {
 			$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRatesByGeoZoneId($geo_zone_id);
 

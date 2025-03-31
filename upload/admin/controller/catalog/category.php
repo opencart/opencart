@@ -192,6 +192,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
@@ -213,8 +214,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Categories
 		$category_total = $this->model_catalog_category->getTotalCategories($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $category_total,
 			'page'  => $page,
@@ -625,6 +628,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	public function autocomplete(): void {
 		$json = [];
 
+		// Categories
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('catalog/category');
 

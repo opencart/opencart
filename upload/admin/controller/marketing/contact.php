@@ -31,12 +31,12 @@ class Contact extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		// Stores
+		// Setting
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		// Customer Group
+		// Customer Groups
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -87,10 +87,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Store
+			// Setting
 			$this->load->model('setting/store');
 
-			// Setting
 			$this->load->model('setting/setting');
 
 			// Customer

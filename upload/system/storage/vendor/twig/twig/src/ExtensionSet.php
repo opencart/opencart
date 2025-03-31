@@ -14,7 +14,6 @@ namespace Twig;
 use Twig\Error\RuntimeError;
 use Twig\Extension\ExtensionInterface;
 use Twig\Extension\GlobalsInterface;
-use Twig\Extension\LastModifiedExtensionInterface;
 use Twig\Extension\StagingExtension;
 use Twig\Node\Expression\Binary\AbstractBinary;
 use Twig\Node\Expression\Unary\AbstractUnary;
@@ -52,11 +51,8 @@ final class ExtensionSet
     private $binaryOperators;
     /** @var array<string, mixed>|null */
     private $globals;
-    /** @var array<callable(string): (TwigFunction|false)> */
     private $functionCallbacks = [];
-    /** @var array<callable(string): (TwigFilter|false)> */
     private $filterCallbacks = [];
-    /** @var array<callable(string): (TokenParserInterface|false)> */
     private $parserCallbacks = [];
     private $lastModified = 0;
 
@@ -65,9 +61,6 @@ final class ExtensionSet
         $this->staging = new StagingExtension();
     }
 
-    /**
-     * @return void
-     */
     public function initRuntime()
     {
         $this->runtimeInitialized = true;
@@ -123,19 +116,14 @@ final class ExtensionSet
             return $this->lastModified;
         }
 
-        $lastModified = 0;
         foreach ($this->extensions as $extension) {
-            if ($extension instanceof LastModifiedExtensionInterface) {
-                $lastModified = max($extension->getLastModified(), $lastModified);
-            } else {
-                $r = new \ReflectionObject($extension);
-                if (is_file($r->getFileName())) {
-                    $lastModified = max(filemtime($r->getFileName()), $lastModified);
-                }
+            $r = new \ReflectionObject($extension);
+            if (is_file($r->getFileName()) && ($extensionTime = filemtime($r->getFileName())) > $this->lastModified) {
+                $this->lastModified = $extensionTime;
             }
         }
 
-        return $this->lastModified = $lastModified;
+        return $this->lastModified;
     }
 
     public function addExtension(ExtensionInterface $extension): void
@@ -201,9 +189,6 @@ final class ExtensionSet
         return null;
     }
 
-    /**
-     * @param callable(string): (TwigFunction|false) $callable
-     */
     public function registerUndefinedFunctionCallback(callable $callable): void
     {
         $this->functionCallbacks[] = $callable;
@@ -257,9 +242,6 @@ final class ExtensionSet
         return null;
     }
 
-    /**
-     * @param callable(string): (TwigFilter|false) $callable
-     */
     public function registerUndefinedFilterCallback(callable $callable): void
     {
         $this->filterCallbacks[] = $callable;
@@ -326,9 +308,6 @@ final class ExtensionSet
         return null;
     }
 
-    /**
-     * @param callable(string): (TokenParserInterface|false) $callable
-     */
     public function registerUndefinedTokenParserCallback(callable $callable): void
     {
         $this->parserCallbacks[] = $callable;

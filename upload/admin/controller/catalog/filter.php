@@ -139,6 +139,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . '&sort=fd.name' . $url);
 		$data['sort_filter_group'] = $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . '&sort=filter_group' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . '&sort=f.sort_order' . $url);
@@ -153,8 +154,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Filters
 		$filter_total = $this->model_catalog_filter->getTotalFilters();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $filter_total,
 			'page'  => $page,

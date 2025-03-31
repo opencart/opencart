@@ -135,6 +135,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_title'] = $this->url->link('catalog/information.list', 'user_token=' . $this->session->data['user_token'] . '&sort=id.title' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/information.list', 'user_token=' . $this->session->data['user_token'] . '&sort=i.sort_order' . $url);
 
@@ -148,8 +149,10 @@ class Information extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Information
 		$information_total = $this->model_catalog_information->getTotalInformations();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $information_total,
 			'page'  => $page,
@@ -396,7 +399,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		foreach ($selected as $information_id) {

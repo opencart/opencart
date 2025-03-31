@@ -29,6 +29,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			curl_close($curl);
 
+			// Notification
 			if ($status == 200) {
 				$notification = json_decode($response, true);
 			} else {
@@ -37,6 +38,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			if (isset($notification['notification'])) {
 				$this->load->model('tool/notification');
+				
 				foreach ($notification['notifications'] as $result) {
 					$notification_info = $this->model_tool_notification->addNotification($result['notification_id']);
 

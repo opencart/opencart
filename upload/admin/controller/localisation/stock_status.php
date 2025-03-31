@@ -133,6 +133,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sort
 		$data['sort_name'] = $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
@@ -145,8 +146,10 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Stock Statuses
 		$stock_status_total = $this->model_localisation_stock_status->getTotalStockStatuses();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $stock_status_total,
 			'page'  => $page,
@@ -297,6 +300,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $stock_status_id) {
+			// Total Products
 			$product_total = $this->model_catalog_product->getTotalProductsByStockStatusId($stock_status_id);
 
 			if ($product_total) {

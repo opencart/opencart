@@ -3,7 +3,7 @@
 $_['heading_title']     = 'Suivi Mercatique';
 
 // Texte
-$_['text_success']      = 'Succès: Vous avez modifié le suivi Mercatique!';
+$_['text_success']      = 'Succès: Vous avez modifié le suivi mercatique!';
 $_['text_list']         = 'Liste de suivi mercatique';
 $_['text_add']          = 'Ajouter un suivi mercatique';
 $_['text_edit']         = 'Modifier un suivi mercatique';

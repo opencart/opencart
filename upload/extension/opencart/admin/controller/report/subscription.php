@@ -177,6 +177,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Extension
 		$this->load->model('extension/opencart/report/subscription');
 
+		// Total Subscriptions
 		$subscription_total = $this->model_extension_opencart_report_subscription->getTotalSubscriptions($filter_data);
 
 		$results = $this->model_extension_opencart_report_subscription->getSubscriptions($filter_data);
@@ -210,6 +211,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_subscription_status_id=' . $this->request->get['filter_subscription_status_id'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $subscription_total,
 			'page'  => $page,

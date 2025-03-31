@@ -15,9 +15,8 @@ namespace Twig\Node\Expression;
 use Twig\Compiler;
 use Twig\Error\SyntaxError;
 use Twig\Node\Expression\Variable\AssignContextVariable;
-use Twig\Node\Expression\Variable\ContextVariable;
 
-class AssignNameExpression extends ContextVariable
+class AssignNameExpression extends NameExpression
 {
     public function __construct(string $name, int $lineno)
     {

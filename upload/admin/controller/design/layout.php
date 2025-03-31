@@ -133,6 +133,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sort
 		$data['sort_name'] = $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
@@ -145,8 +146,10 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Layouts
 		$layout_total = $this->model_design_layout->getTotalLayouts();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $layout_total,
 			'page'  => $page,
@@ -222,7 +225,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$data['name'] = '';
 		}
 
-		// Stores
+		// Setting
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -398,6 +401,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Layouts
 			$product_total = $this->model_catalog_product->getTotalLayoutsByLayoutId($layout_id);
 
 			if ($product_total) {

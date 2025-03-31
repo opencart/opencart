@@ -137,6 +137,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_username'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
 		$data['sort_status'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 		$data['sort_date_added'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
@@ -152,8 +153,10 @@ class Api extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total APIs
 		$user_total = $this->model_user_api->getTotalApis();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $user_total,
 			'page'  => $page,
@@ -400,8 +403,10 @@ class Api extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		// Total Histories
 		$history_total = $this->model_user_api->getTotalHistories($api_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
 			'page'  => $page,

@@ -1,119 +1,314 @@
 {{ header }}{{ column_left }}
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <h1>{{ heading_title }}</h1>
-      <ol class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ol>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="card">
-      <div class="card-header"><i class="fa-solid fa-rotate"></i> {{ text_upgrade }}</div>
-      <div class="card-body">
-        <fieldset>
-          <legend>{{ text_information }}</legend>
-          <div class="row mb-3">
-            <div class="col">
-              <div class="form-control border rounded-start">
-                <div class="lead"><strong>{{ text_current_version }}</strong>
-                  <br/>
-                  <span{% if upgrade %} class="text-danger"{% endif %}>{{ current_version }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-control border rounded-start">
-                <div class="lead"><strong>{{ text_latest_version }}</strong>
-                  <br/>
-                  {{ latest_version }}
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-control border rounded-start">
-                <div class="lead"><strong>{{ text_date_added }}</strong>
-                  <br/>
-                  {{ date_added }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-control border rounded-start">
-            <div class="lead"><strong>{{ text_change }}</strong>
-              <br/>
-              {{ log }}
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>{{ text_status }}</legend>
-          <div class="input-group input-group-lg">
-            <button type="button" id="button-upgrade" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fa-solid fa-level-up-alt"></i> {{ button_upgrade }}</button>
-            <input type="text" id="input-upgrade" value="{{ text_ready }}" class="form-control bg-white" readonly/>
-          </div>
-        </fieldset>
-      </div>
-    </div>
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			{% if rollback_available %}
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<div class="fs-5 fw-bold">
+						<i class="fa-solid fa-rotate"></i> {{ text_rollback_yes }}
+					</div>
+					<select class="form-select w-auto" id="rollback-select">
+						<option value="">{{ text_select_version }}</option>
+						{% for version in rollback_versions %}
+							{% if version != VERSION %}
+								<option value="{{ version }}">{{ version }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+			{% endif %}
+			<div class="card-body">
+				<fieldset>
+					<legend>{{ text_information }}</legend>
+					<div class="row mb-3">
+						<div class="col">
+							<div class="form-control border rounded-start">
+								<div class="lead"><strong>{{ text_current_version }}</strong>
+									<br/>
+									<span{% if upgrade %} class="text-danger"{% endif %}>{{ current_version }}</span>
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-control border rounded-start">
+								<div class="lead"><strong>{{ text_latest_version }}</strong>
+									<br/>
+									{{ latest_version }}
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-control border rounded-start">
+								<div class="lead"><strong>{{ text_latest_released }}</strong>
+									<br/>
+									{{ date_added }}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-control border rounded-start">
+						<div class="lead"><strong>{{ text_change }}</strong>
+							<br/>
+							{{ log }}
+						</div>
+					</div>
+				</fieldset>
+				{% if update_available %}
+					<fieldset>
+						<legend>{{ text_status }}</legend>
+						<div class="input-group input-group-lg">
+						<button type="button" id="button-upgrade" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fa-solid fa-level-up-alt"></i> {{ button_upgrade }}</button>
+						<input type="text" id="input-upgrade" value="{{ text_ready }}" class="form-control bg-white" readonly/>
+						</div>
+					</fieldset>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="rollbackConfirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title fs-5 fw-bold" id="confirmModalLabel">{{ modal_title }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body fs-5 text-center" id="confirmModalBody">
+				{{ modal_message }}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary me-auto" data-bs-dismiss="modal">
+					{{ button_cancel }}
+				</button>
+				<button type="button" class="btn btn-primary" id="confirmModalSubmit" data-bs-dismiss="modal">
+					{{ button_okay }}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Rollback Status Modal -->
+<div class="modal fade" id="rollbackStatusModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ modal_rollback_status }}</h5>
+			</div>
+			<div class="modal-body">
+				<div class="input-group input-group-lg">
+					<input type="text" id="input-rollback" value="{{ modal_rollback_ready }}" class="form-control bg-white" readonly/>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Spinner Modal -->
+<div class="modal fade" id="spinnerModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+	<div class="modal-content bg-transparent border-0">
+	  <div class="modal-body text-center">
+		<div class="spinner-border text-primary" role="status" style="width: 4rem; height: 4rem;">
+		  <span class="visually-hidden">{{ text_loading }}</span>
+		</div>
+	  </div>
+	</div>
   </div>
 </div>
+
 <script type="text/javascript"><!--
-$('#button-upgrade').on('click', function() {
-    var element = this;
+let rollbackVersion = '';
+let isUpdating = false;
 
-    $(element).button('loading');
-
-    if (confirm('{{ text_confirm }}')) {
-        $('#progress').html('{{ text_download|escape('js') }}');
-
-        var next = 'index.php?route=tool/upgrade.download&user_token={{ user_token }}&version={{ latest_version }}';
-
-        var upgrade = function() {
-            return $.ajax({
-                url: next,
-                dataType: 'json',
-                success: function(json) {
-                    console.log(json);
-
-                    $('#input-upgrade').removeClass('is-valid is-invalid');
-
-                    if (json['error']) {
-                        $('#input-upgrade').val(json['error']);
-                        $('#input-upgrade').addClass('is-invalid');
-
-                        $(element).button('reset');
-                    }
-
-                    if (json['text']) {
-                        $('#input-upgrade').val(json['text']);
-                    }
-
-                    if (json['success']) {
-                        $('#input-upgrade').val(json['success']);
-                        $('#input-upgrade').addClass('is-valid');
-
-                        $(element).button('reset');
-                    }
-
-                    if (json['next']) {
-                        next = json['next'];
-
-                        chain.attach(upgrade);
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
-                    $(element).button('reset');
-                }
-            });
-        };
-
-        chain.attach(upgrade);
-    }
+window.addEventListener('beforeunload', function (e) {
+	if (isUpdating) {
+		e.preventDefault();
+		e.returnValue = '{{ leave_warning }}';
+	}
 });
+
+function showConfirmModal(title, message, type, element) {
+	$('#confirmModalLabel').text(title);
+	$('#confirmModalBody').html(message);
+	$('#rollbackConfirmModal').modal('show');
+
+	$('#confirmModalSubmit').on('click', function() {
+		isUpdating = true;
+		if (type == 'rollback'){
+			runRollback();
+		} else if (type == 'update') {
+			runUpdate(element);
+		}
+	});
+}
+
+$('#rollback-select').on('change', function() {
+	if (this.value != '') {
+		rollbackVersion = this.value;
+		var title = '{{ modal_rollback_title }}';
+		var message = '{{ modal_rollback_message }}';
+		showConfirmModal(title, message, 'rollback', this);
+	}
+});
+
+function runRollback() {
+	$('#spinnerModal').css('display', 'block');
+	setTimeout(function () {
+		$('#rollbackStatusModal').modal('show');
+		$('#spinnerModal').css('display', 'none'); 
+	}, 10);
+
+	setTimeout(function () {
+		$('#input-rollback').val('{{ text_rollback_unzip }}');
+
+		var next = 'index.php?route=tool/upgrade.unzipBackup&user_token={{ user_token }}&version=' + rollbackVersion;
+
+		var rollback = function() {
+			return $.ajax({
+				url: next,
+				dataType: 'json',
+				success: function(json) {
+					// Handling errors
+					if (json['error']) {
+						isUpdating = false;
+						$('#input-rollback').val(json['error']);
+						$('#input-rollback').addClass('is-invalid');
+					}
+
+					// General messages
+					if (json['text']) {
+						$('#input-rollback').val(json['text']);
+					}
+
+					if (json['finalLink']) {
+						finalLink = json['finalLink'];
+					}
+
+					// If there's a next step, attach the rollback function again
+					if (json['next']) {
+						next = json['next'];
+
+						setTimeout(function() {
+							chain.attach(rollback);
+						}, 10);
+					}
+
+					// Rollback Complete
+					if (json['rollbackComplete']) {
+						isUpdating = false;
+						$('#input-rollback').addClass('is-valid');
+
+						// Refresh the page
+						setTimeout(function() {
+							location.reload();
+						}, 1500);
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					isUpdating = false;
+					console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		};
+
+		// Start the upgrade process
+		chain.attach(rollback);
+	}, 50);
+}
+
+$('#button-upgrade').on('click', function() {
+	var finalLink = '';
+	var title = '{{ modal_update_title }}';
+	var message = '{{ modal_update_message }}';
+	showConfirmModal(title, message, 'update', this);
+});
+
+function runUpdate(element) {
+	$(element).button('loading');
+	$('#input-upgrade').val('{{ modal_backing_up_files }}');
+	$('#progress').html('{{ text_download|escape('js') }}');
+
+	var next = 'index.php?route=tool/upgrade.backupFiles&user_token={{ user_token }}&version={{ latest_version }}';
+
+	var upgrade = function() {
+		return $.ajax({
+			url: next,
+			dataType: 'json',
+			success: function(json) {
+				$('#input-upgrade').removeClass('is-valid is-invalid');
+
+				// Handling errors
+				if (json['error']) {
+					isUpdating = false;
+					$('#input-upgrade').val(json['error']);
+					$('#input-upgrade').addClass('is-invalid');
+					$(element).button('reset');
+				}
+
+				// General messages
+				if (json['text']) {
+					$('#input-upgrade').val(json['text']);
+				}
+
+				if (json['finalLink']) {
+					finalLink = json['finalLink'];
+				}
+
+				// If there's a next step, attach the upgrade function again
+				if (json['next']) {
+					next = json['next'];
+
+					setTimeout(function() {
+						chain.attach(upgrade);  // Continue the chain
+					}, 10);  // Adjust the delay as needed
+				}
+
+				// Installation Complete
+				if (json['success']) {
+					$('#input-upgrade').val('Removing install directory');
+					next = 'index.php?route=tool/upgrade.removeInstallDirectory&user_token={{ user_token }}&version={{ latest_version }}';
+
+					setTimeout(function() {
+						chain.attach(upgrade);
+					}, 10);
+				}
+
+				// Upgrade Complete
+				if (json['upgradeComplete']) {
+					isUpdating = false;
+					$('#input-upgrade').addClass('is-valid');
+
+					$(element).button('reset');
+
+					// Refresh the page
+					setTimeout(function() {
+						location.reload();
+					}, 1500);
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				isUpdating = false;
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				$(element).button('reset');
+			}
+		});
+	};
+
+	// Start the upgrade process
+	chain.attach(upgrade);
+}
 //--></script>
 {{ footer }}

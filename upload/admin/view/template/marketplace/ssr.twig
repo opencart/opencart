@@ -56,7 +56,7 @@ $('#button-generate').on('click', function() {
 
     $(element).button('loading');
 
-    var next = $(element).attr('href');
+    var next = $(element).attr('value');
 
     $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
     $('#progress-text').html('');

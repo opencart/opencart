@@ -17,7 +17,7 @@
             <tr{% if not ssr.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ ssr.ssr_id }}" class="form-check-input"/></td>
               <td>{{ ssr.code }}</td>
-              <td>{{ ssr.action }}</td>
+              <td>{{ ssr.action }}<input type="hidden" name="action" value="{{ ssr.action }}"/></td>
               <td class="text-end d-none d-lg-table-cell">{{ ssr.sort_order }}</td>
               <td class="d-none d-lg-table-cell">{{ ssr.date_modified }}</td>
               <td class="text-end text-nowrap">

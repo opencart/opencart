@@ -26,27 +26,30 @@ class Article extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$directory = DIR_CATALOG . 'view/data/cms/';
+
+		if (!is_dir($directory) && mkdir($directory, 0777)) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
 		if (!$json) {
 			// Languages
 			$this->load->model('localisation/language');
 
+			$language_data = [];
+
 			$languages = $this->model_localisation_language->getLanguages();
 
-			$path = [];
+			foreach ($languages as $language) {
+				$language_data[$language['code']] = $language;
+			}
 
-			$directories = DIR_CATALOG . 'view/data/cms/';
-
-
-			//foreach ($directory)
-
+			print_r($languages);
 
 			$limit = 5;
 
-
 			$this->load->model('cms/article');
 
-
-			// Total Articles
 			$article_total = $this->model_cms_article->getTotalArticles();
 
 			$start = ($page - 1) * $limit;
@@ -67,22 +70,32 @@ class Article extends \Opencart\System\Engine\Controller {
 					$descriptions = $this->model_cms_article->getDescriptions($article['article_id']);
 
 					foreach ($descriptions as $description) {
-						if (isset($languages[$description['language_id']])) {
-							$code = preg_replace('/[^A-Z0-9\._-]/i', '', $languages[$description['language_id']]['code']);
+						$content = json_encode($description + $article);
 
-							$file = DIR_CATALOG . 'view/data/cms/article.' . (int)$article['article_id'] . '.' . $code . '.json';
+						echo $content;
 
-							if (!file_put_contents($file, json_encode($description + $article))) {
-								$json['error'] = $this->language->get('error_file');
-							}
+
+						$file = $directory . 'article.' . (int)$article['article_id'] . '.' . $article['language_id'] . '.json';
+
+
+
+
+
+						if (!file_put_contents($file, $content)) {
+
+
+
+
+							$json['error'] = $this->language->get('error_file');
 						}
+
 					}
 				}
 			}
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_article'), $start, $end, $article_total);
+			$json['text'] = sprintf($this->language->get('text_article'), $start ?: 1, $end, $article_total);
 
 			if ($end < $article_total) {
 				$json['next'] = $this->url->link('ssr/article', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);

@@ -66,6 +66,7 @@ $_['text_return_status']       = 'Rückgabestatus';
 $_['text_sale']                = 'Verkäufe';
 $_['text_setting']             = 'Einstellungen';
 $_['text_seo_url']             = 'SEO-URL';
+$_['text_ssr']                 = 'Static Site Rendering';
 $_['text_startup']             = 'Start-up';
 $_['text_statistics']          = 'Statistiken';
 $_['text_stock_status']        = 'Lagerstatus';

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Payment;
 /**
  * Class Cheque
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/module/cheque');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Payment
  */

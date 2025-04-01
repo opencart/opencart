@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Payment;
 /**
  * Class Bank Transfer
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/payment/bank_transfer');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Payment
  */

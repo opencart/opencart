@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Customer Reward
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/customer_reward');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

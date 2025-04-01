@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
  * Class Filter
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/module/filter');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */

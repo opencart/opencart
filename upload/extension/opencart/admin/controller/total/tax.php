@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
  * Class Tax
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/total/tax');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */

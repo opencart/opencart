@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Sale Return
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/sale_return');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

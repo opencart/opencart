@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Sale Tax
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/sale_tax');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Customer Transaction
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/customer_transaction');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

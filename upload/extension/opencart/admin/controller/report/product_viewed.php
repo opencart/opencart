@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Product Viewed
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/product_viewed');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

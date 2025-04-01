@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Customer Search
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/customer_search');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

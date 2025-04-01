@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Subscription
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/subscription');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

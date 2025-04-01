@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 /**
  * Class Pickup
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/shipping/pickup');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Shipping
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
  * Class Store
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/module/store');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */

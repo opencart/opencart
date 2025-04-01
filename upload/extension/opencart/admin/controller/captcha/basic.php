@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Captcha;
 /**
  * Class Basic
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/captcha/basic');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Captcha
  */

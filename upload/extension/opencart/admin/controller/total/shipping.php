@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
  * Class Shipping
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/total/shipping');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */

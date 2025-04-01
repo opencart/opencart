@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Currency;
 /**
  * Class Fixer
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/currency/fixer');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Currency
  */

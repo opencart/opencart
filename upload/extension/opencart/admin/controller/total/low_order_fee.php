@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
  * Class Low Order Fee
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/total/low_order_fee');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */

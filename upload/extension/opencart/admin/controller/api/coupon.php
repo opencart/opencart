@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Api;
 /**
  * Class Coupon
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/api/coupon');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Api
  */

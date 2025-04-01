@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
  * Class Information
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/module/information');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
  * Class Featured
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/module/featured');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
  * Class Account
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/module/account');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */

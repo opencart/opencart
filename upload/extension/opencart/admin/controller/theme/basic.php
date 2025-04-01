@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Theme;
 /**
  * Class Basic
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/theme/basic');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Theme
  */

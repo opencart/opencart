@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
  * Class Online
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/dashboard/online');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */

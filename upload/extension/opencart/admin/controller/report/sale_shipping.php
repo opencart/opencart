@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Sale Shipping
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/sale_shipping');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

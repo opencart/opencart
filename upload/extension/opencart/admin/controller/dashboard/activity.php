@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
  * Class Activity
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/dashboard/activity');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */

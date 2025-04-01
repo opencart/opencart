@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Payment;
 /**
  * Class Free Checkout
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/module/free_checkout');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Payment
  */

@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
  * Class Customer
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/dashboard/customer');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */

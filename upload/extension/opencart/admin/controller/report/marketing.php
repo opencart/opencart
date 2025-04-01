@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Marketing
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/marketing');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

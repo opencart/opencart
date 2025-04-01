@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Currency;
 /**
  * Class ECB
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/currency/ecb');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Currency
  */

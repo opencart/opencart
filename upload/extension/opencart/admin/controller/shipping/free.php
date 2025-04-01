@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 /**
  * Class Free
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/shipping/free');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Shipping
  */

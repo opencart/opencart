@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
  * Class Order
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/dashboard/order');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */

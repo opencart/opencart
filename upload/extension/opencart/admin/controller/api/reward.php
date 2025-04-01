@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Api;
 /**
  * Class Reward
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/api/reward');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Api
  */

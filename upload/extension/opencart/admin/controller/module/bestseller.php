@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
  * Class Best Seller
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/module/bestseller');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */

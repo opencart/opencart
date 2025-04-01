@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
  * Class Map
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/dashboard/map');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */

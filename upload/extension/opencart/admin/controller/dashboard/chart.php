@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
  * Class Chart
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/dashboard/chart');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */

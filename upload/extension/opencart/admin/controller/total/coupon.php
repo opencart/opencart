@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
  * Class Coupon
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/total/coupon');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */

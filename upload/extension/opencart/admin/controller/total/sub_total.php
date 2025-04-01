@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
  * Class Sub Total
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/total/sub_total');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */

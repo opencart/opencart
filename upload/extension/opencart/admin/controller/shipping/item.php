@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 /**
  * Class Item
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/shipping/item');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Shipping
  */

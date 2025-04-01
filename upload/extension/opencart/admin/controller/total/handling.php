@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
  * Class Handling
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/total/handling');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */

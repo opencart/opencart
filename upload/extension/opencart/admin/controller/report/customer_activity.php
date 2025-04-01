@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Customer Activity
+ * 
+ * Can be loaded using $this->load->controller('extension/opencart/report/customer_activity');
  *
  * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */

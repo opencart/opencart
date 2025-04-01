@@ -21,7 +21,7 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 		// Adds any missing setting keys or default values that need changing or removed
 		try {
 			// Get all setting columns from extension table
-			$this->load->language('upgrade/upgrade');
+			$this->load->model('upgrade/upgrade');
 
 			$extensions = $this->model_upgrade_upgrade->getRecords('extension');
 

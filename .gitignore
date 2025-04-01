@@ -3,6 +3,14 @@
 /upload/config.php
 /upload/admin/config.php
 
+# Catalog JSON Files
+/upload/catalog/view/data/*
+!/upload/catalog/view/data/index.html
+
+# Catalog HTML Files
+/upload/catalog/view/html/*
+!/upload/catalog/view/html/index.html
+
 # Image Cache Files
 /upload/image/cache/*
 !/upload/image/cache/index.html

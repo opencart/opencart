@@ -240,7 +240,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			}
 
 
-			$this->load->language('upgrade/upgrade');
+			$this->load->model('upgrade/upgrade');
 
 			$events = $this->model_upgrade_upgrade->getRecords('event');
 
@@ -275,7 +275,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 7, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['text'] = sprintf($this->language->get('text_patch'), 8, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
 
@@ -287,7 +287,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['next'] = $this->url->link('upgrade/upgrade_8', $url, true);
+			$json['next'] = $this->url->link('upgrade/upgrade_9', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

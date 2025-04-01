@@ -191,7 +191,7 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 10, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['text'] = sprintf($this->language->get('text_patch'), 11, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
 
@@ -203,7 +203,7 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['next'] = $this->url->link('upgrade/upgrade_9', $url, true);
+			$json['next'] = $this->url->link('upgrade/upgrade_11', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
- * Class Upgrade11
+ * Class Upgrade14
  *
  * @package Opencart\Install\Controller\Upgrade
  */
-class Upgrade11 extends \Opencart\System\Engine\Controller {
+class Upgrade14 extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *

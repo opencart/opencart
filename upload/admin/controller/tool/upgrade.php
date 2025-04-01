@@ -148,12 +148,14 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	
 	public function fetchPreviousVersionList(): array {
 		$versionList = [];
+		
+		$backupDir = DIR_STORAGE . 'backup/';
 
-		if (is_dir(DIR_BACKUP)) {
-			$files = scandir(DIR_BACKUP);
+		if (is_dir($backupDir)) {
+			$files = scandir($backupDir);
 
 			foreach ($files as $file) {
-				if ($file !== '.' && $file !== '..' && is_dir(DIR_BACKUP . $file)) {
+				if ($file !== '.' && $file !== '..' && is_dir($backupDir . $file)) {
 					$versionList[] = $file; // Add the folder name to the array
 				}
 			}
@@ -176,7 +178,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$backupDir = DIR_BACKUP . VERSION . '/';
+			$backupDir = DIR_STORAGE . 'backup/' . VERSION . '/';
 
 			if (!is_dir($backupDir)) {
 				mkdir($backupDir, 0755, true);
@@ -205,7 +207,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			}
 
 			$srcPath = $source . '/' . $file;
-			if (realpath($srcPath) === realpath(DIR_BACKUP . VERSION)) {
+			if (realpath($srcPath) === realpath(DIR_STORAGE . 'backup/' . VERSION)) {
 				continue;
 			}
 
@@ -233,7 +235,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$backupDir = DIR_BACKUP . VERSION . '/';
+			$backupDir = DIR_STORAGE . 'backup/' . VERSION . '/';
 
 			// Create the backup directory if it doesn't exist
 			if (!is_dir($backupDir)) {
@@ -262,7 +264,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$version = (isset($this->request->get['version']))? $this->request->get['version'] : '';
 
 		$json = [];
-		$backupDir = DIR_BACKUP . VERSION . '/';
+		$backupDir = DIR_STORAGE . 'backup/' . VERSION . '/';
 		$zipFile = $backupDir  . 'backup.zip';
 
 		// Remove existing zip file if it exists
@@ -317,7 +319,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$typeRequest = ($type == '')? '' : '&type=rollback';
 
 		$json = [];
-		$backupDir = DIR_BACKUP . VERSION . '/';
+		$backupDir = DIR_STORAGE . 'backup/' . VERSION . '/';
 		$zipFile = $backupDir . 'backup.zip'; // Get the zip file to keep
 
 		// Check if the backup directory exists
@@ -569,7 +571,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$backupDir = DIR_BACKUP . $version . '/';
+		$backupDir = DIR_STORAGE . 'backup/' . $version . '/';
 		$compressedFile = $backupDir . 'backup.zip';
 
 		$zip = new \ZipArchive();
@@ -611,7 +613,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$version = isset($this->request->get['version']) ? $this->request->get['version'] : '';
 
-		$backupDir = DIR_BACKUP . $version . '/';
+		$backupDir = DIR_STORAGE . 'backup/' . $version . '/';
 		$sqlFile = $backupDir . 'database_backup.sql';
 
 		$json = [];
@@ -627,7 +629,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$backupDir = DIR_BACKUP . $version . '/';
+			$backupDir = DIR_STORAGE . 'backup/' . $version . '/';
 			$tablesBackupPath = $backupDir . 'tables_backup.json';
 			
 			if ($this->model_tool_upgrade->dropTables($tablesBackupPath) == false) {
@@ -661,7 +663,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 
 		// Define the directory paths
-		$backupDir = DIR_BACKUP . $version . '/';
+		$backupDir = DIR_STORAGE . 'backup/' . $version . '/';
 		$rootDir = DIR_OPENCART;
 
 		// Check if the backup directory exists

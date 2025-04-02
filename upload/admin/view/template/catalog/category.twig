@@ -91,6 +91,11 @@ $('#button-repair').on('click', function(e) {
     });
 });
 
+$('#form-filter').on('submit', function(e) {
+	e.preventDefault();
+	$('#button-filter').click();
+});
+
 $('#button-filter').on('click', function() {
     var url = '';
 

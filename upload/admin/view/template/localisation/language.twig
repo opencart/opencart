@@ -1,61 +1,81 @@
 {{ header }}{{ column_left }}
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <div class="float-end">
-        <button type="button" id="button-generate" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button>
-        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-        <button type="submit" form="form-language" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
-      </div>
-      <h1>{{ heading_title }}</h1>
-      <ol class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ol>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="card">
-      <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="language" class="card-body">{{ list }}</div>
-    </div>
-  </div>
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end"><a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+				<button type="submit" form="form-language" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item">
+						<a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a>
+					</li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<!-- Progress Bar -->
+		<div class="row mb-3">
+			<div class="col-sm-10 offset-sm-1">
+				<div id="progress-bar-container" class="progress" style="display: none;">
+					<div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main Form -->
+		<div class="card">
+			<div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+			<div id="language" class="card-body">{{ list }}</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript"><!--
-$('#language').on('click', 'thead a, .pagination a', function(e) {
-    e.preventDefault();
+	let isUpdating = false;
 
-    $('#language').load(this.href);
-});
+	window.addEventListener('beforeunload', function (e) {
+		if (isUpdating) {
+			e.preventDefault();
+		}
+	});
 
-$('#button-generate').on('click', function() {
-    var element = this;
+	$('#language').on('click', 'thead a, .pagination a', function(e) {
+		e.preventDefault();
 
-    $.ajax({
-        url: 'index.php?route=localisation/language.generate&user_token={{ user_token }}',
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
+		$('#language').load(this.href);
+	});
 
-            if (json['error']) {
-                $('#alert').prepend('<x-alert-danger class="alert-dismissible">' + json['error'] + '</x-alert-danger>');
-            }
+	$('#form-language').on('submit', function(e) {
+		e.preventDefault();
 
-            if (json['success']) {
-                $('#alert').prepend('<x-alert-success class="alert-dismissible">' + json['success'] + '</x-alert-success>');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
+		$(document).on('ajaxStart', function() {
+			isUpdating = true;
+			$('#progress-bar-container').show();
+			$('#progress-bar').css('width', '0%').attr('aria-valuenow', 0);
+		});
+
+		let interval = '';
+
+		$(document).on('ajaxSend', function() {
+			let progress = 0;
+			interval = setInterval(function() {
+				if (progress < 100) {
+					progress += 20;
+					$('#progress-bar').css('width', progress + '%').attr('aria-valuenow', progress);
+				}
+			}, 10);
+		});
+
+		$(document).on('ajaxStop', function() {
+			isUpdating = false;
+			clearInterval(interval);
+			$('#progress-bar-container').hide();
+			$('#progress-bar').css('width', '0%').attr('aria-valuenow', 0);
+		});
+
+		$(this).trigger('submit');
+	});
 //--></script>
 {{ footer }}

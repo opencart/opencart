@@ -179,7 +179,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$data['user_token'] = isset($this->request->get['user_token']) ? $this->request->get['user_token'] : '';
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 

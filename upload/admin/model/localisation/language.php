@@ -39,223 +39,142 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$language_id = $this->db->getLastId();
 
-		// Attribute
-		$this->load->model('catalog/attribute');
-
-		$results = $this->model_catalog_attribute->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $attribute) {
-			$this->model_catalog_attribute->addDescription($attribute['attribute_id'], $language_id, $attribute);
-		}
-
-		// Attribute Group
-		$this->load->model('catalog/attribute_group');
-
-		$results = $this->model_catalog_attribute_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $attribute_group) {
-			$this->model_catalog_attribute_group->addDescription($attribute_group['attribute_group_id'], $language_id, $attribute_group);
-		}
-
-		// Banner
-		$this->load->model('design/banner');
-
-		$results = $this->model_design_banner->getImagesByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $banner_image) {
-			$this->model_design_banner->addImage($banner_image['banner_id'], $language_id, $banner_image);
-		}
-
-		// Category
-		$this->load->model('catalog/category');
-
-		$results = $this->model_catalog_category->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $category) {
-			$this->model_catalog_category->addDescription($category['category_id'], $language_id, $category);
-		}
-
-		// Country
-		$this->load->model('localisation/country');
-
-		$results = $this->model_localisation_country->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $country) {
-			$this->model_localisation_country->addDescription($country['country_id'], $language_id, $country);
-		}
-
-		// Customer Group
-		$this->load->model('customer/customer_group');
-
-		$results = $this->model_customer_customer_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $customer_group) {
-			$this->model_customer_customer_group->addDescription($customer_group['customer_group_id'], $language_id, $customer_group);
-		}
-
-		// Custom Field
-		$this->load->model('customer/custom_field');
-
-		$results = $this->model_customer_custom_field->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $custom_field) {
-			$this->model_customer_custom_field->addDescription($custom_field['custom_field_id'], $language_id, $custom_field);
-		}
-
-		// Custom Field Value
-		$results = $this->model_customer_custom_field->getValueDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $custom_field_value) {
-			$this->model_customer_custom_field->addValueDescription($custom_field_value['custom_field_value_id'], $custom_field_value['custom_field_id'], $language_id, $custom_field_value);
-		}
-
-		// Download
-		$this->load->model('catalog/download');
-
-		$results = $this->model_catalog_download->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $download) {
-			$this->model_catalog_download->addDescription($download['download_id'], $language_id, $download);
-		}
-
-		// Filter
-		$this->load->model('catalog/filter');
-
-		$results = $this->model_catalog_filter->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $filter) {
-			$this->model_catalog_filter->addDescription($filter['filter_id'], $language_id, $filter);
-		}
-
-		// Filter Group
-		$this->load->model('catalog/filter_group');
-
-		$results = $this->model_catalog_filter_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $filter_group) {
-			$this->model_catalog_filter_group->addDescription($filter_group['filter_group_id'], $language_id, $filter_group);
-		}
-
-		// Information
-		$this->load->model('catalog/information');
-
-		$results = $this->model_catalog_information->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $information) {
-			$this->model_catalog_information->addDescription($information['information_id'], $language_id, $information);
-		}
-
-		// Length
-		$this->load->model('localisation/length_class');
-
-		$results = $this->model_localisation_length_class->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $length) {
-			$this->model_localisation_length_class->addDescription($length['length_class_id'], $language_id, $length);
-		}
-
-		// Option
-		$this->load->model('catalog/option');
-
-		$results = $this->model_catalog_option->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $option) {
-			$this->model_catalog_option->addDescription($option['option_id'], $language_id, $option);
-		}
-
-		// Option Value
-		$results = $this->model_catalog_option->getValueDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $option_value) {
-			$this->model_catalog_option->addValueDescription($option_value['option_value_id'], $option_value['option_id'], $language_id, $option_value);
-		}
-
-		// Order Status
-		$this->load->model('localisation/order_status');
-
-		$results = $this->model_localisation_order_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $order_status) {
-			$this->model_localisation_order_status->addDescription($order_status['order_status_id'], $language_id, $order_status);
-		}
-
-		// Product
-		$this->load->model('catalog/product');
-
-		$results = $this->model_catalog_product->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $product) {
-			$this->model_catalog_product->addDescription($product['product_id'], $language_id, $product);
-		}
-
-		// Product Attribute
-		$results = $this->model_catalog_product->getAttributesByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $product_attribute) {
-			$this->model_catalog_product->addAttribute($product_attribute['product_id'], $product_attribute['attribute_id'], $language_id, $product_attribute);
-		}
-
-		// Return Action
-		$this->load->model('localisation/return_action');
-
-		$results = $this->model_localisation_return_action->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $return_action) {
-			$this->model_localisation_return_action->addDescription($return_action['return_action_id'], $language_id, $return_action);
-		}
-
-		// Return Reason
-		$this->load->model('localisation/return_reason');
-
-		$results = $this->model_localisation_return_reason->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $return_reason) {
-			$this->model_localisation_return_reason->addDescription($return_reason['return_reason_id'], $language_id, $return_reason);
-		}
-
-		// Return Status
-		$this->load->model('localisation/return_status');
-
-		$results = $this->model_localisation_return_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $return_status) {
-			$this->model_localisation_return_status->addDescription($return_status['return_status_id'], $language_id, $return_status);
-		}
-
-		// Stock Status
-		$this->load->model('localisation/stock_status');
-
-		$results = $this->model_localisation_stock_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $stock_status) {
-			$this->model_localisation_stock_status->addDescription($stock_status['stock_status_id'], $language_id, $stock_status);
-		}
-
-		// Weight Class
-		$this->load->model('localisation/weight_class');
-
-		$results = $this->model_localisation_weight_class->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $weight_class) {
-			$this->model_localisation_weight_class->addDescription($weight_class['weight_class_id'], $language_id, $weight_class);
-		}
-
-		// Subscription Plan
-		$this->load->model('catalog/subscription_plan');
-
-		$results = $this->model_catalog_subscription_plan->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $subscription_plan) {
-			$this->model_catalog_subscription_plan->addDescription($subscription_plan['subscription_plan_id'], $language_id, $subscription_plan);
-		}
-
-		// Subscription Status
-		$this->load->model('localisation/subscription_status');
-
-		$results = $this->model_localisation_subscription_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $subscription) {
-			$this->model_localisation_subscription_status->addDescription($subscription['subscription_status_id'], $language_id, $subscription);
+		$models = [
+			'catalog/attribute' => [
+				'model' => 'model_catalog_attribute',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'catalog/attribute_group' => [
+				'model' => 'model_catalog_attribute_group',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'design/banner' => [
+				'model' => 'model_design_banner',
+				'methods' => ['getImagesByLanguageId', 'addImage']
+			],
+			'catalog/category' => [
+				'model' => 'model_catalog_category',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'localisation/country' => [
+				'model' => 'model_localisation_country',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'customer/customer_group' => [
+				'model' => 'model_customer_customer_group',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'customer/custom_field' => [
+				'model' => 'model_customer_custom_field',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription', 'getValueDescriptionsByLanguageId', 'addValueDescription']
+			],
+			'catalog/download' => [
+				'model' => 'model_catalog_download',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'catalog/filter' => [
+				'model' => 'model_catalog_filter',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'catalog/filter_group' => [
+				'model' => 'model_catalog_filter_group',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'catalog/information' => [
+				'model' => 'model_catalog_information',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'localisation/length_class' => [
+				'model' => 'model_localisation_length_class',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'catalog/option' => [
+				'model' => 'model_catalog_option',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription', 'getValueDescriptionsByLanguageId', 'addValueDescription']
+			],
+			'localisation/order_status' => [
+				'model' => 'model_localisation_order_status',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'catalog/product' => [
+				'model' => 'model_catalog_product',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription', 'getAttributesByLanguageId', 'addAttribute']
+			],
+			'localisation/return_action' => [
+				'model' => 'model_localisation_return_action',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'localisation/return_reason' => [
+				'model' => 'model_localisation_return_reason',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'localisation/return_status' => [
+				'model' => 'model_localisation_return_status',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'localisation/stock_status' => [
+				'model' => 'model_localisation_stock_status',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'localisation/weight_class' => [
+				'model' => 'model_localisation_weight_class',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'catalog/subscription_plan' => [
+				'model' => 'model_catalog_subscription_plan',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'localisation/subscription_status' => [
+				'model' => 'model_localisation_subscription_status',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'cms/topic' => [
+				'model' => 'model_cms_topic',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			],
+			'localisation/zone' => [
+				'model' => 'model_localisation_zone',
+				'methods' => ['getDescriptionsByLanguageId', 'addDescription']
+			]
+		];
+		
+		foreach ($models as $key => $methods) {
+			// Load the model dynamically
+			$this->load->model($key);
+
+			$keyParts = explode('/', $key);
+			$modelName = end($keyParts);
+
+			// Call the first method dynamically (e.g., getDescriptionsByLanguageId)
+			$results = $this->{$methods['model']}->{$methods['methods'][0]}($this->config->get('config_language_id'));
+
+			// Loop through the results and call the second method (e.g., addDescription)
+			foreach ($results as $result) {
+				$this->{$methods['model']}->{$methods['methods'][1]}($result[$modelName . '_id'], $language_id, $result);
+			}
+
+			// Special case for addValueDescription &  addAttribute
+			if (isset($methods['methods'][2]) && isset($methods['methods'][3])) {
+				$results = $this->{$methods['model']}->{$methods['methods'][2]}($this->config->get('config_language_id'));
+
+				foreach ($results as $result) {
+					if($methods['methods'][3] === 'addValueDescription') {
+						$this->{$methods['model']}->{$methods['methods'][3]}(
+							$result[$modelName . '_value_id'],
+							$result[$modelName . '_id'],
+							$language_id,
+							$result
+						);
+					} elseif($methods['methods'][3] === 'addAttribute') {
+						$this->{$methods['model']}->{$methods['methods'][3]}(
+							$result[$modelName . '_id'],
+							$result['attribute_id'],
+							$language_id,
+							$result
+						);
+					}
+				}
+			}
 		}
 
 		// SEO
@@ -275,33 +194,49 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], 0, $language['language_id'], -2);
 		}
 
-		// Set default store
+
 		$this->load->model('setting/store');
+		$this->load->model('setting/setting');
 
 		$stores = $this->model_setting_store->getStores();
+		$store_ids = [0]; 
 
 		foreach ($stores as $store) {
+			$store_ids[] = $store['store_id'];
+
 			foreach ($languages as $language) {
 				$this->model_design_seo_url->addSeoUrl('language', (string)$data['code'], (string)$data['code'], $store['store_id'], $language['language_id'], -2);
 			}
 		}
+		
+		foreach ($store_ids as $store_id) {
+			// Get all settings for this store
+			$settings = $this->model_setting_setting->getSetting('config', $store_id);
+	
+			// Ensure 'config_description' exists
+			if (isset($settings['config_description'])) {
+				$config_description = $settings['config_description'];
+			} else {
+				$config_description = [];
+			}
 
-		// Topic Status
-		$this->load->model('cms/topic');
+			// Get the first language's data
+			$firstLang = reset($config_description);
 
-		$results = $this->model_cms_topic->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+			// Add new language entry if not already present
+			if (!isset($config_description[$language_id])) {
+				$config_description[$language_id] = [
+					'meta_title'       => $firstLang['meta_title'] ?? '',
+					'meta_description' => $firstLang['meta_description'] ?? '',
+					'meta_keyword'     => $firstLang['meta_keyword'] ?? ''
+				];
+			}
 
-		foreach ($results as $topic) {
-			$this->model_cms_topic->addDescription($topic['topic_id'], $language_id, $topic);
-		}
+			// Update the settings array
+			$settings['config_description'] = $config_description;
 
-		// Zone
-		$this->load->model('localisation/zone');
-
-		$results = $this->model_localisation_zone->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $zone) {
-			$this->model_localisation_zone->addDescription($zone['zone_id'], $language_id, $zone);
+			// Save back to the database
+			$this->model_setting_setting->editSetting('config', $settings, $store_id);
 		}
 
 		return $language_id;
@@ -338,21 +273,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->cache->delete('language');
 	}
 
-	/**
-	 * Delete Language
-	 *
-	 * Delete language record in the database.
-	 *
-	 * @param int $language_id primary key of the language record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/language');
-	 *
-	 * $this->model_localisation_language->deleteLanguage($language_id);
-	 */
+
 	public function deleteLanguage(int $language_id): void {
 		$language_info = $this->getLanguage($language_id);
 

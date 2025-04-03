@@ -99,6 +99,18 @@ $('#input-name').on('keyup', function() {
 	submitForm();
 });
 
+$('#input-name').on('cut', function(event) {
+    setTimeout(() => {
+        submitForm();
+    }, 0);
+});
+
+$('#input-name').on('paste', function(event) {
+    setTimeout(() => {
+        submitForm();
+    }, 0);
+});
+
 $('#input-status').on('change', function() {
 	submitForm();
 });

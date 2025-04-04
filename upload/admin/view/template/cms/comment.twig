@@ -64,7 +64,7 @@
         <div class="card">
           <div class="card-header"><i class="fa fa-list"></i> {{ text_list }}</div>
           <div class="card-body">
-            <div id="comment">{{ list }}</div>
+            <div id="list">{{ list }}</div>
           </div>
         </div>
       </div>
@@ -72,13 +72,13 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#comment').on('click', '.pagination a', function(e) {
+$('#list').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
-    $('#comment').load(this.href);
+    $('#list').load(this.href);
 });
 
-$('#comment').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
+$('#list').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
     var element = this;
 
     $.ajax({
@@ -146,7 +146,7 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    $('#comment').load('index.php?route=cms/comment.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=cms/comment.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

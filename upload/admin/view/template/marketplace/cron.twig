@@ -30,15 +30,15 @@
     </div>
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="cron" class="card-body">{{ list }}</div>
+      <div id="list" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#cron').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#cron').load(this.href);
+    $('#list').load(this.href);
 });
 
 $('#button-copy').on('click', function() {
@@ -52,7 +52,7 @@ $('#button-copy').on('click', function() {
     navigator.clipboard.writeText(copyText.value);
 });
 
-$('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
+$('#list').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
     var element = this;
 
     $.ajax({
@@ -74,7 +74,7 @@ $('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#cron').load($('#form-cron').attr('data-oc-load'));
+                $('#list').load($('#form-cron').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

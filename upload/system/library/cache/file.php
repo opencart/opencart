@@ -76,9 +76,11 @@ class File {
 
 		if ($files) {
 			foreach ($files as $file) {
-				if (!@unlink($file)) {
-					clearstatcache(false, $file);
-				}
+				try{//due to race conditions
+					if (!@unlink($file)) {
+						clearstatcache(false, $file);
+					}
+				}catch(\Throwable $e){}
 			}
 		}
 	}

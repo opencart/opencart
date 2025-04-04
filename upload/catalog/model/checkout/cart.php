@@ -81,7 +81,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'subscription' => $subscription_data,
 				'option'       => $option_data,
 				'price_text'   => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-				'total_text'   => $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+				'total_text'   => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))*$product['quantity'], $this->session->data['currency'])
 			] + $product;
 		}
 

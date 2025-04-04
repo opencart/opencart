@@ -3,6 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
+        <button type="button" id="button-generate" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-primary"><i class="fa-solid fa-sync"></i></button>
         <button type="submit" form="form-ssr" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -18,38 +19,35 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
       <div class="card-body">
-        <fieldset>
-          <legend>{{ text_progress }}</legend>
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
-            <div class="col-sm-10 mt-2">
-              <div class="progress">
-                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-              </div>
-              <div id="progress-text"></div>
-            </div>
-          </div>
-          <div class="text-end">
-            <button type="button" id="button-generate" class="btn btn-primary"><i class="fa-solid fa-sync"></i> {{ button_generate }}</button>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>{{ text_task }}</legend>
-          <div id="ssr">{{ list }}</div>
-        </fieldset>
+        <div id="list">{{ list }}</div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#ssr').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#ssr').load(this.href);
+    $('#list').load(this.href);
 });
 
-// Install
+/*
 $('#button-generate').on('click', function() {
+    var element = this;
+
+    $(element).button('loading');
+
+    $('#ssr input').each(function() {
+        $(this).prop('checked', true);
+    });
+
+    for (let i = 0; list.length; i++) {
+
+    }
+});
+*/
+
+$('#list').on('click', '.btn-warning', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -61,7 +59,7 @@ $('#button-generate').on('click', function() {
     $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
     $('#progress-text').html('');
 
-    var installer = function() {
+    var ssr = function() {
         return $.ajax({
             url: next,
             dataType: 'json',
@@ -88,13 +86,13 @@ $('#button-generate').on('click', function() {
 
                     $(element).button('reset');
 
-                    $('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
+                    $('#list').load('index.php?route=marketplace/ssr.list&user_token={{ user_token }}');
                 }
 
                 if (json['next']) {
                     next = json['next'];
 
-                    chain.attach(installer);
+                    chain.attach(ssr);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -105,10 +103,10 @@ $('#button-generate').on('click', function() {
         });
     };
 
-    chain.attach(installer);
+    chain.attach(ssr);
 });
 
-$('#ssr').on('click', '.btn-success, .btn-warning', function(e) {
+$('#list').on('click', '.btn-success, .btn-warning', function(e) {
     var element = this;
 
     $.ajax({
@@ -130,7 +128,7 @@ $('#ssr').on('click', '.btn-success, .btn-warning', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#ssr').load($('#form-ssr').attr('data-oc-load'));
+                $('#list').load($('#form-ssr').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

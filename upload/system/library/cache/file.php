@@ -80,7 +80,7 @@ class File {
 					if (!@unlink($file)) {
 						clearstatcache(false, $file);
 					}
-				}catch(\Exception $e){}
+				}catch(\Throwable $e){}
 			}
 		}
 	}

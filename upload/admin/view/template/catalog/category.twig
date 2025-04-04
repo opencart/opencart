@@ -47,17 +47,17 @@
       <div class="col col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="category" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#category').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#category').load(this.href);
+    $('#list').load(this.href);
 });
 
 $('#button-repair').on('click', function(e) {
@@ -82,7 +82,7 @@ $('#button-repair').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#category').load('index.php?route=catalog/category.list&user_token={{ user_token }}');
+                $('#list').load('index.php?route=catalog/category.list&user_token={{ user_token }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -108,7 +108,7 @@ $('#button-filter').on('click', function() {
 
     window.history.pushState({}, null, 'index.php?route=catalog/category&user_token={{ user_token }}' + url);
 
-    $('#category').load('index.php?route=catalog/category.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=catalog/category.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-name').autocomplete({

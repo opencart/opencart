@@ -107,7 +107,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Languages
+		// Language
 		$data['languages'] = [];
 
 		$filter_data = [
@@ -136,7 +136,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		// Sorts
 		$data['sort_name'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_code'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
 		$data['sort_sort_order'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
@@ -151,10 +150,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		// Total Languages
 		$language_total = $this->model_localisation_language->getTotalLanguages();
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $language_total,
 			'page'  => $page,
@@ -181,6 +178,8 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -211,7 +210,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/language.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Language
 		if (isset($this->request->get['language_id'])) {
 			$this->load->model('localisation/language');
 
@@ -305,7 +303,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error']['locale'] = $this->language->get('error_locale');
 		}
 
-		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguageByCode($post_info['code']);
@@ -348,13 +345,10 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Setting
+		// Store
 		$this->load->model('setting/store');
 
-		// Language
-		$this->load->model('localisation/language');
-
-		// Orders
+		// Order
 		$this->load->model('sale/order');
 
 		foreach ($selected as $language_id) {
@@ -376,7 +370,6 @@ class Language extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Total Orders
 			$order_total = $this->model_sale_order->getTotalOrdersByLanguageId($language_id);
 
 			if ($order_total) {
@@ -385,6 +378,8 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('localisation/language');
+
 			foreach ($selected as $language_id) {
 				$this->model_localisation_language->deleteLanguage($language_id);
 			}

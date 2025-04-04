@@ -28,15 +28,15 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$directory = DIR_CATALOG . 'view/data/cms/';
 
-		if (!is_dir($directory) && mkdir($directory, 0777)) {
+		if (!is_dir($directory) && !mkdir($directory, 0777)) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (!$json) {
 			// Languages
-			$this->load->model('localisation/language');
-
 			$language_data = [];
+
+			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
 
@@ -77,15 +77,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 						$file = $directory . 'article.' . (int)$article['article_id'] . '.' . $article['language_id'] . '.json';
 
-
-
-
-
 						if (!file_put_contents($file, $content)) {
-
-
-
-
 							$json['error'] = $this->language->get('error_file');
 						}
 

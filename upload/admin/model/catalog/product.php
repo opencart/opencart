@@ -482,7 +482,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteStores($product_id);
 		$this->model_catalog_product->deleteSubscriptions($product_id);
 
-		// Reviews
+		// Review
 		$this->load->model('catalog/review');
 
 		$this->model_catalog_review->deleteReviewsByProductId($product_id);
@@ -1022,10 +1022,6 @@ class Product extends \Opencart\System\Engine\Model {
 	public function getProducts(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
 
-		if (!empty($data['filter_model'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
-		}
-
 		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
@@ -1037,7 +1033,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND (LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "' OR LCASE(`pc`.`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "')";
+			$sql .= " AND (LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "')";
 		}
 
 		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
@@ -2214,7 +2210,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Discounts By Customer Group ID
+	 * Delete Discounts By Customer ID
 	 *
 	 * Delete discounts by customer group records in the database.
 	 *

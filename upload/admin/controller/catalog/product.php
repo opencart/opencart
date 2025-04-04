@@ -165,22 +165,28 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['filter_manufacturer'] = '';
 
 		// Category
-		if (!empty($filter_category_id)) {
-			$this->load->model('catalog/category');
+		$this->load->model('catalog/category');
 
-			$category_info = $this->model_catalog_category->getCategory($filter_category_id);
+		$data['categories'] = [];
 
-			$data['filter_category'] = !empty($category_info['name']) ? (!empty($category_info['path']) ? implode(' > ', [$category_info['path'], $category_info['name']]) : $category_info['name']) : '';
-		}
+		$filter_data = [
+			'filter_name'   => '',
+			'sort'   => 'name'
+		];
+
+		$data['categories'] = $this->model_catalog_category->getCategories($filter_data);
 
 		// Manufacturer
-		if (!empty($filter_manufacturer_id)) {
-			$this->load->model('catalog/manufacturer');
+		$this->load->model('catalog/manufacturer');
 
-			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($filter_manufacturer_id);
+		$data['manufacturers'] = [];
 
-			$data['filter_manufacturer'] = !empty($manufacturer_info['name']) ? $manufacturer_info['name'] : '';
-		}
+		$filter_data = [
+			'filter_name'   => '',
+			'sort'   => 'name'
+		];
+
+		$data['manufacturers'] = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -203,8 +209,6 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Get List
-	 *
 	 * @return string
 	 */
 	public function getList(): string {
@@ -324,7 +328,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Products
+		// Product
 		$data['products'] = [];
 
 		$filter_data = [
@@ -422,7 +426,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=pd.name' . $url);
 		$data['sort_model'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.model' . $url);
 		$data['sort_price'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.price' . $url);
@@ -475,10 +478,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		// Total Products
 		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,
 			'page'  => $page,
@@ -513,7 +514,6 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
-		// Product
 		if (isset($this->request->get['master_id'])) {
 			$this->load->model('catalog/product');
 
@@ -673,7 +673,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['master_id'] = 0;
 		}
 
-		// Languages
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -708,7 +708,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['price'] = '';
 		}
 
-		// Tax Classes
+		// Tax Class
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
@@ -737,7 +737,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['subtract'] = 1;
 		}
 
-		// Stock Statuses
+		// Stock Status
 		$this->load->model('localisation/stock_status');
 
 		$data['stock_statuses'] = $this->model_localisation_stock_status->getStockStatuses();
@@ -784,7 +784,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['height'] = '';
 		}
 
-		// Length Classes
+		// Length Class
 		$this->load->model('localisation/length_class');
 
 		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
@@ -795,7 +795,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['length_class_id'] = (int)$this->config->get('config_length_class_id');
 		}
 
-		// Weight Classes
+		// Weight Class
 		if (!empty($product_info)) {
 			$data['weight'] = $product_info['weight'];
 		} else {
@@ -883,7 +883,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Stores
+		// Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
@@ -960,7 +960,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Customer Groups
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -1053,7 +1053,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Subscription Plans
+		// Subscription Plan
 		$this->load->model('catalog/subscription_plan');
 
 		$data['subscription_plans'] = $this->model_catalog_subscription_plan->getSubscriptionPlans();
@@ -1144,7 +1144,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_seo_url'] = [];
 		}
 
-		// Layouts
+		// Layout
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -1358,7 +1358,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Product
 			$this->load->model('catalog/product');
 
 			foreach ($selected as $product_id) {
@@ -1408,7 +1407,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Product
 		$this->load->model('catalog/product');
 
-		// Setting
+		// Store
 		$this->load->model('setting/store');
 
 		$results = $this->model_catalog_product->getReports($product_id, ($page - 1) * $limit, $limit);
@@ -1432,10 +1431,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Total Reports
 		$report_total = $this->model_catalog_product->getTotalReports($product_id);
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $report_total,
 			'page'  => $page,
@@ -1483,7 +1480,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'limit'        => $limit
 		];
 
-		// Products
+		// Product
 		$this->load->model('catalog/product');
 
 		// Option

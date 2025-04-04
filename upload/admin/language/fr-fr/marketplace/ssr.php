@@ -10,7 +10,7 @@ $_['text_event']           = 'Progression GSS (SSR)';
 // Colonne
 $_['column_code']          = 'Code GSS (SSR)';
 $_['column_progress']      = 'Progression';
-$_['column_sort_order']    = 'Order de Tri';
+$_['column_sort_order']    = 'Ordre de Tri';
 $_['column_date_modified'] = 'Date de Modification';
 $_['column_action']        = 'Action';
 

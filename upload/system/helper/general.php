@@ -139,3 +139,94 @@ if (!function_exists('str_contains')) {
 		return $find === '' || strpos($string, $find) !== false;
 	}
 }
+
+// File Handling Functions
+
+// 1. Reading a file
+function readFileContent($filename) {
+	if (file_exists($filename)) {
+		$content = file_get_contents($filename);
+
+		return $content;
+	}
+
+	return "File not found";
+}
+
+// 2. Writing to a file
+function writeToFile($filename, $content) {
+	$result = file_put_contents($filename, $content);
+
+	return $result !== false;
+}
+
+// 3. Appending to a file
+function appendToFile($filename, $content) {
+	$result = file_put_contents($filename, $content, FILE_APPEND);
+	return $result !== false;
+}
+
+// 4. Checking if file exists
+function checkFileExists($filename) {
+	return file_exists($filename);
+}
+
+// 5. Getting file size (in bytes)
+function getFileSize($filename) {
+	return filesize($filename);
+}
+
+// 6. Deleting a file
+function deleteFile($filename) {
+	if (file_exists($filename)) {
+		return unlink($filename);
+	}
+	return false;
+}
+
+// Directory Handling Functions
+
+// 1. Creating a directory
+function createDirectory($dirname, $permissions = 0777) {
+	if (!is_dir($dirname)) {
+		return mkdir($dirname, $permissions, true);
+	}
+
+	return false;
+}
+
+// 2. Removing a directory (must be empty)
+function removeDirectory($dirname) {
+	if (is_dir($dirname)) {
+		return rmdir($dirname);
+	}
+
+	return false;
+}
+
+// 3. Reading directory contents
+function readDirectory($dirname) {
+	$contents = [];
+	if (is_dir($dirname)) {
+		$files = scandir($dirname);
+		foreach ($files as $file) {
+			if ($file != "." && $file != "..") {
+				$contents[] = $file;
+			}
+		}
+	}
+	return $contents;
+}
+
+// 4. Checking if directory exists
+function checkDirectoryExists($dirname) {
+	return is_dir($dirname);
+}
+
+// 5. Getting file information
+function getFileInfo($filename) {
+	if (file_exists($filename)) {
+		return pathinfo($filename);
+	}
+	return false;
+}

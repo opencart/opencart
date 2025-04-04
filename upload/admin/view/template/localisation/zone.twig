@@ -45,17 +45,17 @@
       <div class="col-lg-9 col-md-122">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="zone" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#zone').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#zone').load(this.href);
+    $('#list').load(this.href);
 });
 
 $('#button-filter').on('click', function() {
@@ -81,7 +81,7 @@ $('#button-filter').on('click', function() {
 
     window.history.pushState({}, null, 'index.php?route=localisation/zone&user_token={{ user_token }}' + url);
 
-    $('#zone').load('index.php?route=localisation/zone.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=localisation/zone.list&user_token={{ user_token }}' + url);
 });
 //--></script>
 {{ footer }}

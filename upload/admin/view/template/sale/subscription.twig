@@ -62,17 +62,17 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="subscription" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#subscription').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#subscription').load(this.href);
+    $('#list').load(this.href);
 });
 
 $('#button-filter').on('click', function() {
@@ -116,7 +116,7 @@ $('#button-filter').on('click', function() {
 
     window.history.pushState({}, null, 'index.php?route=sale/subscription&user_token={{ user_token }}' + url);
 
-    $('#subscription').load('index.php?route=sale/subscription.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=sale/subscription.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

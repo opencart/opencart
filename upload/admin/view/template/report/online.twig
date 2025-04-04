@@ -40,17 +40,17 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="online" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#online').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#online').load(this.href);
+    $('#list').load(this.href);
 });
 
 $('#button-filter, #button-refresh').on('click', function() {
@@ -68,7 +68,7 @@ $('#button-filter, #button-refresh').on('click', function() {
         url += '&filter_ip=' + encodeURIComponent(filter_ip);
     }
 
-    $('#online').load('index.php?route=report/online.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=report/online.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

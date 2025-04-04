@@ -16,18 +16,18 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="startup" class="card-body">{{ list }}</div>
+      <div id="list" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#startup').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#startup').load(this.href);
+    $('#list').load(this.href);
 });
 
-$('#startup').on('click', '.btn-success, .btn-danger', function(e) {
+$('#list').on('click', '.btn-success, .btn-danger', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -51,7 +51,7 @@ $('#startup').on('click', '.btn-success, .btn-danger', function(e) {
             if (json['success']) {
                 $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#startup').load($('#form-startup').attr('data-oc-load'));
+                $('#list').load($('#form-startup').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

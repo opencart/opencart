@@ -57,17 +57,17 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="review" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#review').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#review').load(this.href);
+    $('#list').load(this.href);
 });
 
 $('#button-filter').on('click', function() {
@@ -105,7 +105,7 @@ $('#button-filter').on('click', function() {
 
     window.history.pushState({}, null, 'index.php?route=catalog/review&user_token={{ user_token }}' + url);
 
-    $('#review').load('index.php?route=catalog/review.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=catalog/review.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-product').autocomplete({

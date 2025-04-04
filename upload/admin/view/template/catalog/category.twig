@@ -25,7 +25,7 @@
 							<i class="fa-solid fa-filter"></i> {{ text_filter }}
 						</span>
 
-						<button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary border-0" id = "button-reset">
+						<button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary border-0" id="button-reset">
 							<i class="fa-solid fa-filter-circle-xmark"></i>
 						</button>
 					</div>
@@ -99,13 +99,7 @@ $('#input-name').on('keyup', function() {
 	submitForm();
 });
 
-$('#input-name').on('cut', function(event) {
-    setTimeout(() => {
-        submitForm();
-    }, 0);
-});
-
-$('#input-name').on('paste', function(event) {
+$('#input-name').on('cut paste', function(event) {
     setTimeout(() => {
         submitForm();
     }, 0);
@@ -170,6 +164,7 @@ $('#input-name').autocomplete({
 		} else {
 			$('#input-name').val('');
 		}
+		submitForm();
 	}
 });
 //--></script>

@@ -204,9 +204,9 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		// Sorts
-		$data['sort_name'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cd.name' . $url);
-		$data['sort_iso_code_2'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=c.iso_code_2' . $url);
-		$data['sort_iso_code_3'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=c.iso_code_3' . $url);
+		$data['sort_name'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_iso_code_2'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_2' . $url);
+		$data['sort_iso_code_3'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
 
 		$url = '';
 

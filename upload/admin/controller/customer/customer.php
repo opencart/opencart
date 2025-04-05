@@ -1301,7 +1301,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'description' => '',
-			'points'      => 0,
+			'points'      => 0
 		];
 
 		$post_info = $this->request->post + $required;

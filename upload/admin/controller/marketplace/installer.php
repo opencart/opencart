@@ -214,7 +214,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 				\ZipArchive::ER_NOZIP  => $this->language->get('error_zip_nozip'),
 				\ZipArchive::ER_OPEN   => $this->language->get('error_zip_open'),
 				\ZipArchive::ER_READ   => $this->language->get('error_zip_read'),
-				\ZipArchive::ER_SEEK   => $this->language->get('error_zip_seek'),
+				\ZipArchive::ER_SEEK   => $this->language->get('error_zip_seek')
 			];
 
 			// Check if the zip is valid

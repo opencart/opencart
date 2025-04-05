@@ -527,7 +527,7 @@ class User extends \Opencart\System\Engine\Controller {
 			'firstname' => '',
 			'lastname'  => '',
 			'email'     => '',
-			'password'  => '',
+			'password'  => ''
 		];
 
 		$post_info = $this->request->post + $required;

@@ -64,7 +64,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *     'product_id' => 1,
 	 *     'text'       => 'Review Text',
 	 *     'rating'     => 4,
-	 *     'status'     => 1,
+	 *     'status'     => 1
 	 * ];
 	 *
 	 * $this->load->model('catalog/review');
@@ -282,7 +282,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *     'filter_author'    => 'Author Name',
 	 *     'filter_status'    => 1,
 	 *     'filter_date_from' => '2021-01-01',
-	 *     'filter_date_to'   => '2021-01-31',
+	 *     'filter_date_to'   => '2021-01-31'
 	 * ];
 	 *
 	 * $this->load->model('catalog/review');

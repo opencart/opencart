@@ -251,7 +251,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $zone_data['zone_description'] = [
-	 *     'name' => 'Zone Name',
+	 *     'name' => 'Zone Name'
 	 * ];
 	 *
 	 * $this->load->model('localisation/zone');

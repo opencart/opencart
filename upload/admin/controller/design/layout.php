@@ -332,7 +332,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'layout_id'     => 0,
 			'name'          => '',
 			'layout_route'  => [],
-			'layout_module' => [],
+			'layout_module' => []
 		];
 
 		$post_info = $this->request->post + $required;

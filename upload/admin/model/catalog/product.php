@@ -42,7 +42,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'length_class_id'               => 0,
 	 *     'status'                        => 0,
 	 *     'tax_class_id'                  => 0,
-	 *     'sort_order'                    => 0,
+	 *     'sort_order'                    => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/product');
@@ -219,7 +219,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'length_class_id'               => 0,
 	 *     'status'                        => 1,
 	 *     'tax_class_id'                  => 0,
-	 *     'sort_order'                    => 0,
+	 *     'sort_order'                    => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/product');

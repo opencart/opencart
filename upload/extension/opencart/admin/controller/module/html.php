@@ -112,7 +112,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'module_id' => 0,
-			'name'      => '',
+			'name'      => ''
 		];
 
 		$post_info = $this->request->post + $required;

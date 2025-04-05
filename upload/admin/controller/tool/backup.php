@@ -113,7 +113,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 				'filename'   => basename($file),
 				'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
 				'date_added' => date($this->language->get('datetime_format'), filemtime($file)),
-				'download'   => $this->url->link('tool/backup.download', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode(basename($file))),
+				'download'   => $this->url->link('tool/backup.download', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode(basename($file)))
 			];
 		}
 

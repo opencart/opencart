@@ -97,7 +97,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		// Add keys for missing post vars
 		$required = [
 			'email'  => '',
-			'action' => '',
+			'action' => ''
 		];
 
 		$post_info = $this->request->post + $required;

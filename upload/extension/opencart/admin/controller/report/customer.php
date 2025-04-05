@@ -89,22 +89,22 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_year'),
-			'value' => 'year',
+			'value' => 'year'
 		];
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_month'),
-			'value' => 'month',
+			'value' => 'month'
 		];
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_week'),
-			'value' => 'week',
+			'value' => 'week'
 		];
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_day'),
-			'value' => 'day',
+			'value' => 'day'
 		];
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -176,7 +176,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['customers'][] = [
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
-				'total'      => $result['total'],
+				'total'      => $result['total']
 			];
 		}
 

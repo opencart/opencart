@@ -94,22 +94,22 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_year'),
-			'value' => 'year',
+			'value' => 'year'
 		];
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_month'),
-			'value' => 'month',
+			'value' => 'month'
 		];
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_week'),
-			'value' => 'week',
+			'value' => 'week'
 		];
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_day'),
-			'value' => 'day',
+			'value' => 'day'
 		];
 
 		$data['user_token'] = $this->session->data['user_token'];

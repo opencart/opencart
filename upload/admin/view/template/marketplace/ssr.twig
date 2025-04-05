@@ -15,11 +15,26 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_event }}</div>
+    <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_ssr }}</div>
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
       <div class="card-body">
-        <div id="list">{{ list }}</div>
+        <fieldset>
+          <legend>{{ text_progress }}</legend>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
+            <div class="col-sm-10 mt-2">
+              <div class="progress">
+                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+              </div>
+              <div id="progress-text" class="form-text mb-2"></div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_render }}</legend>
+          <div id="list">{{ list }}</div>
+        </fieldset>
       </div>
     </div>
   </div>
@@ -70,19 +85,18 @@ $('#list').on('click', '.btn-warning', function(e) {
 
                 if (json['error']) {
                     $('#progress-bar').addClass('bg-danger');
-                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+                    $('#progress-text').html(json['error']);
 
                     $(element).button('reset');
                 }
 
                 if (json['text']) {
-                    $('#progress-bar').addClass('bg-success');
-                    $('#progress-text').html('<div class="text-success">' + json['text'] + '</div>');
+                    $('#progress-text').html(json['text']);
                 }
 
                 if (json['success']) {
                     $('#progress-bar').addClass('bg-success').css('width', '100%');
-                    $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
+                    $('#progress-text').html(json['success']);
 
                     $(element).button('reset');
 

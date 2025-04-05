@@ -172,7 +172,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			// SSR
 			$this->load->model('setting/ssr');
 
-			$this->model_setting_cron->editStatus($ssr_id, false);
+			$this->model_setting_ssr->editStatus($ssr_id, false);
 
 			$json['success'] = $this->language->get('text_success');
 		}

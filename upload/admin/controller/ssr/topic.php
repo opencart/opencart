@@ -12,6 +12,10 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index() {
+
+	}
+
+	public function list() {
 		$this->load->language('ssr/topic');
 
 		$json = [];
@@ -24,6 +28,12 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'ssr/topic')) {
 			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$directory = DIR_CATALOG . 'view/data/cms/';
+
+		if (!is_dir($directory) && !mkdir($directory, 0777)) {
+			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (!$json) {

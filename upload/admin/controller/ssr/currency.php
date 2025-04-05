@@ -20,13 +20,19 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$directory = DIR_CATALOG . 'view/data/localisation/';
+
+		if (!is_dir($directory) && !mkdir($directory, 0777)) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
 		if (!$json) {
 			// Currency
 			$this->load->model('localisation/currency');
 
 			$currencies = $this->model_localisation_currency->getCurrencies();
 
-			$file = DIR_CATALOG . 'view/data/localisation/currency.json';
+			$file = $directory . 'currency.json';
 
 			if (file_put_contents($file, json_encode($currencies))) {
 				$json['success'] = $this->language->get('text_success');

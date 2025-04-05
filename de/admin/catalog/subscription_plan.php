@@ -36,7 +36,7 @@ $_['column_action']          = 'Aktionen';
 $_['help_trial_duration']    = 'Die Dauer gibt an, wie oft der Benutzer eine Zahlung vornimmt.';
 $_['help_trial_cycle']       = 'Die Abonnementbeträge werden anhand der Häufigkeit und Zyklen berechnet.';
 $_['help_trial_frequency']   = 'Wenn Sie eine Häufigkeit von „Woche“ und einen Zyklus von „2“ verwenden, wird dem Benutzer alle 2 Wochen eine Rechnung gestellt.';
-$_['help_duration']          = 'The duration is the number of times the user will make a payment, set this to 0 if you want payments until they are canceled.';
+$_['help_duration']          = 'Die Dauer ist die Anzahl an Zahlungen, die ein Benutzer vornimmt. Setzen sie diese auf 0, wenn Sie Zahlungen bis zur  Stornierung möchten.';
 $_['help_cycle']             = 'Die Abonnementbeträge werden anhand der Häufigkeit und Zyklen berechnet.';
 $_['help_frequency']         = 'Wenn Sie eine Häufigkeit von „Woche“ und einen Zyklus von „2“ verwenden, wird dem Benutzer alle 2 Wochen eine Rechnung gestellt.';
 

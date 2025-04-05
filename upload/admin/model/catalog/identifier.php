@@ -24,7 +24,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *     'product_id' => 1,
 	 *     'text'       => 'identifier Text',
 	 *     'rating'     => 4,
-	 *     'status'     => 0,
+	 *     'status'     => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/identifier');
@@ -58,7 +58,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *     'product_id' => 1,
 	 *     'text'       => 'Identifier Text',
 	 *     'rating'     => 4,
-	 *     'status'     => 1,
+	 *     'status'     => 1
 	 * ];
 	 *
 	 * $this->load->model('catalog/identifier');

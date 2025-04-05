@@ -1,33 +1,33 @@
 <?php
 // Heading
-$_['heading_title']    = 'Identifiers';
+$_['heading_title']    = 'Identifikatoren';
 
 // Text
-$_['text_success']     = 'Success: You have modified Identifiers!';
-$_['text_list']        = 'Identifier List';
-$_['text_add']         = 'Add Identifier';
-$_['text_edit']        = 'Edit Identifier';
+$_['text_success']     = 'Erfolg: Sie haben Identifikatoren bearbeitet!';
+$_['text_list']        = 'Identifikatoren Liste';
+$_['text_add']         = 'Identifikator hinzufügen';
+$_['text_edit']        = 'Identifikator bearbeiten';
 $_['text_regex']       = 'Regex Ausdruck';
 
 // Column
-$_['column_name']      = 'Identifier Name';
+$_['column_name']      = 'Identifikatorname';
 $_['column_code']      = 'Code';
 $_['column_action']    = 'Aktionen';
 
 // Entry
-$_['entry_name']       = 'Identifier Name';
+$_['entry_name']       = 'Identifikatorname';
 $_['entry_code']       = 'Code';
 $_['entry_validation'] = 'Validierung';
 $_['entry_status']     = 'Status';
 
 // Help
-$_['help_name']        = 'Example: Stock Keeping Unit, Universal Product Code, European Article Number, Japanese Article Number, International Standard Book Number or Manufacturer Part Number';
-$_['help_code']        = 'Example: SKU, UPC, EAN, JAN, ISBN or MPN';
+$_['help_name']        = 'Beispiel: Stock Keeping Unit, Universal Product Code, Europäische Artikelnummer, Japanische Artikelnummer, Internationale Standardbuchnummer oder Hersteller-Artikelnummer';
+$_['help_code']        = 'Beispiel: SKU, UPC, EAN, JAN, ISBN oder MPN';
 $_['help_regex']       = 'Verwenden Sie reguläre Ausdrücke. Beispiel: /[^a-zA-Z0-9_-]/';
-$_['help_status']      = 'Display product identifier on product info page';
+$_['help_status']      = 'Produktkennung auf der Produktinformationsseite anzeigen';
 
 // Error
 $_['error_warning']    = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
-$_['error_permission'] = 'Warning: You do not have permission to modify identifiers!';
-$_['error_name']       = 'Identifier Name must be between 1 and 64 characters!';
-$_['error_code']       = 'Identifier Code must be between 3 and 48 characters!';
+$_['error_permission'] = 'Warnung: Sie haben keine Berechtigung zum Ändern der Identifikatoren!';
+$_['error_name']       = 'Identifikationsname muss zwischen 1 und 64 Zeichen haben!';
+$_['error_code']       = 'Identifikationscode muss zwischen 3 und 48 Zeichen haben!';

@@ -7,7 +7,9 @@ namespace Opencart\Admin\Controller\Ssr;
  */
 class Country extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generate
+	 * Index
+	 *
+	 * Generates the country list JSON files by language.
 	 *
 	 * @return void
 	 */
@@ -141,6 +143,29 @@ class Country extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function clear() {
+		$this->load->language('ssr/language');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'ssr/language')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$files = glob(DIR_CATALOG . 'view/data/localisation/country-*.json');
+
+			foreach ($files as $file) {
+				unlink($file);
+			}
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

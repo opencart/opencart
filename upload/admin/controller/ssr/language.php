@@ -12,11 +12,11 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index() {
-		$this->load->language('localisation/language');
+		$this->load->language('ssr/language');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'localisation/language')) {
+		if (!$this->user->hasPermission('modify', 'ssr/language')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -27,7 +27,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Languages
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
@@ -39,6 +38,29 @@ class Language extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['error'] = sprintf($this->language->get('error_file'), $file);
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function clear() {
+		$this->load->language('ssr/language');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'ssr/language')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$file = DIR_CATALOG . 'view/data/localisation/language.json';
+
+			if  (is_file($file)) {
+				unlink($file);
+			}
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

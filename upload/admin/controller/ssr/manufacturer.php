@@ -120,4 +120,29 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function clear() {
+		$this->load->language('catalog/manufacturer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'ssr/language')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$directory = DIR_CATALOG . 'view/data/localisation/';
+
+			$files = glob($directory . 'language.json');
+
+			foreach ($files as $file) {
+				unlink($file);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

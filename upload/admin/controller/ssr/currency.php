@@ -12,11 +12,11 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index() {
-		$this->load->language('localisation/currency');
+		$this->load->language('ssr/currency');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
+		if (!$this->user->hasPermission('modify', 'ssr/currency')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -27,7 +27,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Currency
 			$this->load->model('localisation/currency');
 
 			$currencies = $this->model_localisation_currency->getCurrencies();
@@ -39,6 +38,29 @@ class Currency extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['error'] = sprintf($this->language->get('error_file'), $file);
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function clear() {
+		$this->load->language('ssr/currency');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'ssr/currency')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$file = DIR_CATALOG . 'view/data/localisation/currency.json';
+
+			if  (is_file($file)) {
+				unlink($file);
+			}
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

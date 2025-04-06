@@ -8,6 +8,8 @@ $_['text_list']               = 'Information List';
 $_['text_add']                = 'Add Information';
 $_['text_edit']               = 'Edit Information';
 $_['text_default']            = 'Default';
+$_['text_general']            = 'General';
+$_['text_meta']               = 'Meta Tags';
 $_['text_keyword']            = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 
 // Column

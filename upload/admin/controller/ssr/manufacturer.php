@@ -56,7 +56,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function list() {
+	public function info() {
 		$this->load->language('ssr/manufacturer');
 
 		$json = [];
@@ -74,7 +74,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$directory = DIR_CATALOG . 'view/data/catalog/';
 
 		if (!is_dir($directory) && !mkdir($directory, 0777)) {
-			$json['error'] = $this->language->get('error_directory');
+			$json['error'] = sprintf($this->language->get('error_directory'), $directory);
 		}
 
 		if (!$json) {
@@ -92,18 +92,16 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				'limit' => $limit
 			];
 
-			$topics = $this->model_catalog_manufacturer->getManufacturers($filter_data);
+			$manufacturers = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 
-			foreach ($topics as $topic) {
-				if ($topic['status']) {
-					if (isset($languages[$description['language_id']])) {
-						$code = preg_replace('/[^A-Z0-9_-]/i', '', $languages[$description['language_id']]['code']);
+			foreach ($manufacturers as $manufacturer) {
+				if ($manufacturer['status']) {
+					$file = DIR_CATALOG . 'view/data/catalog/manufacturer.' . (int)$manufacturer['manufacturer_id'] . '.json';
 
-						$file = DIR_CATALOG . 'view/data/cms/topic.' . (int)$topic['topic_id'] . '.' . $code . '.json';
+					if (!file_put_contents($file, json_encode($manufacturer))) {
+						$json['error'] = sprintf($this->language->get('error_file'), $file);
 
-						if (!file_put_contents($file, json_encode($description + $topic))) {
-							$json['error'] = $this->language->get('error_file');
-						}
+						break;
 					}
 				}
 			}
@@ -113,7 +111,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $manufacturer_total);
 
 			if ($end < $manufacturer_total) {
-				$json['next'] = $this->url->link('ssr/topic', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('ssr/manufacturer.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}

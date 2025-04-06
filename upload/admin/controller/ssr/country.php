@@ -55,6 +55,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 				if (!file_put_contents($file, json_encode($value))) {
 					$json['error'] = $this->language->get('error_file');
+
+					break;
 				}
 			}
 		}
@@ -87,7 +89,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$directory = DIR_CATALOG . 'view/data/localisation/';
 
 		if (!is_dir($directory) && !mkdir($directory, 0777)) {
-			$json['error'] = $this->language->get('error_directory');
+			$json['error'] = sprintf($this->language->get('error_directory'), $directory);
 		}
 
 		if (!$json) {
@@ -121,7 +123,9 @@ class Country extends \Opencart\System\Engine\Controller {
 							$file = $directory . 'country.' . (int)$country['country_id'] . '.' . $languages[$description['language_id']]['code'] . '.json';
 
 							if (!file_put_contents($file, json_encode($description + $country + ['zone' => $this->model_localisation_zone->getZonesByCountryId($country['country_id'])]))) {
-								$json['error'] = $this->language->get('error_file');
+								$json['error'] = sprintf($this->language->get('error_file'), $file);
+
+								break;
 							}
 						}
 					}
@@ -130,9 +134,9 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($end < $country_total) {
-				$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $country_total);
+			$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $country_total);
 
+			if ($end < $country_total) {
 				$json['next'] = $this->url->link('ssr/country.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');

@@ -23,7 +23,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$directory = DIR_CATALOG . 'view/data/localisation/';
 
 		if (!is_dir($directory) && !mkdir($directory, 0777)) {
-			$json['error'] = $this->language->get('error_directory');
+			$json['error'] = sprintf($this->language->get('error_directory'), $directory);
 		}
 
 		if (!$json) {
@@ -37,7 +37,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			if (file_put_contents($file, json_encode($currencies))) {
 				$json['success'] = $this->language->get('text_success');
 			} else {
-				$json['error'] = $this->language->get('error_file');
+				$json['error'] = sprintf($this->language->get('error_file'), $file);
 			}
 		}
 

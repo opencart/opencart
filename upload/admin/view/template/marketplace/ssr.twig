@@ -46,22 +46,6 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-/*
-$('#button-generate').on('click', function() {
-    var element = this;
-
-    $(element).button('loading');
-
-    $('#ssr input').each(function() {
-        $(this).prop('checked', true);
-    });
-
-    for (let i = 0; list.length; i++) {
-
-    }
-});
-*/
-
 $('#list').on('click', '.btn-warning', function(e) {
     e.preventDefault();
 
@@ -120,7 +104,7 @@ $('#list').on('click', '.btn-warning', function(e) {
     chain.attach(ssr);
 });
 
-$('#list').on('click', '.btn-success, .btn-warning', function(e) {
+$('#list').on('click', '.btn-success, .btn-danger', function(e) {
     var element = this;
 
     $.ajax({

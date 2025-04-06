@@ -19,25 +19,15 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		try {
 			$ssrs = [];
 
-			$ssrs[] = [
-				'code'   => 'article',
-				'action' => 'ssr/article'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'article',
+			//	'action' => 'ssr/article'
+			//];
 
-			$ssrs[] = [
-				'code'   => 'article',
-				'action' => 'ssr/article.template'
-			];
-
-			$ssrs[] = [
-				'code'   => 'article',
-				'action' => 'ssr/article.image'
-			];
-
-			$ssrs[] = [
-				'code'   => 'category',
-				'action' => 'ssr/category'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'category',
+			//	'action' => 'ssr/category'
+			//];
 
 			$ssrs[] = [
 				'code'   => 'country',
@@ -49,30 +39,30 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 				'action' => 'ssr/currency'
 			];
 
-			$ssrs[] = [
-				'code'   => 'information',
-				'action' => 'ssr/information'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'information',
+			//	'action' => 'ssr/information'
+			//];
 
 			$ssrs[] = [
 				'code'   => 'language',
 				'action' => 'ssr/language'
 			];
 
-			$ssrs[] = [
-				'code'   => 'manufacturer',
-				'action' => 'ssr/manufacturer'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'manufacturer',
+			//	'action' => 'ssr/manufacturer'
+			//];
 
-			$ssrs[] = [
-				'code'   => 'product',
-				'action' => 'ssr/product'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'product',
+			//	'action' => 'ssr/product'
+			//];
 
-			$ssrs[] = [
-				'code'   => 'topic',
-				'action' => 'ssr/topic'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'topic',
+			//	'action' => 'ssr/topic'
+			//];
 
 			foreach ($ssrs as $ssr) {
 				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ssr` WHERE `code` = '" . $this->db->escape($ssr['code']) . "'");

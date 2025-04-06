@@ -159,7 +159,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = glob(DIR_CATALOG . 'view/data/localisation/country-*.json');
+			$files = glob(DIR_CATALOG . 'view/data/localisation/country.*.json');
 
 			foreach ($files as $file) {
 				unlink($file);

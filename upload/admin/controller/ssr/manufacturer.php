@@ -126,14 +126,18 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/language')) {
+		if (!$this->user->hasPermission('modify', 'ssr/manufacturer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$directory = DIR_CATALOG . 'view/data/localisation/';
+			$file = DIR_CATALOG . 'view/data/catalog/manufacturer.json';
 
-			$files = glob($directory . 'language.json');
+			if  (is_file($file)) {
+				unlink($file);
+			}
+
+			$files = glob(DIR_CATALOG . 'view/data/catalog/manufacturer.*.json');
 
 			foreach ($files as $file) {
 				unlink($file);

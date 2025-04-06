@@ -22,9 +22,9 @@ class Information extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (!$this->user->hasPermission('modify', 'catalog/information')) {
+		//if (!$this->user->hasPermission('modify', 'catalog/information')) {
 			$json['error'] = $this->language->get('error_permission');
-		}
+		//}
 
 		if (!$json) {
 			$this->load->model('localisation/language');

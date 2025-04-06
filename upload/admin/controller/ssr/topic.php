@@ -12,10 +12,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index() {
-
-	}
-
-	public function list() {
 		$this->load->language('ssr/topic');
 
 		$json = [];
@@ -90,13 +86,5 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function template() {
-
-	}
-
-	public function image() {
-
 	}
 }

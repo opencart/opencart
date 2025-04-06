@@ -214,12 +214,14 @@
                         <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
                       {% endfor %}
                     </select>
+                    <div id="error-country" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
                   <div class="col-sm-10">
                     <select name="config_zone_id" id="input-zone" class="form-select"></select>
+                    <div id="error-zone" class="invalid-feedback"></div>
                   </div>
                 </div>
               </fieldset>

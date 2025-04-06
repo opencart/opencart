@@ -120,7 +120,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
 	public function clear() {
 		$this->load->language('catalog/manufacturer');
 

@@ -4,26 +4,17 @@ $_['heading_title']        = 'Générateur de Site Statique';
 
 // Texte
 $_['text_success']         = 'Succès: Vous avez modifié le générateur de site statique!';
-
-$_['text_progress']        = 'Progression de l\'installation';
-$_['text_installed']       = 'Extensions installées';
-$_['text_info']            = 'Information sur les extensions';
-$_['text_install']         = 'Installation des fichiers à partir de %s envers %s de %s';
-$_['text_vendor']          = 'Refraîchir les fichiers fournisseurs';
-$_['text_xml']             = 'Installer les fichiers OCMOD';
-
+$_['text_list']            = 'Liste GSS (SSR)';
+$_['text_ssr']             = 'Le Générateur de Site Statique permet de pré-afficher les modèles et les données statiques. En cas de problème, vous pouvez activer ou désactiver le rendu de site statique ici.';
+$_['text_progress']        = 'Progression';
+$_['text_render']          = 'Générateurs de Site Statique';
+ 
 // Colonne
-$_['column_code']          = 'Code CRON';
-$_['column_name']          = 'Nom de l\'extension';
-$_['column_version']       = 'Version';
-$_['column_date_modified'] = 'Date d\'ajout';
+$_['column_code']          = 'Code GSS (SSR)';
+$_['column_progress']      = 'Progression';
+$_['column_sort_order']    = 'Ordre de Tri';
+$_['column_date_modified'] = 'Date de Modification';
 $_['column_action']        = 'Action';
-
-// Entrée
-$_['entry_progress']       = 'Progression';
-$_['entry_name']           = 'Nom de l\'extension';
-$_['entry_description']    = 'Description';
-$_['entry_code']           = 'Code';
 
 // Erreur
 $_['error_permission']     = 'Attention: Vous n\'avez pas la permission de modifier le générateur de site statique!';

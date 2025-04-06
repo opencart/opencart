@@ -8,6 +8,8 @@ $_['text_list']               = 'Liste des Sujets';
 $_['text_add']                = 'Ajouter un Sujet';
 $_['text_edit']               = 'Modifier le Sujet';
 $_['text_default']            = 'Par Défaut';
+$_['text_general']            = 'Général';
+$_['text_meta']               = 'Balises Meta';
 $_['text_keyword']            = 'N\'utilisez pas d\'espaces, remplacez-les par des - et assurez-vous que l\'URL SEO soit unique à l\'échelle mondiale.';
 
 // Colonne

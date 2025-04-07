@@ -5,6 +5,7 @@ $_['heading_title']           = 'SEO-URL';
 // Text
 $_['text_success']            = 'Erfolg: Sie haben die SEO-URL geändert!';
 $_['text_list']               = 'SEO-URL-Liste';
+$_['text_install']            = 'Installieren';
 $_['text_add']                = 'SEO-URL hinzufügen';
 $_['text_edit']               = 'SEO-URL bearbeiten';
 $_['text_filter']             = 'Filter';

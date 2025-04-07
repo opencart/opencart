@@ -80,3 +80,4 @@ $_['error_paypal']              = 'l\'adresse email PayPal ne semble pas valide!
 $_['error_bank_account_name']   = 'Nom du compte requis!';
 $_['error_bank_account_number'] = 'Numéro de compte requis!';
 $_['error_custom_field']        = '%s requis!';
+$_['error_regex']               = '%s n\'est pas une entrée valide!';

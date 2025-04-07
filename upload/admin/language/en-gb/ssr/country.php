@@ -2,6 +2,7 @@
 // Text
 $_['text_list']        = 'You have rendered the country list';
 $_['text_next']        = 'You have rendered %s to %s of %s countries';
+$_['text_country']     = 'Countries';
 $_['text_success']     = 'Success: You have modified countries!';
 
 // Error

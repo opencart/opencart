@@ -80,3 +80,4 @@ $_['error_permission']           = 'Attention: Vous n\'avez pas la permission de
 $_['error_subscription_status']  = 'Attention: Le statut de l\'abonnement doit être sélectionné!';
 $_['error_payment_method']       = 'Attention: La méthode de paiement n\'existe pas!';
 $_['error_subscription']         = 'Attention: L\'abonnement n\'est pas encore ajouté!';
+$_['error_api']                  = 'Attention: Vous devez entrer vos informations d\'API OpenCart!';

@@ -80,3 +80,4 @@ $_['error_permission']           = 'Warning: You do not have permission to modif
 $_['error_subscription_status']  = 'Warning: Subscription status needs to be selected!';
 $_['error_payment_method']       = 'Warning: Payment method does not exist!';
 $_['error_subscription']         = 'Warning: Subscription not yet added!';
+$_['error_api']                  = 'API Access Key required!';

@@ -124,6 +124,7 @@ $_['error_pagination']                 = 'La pagination est requise!';
 $_['error_customer_group_display']     = 'Vous devez inclure le groupe de clients par défaut si vous utilisez cette fonctionnalité!';
 $_['error_default']                    = 'Attention: Vous ne pouvez pas supprimer votre magasin par défaut!';
 $_['error_order']                      = 'Attention: Ce magasin ne peut pas être supprimée car elle est actuellement assignée à %s commandes!';
+$_['error_store'] 		               = 'Attention: Le magasin %s n\'a pu être trouvé!';
 $_['error_subscription']               = 'Attention: Ce magasin ne peut pas être supprimée car elle est actuellement assignée à %s abonnements!';
 $_['error_image_thumb']                = 'Les dimensions de l\'image miniature du produit sont requises!';
 $_['error_image_popup']                = 'Les dimensions de l\'image popup du produit sont requises!';

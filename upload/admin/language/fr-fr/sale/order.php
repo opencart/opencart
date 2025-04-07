@@ -134,3 +134,4 @@ $_['error_affiliate']            = 'Avertissement: L\'affilié n\'existe pas!';
 $_['error_reward_add']           = 'Avertissement: Les points de récompenses pour cette commande ont déjà été ajoutés!';
 $_['error_reward_guest']         = 'Avertissement: Les invités ne peuvent pas utiliser les points de récompenses!';
 $_['error_commission_add']       = 'Avertissement: La commission affiliée pour cette commande a déjà été ajoutée!';
+$_['error_api']                  = 'Attention: Vous devez entrer vos informations d\'API OpenCart!';

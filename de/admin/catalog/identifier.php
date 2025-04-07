@@ -30,4 +30,5 @@ $_['help_status']      = 'Produktkennung auf der Produktinformationsseite anzeig
 $_['error_warning']    = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission'] = 'Warnung: Sie haben keine Berechtigung zum Ändern der Identifikatoren!';
 $_['error_name']       = 'Identifikationsname muss zwischen 1 und 64 Zeichen haben!';
+$_['error_exists']     = 'Identifier does not exist!';
 $_['error_code']       = 'Identifikationscode muss zwischen 3 und 48 Zeichen haben!';

@@ -80,3 +80,4 @@ $_['error_paypal']              = 'Die PayPal-E-Mail-Adresse scheint ungültig z
 $_['error_bank_account_name']   = 'Kontoname erforderlich!';
 $_['error_bank_account_number'] = 'Kontonummer erforderlich!';
 $_['error_custom_field']        = '%s erforderlich!';
+$_['error_regex']               = '%s ist keine gültige Eingabe!';

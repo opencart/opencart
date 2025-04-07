@@ -31,6 +31,7 @@ $_['error_permission']  = 'Achtung: Sie sind nicht berechtigt, Sprachen zu ände
 $_['error_exists']      = 'Achtung: Sie haben diese Sprache bereits hinzugefügt!';
 $_['error_name']        = 'Der Sprachenname muss zwischen 1 und 32 Zeichen lang sein!';
 $_['error_code']        = 'Der Sprachcode muss zwischen 2 und 5 Zeichen lang sein!';
+$_['error_file']        = 'Datei konnte nicht gefunden werden!';
 $_['error_locale']      = 'Gebietsschema erforderlich!';
 $_['error_default']     = 'Achtung: Diese Sprache kann nicht gelöscht werden, da sie aktuell als Standard-Shopsprache zugewiesen ist!';
 $_['error_admin']       = 'Achtung: Diese Sprache kann nicht gelöscht werden, da sie aktuell als Administrationssprache zugewiesen ist!';

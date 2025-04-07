@@ -124,6 +124,7 @@ $_['error_pagination']                 = 'Pagination required!';
 $_['error_customer_group_display']     = 'You must include the default customer group if you are going to use this feature!';
 $_['error_default']                    = 'Warning: You cannot delete your default store!';
 $_['error_order']                      = 'Warning: This Store cannot be deleted as it is currently assigned to %s orders!';
+$_['error_store'] 		               = 'Warning: Store %s cannot be found!';
 $_['error_subscription']               = 'Warning: This Store cannot be deleted as it is currently assigned to %s subscriptions!';
 $_['error_image_thumb']                = 'Product Image Thumb Size dimensions required!';
 $_['error_image_popup']                = 'Product Image Popup Size dimensions required!';

@@ -166,6 +166,7 @@ $_['error_upload_8']                = 'Achtung: Datei-Upload durch Erweiterung g
 $_['error_upload_999']              = 'Achtung: Kein Fehlercode verfügbar!';
 $_['error_upload_size']             = 'Achtung: Die hochgeladene Datei überschreitet die maximale Dateigröße von %sMB!';
 $_['error_curl']                    = 'CURL: Fehlercode (%s): %s';
+$_['error_session']                 = 'Achtung: Die Sitzung ist abgelaufen. Bitte senden Sie das Formular erneut!';
 $_['error_format_b']				= 'Warnung: Die hochgeladene Datei überschreitet die maximale Dateigröße: %s Bytes!';
 $_['error_format_kb']				= 'Warnung: Die hochgeladene Datei überschreitet die maximale Dateigröße: %s Kilobyte!';
 $_['error_format_mb']				= 'Warnung: Die hochgeladene Datei überschreitet die maximale Dateigröße: %s Megabyte!';

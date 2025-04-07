@@ -137,3 +137,4 @@ $_['error_keyword']              = 'Die SEO-URL muss zwischen 1 und 64 Zeichen l
 $_['error_keyword_exists']       = 'SEO-URL muss eindeutig sein!';
 $_['error_keyword_character']    = 'Das Schlüsselwort darf nur die Zeichen az, 0-9, - und _ enthalten!';
 $_['error_required']             = '%s erforderlich!';
+$_['error_regex']                = '%s ist keine gültige Eingabe!';

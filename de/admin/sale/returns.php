@@ -58,11 +58,12 @@ $_['help_product']        = '(Autovervollständigung)';
 // Error
 $_['error_warning']       = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']    = 'Achtung: Sie sind nicht berechtigt, Rücksendungen zu ändern!';
-$_['error_order']         = 'Bestellung nicht gefunden!';
+$_['error_order_id']      = 'Bestell-ID erforderlich!';
 $_['error_customer']      = 'Kunde nicht gefunden!';
 $_['error_firstname']     = 'Der Vorname muss zwischen 1 und 32 Zeichen lang sein!';
 $_['error_lastname']      = 'Der Nachname muss zwischen 1 und 32 Zeichen lang sein!';
 $_['error_email']         = 'E-Mail-Adresse scheint nicht gültig zu sein!';
+$_['error_return']        = 'Die von Ihnen gewünschte Retoure konnte nicht gefunden werden!';
 $_['error_telephone']     = 'Die Telefonnummer muss zwischen 3 und 32 Zeichen lang sein!';
 $_['error_product']       = 'Produkt nicht gefunden!';
 $_['error_name']          = 'Der Produktname muss größer als 1 und kleiner als 255 Zeichen sein!';

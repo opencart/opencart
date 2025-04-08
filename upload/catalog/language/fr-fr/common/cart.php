@@ -10,6 +10,7 @@ $_['text_week']                  = 'semaine';
 $_['text_semi_month']            = 'demi-mois';
 $_['text_month']                 = 'mois';
 $_['text_year']                  = 'année';
+$_['text_remove']                = 'Retirer';
 $_['text_no_results']            = 'Votre panier est vide!';
 $_['text_model']                 = 'Modèle';
 $_['text_cart']                  = 'Voir le panier';

@@ -85,7 +85,7 @@ $_['entry_width']                      = 'Largeur';
 $_['entry_height']                     = 'Hauteur';
 
 // Aide
-$_['help_url']                         = 'Incluez l\'URL complète de votre magasin. Assurez-vous d\'ajouter \'/\' à la fin. Exemple: http://www.votredomaine.com/chemin/<br/><br/>N\'utilisez pas de répertoires pour créer un nouveau magasin. Vous devez toujours pointer un autre domaine ou sous-domaine vers votre hébergement.';
+$_['help_url']                         = 'Incluez l\'URL complète de votre magasin. Assurez-vous d\'ajouter \'/\' à la fin. Exemple: http://www.votredomaine.com/chemin/<br/><br/>N\'utilisez pas de dossiers pour créer un nouveau magasin. Vous devez toujours pointer un autre domaine ou sous-domaine vers votre hébergement.';
 $_['help_icon']                        = 'L\'icône devrait être sous format PNG d\'une taille de 16px par 16px.';
 $_['help_geocode']                     = 'Veuillez entrer manuellement le code géographique de l\'emplacement de votre magasin.';
 $_['help_open']                        = 'Remplissez les horaires d\'ouverture de votre magasin.';

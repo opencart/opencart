@@ -23,4 +23,4 @@ $_['text_commercial_visit']       = 'Visitez notre page partenaire';
 $_['button_mail']                 = 'Rejoignez ici';
 
 // Erreur
-$_['error_warning']               = 'N\'oubliez pas de supprimer votre répertoire d\'installation !';
+$_['error_warning']               = 'N\'oubliez pas de supprimer votre dossier d\'installation !';

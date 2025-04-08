@@ -6,5 +6,5 @@ $_['text_success']     = 'Succès: Vous avez modifié les articles!';
 
 // Erreur
 $_['error_permission'] = 'Attention: Vous n\'avez pas la permission de modifier les articles!';
-$_['error_directory']  = 'Attention: Le répertoire n\'existe pas!';
+$_['error_directory']  = 'Attention: Le dossier n\'existe pas!';
 $_['error_file']       = 'Le fichier est introuvable!';

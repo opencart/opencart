@@ -25,7 +25,7 @@ $_['entry_filename']           = 'Nom du Fichier';
 $_['entry_mask']               = 'Masque';
 
 // Aide
-$_['help_filename']            = 'Vous pouvez télécharger via le bouton de téléchargement ou utiliser FTP pour télécharger dans le répertoire des téléchargements et entrer les détails ci-dessous.';
+$_['help_filename']            = 'Vous pouvez télécharger via le bouton de téléchargement ou utiliser FTP pour télécharger dans le dossier des téléchargements et entrer les détails ci-dessous.';
 $_['help_mask']                = 'Il est recommandé que le nom du fichier et le masque soient différents pour empêcher les utilisateurs d\'essayer de lier directement vos téléchargements.';
 
 // Erreur
@@ -34,7 +34,7 @@ $_['error_permission']         = 'Attention: Vous n\'avez pas la permission de m
 $_['error_name']               = 'Le nom du téléchargement doit contenir entre 3 et 64 caractères!';
 $_['error_filename']           = 'Le nom du fichier doit contenir entre 3 et 128 caractères!';
 $_['error_filename_character'] = 'Le nom du fichier ne peut utiliser que les caractères a-z, 0-9, - et _ !';
-$_['error_directory']          = 'Les téléchargements doivent être dans le répertoire storage/download!';
+$_['error_directory']          = 'Les téléchargements doivent être dans le dossier storage/download!';
 $_['error_exists']             = 'Le fichier n\'existe pas!';
 $_['error_upload']             = 'Le fichier n\'a pu être téléchargé!';
 $_['error_headers_sent']       = 'Erreur: Les en-têtes ont déjà été envoyés!';

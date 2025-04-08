@@ -9,7 +9,7 @@ $_['text_restore']       = 'Restauration %s sur %s';
 $_['text_option']        = 'Options de sauvegarde';
 $_['text_history']       = 'Historique des sauvegardes';
 $_['text_progress']      = 'Progression';
-$_['text_import']        = 'Pour les fichiers de sauvegarde volumineux, il est préférable de télécharger le fichier SQL via FTP dans le répertoire <strong>~/storage/backup/</strong>.';
+$_['text_import']        = 'Pour les fichiers de sauvegarde volumineux, il est préférable de télécharger le fichier SQL via FTP dans le dossier <strong>~/storage/backup/</strong>.';
 
 // Colonne
 $_['column_filename']    = 'Nom du fichier';
@@ -26,7 +26,7 @@ $_['error_permission']   = 'Attention: Vous n\'avez pas la permission de modifie
 $_['error_export']       = 'Attention: Vous devez sélectionner au moins une table à exporter!';
 $_['error_table']        = 'La table %s n\'est pas dans la liste autorisée!';
 $_['error_file']         = 'Le fichier est introuvable!';
-$_['error_directory']    = 'Le répertoire est introuvable!';
+$_['error_directory']    = 'Le dossier est introuvable!';
 $_['error_not_found']    = 'Erreur: Impossible de trouver le fichier %s!';
 $_['error_headers_sent'] = 'Erreur: Les en-têtes ont déjà été envoyés!';
 $_['error_upload_size']  = 'Le fichier téléchargé ne peut pas dépasser %s!';

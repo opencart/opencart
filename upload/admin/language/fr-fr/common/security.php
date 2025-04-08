@@ -3,7 +3,7 @@
 $_['heading_title']                   = 'Notification de Sécurité Importante!';
 
 // Texte
-$_['text_install']                    = 'Répertoire d\'installation';
+$_['text_install']                    = 'Dossier d\'installation';
 $_['text_install_description']        = 'Votre dossier d\'installation doit être supprimé!';
 $_['text_install_success']            = 'Succès: Le dossier d\'installation a été supprimé!';
 $_['text_storage']                    = 'Chemin de stockage';
@@ -26,7 +26,7 @@ $_['text_path']                       = 'Chemin';
 $_['entry_path']                      = 'Chemin';
 $_['entry_path_current']              = 'Chemin Actuel';
 $_['entry_path_new']                  = 'Nouveau Chemin';
-$_['entry_name']                      = 'Nom du Répertoire';
+$_['entry_name']                      = 'Nom du Dossier';
 
 // Bouton
 $_['button_move']                     = 'Déplacer';

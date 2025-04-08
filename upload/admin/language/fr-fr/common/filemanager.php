@@ -4,12 +4,12 @@ $_['heading_title']    = 'Gestionnaire d\'Images';
 
 // Texte
 $_['text_uploaded']    = 'Succès: Votre fichier a été téléversé!';
-$_['text_directory']   = 'Succès: Répertoire créé!';
+$_['text_directory']   = 'Succès: Dossier créé!';
 $_['text_delete']      = 'Succès: Votre fichier ou dossier a été supprimé!';
 
 // Entrée
 $_['entry_search']     = 'Rechercher..';
-$_['entry_folder']     = 'Nom du Répertoire';
+$_['entry_folder']     = 'Nom du Dossier';
 
 // Erreur
 $_['error_permission'] = 'Attention: Permission refusée!';

@@ -117,12 +117,6 @@ $_['entry_subscription']         = 'Plan d\'Abonnement';
 
 // Aide
 $_['help_tag']                   = 'Séparés par des virgules';
-$_['help_sku']                   = 'Unité de Gestion des Stocks';
-$_['help_upc']                   = 'Code Universel des Produits';
-$_['help_ean']                   = 'Numéro Européen d\'Article';
-$_['help_jan']                   = 'Numéro Japonais d\'Article';
-$_['help_isbn']                  = 'Numéro Standard International des Livres';
-$_['help_mpn']                   = 'Numéro de Pièce du Fabricant';
 $_['help_minimum']               = 'Forcer une quantité minimum commandée';
 $_['help_stock_status']          = 'Statut affiché lorsqu\'un produit est en rupture de stock';
 $_['help_manufacturer']          = '(Autocomplétion)';

@@ -42,6 +42,7 @@ $_['entry_telephone']      = 'Téléphone';
 $_['entry_product']        = 'Produit';
 $_['entry_model']          = 'Modèle';
 $_['entry_quantity']       = 'Quantité';
+$_['entry_status']         = 'Statut';
 $_['entry_opened']         = 'Ouvert';
 $_['entry_comment']        = 'Commentaire';
 $_['entry_return_reason']  = 'Raison du Retour';

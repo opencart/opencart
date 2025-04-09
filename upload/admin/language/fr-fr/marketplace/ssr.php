@@ -8,6 +8,9 @@ $_['text_list']            = 'Liste GSS (SSR)';
 $_['text_ssr']             = 'Le Générateur de Site Statique permet de pré-afficher les modèles et les données statiques. En cas de problème, vous pouvez activer ou désactiver le rendu de site statique ici.';
 $_['text_progress']        = 'Progression';
 $_['text_render']          = 'Générateurs de Site Statique';
+
+// Entry
+$_['entry_progress']       = 'Progression';
  
 // Colonne
 $_['column_code']          = 'Code GSS (SSR)';

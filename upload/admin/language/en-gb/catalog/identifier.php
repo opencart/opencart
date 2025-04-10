@@ -30,4 +30,5 @@ $_['help_status']      = 'Display product identifier on product info page';
 $_['error_warning']    = 'Warning: Please check the form carefully for errors!';
 $_['error_permission'] = 'Warning: You do not have permission to modify identifiers!';
 $_['error_name']       = 'Identifier Name must be between 1 and 64 characters!';
+$_['error_exists']     = 'Identifier does not exist!';
 $_['error_code']       = 'Identifier Code must be between 3 and 48 characters!';

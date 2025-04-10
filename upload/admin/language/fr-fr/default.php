@@ -166,6 +166,7 @@ $_['error_upload_8']                = 'Avertissement: Téléversement de fichier
 $_['error_upload_999']              = 'Avertissement: Aucun code d\'erreur disponible!';
 $_['error_upload_size']             = 'Avertissement: Le fichier téléversé dépasse la taille maximale autorisée de %s Mo!';
 $_['error_curl']                    = 'CURL: Code d\'Erreur(%s): %s';
+$_['error_session']                 = 'Attention: La session a expirée, veuillez soumettre à nouveau le formulaire!';
 $_['error_format_b']                = 'Avertissement: Le fichier téléversé dépasse la taille maximale: %s octets!';
 $_['error_format_kb']               = 'Avertissement: Le fichier téléversé dépasse la taille maximale: %s kilooctets!';
 $_['error_format_mb']               = 'Avertissement: Le fichier téléversé dépasse la taille maximale: %s mégaoctets!';

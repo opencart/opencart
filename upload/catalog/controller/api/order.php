@@ -687,7 +687,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'order_status_id' => 0,
 			'comment'         => '',
 			'notify'          => 0,
-			'override'        => 0,
+			'override'        => 0
 		];
 
 		$post_info = $this->request->post + $required;

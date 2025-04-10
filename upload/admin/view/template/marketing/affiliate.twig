@@ -66,7 +66,7 @@
                 </select>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -89,60 +89,12 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
-    url = '';
+$('#form-filter').on('submit', function() {
+    let url = $(this).serialize();
 
-    var filter_customer = $('#input-customer').val();
+    window.history.pushState({}, null, 'index.php?route=marketing/affiliate&user_token={{ user_token }}&' + url);
 
-    if (filter_customer) {
-        url += '&filter_customer=' + encodeURIComponent(filter_customer);
-    }
-
-    var filter_tracking = $('#input-tracking').val();
-
-    if (filter_tracking) {
-        url += '&filter_tracking=' + encodeURIComponent(filter_tracking);
-    }
-
-    var filter_payment_method = $('#input-payment-method').val();
-
-    if (filter_payment_method) {
-        url += '&filter_payment_method=' + filter_payment_method;
-    }
-
-    var filter_commission = $('#input-commission').val();
-
-    if (filter_commission) {
-        url += '&filter_commission=' + filter_commission;
-    }
-
-    var filter_date_from = $('#input-date-from').val();
-
-    if (filter_date_from) {
-        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
-    }
-
-    var filter_date_to = $('#input-date-to').val();
-
-    if (filter_date_to) {
-        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
-    }
-
-    var filter_status = $('#input-status').val();
-
-    if (filter_status !== '') {
-        url += '&filter_status=' + filter_status;
-    }
-
-    var limit = $('#input-limit').val();
-
-    if (limit) {
-        url += '&limit=' + limit;
-    }
-
-    window.history.pushState({}, null, 'index.php?route=marketing/affiliate&user_token={{ user_token }}' + url);
-
-    $('#list').load('index.php?route=marketing/affiliate.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=marketing/affiliate.list&user_token={{ user_token }}&' + url);
 });
 
 $('#input-customer').autocomplete({

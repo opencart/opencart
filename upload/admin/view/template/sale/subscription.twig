@@ -52,7 +52,7 @@
                 <input type="date" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -75,48 +75,14 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
-    url = '';
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
 
-    var filter_subscription_id = $('#input-subscription-id').val();
+    let url = $(this).serialize();
 
-    if (filter_subscription_id) {
-        url += '&filter_subscription_id=' + filter_subscription_id;
-    }
+    window.history.pushState({}, null, 'index.php?route=sale/subscription&user_token={{ user_token }}&' + url);
 
-    var filter_order_id = $('#input-order-id').val();
-
-    if (filter_order_id) {
-        url += '&filter_order_id=' + filter_order_id;
-    }
-
-    var filter_customer = $('#input-customer').val();
-
-    if (filter_customer) {
-        url += '&filter_customer=' + encodeURIComponent(filter_customer);
-    }
-
-    var filter_subscription_status_id = $('#input-subscription-status').val();
-
-    if (filter_subscription_status_id !== '') {
-        url += '&filter_subscription_status_id=' + filter_subscription_status_id;
-    }
-
-    var filter_date_from = $('#input-date-from').val();
-
-    if (filter_date_from) {
-        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
-    }
-
-    var filter_date_to = $('#input-date-to').val();
-
-    if (filter_date_to) {
-        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
-    }
-
-    window.history.pushState({}, null, 'index.php?route=sale/subscription&user_token={{ user_token }}' + url);
-
-    $('#list').load('index.php?route=sale/subscription.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=sale/subscription.list&user_token={{ user_token }}&' + url);
 });
 
 $('#input-customer').autocomplete({

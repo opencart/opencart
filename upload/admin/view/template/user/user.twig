@@ -53,7 +53,7 @@
                 <label for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -76,48 +76,14 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
-    url = '';
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
 
-    var filter_username = $('#input-username').val();
+    let url = $(this).serialize();
 
-    if (filter_username) {
-        url += '&filter_username=' + encodeURIComponent(filter_username);
-    }
+    window.history.pushState({}, null, 'index.php?route=user/user&user_token={{ user_token }}&' + url);
 
-    var filter_name = $('#input-name').val();
-
-    if (filter_name) {
-        url += '&filter_name=' + encodeURIComponent(filter_name);
-    }
-
-    var filter_email = $('#input-email').val();
-
-    if (filter_email) {
-        url += '&filter_email=' + encodeURIComponent(filter_email);
-    }
-
-    var filter_user_group_id = $('#input-user-group').val();
-
-    if (filter_user_group_id !== '') {
-        url += '&filter_user_group_id=' + filter_user_group_id;
-    }
-
-    var filter_status = $('#input-status').val();
-
-    if (filter_status !== '') {
-        url += '&filter_status=' + filter_status;
-    }
-
-    var filter_ip = $('#input-ip').val();
-
-    if (filter_ip) {
-        url += '&filter_ip=' + encodeURIComponent(filter_ip);
-    }
-
-    window.history.pushState({}, null, 'index.php?route=user/user&user_token={{ user_token }}' + url);
-
-    $('#list').load('index.php?route=user/user.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=user/user.list&user_token={{ user_token }}&' + url);
 });
 
 $('#input-username').autocomplete({

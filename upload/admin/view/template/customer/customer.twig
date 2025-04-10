@@ -80,54 +80,12 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
-    url = '';
+$('#form-filter').on('submit', function() {
+    let url = $(this).serialize();
 
-    var filter_name = $('#input-name').val();
+    window.history.pushState({}, null, 'index.php?route=customer/customer&user_token={{ user_token }}&' + url);
 
-    if (filter_name) {
-        url += '&filter_name=' + encodeURIComponent(filter_name);
-    }
-
-    var filter_email = $('#input-email').val();
-
-    if (filter_email) {
-        url += '&filter_email=' + encodeURIComponent(filter_email);
-    }
-
-    var filter_customer_group_id = $('#input-customer-group').val();
-
-    if (filter_customer_group_id !== '') {
-        url += '&filter_customer_group_id=' + filter_customer_group_id;
-    }
-
-    var filter_status = $('#input-status').val();
-
-    if (filter_status !== '') {
-        url += '&filter_status=' + filter_status;
-    }
-
-    var filter_ip = $('#input-ip').val();
-
-    if (filter_ip) {
-        url += '&filter_ip=' + encodeURIComponent(filter_ip);
-    }
-
-    var filter_date_from = $('#input-date-from').val();
-
-    if (filter_date_from) {
-        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
-    }
-
-    var filter_date_to = $('#input-date-to').val();
-
-    if (filter_date_to) {
-        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
-    }
-
-    window.history.pushState({}, null, 'index.php?route=customer/customer&user_token={{ user_token }}' + url);
-
-    $('#list').load('index.php?route=customer/customer.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=customer/customer.list&user_token={{ user_token }}&' + url);
 });
 
 $('#input-name').autocomplete({

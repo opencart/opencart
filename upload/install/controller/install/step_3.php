@@ -143,7 +143,6 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Install
 			$this->load->model('install/install');
 
 			$this->model_install_install->database($this->request->post);

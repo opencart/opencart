@@ -542,7 +542,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Categories
 			$this->load->model('catalog/category');
 
 			$this->model_catalog_category->repairCategories();
@@ -575,7 +574,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Category
 			$this->load->model('catalog/category');
 
 			foreach ($selected as $category_id) {
@@ -610,7 +608,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Modification
 			$this->load->model('catalog/category');
 
 			$this->model_setting_modification->editStatus($category_id, true);

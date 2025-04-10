@@ -159,7 +159,6 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer Group
 			if ($post_info['customer_group_id']) {
 				$customer_group_id = (int)$post_info['customer_group_id'];
 			} else {

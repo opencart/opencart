@@ -61,7 +61,6 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('report_product_viewed', $this->request->post);
@@ -215,7 +214,6 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('extension/opencart/report/product_viewed');
 
 			if ($page == 1) {

@@ -281,7 +281,6 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Length Class
 			$this->load->model('localisation/length_class');
 
 			if (!$post_info['length_class_id']) {
@@ -334,7 +333,6 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Length Class
 			$this->load->model('localisation/length_class');
 
 			foreach ($selected as $length_class_id) {

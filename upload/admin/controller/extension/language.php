@@ -105,7 +105,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('language', $extension, $code);
@@ -170,7 +169,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('language', $this->request->get['code']);

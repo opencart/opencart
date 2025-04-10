@@ -363,7 +363,6 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Option
 			$this->load->model('catalog/option');
 
 			if (!$post_info['option_id']) {
@@ -412,7 +411,6 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Option
 			$this->load->model('catalog/option');
 
 			foreach ($selected as $option_id) {

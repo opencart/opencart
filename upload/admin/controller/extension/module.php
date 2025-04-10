@@ -144,12 +144,10 @@ class Module extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('module', $extension, $code);
 
-			// User Group
 			$this->load->model('user/user_group');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/module/' . $code);
@@ -196,7 +194,6 @@ class Module extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('module', $this->request->get['code']);
@@ -232,7 +229,6 @@ class Module extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->language('extension/' . $this->request->get['extension'] . '/module/' . $this->request->get['code'], 'extension');
 
-			// Extension
 			$this->load->model('setting/module');
 
 			$this->model_setting_module->addModule($this->request->get['extension'] . '.' . $this->request->get['code'], ['name' => $this->language->get('extension_heading_title')]);
@@ -265,7 +261,6 @@ class Module extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/module');
 
 			$this->model_setting_module->deleteModule($module_id);

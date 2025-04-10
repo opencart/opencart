@@ -134,7 +134,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			$this->model_setting_event->editStatus($event_id, true);
@@ -167,7 +166,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			$this->model_setting_event->editStatus($event_id, false);
@@ -200,7 +198,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			foreach ($selected as $event_id) {

@@ -370,7 +370,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Theme
 			$this->load->model('design/theme');
 
 			if (!$post_info['theme_id']) {
@@ -412,7 +411,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Theme
 			$this->load->model('design/theme');
 
 			foreach ($selected as $theme_id) {

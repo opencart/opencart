@@ -99,7 +99,6 @@ class Tracking extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Products
 			$filter_data = [
 				'filter_search' => $search,
 				'start'         => 0,

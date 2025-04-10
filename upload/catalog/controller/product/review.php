@@ -199,7 +199,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Review
 			$this->load->model('catalog/review');
 
 			$this->model_catalog_review->addReview($product_id, $this->request->post);

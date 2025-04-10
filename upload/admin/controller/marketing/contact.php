@@ -87,7 +87,6 @@ class Contact extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Setting
 			$this->load->model('setting/store');
 
 			$this->load->model('setting/setting');

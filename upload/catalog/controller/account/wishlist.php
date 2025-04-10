@@ -234,7 +234,6 @@ class WishList extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Wishlist
 			$this->load->model('account/wishlist');
 
 			$this->model_account_wishlist->deleteWishlist($this->customer->getId(), $product_id);

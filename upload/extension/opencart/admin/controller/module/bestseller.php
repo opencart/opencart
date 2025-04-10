@@ -144,7 +144,6 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/module');
 
 			if (!$post_info['module_id']) {
@@ -279,13 +278,10 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Bestseller
 			$this->load->model('extension/opencart/module/bestseller');
 
-			// Product
 			$this->load->model('catalog/product');
 
-			// Order
 			$this->load->model('sale/order');
 
 			$total = $this->model_catalog_product->getTotalProducts();

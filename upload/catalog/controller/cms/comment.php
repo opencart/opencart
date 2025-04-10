@@ -359,7 +359,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Anti-Spam
 			$this->load->model('cms/antispam');
 
 			$spam = $this->model_cms_antispam->getSpam($post_info['comment']);

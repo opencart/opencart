@@ -306,7 +306,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Tax Rate
 			$this->load->model('localisation/tax_rate');
 
 			if (!$post_info['tax_rate_id']) {
@@ -355,7 +354,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Tax Rate
 			$this->load->model('localisation/tax_rate');
 
 			foreach ($selected as $tax_rate_id) {

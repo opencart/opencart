@@ -74,7 +74,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('fraud_ip', $this->request->post);
@@ -192,7 +191,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('extension/opencart/fraud/ip');
 
 			if (!$this->model_extension_opencart_fraud_ip->getTotalIpsByIp($ip)) {
@@ -221,7 +219,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('extension/opencart/fraud/ip');
 
 			$this->model_extension_opencart_fraud_ip->removeIp($this->request->post['ip']);

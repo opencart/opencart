@@ -105,7 +105,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extensions
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('currency', $extension, $code);
@@ -157,7 +156,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('currency', $this->request->get['code']);

@@ -439,7 +439,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription
 			$this->load->model('account/subscription');
 
 			$subscription_info = $this->model_account_subscription->getSubscription($subscription_id);
@@ -460,7 +459,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription
 			$this->load->model('checkout/subscription');
 
 			$this->model_checkout_subscription->addHistory($subscription_id, (int)$this->config->get('config_subscription_canceled_status_id'));

@@ -99,7 +99,6 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('payment_bank_transfer', $this->request->post);

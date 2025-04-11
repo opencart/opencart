@@ -9,7 +9,7 @@ $_['text_ssr']             = 'Le Générateur de Site Statique permet de pré-af
 $_['text_progress']        = 'Progression';
 $_['text_render']          = 'Générateurs de Site Statique';
 
-// Entry
+// Entrée
 $_['entry_progress']       = 'Progression';
  
 // Colonne

@@ -316,7 +316,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Banner
 			$this->load->model('design/banner');
 
 			if (!$post_info['banner_id']) {
@@ -353,7 +352,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Banner
 			$this->load->model('design/banner');
 
 			foreach ($selected as $banner_id) {

@@ -832,7 +832,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Affiliate
 			$this->load->model('marketing/affiliate');
 
 			foreach ($selected as $affiliate_id) {
@@ -861,10 +860,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Affiliate
 			$this->load->model('marketing/affiliate');
 
-			// Customer
 			$this->load->model('customer/customer');
 
 			$results = $this->model_marketing_affiliate->getAffiliates(['filter_status' => 1]);
@@ -959,10 +956,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Affiliate
 			$this->load->model('marketing/affiliate');
 
-			// Customer
 			$this->load->model('customer/customer');
 
 			foreach ($selected as $customer_id) {

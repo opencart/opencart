@@ -35,4 +35,4 @@ $_['error_minimum']              = 'Le montant minimum de commande pour %s est d
 $_['error_required']             = '%s requis!';
 $_['error_regex']                = '%s n\'est pas une entrée valide!';
 $_['error_product']              = 'Attention: Le produit est introuvable!';
-$_['error_subscription']         = 'Veuillez sélectionner un plan d\'abonnement!';
+$_['error_subscription']         = 'Veuillez svp sélectionner un plan d\'abonnement!';

@@ -207,7 +207,6 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Address Format
 			$this->load->model('localisation/address_format');
 
 			if (!$post_info['address_format_id']) {
@@ -260,7 +259,6 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Address Format
 			$this->load->model('localisation/address_format');
 
 			foreach ($selected as $address_format_id) {

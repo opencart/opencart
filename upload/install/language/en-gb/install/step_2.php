@@ -26,6 +26,7 @@ $_['text_zip']               = 'ZIP';
 $_['text_mbstring']          = 'mbstring';
 $_['text_on']                = 'On';
 $_['text_off']               = 'Off';
+$_['text_directory']         = 'Directories';
 $_['text_file']              = 'Files';
 $_['text_status']            = 'Status';
 $_['text_writable']          = 'Writable';

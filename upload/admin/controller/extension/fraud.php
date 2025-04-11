@@ -105,12 +105,10 @@ class Fraud extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('fraud', $extension, $code);
 
-			// User Group
 			$this->load->model('user/user_group');
 
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/fraud/' . $code);
@@ -157,7 +155,6 @@ class Fraud extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('fraud', $this->request->get['code']);

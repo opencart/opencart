@@ -261,7 +261,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Return Reason
 			$this->load->model('localisation/return_reason');
 
 			if (!$post_info['return_reason_id']) {
@@ -310,7 +309,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Return Reason
 			$this->load->model('localisation/return_reason');
 
 			foreach ($selected as $return_reason_id) {

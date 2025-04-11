@@ -174,7 +174,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/module');
 
 			if (!$post_info['module_id']) {

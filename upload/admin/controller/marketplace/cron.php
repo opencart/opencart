@@ -141,7 +141,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Cron
 			$this->load->model('setting/cron');
 
 			$cron_info = $this->model_setting_cron->getCron($cron_id);
@@ -187,7 +186,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Cron
 			$this->load->model('setting/cron');
 
 			$this->model_setting_cron->editStatus($cron_id, true);
@@ -220,7 +218,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Cron
 			$this->load->model('setting/cron');
 
 			$this->model_setting_cron->editStatus($cron_id, false);
@@ -253,7 +250,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/cron');
 
 			foreach ($selected as $cron_id) {

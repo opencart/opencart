@@ -15,6 +15,7 @@ $_['text_yes']              = 'Oui';
 $_['text_no']               = 'Non';
 $_['text_none']             = ' --- Aucun --- ';
 $_['text_select']           = ' --- Veuillez sélectionner --- ';
+$_['text_all']              = 'Tous';
 $_['text_all_zones']        = 'Toutes les zones';
 $_['text_pagination']       = 'Affichage de %d à %d sur %d (%d Pages)';
 $_['text_loading']          = 'Chargement...';

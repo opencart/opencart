@@ -266,7 +266,6 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription Status
 			$this->load->model('localisation/subscription_status');
 
 			if (!$post_info['subscription_status_id']) {
@@ -329,7 +328,6 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription Status
 			$this->load->model('localisation/subscription_status');
 
 			foreach ($selected as $subscription_status_id) {

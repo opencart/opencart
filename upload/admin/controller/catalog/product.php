@@ -1323,7 +1323,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Product
 			$this->load->model('catalog/product');
 
 			foreach ($selected as $product_id) {
@@ -1358,7 +1357,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Product
 			$this->load->model('catalog/product');
 
 			foreach ($selected as $product_id) {

@@ -106,7 +106,6 @@ class Captcha extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->install('captcha', $extension, $code);
@@ -158,7 +157,6 @@ class Captcha extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('setting/extension');
 
 			$this->model_setting_extension->uninstall('captcha', $this->request->get['code']);

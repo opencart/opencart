@@ -415,7 +415,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Return
 			$this->load->model('account/returns');
 
 			$this->model_account_returns->addReturn($post_info);

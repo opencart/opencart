@@ -134,7 +134,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Startup
 			$this->load->model('setting/startup');
 
 			$this->model_setting_startup->editStatus($startup_id, true);
@@ -167,7 +166,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Startup
 			$this->load->model('setting/startup');
 
 			$this->model_setting_startup->editStatus($startup_id, false);
@@ -200,7 +198,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Startup
 			$this->load->model('setting/startup');
 
 			foreach ($selected as $startup_id) {

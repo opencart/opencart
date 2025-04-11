@@ -638,7 +638,6 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// User
 			$this->load->model('user/user');
 
 			foreach ($selected as $user_id) {

@@ -222,7 +222,6 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer Approval
 			$this->load->model('customer/customer_approval');
 
 			$approvals = [];
@@ -271,7 +270,6 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer Approval
 			$this->load->model('customer/customer_approval');
 
 			$denials = [];

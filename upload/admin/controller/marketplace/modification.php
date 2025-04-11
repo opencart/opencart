@@ -612,7 +612,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Modification
 			$this->load->model('setting/modification');
 
 			$this->model_setting_modification->editStatus($modification_id, true);
@@ -645,7 +644,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Modification
 			$this->load->model('setting/modification');
 
 			$this->model_setting_modification->editStatus($modification_id, false);
@@ -678,7 +676,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Modification
 			$this->load->model('setting/modification');
 
 			foreach ($selected as $modification_id) {

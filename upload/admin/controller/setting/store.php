@@ -755,10 +755,8 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Setting
 			$this->load->model('setting/setting');
 
-			// Setting
 			$this->load->model('setting/store');
 
 			if (!$this->request->post['store_id']) {
@@ -825,7 +823,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Setting
 			$this->load->model('setting/store');
 
 			$this->load->model('setting/setting');

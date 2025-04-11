@@ -295,7 +295,6 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer
 			$this->load->model('customer/customer');
 
 			if (!$post_info['address_id']) {

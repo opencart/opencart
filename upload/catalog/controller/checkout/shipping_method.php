@@ -60,7 +60,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Shipping Methods
 			$this->load->model('checkout/shipping_method');
 
 			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);

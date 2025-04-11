@@ -61,7 +61,6 @@ class SubTotal extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Setting
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('total_sub_total', $this->request->post);

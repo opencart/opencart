@@ -283,7 +283,6 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Filter Group
 			$this->load->model('catalog/filter_group');
 
 			if (!$post_info['filter_group_id']) {
@@ -332,7 +331,6 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Filter Group
 			$this->load->model('catalog/filter_group');
 
 			foreach ($selected as $filter_group_id) {

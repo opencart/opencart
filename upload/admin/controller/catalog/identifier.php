@@ -263,7 +263,6 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Identifier
 			$this->load->model('catalog/identifier');
 
 			foreach ($selected as $identifier_id) {

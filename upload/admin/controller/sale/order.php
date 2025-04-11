@@ -1312,7 +1312,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Order
 			$this->load->model('sale/order');
 
 			foreach ($selected as $order_id) {
@@ -1860,7 +1859,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['success'] = $this->language->get('text_success');
 
-			// Order
 			$this->load->model('sale/order');
 
 			$json['invoice_no'] = $this->model_sale_order->createInvoiceNo($order_id);
@@ -1953,7 +1951,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->deleteRewardsByOrderId($order_id);
@@ -2050,7 +2047,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->deleteTransactionsByOrderId($order_id);

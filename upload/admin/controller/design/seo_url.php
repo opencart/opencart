@@ -548,7 +548,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// SEO
 			if (!$post_info['seo_url_id']) {
 				$json['seo_url_id'] = $this->model_design_seo_url->addSeoUrl($post_info['key'], $post_info['value'], $post_info['keyword'], $post_info['store_id'], $post_info['language_id'], (int)$post_info['sort_order']);
 			} else {
@@ -583,7 +582,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// SEO
 			$this->load->model('design/seo_url');
 
 			foreach ($selected as $seo_url_id) {
@@ -612,7 +610,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// SEO
 			$data['seo_urls'] = [];
 
 			$filter_data = [

@@ -71,7 +71,6 @@ class Newsletter extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Customer
 			$this->load->model('account/customer');
 
 			$this->model_account_customer->editNewsletter($this->customer->getId(), !empty($this->request->post['newsletter']));

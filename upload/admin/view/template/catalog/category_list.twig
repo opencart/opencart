@@ -18,7 +18,7 @@
               <td class="text-center"><img src="{{ category.image }}" alt="{{ category.name }}" class="img-thumbnail"/></td>
               <td>{{ category.name }}</td>
               <td class="text-end">{{ category.sort_order }}</td>
-              <td class="text-end"><a href="{{ category.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary% if not category.status %} opacity-25"{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end"><a href="{{ category.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary% if not category.status %} opacity-25{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

@@ -69,11 +69,19 @@
             </div>
           </div>
           <div class="col-md-4 col-lg-3">
+
             <div id="buy" class="card mb-3">
               <div class="card-body">
+
+
                 {% if license == '1' and not purchased %}
-                  <button type="button" id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
+                  <div class="d-grid">
+                    <button type="button" id="button-buy" class="btn btn-success btn-lg">{{ button_purchase }}</button>
+                  </div>
                 {% endif %}
+
+
+
                 <div id="price" class="row">
                   <div class="col-lg-5"><strong>{{ text_price }}</strong></div>
                   <div class="col-lg-7 text-end">{% if license %}
@@ -118,12 +126,15 @@
                 </div>
               </div>
             </div>
+
             <div id="sales" class="card mb-3">
               <div class="card-body"><i class="fa-solid fa-shopping-cart"></i> <strong>{{ sales }}</strong> {{ text_sales }}</div>
             </div>
+
             <div id="sales" class="card mb-3">
               <div class="card-body"><i class="fa-solid fa-download"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
             </div>
+
             <div class="card mb-3">
               <div class="card-body">
                 <div class="media">
@@ -134,7 +145,10 @@
                   </div>
                 </div>
                 <br/>
-                <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">{{ button_view_all }}</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-outline-secondary btn-lg btn-block">{{ button_support }}</a>
+                <div class="d-grid">
+                  <a href="{{ filter_member }}" class="btn btn-primary btn-lg mb-1">{{ button_view_all }}</a>
+                  <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-outline-secondary btn-lg">{{ button_support }}</a>
+                </div>
               </div>
             </div>
           </div>
@@ -349,7 +363,7 @@ $('#button-comment').on('click', function() {
 });
 
 // Next replies
-$('#comment').on('click', '.btn-block', function(e) {
+$('#comment').on('click', '.btn-outline-secondary', function(e) {
     e.preventDefault();
 
     var element = this;

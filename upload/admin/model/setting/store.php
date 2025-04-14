@@ -35,6 +35,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		// Layout Route
 		$this->load->model('design/layout');
+
 		$results = $this->model_design_layout->getRoutesByStoreId(0);
 
 		foreach ($results as $result) {
@@ -304,7 +305,7 @@ class Store extends \Opencart\System\Engine\Model {
 		}
 
 		// Language
-		$language = new \Opencart\System\Library\Language($request->get['language']);
+		$language = new \Opencart\System\Library\Language($language);
 		$language->addPath(DIR_CATALOG . 'language/');
 		$language->load('default');
 		$registry->set('language', $language);
@@ -314,6 +315,11 @@ class Store extends \Opencart\System\Engine\Model {
 
 		// Document
 		$registry->set('document', new \Opencart\System\Library\Document());
+
+		// Language
+
+		// Currency
+		$session->data['currency'] = $currency;
 
 		// Run pre actions to load key settings and classes.
 		$pre_actions = [

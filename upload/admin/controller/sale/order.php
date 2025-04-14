@@ -1254,11 +1254,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $currency);
 
-			// Set the store ID.
-			$store->config->set('config_store_id', $store_id);
-
-			$store->session->data['currency'] = $currency;
-
 			// 2. Remove the unneeded keys.
 			$request_data = $this->request->get;
 
@@ -1266,6 +1261,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// 3. Add the request GET vars.
 			$store->request->get = $request_data;
+
+			print_r($store->request->get);
 
 			$store->request->get['route'] = 'api/order';
 

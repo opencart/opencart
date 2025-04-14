@@ -17,13 +17,28 @@ class XCountry extends WebComponent {
 
     event = {
         connected: async () => {
+
+            console.log(this);
+            console.log(this.__proto__);
+            console.log(this.dataset);
+            console.log(this.attributes);
+
+
+
             // Add the data attributes to the data object
             this.data.id = this.getAttribute('data-id');
             this.data.name = this.getAttribute('data-name');
-            this.data.value = this.getAttribute('data-value');
+            this.data.value = this.getAttribute('data-oc-value');
+            this.data.language = this.getAttribute('data-oc-language');
+
+            this.data.target = this.getAttribute('data-oc-target');
+
+
+
+
 
             // Add countries to the data object
-            this.data.countries = await (await fetch('./data/country.json')).json();
+            this.data.countries = await (await fetch('./data/country.' + this.data.language + '.json')).json();
 
             this.addStylesheet('bootstrap.css');
             this.addStylesheet('fontawesome.css');

@@ -228,32 +228,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 		}
 
-		$find = [
-			'{firstname}',
-			'{lastname}',
-			'{company}',
-			'{address_1}',
-			'{address_2}',
-			'{city}',
-			'{postcode}',
-			'{zone}',
-			'{zone_code}',
-			'{country}'
-		];
-
-		$replace = [
-			'firstname' => $order_info['shipping_firstname'],
-			'lastname'  => $order_info['shipping_lastname'],
-			'company'   => $order_info['shipping_company'],
-			'address_1' => $order_info['shipping_address_1'],
-			'address_2' => $order_info['shipping_address_2'],
-			'city'      => $order_info['shipping_city'],
-			'postcode'  => $order_info['shipping_postcode'],
-			'zone'      => $order_info['shipping_zone'],
-			'zone_code' => $order_info['shipping_zone_code'],
-			'country'   => $order_info['shipping_country']
-		];
-
 		$data['shipping_address'] = str_replace($pattern_1, '<br/>', preg_replace($pattern_2, '<br/>', trim(str_replace($find, $replace, $format))));
 
 		// Upload

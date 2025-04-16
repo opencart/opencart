@@ -30,7 +30,7 @@ class Header extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['lang'] = $this->language->get('code');
+		$data['lang'] = $this->config->get('config_language');
 		$data['direction'] = $this->language->get('direction');
 
 		$data['title'] = $this->document->getTitle();

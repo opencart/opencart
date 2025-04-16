@@ -1,7 +1,6 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XCountry extends WebComponent {
-    data = {};
     event = {
         connected: async () => {
             // I think for simple elements we can get without using a template system

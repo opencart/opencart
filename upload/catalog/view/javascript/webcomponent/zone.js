@@ -1,46 +1,47 @@
 import { WebComponent } from './../webcomponent.js';
 
-const template = `
-<select name="{{ name }}" id="{{ id }}" class="{{ class }}">
-  {% for zone in zones %}
-  <option value="{{ zone.zone_id }}"{% if zone.zone_id == value %} selected{% endif %}>{{ zone.name }}</option>
-  {% endfor %}
-</select>`;
-
 class XZone extends WebComponent {
     static observed = ['data-country-id'];
 
-    data = {
-        id: '',
-        name: '',
-        value: 0,
-        country_id: 0,
-        zones: []
-    };
-
+    target; ''
     event = {
         connected: async () => {
-            // Add the data attributes to the data object
-            this.data.id = this.getAttribute('data-id');
-            this.data.name = this.getAttribute('data-name');
-            this.data.value = this.getAttribute('data-value');
-            this.data.country_id = this.getAttribute('data-country-id');
-
-            let country = await (await fetch('./data/country.' + this.data.country_id + '.json')).json();
-
-            //this.data.zones = country.zone;
+            // Add the select element to the shadow DOM
+            this.shadow.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.innerHTML + '</select>';
 
             this.addStylesheet('bootstrap.css');
-            this.addStylesheet('fontawesome.css');
-
-            //this.shadow.innerHTML = await this.render('zone.html', this.data);
+            //this.addStylesheet('fonts/fontawesome/css/fontawesome.css');
 
             this.shadow.addEventListener('change', this.event.onchange);
+
+            let element = document.querySelector(this.getAttribute('target'));
+
+            console.log(element);
+            console.log(element.getAttribute('value'));
+
+            let response = await fetch('./data/country.' + element.getAttribute('value') + '.' + this.getAttribute('language') + '.json');
+
+            response.json().then(this.event.onloaded);
+        },
+        onloaded: (country) => {
+            //this.data.zones = country.zone;
+            let html = this.innerHTML;
+            let zones = country['zone'];
+
+            for (let i in zones) {
+                html += '<option value="' + zones[i].zone_id + '"';
+
+                if (zones[i].zone_id == this.getAttribute('value')) {
+                    html += ' selected';
+                }
+
+                html += '>' + zones[i].name + '</option>';
+            }
+
+            this.shadow.querySelector('select').innerHTML = html;
         },
         onchange: (e) => {
-            this.data.value = e.target.value;
-
-            this.setAttribute('data-value', this.data.value);
+            this.setAttribute('value', e.target.value);
         },
         changed: async (name, value_old, value_new) => {
             if (name == 'data-country-id' && value_new) {
@@ -51,6 +52,19 @@ class XZone extends WebComponent {
                 this.data.zones = country.zone;
 
                 this.shadow.innerHTML = await this.render('zone.html', this.data);
+
+
+
+                // input-postcode
+                if (this.hasAttribute('postcode')) {
+                    //   document.querySelector(this.getAttribute('postcode')).addClass('required');
+                }
+
+                // Apply change to target element
+                //let target = document.querySelector(this.getAttribute('target'));
+
+                // target.setAttribute('data-country-id', e.target.value);
+
             }
         }
     };

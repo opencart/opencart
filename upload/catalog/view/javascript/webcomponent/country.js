@@ -9,7 +9,7 @@ class XCountry extends WebComponent {
             this.shadow.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.innerHTML + '</select>';
 
             this.addStylesheet('bootstrap.css');
-            this.addStylesheet('font/fontawesome.css');
+            this.addStylesheet('fonts/fontawesome/css/fontawesome.css');
 
             this.shadow.addEventListener('change', this.event.onchange);
 
@@ -34,11 +34,6 @@ class XCountry extends WebComponent {
         },
         onchange: async (e) => {
             this.setAttribute('value', e.target.value);
-
-            // Apply change to target element
-            let target = document.querySelector(this.getAttribute('target'));
-
-            target.setAttribute('data-country-id', e.target.value);
         }
     };
 }

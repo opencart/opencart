@@ -1,61 +1,44 @@
 import { WebComponent } from './../webcomponent.js';
 
-const template = `
-<select name="{{ name }}" id="{{ id }}" class="{{ class }}">
-  {% for country in countries %}
-  <option value="{{ country.country_id }}"{% if country.country_id == value %} selected{% endif %}>{{ country.name }}</option>
-  {% endfor %}
-</select>`;
-
 class XCountry extends WebComponent {
-    data = {
-        id: '',
-        name: '',
-        value: 0,
-        countries: []
-    };
-
+    data = {};
     event = {
         connected: async () => {
-
-            console.log(this);
-            console.log(this.__proto__);
-            console.log(this.dataset);
-            console.log(this.attributes);
-
-
-
-            // Add the data attributes to the data object
-            this.data.id = this.getAttribute('data-id');
-            this.data.name = this.getAttribute('data-name');
-            this.data.value = this.getAttribute('data-oc-value');
-            this.data.language = this.getAttribute('data-oc-language');
-
-            this.data.target = this.getAttribute('data-oc-target');
-
-
-
-
-
-            // Add countries to the data object
-            this.data.countries = await (await fetch('./data/country.' + this.data.language + '.json')).json();
+            // I think for simple elements we can get without using a template system
+            // Add the select element to the shadow DOM
+            this.shadow.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.innerHTML + '</select>';
 
             this.addStylesheet('bootstrap.css');
-            this.addStylesheet('fontawesome.css');
-
-            this.shadow.innerHTML = await this.render('country.html', this.data);
+            this.addStylesheet('font/fontawesome.css');
 
             this.shadow.addEventListener('change', this.event.onchange);
+
+            let response = await fetch('./catalog/view/data/localisation/country.' + this.getAttribute('language') + '.json');
+
+            response.json().then(this.event.onloaded);
+        },
+        onloaded: (countries) => {
+            let html = this.innerHTML;
+
+            for (let i in countries) {
+                html += '<option value="' + countries[i].country_id + '"';
+
+                if (countries[i].country_id == this.getAttribute('value')) {
+                    html += ' selected';
+                }
+
+                html += '>' + countries[i].name + '</option>';
+            }
+
+            this.shadow.querySelector('select').innerHTML = html;
         },
         onchange: async (e) => {
-            this.data.value = e.target.value;
-
-            this.setAttribute('data-value', this.data.value);
+            this.setAttribute('value', e.target.value);
 
             // Apply change to target element
-            let target = document.querySelector(this.getAttribute('data-target'));
+            let target = document.querySelector(this.getAttribute('target'));
 
-            target.setAttribute('data-country-id', this.data.value);
+            target.setAttribute('data-country-id', e.target.value);
         }
     };
 }

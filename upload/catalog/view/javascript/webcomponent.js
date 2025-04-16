@@ -13,7 +13,7 @@ export class WebComponent extends HTMLElement {
     }
 
     async addStylesheet(stylesheet) {
-        let module = await (await import('./../style/' + stylesheet, {with: {type: 'css'}}));
+        let module = await (await import('./../stylesheet/' + stylesheet, {with: {type: 'css'}}));
 
         this.shadow.adoptedStyleSheets.push(module.default);
     }

@@ -28,12 +28,12 @@ class XZone extends WebComponent {
 
             let country = await (await fetch('./data/country.' + this.data.country_id + '.json')).json();
 
-            this.data.zones = country.zone;
+            //this.data.zones = country.zone;
 
             this.addStylesheet('bootstrap.css');
             this.addStylesheet('fontawesome.css');
 
-            this.shadow.innerHTML = await this.render('zone.html', this.data);
+            //this.shadow.innerHTML = await this.render('zone.html', this.data);
 
             this.shadow.addEventListener('change', this.event.onchange);
         },

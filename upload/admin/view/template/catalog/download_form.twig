@@ -25,34 +25,34 @@
           </ul>
           <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
-              <div class="row mb-3 required">
+              <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   {% for language in languages %}
                     <div class="input-group">
                       <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                      <input type="text" name="download_description[{{ language.language_id }}][name]" value="{{ download_description[language.language_id] ? download_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                      <input type="text" name="download_description[{{ language.language_id }}][name]" value="{{ download_description[language.language_id] ? download_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
                     </div>
                     <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                   {% endfor %}
                 </div>
               </div>
-              <div class="row mb-3 required">
+              <div class="row mb-3">
                 <label for="input-filename" class="col-sm-2 col-form-label">{{ entry_filename }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <button type="button" id="button-upload" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
-                    <input type="text" name="filename" value="{{ filename }}" placeholder="{{ entry_filename }}" id="input-filename" class="form-control"/>
+                    <input type="text" name="filename" value="{{ filename }}" placeholder="{{ entry_filename }}" id="input-filename" class="form-control" required/>
                     <button type="button" id="button-download" class="btn btn-outline-secondary"{% if not filename %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</button>
                   </div>
                   <div class="form-text">{{ help_filename }}</div>
                   <div id="error-filename" class="invalid-feedback"></div>
                 </div>
               </div>
-              <div class="row mb-3 required">
+              <div class="row mb-3">
                 <label for="input-mask" class="col-sm-2 col-form-label">{{ entry_mask }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="mask" value="{{ mask }}" placeholder="{{ entry_mask }}" id="input-mask" class="form-control"/>
+                  <input type="text" name="mask" value="{{ mask }}" placeholder="{{ entry_mask }}" id="input-mask" class="form-control" required/>
                   <div class="form-text">{{ help_mask }}</div>
                   <div id="error-mask" class="invalid-feedback"></div>
                 </div>

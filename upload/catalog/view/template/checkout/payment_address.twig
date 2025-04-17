@@ -23,42 +23,42 @@
   <div id="payment-new" style="display: {% if not addresses %}block{% else %}none{% endif %};">
     <form id="form-payment-address">
       <div class="row row-cols-1 row-cols-md-2">
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label>
-          <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
+          <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control" required/>
           <div id="error-payment-firstname" class="invalid-feedback"></div>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label>
-          <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
+          <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control" required/>
           <div id="error-payment-lastname" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
           <label for="input-payment-company" class="form-label">{{ entry_company }}</label>
           <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label>
-          <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
+          <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control" required/>
           <div id="error-payment-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
           <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label>
           <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-payment-city" class="form-label">{{ entry_city }}</label>
-          <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
+          <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control" required/>
           <div id="error-payment-city" class="invalid-feedback"></div>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label>
-          <input type="text" name="postcode" value="" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
+          <input type="text" name="postcode" value="" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control" required/>
           <div id="error-payment-postcode" class="invalid-feedback"></div>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
-          <select name="country_id" id="input-payment-country" class="form-select">
+          <select name="country_id" id="input-payment-country" class="form-select" required>
             <option value="0">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -66,8 +66,8 @@
           </select>
           <div id="error-payment-country" class="invalid-feedback"></div>
         </div>
-        <div class="col mb-3 required">
-          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
+        <div class="col mb-3">
+          <label for="input-payment-zone" class="form-label required">{{ entry_zone }}</label>
           <select name="zone_id" id="input-payment-zone" class="form-select">
             <option value="">{{ text_select }}</option>
             {% for zone in zones %}

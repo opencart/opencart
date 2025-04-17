@@ -36,28 +36,28 @@
                   <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
                     <fieldset>
                       <legend>{{ text_general }}</legend>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_title }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="information_description[{{ language.language_id }}][title]" value="{{ information_description[language.language_id] ? information_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title-{{ language.language_id }}" class="form-control"/>
+                          <input type="text" name="information_description[{{ language.language_id }}][title]" value="{{ information_description[language.language_id] ? information_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title-{{ language.language_id }}" class="form-control" required/>
                           <div id="error-title-{{ language.language_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
                         <div class="col-sm-10">
                           <div id="input-description-{{ language.language_id }}">
-                            <textarea name="information_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ information_description[language.language_id] ? information_description[language.language_id].description }}</textarea>
+                            <textarea name="information_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control" required>{{ information_description[language.language_id] ? information_description[language.language_id].description }}</textarea>
                           </div>
                         </div>
                       </div>
                     </fieldset>
                     <fieldset>
                       <legend>{{ text_meta }}</legend>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="information_description[{{ language.language_id }}][meta_title]" value="{{ information_description[language.language_id] ? information_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
+                          <input type="text" name="information_description[{{ language.language_id }}][meta_title]" value="{{ information_description[language.language_id] ? information_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control" required/>
                           <div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>

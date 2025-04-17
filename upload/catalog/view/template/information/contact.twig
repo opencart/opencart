@@ -52,14 +52,11 @@
       {% if locations %}
         <h3>{{ text_store }}</h3>
         <div id="accordion" class="accordion mb-3">
-
           {% for location in locations %}
-
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse-location-{{ location.location_id }}">{{ location.name }}</button>
               </h2>
-
               <div id="collapse-location-{{ location.location_id }}" class="accordion-collapse collapse" data-bs-parent="#accordion">
 
                 <div class="accordion-body">
@@ -103,24 +100,24 @@
       <form id="form-contact" action="{{ send }}" method="post" data-oc-toggle="ajax">
         <fieldset>
           <legend>{{ text_contact }}</legend>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control"/>
+              <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" required/>
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
             <div class="col-sm-10">
-              <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control"/>
+              <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" required/>
               <div id="error-email" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-enquiry" class="col-sm-2 col-form-label">{{ entry_enquiry }}</label>
             <div class="col-sm-10">
-              <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control"></textarea>
+              <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control" required></textarea>
               <div id="error-enquiry" class="invalid-feedback"></div>
             </div>
           </div>

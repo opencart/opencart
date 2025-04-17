@@ -18,6 +18,12 @@ export class WebComponent extends HTMLElement {
         this.shadow.adoptedStyleSheets.push(module.default);
     }
 
+    async fetch(route) {
+        let response = await fetch('./catalog/view/data/' + route + '.json');
+
+        return await response.json();
+    }
+
     async parse(code, data) {
         return engine.parseAndRender(code, this.data).then(function(html) {
             document.body.innerHTML = html

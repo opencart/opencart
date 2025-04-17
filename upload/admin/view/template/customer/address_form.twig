@@ -7,42 +7,42 @@
       </div>
       <div class="modal-body">
         <form id="form-address" action="{{ save }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#address">
-          <div class="mb-3 required">
+          <div class="mb-3">
             <label for="input-address-firstname" class="form-label">{{ entry_firstname }}</label>
-            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-address-firstname" class="form-control"/>
+            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-address-firstname" class="form-control" required/>
             <div id="error-address-firstname" class="invalid-feedback"></div>
           </div>
-          <div class="mb-3 required">
+          <div class="mb-3">
             <label for="input-address-lastname" class="form-label">{{ entry_lastname }}</label>
-            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-address-lastname" class="form-control"/>
+            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-address-lastname" class="form-control" required/>
             <div id="error-address-lastname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
             <label for="input-address-company" class="form-label">{{ entry_company }}</label>
             <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-address-company" class="form-control"/>
           </div>
-          <div class="mb-3 required">
+          <div class="mb-3">
             <label for="input-address-address-1" class="form-label">{{ entry_address_1 }}</label>
-            <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-address-1" class="form-control"/>
+            <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-address-1" class="form-control" required/>
             <div id="error-address-address-1" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
             <label for="input-address-address-2" class="form-label">{{ entry_address_2 }}</label>
             <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-address-address-2" class="form-control"/>
           </div>
-          <div class="mb-3 required">
+          <div class="mb-3">
             <label for="input-address-city" class="form-label">{{ entry_city }}</label>
-            <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-address-city" class="form-control"/>
+            <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-address-city" class="form-control" required/>
             <div id="error-address-city" class="invalid-feedback"></div>
           </div>
-          <div class="mb-3 required">
+          <div class="mb-3">
             <label for="input-address-postcode" class="form-label">{{ entry_postcode }}</label>
-            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-address-postcode" class="form-control"/>
+            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-address-postcode" class="form-control" required/>
             <div id="error-address-postcode" class="invalid-feedback"></div>
           </div>
-          <div class="mb-3 required">
+          <div class="mb-3">
             <label for="input-address-country" class="form-label">{{ entry_country }}</label>
-            <select name="country_id" id="input-address-country" class="form-select">
+            <select name="country_id" id="input-address-country" class="form-select" required>
               <option value="">{{ text_select }}</option>
               {% for country in countries %}
                 <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -50,9 +50,9 @@
             </select>
             <div id="error-address-country" class="invalid-feedback"></div>
           </div>
-          <div class="mb-3 required">
+          <div class="mb-3">
             <label for="input-address-zone" class="form-label">{{ entry_zone }}</label>
-            <select name="zone_id" id="input-address-zone" class="form-select"></select>
+            <select name="zone_id" id="input-address-zone" class="form-select" required></select>
             <div id="error-address-zone" class="invalid-feedback"></div>
           </div>
 

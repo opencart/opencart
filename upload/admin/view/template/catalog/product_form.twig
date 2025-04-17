@@ -47,11 +47,11 @@
                   <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
                     <fieldset>
                       <legend>{{ text_general }}</legend>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group">
-                            <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                            <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
                             {% if master_id %}
                               <div class="input-group-text">
                                 <div class="form-switch">
@@ -83,11 +83,11 @@
                     </fieldset>
                     <fieldset>
                       <legend>{{ text_meta }}</legend>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                         <div class="col-sm-10">
                           <div class="input-group">
-                            <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
+                            <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control" required/>
                             {% if master_id %}
                               <div class="input-group-text">
                                 <div class="form-switch">
@@ -154,15 +154,16 @@
               <input type="hidden" name="master_id" value="{{ master_id }}"/>
               <fieldset>
                 <legend>{{ text_model }}</legend>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-model" class="col-sm-2 col-form-label">{{ entry_model }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+                      <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" required/>
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-switch">
-                            <input type="checkbox" name="override[model]" value="1" id="input-variant-model" data-oc-toggle="switch" data-oc-target="#input-model" class="form-check-input"{% if override.model %} checked{% endif %}/> <label for="input-variant-model" class="form-check-label"></label>
+                            <input type="checkbox" name="override[model]" value="1" id="input-variant-model" data-oc-toggle="switch" data-oc-target="#input-model" class="form-check-input"{% if override.model %} checked{% endif %}/>
+                            <label for="input-variant-model" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}

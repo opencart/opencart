@@ -23,42 +23,42 @@
   <div id="shipping-new" style="display: {% if not addresses %}block{% else %}none{% endif %};">
     <form id="form-shipping-address">
       <div class="row row-cols-1 row-cols-md-2">
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label >
-          <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+          <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control" required/>
           <div id="error-shipping-firstname" class="invalid-feedback"></div>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
-          <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+          <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control" required/>
           <div id="error-shipping-lastname" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
           <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
           <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
-          <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+          <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control" required/>
           <div id="error-shipping-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
           <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
           <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
-          <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
+          <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control" required/>
           <div id="error-shipping-city" class="invalid-feedback"></div>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
-          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
+          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control" required/>
           <div id="error-shipping-postcode" class="invalid-feedback"></div>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
-          <select name="country_id" id="input-shipping-country" class="form-select">
+          <select name="country_id" id="input-shipping-country" class="form-select" required>
             <option value="0">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -66,9 +66,9 @@
           </select>
           <div id="error-shipping-country" class="invalid-feedback"></div>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3">
           <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
-          <select name="zone_id" id="input-shipping-zone" class="form-select">
+          <select name="zone_id" id="input-shipping-zone" class="form-select" required>
             <option value="">{{ text_select }}</option>
             {% for zone in zones %}
               <option value="{{ zone.zone_id }}">{{ zone.name }}</option>

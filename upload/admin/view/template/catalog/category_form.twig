@@ -36,10 +36,10 @@
                   <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
                     <fieldset>
                       <legend>{{ text_general }}</legend>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="category_description[{{ language.language_id }}][name]" value="{{ category_description[language.language_id] ? category_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                          <input type="text" name="category_description[{{ language.language_id }}][name]" value="{{ category_description[language.language_id] ? category_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
                           <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
@@ -52,10 +52,10 @@
                     </fieldset>
                     <fieldset>
                       <legend>{{ text_meta }}</legend>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="category_description[{{ language.language_id }}][meta_title]" value="{{ category_description[language.language_id] ? category_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
+                          <input type="text" name="category_description[{{ language.language_id }}][meta_title]" value="{{ category_description[language.language_id] ? category_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control" required/>
                           <div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>

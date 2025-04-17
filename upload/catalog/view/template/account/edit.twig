@@ -11,33 +11,33 @@
       <form id="form-customer" action="{{ save }}" method="post" data-oc-toggle="ajax">
         <fieldset>
           <legend>{{ text_your_details }}</legend>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }} </label>
             <div class="col-sm-10">
-              <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+              <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required/>
               <div id="error-firstname" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
             <div class="col-sm-10">
-              <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+              <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required/>
               <div id="error-lastname" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
             <div class="col-sm-10">
-              <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+              <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
               <div id="error-email" class="invalid-feedback"></div>
             </div>
           </div>
 
           {% if config_telephone_display %}
-            <div class="row mb-3{% if config_telephone_required %} required{% endif %}">
+            <div class="row mb-3">
               <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
               <div class="col-sm-10">
-                <input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+                <input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"{% if config_telephone_required %} required{% endif %}/>
                 <div id="error-telephone" class="invalid-feedback"></div>
               </div>
             </div>

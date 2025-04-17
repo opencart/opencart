@@ -11,6 +11,7 @@ class XZone extends WebComponent {
 
             this.shadow.addEventListener('change', this.event.onchange);
 
+            // Get the country id from the target element
             let element = document.querySelector(this.getAttribute('target'));
 
             element.shadow.querySelector('select').addEventListener('change', this.event.changed);
@@ -39,23 +40,6 @@ class XZone extends WebComponent {
             }
 
             this.shadow.querySelector('select').innerHTML = html;
-
-            /*
-            if (json['postcode_required'] == '1') {
-                $('#input-postcode').parent().parent().addClass('required');
-            } else {
-                $('#input-postcode').parent().parent().removeClass('required');
-            }
-            // input-postcode
-            if (this.hasAttribute('postcode')) {
-                // document.querySelector(this.getAttribute('postcode')).addClass('required');
-            }
-
-            // Apply change to target element
-            //let target = document.querySelector(this.getAttribute('target'));
-
-            // target.setAttribute('data-country-id', e.target.value);
-            */
         },
         onchange: async (e) => {
             this.setAttribute('value', e.target.value);

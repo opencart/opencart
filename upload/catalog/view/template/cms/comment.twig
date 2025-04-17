@@ -35,14 +35,14 @@
       </div>
       <div class="modal-body">
         <form id="form-comment" action="" data-oc-target="" data-oc-trigger="">
-          <div class="mb-3 required">
+          <div class="mb-3">
             <label for="input-author" class="form-label">{{ entry_author }}</label>
-            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" required/>
             <div id="error-author" class="invalid-feedback"></div>
           </div>
-          <div class="mb-3 required">
+          <div class="mb-3">
             <label for="input-comment" class="form-label">{{ entry_comment }}</label>
-            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control" required>{{ comment }}</textarea>
             <div id="error-comment" class="invalid-feedback"></div>
           </div>
           {{ captcha }}

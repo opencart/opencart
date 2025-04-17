@@ -18,17 +18,17 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-language" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
             <div class="col-sm-10">
-              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" required/>
               <div id="error-code" class="invalid-feedback"></div>
             </div>
           </div>
@@ -38,10 +38,10 @@
               <input type="text" name="extension" value="{{ extension }}" id="input-extension" class="form-control" readonly/>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-locale" class="col-sm-2 col-form-label">{{ entry_locale }}</label>
             <div class="col-sm-10">
-              <input type="text" name="locale" value="{{ locale }}" placeholder="{{ entry_locale }}" id="input-locale" class="form-control"/>
+              <input type="text" name="locale" value="{{ locale }}" placeholder="{{ entry_locale }}" id="input-locale" class="form-control" required/>
               <div class="form-text">{{ help_locale }}</div>
               <div id="error-locale" class="invalid-feedback"></div>
             </div>

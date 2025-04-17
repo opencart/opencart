@@ -206,8 +206,8 @@
               {% if subscription_plans %}
                 <hr/>
                 <h3>{{ text_subscription }}</h3>
-                <div class="mb-3 required">
-                  <select name="subscription_plan_id" id="input-subscription" class="form-select">
+                <div class="mb-3">
+                  <select name="subscription_plan_id" id="input-subscription" class="form-select" required>
                     <option value="">{{ text_select }}</option>
                     {% for subscription_plan in subscription_plans %}
                       <option value="{{ subscription_plan.subscription_plan_id }}">{{ subscription_plan.name }}</option>

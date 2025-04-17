@@ -26,6 +26,13 @@ class XCountry extends WebComponent {
             let response = await fetch('./catalog/view/data/localisation/country.' + this.getAttribute('language') + '.json');
 
             response.json().then(this.event.onloaded);
+
+
+            const form = document.querySelector('#form-address');
+            const data = new FormData(form);
+
+            console.log(data);
+            console.log(data.entries());
         },
         onloaded: (countries) => {
             let html = this.innerHTML;

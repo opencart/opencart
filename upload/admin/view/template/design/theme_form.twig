@@ -19,10 +19,10 @@
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-theme" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3 required">
-            <label for="input-route" class="col-sm-2 col-form-label required">{{ entry_store }}</label>
+          <div class="row mb-3">
+            <label for="input-route" class="col-sm-2 col-form-label">{{ entry_store }}</label>
             <div class="col-sm-10">
-              <select name="store_id" id="input-store" class="form-select">
+              <select name="store_id" id="input-store" class="form-select" required>
                 <option value="0">{{ text_default }}</option>
                 {% for store in stores %}
                   <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>

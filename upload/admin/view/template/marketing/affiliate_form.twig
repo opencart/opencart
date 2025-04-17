@@ -28,13 +28,14 @@
             <div id="tab-general" class="tab-pane active">
               <fieldset>
                 <legend>{{ text_affiliate }}</legend>
-                <div class="row mb-3 required" class="tab-pane active">
+                <div class="row mb-3">
                   <label for="input-customer" class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/> <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
-                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control"{% if customer_id %} disabled{% endif %} autocomplete="off"/>
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control"{% if customer_id %} disabled{% endif %} required autocomplete="off"/>
                     <ul id="autocomplete-customer" class="dropdown-menu"></ul>
                     <div id="error-customer" class="invalid-feedback"></div>
+                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
+                    <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
                   </div>
                 </div>
 
@@ -52,10 +53,10 @@
                   </div>
                 </div>
 
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-tracking" class="col-sm-2 col-form-label">{{ entry_tracking }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="tracking" value="{{ tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
+                    <input type="text" name="tracking" value="{{ tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control" required/>
                     <div class="form-text">{{ help_tracking }}</div>
                     <div id="error-tracking" class="invalid-feedback"></div>
                   </div>
@@ -214,19 +215,19 @@
                   </div>
                 </div>
                 <div id="payment-cheque" class="payment">
-                  <div class="row mb-3 required">
+                  <div class="row mb-3">
                     <label for="input-cheque" class="col-sm-2 col-form-label">{{ entry_cheque }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control"/>
+                      <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" required/>
                       <div id="error-cheque" class="invalid-feedback"></div>
                     </div>
                   </div>
                 </div>
                 <div id="payment-paypal" class="payment">
-                  <div class="row mb-3 required">
+                  <div class="row mb-3">
                     <label for="input-paypal" class="col-sm-2 col-form-label">{{ entry_paypal }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control"/>
+                      <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" required/>
                       <div id="error-paypal" class="invalid-feedback"></div>
                     </div>
                   </div>
@@ -250,17 +251,17 @@
                       <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control"/>
                     </div>
                   </div>
-                  <div class="row mb-3 required">
+                  <div class="row mb-3">
                     <label for="input-bank-account-name" class="col-sm-2 col-form-label">{{ entry_bank_account_name }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control"/>
+                      <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" required/>
                       <div id="error-bank-account-name" class="invalid-feedback"></div>
                     </div>
                   </div>
-                  <div class="row mb-3 required">
+                  <div class="row mb-3">
                     <label for="input-bank-account-number" class="col-sm-2 col-form-label">{{ entry_bank_account_number }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control"/>
+                      <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" required/>
                       <div id="error-bank-account-number" class="invalid-feedback"></div>
                     </div>
                   </div>

@@ -67,8 +67,8 @@
           <div id="error-payment-country" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
-          <label for="input-payment-zone" class="form-label required">{{ entry_zone }}</label>
-          <select name="zone_id" id="input-payment-zone" class="form-select">
+          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
+          <select name="zone_id" id="input-payment-zone" class="form-select" required>
             <option value="">{{ text_select }}</option>
             {% for zone in zones %}
               <option value="{{ zone.zone_id }}">{{ zone.name }}</option>

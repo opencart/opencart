@@ -18,17 +18,17 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-tax-rate" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-rate" class="col-sm-2 col-form-label">{{ entry_rate }}</label>
             <div class="col-sm-10">
-              <input type="text" name="rate" value="{{ rate }}" placeholder="{{ entry_rate }}" id="input-rate" class="form-control"/>
+              <input type="text" name="rate" value="{{ rate }}" placeholder="{{ entry_rate }}" id="input-rate" class="form-control" required/>
               <div id="error-rate" class="invalid-feedback"></div>
             </div>
           </div>
@@ -36,16 +36,8 @@
             <label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
             <div class="col-sm-10">
               <select name="type" id="input-type" class="form-select">
-                {% if type == 'P' %}
-                  <option value="P" selected>{{ text_percent }}</option>
-                {% else %}
-                  <option value="P">{{ text_percent }}</option>
-                {% endif %}
-                {% if type == 'F' %}
-                  <option value="F" selected>{{ text_amount }}</option>
-                {% else %}
-                  <option value="F">{{ text_amount }}</option>
-                {% endif %}
+                <option value="P"{% if type == 'P' %} selected{% endif %}>{{ text_percent }}</option>
+                <option value="F"{% if type == 'F' %} selected{% endif %}>{{ text_amount }}</option>
               </select>
             </div>
           </div>

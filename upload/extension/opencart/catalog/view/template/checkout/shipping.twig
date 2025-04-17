@@ -4,10 +4,10 @@
     <div class="accordion-body">
       <form id="form-quote">
         <p>{{ text_destination }}</p>
-        <div class="row mb-3 required">
+        <div class="row mb-3">
           <label for="input-country" class="col-md-4 col-form-label">{{ entry_country }}</label>
           <div class="col-md-8">
-            <select name="country_id" id="input-country" class="form-select">
+            <select name="country_id" id="input-country" class="form-select" required>
               <option value="">{{ text_select }}</option>
               {% for country in countries %}
                 <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -16,17 +16,17 @@
             <div id="error-country" class="invalid-feedback"></div>
           </div>
         </div>
-        <div class="row mb-3 required">
+        <div class="row mb-3">
           <label for="input-zone" class="col-md-4 col-form-label">{{ entry_zone }}</label>
           <div class="col-md-8">
-            <select name="zone_id" id="input-zone" class="form-select"></select>
+            <select name="zone_id" id="input-zone" class="form-select" required></select>
             <div id="error-zone" class="invalid-feedback"></div>
           </div>
         </div>
-        <div class="row mb-3 required">
+        <div class="row mb-3">
           <label for="input-postcode" class="col-md-4 col-form-label">{{ entry_postcode }}</label>
           <div class="col-md-8">
-            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
+            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" required/>
             <div id="error-postcode" class="invalid-feedback"></div>
           </div>
         </div>

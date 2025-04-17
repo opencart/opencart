@@ -227,7 +227,7 @@ button:focus {
   font-size: 0.9em;
 }
 /* required */
-label:has(+ div > *[required]):before {
+label:has(+ div *[required]):before {
   content: "* ";
   color: red;
   font-weight: bold;

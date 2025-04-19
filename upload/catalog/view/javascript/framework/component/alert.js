@@ -1,12 +1,6 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XAlert extends WebComponent {
-    data = {
-        icon: '',
-        type: '',
-        message: ''
-    };
-
     event = {
         connected: async () => {
             this.data.type = this.dataset.type;
@@ -27,10 +21,7 @@ class XAlert extends WebComponent {
                     break;
             }
 
-            this.addStylesheet('bootstrap.css');
-            this.addStylesheet('fontawesome.css');
-
-            this.shadow.innerHTML = await this.render('alert.html', this.data);
+            this.shadow.innerHTML = await this.template.render('alert.html', this.data);
 
             // Get the alert element
             let alert = this.shadow.querySelector('.alert');

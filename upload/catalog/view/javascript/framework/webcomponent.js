@@ -1,18 +1,18 @@
-import Loader from './library/loader.js';
 import Registry from './library/registry.js';
-import Config from './library/config.js';
-import Language from './library/language.js';
+import Storage from './library/storage.js';
 import Template from './library/template.js';
+import Language from './library/language.js';
+import Config from './library/config.js';
 
 const registry = new Registry();
-const loader= new Loader(registry);
 
-registry.set('load', loader);
-registry.set('data', []);
+registry.set('config', new Config());
+registry.set('Language', new Language());
+registry.set('storage', new Storage());
+registry.set('template', new Template());
 
 export class WebComponent extends HTMLElement {
     registry = {};
-    data = [];
     event = {
         connected: null,
         disconnected: null,
@@ -29,7 +29,22 @@ export class WebComponent extends HTMLElement {
         super();
 
         this.registry = registry;
-        this.load = loader;
+    }
+
+    get storage () {
+        return this.registry.get('storage');
+    }
+
+    get template () {
+        return this.registry.get('template');
+    }
+
+    get language () {
+        return this.registry.get('language');
+    }
+
+    get config () {
+        return this.registry.get('config');
     }
 
     connectedCallback() {

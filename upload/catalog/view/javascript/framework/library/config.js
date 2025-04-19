@@ -14,10 +14,12 @@ export default class Config {
     }
 
     async load(path) {
-        let response = await fetch('./data/config/' + path + 'json');
+        let response = await fetch('./catalog/view/config/' + path + 'json');
 
-        response.then((data) => {
-            this.data = data.json();
-        });
+        if (response.status == 200) {
+            this.data = await response.json();
+        } else {
+            console.log('Could not load config file ' + path + '.json');
+        }
     }
 }

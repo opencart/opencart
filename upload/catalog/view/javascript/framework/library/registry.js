@@ -12,4 +12,8 @@ export default class Registry {
     has (key) {
         return this.data[key] !== undefined;
     }
+
+    remove (key) {
+        delete this.data[key];
+    }
 }

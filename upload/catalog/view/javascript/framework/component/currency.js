@@ -3,7 +3,7 @@ import { WebComponent } from './../webcomponent.js';
 class XCurrency extends WebComponent {
     data = {
         title: '',
-        content: '',
+        content: ''
     };
 
     event = {

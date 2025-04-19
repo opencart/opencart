@@ -3,24 +3,23 @@ import { WebComponent } from './../webcomponent.js';
 class XZone extends WebComponent {
     event = {
         connected: async () => {
-            // Add the select element to the shadow DOM
-            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.innerHTML + '</select>';
+            this.default = this.innerHTML;
 
-            this.addEventListener('change', this.event.onchange);
+            // Add the select element to the shadow DOM
+            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.default + '</select>';
+
+            this.element = this.querySelector('select');
+
+            this.element.addEventListener('change', this.event.onchange);
 
             // Get the country id from the target element
             let element = document.querySelector(this.getAttribute('target'));
 
             element.querySelector('select').addEventListener('change', this.event.changed);
 
-            this.getCountry(element.getAttribute('value')).then(this.event.onloaded);
-        },
-        changed: async (e) => {
-            let response = await fetch('./catalog/view/data/localisation/country.' + e.target.value + '.' + this.getAttribute('language') + '.json');
+            let response = this.storage.fetch('localisation/country.' + this.getAttribute('value'));
 
-            response.json().then(this.event.onloaded);
-
-            this.getCountry(element.getAttribute('value')).then(this.event.onloaded);
+            response.then(this.event.onloaded);
         },
         onloaded: (country) => {
             let html = '';
@@ -36,15 +35,16 @@ class XZone extends WebComponent {
                 html += '>' + zones[i].name + '</option>';
             }
 
-            this.querySelector('select').innerHTML = html;
+            this.element.innerHTML = html;
+        },
+        changed: async (e) => {
+            let response = this.storage.fetch('localisation/country.' + e.target.value);
+
+            response.then(this.event.onloaded);
+
         },
         onchange: async (e) => {
             this.setAttribute('value', e.target.value);
-        },
-        getCountry: async (country_id) => {
-            let response = await fetch('./catalog/view/data/localisation/country.' + country_id + '.' + this.getAttribute('language') + '.json');
-
-            return response.json();
         }
     };
 }

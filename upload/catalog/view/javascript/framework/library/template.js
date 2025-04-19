@@ -1,32 +1,16 @@
 import './../../liquid.browser.umd.js';
 
 export default class Template {
-    engine;
-    data = [];
+    engine = {};
 
     constructor() {
-        this.engine = new liquidjs.Liquid();
-    }
-
-    get (key) {
-        return this.data[key];
-    }
-
-    set (key, value) {
-        this.data[key] = value;
-    }
-
-    has (key) {
-        return this.data[key] !== undefined;
-    }
-
-    load(path) {
-        this.fetch('./data/config/' + url + 'json').then((response) => {
-            this.data = response.json();
+        this.engine = new liquidjs.Liquid({
+            root: '',
+            extname: '.liquid'
         });
     }
 
     async render(path, data) {
-        return this.engine.parseAndRender('./template/' + path + '.twig', data);
+        return this.engine.renderFile('./template/' + path, data);
     }
 }

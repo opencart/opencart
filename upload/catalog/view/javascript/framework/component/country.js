@@ -1,59 +1,60 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XCountry extends WebComponent {
+    static observed = ['postcode-required'];
+    default = HTMLInputElement;
     element = HTMLInputElement;
-    postcode = HTMLInputElement;
     countries = [];
+
     event = {
         connected: async () => {
+            this.default = this.innerHTML;
+
             // I think for simple elements we can get without using a template system
-            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '" required>' + this.innerHTML + '</select>';
+            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '"' + (this.hasAttribute('required') ? ' required' : '') + '>' + this.default + '</select>';
 
             this.element = this.querySelector('select');
 
-            let value= this.getAttribute('value');
+            this.element.addEventListener('change', this.event.onchange);
 
-            let html = '';
+            let response = this.storage.fetch('localisation/country');
 
-            let countries = await this.load.data('localisation/country.' + this.getAttribute('language'));
+            response.then(this.event.onloaded);
+        },
+        onloaded: (countries) => {
+            let html = this.default;
 
-            for (let i in countries) {
-                html += '<option value="' + countries[i].country_id + '"';
+            this.countries = countries;
 
-                if (countries[i].country_id == value) {
+            for (let i in this.countries) {
+                html += '<option value="' + this.countries[i].country_id + '"';
+
+                if (this.countries[i].country_id == this.getAttribute('value')) {
                     html += ' selected';
                 }
 
-                html += '>' + countries[i].name + '</option>';
+                html += '>' + this.countries[i].name + '</option>';
             }
 
             this.element.innerHTML = html;
 
-            this.element.addEventListener('change', this.event.onchange);
-
-            // If attribute postcode exists
+            // Checks to see if the selected country option requires a postcode
             if (this.hasAttribute('postcode')) {
-                this.setPostcode(document.querySelector(this.getAttribute('postcode')));
+                this.setAttribute('postcode-required', this.countries[this.getAttribute('value')].postcode_required);
             }
         },
-        setPostcode: () => {
-            if (this.hasAttribute('postcode')) {
-                let element = document.querySelector(this.getAttribute('postcode'));
-
-                if (this.countries[e.target.value] && this.countries[e.target.value].postcode_required == 1) {
-                    element.setAttribute('required', '');
-                } else {
-                    element.removeAttribute('required');
-                }
-            }
-        },
-        onchange: async (e) => {
+        onchange: (e) => {
             this.setAttribute('value', e.target.value);
 
             if (this.hasAttribute('postcode')) {
+                this.setAttribute('postcode-required', this.countries[e.target.value].postcode_required);
+            }
+        },
+        changed: async (name, value_old, value_new) => {
+            if (name == 'postcode-required') {
                 let element = document.querySelector(this.getAttribute('postcode'));
 
-                if (this.countries[e.target.value] && this.countries[e.target.value].postcode_required == 1) {
+                if (value_new == 1) {
                     element.setAttribute('required', '');
                 } else {
                     element.removeAttribute('required');

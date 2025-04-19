@@ -14,10 +14,12 @@ export default class Language {
     }
 
     async load(path) {
-        let response = await fetch('./data/language/' + path + '.json');
+        let response = await fetch('./catalog/view/language/' + path + '.json');
 
-        response.then((data) => {
-            this.data = data.json();
-        });
+        if (response.status == 200) {
+            this.data = await response.json();
+        } else {
+            console.log('Could not load file ' + path + '.json');
+        }
     }
 }

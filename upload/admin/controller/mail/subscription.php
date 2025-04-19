@@ -53,7 +53,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'filter_date_next'              => date('Y-m-d H:i:s')
 		];
 
-		$subscriptions = $this->model_checkout_subscription->getSubscriptions($filter_data);
+		$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 		if ($subscriptions) {
 			foreach ($subscriptions as $subscription) {
@@ -228,7 +228,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'filter_date_next'              => date('Y-m-d H:i:s')
 		];
 
-		$subscriptions = $this->model_checkout_subscription->getSubscriptions($filter_data);
+		$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 		if ($subscriptions) {
 			// Customer

@@ -11,7 +11,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function index(): void {
 		$this->load->language('ssr/information');
 
 		$json = [];
@@ -23,7 +23,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		//if (!$this->user->hasPermission('modify', 'catalog/information')) {
-			$json['error'] = $this->language->get('error_permission');
+		$json['error'] = $this->language->get('error_permission');
 		//}
 
 		if (!$json) {
@@ -79,15 +79,9 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function template() {
+	public function template(): void {}
 
-	}
+	public function language(): void {}
 
-	public function language() {
-
-	}
-
-	public function image() {
-
-	}
+	public function image(): void {}
 }

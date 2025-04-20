@@ -11,7 +11,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function index(): void {
 		$this->load->language('ssr/language');
 
 		$json = [];
@@ -44,7 +44,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('ssr/language');
 
 		$json = [];
@@ -56,7 +56,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$file = DIR_CATALOG . 'view/data/localisation/language.json';
 
-			if  (is_file($file)) {
+			if (is_file($file)) {
 				unlink($file);
 			}
 

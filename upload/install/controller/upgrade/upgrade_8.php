@@ -239,7 +239,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
 			$this->load->model('upgrade/upgrade');
 
 			$events = $this->model_upgrade_upgrade->getRecords('event');

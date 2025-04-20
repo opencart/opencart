@@ -145,9 +145,7 @@ if (!function_exists('str_contains')) {
 // 1. Reading a file
 function readFileContent($filename) {
 	if (file_exists($filename)) {
-		$content = file_get_contents($filename);
-
-		return $content;
+		return file_get_contents($filename);
 	}
 
 	return "File not found";
@@ -163,6 +161,7 @@ function writeToFile($filename, $content) {
 // 3. Appending to a file
 function appendToFile($filename, $content) {
 	$result = file_put_contents($filename, $content, FILE_APPEND);
+
 	return $result !== false;
 }
 
@@ -181,6 +180,7 @@ function deleteFile($filename) {
 	if (file_exists($filename)) {
 		return unlink($filename);
 	}
+
 	return false;
 }
 
@@ -215,6 +215,7 @@ function readDirectory($dirname) {
 			}
 		}
 	}
+
 	return $contents;
 }
 
@@ -228,5 +229,6 @@ function getFileInfo($filename) {
 	if (file_exists($filename)) {
 		return pathinfo($filename);
 	}
+
 	return false;
 }

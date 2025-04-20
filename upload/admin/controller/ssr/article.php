@@ -11,7 +11,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function index(): void {
 		$this->load->language('ssr/article');
 
 		$json = [];
@@ -23,7 +23,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		//if (!$this->user->hasPermission('modify', 'ssr/article')) {
-			$json['error'] = $this->language->get('error_permission');
+		$json['error'] = $this->language->get('error_permission');
 		//}
 
 		//$directory = DIR_CATALOG . 'view/data/cms/';
@@ -86,7 +86,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('ssr/category');
 
 		$json = [];

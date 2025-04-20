@@ -23,6 +23,7 @@ $_['entry_db_database']      = 'Database';
 $_['entry_db_port']          = 'Port';
 $_['entry_db_prefix']        = 'Prefix';
 $_['entry_db_advanced']      = 'Advanced';
+$_['entry_db_ssl_info']      = 'SSL Info';
 $_['entry_db_ssl_key']       = 'SSL Key';
 $_['entry_db_ssl_cert']      = 'SSL Cert';
 $_['entry_db_ssl_ca']        = 'SSL CA';

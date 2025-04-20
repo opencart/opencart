@@ -10,7 +10,7 @@ $_['text_success']         = 'Succès: Votre estimation d\'expédition a été a
 
 // Entrée
 $_['entry_country']        = 'Pays';
-$_['entry_zone']           = 'Région / Province';
+$_['entry_zone']           = 'Région / État';
 $_['entry_postcode']       = 'Code Postal';
 
 // Erreur

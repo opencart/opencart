@@ -284,6 +284,7 @@ $_['error_email']                         = 'E-Mail-Adresse scheint nicht gülti
 $_['error_country']                       = 'Bitte wählen Sie ein Land!';
 $_['error_zone']                          = 'Bitte wählen Sie eine Region / ein Bundesland!';
 $_['error_product_description_length']    = 'Produktbeschreibungslänge erforderlich!';
+$_['error_article_description_length']    = 'Article description length required!';
 $_['error_pagination']                    = 'Seitennummerierung erforderlich!';
 $_['error_autocomplete_limit']            = 'Autovervollständigungslimit erforderlich!';
 $_['error_login_attempts']                = 'Die Anzahl der Anmeldeversuche muss größer als 0 sein!';

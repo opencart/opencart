@@ -23,7 +23,7 @@ $_['entry_status']     = 'Status';
 $_['entry_date_from']  = 'Date From';
 $_['entry_date_to']    = 'Date To';
 
-// Button
+// Buttons
 $_['button_spam']      = 'Spam';
 $_['button_rating']    = 'Calculate Ratings';
 

@@ -15,11 +15,6 @@ $_['text_semi_month']        = 'Demi-Mois';
 $_['text_month']             = 'Mois';
 $_['text_year']              = 'Année';
 
-// Colonne
-$_['column_name']           = 'Nom du Plan d\'Abonnement';
-$_['column_sort_order']     = 'Ordre de Tri';
-$_['column_action']         = 'Action';
-
 // Entrée
 $_['entry_name']            = 'Nom du Plan d\'Abonnement';
 $_['entry_trial_duration']  = 'Durée de l\'Essai';
@@ -31,6 +26,11 @@ $_['entry_cycle']           = 'Cycle';
 $_['entry_frequency']       = 'Fréquence';
 $_['entry_status']          = 'Statut';
 $_['entry_sort_order']      = 'Ordre de Tri';
+
+// Colonne
+$_['column_name']           = 'Nom du Plan d\'Abonnement';
+$_['column_sort_order']     = 'Ordre de Tri';
+$_['column_action']         = 'Action';
 
 // Aide
 $_['help_trial_duration']   = 'La durée correspond au nombre de fois que l\'utilisateur effectuera un paiement.';

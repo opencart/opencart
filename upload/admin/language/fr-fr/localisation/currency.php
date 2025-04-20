@@ -20,6 +20,8 @@ $_['column_action']        = 'Action';
 // Entrée
 $_['entry_title']          = 'Nom de la devise';
 $_['entry_code']           = 'Code';
+$_['error_exists']         = 'La devise n\'existe pas!';
+$_['error_file']           = 'Le fichier est introuvable!';
 $_['entry_value']          = 'Valeur';
 $_['entry_symbol_left']    = 'Symbole à gauche';
 $_['entry_symbol_right']   = 'Symbole à droite';

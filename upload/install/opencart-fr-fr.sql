@@ -2576,6 +2576,23 @@ VALUES (0, 1, 'product_id', '47', 'hp-lp3065', 1),
 -----------------------------------------------------------
 
 --
+-- Dumping data for table `oc_ssr`
+--
+
+INSERT INTO `oc_ssr` (`ssr_id`, `code`, `description`, `action`, `status`, `sort_order`, `date_modified`)
+VALUES (1, 'article', '', 'ssr/article', 0, 0, '2025-04-01 18:12:16'),
+       (2, 'category', '', 'ssr/category', 0, 0, '2025-04-01 18:12:16'),
+       (3, 'country', '', 'ssr/country', 1, 0, '2025-04-01 18:12:16'),
+       (4, 'currency', '', 'ssr/currency', 1, 0, '2025-04-01 18:12:16'),
+       (5, 'information', '', 'ssr/information', 0, 0, '2025-04-01 18:12:16'),
+       (6, 'language', '', 'ssr/language', 1, 0, '2025-04-01 18:12:16'),
+       (7, 'manufacturer', '', 'ssr/manufacturer', 0, 0, '2025-04-01 18:12:16'),
+       (8, 'product', '', 'ssr/product', 0, 0, '2025-04-01 18:12:16'),
+       (9, 'topic', '', 'ssr/topic', 0, 0, '2025-04-01 18:12:16');
+
+-----------------------------------------------------------
+
+--
 -- Dumping data for table `oc_statistics`
 --
 

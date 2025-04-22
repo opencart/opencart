@@ -161,7 +161,11 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * $filter_data = [
 	 *     'filter_subscription_id'        => 1,
 	 *     'filter_order_id'               => 1,
+	 *     'filter_order_product_id'       => 1,
+	 *     'filter_customer_payment_id'    => 1,
+	 *     'filter_customer_id'            => 1,
 	 *     'filter_customer'               => 'John Doe',
+	 *     'filter_date_next'              => '2022-01-01',
 	 *     'filter_subscription_status_id' => 1,
 	 *     'filter_date_from'              => '2021-01-01',
 	 *     'filter_date_to'                => '2021-01-31',
@@ -276,14 +280,14 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * $filter_data = [
 	 *     'filter_subscription_id'        => 1,
 	 *     'filter_order_id'               => 1,
+	 *     'filter_order_product_id'       => 1,
+	 *     'filter_customer_payment_id'    => 1,
+	 *     'filter_customer_id'            => 1,
 	 *     'filter_customer'               => 'John Doe',
+	 *     'filter_date_next'              => '2022-01-01',
 	 *     'filter_subscription_status_id' => 1,
 	 *     'filter_date_from'              => '2021-01-01',
 	 *     'filter_date_to'                => '2021-01-31',
-	 *     'order'                         => 's.subscription_id',
-	 *     'sort'                          => 'DESC',
-	 *     'start'                         => 0,
-	 *     'limit'                         => 10
 	 * ];
 	 *
 	 * $this->load->model('sale/subscription');
@@ -303,12 +307,24 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
+		if (!empty($data['filter_order_product_id'])) {
+			$implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
+		}
+
+		if (!empty($data['filter_customer_payment_id'])) {
+			$implode[] = "`s`.`customer_payment_id` = " . (int)$data['filter_customer_payment_id'];
+		}
+
 		if (!empty($data['filter_customer_id'])) {
 			$implode[] = "`s`.`customer_id` = " . (int)$data['filter_customer_id'];
 		}
 
 		if (!empty($data['filter_customer'])) {
 			$implode[] = "LCASE(CONCAT(`o`.`firstname`, ' ', `o`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
+		}
+
+		if (!empty($data['filter_date_next'])) {
+			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape((string)$data['filter_date_next']) . "')";
 		}
 
 		if (!empty($data['filter_subscription_status_id'])) {

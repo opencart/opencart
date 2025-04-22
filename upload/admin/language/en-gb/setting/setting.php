@@ -284,6 +284,7 @@ $_['error_email']                         = 'E-Mail Address does not appear to b
 $_['error_country']                       = 'Please select a country!';
 $_['error_zone']                          = 'Please select a region / state!';
 $_['error_product_description_length']    = 'Product description length required!';
+$_['error_article_description_length']    = 'Article description length required!';
 $_['error_pagination']                    = 'Pagination required!';
 $_['error_autocomplete_limit']            = 'Autocomplete limit required!';
 $_['error_login_attempts']                = 'Login Attempts must be greater than 0!';

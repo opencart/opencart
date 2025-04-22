@@ -296,6 +296,19 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> subscription records
 	 *
 	 * @example
+	 * 
+	 * $filter_data = [
+	 *     'filter_subscription_id'        => 1,
+	 *     'filter_order_id'               => 1,
+	 *     'filter_order_product_id'       => 1,
+	 *     'filter_customer_payment_id'    => 1,
+	 *     'filter_customer_id'            => 1,
+	 *     'filter_customer'               => 'John Doe',
+	 *     'filter_date_next'              => '2022-01-01',
+	 *     'filter_subscription_status_id' => 1,
+	 *     'filter_date_from'              => '2021-01-01',
+	 *     'filter_date_to'                => '2021-01-31',
+	 * ];
 	 *
 	 * $this->load->model('checkout/subscription');
 	 *
@@ -313,16 +326,25 @@ class Subscription extends \Opencart\System\Engine\Model {
 		if (!empty($data['filter_order_id'])) {
 			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
+
 		if (!empty($data['filter_order_product_id'])) {
 			$implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
 		}
 
+		if (!empty($data['filter_customer_payment_id'])) {
+			$implode[] = "`s`.`customer_payment_id` = " . (int)$data['filter_customer_payment_id'];
+		}
+
+		if (!empty($data['filter_customer_id'])) {
+			$implode[] = "`s`.`customer_id` = " . (int)$data['filter_customer_id'];
+		}
+
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) LIKE '" . $this->db->escape($data['filter_customer'] . '%') . "'";
+			$implode[] = "LCASE(CONCAT(`o`.`firstname`, ' ', `o`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_date_next'])) {
-			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape($data['filter_date_next']) . "')";
+			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape((string)$data['filter_date_next']) . "')";
 		}
 
 		if (!empty($data['filter_subscription_status_id'])) {
@@ -330,11 +352,11 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(`s`.`date_added`) >= DATE('" . $this->db->escape($data['filter_date_from']) . "')";
+			$implode[] = "DATE(`s`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`s`.`date_added`) <= DATE('" . $this->db->escape($data['filter_date_to']) . "')";
+			$implode[] = "DATE(`s`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -386,6 +408,88 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		return $order_data;
+	}
+
+	/**
+	 * Get Total Subscriptions
+	 *
+	 * Get the total number of total subscription records in the database.
+	 *
+	 * @param array<string, mixed> $data array of filters
+	 *
+	 * @return int total number of subscription records
+	 *
+	 * @example
+	 *
+	 * $filter_data = [
+	 *     'filter_subscription_id'        => 1,
+	 *     'filter_order_id'               => 1,
+	 *     'filter_order_product_id'       => 1,
+	 *     'filter_customer_payment_id'    => 1,
+	 *     'filter_customer_id'            => 1,
+	 *     'filter_customer'               => 'John Doe',
+	 *     'filter_date_next'              => '2022-01-01',
+	 *     'filter_subscription_status_id' => 1,
+	 *     'filter_date_from'              => '2021-01-01',
+	 *     'filter_date_to'                => '2021-01-31',
+	 * ];
+	 *
+	 * $this->load->model('sale/subscription');
+	 *
+	 * $subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
+	 */
+	public function getTotalSubscriptions(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
+
+		$implode = [];
+
+		if (!empty($data['filter_subscription_id'])) {
+			$implode[] = "`s`.`subscription_id` = '" . (int)$data['filter_subscription_id'] . "'";
+		}
+
+		if (!empty($data['filter_order_id'])) {
+			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
+		}
+
+		if (!empty($data['filter_order_product_id'])) {
+			$implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
+		}
+
+		if (!empty($data['filter_customer_payment_id'])) {
+			$implode[] = "`s`.`customer_payment_id` = " . (int)$data['filter_customer_payment_id'];
+		}
+
+		if (!empty($data['filter_customer_id'])) {
+			$implode[] = "`s`.`customer_id` = " . (int)$data['filter_customer_id'];
+		}
+
+		if (!empty($data['filter_customer'])) {
+			$implode[] = "LCASE(CONCAT(`o`.`firstname`, ' ', `o`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
+		}
+
+		if (!empty($data['filter_date_next'])) {
+			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape((string)$data['filter_date_next']) . "')";
+		}
+
+		if (!empty($data['filter_subscription_status_id'])) {
+			$implode[] = "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
+		}
+
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(`s`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(`s`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
 	}
 
 	/**

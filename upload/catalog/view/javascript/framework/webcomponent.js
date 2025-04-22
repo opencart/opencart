@@ -6,10 +6,10 @@ import Config from './library/config.js';
 
 const registry = new Registry();
 
-registry.set('config', new Config());
-registry.set('Language', new Language());
 registry.set('storage', new Storage());
 registry.set('template', new Template());
+registry.set('Language', new Language());
+registry.set('config', new Config());
 
 export class WebComponent extends HTMLElement {
     registry = {};

@@ -340,16 +340,23 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'manufacturer_id'      => 0,
-			'name'                 => '',
-			'manufacturer_seo_url' => []
+			'manufacturer_id'          => 0,
+			'manufacturer_description' => [],
+			'manufacturer_seo_url'     => []
 		];
 
 		$post_info = $this->request->post + $required;
 
-		if (!oc_validate_length($post_info['name'], 1, 64)) {
-			$json['error']['name'] = $this->language->get('error_name');
+		foreach ($post_info['information_description'] as $language_id => $value) {
+			if (!oc_validate_length($value['name'], 1, 64)) {
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+			}
+
+			if (!oc_validate_length($value['meta_title'], 1, 255)) {
+				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
+			}
 		}
+
 
 		// SEO
 		if ($post_info['manufacturer_seo_url']) {

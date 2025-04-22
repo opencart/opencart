@@ -78,7 +78,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'name';
+			$sort = 'md.name';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -127,9 +127,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 
 		foreach ($results as $result) {
-			$image = $result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))
-				? $result['image']
-				: 'no_image.png';
+			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
+				$image = $result['image'];
+			} else {
+				$image = 'no_image.png';
+			}
 
 			$data['manufacturers'][] = [
 				'image' => $this->model_tool_image->resize($image, 40, 40),
@@ -146,8 +148,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Sorts
-		$data['sort_name'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+		$data['sort_name'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=md.name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.sort_order' . $url);
 
 		$url = '';
 

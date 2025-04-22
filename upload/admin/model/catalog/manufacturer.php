@@ -219,8 +219,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name',
-			'sort_order'
+			'md.name',
+			'm.sort_order'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

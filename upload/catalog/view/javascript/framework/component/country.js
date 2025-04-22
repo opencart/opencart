@@ -27,7 +27,7 @@ class XCountry extends WebComponent {
             this.countries = countries;
 
             for (let i in this.countries) {
-                html += '<option value="' + this.countries[i].country_id + '"';
+                html += '<option value="' + this.countries[i].country_id + '"'; 
 
                 if (this.countries[i].country_id == this.getAttribute('value')) {
                     html += ' selected';
@@ -39,20 +39,20 @@ class XCountry extends WebComponent {
             this.element.innerHTML = html;
 
             // Checks to see if the selected country option requires a postcode
-            if (this.hasAttribute('postcode')) {
+            if (this.hasAttribute('target')) {
                 this.setAttribute('postcode-required', this.countries[this.getAttribute('value')].postcode_required);
             }
         },
         onchange: (e) => {
             this.setAttribute('value', e.target.value);
 
-            if (this.hasAttribute('postcode')) {
+            if (this.hasAttribute('target')) {
                 this.setAttribute('postcode-required', this.countries[e.target.value].postcode_required);
             }
         },
         changed: async (name, value_old, value_new) => {
             if (name == 'postcode-required') {
-                let element = document.querySelector(this.getAttribute('postcode'));
+                let element = document.querySelector(this.getAttribute('target'));
 
                 if (value_new == 1) {
                     element.setAttribute('required', '');

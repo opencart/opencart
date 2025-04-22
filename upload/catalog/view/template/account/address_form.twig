@@ -10,6 +10,7 @@
       <h1>{{ text_address }}</h1>
       <form id="form-address" action="{{ save }}" method="post" data-oc-toggle="ajax">
         <fieldset>
+
           <div class="row mb-3">
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
             <div class="col-sm-10">
@@ -17,6 +18,7 @@
               <div id="error-firstname" class="invalid-feedback"></div>
             </div>
           </div>
+
           <div class="row mb-3 ">
             <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
             <div class="col-sm-10">
@@ -24,12 +26,14 @@
               <div id="error-lastname" class="invalid-feedback"></div>
             </div>
           </div>
+
           <div class="row mb-3">
             <label for="input-company" class="col-sm-2 col-form-label">{{ entry_company }}</label>
             <div class="col-sm-10">
               <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-company" class="form-control"/>
             </div>
           </div>
+
           <div class="row mb-3">
             <label for="input-address-1" class="col-sm-2 col-form-label">{{ entry_address_1 }}</label>
             <div class="col-sm-10">
@@ -37,12 +41,14 @@
               <div id="error-address-1" class="invalid-feedback"></div>
             </div>
           </div>
+
           <div class="row mb-3">
             <label for="input-address-2" class="col-sm-2 col-form-label">{{ entry_address_2 }}</label>
             <div class="col-sm-10">
               <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-address-2" class="form-control"/>
             </div>
           </div>
+
           <div class="row mb-3">
             <label for="input-city" class="col-sm-2 col-form-label">{{ entry_city }}</label>
             <div class="col-sm-10">
@@ -62,7 +68,7 @@
           <div class="row mb-3">
             <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
             <div class="col-sm-10">
-              <x-country name="country_id" value="{{ country_id }}" id="x-country" postcode-required="1" postcode="#input-postcode" language="{{ language }}" input-id="input-country" input-class="form-select" required>
+              <x-country name="country_id" value="{{ country_id }}" id="x-country" postcode-required="1" target="#input-postcode" language="{{ language }}" input-id="input-country" input-class="form-select" required>
                 <option value="0">{{ text_select }}</option>
               </x-country>
               <div id="error-country" class="invalid-feedback"></div>

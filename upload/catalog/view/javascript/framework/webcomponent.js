@@ -78,5 +78,5 @@ export class WebComponent extends HTMLElement {
 
 document.addEventListener('DOMContentLoaded', () => {
     import('./component/country.js');
-    //import('./component/zone.js');
+    import('./component/zone.js');
 });

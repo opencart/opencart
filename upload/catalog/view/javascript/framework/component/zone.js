@@ -1,15 +1,18 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XZone extends WebComponent {
+    element = HTMLInputElement;
+
     event = {
         connected: async () => {
             this.default = this.innerHTML;
 
-            // Add the select element to the shadow DOM
+            // Create the select element
             this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.default + '</select>';
 
             this.element = this.querySelector('select');
 
+            // Add the on change event
             this.element.addEventListener('change', this.event.onchange);
 
             // Get the country id from the target element
@@ -17,12 +20,13 @@ class XZone extends WebComponent {
 
             element.querySelector('select').addEventListener('change', this.event.changed);
 
+            //observer.observe(element, config);
             let response = this.storage.fetch('localisation/country.' + this.getAttribute('value'));
 
             response.then(this.event.onloaded);
         },
         onloaded: (country) => {
-            let html = '';
+            let html = this.default;
             let zones = country['zone'];
 
             for (let i in zones) {
@@ -36,12 +40,6 @@ class XZone extends WebComponent {
             }
 
             this.element.innerHTML = html;
-        },
-        changed: async (e) => {
-            let response = this.storage.fetch('localisation/country.' + e.target.value);
-
-            response.then(this.event.onloaded);
-
         },
         onchange: async (e) => {
             this.setAttribute('value', e.target.value);

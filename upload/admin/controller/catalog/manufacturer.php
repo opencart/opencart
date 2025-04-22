@@ -235,10 +235,15 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['manufacturer_id'] = 0;
 		}
 
+		// Languages
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
 		if (!empty($manufacturer_info)) {
-			$data['name'] = $manufacturer_info['name'];
+			$data['manufacturer_description'] = $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id']);
 		} else {
-			$data['name'] = '';
+			$data['manufacturer_description'] = [];
 		}
 
 		// Stores

@@ -34,6 +34,11 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 		$manufacturer_id = $this->db->getLastId();
 
+		// Description
+		foreach ($data['manufacturer_description'] as $language_id => $manufacturer_description) {
+			$this->model_catalog_information->addDescription($manufacturer_id, $language_id, $manufacturer_description);
+		}
+
 		// Store
 		if (isset($data['manufacturer_store'])) {
 			foreach ($data['manufacturer_store'] as $store_id) {
@@ -89,6 +94,14 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	public function editManufacturer(int $manufacturer_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
+
+		// Description
+		$this->deleteDescriptions($manufacturer_id);
+
+		foreach ($data['manufacturer_description'] as $language_id => $manufacturer_description) {
+			$this->model_catalog_information->addDescription($manufacturer_id, $language_id, $manufacturer_description);
+		}
+
 		// Store
 		$this->deleteStores($manufacturer_id);
 
@@ -143,6 +156,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	public function deleteManufacturer(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
+		$this->model_catalog_information->deleteDescriptions($manufacturer_id);
 		$this->model_catalog_manufacturer->deleteStores($manufacturer_id);
 		$this->model_catalog_manufacturer->deleteLayouts($manufacturer_id);
 
@@ -255,6 +269,121 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer`");
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Add Description
+	 *
+	 * Create a new manufacturer description record in the database.
+	 *
+	 * @param int                  $information_id primary key of the information record
+	 * @param int                  $language_id    primary key of the language record
+	 * @param array<string, mixed> $data           array of data
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $information_data['manufacturer_description'] = [
+	 *     'title'            => 'Information Title',
+	 *     'description'      => 'Information Description',
+	 *     'meta_title'       => 'Meta Title',
+	 *     'meta_description' => 'Meta Description',
+	 *     'meta_keyword'     => 'Meta Keyword'
+	 * ];
+	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
+	 * $this->model_catalog_manufacturer->addDescription($information_id, $language_id, $information_data);
+	 */
+	public function addDescription(int $manufacturer_id, int $language_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_description` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+	}
+
+	/**
+	 * Delete Descriptions
+	 *
+	 * Delete information description records in the database.
+	 *
+	 * @param int $information_id primary key of the information record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $this->model_catalog_information->deleteDescriptions($information_id);
+	 */
+	public function deleteDescriptions(int $manufacturer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_description` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+	}
+
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * Delete information descriptions by language records in the database.
+	 *
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $this->model_catalog_information->deleteDescriptionsByLanguageId($language_id);
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
+	/**
+	 * Get Descriptions
+	 *
+	 * Get the record of the information description records in the database.
+	 *
+	 * @param int $information_id primary key of the information record
+	 *
+	 * @return array<int, array<string, string>> description records that have information ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $information_description = $this->model_catalog_information->getDescriptions($information_id);
+	 */
+	public function getDescriptions(int $manufacturer_id): array {
+		$information_description_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_description` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+
+		foreach ($query->rows as $result) {
+			$information_description_data[$result['language_id']] = $result;
+		}
+
+		return $information_description_data;
+	}
+
+	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * Get the record of the information descriptions by language records in the database.
+	 *
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return array<int, array<string, string>> description records that have language ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $results = $this->model_catalog_information->getDescriptionsByLanguageId($language_id);
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
 	}
 
 	/**

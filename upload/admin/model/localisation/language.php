@@ -145,6 +145,7 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_catalog_information->addDescription($information['information_id'], $language_id, $information);
 		}
 
+
 		// Length
 		$this->load->model('localisation/length_class');
 
@@ -152,6 +153,15 @@ class Language extends \Opencart\System\Engine\Model {
 
 		foreach ($results as $length) {
 			$this->model_localisation_length_class->addDescription($length['length_class_id'], $language_id, $length);
+		}
+
+		// Manufacturer
+		$this->load->model('catalog/manufacturer');
+
+		$results = $this->model_catalog_manufacturer->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+
+		foreach ($results as $manufacturer) {
+			$this->model_catalog_manufacturer->addDescription($manufacturer['manufacturer_id'], $language_id, $information);
 		}
 
 		// Option
@@ -425,6 +435,11 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->load->model('localisation/length_class');
 
 		$this->model_localisation_length_class->deleteDescriptionsByLanguageId($language_id);
+
+		// Manufacturer
+		$this->load->model('catalog/manufacturer');
+
+		$this->model_catalog_manufacturer->deleteDescriptionsByLanguageId($language_id);
 
 		// Option
 		$this->load->model('catalog/option');

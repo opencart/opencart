@@ -7,7 +7,6 @@ $_['text_success']            = 'Erfolg: Sie haben Themen geändert!';
 $_['text_list']               = 'Themenliste';
 $_['text_add']                = 'Thema hinzufügen';
 $_['text_edit']               = 'Thema bearbeiten';
-$_['text_default']            = 'Standard';
 $_['text_general']            = 'Allgemein';
 $_['text_meta']               = 'Meta-Tags';
 $_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL  eindeutig ist.';

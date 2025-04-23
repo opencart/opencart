@@ -6,7 +6,6 @@ $_['heading_title']     = 'Theme Editor';
 $_['text_success']      = 'Success: You have modified themes!';
 $_['text_add']          = 'Add Theme';
 $_['text_edit']         = 'Edit Theme';
-$_['text_default']      = 'Default';
 $_['text_extension']    = 'Extensions';
 $_['text_code']         = 'Template Code Editor';
 $_['text_twig']         = 'The theme editor uses the template language Twig. You can read about <a href="https://twig.symfony.com/doc/" target="_blank" class="alert-link">Twig syntax here</a>.';

@@ -89,7 +89,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 			$data['stores'][] = [
 				'store_id' => 0,
-				'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
+				'name'     => $this->config->get('config_name'),
 				'url'      => HTTP_CATALOG,
 				'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
 			];

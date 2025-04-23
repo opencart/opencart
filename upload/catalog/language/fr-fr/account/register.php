@@ -36,4 +36,4 @@ $_['error_password_lowercase'] = 'minuscule';
 $_['error_password_number']    = 'numéro';
 $_['error_password_symbol']    = 'symbole';
 $_['error_password_length']    = 'Le mot de passe devrait contenir entre %d et 40 caractères!';
-$_['error_agree']              = 'Attention: Vous devez accepter les %s!';
+$_['error_agree']              = 'Attention: Vous devez accepter les %s !';

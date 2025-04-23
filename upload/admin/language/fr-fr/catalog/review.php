@@ -4,7 +4,7 @@ $_['heading_title']     = 'Avis';
 
 // Texte
 $_['text_success']      = 'Succès: Vous avez modifié les avis!';
-$_['text_next']         = 'Succès: Vous avez modifié les évaluations de %s produit(s) sur %s!';
+$_['text_next']         = 'Succès: Vous avez modifié les évaluations de %s produit(s) sur %s !';
 $_['text_list']         = 'Liste des Avis';
 $_['text_add']          = 'Ajouter un Avis';
 $_['text_edit']         = 'Modifier l\'Avis';

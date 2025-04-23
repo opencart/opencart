@@ -1760,13 +1760,34 @@ VALUES (1, 1, 'Centimètre', 'cm'),
 -- Dumping data for table `oc_manufacturer`
 --
 
-INSERT INTO `oc_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`)
-VALUES (5, 'HTC', 'catalog/demo/htc_logo.jpg', 0),
-       (6, 'Palm', 'catalog/demo/palm_logo.jpg', 0),
-       (7, 'Hewlett-Packard', 'catalog/demo/hp_logo.jpg', 0),
-       (8, 'Apple', 'catalog/demo/apple_logo.jpg', 0),
-       (9, 'Canon', 'catalog/demo/canon_logo.jpg', 0),
-       (10, 'Sony', 'catalog/demo/sony_logo.jpg', 0);
+INSERT INTO `oc_manufacturer` (`manufacturer_id`, `image`, `sort_order`) VALUES
+(5, 'catalog/demo/htc_logo.jpg', 0),
+(6, 'catalog/demo/palm_logo.jpg', 0),
+(7, 'catalog/demo/hp_logo.jpg', 0),
+(8, 'catalog/demo/apple_logo.jpg', 0),
+(9, 'catalog/demo/canon_logo.jpg', 0),
+(10, 'catalog/demo/sony_logo.jpg', 0);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_manufacturer_description`
+--
+
+INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(5, 1, 'HTC', NULL, NULL, NULL, NULL),
+(5, 25, 'HTC', NULL, NULL, NULL, NULL),
+(6, 1, 'Palm', NULL, NULL, NULL, NULL),
+(6, 25, 'Palm', NULL, NULL, NULL, NULL),
+(7, 1, 'Hewlett-Packard', NULL, NULL, NULL, NULL),
+(7, 25, 'Hewlett-Packard', NULL, NULL, NULL, NULL),
+(8, 1, 'Apple', NULL, NULL, NULL, NULL),
+(8, 25, 'Apple', NULL, NULL, NULL, NULL),
+(9, 1, 'Canon', NULL, NULL, NULL, NULL),
+(9, 25, 'Canon', NULL, NULL, NULL, NULL),
+(10, 1, 'Sony', NULL, NULL, NULL, NULL),
+(10, 25, 'Sony', NULL, NULL, NULL, NULL);
+
 -----------------------------------------------------------
 
 --
@@ -2275,8 +2296,6 @@ VALUES (0, 'config', 'config_shared', '0', 0),
        (0, 'config', 'config_description', '{"1":{"meta_title":"Votre Magasin","meta_description":"","meta_keyword":""}}', 1),
        (0, 'config', 'config_session_expire', '86400', 0),
        (0, 'config', 'config_session_samesite', 'Strict', 0),
-       (0, 'config', 'config_meta_description', 'Mon Magasin', 0),
-       (0, 'config', 'config_meta_keyword', '', 0),
        (0, 'config', 'config_theme', 'basic', 0),
        (0, 'config', 'config_layout_id', '4', 0),
        (0, 'config', 'config_country_id', '222', 0),
@@ -2572,6 +2591,23 @@ VALUES (0, 1, 'product_id', '47', 'hp-lp3065', 1),
        (0, 1, 'route', 'product/product', 'product', -1),
        (0, 1, 'route', 'product/category', 'catalog', -1),
        (0, 1, 'route', 'product/manufacturer', 'brands', -1);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_ssr`
+--
+
+INSERT INTO `oc_ssr` (`ssr_id`, `code`, `description`, `action`, `status`, `sort_order`, `date_modified`)
+VALUES (1, 'article', '', 'ssr/article', 0, 0, '2025-04-01 18:12:16'),
+       (2, 'category', '', 'ssr/category', 0, 0, '2025-04-01 18:12:16'),
+       (3, 'country', '', 'ssr/country', 1, 0, '2025-04-01 18:12:16'),
+       (4, 'currency', '', 'ssr/currency', 1, 0, '2025-04-01 18:12:16'),
+       (5, 'information', '', 'ssr/information', 0, 0, '2025-04-01 18:12:16'),
+       (6, 'language', '', 'ssr/language', 1, 0, '2025-04-01 18:12:16'),
+       (7, 'manufacturer', '', 'ssr/manufacturer', 0, 0, '2025-04-01 18:12:16'),
+       (8, 'product', '', 'ssr/product', 0, 0, '2025-04-01 18:12:16'),
+       (9, 'topic', '', 'ssr/topic', 0, 0, '2025-04-01 18:12:16');
 
 -----------------------------------------------------------
 

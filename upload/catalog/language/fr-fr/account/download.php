@@ -14,5 +14,5 @@ $_['column_size']       = 'Taille';
 $_['column_date_added'] = 'Date d\'ajout';
 
 // Erreur
-$_['error_not_found']    = 'Erreur: Impossible de trouver le fichier %s!';
+$_['error_not_found']    = 'Erreur: Impossible de trouver le fichier %s !';
 $_['error_headers_sent'] = 'Erreur: Les en-têtes ont déjà été envoyés!';

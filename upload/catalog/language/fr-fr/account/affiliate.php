@@ -28,7 +28,7 @@ $_['entry_bank_account_number'] = 'Numéro de compte';
 
 // Erreur
 $_['error_token']               = 'Attention: Jeton d\'affiliation invalide!';
-$_['error_agree']               = 'Attention: Vous devez accepter les %s!';
+$_['error_agree']               = 'Attention: Vous devez accepter les %s !';
 $_['error_payment_method']      = 'Mode de paiement requis!';
 $_['error_cheque']              = 'Le nom du bénéficiaire du chèque est requis!';
 $_['error_paypal']              = 'L\'adresse e-mail PayPal ne semble pas être valide!';

@@ -5,7 +5,7 @@ $_['heading_title']    = 'Blogues';
 // Texte
 $_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Succès: Vous avez modifié le module des blogues!';
-$_['text_next']        = 'Succès: Vous avez modifié le module des blogues de %s sur %s!';
+$_['text_next']        = 'Succès: Vous avez modifié le module des blogues de %s sur %s !';
 $_['text_edit']        = 'Modifier le Module des Blogues';
 
 // Formulaire

@@ -28,7 +28,7 @@ $_['entry_store']             = 'Magasins';
 $_['entry_sort_order']        = 'Ordre de Tri';
 $_['entry_status']            = 'Statut';
 $_['entry_keyword']           = 'Mot-clé';
-$_['entry_layout']            = 'Disposition de Remplacement';
+$_['entry_layout']            = 'Substitution de Mise en Page';
 
 // Erreur
 $_['error_warning']           = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
@@ -37,4 +37,4 @@ $_['error_name']              = 'Le nom du sujet doit contenir entre 1 et 255 ca
 $_['error_meta_title']        = 'Le titre Meta doit contenir plus de 1 caractère et moins de 255 caractères!';
 $_['error_keyword']           = 'L\'URL SEO doit contenir entre 1 et 64 caractères!';
 $_['error_keyword_exists']    = 'L\'URL SEO doit être unique!';
-$_['error_keyword_character'] = 'Le mot-clé ne peut utiliser que les caractères a-z, 0-9, - et _ !';
+$_['error_keyword_character'] = 'Le mot-clé ne peut utiliser que les caractères a-z, 0-9, - et _!';

@@ -39,4 +39,4 @@ $_['error_value']             = 'La valeur doit contenir entre 1 et 255 caractè
 $_['error_value_exists']      = 'La valeur est déjà utilisée!';
 $_['error_keyword']           = 'Le mot-clé doit contenir entre 1 et 64 caractères!';
 $_['error_keyword_exists']    = 'Le mot-clé est déjà utilisé!';
-$_['error_keyword_character'] = 'Le mot-clé ne peut utiliser que les caractères a-z, 0-9, - et _ !';
+$_['error_keyword_character'] = 'Le mot-clé ne peut utiliser que les caractères a-z, 0-9, - et _!';

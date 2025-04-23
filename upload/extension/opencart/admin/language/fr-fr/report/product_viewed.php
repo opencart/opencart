@@ -6,7 +6,7 @@ $_['heading_title']    = 'Rapport des Produits Consultés';
 $_['text_extension']   = 'Extensions';
 $_['text_edit']        = 'Modifier le Rapport des Produits Consultés';
 $_['text_success']     = 'Succès: Vous avez modifié le rapport des produits consultés!';
-$_['text_progress']    = 'Progression %s de %s!';
+$_['text_progress']    = 'Progression %s de %s !';
 
 // Colonne
 $_['column_name']      = 'Nom du Produit';

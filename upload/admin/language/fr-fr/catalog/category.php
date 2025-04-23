@@ -47,4 +47,4 @@ $_['error_meta_title']        = 'Le titre Meta doit contenir plus de 1 caractèr
 $_['error_parent']            = 'La catégorie parente que vous avez choisie est un enfant de la catégorie actuelle!';
 $_['error_keyword']           = 'L\'URL SEO doit contenir entre 1 et 64 caractères!';
 $_['error_keyword_exists']    = 'L\'URL SEO doit être unique!';
-$_['error_keyword_character'] = 'Le mot-clé ne peut utiliser que les caractères a-z, 0-9, - et _ !';
+$_['error_keyword_character'] = 'Le mot-clé ne peut utiliser que les caractères a-z, 0-9, - et _!';

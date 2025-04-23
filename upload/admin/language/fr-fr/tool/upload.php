@@ -21,7 +21,7 @@ $_['entry_date_to']      = 'Date de fin';
 
 // Erreur
 $_['error_permission']   = 'Attention: Vous n\'avez pas la permission de modifier les téléversements!';
-$_['error_not_found']    = 'Erreur: Impossible de trouver le fichier %s!';
+$_['error_not_found']    = 'Erreur: Impossible de trouver le fichier %s !';
 $_['error_headers_sent'] = 'Erreur: Les en-têtes ont déjà été envoyés!';
 $_['error_upload']       = 'Le fichier n\'a pas pu être téléversé!';
 $_['error_filename']     = 'Le nom du fichier doit contenir entre 3 et 128 caractères!';

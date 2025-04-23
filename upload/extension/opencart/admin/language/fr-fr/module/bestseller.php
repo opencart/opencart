@@ -5,7 +5,7 @@ $_['heading_title']    = 'Meilleures Produits';
 // Texte
 $_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Succès: Vous avez modifié le module meilleures produits!';
-$_['text_next']        = 'Succès: Vous avez modifié le module meilleures produits de %s sur %s!';
+$_['text_next']        = 'Succès: Vous avez modifié le module meilleures produits de %s sur %s !';
 $_['text_edit']        = 'Modifier le Module Meilleures Produits';
 $_['text_horizontal']  = 'Horizontal';
 $_['text_vertical']    = 'Vertical';

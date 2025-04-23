@@ -8,7 +8,6 @@ $_['text_list']               = 'Category List';
 $_['text_add']                = 'Add Category';
 $_['text_edit']               = 'Edit Category';
 $_['text_filter']             = 'Filter';
-$_['text_default']            = 'Default';
 $_['text_general']            = 'General';
 $_['text_meta']               = 'Meta Tags';
 $_['text_keyword']            = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';

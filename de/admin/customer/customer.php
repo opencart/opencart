@@ -7,7 +7,6 @@ $_['text_success']             = 'Erfolg: Sie haben veränderte Kunden!';
 $_['text_list']                = 'Kundenliste';
 $_['text_add']                 = 'Kunden hinzufügen';
 $_['text_edit']                = 'Kunden bearbeiten';
-$_['text_default']             = 'Standard';
 $_['text_store']               = 'Online-Shop (Store)';
 $_['text_customer']            = 'Kundendetails';
 $_['text_password']            = 'Passwort';

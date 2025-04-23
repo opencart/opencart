@@ -10,7 +10,6 @@ $_['text_edit']           = 'Layout bearbeiten';
 $_['text_remove']         = 'Entfernen';
 $_['text_route']          = 'Wählen Sie das Geschäft und die Routen aus, die mit diesem Layout verwendet werden sollen';
 $_['text_module']         = 'Wählen Sie die Position der Module';
-$_['text_default']        = 'Standard';
 $_['text_content_top']    = 'Inhalt Top';
 $_['text_content_bottom'] = 'Inhalt unten';
 $_['text_column_left']    = 'Spalte links';

@@ -143,90 +143,109 @@ if (!function_exists('str_contains')) {
 // File Handling Functions
 
 // 1. Reading a file
-function readFileContent($filename) {
-	if (file_exists($filename)) {
-		$content = file_get_contents($filename);
-
-		return $content;
+function oc_file_read($file) {
+	if (is_file($file)) {
+		return file_get_contents($file);
 	}
 
-	return "File not found";
+	return false;
 }
 
 // 2. Writing to a file
-function writeToFile($filename, $content) {
-	$result = file_put_contents($filename, $content);
-
-	return $result !== false;
+function oc_file_write($file, $content) {
+	return file_put_contents($file, $content) !== false;
 }
 
 // 3. Appending to a file
-function appendToFile($filename, $content) {
-	$result = file_put_contents($filename, $content, FILE_APPEND);
-	return $result !== false;
-}
-
-// 4. Checking if file exists
-function checkFileExists($filename) {
-	return file_exists($filename);
-}
-
-// 5. Getting file size (in bytes)
-function getFileSize($filename) {
-	return filesize($filename);
+function oc_file_append($filename, $content) {
+	return file_put_contents($filename, $content, FILE_APPEND) !== false;
 }
 
 // 6. Deleting a file
-function deleteFile($filename) {
-	if (file_exists($filename)) {
-		return unlink($filename);
+function oc_file_delete($path) {
+	if (is_file($path)) {
+		return unlink($path);
 	}
+
 	return false;
 }
 
 // Directory Handling Functions
 
 // 1. Creating a directory
-function createDirectory($dirname, $permissions = 0777) {
-	if (!is_dir($dirname)) {
-		return mkdir($dirname, $permissions, true);
+function oc_directory_create($path, $permissions = 0777) {
+	$path_new = '';
+
+	$directories = explode('/', rtrim($path, '/'));
+
+	foreach ($directories as $directory) {
+		if (!$path_new) {
+			$path_new = $directory;
+		} else {
+			$path_new = $path_new . '/' . $directory;
+		}
+
+		// To fix storage location
+		if (!is_dir($path_new . '/') && !mkdir($path_new . '/', $permissions)) {
+			return false;
+		}
 	}
 
-	return false;
+	return true;
 }
 
-// 2. Removing a directory (must be empty)
-function removeDirectory($dirname) {
-	if (is_dir($dirname)) {
-		return rmdir($dirname);
+// 2. Removing a directory
+function oc_directory_remove($path) {
+	$files = [];
+
+	// Make path into an array
+	$directory = [$path];
+
+	// While the path array is still populated keep looping through
+	while (count($directory) != 0) {
+		$next = array_shift($directory);
+
+		if (is_dir($next)) {
+			foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+				// If directory add to path array
+				$directory[] = $file;
+			}
+		}
+
+		// Add the file to the files to be deleted array
+		$files[] = $next;
 	}
 
-	return false;
+	// Reverse sort the file array
+	rsort($files);
+
+	foreach ($files as $file) {
+		// If file just delete
+		if (is_file($file)) {
+			unlink($file);
+		}
+
+		// If directory use the remove directory function
+		if (is_dir($file)) {
+			rmdir($file);
+		}
+	}
+
+	return true;
 }
 
 // 3. Reading directory contents
-function readDirectory($dirname) {
+function oc_directory_read($directory) {
 	$contents = [];
-	if (is_dir($dirname)) {
-		$files = scandir($dirname);
+
+	if (is_dir($directory)) {
+		$files = scandir($directory);
+
 		foreach ($files as $file) {
-			if ($file != "." && $file != "..") {
+			if ($file != '.' && $file != '..') {
 				$contents[] = $file;
 			}
 		}
 	}
 	return $contents;
-}
-
-// 4. Checking if directory exists
-function checkDirectoryExists($dirname) {
-	return is_dir($dirname);
-}
-
-// 5. Getting file information
-function getFileInfo($filename) {
-	if (file_exists($filename)) {
-		return pathinfo($filename);
-	}
-	return false;
 }

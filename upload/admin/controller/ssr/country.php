@@ -22,22 +22,55 @@ class Country extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = DIR_CATALOG . 'view/data/localisation/';
-
-		if (!is_dir($directory) && !mkdir($directory, 0777)) {
-			$json['error'] = $this->language->get('error_directory');
-		}
-
 		if (!$json) {
+			$stores = [];
+
+			$stores[] = [
+				'name' => $this->language->get('text_default'),
+				'url'  => parse_url(HTTP_CATALOG, PHP_URL_HOST)
+			];
 
 			$this->load->model('setting/store');
 
-			$stores = $this->model_setting_store->getStores();
+			$results = $this->model_setting_store->getStores();
+
+			foreach ($results as $result) {
+				$stores[] = [
+					'name' => $result['name'],
+					'url'  => parse_url($result['url'], PHP_URL_HOST)
+				];
+			}
+
+			$base = DIR_CATALOG . 'view/data/';
 
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
 
+			foreach ($stores as $store) {
+				foreach ($languages as $language) {
+					$path = $store['url'] . '/' . $language['code'] . '/localisation/';
+
+					// To fix storage location
+					if (!oc_directory_create($base . $path, 0777)) {
+						$json['error'] = sprintf($this->language->get('error_directory'), $path);
+
+						break;
+					}
+
+
+
+
+				}
+			}
+		}
+
+		// Must not have a path before files and directories can be moved
+		foreach ($paths as $path) {
+
+		}
+
+		if (!$json) {
 			// Generate a list of countries to store as JSON
 			$countries = [];
 
@@ -57,13 +90,15 @@ class Country extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			foreach ($countries as $language => $value) {
-				$file = $directory . 'country.' . $language . '.json';
+			foreach ($stores as $store) {
+				foreach ($countries as $language => $value) {
+					$file = $directory . 'country.' . $language . '.json';
 
-				if (!file_put_contents($file, json_encode($value))) {
-					$json['error'] = $this->language->get('error_file');
+					if (!file_put_contents($file, json_encode($value))) {
+						$json['error'] = $this->language->get('error_file');
 
-					break;
+						break;
+					}
 				}
 			}
 		}

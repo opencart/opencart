@@ -16,7 +16,6 @@ $_['text_price']                 = 'Preis';
 $_['text_stock']                 = 'Aktie';
 $_['text_specification']         = 'Spezifikation';
 $_['text_filter']                = 'Filter';
-$_['text_default']               = 'Standard';
 $_['text_keyword']               = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL  eindeutig ist.';
 $_['text_option_add']            = 'Neue Option zufügen';
 $_['text_option_value']          = 'Optionswert';

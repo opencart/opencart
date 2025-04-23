@@ -1,6 +1,7 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XZone extends WebComponent {
+    default = HTMLInputElement;
     element = HTMLInputElement;
 
     event = {

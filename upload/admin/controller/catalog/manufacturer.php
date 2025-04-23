@@ -359,7 +359,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
 		// SEO
 		if ($post_info['manufacturer_seo_url']) {
 			$this->load->model('design/seo_url');

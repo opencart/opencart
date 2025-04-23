@@ -58,7 +58,6 @@ $_['text_store_email']           = 'E-Mail speichern';
 $_['text_customer_email']        = 'Kunden E-Mail';
 $_['text_customer_telephone']    = 'Kundentelefon';
 $_['text_missing']               = 'Fehlende Bestellungen';
-$_['text_default']               = 'Standard';
 $_['text_picklist']              = 'Versandschein';
 $_['text_sku']                   = 'Artikelnummer';
 $_['text_upc']                   = 'UPC';

@@ -29,6 +29,11 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+
+			$this->load->model('setting/store');
+
+			$stores = $this->model_setting_store->getStores();
+
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();

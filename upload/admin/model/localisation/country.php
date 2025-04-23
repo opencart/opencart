@@ -41,6 +41,12 @@ class Country extends \Opencart\System\Engine\Model {
 			$this->model_localisation_country->addDescription($country_id, $language_id, $country_description);
 		}
 
+		if (isset($data['country_store'])) {
+			foreach ($data['country_store'] as $store_id) {
+				$this->model_localisation_country->addStore($country_id, $store_id);
+			}
+		}
+
 		$this->cache->delete('country');
 
 		return $country_id;
@@ -80,6 +86,14 @@ class Country extends \Opencart\System\Engine\Model {
 			$this->model_localisation_country->addDescription($country_id, $language_id, $country_description);
 		}
 
+		$this->model_localisation_country->deleteStores($country_id);
+
+		if (isset($data['country_store'])) {
+			foreach ($data['country_store'] as $store_id) {
+				$this->model_localisation_country->addStore($country_id, $store_id);
+			}
+		}
+
 		$this->cache->delete('country');
 	}
 
@@ -102,6 +116,7 @@ class Country extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		$this->model_localisation_country->deleteDescriptions($country_id);
+		$this->model_localisation_country->deleteStores($country_id);
 
 		$this->cache->delete('country');
 	}
@@ -261,6 +276,82 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Countries
+	 *
+	 * Get the total number of country records in the database.
+	 *
+	 * @param array<string, mixed> $data array of filters
+	 *
+	 * @return int total number of country records
+	 *
+	 * @example
+	 *
+	 * $filter_data = [
+	 *     'filter_name'       => 'Country Name',
+	 *     'filter_iso_code_2' => 'Country ISO Code 2',
+	 *     'filter_iso_code_3' => 'Country ISO Code 3',
+	 *     'sort'              => 'name',
+	 *     'order'             => 'DESC',
+	 *     'start'             => 0,
+	 *     'limit'             => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $country_total = $this->model_localisation_country->getTotalCountries($filter_data);
+	 */
+	public function getTotalCountries(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c`";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
+		}
+
+		$implode = [];
+
+		if (!empty($data['filter_name'])) {
+			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+		}
+
+		if (!empty($data['filter_iso_code_2'])) {
+			$implode[] = "LCASE(`c`.`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
+		}
+
+		if (!empty($data['filter_iso_code_3'])) {
+			$implode[] = "LCASE(`c`.`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Countries By Address Format ID
+	 *
+	 * Get the total number of countries by address format records in the database.
+	 *
+	 * @param int $address_format_id primary key of the address format record
+	 *
+	 * @return int total number of country records that have address format ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $country_total = $this->model_localisation_country->getTotalCountriesByAddressFormatId($address_format_id);
+	 */
+	public function getTotalCountriesByAddressFormatId(int $address_format_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` WHERE `address_format_id` = '" . (int)$address_format_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Add Description
 	 *
 	 * Create a new country description record in the database.
@@ -372,78 +463,69 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Countries
+	 * Add Store
 	 *
-	 * Get the total number of country records in the database.
+	 * Create a new country store record in the database.
 	 *
-	 * @param array<string, mixed> $data array of filters
+	 * @param int $country_id primary key of the country record
+	 * @param int $store_id    primary key of the store record
 	 *
-	 * @return int total number of country records
+	 * @return void
 	 *
 	 * @example
 	 *
-	 * $filter_data = [
-	 *     'filter_name'       => 'Country Name',
-	 *     'filter_iso_code_2' => 'Country ISO Code 2',
-	 *     'filter_iso_code_3' => 'Country ISO Code 3',
-	 *     'sort'              => 'name',
-	 *     'order'             => 'DESC',
-	 *     'start'             => 0,
-	 *     'limit'             => 10
-	 * ];
-	 *
 	 * $this->load->model('localisation/country');
 	 *
-	 * $country_total = $this->model_localisation_country->getTotalCountries($filter_data);
+	 * $this->model_localisation_country->addStore($country_id, $store_id);
 	 */
-	public function getTotalCountries(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c`";
-
-		if (!empty($data['filter_name'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
-		}
-
-		$implode = [];
-
-		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_iso_code_2'])) {
-			$implode[] = "LCASE(`c`.`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_iso_code_3'])) {
-			$implode[] = "LCASE(`c`.`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
+	public function addStore(int $country_id, int $store_id): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "country_to_store` SET `country_id` = '" . (int)$country_id . "', `store_id` = '" . (int)$store_id . "'");
 	}
 
 	/**
-	 * Get Total Countries By Address Format ID
+	 * Delete Stores
 	 *
-	 * Get the total number of countries by address format records in the database.
+	 * Delete country store records in the database.
 	 *
-	 * @param int $address_format_id primary key of the address format record
+	 * @param int $country_id primary key of the country record
 	 *
-	 * @return int total number of country records that have address format ID
+	 * @return void
 	 *
 	 * @example
 	 *
 	 * $this->load->model('localisation/country');
 	 *
-	 * $country_total = $this->model_localisation_country->getTotalCountriesByAddressFormatId($address_format_id);
+	 * $this->model_localisation_country->deleteStores($country_id);
 	 */
-	public function getTotalCountriesByAddressFormatId(int $address_format_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` WHERE `address_format_id` = '" . (int)$address_format_id . "'");
-
-		return (int)$query->row['total'];
+	public function deleteStores(int $country_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_to_store` WHERE `country_id` = '" . (int)$country_id . "'");
 	}
+
+	/**
+	 * Get Stores
+	 *
+	 * Get the record of the information store records in the database.
+	 *
+	 * @param int $information_id primary key of the information record
+	 *
+	 * @return array<int, int> store records that have information ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $information_store = $this->model_catalog_information->getStores($information_id);
+	 */
+	public function getStores(int $country_id): array {
+		$country_store_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country_to_store` WHERE `country_id` = '" . (int)$country_id . "'");
+
+		foreach ($query->rows as $result) {
+			$country_store_data[] = $result['store_id'];
+		}
+
+		return $country_store_data;
+	}
+
 }

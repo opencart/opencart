@@ -16,7 +16,7 @@
           {% for currency in currencies %}
             <tr{% if not currency.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" class="form-check-input"/></td>
-              <td>{{ currency.title }}</td>
+              <td>{{ currency.title }}{% if currency.currency_id == currency_id %} <strong>({{ text_default }})</strong>{% endif %}</td>
               <td>{{ currency.code }}</td>
               <td class="text-end">{{ currency.value }}</td>
               <td class="d-none d-lg-table-cell">{{ currency.date_modified }}</td>

@@ -9,7 +9,6 @@ $_['text_install']            = 'Install';
 $_['text_add']                = 'Add SEO URL';
 $_['text_edit']               = 'Edit SEO URL';
 $_['text_filter']             = 'Filter';
-$_['text_default']            = 'Default';
 
 // Column
 $_['column_key']              = 'Key';

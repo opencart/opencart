@@ -58,7 +58,6 @@ $_['text_store_email']           = 'Store E-Mail';
 $_['text_customer_email']        = 'Customer E-Mail';
 $_['text_customer_telephone']    = 'Customer Telephone';
 $_['text_missing']               = 'Missing Orders';
-$_['text_default']               = 'Default';
 $_['text_picklist']              = 'Dispatch Note';
 $_['text_sku']                   = 'SKU';
 $_['text_upc']                   = 'UPC';

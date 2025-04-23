@@ -60,7 +60,7 @@ class Captcha extends \Opencart\System\Engine\Controller {
 				$this->load->language('extension/' . $extension . '/captcha/' . $code, $code);
 
 				$data['extensions'][] = [
-					'name'      => $this->language->get($code . '_heading_title') . ($code == $this->config->get('config_captcha') ? $this->language->get('text_default') : ''),
+					'name'      => $this->language->get($code . '_heading_title'),
 					'status'    => $this->config->get('captcha_' . $code . '_status'),
 					'install'   => $this->url->link('extension/captcha.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/captcha.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
@@ -69,6 +69,9 @@ class Captcha extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
+
+		// Default
+		$data['code'] = $this->config->get('config_captcha');
 
 		$data['promotion'] = $this->load->controller('marketplace/promotion');
 

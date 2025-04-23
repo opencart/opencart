@@ -136,11 +136,14 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['currencies'][] = [
-				'title'         => $result['title'] . (($result['code'] == $this->config->get('config_currency')) ? $this->language->get('text_default') : ''),
+				'title'         => $result['title'],
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'edit'          => $this->url->link('localisation/currency.form', 'user_token=' . $this->session->data['user_token'] . '&currency_id=' . $result['currency_id'] . $url)
 			] + $result;
 		}
+
+		// Default
+		$data['code'] = $this->config->get('config_currency');
 
 		$url = '';
 

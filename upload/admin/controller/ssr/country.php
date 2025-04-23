@@ -41,14 +41,27 @@ class Country extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$base = DIR_CATALOG . 'view/data/';
-
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
 
+			$this->load->model('localisation/country');
+
+			$stores = $this->model_localisation_country->getStores();
+
+
+
+			$base = DIR_CATALOG . 'view/data/';
+
 			foreach ($stores as $store) {
+
+
+				$descriptions = $this->model_localisation_country->getDescriptions($result['country_id']);
+
 				foreach ($languages as $language) {
+
+
+
 					$path = $store['url'] . '/' . $language['code'] . '/localisation/';
 
 					// To fix storage location
@@ -59,17 +72,14 @@ class Country extends \Opencart\System\Engine\Controller {
 					}
 
 
-
-
 				}
 			}
 		}
 
+
+
+
 		// Must not have a path before files and directories can be moved
-		foreach ($paths as $path) {
-
-		}
-
 		if (!$json) {
 			// Generate a list of countries to store as JSON
 			$countries = [];

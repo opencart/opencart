@@ -123,10 +123,13 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['order_statuses'][] = [
-				'name' => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : ''),
+				'name' => $result['name'],
 				'edit' => $this->url->link('localisation/order_status.form', 'user_token=' . $this->session->data['user_token'] . '&order_status_id=' . $result['order_status_id'] . $url)
 			] + $result;
 		}
+
+		// Default
+		$data['order_status_id'] = $this->config->get('config_order_status_id');
 
 		$url = '';
 

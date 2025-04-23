@@ -7,7 +7,6 @@ $_['text_success']            = 'Erfolgreich: Sie haben Hersteller bearbeitet!';
 $_['text_list']               = 'Hersteller Liste';
 $_['text_add']                = 'Neuer Hersteller zufügen';
 $_['text_edit']               = 'Hersteller bearbeiten';
-$_['text_default']            = 'Standard';
 $_['text_general']            = 'Allgemein';
 $_['text_meta']               = 'Meta-Tags';
 $_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie Leerzeichen stattdessen durch - und stellen Sie sicher, dass die SEO-URL  eindeutig ist.';

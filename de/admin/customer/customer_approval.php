@@ -5,7 +5,6 @@ $_['heading_title']         = 'Kundenzulassungen';
 // Text
 $_['text_success']          = 'Erfolg: Sie haben Kundenfreigaben geändert!';
 $_['text_list']             = 'Kundengenehmigungsliste';
-$_['text_default']          = 'Standard';
 $_['text_customer']         = 'Kunde';
 $_['text_affiliate']        = 'Partnerprogramm';
 $_['text_filter']           = 'Filter';

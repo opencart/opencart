@@ -6,7 +6,6 @@ $_['heading_title']        = 'Mail';
 $_['text_mail']            = 'Senden Sie E-Mails an Kunden';
 $_['text_success']         = 'Ihre Nachricht wurde erfolgreich gesendet!';
 $_['text_sent']            = 'Ihre Nachricht wurde erfolgreich an %s bis %s von %s Empfängern gesendet!';
-$_['text_default']         = 'Standard';
 $_['text_newsletter']      = 'Alle Newsletter-Abonnenten';
 $_['text_customer_all']    = 'Alle Kunden';
 $_['text_customer_group']  = 'Kundengruppe';

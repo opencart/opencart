@@ -7,7 +7,6 @@ $_['text_success']     = 'Erfolg: Sie haben Banner geändert!';
 $_['text_list']        = 'Bannerliste';
 $_['text_add']         = 'Banner hinzufügen';
 $_['text_edit']        = 'Banner bearbeiten';
-$_['text_default']     = 'Standard';
 
 // Column
 $_['column_name']      = 'Bannername';

@@ -349,7 +349,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
-		foreach ($post_info['information_description'] as $language_id => $value) {
+		foreach ($post_info['manufacturer_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}

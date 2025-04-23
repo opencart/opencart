@@ -40,7 +40,7 @@
                       <div class="row mb-3">
                         <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="manufacturer_description[{{ language.language_id }}][name]" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
+                          <input type="text" name="manufacturer_description[{{ language.language_id }}][name]" value="{{ manufacturer_description[language.language_id] ? manufacturer_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
                           <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>

@@ -30,13 +30,13 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $manufacturer_id = $this->model_catalog_manufacturer->addManufacturer($manufacturer_data);
 	 */
 	public function addManufacturer(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$manufacturer_id = $this->db->getLastId();
 
 		// Description
 		foreach ($data['manufacturer_description'] as $language_id => $manufacturer_description) {
-			$this->model_catalog_information->addDescription($manufacturer_id, $language_id, $manufacturer_description);
+			$this->model_catalog_manufacturer->addDescription($manufacturer_id, $language_id, $manufacturer_description);
 		}
 
 		// Store
@@ -92,14 +92,14 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_manufacturer->editManufacturer($manufacturer_id, $manufacturer_data);
 	 */
 	public function editManufacturer(int $manufacturer_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
 
 		// Description
 		$this->deleteDescriptions($manufacturer_id);
 
 		foreach ($data['manufacturer_description'] as $language_id => $manufacturer_description) {
-			$this->model_catalog_information->addDescription($manufacturer_id, $language_id, $manufacturer_description);
+			$this->model_catalog_manufacturer->addDescription($manufacturer_id, $language_id, $manufacturer_description);
 		}
 
 		// Store
@@ -156,7 +156,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	public function deleteManufacturer(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
-		$this->model_catalog_information->deleteDescriptions($manufacturer_id);
+		$this->model_catalog_manufacturer->deleteDescriptions($manufacturer_id);
 		$this->model_catalog_manufacturer->deleteStores($manufacturer_id);
 		$this->model_catalog_manufacturer->deleteLayouts($manufacturer_id);
 
@@ -215,7 +215,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer` `m` LEFT JOIN `" . DB_PREFIX . "manufacturer_description` `md` ON (`m`.`manufacturer_id` = `md`.`manufacturer_id`) WHERE `md`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+			$sql .= " AND LCASE(`md`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		$sort_data = [
@@ -276,7 +276,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new manufacturer description record in the database.
 	 *
-	 * @param int                  $information_id primary key of the information record
+	 * @param int                  $manufacturer_id primary key of the manufacturer record
 	 * @param int                  $language_id    primary key of the language record
 	 * @param array<string, mixed> $data           array of data
 	 *
@@ -284,9 +284,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $information_data['manufacturer_description'] = [
-	 *     'title'            => 'Information Title',
-	 *     'description'      => 'Information Description',
+	 * $manufacturer_data['manufacturer_description'] = [
+	 *     'title'            => 'manufacturer Title',
+	 *     'description'      => 'manufacturer Description',
 	 *     'meta_title'       => 'Meta Title',
 	 *     'meta_description' => 'Meta Description',
 	 *     'meta_keyword'     => 'Meta Keyword'
@@ -294,26 +294,26 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/manufacturer');
 	 *
-	 * $this->model_catalog_manufacturer->addDescription($information_id, $language_id, $information_data);
+	 * $this->model_catalog_manufacturer->addDescription($manufacturer_id, $language_id, $manufacturer_data);
 	 */
 	public function addDescription(int $manufacturer_id, int $language_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_description` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($data['title']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_description` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
 	/**
 	 * Delete Descriptions
 	 *
-	 * Delete information description records in the database.
+	 * Delete manufacturer description records in the database.
 	 *
-	 * @param int $information_id primary key of the information record
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
 	 * @return void
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/information');
+	 * $this->load->model('catalog/manufacturer');
 	 *
-	 * $this->model_catalog_information->deleteDescriptions($information_id);
+	 * $this->model_catalog_manufacturer->deleteDescriptions($manufacturer_id);
 	 */
 	public function deleteDescriptions(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_description` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
@@ -322,7 +322,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Descriptions By Language ID
 	 *
-	 * Delete information descriptions by language records in the database.
+	 * Delete manufacturer descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -330,9 +330,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/information');
+	 * $this->load->model('catalog/manufacturer');
 	 *
-	 * $this->model_catalog_information->deleteDescriptionsByLanguageId($language_id);
+	 * $this->model_catalog_manufacturer->deleteDescriptionsByLanguageId($language_id);
 	 */
 	public function deleteDescriptionsByLanguageId(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -341,34 +341,34 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Descriptions
 	 *
-	 * Get the record of the information description records in the database.
+	 * Get the record of the manufacturer description records in the database.
 	 *
-	 * @param int $information_id primary key of the information record
+	 * @param int $manufacturer_id primary key of the manufacturer record
 	 *
-	 * @return array<int, array<string, string>> description records that have information ID
+	 * @return array<int, array<string, string>> description records that have manufacturer ID
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/information');
+	 * $this->load->model('catalog/manufacturer');
 	 *
-	 * $information_description = $this->model_catalog_information->getDescriptions($information_id);
+	 * $manufacturer_description = $this->model_catalog_manufacturer->getDescriptions($manufacturer_id);
 	 */
 	public function getDescriptions(int $manufacturer_id): array {
-		$information_description_data = [];
+		$manufacturer_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_description` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
 		foreach ($query->rows as $result) {
-			$information_description_data[$result['language_id']] = $result;
+			$manufacturer_description_data[$result['language_id']] = $result;
 		}
 
-		return $information_description_data;
+		return $manufacturer_description_data;
 	}
 
 	/**
 	 * Get Descriptions By Language ID
 	 *
-	 * Get the record of the information descriptions by language records in the database.
+	 * Get the record of the manufacturer descriptions by language records in the database.
 	 *
 	 * @param int $language_id primary key of the language record
 	 *
@@ -376,9 +376,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/information');
+	 * $this->load->model('catalog/manufacturer');
 	 *
-	 * $results = $this->model_catalog_information->getDescriptionsByLanguageId($language_id);
+	 * $results = $this->model_catalog_manufacturer->getDescriptionsByLanguageId($language_id);
 	 */
 	public function getDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_description` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -389,7 +389,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Store
 	 *
-	 * Create a new information store record in the database.
+	 * Create a new manufacturer store record in the database.
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 * @param int $store_id        primary key of the store record

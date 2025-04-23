@@ -1763,15 +1763,29 @@ VALUES (1, 1, 'Centimeter', 'cm'),
 -- Dumping data for table `oc_manufacturer`
 --
 
-INSERT INTO `oc_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`)
-VALUES (5, 'HTC', 'catalog/demo/htc_logo.jpg', 0),
-       (6, 'Palm', 'catalog/demo/palm_logo.jpg', 0),
-       (7, 'Hewlett-Packard', 'catalog/demo/hp_logo.jpg', 0),
-       (8, 'Apple', 'catalog/demo/apple_logo.jpg', 0),
-       (9, 'Canon', 'catalog/demo/canon_logo.jpg', 0),
-       (10, 'Sony', 'catalog/demo/sony_logo.jpg', 0);
+INSERT INTO `oc_manufacturer` (`manufacturer_id`, `image`, `sort_order`) VALUES
+(5, 'catalog/demo/htc_logo.jpg', 0),
+(6, 'catalog/demo/palm_logo.jpg', 0),
+(7, 'catalog/demo/hp_logo.jpg', 0),
+(8, 'catalog/demo/apple_logo.jpg', 0),
+(9, 'catalog/demo/canon_logo.jpg', 0),
+(10, 'catalog/demo/sony_logo.jpg', 0);
 
 -----------------------------------------------------------
+
+INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(5, 1, 'HTC', NULL, NULL, NULL, NULL),
+(5, 25, 'HTC', NULL, NULL, NULL, NULL),
+(6, 1, 'Palm', NULL, NULL, NULL, NULL),
+(6, 25, 'Palm', NULL, NULL, NULL, NULL),
+(7, 1, 'Hewlett-Packard', NULL, NULL, NULL, NULL),
+(7, 25, 'Hewlett-Packard', NULL, NULL, NULL, NULL),
+(8, 1, 'Apple', NULL, NULL, NULL, NULL),
+(8, 25, 'Apple', NULL, NULL, NULL, NULL),
+(9, 1, 'Canon', NULL, NULL, NULL, NULL),
+(9, 25, 'Canon', NULL, NULL, NULL, NULL),
+(10, 1, 'Sony', NULL, NULL, NULL, NULL),
+(10, 25, 'Sony', NULL, NULL, NULL, NULL);
 
 --
 -- Dumping data for table `oc_manufacturer_to_store`

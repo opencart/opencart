@@ -22,7 +22,7 @@ class XZone extends WebComponent {
             element.querySelector('select').addEventListener('change', this.event.changed);
 
             //observer.observe(element, config);
-            let response = this.storage.fetch('localisation/country.' + this.getAttribute('value'));
+            let response = this.storage.fetch('localisation/country-' + this.getAttribute('value'));
 
             response.then(this.event.onloaded);
         },

@@ -177,10 +177,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_country->getCountries($filter_data);
 
 		foreach ($results as $result) {
-			$data['countries'][] = [
-				'name' => $result['name'],
-				'edit' => $this->url->link('localisation/country.form', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)
-			] + $result;
+			$data['countries'][] = ['edit' => $this->url->link('localisation/country.form', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)] + $result;
 		}
 
 		// Default

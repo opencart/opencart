@@ -60,6 +60,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
+					'code'      => $code,
 					'status'    => $this->config->get('currency_' . $code . '_status'),
 					'install'   => $this->url->link('extension/currency.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/currency.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
@@ -70,7 +71,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		// Default
-		$data['code'] = $this->config->get('config_currency');
+		$data['code'] = $this->config->get('config_currency_engine');
 
 		$data['promotion'] = $this->load->controller('marketplace/promotion');
 

@@ -145,7 +145,6 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_catalog_information->addDescription($information['information_id'], $language_id, $information);
 		}
 
-
 		// Length
 		$this->load->model('localisation/length_class');
 

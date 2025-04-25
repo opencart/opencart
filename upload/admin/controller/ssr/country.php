@@ -23,98 +23,62 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('localisation/country');
+
 			$stores = [];
 
 			$stores[] = [
-				'name' => $this->language->get('text_default'),
-				'url'  => parse_url(HTTP_CATALOG, PHP_URL_HOST)
+				'store_id' => 0,
+				'url'      => HTTP_CATALOG
 			];
 
 			$this->load->model('setting/store');
 
-			$results = $this->model_setting_store->getStores();
+			$stores = $stores + $this->model_setting_store->getStores();
 
-			foreach ($results as $result) {
-				$stores[] = [
-					'name' => $result['name'],
-					'url'  => parse_url($result['url'], PHP_URL_HOST)
-				];
-			}
-
+			// Get all languages so we don't need to keep querying te DB
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
 
-			$this->load->model('localisation/country');
-
-			$stores = $this->model_localisation_country->getStores();
-
-
-
-			$base = DIR_CATALOG . 'view/data/';
-
 			foreach ($stores as $store) {
-
-
-				$descriptions = $this->model_localisation_country->getDescriptions($result['country_id']);
+				$countries = $this->model_localisation_country->getCountriesByStoreId($store['store_id']);
 
 				foreach ($languages as $language) {
+					$country_data = [];
 
+					foreach ($countries as $country) {
+						if ($country['status']) {
+							$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
 
+							if ($description_info) {
+								$country_data[$country['country_id']] = $description_info + $country;
+							}
+						}
+					}
 
-					$path = $store['url'] . '/' . $language['code'] . '/localisation/';
+					$base = DIR_CATALOG . 'view/data/';
+					$filename = 'country.json';
+					$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
 
-					// To fix storage location
-					if (!oc_directory_create($base . $path, 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $path);
+					if (!oc_directory_create($base . $directory, 0777)) {
+						$json['error'] = sprintf($this->language->get('error_directory'), $directory);
 
 						break;
 					}
 
+					if (!file_put_contents($base . $directory . $filename, json_encode($country_data))) {
+						$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
 
+						break;
+					}
 				}
 			}
 		}
-
-
-
 
 		// Must not have a path before files and directories can be moved
 		if (!$json) {
-			// Generate a list of countries to store as JSON
-			$countries = [];
-
-			$this->load->model('localisation/country');
-
-			$results = $this->model_localisation_country->getCountries();
-
-			foreach ($results as $result) {
-				if ($result['status']) {
-					$descriptions = $this->model_localisation_country->getDescriptions($result['country_id']);
-
-					foreach ($descriptions as $description) {
-						if (isset($languages[$description['language_id']])) {
-							$countries[$languages[$description['language_id']]['code']][] = $description + $result;
-						}
-					}
-				}
-			}
-
-			foreach ($stores as $store) {
-				foreach ($countries as $language => $value) {
-					$file = $directory . 'country.' . $language . '.json';
-
-					if (!file_put_contents($file, json_encode($value))) {
-						$json['error'] = $this->language->get('error_file');
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (!$json) {
-			$json['text'] = $this->language->get('text_country');
+			$json['text'] = $this->language->get('text_list');
 
 			$json['next'] = $this->url->link('ssr/country.info', 'user_token=' . $this->session->data['user_token'], true);
 		}
@@ -138,46 +102,58 @@ class Country extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = DIR_CATALOG . 'view/data/localisation/';
-
-		if (!is_dir($directory) && !mkdir($directory, 0777)) {
-			$json['error'] = sprintf($this->language->get('error_directory'), $directory);
-		}
-
 		if (!$json) {
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
 
-			$limit = 5;
-
-			$this->load->model('localisation/country');
-			$this->load->model('localisation/zone');
-
-			$country_total = $this->model_localisation_country->getTotalCountries();
-
+			$limit = 10;
 			$start = ($page - 1) * $limit;
-			$end = $start > ($country_total - $limit) ? $country_total : ($start + $limit);
 
 			$filter_data = [
 				'start' => $start,
 				'limit' => $limit
 			];
 
+			$this->load->model('localisation/country');
+			$this->load->model('localisation/zone');
+			$this->load->model('setting/store');
+
 			$countries = $this->model_localisation_country->getCountries($filter_data);
 
 			foreach ($countries as $country) {
 				if ($country['status']) {
-					$descriptions = $this->model_localisation_country->getDescriptions($country['country_id']);
+					$stores = $this->model_localisation_country->getStores($country['country_id']);
 
-					foreach ($descriptions as $description) {
-						if (isset($languages[$description['language_id']])) {
-							$file = $directory . 'country.' . (int)$country['country_id'] . '.' . $languages[$description['language_id']]['code'] . '.json';
+					foreach ($stores as $store_id) {
+						if (!$store_id) {
+							$store_info = [
+								'store_id' => 0,
+								'url'      => HTTP_CATALOG
+							];
+						} else {
+							$store_info = $this->model_setting_store->getStore($store_id);
+						}
 
-							if (!file_put_contents($file, json_encode($description + $country + ['zone' => $this->model_localisation_zone->getZonesByCountryId($country['country_id'])]))) {
-								$json['error'] = sprintf($this->language->get('error_file'), $file);
+						foreach ($languages as $language) {
+							$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
 
-								break;
+							if ($description_info) {
+								$base = DIR_CATALOG . 'view/data/';
+								$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+								$filename = 'country-' . $country['country_id'] . '.json';
+
+								if (!oc_directory_create($base . $directory, 0777)) {
+									$json['error'] = sprintf($this->language->get('error_directory'), $directory);
+
+									break;
+								}
+
+								if (!file_put_contents($base . $directory . $filename, json_encode($description_info + $country + ['zone' => $this->model_localisation_zone->getZonesByCountryId($country['country_id'])]))) {
+									$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
+
+									break;
+								}
 							}
 						}
 					}
@@ -186,7 +162,11 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $country_total);
+			$country_total = $this->model_localisation_country->getTotalCountries();
+
+			$end = $start > ($country_total - $limit) ? $country_total : ($start + $limit);
+
+			$json['text'] = sprintf($this->language->get('text_next'), !$start ?? 1, $end, $country_total);
 
 			if ($end < $country_total) {
 				$json['next'] = $this->url->link('ssr/country.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
@@ -209,10 +189,39 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = glob(DIR_CATALOG . 'view/data/localisation/country.*.json');
+			$this->load->model('localisation/language');
 
-			foreach ($files as $file) {
-				unlink($file);
+			$languages = $this->model_localisation_language->getLanguages();
+
+			$stores = [];
+
+			$stores[] = [
+				'store_id' => 0,
+				'url'      => HTTP_CATALOG
+			];
+
+			$this->load->model('setting/store');
+
+			$stores = $stores + $this->model_setting_store->getStores();
+
+			foreach ($stores as $store) {
+				foreach ($languages as $language) {
+					$base = DIR_CATALOG . 'view/data/';
+					$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+					$filename = 'country.json';
+
+					$file = $base . $directory . $filename;
+
+					if (is_file($file)) {
+						unlink($file);
+					}
+
+					$files = glob($directory . 'country-*.json');
+
+					foreach ($files as $file) {
+						unlink($file);
+					}
+				}
 			}
 
 			$json['success'] = $this->language->get('text_success');

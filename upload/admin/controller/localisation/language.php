@@ -129,7 +129,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		// Default
-		$data['code'] = $this->config->get('config_language');
+		$data['code'] = $this->config->get('config_language_admin');
 
 		$url = '';
 

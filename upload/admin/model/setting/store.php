@@ -190,7 +190,19 @@ class Store extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_setting_store->getStores();
 	 */
 	public function getStores(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url` ASC";
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
 
 		$key = md5($sql);
 

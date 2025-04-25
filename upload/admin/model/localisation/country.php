@@ -260,19 +260,9 @@ class Country extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$key = md5($sql);
+		$query = $this->db->query($sql);
 
-		$country_data = $this->cache->get('country.' . $key);
-
-		if (!$country_data) {
-			$query = $this->db->query($sql);
-
-			$country_data = $query->rows;
-
-			$this->cache->set('country.' . $key, $country_data);
-		}
-
-		return $country_data;
+		return $query->rows;
 	}
 
 	/**
@@ -414,6 +404,12 @@ class Country extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
+	public function getDescription(int $country_id, $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$country_id . "' AND `language_id` = '" . (int)$language_id . "'");
+
+		return $query->row;
+	}
+
 	/**
 	 * Get Descriptions
 	 *
@@ -506,15 +502,15 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the information store records in the database.
 	 *
-	 * @param int $information_id primary key of the information record
+	 * @param int $information_id primary key of the store record
 	 *
-	 * @return array<int, int> store records that have information ID
+	 * @return array<int, int> store records that have store ID
 	 *
 	 * @example
 	 *
 	 * $this->load->model('catalog/information');
 	 *
-	 * $information_store = $this->model_catalog_information->getStores($information_id);
+	 * $stores = $this->model_catalog_information->getStores($istore_id);
 	 */
 	public function getStores(int $country_id): array {
 		$country_store_data = [];
@@ -528,4 +524,9 @@ class Country extends \Opencart\System\Engine\Model {
 		return $country_store_data;
 	}
 
+	public function getCountriesByStoreId(int $store_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country_to_store` `c2s` LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`c2s`.`country_id` = `c`.`country_id`) WHERE `c2s`.`store_id` = '" . (int)$store_id . "'");
+
+		return $query->rows;
+	}
 }

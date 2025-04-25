@@ -61,6 +61,7 @@ class Captcha extends \Opencart\System\Engine\Controller {
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
+					'code'      => $code,
 					'status'    => $this->config->get('captcha_' . $code . '_status'),
 					'install'   => $this->url->link('extension/captcha.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/captcha.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),

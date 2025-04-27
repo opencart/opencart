@@ -1444,7 +1444,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_product->addCode($product_id, $data);
 	 */
 	public function addCode(int $product_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . (int)$product_id . "', `code` = '" . $this->db->escape($data['code']) . "', `value` = '" . $this->db->escape($data['value']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . (int)$product_id . "', `identifier_id` = '" . (int)$data['identifier_id'] . "', `value` = '" . $this->db->escape($data['value']) . "'");
 	}
 
 	/**
@@ -1482,7 +1482,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_product->getCodes($product_id);
 	 */
 	public function getCodes(int $product_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_code` WHERE `product_id` = '" . (int)$product_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "identifier` WHERE `identifier_id` = `pc`.`identifier_id`) AS `code` FROM `" . DB_PREFIX . "product_code` `pc` WHERE `pc`.`product_id` = '" . (int)$product_id . "'");
 
 		return $query->rows;
 	}

@@ -177,9 +177,10 @@
                     <div class="input-group">
                       <select id="input-code" class="form-select">
                         {% for identifier in identifiers %}
-                          <option value="{{ identifier.code }}">{{ identifier.code }}</option>
+                          <option value="{{ identifier.identifier_id }}">{{ identifier.code }}</option>
                         {% endfor %}
-                      </select> <input type="text" value="" placeholder="{{ entry_product_code }}" id="input-value" class="form-control w-75"/>
+                      </select>
+                      <input type="text" value="" placeholder="{{ entry_product_code }}" id="input-value" class="form-control w-75"/>
                       <button type="button" id="button-code" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button>
                     </div>
                     <div class="input-group">
@@ -188,13 +189,22 @@
                           <tbody>
                             {% set code_row = 0 %}
                             {% for product_code in product_codes %}
+
                               <tr id="code-row-{{ code_row }}">
-                                <td style="width: 1px;">{{ product_code.code }}<input type="hidden" name="product_code[{{ code_row }}][code]" value="{{ product_code.code }}"/></td>
+
+                                <td style="width: 1px;">{{ product_code.code }}
+                                  <input type="hidden" name="product_code[{{ code_row }}][code]" value="{{ product_code.code }}"/>
+                                </td>
                                 <td id="input-code-{{ code_row }}">{{ product_code.value }}
                                   <div id="error-code-{{ code_row }}" class="invalid-feedback"></div>
-                                  <input type="hidden" name="product_code[{{ code_row }}][value]" value="{{ product_code.value }}"></td>
+
+                                  <input type="hidden" name="product_code[{{ code_row }}][value]" value="{{ product_code.value }}">
+                                </td>
+
                                 <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+
                               </tr>
+
                               {% set code_row = code_row + 1 %}
                             {% endfor %}
                           </tbody>
@@ -1309,11 +1319,10 @@ var code_row = {{ code_row }};
 $('#button-code').on('click', function() {
     var html = '';
 
-    let code = $('#input-code').val();
     let value = $('#input-value').val();
 
     html += '<tr id="code-row-' + code_row + '">';
-    html += '  <td style="width: 1px;">' + code + '<input type="hidden" name="product_code[' + code_row + '][code]" value="' + code + '"/></td>';
+    html += '  <td style="width: 1px;">' + $('#input-code option:selected').text() + '<input type="hidden" name="product_code[' + code_row + '][identifier_id]" value="' + $('#input-code').val() + '"/></td>';
     html += '  <td>' + value + '<div id="error-code-' + code_row + '" class="invalid-feedback"></div><input type="hidden" name="product_code[' + code_row + '][value]" value="' + value + '"/></td>';
     html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';

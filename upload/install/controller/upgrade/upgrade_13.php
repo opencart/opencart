@@ -55,16 +55,18 @@ class Upgrade13 extends \Opencart\System\Engine\Controller {
 				];
 
 				foreach ($identifiers as $identifier) {
-					if ($this->model_upgrade_upgrade->hasField('product', $identifier['code'])) {
-						$identifier_id = $this->model_upgrade_upgrade->addRecord('identifier', $identifier);
+					$identifier_id = $this->model_upgrade_upgrade->addRecord('identifier', $identifier);
 
-						$product_query = $this->db->query("SELECT `product_id`, `" . $this->db->escape($identifier['code']) . "` FROM `" . DB_PREFIX . "product` WHERE `" . $this->db->escape($identifier['code']) . "` != ''");
+					$code = strtolower($identifier['code']);
+
+					if ($this->model_upgrade_upgrade->hasField('product', $code)) {
+						$product_query = $this->db->query("SELECT `product_id`, `" . $this->db->escape($code) . "` FROM `" . DB_PREFIX . "product` WHERE `" . $this->db->escape($identifier['code']) . "` != ''");
 
 						foreach ($product_query->rows as $product) {
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . $this->db->escape($product['product_id']) . "', `identifier_id` = '" . (int)$identifier_id . "', `value` = '" . $this->db->escape($product[$identifier['code']]) . "'");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . $this->db->escape($product['product_id']) . "', `identifier_id` = '" . (int)$identifier_id . "', `value` = '" . $this->db->escape($product[$code]) . "'");
 						}
 
-						$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` DROP `" . $this->db->escape(strtolower($identifier['code'])) . "`");
+						$this->model_upgrade_upgrade->dropField('product', $code);
 					}
 				}
 			}

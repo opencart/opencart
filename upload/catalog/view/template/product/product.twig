@@ -41,16 +41,16 @@
 
           <ul class="list-unstyled">
             {% if manufacturer %}
-              <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
+              <li><strong>{{ text_manufacturer }}</strong> <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
             {% endif %}
-            <li>{{ text_model }} {{ model }}</li>
+            <li><strong>{{ text_model }}</strong> {{ model }}</li>
             {% for product_code in product_codes %}
-              <li>{{ product_code.code }}: {{ product_code.value }}</li>
+              <li><strong>{{ product_code.code }}</strong> {{ product_code.value }}</li>
             {% endfor %}
             {% if reward %}
-              <li>{{ text_reward }} {{ reward }}</li>
+              <li><strong>{{ text_reward }}</strong> {{ reward }}</li>
             {% endif %}
-            <li>{{ text_stock }} {{ stock }}</li>
+            <li><strong>{{ text_stock }}</strong> <strong><span class="text-{% if stock %}success{% else %}danger{% endif %}">{{ stock_status }}</span></strong></li>
           </ul>
 
           {% if price %}

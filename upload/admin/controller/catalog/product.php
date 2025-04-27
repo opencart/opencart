@@ -1227,7 +1227,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/identifier');
 
 		foreach ($post_info['product_code'] as $key => $product_code) {
-			$identifier_info = $this->model_catalog_identifier->getIdentifierByCode($product_code['code']);
+			$identifier_info = $this->model_catalog_identifier->getIdentifier($product_code['identifier_id']);
 
 			if ($identifier_info && $identifier_info['validation'] && !oc_validate_regex($product_code['value'], $identifier_info['validation'])) {
 				$json['error']['code_' . $key] = sprintf($this->language->get('error_regex'), $product_code['code']);

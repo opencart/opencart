@@ -285,10 +285,16 @@ class Product extends \Opencart\System\Engine\Controller {
 			// Stock Status
 			if ($product_info['quantity'] <= 0) {
 				$stock_status_id = $product_info['stock_status_id'];
+
+				$data['stock'] = false;
 			} elseif (!$this->config->get('config_stock_display')) {
 				$stock_status_id = (int)$this->config->get('config_stock_status_id');
+
+				$data['stock'] = true;
 			} else {
 				$stock_status_id = 0;
+
+				$data['stock'] = true;
 			}
 
 			$this->load->model('localisation/stock_status');
@@ -296,9 +302,9 @@ class Product extends \Opencart\System\Engine\Controller {
 			$stock_status_info = $this->model_localisation_stock_status->getStockStatus($stock_status_id);
 
 			if ($stock_status_info) {
-				$data['stock'] = $stock_status_info['name'];
+				$data['stock_status'] = $stock_status_info['name'];
 			} else {
-				$data['stock'] = $product_info['quantity'];
+				$data['stock_status'] = $product_info['quantity'];
 			}
 
 			$data['rating'] = (int)$product_info['rating'];

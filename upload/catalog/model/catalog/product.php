@@ -457,7 +457,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $codes = $this->model_catalog_product->getCodes($product_id);
 	 */
 	public function getCodes(int $product_id): array {
-		$query = $this->db->query("SELECT `pc`.`code`, `pc`.`value`, `i`.`status` FROM `" . DB_PREFIX . "product_code` `pc` LEFT JOIN `" . DB_PREFIX . "identifier` `i` ON (`pc`.code = `i`.`code`) WHERE `product_id` = '" . (int)$product_id . "' AND `pc`.`value` != ''");
+		$query = $this->db->query("SELECT `i`.`code`, `pc`.`value`, `i`.`status` FROM `" . DB_PREFIX . "product_code` `pc` LEFT JOIN `" . DB_PREFIX . "identifier` `i` ON (`pc`.`identifier_id` = `i`.`identifier_id`) WHERE `product_id` = '" . (int)$product_id . "' AND `pc`.`value` != ''");
 
 		return $query->rows;
 	}

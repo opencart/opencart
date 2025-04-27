@@ -2,11 +2,11 @@
 // Text
 $_['text_search']                = 'Suchen';
 $_['text_brand']                 = 'Marke';
-$_['text_manufacturer']          = 'Marke:';
-$_['text_model']                 = 'Artikel-Nr.:';
-$_['text_reward']                = 'Belohnungspunkte:';
+$_['text_manufacturer']          = 'Marke';
+$_['text_model']                 = 'Modell';
+$_['text_reward']                = 'Belohnungspunkte';
 $_['text_points']                = 'Preis in Prämienpunkten:';
-$_['text_stock']                 = 'Verfügbarkeit:';
+$_['text_stock']                 = 'Verfügbarkeit';
 $_['text_tax']                   = 'Ohne Steuern:';
 $_['text_discount']              = ' oder mehr ';
 $_['text_option']                = 'Verfügbare Optionen';

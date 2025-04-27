@@ -21,7 +21,7 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	 * 
 	 * @return void
 	 */
-	public function addRecord($table, $data): void {
+	public function addRecord($table, $data): int {
 		$implode = [];
 
 		foreach ($data as $key => $value) {
@@ -50,6 +50,8 @@ class Upgrade extends \Opencart\System\Engine\Model {
 		}
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . $table . "` SET " . implode(", ", $implode));
+
+		return $this->db->getLastId();
 	}
 
 	/**

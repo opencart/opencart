@@ -5390,8 +5390,8 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'code',
-				'type' => 'varchar(48)'
+				'name' => 'identifier_id',
+				'type' => 'varchar(11)'
 			],
 			[
 				'name' => 'value',
@@ -5410,9 +5410,9 @@ function oc_db_schema() {
 		],
 		'index' => [
 			[
-				'name' => 'code',
+				'name' => 'identifier_id',
 				'key'  => [
-					'code'
+					'identifier_id'
 				]
 			]
 		],

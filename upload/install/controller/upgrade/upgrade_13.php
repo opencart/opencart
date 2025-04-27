@@ -55,31 +55,32 @@ class Upgrade13 extends \Opencart\System\Engine\Controller {
 				];
 
 				foreach ($identifiers as $identifier) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape($identifier['name']) . "',  `code` = '" . $this->db->escape($identifier['code']) . "', `status` = '1'");
+					if ($this->model_upgrade_upgrade->hasField('product', $identifier['code'])) {
+						$identifier_id = $this->model_upgrade_upgrade->addRecord('identifier', $identifier);
+
+						$product_query = $this->db->query("SELECT `product_id`, `" . $this->db->escape($identifier['code']) . "` FROM `" . DB_PREFIX . "product` WHERE `" . $this->db->escape($identifier['code']) . "` != ''");
+
+						foreach ($product_query->rows as $product) {
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . $this->db->escape($product['product_id']) . "', `identifier_id` = '" . (int)$identifier_id . "', `value` = '" . $this->db->escape($product[$identifier['code']]) . "'");
+						}
+
+						$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` DROP `" . $this->db->escape($identifier['code']) . "`");
+					}
 				}
 			}
 
-			// Drop Fields
-			$remove = [
-				'sku',
-				'upc',
-				'ean',
-				'jan',
-				'isbn'
-			];
+			if ($this->model_upgrade_upgrade->hasField('product_code', 'code')) {
+				$product_codes = $this->model_upgrade_upgrade->getRecords('product_code');
 
-			foreach ($remove as $field) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product' AND COLUMN_NAME = '" . $field . "'");
+				foreach ($product_codes as $product_code) {
+					$identifier_query = $this->db->query("SELECT `identifier_id` FROM `" . DB_PREFIX . "identifier` WHERE code = '" . $this->db->escape($product_code['code']) . "'");
 
-				if ($query->num_rows) {
-					$product_query = $this->db->query("SELECT `product_id`, `" . $field . "` FROM `" . DB_PREFIX . "product` WHERE `" . $field . "` != ''");
-
-					foreach ($product_query->rows as $product) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . $this->db->escape($product['product_id']) . "', `code` = '" . $this->db->escape($field) . "', `value` = '" . $this->db->escape($product[$field]) . "'");
+					if ($identifier_query->num_rows) {
+						$this->db->query("UPDATE `" . DB_PREFIX . "product_code` SET `identifier_id` = " . (int)$identifier_query->row['identifier_id'] . "' WHERE `product_code_id` = '" . (int)$product_code['product_code_id'] . "'");
 					}
-
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` DROP `" . $field . "`");
 				}
+
+				$this->model_upgrade_upgrade->dropField('identifier', 'code');
 			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());

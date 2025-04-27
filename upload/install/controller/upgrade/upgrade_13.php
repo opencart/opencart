@@ -64,7 +64,7 @@ class Upgrade13 extends \Opencart\System\Engine\Controller {
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . $this->db->escape($product['product_id']) . "', `identifier_id` = '" . (int)$identifier_id . "', `value` = '" . $this->db->escape($product[$identifier['code']]) . "'");
 						}
 
-						$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` DROP `" . $this->db->escape($identifier['code']) . "`");
+						$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` DROP `" . $this->db->escape(strtolower($identifier['code'])) . "`");
 					}
 				}
 			}
@@ -76,11 +76,11 @@ class Upgrade13 extends \Opencart\System\Engine\Controller {
 					$identifier_query = $this->db->query("SELECT `identifier_id` FROM `" . DB_PREFIX . "identifier` WHERE code = '" . $this->db->escape($product_code['code']) . "'");
 
 					if ($identifier_query->num_rows) {
-						$this->db->query("UPDATE `" . DB_PREFIX . "product_code` SET `identifier_id` = " . (int)$identifier_query->row['identifier_id'] . "' WHERE `product_code_id` = '" . (int)$product_code['product_code_id'] . "'");
+						$this->db->query("UPDATE `" . DB_PREFIX . "product_code` SET `identifier_id` = '" . (int)$identifier_query->row['identifier_id'] . "' WHERE `product_code_id` = '" . (int)$product_code['product_code_id'] . "'");
 					}
 				}
 
-				$this->model_upgrade_upgrade->dropField('identifier', 'code');
+				$this->model_upgrade_upgrade->dropField('product_code', 'code');
 			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());

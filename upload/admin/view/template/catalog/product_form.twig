@@ -1899,7 +1899,7 @@ $('#button-subscription').on('click', function() {
   {% for customer_group in customer_groups %}
     html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
   {% endfor %}
-    html += '  <select></td>';
+    html += '  </select></td>';
     html += '  <td class="text-end"><input type="text" name="product_subscription[' + subscription_row + '][trial_price]" value="" placeholder="{{ entry_trial_price|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><input type="text" name="product_subscription[' + subscription_row + '][price]" value="" placeholder="{{ entry_price|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#subscription-row-' + subscription_row + '\').remove()" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';

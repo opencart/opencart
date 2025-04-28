@@ -189,22 +189,14 @@
                           <tbody>
                             {% set code_row = 0 %}
                             {% for product_code in product_codes %}
-
                               <tr id="code-row-{{ code_row }}">
-
-                                <td style="width: 1px;">{{ product_code.code }}
-                                  <input type="hidden" name="product_code[{{ code_row }}][code]" value="{{ product_code.code }}"/>
-                                </td>
-                                <td id="input-code-{{ code_row }}">{{ product_code.value }}
+                                <td style="width: 1px;">{{ product_code.code }}<input type="hidden" name="product_code[{{ code_row }}][identifier_id]" value="{{ product_code.identifier_id }}"/></td>
+                                <td>{{ product_code.value }}
                                   <div id="error-code-{{ code_row }}" class="invalid-feedback"></div>
-
                                   <input type="hidden" name="product_code[{{ code_row }}][value]" value="{{ product_code.value }}">
                                 </td>
-
                                 <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
-
                               </tr>
-
                               {% set code_row = code_row + 1 %}
                             {% endfor %}
                           </tbody>

@@ -31,11 +31,6 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$data['code'] = '';
 			}
 
-			// Countries
-			$this->load->model('localisation/country');
-
-			$data['countries'] = $this->model_localisation_country->getCountries();
-
 			$data['language'] = $this->config->get('config_language');
 
 			return $this->load->view('extension/opencart/checkout/shipping', $data);

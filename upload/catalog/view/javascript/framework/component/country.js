@@ -27,7 +27,7 @@ class XCountry extends WebComponent {
             this.countries = countries;
 
             for (let i in this.countries) {
-                html += '<option value="' + this.countries[i].country_id + '"'; 
+                html += '<option value="' + this.countries[i].country_id + '"';
 
                 if (this.countries[i].country_id == this.getAttribute('value')) {
                     html += ' selected';
@@ -52,7 +52,7 @@ class XCountry extends WebComponent {
         },
         changed: async (name, value_old, value_new) => {
             if (name == 'postcode-required') {
-                let element = document.querySelector(this.getAttribute('target'));
+                let element = document.getElementById(this.getAttribute('target'));
 
                 if (value_new == 1) {
                     element.setAttribute('required', '');

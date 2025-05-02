@@ -1,5 +1,10 @@
 export default class Storage {
+    path = '';
     data = [];
+
+    constructor(path) {
+        this.path = path;
+    }
 
     get (key) {
         return this.data[key];
@@ -25,13 +30,13 @@ export default class Storage {
         this.data[path.replaceAll('/', '.')] = await this.fetch(path);
     }
 
-    async fetch(path) {
-        let response = await fetch('./catalog/view/data/' + path + '.json');
+    async fetch(filename) {
+        let response = await fetch(this.path + filename + '.json');
 
         if (response.status == 200) {
             return await response.json();
         } else {
-            console.log('Could not load file ' + path + '.json');
+            console.log('Could not load file ' + filename + '.json');
 
             return [];
         }

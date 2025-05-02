@@ -18,6 +18,13 @@ class Url {
 	 * @var string
 	 */
 	private string $url;
+	private string $scheme;
+	private string $host;
+	private int $port;
+	private string $path;
+	private string $query;
+	private string $fragment;
+
 	/**
 	 * @var array<int, object>
 	 */
@@ -30,6 +37,12 @@ class Url {
 	 */
 	public function __construct(string $url) {
 		$this->url = $url;
+
+		$parts = parse_url($url);
+
+		foreach ($parts as $key => $value) {
+			$this->{$key} = $value;
+		}
 	}
 
 	/**

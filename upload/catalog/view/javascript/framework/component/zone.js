@@ -16,15 +16,28 @@ class XZone extends WebComponent {
             // Add the on change event
             this.element.addEventListener('change', this.event.onchange);
 
-            // Get the country id from the target element
-            let element = document.querySelector(this.getAttribute('target'));
+            // Country Element
+            let target = document.getElementById(this.getAttribute('target'));
 
-            element.querySelector('select').addEventListener('change', this.event.changed);
-
-            //observer.observe(element, config);
-            let response = this.storage.fetch('localisation/country-' + this.getAttribute('value'));
+            let response = this.storage.fetch('localisation/country-' + target.getAttribute('value'));
 
             response.then(this.event.onloaded);
+
+            let option = {
+                attributes: true,
+                attributeFilter: ['value']
+            }
+
+            this.observer.observe(target, this.event.onready.bind(this), option);
+        },
+        onready(records) {
+            records.forEach((record) => {
+                if (record.attributeName == 'value') {
+                    let response = this.storage.fetch('localisation/country-' + record.target.getAttribute('value'));
+
+                    response.then(this.event.onloaded);
+                }
+            });
         },
         onloaded: (country) => {
             let html = this.default;

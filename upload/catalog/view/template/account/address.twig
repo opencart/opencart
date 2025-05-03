@@ -33,10 +33,10 @@ $('#address').on('click', '.btn-danger', function(e) {
         url: $(element).attr('href'),
         dataType: 'json',
         beforeSend: function() {
-            $(element).prop('disabled', true);
+            $(element).button('loading');
         },
         complete: function() {
-            $(element).prop('disabled', false);
+            $(element).button('reset');
         },
         success: function(json) {
             console.log(json);
@@ -44,11 +44,11 @@ $('#address').on('click', '.btn-danger', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#address').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#address').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#address').load('index.php?route=account/address.list&language={{ language }}&customer_token={{ customer_token }}');
             }

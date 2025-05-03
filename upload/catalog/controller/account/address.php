@@ -401,7 +401,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				$this->model_account_address->editAddress($this->customer->getId(), (int)$this->request->get['address_id'], $post_info);
 
 				// If address is in session update it.
-				if (isset($this->session->data['shipping_address']) && ($this->session->data['shipping_address']['address_id'] == (int)$this->request->get['address_id'])) {
+				if (isset($this->session->data['shipping_address']['address_id']) && ($this->session->data['shipping_address']['address_id'] == (int)$this->request->get['address_id'])) {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getId(), (int)$this->request->get['address_id']);
 
 					unset($this->session->data['order_id']);
@@ -412,7 +412,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				}
 
 				// If address is in session update it.
-				if (isset($this->session->data['payment_address']) && ($this->session->data['payment_address']['address_id'] == (int)$this->request->get['address_id'])) {
+				if (isset($this->session->data['payment_address']['address_id']) && ($this->session->data['payment_address']['address_id'] == (int)$this->request->get['address_id'])) {
 					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getId(), (int)$this->request->get['address_id']);
 
 					unset($this->session->data['order_id']);

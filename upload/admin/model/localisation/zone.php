@@ -300,6 +300,12 @@ class Zone extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
+	public function getDescription(int $zone_id, $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_description` WHERE `zone_id` = '" . (int)$zone_id . "' AND `language_id` = '" . (int)$language_id . "'");
+
+		return $query->row;
+	}
+
 	/**
 	 * Get Descriptions
 	 *

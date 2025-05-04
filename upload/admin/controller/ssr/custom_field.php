@@ -194,80 +194,10 @@ class Country extends \Opencart\System\Engine\Controller {
 	}
 
 	public function admin() {
-		$this->load->language('ssr/country');
 
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'ssr/country')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('localisation/country');
-
-			$stores = [];
-
-			$stores[] = [
-				'store_id' => 0,
-				'url'      => HTTP_CATALOG
-			];
-
-			$this->load->model('setting/store');
-
-			$stores = $stores + $this->model_setting_store->getStores();
-
-			// Get all languages so we don't need to keep querying te DB
-			$this->load->model('localisation/language');
-
-			$languages = $this->model_localisation_language->getLanguages();
-
-			foreach ($stores as $store) {
-				$countries = $this->model_localisation_country->getCountriesByStoreId($store['store_id']);
-
-				foreach ($languages as $language) {
-					$country_data = [];
-
-					foreach ($countries as $country) {
-						if ($country['status']) {
-							$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
-
-							if ($description_info) {
-								$country_data[$country['country_id']] = $description_info + $country;
-							}
-						}
-					}
-
-					$base = DIR_CATALOG . 'view/data/';
-					$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-					$filename = 'country.json';
-
-					if (!oc_directory_create($base . $directory, 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $directory);
-
-						break;
-					}
-
-					if (!file_put_contents($base . $directory . $filename, json_encode($country_data))) {
-						$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
-
-						break;
-					}
-				}
-			}
-		}
-
-		// Must not have a path before files and directories can be moved
-		if (!$json) {
-			$json['text'] = $this->language->get('text_list');
-
-			$json['next'] = $this->url->link('ssr/country.info', 'user_token=' . $this->session->data['user_token'], true);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
-	public function admin_info() {
+	public function zone() {
 		$this->load->language('ssr/country');
 
 		$json = [];

@@ -69,9 +69,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function admin_currency() {}
-
-
 	public function clear() {
 		$this->load->language('ssr/currency');
 

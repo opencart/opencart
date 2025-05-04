@@ -404,7 +404,7 @@ class Country extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
-	public function getDescription(int $country_id, $language_id): array {
+	public function getDescription(int $country_id, int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$country_id . "' AND `language_id` = '" . (int)$language_id . "'");
 
 		return $query->row;

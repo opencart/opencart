@@ -520,6 +520,10 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
     margin-left: 4px;
 }
 
+.table-disabled {
+
+}
+
 .table a.asc:after {
     font-family: 'Font Awesome 6 Free';
     font-weight: 600;

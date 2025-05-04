@@ -8,7 +8,7 @@
           <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
           <th class="text-center">{{ column_status }}</th>
           <th class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
-          <th class="text-end col-1">{{ column_action }}</th>
+          <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>

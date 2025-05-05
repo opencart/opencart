@@ -344,6 +344,12 @@ footer h5 {
 .alert {
 	padding: 8px 14px 8px 14px;
 }
+.alert > .close {
+	position: relative;
+	top: -2px;
+	right: 0px;
+	color: inherit;
+}
 /* breadcrumb */
 .breadcrumb {
 	margin: 0 0 20px 0;

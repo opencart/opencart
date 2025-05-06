@@ -18,7 +18,27 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = (string)$this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (string)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
 		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . urlencode(html_entity_decode($this->request->get['filter_store_id'], ENT_QUOTES, 'UTF-8'));
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -48,6 +68,27 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['delete'] = $this->url->link('catalog/manufacturer.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('catalog/manufacturer.getList');
+		
+		$data['stores'] = [];
+
+		$data['stores'][] = [
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		];
+
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = [
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			];
+		}
+
+		$data['filter_name'] = $filter_name;
+		$data['filter_store_id'] = $filter_store_id;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -75,6 +116,18 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = $this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = $this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
@@ -95,6 +148,14 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . urlencode(html_entity_decode($this->request->get['filter_store_id'], ENT_QUOTES, 'UTF-8'));
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -113,11 +174,31 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['manufacturers'] = [];
 
 		$filter_data = [
+			'filter_name'     => $filter_name,
+			'filter_store_id' => $filter_store_id,
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$data['stores'] = [];
+
+		$data['stores'][] = [
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		];
+
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = [
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			];
+		}
 
 		// Image
 		$this->load->model('tool/image');
@@ -149,6 +230,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=md.name' . $url);
+		$data['sort_store'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=store' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.sort_order' . $url);
 
 		$url = '';

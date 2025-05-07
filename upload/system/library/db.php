@@ -33,13 +33,29 @@ class DB {
 	 * @param string $ssl_cert
 	 * @param string $ssl_ca
 	 */
-	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '') {
-		$class = 'Opencart\System\Library\DB\\' . $adaptor;
+	public function __construct(array $option = []) {
+		$required = [
+			'engine',
+			'hostname',
+			'username',
+			'database',
+			'port'
+		];
+
+		foreach ($required as $key) {
+			if (empty($option[$key])) {
+				throw new \Exception('Error: Database ' . $key . ' required!');
+				exit();
+			}
+		}
+
+		$class = 'Opencart\System\Library\DB\\' . $option['engine'];
 
 		if (class_exists($class)) {
-			$this->adaptor = new $class($hostname, $username, $password, $database, $port, $ssl_key, $ssl_cert, $ssl_ca);
+			$this->adaptor = new $class($option);
 		} else {
-			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
+			throw new \Exception('Error: Could not load database adaptor ' . $option['engine'] . '!');
+			exit();
 		}
 	}
 

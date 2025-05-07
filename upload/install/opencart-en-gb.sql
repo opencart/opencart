@@ -1763,29 +1763,29 @@ VALUES (1, 1, 'Centimeter', 'cm'),
 -- Dumping data for table `oc_manufacturer`
 --
 
-INSERT INTO `oc_manufacturer` (`manufacturer_id`, `image`, `sort_order`) VALUES
-(5, 'catalog/demo/htc_logo.jpg', 0),
-(6, 'catalog/demo/palm_logo.jpg', 0),
-(7, 'catalog/demo/hp_logo.jpg', 0),
-(8, 'catalog/demo/apple_logo.jpg', 0),
-(9, 'catalog/demo/canon_logo.jpg', 0),
-(10, 'catalog/demo/sony_logo.jpg', 0);
+INSERT INTO `oc_manufacturer` (`manufacturer_id`, `image`, `sort_order`)
+VALUES (5, 'catalog/demo/htc_logo.jpg', 0),
+       (6, 'catalog/demo/palm_logo.jpg', 0),
+       (7, 'catalog/demo/hp_logo.jpg', 0),
+       (8, 'catalog/demo/apple_logo.jpg', 0),
+       (9, 'catalog/demo/canon_logo.jpg', 0),
+       (10, 'catalog/demo/sony_logo.jpg', 0);
 
 -----------------------------------------------------------
 
-INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
-(5, 1, 'HTC', NULL, NULL, NULL, NULL),
-(5, 25, 'HTC', NULL, NULL, NULL, NULL),
-(6, 1, 'Palm', NULL, NULL, NULL, NULL),
-(6, 25, 'Palm', NULL, NULL, NULL, NULL),
-(7, 1, 'Hewlett-Packard', NULL, NULL, NULL, NULL),
-(7, 25, 'Hewlett-Packard', NULL, NULL, NULL, NULL),
-(8, 1, 'Apple', NULL, NULL, NULL, NULL),
-(8, 25, 'Apple', NULL, NULL, NULL, NULL),
-(9, 1, 'Canon', NULL, NULL, NULL, NULL),
-(9, 25, 'Canon', NULL, NULL, NULL, NULL),
-(10, 1, 'Sony', NULL, NULL, NULL, NULL),
-(10, 25, 'Sony', NULL, NULL, NULL, NULL);
+INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`)
+VALUES (5, 1, 'HTC', NULL, NULL, NULL, NULL),
+       (5, 25, 'HTC', NULL, NULL, NULL, NULL),
+       (6, 1, 'Palm', NULL, NULL, NULL, NULL),
+       (6, 25, 'Palm', NULL, NULL, NULL, NULL),
+       (7, 1, 'Hewlett-Packard', NULL, NULL, NULL, NULL),
+       (7, 25, 'Hewlett-Packard', NULL, NULL, NULL, NULL),
+       (8, 1, 'Apple', NULL, NULL, NULL, NULL),
+       (8, 25, 'Apple', NULL, NULL, NULL, NULL),
+       (9, 1, 'Canon', NULL, NULL, NULL, NULL),
+       (9, 25, 'Canon', NULL, NULL, NULL, NULL),
+       (10, 1, 'Sony', NULL, NULL, NULL, NULL),
+       (10, 25, 'Sony', NULL, NULL, NULL, NULL);
 
 --
 -- Dumping data for table `oc_manufacturer_to_store`
@@ -2583,16 +2583,34 @@ VALUES (0, 1, 'product_id', '47', 'hp-lp3065', 1),
 -- Dumping data for table `oc_ssr`
 --
 
-INSERT INTO `oc_ssr` (`ssr_id`, `code`, `description`, `action`, `status`, `sort_order`, `date_modified`)
-VALUES (1, 'article', '', 'ssr/article', 0, 0, '2025-04-01 18:12:16'),
-       (2, 'category', '', 'ssr/category', 0, 0, '2025-04-01 18:12:16'),
-       (3, 'country', '', 'ssr/country', 1, 0, '2025-04-01 18:12:16'),
-       (4, 'currency', '', 'ssr/currency', 1, 0, '2025-04-01 18:12:16'),
-       (5, 'information', '', 'ssr/information', 0, 0, '2025-04-01 18:12:16'),
-       (6, 'language', '', 'ssr/language', 1, 0, '2025-04-01 18:12:16'),
-       (7, 'manufacturer', '', 'ssr/manufacturer', 0, 0, '2025-04-01 18:12:16'),
-       (8, 'product', '', 'ssr/product', 0, 0, '2025-04-01 18:12:16'),
-       (9, 'topic', '', 'ssr/topic', 0, 0, '2025-04-01 18:12:16');
+INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status`, `sort_order`, `date_modified`)
+VALUES ('article', '', 'ssr/catalog/article', 0, 0, '2025-04-01 18:12:16'),
+       ('banner', '', 'ssr/catalog/banner', 0, 0, '2025-04-01 18:12:16'),
+       ('category', '', 'ssr/catalog/category', 0, 0, '2025-04-01 18:12:16'),
+       ('country', '', 'ssr/catalog/country', 1, 0, '2025-04-01 18:12:16'),
+       ('country', '', 'ssr/admin/country', 1, 0, '2025-04-01 18:12:16'),
+       ('currency', '', 'ssr/catalog/currency', 1, 0, '2025-04-01 18:12:16'),
+       ('currency', '', 'ssr/admin/currency', 1, 0, '2025-04-01 18:12:16'),
+       ('custom_field', '', 'ssr/catalog/custom_field', 1, 0, '2025-04-01 18:12:16'),
+       ('custom_field', '', 'ssr/admin/custom_field', 1, 0, '2025-04-01 18:12:16'),
+       ('customer_group', '', 'ssr/catalog/customer_group', 1, 0, '2025-04-01 18:12:16'),
+       ('customer_group', '', 'ssr/admin/customer_group', 1, 0, '2025-04-01 18:12:16'),
+       ('information', '', 'ssr/catalog/information', 0, 0, '2025-04-01 18:12:16'),
+       ('language', '', 'ssr/catalog/language', 1, 0, '2025-04-01 18:12:16'),
+       ('language', '', 'ssr/admin/language', 1, 0, '2025-04-01 18:12:16'),
+       ('length_class', '', 'ssr/catalog/length_class', 1, 0, '2025-04-01 18:12:16'),
+       ('length_class', '', 'ssr/admin/length_class', 1, 0, '2025-04-01 18:12:16'),
+       ('manufacturer', '', 'ssr/catalog/manufacturer', 0, 0, '2025-04-01 18:12:16'),
+       ('product', '', 'ssr/catalog/product', 0, 0, '2025-04-01 18:12:16'),
+       ('return_reason', '', 'ssr/catalog/return_reason', 1, 0, '2025-04-01 18:12:16'),
+       ('return_reason', '', 'ssr/admin/return_reason', 1, 0, '2025-04-01 18:12:16'),
+       ('store', '', 'ssr/catalog/store', 1, 0, '2025-04-01 18:12:16'),
+       ('store', '', 'ssr/admin/store', 1, 0, '2025-04-01 18:12:16'),
+       ('topic', '', 'ssr/catalog/topic', 0, 0, '2025-04-01 18:12:16'),
+       ('translation', '', 'ssr/catalog/translation', 1, 0, '2025-04-01 18:12:16'),
+       ('translation', '', 'ssr/admin/translation', 1, 0, '2025-04-01 18:12:16'),
+       ('weight_class', '', 'ssr/catalog/weight_class', 1, 0, '2025-04-01 18:12:16'),
+       ('weight_class', '', 'ssr/admin/weight_class', 1, 0, '2025-04-01 18:12:16');
 
 -----------------------------------------------------------
 

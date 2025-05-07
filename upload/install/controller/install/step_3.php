@@ -116,8 +116,24 @@ class Step3 extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			try {
-				$db = new \Opencart\System\Library\DB($this->request->post['db_driver'], html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_port'], $this->request->post['db_ssl_key'], $this->request->post['db_ssl_cert'], $this->request->post['db_ssl_ca']);
+				$option = [
+					'engine'   => $this->request->post['db_driver'],
+					'hostname' => html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'),
+					'username' => html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'),
+					'password' => html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'),
+					'database' => html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'),
+					'port'     => $this->request->post['db_port'],
+					'prefix'   => $this->request->post['db_prefix'],
+					'ssl_key'  => html_entity_decode($this->request->post['db_ssl_key'], ENT_QUOTES, 'UTF-8'),
+					'ssl_cert' => html_entity_decode($this->request->post['db_ssl_cert'], ENT_QUOTES, 'UTF-8'),
+					'ssl_ca'   => html_entity_decode($this->request->post['db_ssl_ca'], ENT_QUOTES, 'UTF-8')
+				];
+
+				$db = new \Opencart\System\Library\DB($option);
 			} catch (\Exception $e) {
+
+				echo $e->getMessage();
+				
 				$json['error']['warning'] = $e->getMessage();
 			}
 		}

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Ssr;
+namespace Opencart\Admin\Controller\Ssr\Catalog;
 /**
  * Class Currency
  *

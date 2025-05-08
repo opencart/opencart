@@ -287,7 +287,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *     'filter_date_next'              => '2022-01-01',
 	 *     'filter_subscription_status_id' => 1,
 	 *     'filter_date_from'              => '2021-01-01',
-	 *     'filter_date_to'                => '2021-01-31',
+	 *     'filter_date_to'                => '2021-01-31'
 	 * ];
 	 *
 	 * $this->load->model('sale/subscription');

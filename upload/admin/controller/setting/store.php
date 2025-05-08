@@ -295,10 +295,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		if (isset($setting_info['config_country_id'])) {
 			$data['config_country_id'] = $setting_info['config_country_id'];
 		} else {

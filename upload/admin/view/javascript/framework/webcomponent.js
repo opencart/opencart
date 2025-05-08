@@ -11,7 +11,7 @@ const base = new URL(document.querySelector('base').href);
 
 let language = document.getElementById('input-language');
 
-registry.set('storage', new Storage('./view/data/' + base.host + '/' + language.value + '/'));
+registry.set('storage', new Storage('./view/data/en-gb/'));
 registry.set('template', new Template());
 registry.set('Language', new Language());
 registry.set('observer', new Observer());

@@ -645,10 +645,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		$data['address'] = $this->load->controller('customer/address.getAddress');
 		$data['history'] = $this->getHistory();
 		$data['transaction'] = $this->getTransaction();

@@ -204,18 +204,16 @@
                 <div class="row mb-3">
                   <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
                   <div class="col-sm-10">
-                    <select name="config_country_id" id="input-country" class="form-select">
-                      {% for country in countries %}
-                        <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
-                      {% endfor %}
-                    </select>
+                    <x-country name="config_country_id" value="{{ config_country_id }}" id="x-country" input-id="input-country" input-class="form-select" required>
+                      <option value="0">{{ text_select }}</option>
+                    </x-country>
                     <div id="error-country" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
                   <div class="col-sm-10">
-                    <select name="config_zone_id" id="input-zone" class="form-select"></select>
+                    <x-zone name="config_zone_id" value="{{ config_zone_id }}" target="x-country" input-id="input-zone" input-class="form-select" required></x-zone>
                     <div id="error-zone" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -1549,48 +1547,5 @@ $('#input-theme').on('change', function() {
 });
 
 $('#input-theme').trigger('change');
-
-$('#input-country').on('change', function() {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=localisation/country.country&user_token={{ user_token }}&country_id=' + this.value,
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).prop('disabled', true);
-            $('#input-zone').prop('disabled', true);
-        },
-        complete: function() {
-            $(element).prop('disabled', false);
-            $('#input-zone').prop('disabled', false);
-        },
-        success: function(json) {
-            html = '<option value="">{{ text_select|escape('js') }}</option>';
-
-            if (json['zone'] && json['zone'] != '') {
-                for (i = 0; i < json['zone'].length; i++) {
-                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-                    if (json['zone'][i]['zone_id'] == '{{ config_zone_id }}') {
-                        html += ' selected';
-                    }
-
-                    html += '>' + json['zone'][i]['name'] + '</option>';
-                }
-            } else {
-                html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
-            }
-
-            $('#input-zone').html(html);
-
-            $('#button-save').prop('disabled', false);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#input-country').trigger('change');
 //--></script>
 {{ footer }}

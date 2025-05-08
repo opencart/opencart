@@ -14,11 +14,11 @@ class Country extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/country');
+		$this->load->language('ssr/admin/custom_field');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/country')) {
+		if (!$this->user->hasPermission('modify', 'ssr/admin/custom_field')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -48,12 +48,10 @@ class Country extends \Opencart\System\Engine\Controller {
 					$country_data = [];
 
 					foreach ($countries as $country) {
-						if ($country['status']) {
-							$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
+						$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
 
-							if ($description_info) {
-								$country_data[$country['country_id']] = $description_info + $country;
-							}
+						if ($description_info) {
+							$country_data[$country['country_id']] = $description_info + $country;
 						}
 					}
 

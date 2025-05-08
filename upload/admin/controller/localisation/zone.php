@@ -348,10 +348,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 
 		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		if (!empty($zone_info)) {
 			$data['country_id'] = $zone_info['country_id'];
 		} else {

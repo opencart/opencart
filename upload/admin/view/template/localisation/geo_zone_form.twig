@@ -46,12 +46,12 @@
                 {% set zone_to_geo_zone_row = 0 %}
                 {% for zone_to_geo_zone in zone_to_geo_zones %}
                   <tr id="zone-to-geo-zone-row-{{ zone_to_geo_zone_row }}">
-                    <td><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][country_id]" class="form-select" data-zone-to-geo-zone-row="{{ zone_to_geo_zone_row }}" data-zone-id="{{ zone_to_geo_zone.zone_id }}" disabled>
-                        {% for country in countries %}
-                          <option value="{{ country.country_id }}"{% if country.country_id == zone_to_geo_zone.country_id %} selected{% endif %}>{{ country.name }}</option>
-                        {% endfor %}
-                      </select></td>
-                    <td><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][zone_id]" class="form-select" disabled></select></td>
+                    <td><x-country name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][country_id]" value="{{ zone_to_geo_zone.country_id }}" id="x-country-{{ zone_to_geo_zone_row }}" input-id="input-country-{{ zone_to_geo_zone_row }}" input-class="form-select">
+                        <option value="0">{{ text_select }}</option>
+                      </x-country></td>
+                    <td><x-zone name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][zone_id]" value="{{ zone_to_geo_zone.zone_id }}" target="x-country-{{ zone_to_geo_zone_row }}" input-id="input-zone-{{ zone_to_geo_zone_row }}" input-class="form-select">
+                        <option value="0">{{ text_all_zones }}</option>
+                      </x-zone></td>
                     <td class="text-end"><button type="button" onclick="$('#zone-to-geo-zone-row-{{ zone_to_geo_zone_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set zone_to_geo_zone_row = zone_to_geo_zone_row + 1 %}
@@ -76,89 +76,14 @@ var zone_to_geo_zone_row = {{ zone_to_geo_zone_row }};
 
 $('#button-geo-zone').on('click', function() {
     html = '<tr id="zone-to-geo-zone-row-' + zone_to_geo_zone_row + '">';
-    html += '  <td><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" class="form-select" data-zone-to-geo-zone-row="' + zone_to_geo_zone_row + '" disabled>';
-  {% for country in countries %}
-    html += '    <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
-  {% endfor %}
-    html += '  </select></td>';
-    html += '  <td><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" class="form-select" disabled><option value="0">{{ text_all_zones|escape('js') }}</option></select></td>';
+    html += '  <td><x-country name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" value="{{ zone_to_geo_zone.country_id }}" id="x-country-' + zone_to_geo_zone_row + '" input-id="input-country-' + zone_to_geo_zone_row + '" input-class="form-select"><option value="0">{{ text_select }}</option></x-country></td>';
+    html += '  <td><x-zone name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" value="{{ zone_to_geo_zone.zone_id }}" target="x-country-' + zone_to_geo_zone_row + '" input-id="input-zone-' + zone_to_geo_zone_row + '" input-class="form-select" required><option value="0">{{ text_all_zones }}</option></x-zone></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#zone-to-geo-zone-row-' + zone_to_geo_zone_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#zone-to-geo-zone tbody').append(html);
 
-    $('select[name=\'zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]\']').trigger('change');
-
     zone_to_geo_zone_row++;
 });
-
-var zone = [];
-
-$('#zone-to-geo-zone').on('change', 'select[name$=\'[country_id]\']', function() {
-    var element = this;
-
-    $(element).prop('disabled', true);
-
-    $('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
-
-    if (!zone[$(element).val()]) {
-        $.ajax({
-            url: 'index.php?route=localisation/country.country&user_token={{ user_token }}&country_id=' + $(element).val(),
-            dataType: 'json',
-            beforeSend: function() {
-                $('button[form=\'form-geo-zone\']').prop('disabled', true);
-            },
-            complete: function() {
-                $('button[form=\'form-geo-zone\']').prop('disabled', false);
-            },
-            success: function(json) {
-                zone[$(element).val()] = json;
-
-                html = '<option value="0">{{ text_all_zones|escape('js') }}</option>';
-
-                for (i = 0; i < json['zone'].length; i++) {
-                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-                    if (json['zone'][i]['zone_id'] == $(element).attr('data-zone-id')) {
-                        html += ' selected';
-                    }
-
-                    html += '>' + json['zone'][i]['name'] + '</option>';
-                }
-
-                $('#zone-to-geo-zone select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').html(html);
-
-                $('#zone-to-geo-zone select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
-
-                $(element).prop('disabled', false);
-
-                $('#zone-to-geo-zone select[name$=\'[country_id]\']:disabled:first').trigger('change');
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    } else {
-        html = '<option value="0">{{ text_all_zones|escape('js') }}</option>';
-
-        for (i = 0; i < zone[$(element).val()]['zone'].length; i++) {
-            html += '<option value="' + zone[element.value]['zone'][i]['zone_id'] + '"';
-
-            if (zone[$(element).val()]['zone'][i]['zone_id'] == $(element).attr('data-zone-id')) {
-                html += ' selected';
-            }
-
-            html += '>' + zone[$(element).val()]['zone'][i]['name'] + '</option>';
-        }
-
-        $('#zone-to-geo-zone select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').html(html);
-
-        $(element).prop('disabled', false);
-
-        $('#zone-to-geo-zone select[name$=\'[country_id]\']:disabled:first').trigger('change');
-    }
-});
-
-$('#zone-to-geo-zone select[name$=\'[country_id]\']:first').trigger('change');
 //--></script>
 {{ footer }}

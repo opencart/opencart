@@ -99,10 +99,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_location'] = (array)$this->config->get('config_location');
 
 		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		$data['config_country_id'] = $this->config->get('config_country_id');
 		$data['config_zone_id'] = $this->config->get('config_zone_id');
 		$data['config_timezone'] = $this->config->get('config_timezone');

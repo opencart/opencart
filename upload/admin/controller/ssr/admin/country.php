@@ -36,12 +36,10 @@ class Country extends \Opencart\System\Engine\Controller {
 				$country_data = [];
 
 				foreach ($countries as $country) {
-					if ($country['status']) {
-						$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
+					$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
 
-						if ($description_info) {
-							$country_data[$country['country_id']] = $description_info + $country;
-						}
+					if ($description_info) {
+						$country_data[$country['country_id']] = $description_info + $country;
 					}
 				}
 

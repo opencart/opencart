@@ -145,13 +145,8 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (!empty($address_info)) {
 			$data['zone_id'] = $address_info['zone_id'];
 		} else {
-			$data['zone_id'] = '';
+			$data['zone_id'] = 0;
 		}
-
-		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom Fields
 		$data['custom_fields'] = [];

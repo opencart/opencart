@@ -1,64 +1,61 @@
 <?php
 namespace Opencart\Admin\Controller\Ssr\Admin;
 /**
- * Class Currency
+ * Class Customer Group
  *
  * @package Opencart\Admin\Controller\Ssr
  */
-class Currency extends \Opencart\System\Engine\Controller {
+class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Generate
 	 *
 	 * @return void
 	 */
 	public function index() {
-		$this->load->language('ssr/currency');
+		$this->load->language('ssr/admin/customer_group');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/currency')) {
+		if (!$this->user->hasPermission('modify', 'ssr/admin/customer_group')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$stores = [];
-
-			$stores[] = [
-				'store_id' => 0,
-				'url'      => HTTP_CATALOG
-			];
-
-			$this->load->model('setting/store');
-
-			$stores = $stores + $this->model_setting_store->getStores();
-
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
 
-			$this->load->model('localisation/currency');
+			$this->load->model('customer/customer_group');
 
-			$currencies = $this->model_localisation_currency->getCurrencies();
+			$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
-			foreach ($stores as $store) {
-				foreach ($languages as $language) {
-					$base = DIR_CATALOG . 'view/data/';
-					$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-					$filename = 'currency.json';
+			foreach ($languages as $language) {
+				$customer_group_data = [];
 
-					if (!oc_directory_create($base . $directory, 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $directory);
+				foreach ($customer_groups as $customer_group) {
+					$description_info = $this->model_customer_customer_group->getDescription($customer_group['customer_group_id'], $language['language_id']);
 
-						break;
+					if ($description_info) {
+						$customer_group_data[$customer_group['customer_group_id']] = $description_info + $customer_group;
 					}
+				}
 
-					$file = $base . $directory . $filename;
+				$base = DIR_APPLICATION . 'view/data/';
+				$directory = $language['code'] . '/customer/';
+				$filename = 'customer_group.json';
 
-					if (!file_put_contents($file, json_encode($currencies))) {
-						$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
+				if (!oc_directory_create($base . $directory, 0777)) {
+					$json['error'] = sprintf($this->language->get('error_directory'), $directory);
 
-						break;
-					}
+					break;
+				}
+
+				$file = $base . $directory . $filename;
+
+				if (!file_put_contents($file, json_encode($customer_group_data))) {
+					$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
+
+					break;
 				}
 			}
 
@@ -70,19 +67,25 @@ class Currency extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear() {
-		$this->load->language('ssr/currency');
+		$this->load->language('ssr/admin/customer_group');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/currency')) {
+		if (!$this->user->hasPermission('modify', 'ssr/admin/customer_group')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$file = DIR_CATALOG . 'view/data/localisation/currency.json';
+			$this->load->model('localisation/language');
 
-			if  (is_file($file)) {
-				unlink($file);
+			$languages = $this->model_localisation_language->getLanguages();
+
+			foreach ($languages as $language) {
+				$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/customer/customer_group.json';
+
+				if (is_file($file)) {
+					unlink($file);
+				}
 			}
 
 			$json['success'] = $this->language->get('text_success');

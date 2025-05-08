@@ -1,0 +1,132 @@
+<?php
+// Heading
+$_['heading_title']              = 'Objednávky';
+
+// Text
+$_['text_success']               = 'Success: You have modified orders!';
+$_['text_list']                  = 'Zoznam objednávok';
+$_['text_add']                   = 'Pridať objednávku';
+$_['text_edit']                  = 'Upraviť objednávku';
+$_['text_filter']                = 'Filter';
+$_['text_order_detail']          = 'Podrobnosti o objednávke';
+$_['text_customer_detail']       = 'Podrobnosti o zákazníkovi';
+$_['text_option']                = 'Možnosti';
+$_['text_store']                 = 'Obchod';
+$_['text_date_added']            = 'Dátum pridania';
+$_['text_payment_method']        = 'Spôsob platby';
+$_['text_shipping_method']       = 'Spôsob dopravy';
+$_['text_customer']              = 'Zákazník';
+$_['text_customer_group']        = 'Zákaznícka skupina';
+$_['text_email']                 = 'E-mail';
+$_['text_telephone']             = 'Telefón';
+$_['text_fax']                   = 'Fax:';
+$_['text_invoice']               = 'Faktúra';
+$_['text_reward']                = 'Vernostné body';
+$_['text_affiliate']             = 'Partneri';
+$_['text_order']                 = 'Objednávka (#%s)';
+$_['text_payment_address']       = 'Fakturačná adresa';
+$_['text_shipping_address']      = 'Dodacia adresa';
+$_['text_comment']               = 'Komentár zákazníka';
+$_['text_history']               = 'História objednávky';
+$_['text_history_add']           = 'Pridať históriu objednávky';
+$_['text_account_custom_field']  = 'Účet vlastných polí';
+$_['text_payment_custom_field']  = 'Fakturačná adresa - vlastné polia';
+$_['text_shipping_custom_field'] = 'Dodacia adresa - vlastné polia';
+$_['text_browser']               = 'Prehliadač';
+$_['text_ip']                    = 'IP Adresa';
+$_['text_forwarded_ip']          = 'Odovzdaná IP adresa';
+$_['text_user_agent']            = 'Prehliadač';
+$_['text_accept_language']       = 'Jazyk';
+$_['text_order_id']              = 'ID objednávky:';
+$_['text_website']               = 'Web stránka:';
+$_['text_invoice_no']            = 'Faktúra číslo';
+$_['text_invoice_date']          = 'Dátum vystavenia faktúry:';
+$_['text_sku']                   = 'SKU:';
+$_['text_upc']                   = 'UPC:';
+$_['text_ean']                   = 'EAN:';
+$_['text_jan']                   = 'JAN:';
+$_['text_isbn']                  = 'ISBN:';
+$_['text_mpn']                   = 'MPN:';
+$_['text_missing']               = 'Chýbajúce objednávky';
+$_['text_default']               = 'Predvolené';
+$_['text_product']               = 'Pridať produkt(y)';
+$_['text_voucher']               = 'Pridať poukaz(y)';
+$_['text_shipping']              = 'Doprava';
+$_['text_contact']               = 'Kontakt';
+$_['text_reward_added']          = 'Úspešne ste pridali vernostné body!';
+$_['text_reward_removed']        = 'Úspešne ste vymazali vernostné body!';
+$_['text_commission_added']      = 'Úspešne ste pridali provízie!';
+$_['text_commission_removed']    = 'Úspešne ste vymazali provízie!';
+$_['text_restock']               = 'Úspešne ste doplnili produkty!';
+$_['text_upload']                = 'Váš súbor bol úspešne nahraný!!';
+$_['text_picklist']              = 'Sprievodka';
+
+// Column
+$_['column_order_id']            = 'ID objednávky';
+$_['column_customer']            = 'Zákazník';
+$_['column_status']              = 'Stav';
+$_['column_date_added']          = 'Dátum pridania';
+$_['column_date_modified']       = 'Dátum zmeny';
+$_['column_total']               = 'Celkom';
+$_['column_product']             = 'Produkt';
+$_['column_model']               = 'Model';
+$_['column_quantity']            = 'Množstvo';
+$_['column_price']               = 'Cena za kus';
+$_['column_comment']             = 'Komentár';
+$_['column_notify']              = 'Upozornenie zákazníka';
+$_['column_location']            = 'Poloha';
+$_['column_reference']           = 'Referencie';
+$_['column_action']              = 'Akcia';
+$_['column_weight']              = 'Hmotnosť produktu';
+
+// Entry
+$_['entry_store']                = 'Obchod:';
+$_['entry_customer']             = 'Zákazník';
+$_['entry_customer_group']       = 'Zákaznícka skupina';
+$_['entry_firstname']            = 'Meno';
+$_['entry_lastname']             = 'Priezvisko';
+$_['entry_email']                = 'E-mail';
+$_['entry_telephone']            = 'Telefón';
+$_['entry_address']              = 'Vybrať adresu';
+$_['entry_company']              = 'Spoločnosť';
+$_['entry_address_1']            = 'Adresa 1';
+$_['entry_address_2']            = 'Adresa 2';
+$_['entry_city']                 = 'Mesto';
+$_['entry_postcode']             = 'PSČ';
+$_['entry_country']              = 'Štát';
+$_['entry_zone']                 = 'Kraj';
+$_['entry_zone_code']            = 'Kód kraja';
+$_['entry_product']              = 'Produkt';
+$_['entry_option']               = 'Vyberte možnosť(i)';
+$_['entry_quantity']             = 'Množstvo';
+$_['entry_to_name']              = 'Meno príjemcu';
+$_['entry_to_email']             = 'E-mail príjemcu';
+$_['entry_from_name']            = 'Meno odosielateľa';
+$_['entry_from_email']           = 'E-mail odosielateľa';
+$_['entry_theme']                = 'Šablóna poukazu';
+$_['entry_message']              = 'Správa';
+$_['entry_amount']               = 'Suma';
+$_['entry_affiliate']            = 'Partneri';
+$_['entry_order_status']         = 'Stav objednávky';
+$_['entry_notify']               = 'Notifikovať zákazníka';
+$_['entry_override']             = 'Schválenie';
+$_['entry_comment']              = 'Komentár'; 
+$_['entry_currency']             = 'Mena';
+$_['entry_shipping_method']      = 'Spôsob dopravy';
+$_['entry_payment_method']       = 'Spôsob platby';
+$_['entry_coupon']               = 'Kupón';
+$_['entry_voucher']              = 'Poukaz';
+$_['entry_reward']               = 'Vernostné body';
+$_['entry_order_id']             = 'ID objednávky';
+$_['entry_total']                = 'Celkom';
+$_['entry_date_added']           = 'Dátum pridania';
+$_['entry_date_modified']        = 'Dátum úpravy';
+
+// Help
+$_['help_override']              = 'V prípade objednávky zákazníka je blokovaná zmena stavu objednávky z dôvodu zamedzenia podvodu.';
+
+// Error
+$_['error_warning']              = 'Upozornenie: Skontrolujte prosím pole s chybami!';
+$_['error_permission']           = 'Upozornenie: Nemáte oprávnenie k zmenám objednávky!';
+$_['error_action']               = 'Upozornenie: Nie je možné dokončiť túto akciu!';
+$_['error_filetype']			 = 'Neplatný typ súboru!';

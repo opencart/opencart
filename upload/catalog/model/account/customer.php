@@ -586,6 +586,21 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * editToken
+	 *
+	 * Update or reset customer token.
+	 *
+	 * @param string $email Customer email
+	 * @param string $token New token (empty to reset it)
+	 *
+	 * @return void
+	 */
+	public function editToken(string $email, string $token): void {
+		// Reset the empty token or update it
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
+	}
+	
+	/**
 	 * Get Token By Code
 	 *
 	 * @param string $code

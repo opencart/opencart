@@ -38,7 +38,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/returns');
 	 *
-	 * $this->model_account_return->addReturn($return_data);
+	 * $this->model_account_returns->addReturn($return_data);
 	 */
 	public function addReturn(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET `order_id` = '" . (int)$data['order_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `email` = '" . $this->db->escape($data['email']) . "', `telephone` = '" . $this->db->escape($data['telephone']) . "', `product` = '" . $this->db->escape($data['product']) . "', `model` = '" . $this->db->escape($data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `opened` = '" . (int)$data['opened'] . "', `return_reason_id` = '" . (int)$data['return_reason_id'] . "', `return_status_id` = '" . (int)$this->config->get('config_return_status_id') . "', `comment` = '" . $this->db->escape($data['comment']) . "', `date_ordered` = '" . $this->db->escape($data['date_ordered']) . "', `date_added` = NOW(), `date_modified` = NOW()");
@@ -59,7 +59,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/returns');
 	 *
-	 * $return_info = $this->model_account_return->getReturn($return_id);
+	 * $return_info = $this->model_account_returns->getReturn($return_id);
 	 */
 	public function getReturn(int $return_id): array {
 		$query = $this->db->query("SELECT *, (SELECT `rr`.`name` FROM `" . DB_PREFIX . "return_reason` `rr` WHERE `rr`.`return_reason_id` = `r`.`return_reason_id` AND `rr`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `reason`, (SELECT `ra`.`name` FROM `" . DB_PREFIX . "return_action` `ra` WHERE `ra`.`return_action_id` = `r`.`return_action_id` AND `ra`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `action`, (SELECT `rs`.`name` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = `r`.`return_status_id` AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `status`, `r`.`comment`, `r`.`date_ordered`, `r`.`date_added`, `r`.`date_modified` FROM `" . DB_PREFIX . "return` `r` WHERE `r`.`return_id` = '" . (int)$return_id . "' AND `r`.`customer_id` = '" . $this->customer->getId() . "'");

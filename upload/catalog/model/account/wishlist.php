@@ -22,7 +22,7 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/wishlist');
 	 *
-	 * $this->model_account_customer->addWishlist($customer_id, $product_id);
+	 * $this->model_account_wishlist->addWishlist($customer_id, $product_id);
 	 */
 	public function addWishlist(int $customer_id, int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `product_id` = '" . (int)$product_id . "'");

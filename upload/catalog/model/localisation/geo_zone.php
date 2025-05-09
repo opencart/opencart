@@ -23,7 +23,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('localisation/geo_zone');
 	 *
-	 * $geo_zone_info = $this->model_localisation_geo_zone->getZone($geo_zone_id, $country_id, $zone_id);
+	 * $geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($geo_zone_id, $country_id, $zone_id);
 	 */
 	public function getGeoZone(int $geo_zone_id, int $country_id, int $zone_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "' AND `country_id` = '" . (int)$country_id . "' AND (`zone_id` = '" . (int)$zone_id . "' OR `zone_id` = '0')");

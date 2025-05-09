@@ -393,7 +393,7 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('user/user');
 	 *
-	 * $user_total = $this->model_user_user->getTotalusersByEmail($email);
+	 * $user_total = $this->model_user_user->getTotalUsersByEmail($email);
 	 */
 	public function getTotalUsersByEmail(string $email): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");

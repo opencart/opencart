@@ -155,7 +155,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		// Addresses
 		$this->load->model('account/address');
 
-		$this->model_account_address->deleteAddresses($customer_id);
+		$this->model_account_address->deleteAddress($customer_id);
 
 		// Affiliate
 		$this->load->model('account/affiliate');
@@ -170,7 +170,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		// Rewards
 		$this->load->model('account/reward');
 
-		$this->model_account_reward->deleteRewards($customer_id);
+		$this->model_account_reward->deleteReward($customer_id);
 
 		// Transactions
 		$this->load->model('account/transaction');

@@ -620,7 +620,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('checkout/subscription');
 	 *
-	 * $this->model_checkout_subscription->addOtion($subscription_id, $subscription_product_id, $subscription_option_data);
+	 * $this->model_checkout_subscription->addOption($subscription_id, $subscription_product_id, $subscription_option_data);
 	 */
 	public function addOption(int $subscription_id, int $subscription_product_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_option` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_product_id` = '" . (int)$subscription_product_id . "', `product_option_id` = '" . (int)$data['product_option_id'] . "', `product_option_value_id` = '" . (int)$data['product_option_value_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `value` = '" . $this->db->escape($data['value']) . "', `type` = '" . $this->db->escape($data['type']) . "'");

@@ -168,7 +168,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/reward');
 	 *
-	 * $reward_total = $this->model_account_reward->getTotalReward($customer_id);
+	 * $reward_total = $this->model_account_reward->getRewardTotal($customer_id);
 	 */
 	public function getRewardTotal(int $customer_id): int {
 		$query = $this->db->query("SELECT SUM(`points`) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "' GROUP BY `customer_id`");

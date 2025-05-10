@@ -24,7 +24,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *     'image'                => 'category_image',
 	 *     'parent_id'            => 0,
 	 *     'sort_order'           => 0,
-	 *     'status'               => 0,
+	 *     'status'               => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/category');
@@ -118,7 +118,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 *     'image'                => 'category_image',
 	 *     'parent_id'            => 0,
 	 *     'sort_order'           => 0,
-	 *     'status'               => 1,
+	 *     'status'               => 1
 	 * ];
 	 *
 	 * $this->load->model('catalog/category');

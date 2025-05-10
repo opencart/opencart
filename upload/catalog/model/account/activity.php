@@ -22,7 +22,7 @@ class Activity extends \Opencart\System\Engine\Model {
 	 *
 	 * $activity_data = [
 	 *     'key'  => '',
-	 *     'data' => [],
+	 *     'data' => []
 	 * ];
 	 *
 	 * $this->load->model('account/activity');

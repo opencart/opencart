@@ -9,6 +9,6 @@ $_['text_contact']  = 'Si vous n\'êtes pas à l\'origine de cette demande, veui
 $_['text_thanks']   = 'Merci,';
 $_['text_ignore']   = 'Si vous n\'êtes pas à l\'origine de cette demande, veuillez ignorer cet e-mail.';
 
-// Bouton
+// Boutons
 $_['button_export'] = 'Je confirme l\'exportation de mes données';
 $_['button_remove'] = 'Je confirme la suppression de mon compte';

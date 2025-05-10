@@ -21,7 +21,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * $attribute_group_data = [
 	 *     'attribute_group_description => [],
-	 *     'sort_order'                 => 0,
+	 *     'sort_order'                 => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/attribute_group');

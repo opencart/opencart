@@ -238,7 +238,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('localisation/geo_zone');
 	 *
-	 * $this->model_geo_zone->addZone($geo_zone_id, $zone_to_geo_zone_data);
+	 * $this->model_localisation_geo_zone->addZone($geo_zone_id, $zone_to_geo_zone_data);
 	 */
 	public function addZone(int $geo_zone_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone_to_geo_zone` SET `geo_zone_id` = '" . (int)$geo_zone_id . "', `country_id` = '" . (int)$data['country_id'] . "', `zone_id` = '" . (int)$data['zone_id'] . "'");
@@ -257,7 +257,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('localisation/geo_zone');
 	 *
-	 * $this->model_geo_zone->deleteZones($geo_zone_id);
+	 * $this->model_localisation_geo_zone->deleteZones($geo_zone_id);
 	 */
 	public function deleteZones(int $geo_zone_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");

@@ -306,7 +306,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_method');
 		$this->load->controller('api/payment_method');
 
-		$this->load->language('sale/subscription');
+		$this->load->language('api/subscription');
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {

@@ -961,7 +961,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('customer/customer');
 	 *
-	 * $this->model_customer_customer->deleteTransactionByOrderId($order_id);
+	 * $this->model_customer_customer->deleteTransactionsByOrderId($order_id);
 	 */
 	public function deleteTransactionsByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");

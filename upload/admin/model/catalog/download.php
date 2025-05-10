@@ -22,7 +22,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 * $download_data = [
 	 *     'download_description' => [],
 	 *     'filename'             => 'download_filename',
-	 *     'mask'                 => 'mask string',
+	 *     'mask'                 => 'mask string'
 	 * ];
 	 *
 	 * $this->load->model('catalog/download');
@@ -56,7 +56,7 @@ class Download extends \Opencart\System\Engine\Model {
 	 * $download_data = [
 	 *     'download_description' => [],
 	 *     'filename'             => 'download_filename',
-	 *     'mask'                 => 'mask string',
+	 *     'mask'                 => 'mask string'
 	 * ];
 	 *
 	 * $this->load->model('catalog/download');

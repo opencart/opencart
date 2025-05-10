@@ -47,7 +47,7 @@ class Layout extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('design/layout');
 	 *
-	 * $modules = $this->model_design_banner->getModules($layout_id, $position);
+	 * $modules = $this->model_design_layout->getModules($layout_id, $position);
 	 */
 	public function getModules(int $layout_id, string $position): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "' AND `position` = '" . $this->db->escape($position) . "' ORDER BY `sort_order`");

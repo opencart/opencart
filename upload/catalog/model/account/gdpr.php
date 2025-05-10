@@ -98,7 +98,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/gdpr');
 	 *
-	 * $results = $this->model_account_customer->getGdprsByEmail($email);
+	 * $results = $this->model_account_gdpr->getGdprsByEmail($email);
 	 */
 	public function getGdprsByEmail(string $email): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `email` = '" . $this->db->escape($email) . "'");
@@ -115,7 +115,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/gdpr');
 	 *
-	 * $results = $this->model_account_customer->getExpires();
+	 * $results = $this->model_account_gdpr->getExpires();
 	 */
 	public function getExpires(): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `status` = '2' AND DATE(`date_added`) <= DATE('" . $this->db->escape(date('Y-m-d', strtotime('+' . (int)$this->config->get('config_gdpr_limit') . ' days'))) . "') ORDER BY `date_added` DESC");

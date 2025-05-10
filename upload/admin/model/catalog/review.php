@@ -64,7 +64,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *     'product_id' => 1,
 	 *     'text'       => 'Review Text',
 	 *     'rating'     => 4,
-	 *     'status'     => 1,
+	 *     'status'     => 1
 	 * ];
 	 *
 	 * $this->load->model('catalog/review');

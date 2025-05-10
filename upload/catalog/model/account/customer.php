@@ -35,7 +35,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/customer');
 	 *
-	 * $this->model_account_customer_customer->addCustomer($customer_data);
+	 * $this->model_account_customer->addCustomer($customer_data);
 	 */
 	public function addCustomer(array $data): int {
 		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
@@ -85,7 +85,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/customer');
 	 *
-	 * $this->model_account_customer_customer->editCustomer($customer_id, $customer_data);
+	 * $this->model_account_customer->editCustomer($customer_id, $customer_data);
 	 */
 	public function editCustomer(int $customer_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `firstname` = '" . $this->db->escape($data['firstname']) . "', `lastname` = '" . $this->db->escape($data['lastname']) . "', `email` = '" . $this->db->escape(oc_strtolower($data['email'])) . "', `telephone` = '" . $this->db->escape($data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -155,7 +155,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		// Addresses
 		$this->load->model('account/address');
 
-		$this->model_account_address->deleteAddresses($customer_id);
+		$this->model_account_address->deleteAddress($customer_id);
 
 		// Affiliate
 		$this->load->model('account/affiliate');
@@ -170,7 +170,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		// Rewards
 		$this->load->model('account/reward');
 
-		$this->model_account_reward->deleteRewards($customer_id);
+		$this->model_account_reward->deleteReward($customer_id);
 
 		// Transactions
 		$this->load->model('account/transaction');

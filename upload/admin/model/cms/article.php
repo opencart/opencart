@@ -22,7 +22,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $article_data = [
 	 *     'article_description' => [],
 	 *     'author'              => 'Author Name',
-	 *     'status'              => 0,
+	 *     'status'              => 0
 	 * ];
 	 *
 	 * $this->load->model('cms/article');
@@ -84,7 +84,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $article_data = [
 	 *     'article_description' => [],
 	 *     'author'              => 'Author Name',
-	 *     'status'              => 1,
+	 *     'status'              => 1
 	 * ];
 	 *
 	 * $this->load->model('cms/article');

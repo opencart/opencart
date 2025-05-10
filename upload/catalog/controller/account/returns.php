@@ -470,7 +470,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function history(): void {
-		$this->load->language('account/return');
+		$this->load->language('account/returns');
 
 		if (!$this->load->controller('account/login.validate')) {
 			$this->session->data['redirect'] = $this->url->link('account/returns', 'language=' . $this->config->get('config_language'));

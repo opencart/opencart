@@ -248,20 +248,12 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['country_id'] = (int)$this->config->get('config_country_id');
 		}
 
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		// Zones
 		if (!empty($address_info)) {
 			$data['zone_id'] = $address_info['zone_id'];
 		} else {
 			$data['zone_id'] = 0;
 		}
-
-		$this->load->model('localisation/zone');
-
-		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
 
 		// Custom Fields
 		$data['custom_fields'] = [];
@@ -361,9 +353,10 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			// Total Zones
+			// Zones
 			$this->load->model('localisation/zone');
 
+			// Total Zones
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
 
 			if ($zone_total && !$post_info['zone_id']) {
@@ -408,7 +401,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				$this->model_account_address->editAddress($this->customer->getId(), (int)$this->request->get['address_id'], $post_info);
 
 				// If address is in session update it.
-				if (isset($this->session->data['shipping_address']) && ($this->session->data['shipping_address']['address_id'] == (int)$this->request->get['address_id'])) {
+				if (isset($this->session->data['shipping_address']['address_id']) && ($this->session->data['shipping_address']['address_id'] == (int)$this->request->get['address_id'])) {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getId(), (int)$this->request->get['address_id']);
 
 					unset($this->session->data['order_id']);
@@ -419,7 +412,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				}
 
 				// If address is in session update it.
-				if (isset($this->session->data['payment_address']) && ($this->session->data['payment_address']['address_id'] == (int)$this->request->get['address_id'])) {
+				if (isset($this->session->data['payment_address']['address_id']) && ($this->session->data['payment_address']['address_id'] == (int)$this->request->get['address_id'])) {
 					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getId(), (int)$this->request->get['address_id']);
 
 					unset($this->session->data['order_id']);
@@ -471,9 +464,10 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_delete');
 			}
 
-			// Total Subscriptions
+			// Subscriptions
 			$this->load->model('account/subscription');
 
+			// Total Subscriptions
 			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByShippingAddressId($address_id);
 
 			if ($subscription_total) {

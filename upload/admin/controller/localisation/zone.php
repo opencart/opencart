@@ -178,10 +178,13 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['zones'][] = [
-				'name' => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : ''),
+				'name' => $result['name'],
 				'edit' => $this->url->link('localisation/zone.form', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $result['zone_id'] . $url)
 			] + $result;
 		}
+
+		// Default
+		$data['zone_id'] = $this->config->get('config_zone_id');
 
 		$url = '';
 
@@ -203,6 +206,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_country'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cd.name' . $url);
 		$data['sort_name'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=zd.name' . $url);
 		$data['sort_code'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=z.code' . $url);
@@ -229,8 +233,10 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Zones
 		$zone_total = $this->model_localisation_zone->getTotalZones($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $zone_total,
 			'page'  => $page,
@@ -342,10 +348,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 
 		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		if (!empty($zone_info)) {
 			$data['country_id'] = $zone_info['country_id'];
 		} else {
@@ -426,7 +428,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		// Customer
@@ -446,12 +448,14 @@ class Zone extends \Opencart\System\Engine\Controller {
 				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
+			// Total Addresses
 			$address_total = $this->model_customer_customer->getTotalAddressesByZoneId((int)$zone_id);
 
 			if ($address_total) {
 				$json['error'] = sprintf($this->language->get('error_address'), $address_total);
 			}
 
+			// Total Zones
 			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByZoneId((int)$zone_id);
 
 			if ($zone_to_geo_zone_total) {

@@ -4,15 +4,17 @@ $_['site_url']           = HTTP_SERVER;
 
 // Database
 $_['db_autostart']       = true;
-$_['db_engine']          = DB_DRIVER; // mysqli, pdo or pgsql
-$_['db_hostname']        = DB_HOSTNAME;
-$_['db_username']        = DB_USERNAME;
-$_['db_password']        = DB_PASSWORD;
-$_['db_database']        = DB_DATABASE;
-$_['db_port']            = DB_PORT;
-//$_['db_ssl_key']         = DB_SSL_KEY;
-//$_['db_ssl_cert']        = DB_SSL_CERT;
-//$_['db_ssl_ca']          = DB_SSL_CA;
+$_['db_option']          = [
+	'engine'   => DB_DRIVER, // mysqli, pdo or pgsql
+	'hostname' => DB_HOSTNAME,
+	'username' => DB_USERNAME,
+	'password' => DB_PASSWORD,
+	'database' => DB_DATABASE,
+	'port'     => DB_PORT,
+	'ssl_key'  => DB_SSL_KEY,
+	'ssl_cert' => DB_SSL_CERT,
+	'ssl_ca'   => DB_SSL_CA
+];
 
 // Session
 $_['session_autostart']  = false;

@@ -277,10 +277,16 @@ button:focus {
   font-size: 0.9em;
 }
 
-/* default boostrap changes */
-div.required .col-form-label:before, div.required .form-label:before {
+/* required */
+label:has(+ div *[required]):before {
   content: '* ';
-  color: #F00;
+  color: red;
+  font-weight: bold;
+}
+
+label.required:before, label:has(+ input:required):before, label:has(+ select:required):before, label:has(+ textarea:required):before {
+  content: '* ';
+  color: red;
   font-weight: bold;
 }
 

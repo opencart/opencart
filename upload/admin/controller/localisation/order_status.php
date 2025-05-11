@@ -123,10 +123,13 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['order_statuses'][] = [
-				'name' => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : ''),
+				'name' => $result['name'],
 				'edit' => $this->url->link('localisation/order_status.form', 'user_token=' . $this->session->data['user_token'] . '&order_status_id=' . $result['order_status_id'] . $url)
 			] + $result;
 		}
+
+		// Default
+		$data['order_status_id'] = $this->config->get('config_order_status_id');
 
 		$url = '';
 
@@ -136,6 +139,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sort
 		$data['sort_name'] = $this->url->link('localisation/order_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
@@ -148,8 +152,10 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Order Statuses
 		$order_status_total = $this->model_localisation_order_status->getTotalOrderStatuses();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_status_total,
 			'page'  => $page,
@@ -299,10 +305,10 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
-		// Order
+		// Orders
 		$this->load->model('sale/order');
 
 		foreach ($selected as $order_status_id) {
@@ -310,12 +316,14 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Orders
 			$order_total = $this->model_sale_order->getTotalOrdersByOrderStatusId($order_status_id);
 
 			if ($order_total) {
 				$json['error'] = sprintf($this->language->get('error_order'), $order_total);
 			}
 
+			// Total Histories
 			$order_total = $this->model_sale_order->getTotalHistoriesByOrderStatusId($order_status_id);
 
 			if ($order_total) {

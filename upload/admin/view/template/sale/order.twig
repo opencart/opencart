@@ -73,7 +73,7 @@
                 <input type="date" name="filter_date_modified_to" value="{{ filter_date_modified_to }}" placeholder="{{ entry_date_modified_to }}" id="input-date-modified-to" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -83,79 +83,27 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="order" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#order').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#order').load(this.href);
+    $('#list').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
-    url = '';
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
 
-    var filter_order_id = $('#input-order-id').val();
+    let url = $(this).serialize();
 
-    if (filter_order_id) {
-        url += '&filter_order_id=' + filter_order_id;
-    }
+    window.history.pushState({}, null, 'index.php?route=sale/order&user_token={{ user_token }}&' + url);
 
-    var filter_customer = $('#input-customer').val();
-
-    if (filter_customer) {
-        url += '&filter_customer=' + encodeURIComponent(filter_customer);
-    }
-
-    var filter_store_id = $('#input-store').val();
-
-    if (filter_store_id !== '') {
-        url += '&filter_store_id=' + filter_store_id;
-    }
-
-    var filter_order_status_id = $('#input-order-status').val();
-
-    if (filter_order_status_id !== '') {
-        url += '&filter_order_status_id=' + filter_order_status_id;
-    }
-
-    var filter_total = $('#input-total').val();
-
-    if (filter_total) {
-        url += '&filter_total=' + encodeURIComponent(filter_total);
-    }
-
-    var filter_date_from = $('#input-date-from').val();
-
-    if (filter_date_from) {
-        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
-    }
-
-    var filter_date_to = $('#input-date-to').val();
-
-    if (filter_date_to) {
-        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
-    }
-
-    var filter_date_modified_from = $('#input-date-modified-from').val();
-
-    if (filter_date_modified_from) {
-        url += '&filter_date_modified_from=' + encodeURIComponent(filter_date_modified_from);
-    }
-
-    var filter_date_modified_to = $('#input-date-modified-to').val();
-
-    if (filter_date_modified_to) {
-        url += '&filter_date_modified_to=' + encodeURIComponent(filter_date_modified_to);
-    }
-
-    window.history.pushState({}, null, 'index.php?route=sale/order&user_token={{ user_token }}' + url);
-
-    $('#order').load('index.php?route=sale/order.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=sale/order.list&user_token={{ user_token }}&' + url);
 });
 
 $('#input-customer').autocomplete({

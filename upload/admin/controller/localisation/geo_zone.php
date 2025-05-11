@@ -133,6 +133,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_description'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=description' . $url);
 
@@ -146,8 +147,10 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Geo Zones
 		$geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $geo_zone_total,
 			'page'  => $page,
@@ -230,10 +233,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		}
 
 		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		if (!empty($geo_zone_info)) {
 			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZones($geo_zone_info['geo_zone_id']);
 		} else {
@@ -264,9 +263,10 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'geo_zone_id' => 0,
-			'name'        => '',
-			'description' => ''
+			'geo_zone_id'      => 0,
+			'name'             => '',
+			'description'      => '',
+			'zone_to_geo_zone' => []
 		];
 
 		$post_info = $this->request->post + $required;
@@ -278,6 +278,12 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		if (!oc_validate_length($post_info['description'], 3, 255)) {
 			$json['error']['description'] = $this->language->get('error_description');
 		}
+
+		if (!isset($this->request->post['zone_to_geo_zone'])) {
+
+
+		}
+
 
 		if (!$json) {
 			// Geo Zone
@@ -319,6 +325,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		// Tax Rate
 		$this->load->model('localisation/tax_rate');
 
+		// Total Tax Rates
 		foreach ($selected as $geo_zone_id) {
 			$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRatesByGeoZoneId($geo_zone_id);
 

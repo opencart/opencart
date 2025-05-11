@@ -139,3 +139,113 @@ if (!function_exists('str_contains')) {
 		return $find === '' || strpos($string, $find) !== false;
 	}
 }
+
+// File Handling Functions
+
+// 1. Reading a file
+function oc_file_read($file) {
+	if (is_file($file)) {
+		return file_get_contents($file);
+	}
+
+	return false;
+}
+
+// 2. Writing to a file
+function oc_file_write($file, $content) {
+	return file_put_contents($file, $content) !== false;
+}
+
+// 3. Appending to a file
+function oc_file_append($filename, $content) {
+	return file_put_contents($filename, $content, FILE_APPEND) !== false;
+}
+
+// 6. Deleting a file
+function oc_file_delete($path) {
+	if (is_file($path)) {
+		return unlink($path);
+	}
+
+	return false;
+}
+
+// Directory Handling Functions
+
+// 1. Creating a directory
+function oc_directory_create($path, $permissions = 0777) {
+	$path_new = '';
+
+	$directories = explode('/', rtrim($path, '/'));
+
+	foreach ($directories as $directory) {
+		if (!$path_new) {
+			$path_new = $directory;
+		} else {
+			$path_new = $path_new . '/' . $directory;
+		}
+
+		// To fix storage location
+		if (!is_dir($path_new . '/') && !mkdir($path_new . '/', $permissions)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+// 2. Removing a directory
+function oc_directory_remove($path) {
+	$files = [];
+
+	// Make path into an array
+	$directory = [$path];
+
+	// While the path array is still populated keep looping through
+	while (count($directory) != 0) {
+		$next = array_shift($directory);
+
+		if (is_dir($next)) {
+			foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+				// If directory add to path array
+				$directory[] = $file;
+			}
+		}
+
+		// Add the file to the files to be deleted array
+		$files[] = $next;
+	}
+
+	// Reverse sort the file array
+	rsort($files);
+
+	foreach ($files as $file) {
+		// If file just delete
+		if (is_file($file)) {
+			unlink($file);
+		}
+
+		// If directory use the remove directory function
+		if (is_dir($file)) {
+			rmdir($file);
+		}
+	}
+
+	return true;
+}
+
+// 3. Reading directory contents
+function oc_directory_read($directory) {
+	$contents = [];
+
+	if (is_dir($directory)) {
+		$files = scandir($directory);
+
+		foreach ($files as $file) {
+			if ($file != '.' && $file != '..') {
+				$contents[] = $file;
+			}
+		}
+	}
+	return $contents;
+}

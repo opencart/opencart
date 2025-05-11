@@ -133,6 +133,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sort
 		$data['sort_name'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
@@ -145,8 +146,10 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Return Reasons
 		$return_reason_total = $this->model_localisation_return_reason->getTotalReturnReasons();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_reason_total,
 			'page'  => $page,
@@ -297,6 +300,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		// Returns
 		$this->load->model('sale/returns');
 
+		// Total Returns
 		foreach ($selected as $return_reason_id) {
 			$return_total = $this->model_sale_returns->getTotalReturnsByReturnReasonId($return_reason_id);
 

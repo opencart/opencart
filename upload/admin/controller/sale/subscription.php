@@ -299,6 +299,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_subscription'] = $this->url->link('sale/subscription.list', 'user_token=' . $this->session->data['user_token'] . '&sort=s.subscription_id' . $url);
 		$data['sort_order'] = $this->url->link('sale/subscription.list', 'user_token=' . $this->session->data['user_token'] . '&sort=s.order_id' . $url);
 		$data['sort_customer'] = $this->url->link('sale/subscription.list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
@@ -339,8 +340,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Subscriptions
 		$subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $subscription_total,
 			'page'  => $page,
@@ -649,16 +652,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
-		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
-		// Zones
-		$this->load->model('localisation/zone');
-
-		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
-
 		// Payment Method
 		if (!empty($subscription_info['payment_method'])) {
 			$data['payment_method_name'] = $subscription_info['payment_method']['name'];
@@ -703,12 +696,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['shipping_zone_id'] = 0;
 			$data['shipping_zone'] = '';
 			$data['shipping_custom_field'] = [];
-		}
-
-		if ($data['payment_country_id'] == $data['shipping_country_id']) {
-			$data['shipping_zones'] = $data['payment_zones'];
-		} else {
-			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 
 		// Shipping Method
@@ -1014,8 +1001,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Histories
 		$subscription_total = $this->model_sale_subscription->getTotalHistories($subscription_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $subscription_total,
 			'page'  => $page,
@@ -1130,8 +1119,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Orders
 		$order_total = $this->model_sale_order->getTotalOrdersBySubscriptionId($subscription_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,
 			'page'  => $page,
@@ -1186,8 +1177,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['logs'][] = ['date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))] + $result;
 		}
 
+		// Total Subscriptions
 		$subscription_total = $this->model_sale_subscription->getTotalLogs($subscription_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $subscription_total,
 			'page'  => $page,

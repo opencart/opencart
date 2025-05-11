@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
- * Class Upgrade8
+ * Class Upgrade9
  *
  * @package Opencart\Install\Controller\Upgrade
  */
-class Upgrade8 extends \Opencart\System\Engine\Controller {
+class Upgrade9 extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -19,25 +19,15 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 		try {
 			$ssrs = [];
 
-			$ssrs[] = [
-				'code'   => 'article',
-				'action' => 'ssr/article'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'article',
+			//	'action' => 'ssr/article'
+			//];
 
-			$ssrs[] = [
-				'code'   => 'article',
-				'action' => 'ssr/article.template'
-			];
-
-			$ssrs[] = [
-				'code'   => 'article',
-				'action' => 'ssr/article.image'
-			];
-
-			$ssrs[] = [
-				'code'   => 'category',
-				'action' => 'ssr/category'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'category',
+			//	'action' => 'ssr/category'
+			//];
 
 			$ssrs[] = [
 				'code'   => 'country',
@@ -49,30 +39,30 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'action' => 'ssr/currency'
 			];
 
-			$ssrs[] = [
-				'code'   => 'information',
-				'action' => 'ssr/information'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'information',
+			//	'action' => 'ssr/information'
+			//];
 
 			$ssrs[] = [
 				'code'   => 'language',
 				'action' => 'ssr/language'
 			];
 
-			$ssrs[] = [
-				'code'   => 'manufacturer',
-				'action' => 'ssr/manufacturer'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'manufacturer',
+			//	'action' => 'ssr/manufacturer'
+			//];
 
-			$ssrs[] = [
-				'code'   => 'product',
-				'action' => 'ssr/product'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'product',
+			//	'action' => 'ssr/product'
+			//];
 
-			$ssrs[] = [
-				'code'   => 'topic',
-				'action' => 'ssr/topic'
-			];
+			//$ssrs[] = [
+			//	'code'   => 'topic',
+			//	'action' => 'ssr/topic'
+			//];
 
 			foreach ($ssrs as $ssr) {
 				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ssr` WHERE `code` = '" . $this->db->escape($ssr['code']) . "'");
@@ -88,7 +78,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 8, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['text'] = sprintf($this->language->get('text_patch'), 9, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
 
@@ -100,7 +90,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['next'] = $this->url->link('upgrade/upgrade_9', $url, true);
+			$json['next'] = $this->url->link('upgrade/upgrade_10', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

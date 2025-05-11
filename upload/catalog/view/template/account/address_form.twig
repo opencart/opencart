@@ -10,17 +10,17 @@
       <h1>{{ text_address }}</h1>
       <form id="form-address" action="{{ save }}" method="post" data-oc-toggle="ajax">
         <fieldset>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
             <div class="col-sm-10">
-              <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+              <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required/>
               <div id="error-firstname" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3 ">
             <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
             <div class="col-sm-10">
-              <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+              <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required/>
               <div id="error-lastname" class="invalid-feedback"></div>
             </div>
           </div>
@@ -30,10 +30,10 @@
               <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-company" class="form-control"/>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-address-1" class="col-sm-2 col-form-label">{{ entry_address_1 }}</label>
             <div class="col-sm-10">
-              <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1" class="form-control"/>
+              <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1" class="form-control" required/>
               <div id="error-address-1" class="invalid-feedback"></div>
             </div>
           </div>
@@ -43,52 +43,45 @@
               <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-address-2" class="form-control"/>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-city" class="col-sm-2 col-form-label">{{ entry_city }}</label>
             <div class="col-sm-10">
-              <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control"/>
+              <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" required/>
               <div id="error-city" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-postcode" class="col-sm-2 col-form-label">{{ entry_postcode }}</label>
             <div class="col-sm-10">
-              <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
+              <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" required/>
               <div id="error-postcode" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
             <div class="col-sm-10">
-              <select name="country_id" id="input-country" class="form-select">
+              <x-country name="country_id" value="{{ country_id }}" id="x-country" postcode-required="1" target="input-postcode" input-id="input-country" input-class="form-select" required>
                 <option value="0">{{ text_select }}</option>
-                {% for country in countries %}
-                  <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
-                {% endfor %}
-              </select>
+              </x-country>
               <div id="error-country" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
             <div class="col-sm-10">
-              <select name="zone_id" id="input-zone" class="form-select">
-                <option value="">{{ text_select }}</option>
-                {% for zone in zones %}
-                  <option value="{{ zone.zone_id }}"{% if zone.zone_id == zone_id %} selected{% endif %}>{{ zone.name }}</option>
-                {% endfor %}
-              </select>
+              <x-zone name="zone_id" value="{{ zone_id }}" target="x-country" input-id="input-zone" input-class="form-select" required>
+                <option value="0">{{ text_select }}</option>
+              </x-zone>
               <div id="error-zone" class="invalid-feedback"></div>
             </div>
           </div>
 
           {% for custom_field in custom_fields %}
-
             {% if custom_field.type == 'select' %}
-              <div class="row mb-3{% if custom_field.required %} required{% endif %}">
+              <div class="row mb-3">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
-                  <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
+                  <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-select"{% if custom_field.required %} required{% endif %}>
                     <option value="">{{ text_select }}</option>
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <option value="{{ custom_field_value.custom_field_value_id }}"{% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
@@ -100,8 +93,8 @@
             {% endif %}
 
             {% if custom_field.type == 'radio' %}
-              <div class="row mb-3{% if custom_field.required %} required{% endif %}">
-                <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label{% if custom_field.required %} required{% endif %}">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
@@ -150,7 +143,6 @@
                 </div>
               </div>
             {% endif %}
-
             {% if custom_field.type == 'file' %}
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -163,7 +155,6 @@
                 </div>
               </div>
             {% endif %}
-
             {% if custom_field.type == 'date' %}
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -173,7 +164,6 @@
                 </div>
               </div>
             {% endif %}
-
             {% if custom_field.type == 'time' %}
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -183,7 +173,6 @@
                 </div>
               </div>
             {% endif %}
-
             {% if custom_field.type == 'datetime' %}
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -193,19 +182,15 @@
                 </div>
               </div>
             {% endif %}
-
           {% endfor %}
-
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
             <div class="col-sm-10">
               <div class="form-check-inline">
-                <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input"{% if default %} checked{% endif %}/>
-                <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
+                <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input"{% if default %} checked{% endif %}/> <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check-inline">
-                <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input"{% if not default %} checked{% endif %}/>
-                <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
+                <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input"{% if not default %} checked{% endif %}/> <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>
@@ -222,50 +207,4 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-<script type="text/javascript"><!--
-$('#input-country').on('change', function() {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=localisation/country&country_id=' + this.value + '&language={{ language }}',
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).prop('disabled', true);
-            $('#input-zone').prop('disabled', true);
-        },
-        complete: function() {
-            $(element).prop('disabled', false);
-            $('#input-zone').prop('disabled', false);
-        },
-        success: function(json) {
-            if (json['postcode_required'] == '1') {
-                $('#input-postcode').parent().parent().addClass('required');
-            } else {
-                $('#input-postcode').parent().parent().removeClass('required');
-            }
-
-            html = '<option value="">{{ text_select|escape('js') }}</option>';
-
-            if (json['zone'] && json['zone'] != '') {
-                for (i = 0; i < json['zone'].length; i++) {
-                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-                    if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
-                        html += ' selected';
-                    }
-
-                    html += '>' + json['zone'][i]['name'] + '</option>';
-                }
-            } else {
-                html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
-            }
-
-            $('#input-zone').html(html);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-//--></script>
 {{ footer }}

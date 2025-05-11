@@ -249,6 +249,27 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
+	/*
+     * Get Description
+	 *
+	 * Get the record of the country description records in the database.
+	 *
+	 * @param int $country_id primary key of the country record
+	 *
+	 * @return array<int, array<string, string>> description records that have country ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $country_description = $this->model_localisation_country->getDescriptions($country_id);
+	 */
+	public function getDescription(int $customer_group_id, int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group_description` WHERE `customer_group_id` = '" . (int)$customer_group_id . "' AND `language_id` = '" . (int)$language_id . "'");
+
+		return $query->row;
+	}
+
 	/**
 	 * Get Descriptions
 	 *

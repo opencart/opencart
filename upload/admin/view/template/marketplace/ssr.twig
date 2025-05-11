@@ -3,6 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
+        <button type="button" id="button-generate" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-primary"><i class="fa-solid fa-sync"></i></button>
         <button type="submit" form="form-ssr" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -14,7 +15,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_event }}</div>
+    <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_ssr }}</div>
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
       <div class="card-body">
@@ -26,42 +27,38 @@
               <div class="progress">
                 <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
               </div>
-              <div id="progress-text"></div>
+              <div id="progress-text" class="form-text mb-2"></div>
             </div>
-          </div>
-          <div class="text-end">
-            <button type="button" id="button-generate" class="btn btn-primary"><i class="fa-solid fa-sync"></i> {{ button_generate }}</button>
           </div>
         </fieldset>
         <fieldset>
-          <legend>{{ text_task }}</legend>
-          <div id="ssr">{{ list }}</div>
+          <legend>{{ text_render }}</legend>
+          <div id="list">{{ list }}</div>
         </fieldset>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#ssr').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#ssr').load(this.href);
+    $('#list').load(this.href);
 });
 
-// Install
-$('#button-generate').on('click', function() {
+$('#list').on('click', '.btn-warning', function(e) {
     e.preventDefault();
 
     var element = this;
 
     $(element).button('loading');
 
-    var next = $(element).attr('href');
+    var next = $(element).attr('value');
 
     $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
     $('#progress-text').html('');
 
-    var installer = function() {
+    var ssr = function() {
         return $.ajax({
             url: next,
             dataType: 'json',
@@ -72,29 +69,28 @@ $('#button-generate').on('click', function() {
 
                 if (json['error']) {
                     $('#progress-bar').addClass('bg-danger');
-                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+                    $('#progress-text').html(json['error']);
 
                     $(element).button('reset');
                 }
 
                 if (json['text']) {
-                    $('#progress-bar').addClass('bg-success');
-                    $('#progress-text').html('<div class="text-success">' + json['text'] + '</div>');
+                    $('#progress-text').html(json['text']);
                 }
 
                 if (json['success']) {
                     $('#progress-bar').addClass('bg-success').css('width', '100%');
-                    $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
+                    $('#progress-text').html(json['success']);
 
                     $(element).button('reset');
 
-                    $('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
+                    $('#list').load('index.php?route=marketplace/ssr.list&user_token={{ user_token }}');
                 }
 
                 if (json['next']) {
                     next = json['next'];
 
-                    chain.attach(installer);
+                    chain.attach(ssr);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -105,10 +101,10 @@ $('#button-generate').on('click', function() {
         });
     };
 
-    chain.attach(installer);
+    chain.attach(ssr);
 });
 
-$('#ssr').on('click', '.btn-success, .btn-warning', function(e) {
+$('#list').on('click', '.btn-success, .btn-danger', function(e) {
     var element = this;
 
     $.ajax({
@@ -130,7 +126,7 @@ $('#ssr').on('click', '.btn-success, .btn-warning', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#ssr').load($('#form-ssr').attr('data-oc-load'));
+                $('#list').load($('#form-ssr').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

@@ -31,11 +31,6 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$data['code'] = '';
 			}
 
-			// Countries
-			$this->load->model('localisation/country');
-
-			$data['countries'] = $this->model_localisation_country->getCountries();
-
 			$data['language'] = $this->config->get('config_language');
 
 			return $this->load->view('extension/opencart/checkout/shipping', $data);
@@ -86,6 +81,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		// Zones
 		$this->load->model('localisation/zone');
 
+		// Total Zones
 		$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
 
 		if ($zone_total && !$post_info['zone_id']) {

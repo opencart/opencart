@@ -123,10 +123,13 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['customer_groups'][] = [
-				'name' => $result['name'] . (($result['customer_group_id'] == $this->config->get('config_customer_group_id')) ? $this->language->get('text_default') : ''),
+				'name' => $result['name'],
 				'edit' => $this->url->link('customer/customer_group.form', 'user_token=' . $this->session->data['user_token'] . '&customer_group_id=' . $result['customer_group_id'] . $url)
 			] + $result;
 		}
+
+		// Default
+		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 
 		$url = '';
 
@@ -136,6 +139,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('customer/customer_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cgd.name' . $url);
 		$data['sort_sort_order'] = $this->url->link('customer/customer_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cg.sort_order' . $url);
 
@@ -149,8 +153,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Customer Groups
 		$customer_group_total = $this->model_customer_customer_group->getTotalCustomerGroups();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_group_total,
 			'page'  => $page,
@@ -315,7 +321,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		// Customer
@@ -332,6 +338,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
+			// Total Customers
 			$customer_total = $this->model_customer_customer->getTotalCustomersByCustomerGroupId($customer_group_id);
 
 			if ($customer_total) {

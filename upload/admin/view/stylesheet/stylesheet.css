@@ -495,9 +495,16 @@ a {
     border-bottom: 1px solid #ededed;
 }
 
-div.required .col-form-label:not(span):before, div.required .form-label:before, td.required:before {
+/* required */
+label:has(+ div *[required]):before {
     content: '* ';
-    color: #F00;
+    color: red;
+    font-weight: bold;
+}
+
+label.required:before, label:has(+ input:required):before, label:has(+ select:required):before, label:has(+ textarea:required):before {
+    content: '* ';
+    color: red;
     font-weight: bold;
 }
 
@@ -511,6 +518,10 @@ div.required .col-form-label:not(span):before, div.required .form-label:before, 
     content: "\f059";
     color: #1E91CF;
     margin-left: 4px;
+}
+
+.table-disabled {
+
 }
 
 .table a.asc:after {

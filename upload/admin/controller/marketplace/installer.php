@@ -167,8 +167,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Installs
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
 			'page'  => $page,
@@ -217,8 +219,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			// Check if the zip is valid
 			$result_code = $zip->open($temp_file);
-			if ($result_code !== true) {
 
+			if ($result_code !== true) {
 				$json['error'] = $zip_errors[$result_code] ?? $this->language->get('error_unknown');
 
 				if (is_file($temp_file)) {

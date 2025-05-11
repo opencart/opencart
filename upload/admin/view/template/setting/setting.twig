@@ -32,10 +32,10 @@
             <div id="tab-general" class="tab-pane active">
               <fieldset>
                 <legend>{{ text_site }}</legend>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                    <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
                     <div id="error-name" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -97,10 +97,10 @@
                 <div class="tab-content">
                   {% for language in languages %}
                     <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="config_description[{{ language.language_id }}][meta_title]" value="{{ config_description[language.language_id] ? config_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
+                          <input type="text" name="config_description[{{ language.language_id }}][meta_title]" value="{{ config_description[language.language_id] ? config_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control" required/>
                           <div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
@@ -122,17 +122,17 @@
               </fieldset>
             </div>
             <div id="tab-store" class="tab-pane">
-              <div class="row mb-3 required">
+              <div class="row mb-3">
                 <label for="input-owner" class="col-sm-2 col-form-label">{{ entry_owner }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
+                  <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control" required/>
                   <div id="error-owner" class="invalid-feedback"></div>
                 </div>
               </div>
-              <div class="row mb-3 required">
+              <div class="row mb-3">
                 <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
                 <div class="col-sm-10">
-                  <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
+                  <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control" required>{{ config_address }}</textarea>
                 </div>
               </div>
               <div class="row mb-3">
@@ -142,10 +142,10 @@
                   <div class="form-text">{{ help_geocode }}</div>
                 </div>
               </div>
-              <div class="row mb-3 required">
+              <div class="row mb-3">
                 <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+                  <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
                   <div id="error-email" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -204,17 +204,17 @@
                 <div class="row mb-3">
                   <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
                   <div class="col-sm-10">
-                    <select name="config_country_id" id="input-country" class="form-select">
-                      {% for country in countries %}
-                        <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
-                      {% endfor %}
-                    </select>
+                    <x-country name="config_country_id" value="{{ config_country_id }}" id="x-country" input-id="input-country" input-class="form-select" required>
+                      <option value="0">{{ text_select }}</option>
+                    </x-country>
+                    <div id="error-country" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
                   <div class="col-sm-10">
-                    <select name="config_zone_id" id="input-zone" class="form-select"></select>
+                    <x-zone name="config_zone_id" value="{{ config_zone_id }}" target="x-country" input-id="input-zone" input-class="form-select" required></x-zone>
+                    <div id="error-zone" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -315,18 +315,18 @@
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-product">{{ text_product }}</button></h2>
                   <div id="collapse-product" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
                     <div class="accordion-body">
-                      <div class="row mt-2 mb-3 required">
+                      <div class="row mt-2 mb-3">
                         <label for="input-product-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-product-description-length" class="form-control"/>
+                          <input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-product-description-length" class="form-control" required/>
                           <div class="form-text">{{ help_product_description_length }}</div>
                           <div id="error-product-description-length" class="invalid-feedback"></div>
                         </div>
                       </div>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-pagination" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" id="input-pagination" class="form-control"/>
+                          <input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" id="input-pagination" class="form-control" required/>
                           <div class="form-text">{{ help_pagination }}</div>
                           <div id="error-pagination" class="invalid-feedback"></div>
                         </div>
@@ -340,27 +340,28 @@
                           <div class="form-text">{{ help_product_count }}</div>
                         </div>
                       </div>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-pagination-admin" class="col-sm-2 col-form-label">{{ entry_pagination_admin }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="config_pagination_admin" value="{{ config_pagination_admin }}" placeholder="{{ entry_pagination_admin }}" id="input-pagination-admin" class="form-control"/>
+                          <input type="text" name="config_pagination_admin" value="{{ config_pagination_admin }}" placeholder="{{ entry_pagination_admin }}" id="input-pagination-admin" class="form-control" required/>
                           <div class="form-text">{{ help_pagination }}</div>
                           <div id="error-pagination-admin" class="invalid-feedback"></div>
                         </div>
                       </div>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-autocomplete-limit" class="col-sm-2 col-form-label">{{ entry_autocomplete_limit }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="config_autocomplete_limit" value="{{ config_autocomplete_limit }}" placeholder="{{ entry_autocomplete_limit }}" id="input-autocomplete-limit" class="form-control"/>
+                          <input type="text" name="config_autocomplete_limit" value="{{ config_autocomplete_limit }}" placeholder="{{ entry_autocomplete_limit }}" id="input-autocomplete-limit" class="form-control" required/>
                           <div class="form-text">{{ help_autocomplete_limit }}</div>
                           <div id="error-autocomplete-limit" class="invalid-feedback"></div>
                         </div>
                       </div>
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_product_report }}</label>
                         <div class="col-sm-10">
                           <div class="form-switch form-switch-lg">
-                            <input type="hidden" name="config_product_report_status" value="0"/> <input type="checkbox" name="config_product_report_status" value="1" id="input-product-report" class="form-check-input"{% if config_product_report_status %} checked{% endif %}/>
+                            <input type="hidden" name="config_product_report_status" value="0"/>
+                            <input type="checkbox" name="config_product_report_status" value="1" id="input-product-report" class="form-check-input"{% if config_product_report_status %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_product_report }}</div>
                         </div>
@@ -406,10 +407,10 @@
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-cms">{{ text_cms }}</button></h2>
                   <div id="collapse-cms" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
                     <div class="accordion-body">
-                      <div class="row mb-3 required">
+                      <div class="row mb-3">
                         <label for="input-article-description-length" class="col-sm-2 col-form-label">{{ entry_article_description_length }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="config_article_description_length" value="{{ config_article_description_length }}" placeholder="{{ entry_article_description_length }}" id="input-article-description-length" class="form-control"/>
+                          <input type="text" name="config_article_description_length" value="{{ config_article_description_length }}" placeholder="{{ entry_article_description_length }}" id="input-article-description-length" class="form-control" required/>
                           <div class="form-text">{{ help_article_description_length }}</div>
                           <div id="error-article-description-length" class="invalid-feedback"></div>
                         </div>
@@ -1088,183 +1089,183 @@
             <div id="tab-image" class="tab-pane">
               <fieldset>
                 <legend>{{ text_image_size }}</legend>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-default-width" class="col-sm-2 col-form-label">{{ entry_image_default }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-default" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_default_width" value="{{ config_image_default_width }}" placeholder="{{ entry_width }}" id="input-image-default-width" class="form-control"/>
+                        <input type="text" name="config_image_default_width" value="{{ config_image_default_width }}" placeholder="{{ entry_width }}" id="input-image-default-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_default_height" value="{{ config_image_default_height }}" placeholder="{{ entry_height }}" id="input-image-default-height" class="form-control"/>
+                        <input type="text" name="config_image_default_height" value="{{ config_image_default_height }}" placeholder="{{ entry_height }}" id="input-image-default-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-default" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-category-width" class="col-sm-2 col-form-label">{{ entry_image_category }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-category" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_category_width" value="{{ config_image_category_width }}" placeholder="{{ entry_width }}" id="input-image-category-width" class="form-control"/>
+                        <input type="text" name="config_image_category_width" value="{{ config_image_category_width }}" placeholder="{{ entry_width }}" id="input-image-category-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" id="input-image-category-height" class="form-control"/>
+                        <input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" id="input-image-category-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-category" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-thumb-width" class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-thumb" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_thumb_width" value="{{ config_image_thumb_width }}" placeholder="{{ entry_width }}" id="input-image-thumb-width" class="form-control"/>
+                        <input type="text" name="config_image_thumb_width" value="{{ config_image_thumb_width }}" placeholder="{{ entry_width }}" id="input-image-thumb-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" id="input-image-thumb-height" class="form-control"/>
+                        <input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" id="input-image-thumb-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-thumb" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-popup-width" class="col-sm-2 col-form-label">{{ entry_image_popup }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-popup" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_popup_width" value="{{ config_image_popup_width }}" placeholder="{{ entry_width }}" id="input-image-popup-width" class="form-control"/>
+                        <input type="text" name="config_image_popup_width" value="{{ config_image_popup_width }}" placeholder="{{ entry_width }}" id="input-image-popup-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" id="input-image-popup-height" class="form-control"/>
+                        <input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" id="input-image-popup-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-popup" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-product-width" class="col-sm-2 col-form-label">{{ entry_image_product }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-product" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_product_width" value="{{ config_image_product_width }}" placeholder="{{ entry_width }}" id="input-image-product-width" class="form-control"/>
+                        <input type="text" name="config_image_product_width" value="{{ config_image_product_width }}" placeholder="{{ entry_width }}" id="input-image-product-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" id="input-image-product-height" class="form-control"/>
+                        <input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" id="input-image-product-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-product" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-additional-width" class="col-sm-2 col-form-label">{{ entry_image_additional }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-additional" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_additional_width" value="{{ config_image_additional_width }}" placeholder="{{ entry_width }}" id="input-image-additional-width" class="form-control"/>
+                        <input type="text" name="config_image_additional_width" value="{{ config_image_additional_width }}" placeholder="{{ entry_width }}" id="input-image-additional-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" id="input-image-additional-height" class="form-control"/>
+                        <input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" id="input-image-additional-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-additional" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-related-width" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-related" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related-width" class="form-control"/>
+                        <input type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" id="input-image-related-height" class="form-control"/>
+                        <input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" id="input-image-related-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-related" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-article-width" class="col-sm-2 col-form-label">{{ entry_image_article }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-article" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_article_width" value="{{ config_image_article_width }}" placeholder="{{ entry_width }}" id="input-image-article-width" class="form-control"/>
+                        <input type="text" name="config_image_article_width" value="{{ config_image_article_width }}" placeholder="{{ entry_width }}" id="input-image-article-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_article_height" value="{{ config_image_article_height }}" placeholder="{{ entry_height }}" id="input-image-article-height" class="form-control"/>
+                        <input type="text" name="config_image_article_height" value="{{ config_image_article_height }}" placeholder="{{ entry_height }}" id="input-image-article-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-article" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-topic-width" class="col-sm-2 col-form-label">{{ entry_image_topic }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-topic" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_topic_width" value="{{ config_image_topic_width }}" placeholder="{{ entry_width }}" id="input-image-topic-width" class="form-control"/>
+                        <input type="text" name="config_image_topic_width" value="{{ config_image_topic_width }}" placeholder="{{ entry_width }}" id="input-image-topic-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_topic_height" value="{{ config_image_topic_height }}" placeholder="{{ entry_height }}" id="input-image-topic-height" class="form-control"/>
+                        <input type="text" name="config_image_topic_height" value="{{ config_image_topic_height }}" placeholder="{{ entry_height }}" id="input-image-topic-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-topic" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-compare-width" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-compare" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare-width" class="form-control"/>
+                        <input type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" id="input-image-compare-height" class="form-control"/>
+                        <input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" id="input-image-compare-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-compare" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-wishlist-width" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-wishlist" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist-width" class="form-control"/>
+                        <input type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" id="input-image-wishlist-height" class="form-control"/>
+                        <input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" id="input-image-wishlist-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-wishlist" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-cart-width" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-cart" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart-width" class="form-control"/>
+                        <input type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" id="input-image-cart-height" class="form-control"/>
+                        <input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" id="input-image-cart-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-cart" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-image-location-width" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-location" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location-width" class="form-control"/>
+                        <input type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location-width" class="form-control" required/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" id="input-image-location-height" class="form-control"/>
+                        <input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" id="input-image-location-height" class="form-control" required/>
                       </div>
                     </div>
                     <div id="error-image-location" class="invalid-feedback"></div>
@@ -1463,10 +1464,10 @@
               </fieldset>
               <fieldset>
                 <legend>{{ text_upload }}</legend>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-file-max-size" class="col-sm-2 col-form-label">{{ entry_file_max_size }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="config_file_max_size" value="{{ config_file_max_size }}" placeholder="{{ entry_file_max_size }}" id="input-file-max-size" class="form-control"/>
+                    <input type="text" name="config_file_max_size" value="{{ config_file_max_size }}" placeholder="{{ entry_file_max_size }}" id="input-file-max-size" class="form-control" required/>
                     <div class="form-text">{{ help_file_max_size }}</div>
                     <div id="error-file-max-size" class="invalid-feedback"></div>
                   </div>
@@ -1508,10 +1509,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3">
                   <label for="input-error-filename" class="col-sm-2 col-form-label">{{ entry_error_filename }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="config_error_filename" value="{{ config_error_filename }}" placeholder="{{ entry_error_filename }}" id="input-error-filename" class="form-control"/>
+                    <input type="text" name="config_error_filename" value="{{ config_error_filename }}" placeholder="{{ entry_error_filename }}" id="input-error-filename" class="form-control" required/>
                     <div id="error-error-filename" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -1546,48 +1547,5 @@ $('#input-theme').on('change', function() {
 });
 
 $('#input-theme').trigger('change');
-
-$('#input-country').on('change', function() {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=localisation/country.country&user_token={{ user_token }}&country_id=' + this.value,
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).prop('disabled', true);
-            $('#input-zone').prop('disabled', true);
-        },
-        complete: function() {
-            $(element).prop('disabled', false);
-            $('#input-zone').prop('disabled', false);
-        },
-        success: function(json) {
-            html = '<option value="">{{ text_select|escape('js') }}</option>';
-
-            if (json['zone'] && json['zone'] != '') {
-                for (i = 0; i < json['zone'].length; i++) {
-                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-                    if (json['zone'][i]['zone_id'] == '{{ config_zone_id }}') {
-                        html += ' selected';
-                    }
-
-                    html += '>' + json['zone'][i]['name'] + '</option>';
-                }
-            } else {
-                html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
-            }
-
-            $('#input-zone').html(html);
-
-            $('#button-save').prop('disabled', false);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#input-country').trigger('change');
 //--></script>
 {{ footer }}

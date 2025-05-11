@@ -34,51 +34,56 @@
               <div class="tab-content">
                 {% for language in languages %}
                   <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
-                    <div class="row mb-3 required">
-                      <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="topic_description[{{ language.language_id }}][name]" value="{{ topic_description[language.language_id] ? topic_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
-                        <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+                    <fieldset>
+                      <legend>{{ text_general }}</legend>
+                      <div class="row mb-3">
+                        <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="topic_description[{{ language.language_id }}][name]" value="{{ topic_description[language.language_id] ? topic_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
+                          <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
-                      <div class="col-sm-10">
-                        <textarea name="topic_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ topic_description[language.language_id] ? topic_description[language.language_id].description }}</textarea>
+                      <div class="row mb-3">
+                        <label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                        <div class="col-sm-10">
+                          <textarea name="topic_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ topic_description[language.language_id] ? topic_description[language.language_id].description }}</textarea>
+                        </div>
                       </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label">{{ entry_image }}</label>
-                      <div class="col-sm-10">
-                        <div class="border rounded d-block" style="max-width: 300px;">
-                          <img src="{{ topic_description[language.language_id] ? topic_description[language.language_id].thumb : placeholder }}" alt="" title="" id="thumb-image-{{ language.language_id }}" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                          <input type="hidden" name="topic_description[{{ language.language_id }}][image]" value="{{ topic_description[language.language_id] ? topic_description[language.language_id].image }}" id="input-image-{{ language.language_id }}"/>
-                          <div class="d-grid">
-                            <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ language.language_id }}" data-oc-thumb="#thumb-image-{{ language.language_id }}" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
-                            <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ language.language_id }}" data-oc-thumb="#thumb-image-{{ language.language_id }}" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_image }}</label>
+                        <div class="col-sm-10">
+                          <div class="border rounded d-block" style="max-width: 300px;">
+                            <img src="{{ topic_description[language.language_id] ? topic_description[language.language_id].thumb : placeholder }}" alt="" title="" id="thumb-image-{{ language.language_id }}" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="topic_description[{{ language.language_id }}][image]" value="{{ topic_description[language.language_id] ? topic_description[language.language_id].image }}" id="input-image-{{ language.language_id }}"/>
+                            <div class="d-grid">
+                              <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ language.language_id }}" data-oc-thumb="#thumb-image-{{ language.language_id }}" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                              <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ language.language_id }}" data-oc-thumb="#thumb-image-{{ language.language_id }}" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row mb-3 required">
-                      <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="topic_description[{{ language.language_id }}][meta_title]" value="{{ topic_description[language.language_id] ? topic_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
-                        <div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback"></div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>{{ text_meta }}</legend>
+                      <div class="row mb-3">
+                        <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="topic_description[{{ language.language_id }}][meta_title]" value="{{ topic_description[language.language_id] ? topic_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control" required/>
+                          <div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback"></div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label for="input-meta-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
-                      <div class="col-sm-10">
-                        <textarea name="topic_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ topic_description[language.language_id] ? topic_description[language.language_id].meta_description }}</textarea>
+                      <div class="row mb-3">
+                        <label for="input-meta-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
+                        <div class="col-sm-10">
+                          <textarea name="topic_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ topic_description[language.language_id] ? topic_description[language.language_id].meta_description }}</textarea>
+                        </div>
                       </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label for="input-meta-keyword-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
-                      <div class="col-sm-10">
-                        <textarea name="topic_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ topic_description[language.language_id] ? topic_description[language.language_id].meta_keyword }}</textarea>
+                      <div class="row mb-3">
+                        <label for="input-meta-keyword-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
+                        <div class="col-sm-10">
+                          <textarea name="topic_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ topic_description[language.language_id] ? topic_description[language.language_id].meta_keyword }}</textarea>
+                        </div>
                       </div>
-                    </div>
+                    </fieldset>
                   </div>
                 {% endfor %}
               </div>
@@ -106,8 +111,7 @@
                 <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <div class="form-switch form-switch-lg">
-                    <input type="hidden" name="status" value="0"/>
-                    <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                    <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                   </div>
                 </div>
               </div>

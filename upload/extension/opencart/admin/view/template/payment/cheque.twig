@@ -18,10 +18,10 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form id="form-payment" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-payable" class="col-sm-2 col-form-label">{{ entry_payable }}</label>
             <div class="col-sm-10">
-              <input type="text" name="payment_cheque_payable" value="{{ payment_cheque_payable }}" placeholder="{{ entry_payable }}" id="input-payable" class="form-control"/>
+              <input type="text" name="payment_cheque_payable" value="{{ payment_cheque_payable }}" placeholder="{{ entry_payable }}" id="input-payable" class="form-control" required/>
               <div id="error-payable" class="invalid-feedback"></div>
             </div>
           </div>

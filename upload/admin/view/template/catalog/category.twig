@@ -37,7 +37,7 @@
                 </select>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -47,17 +47,17 @@
       <div class="col col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="category" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#category').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#category').load(this.href);
+    $('#list').load(this.href);
 });
 
 $('#button-repair').on('click', function(e) {
@@ -82,7 +82,7 @@ $('#button-repair').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#category').load('index.php?route=catalog/category.list&user_token={{ user_token }}');
+                $('#list').load('index.php?route=catalog/category.list&user_token={{ user_token }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -91,24 +91,12 @@ $('#button-repair').on('click', function(e) {
     });
 });
 
-$('#button-filter').on('click', function() {
-    var url = '';
+$('#form-filter').on('submit', function() {
+    let url = $(this).serialize();
 
-    var filter_name = $('#input-name').val();
+    window.history.pushState({}, null, 'index.php?route=catalog/category&user_token={{ user_token }}&' + url);
 
-    if (filter_name !== '') {
-        url += '&filter_name=' + encodeURIComponent(filter_name);
-    }
-
-    var filter_status = $('#input-status').val();
-
-    if (filter_status !== '') {
-        url += '&filter_status=' + filter_status;
-    }
-
-    window.history.pushState({}, null, 'index.php?route=catalog/category&user_token={{ user_token }}' + url);
-
-    $('#category').load('index.php?route=catalog/category.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=catalog/category.list&user_token={{ user_token }}&' + url);
 });
 
 $('#input-name').autocomplete({

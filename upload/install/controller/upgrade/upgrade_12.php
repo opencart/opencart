@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
- * Class Upgrade9
+ * Class Upgrade12
  *
  * @package Opencart\Install\Controller\Upgrade
  */
-class Upgrade9 extends \Opencart\System\Engine\Controller {
+class Upgrade12 extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -74,7 +74,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 9, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['text'] = sprintf($this->language->get('text_patch'), 12, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
 
@@ -86,7 +86,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['next'] = $this->url->link('upgrade/upgrade_10', $url, true);
+			$json['next'] = $this->url->link('upgrade/upgrade_13', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

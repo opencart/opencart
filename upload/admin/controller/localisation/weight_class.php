@@ -123,10 +123,13 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['weight_classes'][] = [
-				'title' => $result['title'] . (($result['weight_class_id'] == $this->config->get('config_weight_class_id')) ? $this->language->get('text_default') : ''),
+				'title' => $result['title'],
 				'edit'  => $this->url->link('localisation/weight_class.form', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $result['weight_class_id'] . $url)
 			] + $result;
 		}
+
+		// Default
+		$data['weight_class_id'] = $this->config->get('config_weight_class_id');
 
 		$url = '';
 
@@ -136,6 +139,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_title'] = $this->url->link('localisation/weight_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
 		$data['sort_unit'] = $this->url->link('localisation/weight_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=unit' . $url);
 		$data['sort_value'] = $this->url->link('localisation/weight_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
@@ -150,8 +154,10 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Weight Classes
 		$weight_class_total = $this->model_localisation_weight_class->getTotalWeightClasses();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $weight_class_total,
 			'page'  => $page,
@@ -215,7 +221,6 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($this->request->get['weight_class_id']);
 		}
 
-		// Weight Class
 		if (!empty($weight_class_info)) {
 			$data['weight_class_id'] = $weight_class_info['weight_class_id'];
 		} else {
@@ -315,7 +320,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Product
+		// Products
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $weight_class_id) {
@@ -323,6 +328,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Products
 			$product_total = $this->model_catalog_product->getTotalProductsByWeightClassId($weight_class_id);
 
 			if ($product_total) {

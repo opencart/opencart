@@ -35,6 +35,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		// Layout Route
 		$this->load->model('design/layout');
+
 		$results = $this->model_design_layout->getRoutesByStoreId(0);
 
 		foreach ($results as $result) {
@@ -189,7 +190,19 @@ class Store extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_setting_store->getStores();
 	 */
 	public function getStores(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url` ASC";
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
 
 		$key = md5($sql);
 
@@ -304,7 +317,7 @@ class Store extends \Opencart\System\Engine\Model {
 		}
 
 		// Language
-		$language = new \Opencart\System\Library\Language($request->get['language']);
+		$language = new \Opencart\System\Library\Language($language);
 		$language->addPath(DIR_CATALOG . 'language/');
 		$language->load('default');
 		$registry->set('language', $language);
@@ -314,6 +327,11 @@ class Store extends \Opencart\System\Engine\Model {
 
 		// Document
 		$registry->set('document', new \Opencart\System\Library\Document());
+
+		// Language
+
+		// Currency
+		$session->data['currency'] = $currency;
 
 		// Run pre actions to load key settings and classes.
 		$pre_actions = [

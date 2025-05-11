@@ -123,10 +123,13 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['length_classes'][] = [
-				'title' => $result['title'] . (($result['length_class_id'] == $this->config->get('config_length_class_id')) ? $this->language->get('text_default') : ''),
+				'title' => $result['title'],
 				'edit'  => $this->url->link('localisation/length_class.form', 'user_token=' . $this->session->data['user_token'] . '&length_class_id=' . $result['length_class_id'] . $url)
 			] + $result;
 		}
+
+		// Default
+		$data['length_class_id'] = $this->config->get('config_length_class_id');
 
 		$url = '';
 
@@ -136,6 +139,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_title'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
 		$data['sort_unit'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=unit' . $url);
 		$data['sort_value'] = $this->url->link('localisation/length_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
@@ -150,8 +154,10 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Length Classes
 		$length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $length_class_total,
 			'page'  => $page,
@@ -314,7 +320,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Product
+		// Products
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $length_class_id) {
@@ -322,6 +328,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Products
 			$product_total = $this->model_catalog_product->getTotalProductsByLengthClassId($length_class_id);
 
 			if ($product_total) {

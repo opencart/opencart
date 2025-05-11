@@ -19,24 +19,24 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-location" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
             <div class="col-sm-10">
-              <textarea type="text" name="address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ address }}</textarea>
+              <textarea type="text" name="address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control" required>{{ address }}</textarea>
               <div id="error-address" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
             <div class="col-sm-10">
-              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" required/>
               <div class="form-text">{{ help_telephone }}</div>
             </div>
           </div>

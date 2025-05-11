@@ -58,7 +58,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function export(array $gdpr_info): void {
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -239,7 +239,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function approve(array $gdpr_info): void {
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);

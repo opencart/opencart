@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
- * Class Upgrade10
+ * Class Upgrade13
  *
  * @package Opencart\Install\Controller\Upgrade
  */
-class Upgrade10 extends \Opencart\System\Engine\Controller {
+class Upgrade13 extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -17,7 +17,7 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-			$this->load->language('upgrade/upgrade');
+			$this->load->model('upgrade/upgrade');
 
 			$identifiers = $this->model_upgrade_upgrade->getRecords('identifier');
 
@@ -55,38 +55,41 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 				];
 
 				foreach ($identifiers as $identifier) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "identifier` SET `name` = '" . $this->db->escape($identifier['name']) . "',  `code` = '" . $this->db->escape($identifier['code']) . "', `status` = '1'");
+					$identifier_id = $this->model_upgrade_upgrade->addRecord('identifier', $identifier);
+
+					$code = strtolower($identifier['code']);
+
+					if ($this->model_upgrade_upgrade->hasField('product', $code)) {
+						$product_query = $this->db->query("SELECT `product_id`, `" . $this->db->escape($code) . "` FROM `" . DB_PREFIX . "product` WHERE `" . $this->db->escape($identifier['code']) . "` != ''");
+
+						foreach ($product_query->rows as $product) {
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . $this->db->escape($product['product_id']) . "', `identifier_id` = '" . (int)$identifier_id . "', `value` = '" . $this->db->escape($product[$code]) . "'");
+						}
+
+						$this->model_upgrade_upgrade->dropField('product', $code);
+					}
 				}
 			}
 
-			// Drop Fields
-			$remove = [
-				'sku',
-				'upc',
-				'ean',
-				'jan',
-				'isbn'
-			];
+			if ($this->model_upgrade_upgrade->hasField('product_code', 'code')) {
+				$product_codes = $this->model_upgrade_upgrade->getRecords('product_code');
 
-			foreach ($remove as $field) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product' AND COLUMN_NAME = '" . $field . "'");
+				foreach ($product_codes as $product_code) {
+					$identifier_query = $this->db->query("SELECT `identifier_id` FROM `" . DB_PREFIX . "identifier` WHERE code = '" . $this->db->escape($product_code['code']) . "'");
 
-				if ($query->num_rows) {
-					$product_query = $this->db->query("SELECT `product_id`, `" . $field . "` FROM `" . DB_PREFIX . "product` WHERE `" . $field . "` != ''");
-
-					foreach ($product_query->rows as $product) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . $this->db->escape($product['product_id']) . "', `code` = '" . $this->db->escape($field) . "', `value` = '" . $this->db->escape($product[$field]) . "'");
+					if ($identifier_query->num_rows) {
+						$this->db->query("UPDATE `" . DB_PREFIX . "product_code` SET `identifier_id` = '" . (int)$identifier_query->row['identifier_id'] . "' WHERE `product_code_id` = '" . (int)$product_code['product_code_id'] . "'");
 					}
-
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` DROP `" . $field . "`");
 				}
+
+				$this->model_upgrade_upgrade->dropField('product_code', 'code');
 			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 10, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['text'] = sprintf($this->language->get('text_patch'), 13, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
 
@@ -98,7 +101,7 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['next'] = $this->url->link('upgrade/upgrade_11', $url, true);
+			$json['next'] = $this->url->link('upgrade/upgrade_14', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

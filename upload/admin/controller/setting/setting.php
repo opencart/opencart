@@ -99,10 +99,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_location'] = (array)$this->config->get('config_location');
 
 		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		$data['config_country_id'] = $this->config->get('config_country_id');
 		$data['config_zone_id'] = $this->config->get('config_zone_id');
 		$data['config_timezone'] = $this->config->get('config_timezone');
@@ -141,7 +137,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['currency_engines'] = [];
 
-		// Extensions
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('currency');
@@ -313,7 +308,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Captcha
 		$data['config_captcha'] = $this->config->get('config_captcha');
 
-		// Extension
 		$this->load->model('setting/extension');
 
 		$data['captchas'] = [];
@@ -521,6 +515,25 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if ((oc_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
+		}
+
+		// Country
+		$this->load->model('localisation/country');
+
+		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['config_country_id']);
+
+		if (!$country_info) {
+			$json['error']['country'] = $this->language->get('error_country');
+		}
+
+		// Zones
+		$this->load->model('localisation/zone');
+
+		// Total Zones
+		$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$this->request->post['config_country_id']);
+
+		if ($zone_total && !$this->request->post['config_zone_id']) {
+			$json['error']['zone'] = $this->language->get('error_zone');
 		}
 
 		if (!$this->request->post['config_product_description_length']) {

@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
- * Class Upgrade11
+ * Class Upgrade14
  *
  * @package Opencart\Install\Controller\Upgrade
  */
-class Upgrade11 extends \Opencart\System\Engine\Controller {
+class Upgrade14 extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -17,10 +17,10 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-			// Country address_format_id
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "country' AND COLUMN_NAME = 'address_format_id'");
+			// Upgrade
+			$this->load->model('upgrade/upgrade');
 
-			if (!$query->num_rows) {
+			if (!$this->model_upgrade_upgrade->hasField('country', 'address_format_id')) {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "country` ADD COLUMN `address_format_id` int(11) NOT NULL AFTER `address_format`");
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "country` DROP COLUMN `address_format`");
 			}
@@ -38,14 +38,11 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 			// Country
 			$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `address_format_id` = '1' WHERE `address_format_id` = '0'");
 
-			// Upgrade
-			$this->load->model('upgrade/upgrade');
-
 			$languages = $this->model_upgrade_upgrade->getRecords('language');
 
-			if ($this->model_upgrade_upgrade->hasField('country', 'name')) {
-				$countries = $this->model_upgrade_upgrade->getRecords('country');
+			$countries = $this->model_upgrade_upgrade->getRecords('country');
 
+			if ($this->model_upgrade_upgrade->hasField('country', 'name')) {
 				foreach ($countries as $country) {
 					foreach ($languages as $language) {
 						$country_description_data = [
@@ -55,6 +52,33 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 						];
 
 						$this->model_upgrade_upgrade->addRecord('country_description', $country_description_data);
+					}
+				}
+
+				$this->model_upgrade_upgrade->dropField('country', 'name');
+			}
+
+			// Populate countries store table if empty
+			$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country_to_store`");
+
+			if (!$query->row['total']) {
+				$stores = $this->model_upgrade_upgrade->getRecords('store');
+
+				foreach ($countries as $country) {
+					$country_store_data = [
+						'country_id' => $country['country_id'],
+						'store_id'   => 0
+					];
+
+					$this->model_upgrade_upgrade->addRecord('country_to_store', $country_store_data);
+
+					foreach ($stores as $store) {
+						$country_store_data = [
+							'country_id' => $country['country_id'],
+							'store_id'   => $store['store_id']
+						];
+
+						$this->model_upgrade_upgrade->addRecord('country_to_store', $country_store_data);
 					}
 				}
 			}
@@ -73,37 +97,27 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 						$this->model_upgrade_upgrade->addRecord('zone_description', $zone_description_data);
 					}
 				}
-			}
 
-			// country
-			$remove[] = [
-				'table' => 'country',
-				'field' => 'name'
-			];
-
-			// zone
-			$remove[] = [
-				'table' => 'zone',
-				'field' => 'name'
-			];
-
-			foreach ($remove as $result) {
-				$this->model_upgrade_upgrade->dropField($result['table'], $result['field']);
+				$this->model_upgrade_upgrade->dropField('zone', 'name');
 			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
+			$json['text'] = sprintf($this->language->get('text_patch'), 14, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
 
 			$url = '';
+
+			if (isset($this->request->get['version'])) {
+				$url .= '&version=' . $this->request->get['version'];
+			}
 
 			if (isset($this->request->get['admin'])) {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['redirect'] = $this->url->link('install/step_4', $url, true);
+			$json['next'] = $this->url->link('upgrade/upgrade_15', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

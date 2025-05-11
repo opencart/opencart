@@ -16,7 +16,7 @@ use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Node;
 
-abstract class AbstractUnary extends AbstractExpression implements UnaryInterface
+abstract class AbstractUnary extends AbstractExpression
 {
     /**
      * @param AbstractExpression $node

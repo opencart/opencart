@@ -1492,6 +1492,40 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'country_to_store',
+		'field' => [
+			[
+				'name' => 'country_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name'    => 'store_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'country_id',
+			'store_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'country_id',
+				'table' => 'country',
+				'field' => 'country_id'
+			],
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'coupon',
 		'field' => [
 			[
@@ -3854,10 +3888,6 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'name',
-				'type' => 'varchar(64)'
-			],
-			[
 				'name' => 'image',
 				'type' => 'varchar(255)'
 			],
@@ -3869,6 +3899,62 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'manufacturer_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'manufacturer_description',
+		'field' => [
+			[
+				'name' => 'manufacturer_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'description',
+				'type' => 'text'
+			],
+			[
+				'name' => 'meta_title',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'meta_description',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'meta_keyword',
+				'type' => 'varchar(255)'
+			]
+		],
+		'primary' => [
+			'manufacturer_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'name',
+				'key'  => [
+					'name'
+				]
+			]
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -5304,8 +5390,8 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'code',
-				'type' => 'varchar(48)'
+				'name' => 'identifier_id',
+				'type' => 'varchar(11)'
 			],
 			[
 				'name' => 'value',
@@ -5324,9 +5410,9 @@ function oc_db_schema() {
 		],
 		'index' => [
 			[
-				'name' => 'code',
+				'name' => 'identifier_id',
 				'key'  => [
-					'code'
+					'identifier_id'
 				]
 			]
 		],

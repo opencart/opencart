@@ -12,10 +12,10 @@
       <form id="form-return" action="{{ save }}" method="post" data-oc-toggle="ajax">
         <fieldset>
           <legend>{{ text_order }}</legend>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-order-id" class="col-sm-2 col-form-label">{{ entry_order_id }}</label>
             <div class="col-sm-10">
-              <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+              <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" required/>
               <div id="error-order-id" class="invalid-feedback"></div>
             </div>
           </div>
@@ -28,32 +28,32 @@
         </fieldset>
         <fieldset>
           <legend>{{ text_customer }}</legend>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
             <div class="col-sm-10">
-              <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+              <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required/>
               <div id="error-firstname" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
             <div class="col-sm-10">
-              <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+              <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required/>
               <div id="error-lastname" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
             <div class="col-sm-10">
-              <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+              <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
               <div id="error-email" class="invalid-feedback"></div>
             </div>
           </div>
           {% if config_telephone_display %}
-          <div class="row mb-3{% if config_telephone_required %} required{% endif %}">
+          <div class="row mb-3">
             <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
             <div class="col-sm-10">
-              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"{% if config_telephone_required %} required{% endif %}/>
               <div id="error-telephone" class="invalid-feedback"></div>
             </div>
           </div>
@@ -61,18 +61,18 @@
         </fieldset>
         <fieldset>
           <legend>{{ text_product }}</legend>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-product" class="col-sm-2 col-form-label">{{ entry_product }}</label>
             <div class="col-sm-10">
               <input type="hidden" name="product_id" value="{{ product_id }}"/>
-              <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+              <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" required/>
               <div id="error-product" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-model" class="col-sm-2 col-form-label">{{ entry_model }}</label>
             <div class="col-sm-10">
-              <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+              <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" required/>
               <div id="error-model" class="invalid-feedback"></div>
             </div>
           </div>
@@ -82,8 +82,8 @@
               <input type="text" name="quantity" value="1" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
             </div>
           </div>
-          <div class="row mb-3 required">
-            <label class="col-sm-2 col-form-label">{{ entry_reason }}</label>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label required">{{ entry_reason }}</label>
             <div class="col-sm-10">
               <div id="input-reason">
                 {% for return_reason in return_reasons %}
@@ -95,8 +95,8 @@
               <div id="error-reason" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
-            <label class="col-sm-2 col-form-label">{{ entry_opened }}</label>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label required">{{ entry_opened }}</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
                 <input type="radio" name="opened" value="1" id="input-opened-yes" class="form-check-input" checked/>

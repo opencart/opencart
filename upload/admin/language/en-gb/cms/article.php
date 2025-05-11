@@ -8,7 +8,8 @@ $_['text_next']               = 'Success: You have modified %s to %s of %s artic
 $_['text_list']               = 'Article List';
 $_['text_add']                = 'Add Article';
 $_['text_edit']               = 'Edit Article';
-$_['text_default']            = 'Default';
+$_['text_general']            = 'General';
+$_['text_meta']               = 'Meta Tags';
 $_['text_keyword']            = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 
 // Column

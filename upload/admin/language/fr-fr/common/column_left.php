@@ -66,6 +66,7 @@ $_['text_return_status']       = 'Statuts de Retour';
 $_['text_sale']                = 'Ventes';
 $_['text_setting']             = 'Paramètres';
 $_['text_seo_url']             = 'URL SEO';
+$_['text_ssr']                 = 'Générateur de Site Statique';
 $_['text_startup']             = 'Démarrage';
 $_['text_statistics']          = 'Statistiques';
 $_['text_stock_status']        = 'Statuts de Stock';

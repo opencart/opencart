@@ -68,17 +68,46 @@ $(document).ready(function() {
     +function($) {
         $.fn.button = function(state) {
             return this.each(function() {
-                var element = this;
+                let element = this;
 
                 if (state == 'loading') {
                     this.html = $(element).html();
-                    this.state = $(element).prop('disabled');
 
-                    $(element).prop('disabled', true).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
+                    $(element).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
                 }
 
                 if (state == 'reset') {
-                    $(element).prop('disabled', this.state).width('').html(this.html);
+                    $(element).width('').html(this.html);
+                }
+
+                // If button
+                if ($(element).is('button')) {
+                    if (state == 'loading') {
+                        this.state = $(element).prop('disabled');
+
+                        $(element).prop('disabled', true);
+                    }
+
+                    if (state == 'reset') {
+                        $(element).prop('disabled', this.state);
+                    }
+                }
+
+                // If link
+                if ($(element).is('a')) {
+                    if (state == 'loading') {
+                        this.state = $(element).hasClass('disabled');
+
+                        $(element).addClass('disabled');
+                    }
+
+                    if (state == 'reset') {
+                        if (this.state) {
+                            $(element).addClass('disabled');
+                        } else {
+                            $(element).removeClass('disabled');
+                        }
+                    }
                 }
             });
         };

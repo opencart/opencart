@@ -30,9 +30,14 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $manufacturer_id = $this->model_catalog_manufacturer->addManufacturer($manufacturer_data);
 	 */
 	public function addManufacturer(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$manufacturer_id = $this->db->getLastId();
+
+		// Description
+		foreach ($data['manufacturer_description'] as $language_id => $manufacturer_description) {
+			$this->model_catalog_manufacturer->addDescription($manufacturer_id, $language_id, $manufacturer_description);
+		}
 
 		// Store
 		if (isset($data['manufacturer_store'])) {
@@ -87,7 +92,15 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_manufacturer->editManufacturer($manufacturer_id, $manufacturer_data);
 	 */
 	public function editManufacturer(int $manufacturer_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+
+
+		// Description
+		$this->deleteDescriptions($manufacturer_id);
+
+		foreach ($data['manufacturer_description'] as $language_id => $manufacturer_description) {
+			$this->model_catalog_manufacturer->addDescription($manufacturer_id, $language_id, $manufacturer_description);
+		}
 
 		// Store
 		$this->deleteStores($manufacturer_id);
@@ -143,6 +156,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	public function deleteManufacturer(int $manufacturer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
+		$this->model_catalog_manufacturer->deleteDescriptions($manufacturer_id);
 		$this->model_catalog_manufacturer->deleteStores($manufacturer_id);
 		$this->model_catalog_manufacturer->deleteLayouts($manufacturer_id);
 
@@ -170,7 +184,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 	 */
 	public function getManufacturer(int $manufacturer_id): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "manufacturer` `m` LEFT JOIN `" . DB_PREFIX . "manufacturer_description` `md` ON (`m`.`manufacturer_id` = `md`.`manufacturer_id`) WHERE `m`.`manufacturer_id` = '" . (int)$manufacturer_id . "' AND `md`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
@@ -198,15 +212,15 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 	 */
 	public function getManufacturers(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer` `m` LEFT JOIN `" . DB_PREFIX . "manufacturer_description` `md` ON (`m`.`manufacturer_id` = `md`.`manufacturer_id`) WHERE `md`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " WHERE LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+			$sql .= " AND LCASE(`md`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		$sort_data = [
-			'name',
-			'sort_order'
+			'md.name',
+			'm.sort_order'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
@@ -258,9 +272,124 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Description
+	 *
+	 * Create a new manufacturer description record in the database.
+	 *
+	 * @param int                  $manufacturer_id primary key of the manufacturer record
+	 * @param int                  $language_id    primary key of the language record
+	 * @param array<string, mixed> $data           array of data
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $manufacturer_data['manufacturer_description'] = [
+	 *     'title'            => 'manufacturer Title',
+	 *     'description'      => 'manufacturer Description',
+	 *     'meta_title'       => 'Meta Title',
+	 *     'meta_description' => 'Meta Description',
+	 *     'meta_keyword'     => 'Meta Keyword'
+	 * ];
+	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
+	 * $this->model_catalog_manufacturer->addDescription($manufacturer_id, $language_id, $manufacturer_data);
+	 */
+	public function addDescription(int $manufacturer_id, int $language_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_description` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+	}
+
+	/**
+	 * Delete Descriptions
+	 *
+	 * Delete manufacturer description records in the database.
+	 *
+	 * @param int $manufacturer_id primary key of the manufacturer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
+	 * $this->model_catalog_manufacturer->deleteDescriptions($manufacturer_id);
+	 */
+	public function deleteDescriptions(int $manufacturer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_description` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+	}
+
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * Delete manufacturer descriptions by language records in the database.
+	 *
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
+	 * $this->model_catalog_manufacturer->deleteDescriptionsByLanguageId($language_id);
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_description` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
+	/**
+	 * Get Descriptions
+	 *
+	 * Get the record of the manufacturer description records in the database.
+	 *
+	 * @param int $manufacturer_id primary key of the manufacturer record
+	 *
+	 * @return array<int, array<string, string>> description records that have manufacturer ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
+	 * $manufacturer_description = $this->model_catalog_manufacturer->getDescriptions($manufacturer_id);
+	 */
+	public function getDescriptions(int $manufacturer_id): array {
+		$manufacturer_description_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_description` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+
+		foreach ($query->rows as $result) {
+			$manufacturer_description_data[$result['language_id']] = $result;
+		}
+
+		return $manufacturer_description_data;
+	}
+
+	/**
+	 * Get Descriptions By Language ID
+	 *
+	 * Get the record of the manufacturer descriptions by language records in the database.
+	 *
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return array<int, array<string, string>> description records that have language ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
+	 * $results = $this->model_catalog_manufacturer->getDescriptionsByLanguageId($language_id);
+	 */
+	public function getDescriptionsByLanguageId(int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
+
+	/**
 	 * Add Store
 	 *
-	 * Create a new information store record in the database.
+	 * Create a new manufacturer store record in the database.
 	 *
 	 * @param int $manufacturer_id primary key of the manufacturer record
 	 * @param int $store_id        primary key of the store record

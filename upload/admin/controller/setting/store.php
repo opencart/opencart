@@ -89,7 +89,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 			$data['stores'][] = [
 				'store_id' => 0,
-				'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
+				'name'     => $this->config->get('config_name'),
 				'url'      => HTTP_CATALOG,
 				'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
 			];
@@ -105,6 +105,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$store_total += $this->model_setting_store->getTotalStores();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $store_total,
 			'page'  => $page,
@@ -294,10 +295,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		if (isset($setting_info['config_country_id'])) {
 			$data['config_country_id'] = $setting_info['config_country_id'];
 		} else {
@@ -670,6 +667,25 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
+		// Country
+		$this->load->model('localisation/country');
+
+		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['config_country_id']);
+
+		if (!$country_info) {
+			$json['error']['country'] = $this->language->get('error_country');
+		}
+
+		// Zones
+		$this->load->model('localisation/zone');
+
+		// Total Zones
+		$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$this->request->post['config_country_id']);
+
+		if ($zone_total && !$this->request->post['config_zone_id']) {
+			$json['error']['zone'] = $this->language->get('error_zone');
+		}
+
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
 			$json['error']['customer_group_display'] = $this->language->get('error_customer_group_display');
 		}
@@ -738,7 +754,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			// Setting
 			$this->load->model('setting/setting');
 
-			// Store
+			// Setting
 			$this->load->model('setting/store');
 
 			if (!$this->request->post['store_id']) {
@@ -778,7 +794,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Order
+		// Orders
 		$this->load->model('sale/order');
 
 		// Total Subscriptions
@@ -789,12 +805,14 @@ class Store extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Orders
 			$order_total = $this->model_sale_order->getTotalOrdersByStoreId($store_id);
 
 			if ($order_total) {
 				$json['error'] = sprintf($this->language->get('error_store'), $order_total);
 			}
 
+			// Total Subscriptions
 			$subscription_total = $this->model_sale_subscription->getTotalSubscriptionsByStoreId($store_id);
 
 			if ($subscription_total) {
@@ -803,10 +821,9 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Store
+			// Setting
 			$this->load->model('setting/store');
 
-			// Setting
 			$this->load->model('setting/setting');
 
 			foreach ($selected as $store_id) {

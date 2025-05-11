@@ -91,16 +91,21 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		$results = $this->model_setting_ssr->getSsrs($filter_data);
 
 		foreach ($results as $result) {
-			$data['ssrs'][] = [
-				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
-				'run'           => $this->url->link('marketplace/ssr.run', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id']),
-				'enable'        => $this->url->link('marketplace/ssr.enable', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id']),
-				'disable'       => $this->url->link('marketplace/ssr.disable', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id'])
-			] + $result;
+			if ($this->user->hasPermission('access', $result['action'])) {
+				$data['ssrs'][] = [
+					'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
+					'run'           => $this->url->link($result['action'], 'user_token=' . $this->session->data['user_token']),
+					'clear'         => $this->url->link($result['action'] . '.clear', 'user_token=' . $this->session->data['user_token']),
+					'enable'        => $this->url->link('marketplace/ssr.enable', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id']),
+					'disable'       => $this->url->link('marketplace/ssr.disable', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id'])
+				] + $result;
+			}
 		}
 
+		// Total SSRs
 		$ssr_total = $this->model_setting_ssr->getTotalSsrs();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $ssr_total,
 			'page'  => $page,
@@ -111,51 +116,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ssr_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($ssr_total - $this->config->get('config_pagination_admin'))) ? $ssr_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $ssr_total, ceil($ssr_total / $this->config->get('config_pagination_admin')));
 
 		return $this->load->view('marketplace/ssr_list', $data);
-	}
-
-	/**
-	 * Run
-	 *
-	 * @return void
-	 */
-	public function run(): void {
-		$this->load->language('marketplace/ssr');
-
-		$json = [];
-
-		if (isset($this->request->get['ssr_id'])) {
-			$ssr_id = (int)$this->request->get['ssr_id'];
-		} else {
-			$ssr_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/ssr');
-
-			$ssr_info = $this->model_setting_ssr->getSsrs($ssr_id);
-
-			if ($ssr_info) {
-				// Create a store instance using loader class to call controllers, models, views, libraries
-				$this->load->model('setting/store');
-
-				$store = $this->model_setting_store->createStoreInstance(0, $this->config->get('config_language'));
-
-				$store->load->controller($ssr_info['action'], $ssr_id, $ssr_info['code'], $ssr_info['date_added'], $ssr_info['date_modified']);
-
-				$store->session->destroy();
-
-				$this->model_setting_cron->editCron($ssr_info['cron_id']);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	/**
@@ -179,6 +139,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SSR
 			$this->load->model('setting/ssr');
 
 			$this->model_setting_ssr->editStatus($ssr_id, true);
@@ -211,9 +172,10 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SSR
 			$this->load->model('setting/ssr');
 
-			$this->model_setting_cron->editStatus($ssr_id, false);
+			$this->model_setting_ssr->editStatus($ssr_id, false);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -243,6 +205,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// SSR
 			$this->load->model('setting/ssr');
 
 			foreach ($selected as $ssr_id) {

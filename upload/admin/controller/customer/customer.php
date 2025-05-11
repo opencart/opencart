@@ -262,7 +262,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('customer/customer.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Stores
+		// Setting
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
@@ -363,6 +363,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_name'] = $this->url->link('customer/customer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_email'] = $this->url->link('customer/customer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=c.email' . $url);
 		$data['sort_customer_group'] = $this->url->link('customer/customer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer_group' . $url);
@@ -407,8 +408,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Customers
 		$customer_total = $this->model_customer_customer->getTotalCustomers($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,
 			'page'  => $page,
@@ -642,10 +645,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
 		$data['address'] = $this->load->controller('customer/address.getAddress');
 		$data['history'] = $this->getHistory();
 		$data['transaction'] = $this->getTransaction();
@@ -955,8 +954,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Subscriptions
 		$payment_total = $this->model_sale_subscription->getTotalSubscriptions(['filter_customer_id' => $customer_id]);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $payment_total,
 			'page'  => $page,
@@ -1047,8 +1048,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Histories
 		$history_total = $this->model_customer_customer->getTotalHistories($customer_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
 			'page'  => $page,
@@ -1147,8 +1150,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['balance'] = $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency'));
 
+		// Total Transactions
 		$transaction_total = $this->model_customer_customer->getTotalTransactions($customer_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $transaction_total,
 			'page'  => $page,
@@ -1254,8 +1259,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['balance'] = $this->model_customer_customer->getRewardTotal($customer_id);
 
+		// Total Rewards
 		$reward_total = $this->model_customer_customer->getTotalRewards($customer_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $reward_total,
 			'page'  => $page,
@@ -1353,7 +1360,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		// Customers
 		$this->load->model('customer/customer');
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		$results = $this->model_customer_customer->getIps($customer_id, ($page - 1) * $limit, $limit);
@@ -1377,8 +1384,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Customers
 		$ip_total = $this->model_customer_customer->getTotalIps($customer_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $ip_total,
 			'page'  => $page,
@@ -1437,8 +1446,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Authorizes
 		$authorize_total = $this->model_customer_customer->getTotalAuthorizes($customer_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $authorize_total,
 			'page'  => $page,

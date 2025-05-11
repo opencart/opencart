@@ -40,11 +40,11 @@
           </div>
           <fieldset>
             <legend> {{ text_ip_add }} </legend>
-            <div class="row mb-3 required">
+            <div class="row mb-3">
               <label for="input-ip" class="col-sm-2 col-form-label">{{ entry_ip }}</label>
               <div class="col-sm-10">
                 <div class="input-group">
-                  <input type="text" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control"/>
+                  <input type="text" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control" required/>
                   <button class="btn btn-primary" id="button-ip-add" type="button">{{ button_ip_add }}</button>
                 </div>
               </div>

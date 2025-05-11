@@ -49,7 +49,7 @@
                 </select>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -59,55 +59,25 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="seo-url" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#seo-url').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#seo-url').load(this.href);
+    $('#list').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
-    var url = '';
+$('#form-filter').on('submit', function() {
+    let url = $(this).serialize();
 
-    var filter_keyword = $('#input-keyword').val();
+    window.history.pushState({}, null, 'index.php?route=design/seo_url&user_token={{ user_token }}&' + url);
 
-    if (filter_keyword) {
-        url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
-    }
-
-    var filter_key = $('#input-key').val();
-
-    if (filter_key) {
-        url += '&filter_key=' + encodeURIComponent(filter_key);
-    }
-
-    var filter_value = $('#input-value').val();
-
-    if (filter_value) {
-        url += '&filter_value=' + encodeURIComponent(filter_value);
-    }
-
-    var filter_store_id = $('#input-store').val();
-
-    if (filter_store_id) {
-        url += '&filter_store_id=' + filter_store_id;
-    }
-
-    var filter_language_id = $('#input-language').val();
-
-    if (filter_language_id) {
-        url += '&filter_language_id=' + filter_language_id;
-    }
-
-    window.history.pushState({}, null, 'index.php?route=design/seo_url&user_token={{ user_token }}' + url);
-
-    $('#seo-url').load('index.php?route=design/seo_url.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=design/seo_url.list&user_token={{ user_token }}&' + url);
 });
 //--></script>
 {{ footer }}

@@ -454,9 +454,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $custom_field_data['custom_field_value'] = [
-	 *     'custom_field_value_id' => 0,
-	 *     'custom_field_id'       => 1,
-	 *     'sort_order'            => 0
+	 *     'custom_field_value_description' => [],
+	 *     'custom_field_value_id'          => 0,
+	 *     'custom_field_id'                => 1,
+	 *     'sort_order'                     => 0
 	 * ];
 	 *
 	 * $this->load->model('customer/custom_field');
@@ -561,6 +562,12 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
+	 * 
+	 * $custom_field_value_description_data[1] = [
+	 *     'custom_field_value_id' => 1,
+	 *     'custom_field_id'       => 1,
+	 *     'name'                  => 'Custom Field Value Description Name'
+	 * ];
 	 *
 	 * $this->load->model('customer/custom_field');
 	 *

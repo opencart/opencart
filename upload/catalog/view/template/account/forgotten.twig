@@ -5,17 +5,19 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+  <div class="row">
+    {{ column_left }}
+    <div id="content" class="col">
+      {{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_email }}</p>
       <form id="form-forgotten" action="{{ confirm }}" method="post" data-oc-toggle="ajax">
         <fieldset>
           <legend>{{ text_your_email }}</legend>
-          <div class="row mb-3 required">
+          <div class="row mb-3">
             <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
             <div class="col-sm-10">
-              <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+              <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
               <div id="error-email" class="invalid-feedback"></div>
             </div>
           </div>
@@ -29,7 +31,9 @@
           </div>
         </div>
       </form>
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
 {{ footer }}

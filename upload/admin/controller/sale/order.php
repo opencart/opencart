@@ -456,6 +456,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sorts
 		$data['sort_order'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.order_id' . $url);
 		$data['sort_store_name'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.store_name' . $url);
 		$data['sort_customer'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
@@ -518,8 +519,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Orders
 		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,
 			'page'  => $page,
@@ -899,16 +902,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
-		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
-		// Zones
-		$this->load->model('localisation/zone');
-
-		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
-
 		// Payment Method
 		if (!empty($order_info['payment_method'])) {
 			$data['payment_method_name'] = $order_info['payment_method']['name'];
@@ -947,12 +940,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_zone_id'] = 0;
 			$data['shipping_zone'] = '';
 			$data['shipping_custom_field'] = [];
-		}
-
-		if ($data['payment_country_id'] == $data['shipping_country_id']) {
-			$data['shipping_zones'] = $data['payment_zones'];
-		} else {
-			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 
 		// Shipping Method
@@ -1251,11 +1238,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $currency);
 
-			// Set the store ID.
-			$store->config->set('config_store_id', $store_id);
-
-			$store->session->data['currency'] = $currency;
-
 			// 2. Remove the unneeded keys.
 			$request_data = $this->request->get;
 
@@ -1263,6 +1245,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// 3. Add the request GET vars.
 			$store->request->get = $request_data;
+
+			// print_r($store->request->get);
 
 			$store->request->get['route'] = 'api/order';
 
@@ -1805,8 +1789,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		// Total Histories
 		$history_total = $this->model_sale_order->getTotalHistories($order_id);
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
 			'page'  => $page,
@@ -1898,9 +1884,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_order');
 		}
 
-		// Total Rewards
+		// Customer
 		$this->load->model('customer/customer');
 
+		// Total Rewards
 		$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
 
 		if ($reward_total) {
@@ -1984,8 +1971,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
-		// Customer
 		if ($order_info) {
+			// Customer
 			$this->load->model('customer/customer');
 
 			$customer_info = $this->model_customer_customer->getCustomer($order_info['affiliate_id']);
@@ -1994,6 +1981,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_affiliate');
 			}
 
+			// Total Transactions
 			$affiliate_total = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
 
 			if ($affiliate_total) {

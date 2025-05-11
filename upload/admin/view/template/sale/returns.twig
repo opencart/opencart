@@ -57,7 +57,7 @@
                 <input type="date" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -67,73 +67,27 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="return" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#return').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#return').load(this.href);
+    $('#list').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
-    url = '';
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
 
-    var filter_return_id = $('#input-return-id').val();
+    let url = $(this).serialize();
 
-    if (filter_return_id) {
-        url += '&filter_return_id=' + filter_return_id;
-    }
+    window.history.pushState({}, null, 'index.php?route=sale/returns&user_token={{ user_token }}&' + url);
 
-    var filter_order_id = $('#input-order-id').val();
-
-    if (filter_order_id) {
-        url += '&filter_order_id=' + filter_order_id;
-    }
-
-    var filter_customer = $('#input-customer').val();
-
-    if (filter_customer) {
-        url += '&filter_customer=' + encodeURIComponent(filter_customer);
-    }
-
-    var filter_product = $('#input-product').val();
-
-    if (filter_product) {
-        url += '&filter_product=' + encodeURIComponent(filter_product);
-    }
-
-    var filter_model = $('#input-model').val();
-
-    if (filter_model) {
-        url += '&filter_model=' + encodeURIComponent(filter_model);
-    }
-
-    var filter_return_status_id = $('#input-return-status').val();
-
-    if (filter_return_status_id !== '') {
-        url += '&filter_return_status_id=' + filter_return_status_id;
-    }
-
-    var filter_date_from = $('#input-date-from').val();
-
-    if (filter_date_from) {
-        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
-    }
-
-    var filter_date_to = $('#input-date-to').val();
-
-    if (filter_date_to) {
-        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
-    }
-
-    window.history.pushState({}, null, 'index.php?route=sale/returns&user_token={{ user_token }}' + url);
-
-    $('#return').load('index.php?route=sale/returns.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=sale/returns.list&user_token={{ user_token }}&' + url);
 });
 
 $('#input-customer').autocomplete({

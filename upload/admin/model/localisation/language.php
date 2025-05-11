@@ -154,6 +154,15 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_localisation_length_class->addDescription($length['length_class_id'], $language_id, $length);
 		}
 
+		// Manufacturer
+		$this->load->model('catalog/manufacturer');
+
+		$results = $this->model_catalog_manufacturer->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+
+		foreach ($results as $manufacturer) {
+			$this->model_catalog_manufacturer->addDescription($manufacturer['manufacturer_id'], $language_id, $information);
+		}
+
 		// Option
 		$this->load->model('catalog/option');
 
@@ -426,6 +435,11 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$this->model_localisation_length_class->deleteDescriptionsByLanguageId($language_id);
 
+		// Manufacturer
+		$this->load->model('catalog/manufacturer');
+
+		$this->model_catalog_manufacturer->deleteDescriptionsByLanguageId($language_id);
+
 		// Option
 		$this->load->model('catalog/option');
 
@@ -635,7 +649,7 @@ class Language extends \Opencart\System\Engine\Model {
 				$image .= 'extension/' . $result['extension'] . '/catalog/';
 			}
 
-			$language_data[$result['code']] = $result + ['image' => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png'];
+			$language_data[$result['language_id']] = $result + ['image' => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png'];
 		}
 
 		return $language_data;

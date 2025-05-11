@@ -30,7 +30,7 @@
                 <input type="text" name="filter_ip" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -40,35 +40,23 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="online" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#online').on('click', 'thead a, .pagination a', function(e) {
+$('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#online').load(this.href);
+    $('#list').load(this.href);
 });
 
-$('#button-filter, #button-refresh').on('click', function() {
-    var url = '';
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
 
-    var filter_customer = $('#input-customer').val();
-
-    if (filter_customer) {
-        url += '&filter_customer=' + encodeURIComponent(filter_customer);
-    }
-
-    var filter_ip = $('#input-ip').val();
-
-    if (filter_ip) {
-        url += '&filter_ip=' + encodeURIComponent(filter_ip);
-    }
-
-    $('#online').load('index.php?route=report/online.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=report/online.list&user_token={{ user_token }}&' + $(this).serialize());
 });
 
 $('#input-customer').autocomplete({

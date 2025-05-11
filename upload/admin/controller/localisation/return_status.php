@@ -123,10 +123,13 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['return_statuses'][] = [
-				'name' => $result['name'] . (($result['return_status_id'] == $this->config->get('config_return_status_id')) ? $this->language->get('text_default') : ''),
+				'name' => $result['name'],
 				'edit' => $this->url->link('localisation/return_status.form', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $result['return_status_id'] . $url)
 			] + $result;
 		}
+
+		// Default
+		$data['return_status_id'] = $this->config->get('config_return_status_id');
 
 		$url = '';
 
@@ -136,6 +139,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
+		// Sort
 		$data['sort_name'] = $this->url->link('localisation/return_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
@@ -148,8 +152,10 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Return Statuses
 		$return_status_total = $this->model_localisation_return_status->getTotalReturnStatuses();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_status_total,
 			'page'  => $page,
@@ -305,12 +311,14 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
+			// Total Returns
 			$return_total = $this->model_sale_returns->getTotalReturnsByReturnStatusId($return_status_id);
 
 			if ($return_total) {
 				$json['error'] = sprintf($this->language->get('error_return'), $return_total);
 			}
 
+			// Total Histories
 			$return_total = $this->model_sale_returns->getTotalHistoriesByReturnStatusId($return_status_id);
 
 			if ($return_total) {

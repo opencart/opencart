@@ -14,15 +14,12 @@ class XSwitch extends WebComponent {
             this.data.name = this.getAttribute('data-name');
             this.data.value = this.getAttribute('data-value');
 
-            this.addStylesheet('bootstrap.css');
-            this.addStylesheet('fontawesome.css');
-
             this.shadow.innerHTML = await this.render('switch.html', this.data);
 
             this.shadow.addEventListener('change', this.event.onchange);
         },
         onchange: (e) => {
-            this.setAttribute('data-value', e.target.checked ? e.target.value : 0);
+            this.setAttribute('value', e.target.checked ? e.target.value : 0);
         }
     };
 }

@@ -1,8 +1,25 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XZone extends WebComponent {
+    static observed = ['value'];
     default = HTMLInputElement;
     element = HTMLInputElement;
+    target = HTMLInputElement;
+    zones = [];
+
+    get value() {
+        return this.getAttribute('value');
+    }
+
+    set value(value) {
+        if (this.getAttribute('value') != value) {
+            this.setAttribute('value', value);
+        }
+
+        if (this.element.value != value) {
+            this.element.value = value;
+        }
+    }
 
     event = {
         connected: async () => {
@@ -11,52 +28,60 @@ class XZone extends WebComponent {
             // Create the select element
             this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.default + '</select>';
 
+            this.addEventListener('attribute:value', this.event.changeValue);
+
             this.element = this.querySelector('select');
 
-            // Add the on change event
             this.element.addEventListener('change', this.event.onchange);
 
             // Country Element
-            let target = document.getElementById(this.getAttribute('target'));
+            this.target = document.getElementById(this.getAttribute('target'));
 
-            let response = this.storage.fetch('localisation/country-' + target.getAttribute('value'));
+            this.target.addEventListener('attribute:value', this.event.changeCountry.bind(this));
 
-            response.then(this.event.onloaded);
+            if (this.target.value != 0) {
+                let response = this.storage.fetch('localisation/country-' + this.target.value);
 
-            let option = {
-                attributes: true,
-                attributeFilter: ['value']
+                response.then(this.event.onloaded);
+                response.then(this.event.option);
             }
-
-            this.observer.observe(target, this.event.onready.bind(this), option);
-        },
-        onready(records) {
-            records.forEach((record) => {
-                if (record.attributeName == 'value') {
-                    let response = this.storage.fetch('localisation/country-' + record.target.getAttribute('value'));
-
-                    response.then(this.event.onloaded);
-                }
-            });
         },
         onloaded: (country) => {
+            this.zones = country['zone'];
+        },
+        option: () => {
             let html = this.default;
-            let zones = country['zone'];
 
-            for (let i in zones) {
-                html += '<option value="' + zones[i].zone_id + '"';
+            for (let i in this.zones) {
+                html += '<option value="' + this.zones[i].zone_id + '"';
 
-                if (zones[i].zone_id == this.getAttribute('value')) {
+                if (this.zones[i].zone_id == this.value) {
                     html += ' selected';
                 }
 
-                html += '>' + zones[i].name + '</option>';
+                html += '>' + this.zones[i].name + '</option>';
             }
 
             this.element.innerHTML = html;
         },
-        onchange: async (e) => {
-            this.setAttribute('value', e.target.value);
+        onchange: (e) => {
+            this.value = e.target.value;
+        },
+        changeValue: (e) => {
+            this.value = e.detail.value_new;
+        },
+        changeCountry: (e) => {
+            let value = e.target.value;
+
+            if (value != 0) {
+                let response = this.storage.fetch('localisation/country-' + value);
+
+                response.then(this.event.onloaded);
+                response.then(this.event.option);
+            } else {
+                this.zones = [];
+                this.event.option();
+            }
         }
     };
 }

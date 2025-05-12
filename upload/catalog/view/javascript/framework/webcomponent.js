@@ -2,7 +2,6 @@ import Registry from './library/registry.js';
 import Storage from './library/storage.js';
 import Template from './library/template.js';
 import Language from './library/language.js';
-import Observer from './library/observer.js';
 import Config from './library/config.js';
 
 const registry = new Registry();
@@ -14,7 +13,6 @@ let language = document.getElementById('input-language');
 registry.set('storage', new Storage('./catalog/view/data/' + base.host + '/' + language.value + '/'));
 registry.set('template', new Template());
 registry.set('Language', new Language());
-registry.set('observer', new Observer());
 registry.set('config', new Config());
 
 export class WebComponent extends HTMLElement {
@@ -44,10 +42,6 @@ export class WebComponent extends HTMLElement {
         return this.registry.get('language');
     }
 
-    get observer() {
-        return this.registry.get('observer');
-    }
-
     get config() {
         return this.registry.get('config');
     }
@@ -75,9 +69,17 @@ export class WebComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, value_old, value_new) {
-        if (this.event.changed) {
-            this.event.changed(name, value_old, value_new);
-        }
+        let event = new CustomEvent('attribute:' + name, {
+            bubbles: true,
+            cancelable: true,
+            detail: {
+                value_old: value_old,
+                value_new: value_new
+            }
+        });
+
+        // Dispatch the event
+        this.dispatchEvent(event);
     }
 }
 

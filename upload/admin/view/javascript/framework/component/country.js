@@ -6,6 +6,36 @@ class XCountry extends WebComponent {
     element = HTMLInputElement;
     countries = [];
 
+    get value() {
+        return this.getAttribute('value');
+    }
+
+    set value(value) {
+        if (this.getAttribute('value') != value) {
+            this.setAttribute('value', value);
+        }
+
+        if (this.element.value != value) {
+            this.element.value = value;
+        }
+    }
+
+    set postcode(value) {
+        this.setAttribute('postcode', value);
+
+        let target = document.getElementById(this.getAttribute('target'));
+
+        if (value == 1) {
+            target.setAttribute('required', '');
+        } else {
+            target.removeAttribute('required');
+        }
+    }
+
+    get postcode() {
+        return this.getAttribute('postcode');
+    }
+
     event = {
         connected: async () => {
             this.default = this.innerHTML;
@@ -17,21 +47,24 @@ class XCountry extends WebComponent {
             this.element = this.querySelector('select');
 
             this.element.addEventListener('change', this.event.onchange);
+            this.element.addEventListener('change', this.event.postcode);
 
             let response = this.storage.fetch('localisation/country');
 
-            response.then(this.event.onloaded).then(this.event.render);
+            response.then(this.event.onloaded);
+            response.then(this.event.option);
+            response.then(this.event.postcode);
         },
         onloaded: (countries) => {
             this.countries = countries;
         },
-        render: () => {
+        option: () => {
             let html = this.default;
 
             for (let i in this.countries) {
                 html += '<option value="' + this.countries[i].country_id + '"';
 
-                if (this.countries[i].country_id == this.getAttribute('value')) {
+                if (this.countries[i].country_id == this.value) {
                     html += ' selected';
                 }
 
@@ -40,25 +73,20 @@ class XCountry extends WebComponent {
 
             this.element.innerHTML = html;
         },
-        onchange: (e) => {
-           this.setAttribute('value', e.target.value);
-        },
-        changeValue: (e) => {
-            let value = e.detail.value_new;
-
-            if (this.element.value != value) {
-                this.element.value = value;
-
-                if (this.hasAttribute('target') && this.countries[value] !== undefined) {
-                    let target = document.getElementById(this.getAttribute('target'));
-
-                    if (this.countries[value] !== undefined) {
-                        target.setAttribute('postcode', this.countries[value].postcode_required);
-                    } else {
-                        target.setAttribute('required', '');
-                    }
+        postcode: () => {
+            if (this.hasAttribute('target')) {
+                if (this.countries[this.value] !== undefined) {
+                    this.postcode = this.countries[this.value].postcode_required;
+                } else {
+                    this.postcode = 0;
                 }
             }
+        },
+        onchange: (e) => {
+           this.value = e.target.value;
+        },
+        changeValue: (e) => {
+            this.value = e.detail.value_new;
         }
     };
 }

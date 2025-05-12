@@ -7,6 +7,20 @@ class XZone extends WebComponent {
     target = HTMLInputElement;
     zones = [];
 
+    get value() {
+        return this.getAttribute('value');
+    }
+
+    set value(value) {
+        if (this.getAttribute('value') != value) {
+            this.setAttribute('value', value);
+        }
+
+        if (this.element.value != value) {
+            this.element.value = value;
+        }
+    }
+
     event = {
         connected: async () => {
             this.default = this.innerHTML;
@@ -25,26 +39,23 @@ class XZone extends WebComponent {
 
             this.target.addEventListener('attribute:value', this.event.changeCountry.bind(this));
 
-            let value = this.target.getAttribute('value');
+            if (this.target.value != 0) {
+                let response = this.storage.fetch('localisation/country-' + this.target.value);
 
-            if (value > 0) {
-                console.log(value);
-
-                let response = this.storage.fetch('localisation/country-' + value);
-
-                response.then(this.event.onloaded).then(this.event.render);
+                response.then(this.event.onloaded);
+                response.then(this.event.option);
             }
         },
         onloaded: (country) => {
             this.zones = country['zone'];
         },
-        render: () => {
+        option: () => {
             let html = this.default;
 
             for (let i in this.zones) {
                 html += '<option value="' + this.zones[i].zone_id + '"';
 
-                if (this.zones[i].zone_id == this.getAttribute('value')) {
+                if (this.zones[i].zone_id == this.value) {
                     html += ' selected';
                 }
 
@@ -54,25 +65,22 @@ class XZone extends WebComponent {
             this.element.innerHTML = html;
         },
         onchange: (e) => {
-            this.setAttribute('value', e.target.value);
+            this.value = e.target.value;
         },
         changeValue: (e) => {
-            let value = e.detail.value_new;
-
-            if (this.element.value != value) {
-                this.element.value = value;
-            }
+            this.value = e.detail.value_new;
         },
         changeCountry: (e) => {
-            let value = e.target.getAttribute('value')
+            let value = e.target.value;
 
-            if (value > 0) {
+            if (value != 0) {
                 let response = this.storage.fetch('localisation/country-' + value);
 
-                response.then(this.event.onloaded).then(this.event.render);
+                response.then(this.event.onloaded);
+                response.then(this.event.option);
             } else {
                 this.zones = [];
-                this.event.render();
+                this.event.option();
             }
         }
     };

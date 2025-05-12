@@ -21,14 +21,16 @@ class XCountry extends WebComponent {
     }
 
     set postcode(value) {
-        this.setAttribute('postcode', value);
+        if (this.hasAttribute('target')) {
+            this.setAttribute('postcode', value);
 
-        let target = document.getElementById(this.getAttribute('target'));
+            let target = document.getElementById(this.getAttribute('target'));
 
-        if (value == 1) {
-            target.setAttribute('required', '');
-        } else {
-            target.removeAttribute('required');
+            if (value == 1) {
+                target.setAttribute('required', '');
+            } else {
+                target.removeAttribute('required');
+            }
         }
     }
 
@@ -74,12 +76,10 @@ class XCountry extends WebComponent {
             this.element.innerHTML = html;
         },
         postcode: () => {
-            if (this.hasAttribute('target')) {
-                if (this.countries[this.value] !== undefined) {
-                    this.postcode = this.countries[this.value].postcode_required;
-                } else {
-                    this.postcode = 0;
-                }
+            if (this.countries[this.value] !== undefined) {
+                this.postcode = this.countries[this.value].postcode_required;
+            } else {
+                this.postcode = 0;
             }
         },
         onchange: (e) => {

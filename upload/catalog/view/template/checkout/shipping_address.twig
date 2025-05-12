@@ -58,7 +58,7 @@
         </div>
         <div class="col mb-3">
           <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
-          <x-country name="country_id" value="{{ country_id }}" id="x-shipping-country" postcode-required="1" target="input-shipping-postcode" input-id="input-shipping-country" input-class="form-select" required>
+          <x-country name="country_id" value="{{ country_id }}" id="x-shipping-country" postcode="1" target="input-shipping-postcode" input-id="input-shipping-country" input-class="form-select" required>
             <option value="0">{{ text_select }}</option>
           </x-country>
           <div id="error-shipping-country" class="invalid-feedback"></div>

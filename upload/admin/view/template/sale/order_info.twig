@@ -688,14 +688,14 @@
           </div>
           <div class="mb-3">
             <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
-            <x-country name="payment_country_id" value="{{ payment_country_id }}" id="x-payment-country" postcode-required="1" target="input-payment-postcode" input-id="input-payment-country" input-class="form-select" required>
+            <x-country name="payment_country_id" value="{{ payment_country_id }}" id="x-payment-country" postcode="1" target="input-payment-postcode" input-id="input-payment-country" input-class="form-select" required>
               <option value="0">{{ text_select }}</option>
             </x-country>
             <div id="error-payment-country" class="invalid-feedback"></div>
           </div>
           <div class="mb-3">
             <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
-            <x-zone name="payment_zone_id" value="{{ payment_zone_id }}" target="x-payment-country" input-id="input-payment-zone" input-class="form-select" required>
+            <x-zone name="payment_zone_id" value="{{ payment_zone_id }}" id="x-payment-zone" target="x-payment-country" input-id="input-payment-zone" input-class="form-select" required>
               <option value="0">{{ text_select }}</option>
             </x-zone>
             <div id="error-payment-zone" class="invalid-feedback"></div>
@@ -854,7 +854,7 @@
           </div>
           <div class="mb-3">
             <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
-            <x-country name="shipping_country_id" value="{{ shipping_country_id }}" id="x-shipping-country" postcode-required="1" target="input-shipping-postcode" input-id="input-shipping-country" input-class="form-select" required>
+            <x-country name="shipping_country_id" value="{{ shipping_country_id }}" id="x-shipping-country" postcode="1" target="input-shipping-postcode" input-id="input-shipping-country" input-class="form-select" required>
               <option value="0">{{ text_select }}</option>
             </x-country>
             <div id="error-shipping-country" class="invalid-feedback"></div>
@@ -1591,8 +1591,8 @@ $('#input-payment-address').on('change', function() {
             $('#input-payment-address-2').val(json['address_2']);
             $('#input-payment-city').val(json['city']);
             $('#input-payment-postcode').val(json['postcode']);
-            $('#x-payment-country').val(json['country_id']);
-            $('#x-payment-zone').val(json['zone_id']);
+            $('#x-payment-country').attr('value', json['country_id']);
+            $('#x-payment-zone').attr('value', json['zone_id']);
 
             for (i in json['custom_field']) {
                 $('#input-payment-custom-field-' + i).val(json['custom_field'][i]);
@@ -1609,6 +1609,8 @@ $('#input-payment-address').on('change', function() {
         }
     });
 });
+
+
 
 $('#form-payment-address').on('submit', function(e) {
     e.preventDefault();
@@ -1717,8 +1719,8 @@ $('#input-shipping-address').on('change', function() {
             $('#input-shipping-address-2').val(json['address_2']);
             $('#input-shipping-city').val(json['city']);
             $('#input-shipping-postcode').val(json['postcode']);
-            $('#x-shipping-country').val(json['country_id']);
-            $('#x-shipping-zone').val(json['zone_id']);
+            $('#x-shipping-country').attr('value', json['country_id']);
+            $('#x-shipping-zone').attr('value', json['zone_id']);
 
             for (i in json['custom_field']) {
                 $('#input-shipping-custom-field-' + i).val(json['custom_field'][i]);

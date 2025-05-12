@@ -176,7 +176,7 @@
         </div>
         <div class="col mb-3">
           <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
-          <x-country name="payment_country_id" value="{{ payment_country_id }}" id="x-payment-country" postcode-required="1" target="input-payment-postcode" input-id="input-payment-country" input-class="form-select" required>
+          <x-country name="payment_country_id" value="{{ payment_country_id }}" id="x-payment-country" postcode="1" target="input-payment-postcode" input-id="input-payment-country" input-class="form-select" required>
             <option value="0">{{ text_select }}</option>
           </x-country>
           <div id="error-payment-country" class="invalid-feedback"></div>
@@ -329,7 +329,7 @@
       </div>
       <div class="col mb-3">
         <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
-        <x-country name="shipping_country_id" value="{{ shipping_country_id }}" id="x-shipping-country" postcode-required="1" target="input-shipping-postcode" input-id="input-shipping-country" input-class="form-select" required>
+        <x-country name="shipping_country_id" value="{{ shipping_country_id }}" id="x-shipping-country" postcode="1" target="input-shipping-postcode" input-id="input-shipping-country" input-class="form-select" required>
           <option value="0">{{ text_select }}</option>
         </x-country>
         <div id="error-shipping-country" class="invalid-feedback"></div>

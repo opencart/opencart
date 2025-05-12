@@ -1,7 +1,7 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XCountry extends WebComponent {
-    static observed = ['postcode-required'];
+    static observed = ['value', 'postcode'];
     default = HTMLInputElement;
     element = HTMLInputElement;
     countries = [];
@@ -10,8 +10,9 @@ class XCountry extends WebComponent {
         connected: async () => {
             this.default = this.innerHTML;
 
-            // I think for simple elements we can get without using a template system
             this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '"' + (this.hasAttribute('required') ? ' required' : '') + '>' + this.default + '</select>';
+
+            this.addEventListener('attribute:value', this.event.changeValue);
 
             this.element = this.querySelector('select');
 
@@ -19,12 +20,13 @@ class XCountry extends WebComponent {
 
             let response = this.storage.fetch('localisation/country');
 
-            response.then(this.event.onloaded);
+            response.then(this.event.onloaded).then(this.event.render);
         },
         onloaded: (countries) => {
-            let html = this.default;
-
             this.countries = countries;
+        },
+        render: () => {
+            let html = this.default;
 
             for (let i in this.countries) {
                 html += '<option value="' + this.countries[i].country_id + '"';
@@ -37,27 +39,24 @@ class XCountry extends WebComponent {
             }
 
             this.element.innerHTML = html;
-
-            // Checks to see if the selected country option requires a postcode
-            if (this.hasAttribute('target')) {
-                this.setAttribute('postcode-required', this.countries[this.getAttribute('value')].postcode_required);
-            }
         },
         onchange: (e) => {
-            this.setAttribute('value', e.target.value);
-
-            if (this.hasAttribute('target')) {
-                this.setAttribute('postcode-required', this.countries[e.target.value].postcode_required);
-            }
+           this.setAttribute('value', e.target.value);
         },
-        changed: async (name, value_old, value_new) => {
-            if (name == 'postcode-required') {
-                let element = document.getElementById(this.getAttribute('target'));
+        changeValue: (e) => {
+            let value = e.detail.value_new;
 
-                if (value_new == 1) {
-                    element.setAttribute('required', '');
-                } else {
-                    element.removeAttribute('required');
+            if (this.element.value != value) {
+                this.element.value = value;
+
+                if (this.hasAttribute('target') && this.countries[value] !== undefined) {
+                    let target = document.getElementById(this.getAttribute('target'));
+
+                    if (this.countries[value] !== undefined) {
+                        target.setAttribute('postcode', this.countries[value].postcode_required);
+                    } else {
+                        target.setAttribute('required', '');
+                    }
                 }
             }
         }

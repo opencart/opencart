@@ -496,13 +496,7 @@ a {
 }
 
 /* required */
-label:has(+ div *[required]):before {
-    content: '* ';
-    color: red;
-    font-weight: bold;
-}
-
-label.required:before, label:has(+ input:required):before, label:has(+ select:required):before, label:has(+ textarea:required):before {
+label.required:before, label:has(+ * *[required]):before, label:has(+ *[required]):before {
     content: '* ';
     color: red;
     font-weight: bold;

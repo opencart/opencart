@@ -1,7 +1,7 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XCountry extends WebComponent {
-    static observed = ['postcode-required'];
+    static observed = ['postcode'];
     default = HTMLInputElement;
     element = HTMLInputElement;
     countries = [];
@@ -40,18 +40,18 @@ class XCountry extends WebComponent {
 
             // Checks to see if the selected country option requires a postcode
             if (this.hasAttribute('target')) {
-                this.setAttribute('postcode-required', this.countries[this.getAttribute('value')].postcode_required);
+                this.setAttribute('postcode', this.countries[this.getAttribute('value')].postcode_required);
             }
         },
         onchange: (e) => {
             this.setAttribute('value', e.target.value);
 
             if (this.hasAttribute('target')) {
-                this.setAttribute('postcode-required', this.countries[e.target.value].postcode_required);
+                this.setAttribute('postcode', this.countries[e.target.value].postcode_required);
             }
         },
         changed: async (name, value_old, value_new) => {
-            if (name == 'postcode-required') {
+            if (name == 'postcode') {
                 let element = document.getElementById(this.getAttribute('target'));
 
                 if (value_new == 1) {

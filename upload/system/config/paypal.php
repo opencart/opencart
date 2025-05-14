@@ -1,6 +1,6 @@
 <?php 
 $_['paypal_setting'] = array(
-	'version' => '3.0.2',
+	'version' => '3.2.2',
 	'partner' => array(
 		'production' => array(
 			'partner_id' => 'TY2Q25KP2PX9L',
@@ -25,6 +25,7 @@ $_['paypal_setting'] = array(
 		'currency_value' => '1',
 		'card_currency_code' => 'USD',
 		'card_currency_value' => '1',
+		'order_history_token' => '',
 		'callback_token' => '',
 		'webhook_token' => '',
 		'cron_token' => ''
@@ -195,6 +196,13 @@ $_['paypal_setting'] = array(
 			'system_bypassed' => 1
 		)
 	),
+	'fastlane' => array(
+		'status' => false,
+		'card' => array(
+			'align' => 'right',
+			'size' => 'large'
+		)
+	),
 	'message' => array(
 		'checkout' => array(
 			'page_code' => 'checkout',
@@ -272,6 +280,16 @@ $_['paypal_setting'] = array(
 			'name' => 'text_pending_status',
 			'id' => 1
 		),
+		'partially_captured' => array(
+			'code' => 'partially_captured',
+			'name' => 'text_partially_captured_status',
+			'id' => 1
+		),
+		'partially_refunded' => array(
+			'code' => 'partially_refunded',
+			'name' => 'text_partially_refunded_status',
+			'id' => 11
+		),
 		'refunded' => array(
 			'code' => 'refunded',
 			'name' => 'text_refunded_status',
@@ -286,8 +304,14 @@ $_['paypal_setting'] = array(
 			'code' => 'voided',
 			'name' => 'text_voided_status',
 			'id' => 16
+		),
+		'shipped' => array(
+			'code' => 'shipped',
+			'name' => 'text_shipped_status',
+			'id' => 3
 		)
 	),
+	'final_order_status' => array(),
 	'contact' => array(
 		'oid' => '00D300000000LaY',
 		'retURL' => 'https://www.opencart.com/',
@@ -661,8 +685,8 @@ $_['paypal_setting'] = array(
 		),
 	),
 	'button_width' => array(
-		'small' => '200px',
-		'medium' => '250px',
+		'small' => '250px',
+		'medium' => '300px',
 		'large' => '350px',
 		'responsive' => ''
 	),
@@ -809,8 +833,8 @@ $_['paypal_setting'] = array(
 		)
 	),
 	'googlepay_button_width' => array(
-		'small' => '200px',
-		'medium' => '250px',
+		'small' => '250px',
+		'medium' => '300px',
 		'large' => '350px',
 		'responsive' => ''
 	),
@@ -907,8 +931,8 @@ $_['paypal_setting'] = array(
 		)
 	),
 	'applepay_button_width' => array(
-		'small' => '200px',
-		'medium' => '250px',
+		'small' => '250px',
+		'medium' => '300px',
 		'large' => '350px',
 		'responsive' => ''
 	),
@@ -941,7 +965,7 @@ $_['paypal_setting'] = array(
 		)
 	),
 	'card_width' => array(
-		'medium' => '250px',
+		'medium' => '300px',
 		'large' => '350px',
 		'responsive' => ''
 	),
@@ -1004,6 +1028,39 @@ $_['paypal_setting'] = array(
 			'error' => 'error_3ds_system_bypassed',
 			'recommended' => 1
 		)
+	),
+	'fastlane_card_align' => array(
+		'left' => array(
+			'code' => 'left',
+			'name' => 'text_align_left'
+		),
+		'center' => array(
+			'code' => 'center',
+			'name' => 'text_align_center'
+		),
+		'right' => array(
+			'code' => 'right',
+			'name' => 'text_align_right'
+		)
+	),
+	'fastlane_card_size' => array(
+		'medium' => array(
+			'code' => 'medium',
+			'name' => 'text_medium'
+		),
+		'large' => array(
+			'code' => 'large',
+			'name' => 'text_large'
+		),
+		'responsive' => array(
+			'code' => 'responsive',
+			'name' => 'text_responsive'
+		)
+	),
+	'fastlane_card_width' => array(
+		'medium' => '300px',
+		'large' => '350px',
+		'responsive' => ''
 	),
 	'message_insert_type' => array(
 		'into_begin' => array(

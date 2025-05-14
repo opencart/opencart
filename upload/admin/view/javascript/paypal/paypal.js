@@ -31,10 +31,14 @@ var PayPalAPI = (function () {
 		}
 		
 		if (paypal_data['components'].includes('card-fields')) {
-			$('#paypal_card_container').find('iframe').remove();
+			$('#paypal_card_container').find('iframe').parent().remove();
 			$('#paypal_card_container').addClass('paypal-spinner');
 		}
-				
+		
+		if (paypal_data['components'].includes('fastlane')) {
+			$('#fastlane_card_container').addClass('paypal-spinner');
+		}
+										
 		var src_data = {};
 		
 		src_data['components'] = paypal_data['components'].join(',');
@@ -72,8 +76,19 @@ var PayPalAPI = (function () {
 			paypal_script[script_count].type = 'text/javascript';
 			paypal_script[script_count].src = src;
 			paypal_script[script_count].setAttribute('data-partner-attribution-id', paypal_data['partner_attribution_id']);
-			paypal_script[script_count].setAttribute('data-client-token', paypal_data['client_token']);
-			paypal_script[script_count].setAttribute('data-namespace', 'PayPalSDK');			
+			paypal_script[script_count].setAttribute('data-namespace', 'PayPalSDK');
+			
+			if (paypal_data['client_token']) {
+				paypal_script[script_count].setAttribute('data-client-token', paypal_data['client_token']);
+			} 
+			
+			if (paypal_data['sdk_client_token']) {
+				paypal_script[script_count].setAttribute('data-sdk-client-token', paypal_data['sdk_client_token']);
+			}
+			
+			if (paypal_data['client_metadata_id']) {
+				paypal_script[script_count].setAttribute('data-client-metadata-id', paypal_data['client_metadata_id']);
+			}		
 			
 			paypal_script[script_count].async = false;
 			paypal_script[script_count].onload = readyPayPalSDK();
@@ -254,9 +269,53 @@ var PayPalAPI = (function () {
 							
 			$('#paypal_card_container').removeClass('paypal-spinner');
 		}
-									
+		
+		if (paypal_data['components'].includes('fastlane') && $('#fastlane_card').length) {
+			$('#fastlane_card').css('text-align', paypal_data['fastlane_card_align']);
+			
+			if (paypal_data['fastlane_card_width']) {
+				$('#fastlane_card_container').css('display', 'inline-block');
+				$('#fastlane_card_container').css('width', paypal_data['fastlane_card_width']);
+			} else {
+				$('#fastlane_card_container').css('display', 'block');
+				$('#fastlane_card_container').css('width', 'auto');
+			}
+			
+			$('#fastlane_card_container').removeClass('paypal-spinner');
+			
+			initFastlaneSDK().catch(console.log);
+		}
+											
 		if (paypal_callback && typeof paypal_callback == 'function') {
 			paypal_callback();
+		}
+	};
+	
+	var initFastlaneSDK = async function() {
+		var fastlane = await PayPalSDK.Fastlane({});
+		
+		var {identity, profile, FastlanePaymentComponent, FastlaneCardComponent, FastlaneWatermarkComponent} = fastlane;
+
+		window.localStorage.setItem('fastlaneEnv', 'sandbox');
+
+		fastlane.setLocale(paypal_data['locale']);
+		
+		var shippingAddress = false;
+		var billingAddress = false;
+		var fastlaneCardComponent = false;
+								
+		if ($('#fastlane_card_form_container').length && !$('#fastlane_card_form_container').html()) {			
+			var options = {
+				styles: {
+					root: {
+						backgroundColor: '#FFFFFF'
+					}
+				}
+			};
+					
+			fastlaneCardComponent = await FastlaneCardComponent({options});
+			
+			fastlaneCardComponent.render('#fastlane_card_form_container');
 		}
 	};
 	

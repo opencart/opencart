@@ -115,8 +115,8 @@
 						{% for quote in shipping_method['quote'] %}
 						<div class="radio">
 							<label>
-								{% if quote['code'] == code or not code %}
-								{% set code = quote['code'] %}
+								{% if quote['code'] == shipping_method_code or not shipping_method_code %}
+								{% set shipping_method_code = quote['code'] %}
 								<input type="radio" name="shipping_method" value="{{ quote['code'] }}" id="{{ quote['code'] }}" checked="checked" />
 								{% else %}
 								<input type="radio" name="shipping_method" value="{{ quote['code'] }}" id="{{ quote['code'] }}" />
@@ -140,7 +140,7 @@
 				</div>
 				<div class="panel-body">
 					{% for payment_method in payment_methods %}
-					{% if payment_method['code'] == 'paypal' %}
+					{% if payment_method['code'] == payment_method_code %}
 					<div class="radio">
 						<label>
 							<input type="radio" name="payment_method" value="{{ payment_method['code'] }}" checked="checked" />
@@ -209,7 +209,7 @@
 				</div>
 			</div>
 			<div class="buttons">
-				<div class="pull-right"><a href="{{ action_confirm }}" class="btn btn-primary" id="paypal_confirm">{{ button_confirm }}</a></div>
+				<div class="pull-right"><a href="{{ action_confirm }}" class="btn btn-primary" id="paypal_confirm" data-loading-text="{{ text_loading }}">{{ button_confirm }}</a></div>
 			</div>
 			{{ content_bottom }}
 		</div>
@@ -433,19 +433,19 @@ function onLoadPaymentAddress() {
 function onLoadShippingAddress() {
 	// Sort the custom fields
 	$('#shipping_address .form-group[data-sort]').detach().each(function() {
-		if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#shipping_address .form-group').length-2) {
-			$('#shipping_address .form-group').eq(parseInt($(this).attr('data-sort'))+2).before(this);
+		if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#shipping_address .form-group').length - 2) {
+			$('#shipping_address .form-group').eq(parseInt($(this).attr('data-sort')) + 2).before(this);
 		}
 
-		if ($(this).attr('data-sort') > $('#shipping_address .form-group').length-2) {
+		if ($(this).attr('data-sort') > $('#shipping_address .form-group').length - 2) {
 			$('#shipping_address .form-group:last').after(this);
 		}
 
-		if ($(this).attr('data-sort') == $('#collapse-shipping-address .form-group').length-2) {
-			$('#collapse-shipping-address .form-group:last').after(this);
+		if ($(this).attr('data-sort') == $('#shipping_address .form-group').length - 2) {
+			$('#shipping_address .form-group:last').after(this);
 		}
 
-		if ($(this).attr('data-sort') < -$('#shipping_address .form-group').length-2) {
+		if ($(this).attr('data-sort') < -$('#shipping_address .form-group').length - 2) {
 			$('#shipping_address .form-group:first').before(this);
 		}
 	});

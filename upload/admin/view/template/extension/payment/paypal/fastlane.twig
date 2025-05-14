@@ -33,8 +33,8 @@
 						<li class="nav-tab"><a href="{{ href_button }}" class="tab"><i class="tab-icon tab-icon-button"></i><span class="tab-title">{{ text_tab_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_googlepay_button }}" class="tab"><i class="tab-icon tab-icon-googlepay-button"></i><span class="tab-title">{{ text_tab_googlepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
-						<li class="nav-tab active"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
-						<li class="nav-tab"><a href="{{ href_fastlane }}" class="tab"><i class="tab-icon tab-icon-fastlane"></i><span class="tab-title">{{ text_tab_fastlane }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
+						<li class="nav-tab active"><a href="{{ href_fastlane }}" class="tab"><i class="tab-icon tab-icon-fastlane"></i><span class="tab-title">{{ text_tab_fastlane }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_message_configurator }}" class="tab"><i class="tab-icon tab-icon-message-configurator"></i><span class="tab-title">{{ text_tab_message_configurator }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_message_setting }}" class="tab"><i class="tab-icon tab-icon-message-setting"></i><span class="tab-title">{{ text_tab_message_setting }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_order_status }}" class="tab"><i class="tab-icon tab-icon-order-status"></i><span class="tab-title">{{ text_tab_order_status }}</span></a></li>
@@ -42,7 +42,7 @@
 					</ul>
 					<div class="section-content">
 						<div class="row">
-							<div class="col col-lg-6">
+							<div class="col col-lg-6">								
 								<div class="section-checkout">
 									<div class="section-title">{{ text_checkout }}</div>
 									<div class="section-panel">
@@ -69,25 +69,12 @@
 											</div>
 										</div>
 									</div>
-									<div id="paypal_card" class="paypal-card">
-										<div id="paypal_card_container" class="paypal-card-container paypal-spinner">
-											<div id="paypal_card_form" class="paypal-card-form">
-												<div class="card-info-holder-name clearfix">
-													<div id="card_holder_name" class="card-input-container"></div>
-												</div>
-												<div class="card-info-number clearfix">
-													<div id="card_number" class="card-input-container"></div>
-												</div>
-												<div class="card-info-date-cvv clearfix">
-													<div class="card-info-date">
-														<div id="expiration_date" class="card-input-container"></div>
-													</div>
-													<div class="card-info-cvv">
-														<div id="cvv" class="card-input-container"></div>
-													</div>
-												</div>
+									<div id="fastlane_card" class="fastlane-card">
+										<div id="fastlane_card_container" class="fastlane-card-container paypal-spinner">
+											<div id="fastlane_card_form" class="fastlane-card-form">
+												<div id="fastlane_card_form_container" class="fastlane-card-form-container"></div>
 												<div class="card-button">
-													<button type="button" id="paypal_card_button" class="btn paypal-card-button">{{ button_pay }}</button>
+													<button type="button" id="fastlane_card_button" class="btn fastlane-card-button">{{ button_pay }}</button>
 												</div>
 											</div>
 										</div>
@@ -95,71 +82,45 @@
 								</div>	
 							</div>
 							<div class="col col-lg-6">
-								<div class="section-card-setting">
+								<div class="section-fastlane-setting">
 									<div class="row">
 										<div class="col col-md-6">
-											<legend class="legend">{{ text_card_settings }}</legend>
+											<legend class="legend">{{ text_fastlane_settings }}</legend>
 										</div>
 										<div class="col col-md-6">
 											<div class="form-group-status">
-												<label class="control-label" for="input_card_status"><span data-toggle="tooltip" title="{{ help_card_status }}">{{ entry_status }}</span></label>
-												<input type="hidden" name="payment_paypal_setting[card][status]" value="0" />
-												<input type="checkbox" name="payment_paypal_setting[card][status]" value="1" class="switch" {% if setting['card']['status'] %} checked="checked" {% endif %} />
+												<label class="control-label" for="input_fastlane_status"><span data-toggle="tooltip" title="{{ help_fastlane_status }}">{{ entry_status }}</span></label>
+												<input type="hidden" name="payment_paypal_setting[fastlane][status]" value="0" />
+												<input type="checkbox" name="payment_paypal_setting[fastlane][status]" value="1" class="switch" {% if setting['fastlane']['status'] %} checked="checked" {% endif %} />
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="control-label" for="input_card_align">{{ entry_card_align }}</label>
-										<select name="payment_paypal_setting[card][align]" id="input_card_align" class="form-control control-paypal-card">
-											{% for card_align in setting['card_align'] %}
-											{% if (card_align['code'] == setting['card']['align']) %}
-											<option value="{{ card_align['code'] }}" selected="selected">{{ attribute(_context, card_align['name']) }}</option>
+										<p class="alert alert-info">{{ text_fastlane_alert }}</p>
+									</div>
+									<div class="form-group">
+										<label class="control-label" for="input_fastlane_card_align">{{ entry_fastlane_card_align }}</label>
+										<select name="payment_paypal_setting[fastlane][card][align]" id="input_fastlane_card_align" class="form-control control-fastlane-card">
+											{% for fastlane_card_align in setting['fastlane_card_align'] %}
+											{% if (fastlane_card_align['code'] == setting['fastlane']['card']['align']) %}
+											<option value="{{ fastlane_card_align['code'] }}" selected="selected">{{ attribute(_context, fastlane_card_align['name']) }}</option>
 											{% else %}
-											<option value="{{ card_align['code'] }}">{{ attribute(_context, card_align['name']) }}</option>
+											<option value="{{ fastlane_card_align['code'] }}">{{ attribute(_context, fastlane_card_align['name']) }}</option>
 											{% endif %}
 											{% endfor %}
 										</select>
 									</div>
 									<div class="form-group">
-										<label class="control-label" for="input_card_size">{{ entry_card_size }}</label>
-										<select name="payment_paypal_setting[card][size]" id="input_card_size" class="form-control control-paypal-card">
-											{% for card_size in setting['card_size'] %}
-											{% if (card_size['code'] == setting['card']['size']) %}
-											<option value="{{ card_size['code'] }}" selected="selected">{{ attribute(_context, card_size['name']) }}</option>
+										<label class="control-label" for="input_fastlane_card_size">{{ entry_fastlane_card_size }}</label>
+										<select name="payment_paypal_setting[fastlane][card][size]" id="input_fastlane_card_size" class="form-control control-fastlane-card">
+											{% for fastlane_card_size in setting['fastlane_card_size'] %}
+											{% if (fastlane_card_size['code'] == setting['fastlane']['card']['size']) %}
+											<option value="{{ fastlane_card_size['code'] }}" selected="selected">{{ attribute(_context, fastlane_card_size['name']) }}</option>
 											{% else %}
-											<option value="{{ card_size['code'] }}">{{ attribute(_context, card_size['name']) }}</option>
+											<option value="{{ fastlane_card_size['code'] }}">{{ attribute(_context, fastlane_card_size['name']) }}</option>
 											{% endif %}
 											{% endfor %}
 										</select>
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="input_card_secure_method"><span data-toggle="tooltip" title="{{ help_card_secure_method }}">{{ entry_card_secure_method }}</span></label>
-										<select name="payment_paypal_setting[card][secure_method]" id="input_card_secure_method" class="form-control">
-											{% for card_secure_method in setting['card_secure_method'] %}
-											{% if (card_secure_method['code'] == setting['card']['secure_method']) %}
-											<option value="{{ card_secure_method['code'] }}" selected="selected">{{ attribute(_context, card_secure_method['name']) }}</option>
-											{% else %}
-											<option value="{{ card_secure_method['code'] }}">{{ attribute(_context, card_secure_method['name']) }}</option>
-											{% endif %}
-											{% endfor %}
-										</select>
-									</div>
-									<hr class="hr" />
-									<button type="button" href="#all_settings" class="btn btn-default button-all-settings collapsed" data-toggle="collapse" role="button">{{ button_all_settings }}<i class="icon icon-all-settings"></i></button>	
-									<div id="all_settings" class="all-settings collapse">
-										<div class="form-group">
-											<label class="control-label" for="input_card_secure_scenario">{{ entry_card_secure_scenario }}</label>
-											<p class="alert alert-info">{{ help_card_secure_scenario }}</p>
-										</div>
-										{% for card_secure_scenario in setting['card_secure_scenario'] %}
-										<div class="form-group">
-											<label class="control-label" for="input_card_secure_scenario_{{ card_secure_scenario['code'] }}">{{ attribute(_context, card_secure_scenario['name']) }}</label>	
-											<select name="payment_paypal_setting[card][secure_scenario][{{ card_secure_scenario['code'] }}]" id="input_card_secure_scenario_{{ card_secure_scenario['code'] }}" class="form-control">
-												<option value="1" {% if setting['card']['secure_scenario'][card_secure_scenario['code']] %} selected="selected" {% endif %}>{{ text_accept }}{% if card_secure_scenario['recommended'] %} {{ text_recommended }}{% endif %}</option>
-												<option value="0" {% if not setting['card']['secure_scenario'][card_secure_scenario['code']] %} selected="selected" {% endif %}>{{ text_decline }}{% if not card_secure_scenario['recommended'] %} {{ text_recommended }}{% endif %}</option>
-											</select>
-										</div>
-										{% endfor %}
 									</div>
 								</div>
 							</div>
@@ -172,9 +133,9 @@
 </div>
 <script type="text/javascript">
 
-var card_width = JSON.parse('{{ setting['card_width']|json_encode() }}');
+var fastlane_card_width = JSON.parse('{{ setting['fastlane_card_width']|json_encode() }}');
 
-updatePayPalCard();
+updateFastlaneCard();
 
 $('.payment-paypal .switch').bootstrapSwitch({
     'onColor': 'success',
@@ -182,8 +143,8 @@ $('.payment-paypal .switch').bootstrapSwitch({
     'offText': '{{ text_off }}'
 });
 
-$('.payment-paypal').on('change', '.control-paypal-card', function() {
-	updatePayPalCard();
+$('.payment-paypal').on('change', '.control-fastlane-card', function() {
+	updateFastlaneCard();
 });
 
 $('.payment-paypal').on('click', '.button-save', function() {
@@ -226,7 +187,7 @@ $('.payment-paypal').on('click', '.button-agree', function() {
 	});
 });
 
-function updatePayPalCard() {								
+function updateFastlaneCard() {								
 	var paypal_data = {};
 
 	paypal_data['client_id'] = '{{ client_id }}';
@@ -238,13 +199,14 @@ function updatePayPalCard() {
 	paypal_data['currency_code'] = '{{ currency_code }}';
 	paypal_data['currency_value'] = '{{ currency_value }}';
 	paypal_data['decimal_place'] = '{{ decimal_place }}';
-	paypal_data['client_token'] = '{{ client_token }}';
+	paypal_data['sdk_client_token'] = '{{ sdk_client_token }}';
+	paypal_data['client_metadata_id'] = '{{ client_metadata_id }}';
 	paypal_data['transaction_method'] = '{{ setting['general']['transaction_method'] }}';
-	paypal_data['components'] = ['card-fields'];
-	paypal_data['card_align'] = $('.payment-paypal #input_card_align').val();
-	paypal_data['card_size'] = $('.payment-paypal #input_card_size').val();
+	paypal_data['components'] = ['fastlane'];
+	paypal_data['fastlane_card_align'] = $('.payment-paypal #input_fastlane_card_align').val();
+	paypal_data['fastlane_card_size'] = $('.payment-paypal #input_fastlane_card_size').val();
 		
-	paypal_data['card_width'] = card_width[paypal_data['card_size']];
+	paypal_data['fastlane_card_width'] = fastlane_card_width[paypal_data['fastlane_card_size']];
 			
 	PayPalAPI.init(paypal_data);
 }

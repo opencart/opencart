@@ -62,12 +62,35 @@
 		width: 100% !important;
 	}
 }
+.fastlane-card {
+	position: relative;
+}
+.fastlane-card-container {
+	position: relative;
+}
+@media (max-width: 476px) {
+	.fastlane-card-container {
+		width: 100% !important;
+	}
+}
 .paypal-message {
 	position: relative;
 	margin-bottom: 10px;
 }
 .paypal-message [data-pp-message] > * {
 	max-width: none !important;
+}
+.fastlane-customer {
+	position: relative;
+	width: 100%;
+	margin: 1em 0;
+}
+.fastlane-customer .watermark {
+	text-align: right;
+}
+.fastlane-customer .watermark-container {
+	display: inline-block;
+	text-align: left;
 }
 .paypal-spinner {
 	position: relative;

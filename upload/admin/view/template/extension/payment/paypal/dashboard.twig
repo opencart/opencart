@@ -37,7 +37,7 @@
 							<div class="form-group-status">
 								<label class="control-label" for="input_status">{{ entry_status }}</label>
 								<input type="hidden" name="payment_paypal_status" value="0" />
-								<input type="checkbox" name="payment_paypal_status" value="1" class="switch" {% if status %}checked="checked"{% endif %} />
+								<input type="checkbox" name="payment_paypal_status" value="1" class="switch" {% if status %} checked="checked" {% endif %} />
 							</div>
 						</div>
 					</div>
@@ -75,6 +75,13 @@
 								<i class="tab-icon-status tab-icon-status-{% if card_status %}on{% else %}off{% endif %}"></i>
 								<i class="tab-icon tab-icon-card"></i>
 								<span class="tab-title">{{ text_tab_card }}</span>
+							</a>
+						</div>
+						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">
+							<a href="{{ href_fastlane }}" class="tab">
+								<i class="tab-icon-status tab-icon-status-{% if fastlane_status %}on{% else %}off{% endif %}"></i>
+								<i class="tab-icon tab-icon-fastlane"></i>
+								<span class="tab-title">{{ text_tab_fastlane }}</span>
 							</a>
 						</div>
 						<div class="col col-sm-6 col-md-4 col-lg-3 col-tab">

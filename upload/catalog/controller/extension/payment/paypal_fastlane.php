@@ -1,5 +1,5 @@
 <?php
-class ControllerExtensionPaymentPayPalApplePay extends Controller {
+class ControllerExtensionPaymentPayPalFastlane extends Controller {
 	private $error = array();
 			
 	public function index() {
@@ -25,11 +25,8 @@ class ControllerExtensionPaymentPayPalApplePay extends Controller {
 			$data['partner_attribution_id'] = $setting['partner'][$data['environment']]['partner_attribution_id'];
 			$data['checkout_mode'] = $setting['general']['checkout_mode'];
 			$data['transaction_method'] = $setting['general']['transaction_method'];
-			
-			if ($setting['applepay_button']['checkout']['status']) {
-				$data['applepay_button_status'] = $setting['applepay_button']['checkout']['status'];
-			}
-											
+			$data['fastlane_status'] = $setting['fastlane']['status'];
+														
 			require_once DIR_SYSTEM .'library/paypal/paypal.php';
 		
 			$paypal_info = array(
@@ -76,7 +73,7 @@ class ControllerExtensionPaymentPayPalApplePay extends Controller {
 
 			$data['error'] = $this->error;			
 
-			return $this->load->view('extension/payment/paypal/paypal_applepay', $data);
+			return $this->load->view('extension/payment/paypal/paypal_fastlane', $data);
 		}
 		
 		return '';
@@ -99,10 +96,7 @@ class ControllerExtensionPaymentPayPalApplePay extends Controller {
 		$data['partner_id'] = $setting['partner'][$data['environment']]['partner_id'];
 		$data['partner_attribution_id'] = $setting['partner'][$data['environment']]['partner_attribution_id'];
 		$data['transaction_method'] = $setting['general']['transaction_method'];
-			
-		if ($setting['applepay_button']['checkout']['status']) {
-			$data['applepay_button_status'] = $setting['applepay_button']['checkout']['status'];
-		}
+		$data['fastlane_status'] = $setting['fastlane']['status'];
 				
 		require_once DIR_SYSTEM .'library/paypal/paypal.php';
 		
@@ -150,6 +144,6 @@ class ControllerExtensionPaymentPayPalApplePay extends Controller {
 
 		$data['error'] = $this->error;		
 
-		$this->response->setOutput($this->load->view('extension/payment/paypal/paypal_applepay_modal', $data));
+		$this->response->setOutput($this->load->view('extension/payment/paypal/paypal_fastlane_modal', $data));
 	}
 }

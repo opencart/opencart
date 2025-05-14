@@ -34,6 +34,7 @@
 						<li class="nav-tab"><a href="{{ href_googlepay_button }}" class="tab"><i class="tab-icon tab-icon-googlepay-button"></i><span class="tab-title">{{ text_tab_googlepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_fastlane }}" class="tab"><i class="tab-icon tab-icon-fastlane"></i><span class="tab-title">{{ text_tab_fastlane }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_message_configurator }}" class="tab"><i class="tab-icon tab-icon-message-configurator"></i><span class="tab-title">{{ text_tab_message_configurator }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_message_setting }}" class="tab"><i class="tab-icon tab-icon-message-setting"></i><span class="tab-title">{{ text_tab_message_setting }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_order_status }}" class="tab"><i class="tab-icon tab-icon-order-status"></i><span class="tab-title">{{ text_tab_order_status }}</span></a></li>
@@ -42,23 +43,27 @@
 					<div class="section-content">
 						<ul class="nav nav-pills">
 							{% for button in setting['button'] %}
-							<li class="nav-pill {% if loop.first %}active{% endif %}"><a href="#pill_{{ button['page_code'] }}" class="pill" data-toggle="tab">{{ attribute(_context, button['page_name']) }}</a></li>
+							<li class="nav-pill {% if loop.first %} active {% endif %}"><a href="#pill_{{ button['page_code'] }}" class="pill" data-toggle="tab">{{ attribute(_context, button['page_name']) }}</a></li>
 							{% endfor %}
 						</ul>
 						<hr class="hr" />
 						<div class="tab-content">
 							{% for button in setting['button'] %}
-							<div id="pill_{{ button['page_code'] }}" class="tab-pane {% if loop.first %}active{% endif %}">
+							<div id="pill_{{ button['page_code'] }}" class="tab-pane {% if loop.first %} active {% endif %}">
 								<div class="row">
 									<div class="col col-lg-6">
 										{% if (button['page_code'] == 'checkout') %}
 										<div class="section-checkout">
 											<div class="section-title">{{ text_checkout }}</div>
 											<div class="section-panel">
-												<div class="section-panel-title">{{ text_step_payment_method }}<i class="icon icon-section-panel"></i></div>
+												<div class="section-panel-heading">
+													<div class="section-panel-title">{{ text_step_payment_method }}<i class="icon icon-section-panel"></i></div>
+												</div>
 											</div>
 											<div class="section-panel">
-												<div class="section-panel-title">{{ text_step_confirm_order }}<i class="icon icon-section-panel"></i></div>
+												<div class="section-panel-heading">
+													<div class="section-panel-title">{{ text_step_confirm_order }}<i class="icon icon-section-panel"></i></div>
+												</div>
 											</div>
 											<div class="table-totals">
 												<div class="row">
@@ -101,10 +106,14 @@
 												</div>
 											</div>	
 											<div class="section-panel">
-												<div class="section-panel-title">{{ text_step_coupon }}<i class="icon icon-section-panel"></i></div>
+												<div class="section-panel-heading">
+													<div class="section-panel-title">{{ text_step_coupon }}<i class="icon icon-section-panel"></i></div>
+												</div>
 											</div>
 											<div class="section-panel">
-												<div class="section-panel-title">{{ text_step_shipping }}<i class="icon icon-section-panel"></i></div>
+												<div class="section-panel-heading">
+													<div class="section-panel-title">{{ text_step_shipping }}<i class="icon icon-section-panel"></i></div>
+												</div>
 											</div>
 											<div class="table-totals">
 												<div class="row">
@@ -161,7 +170,7 @@
 													<div class="form-group-status">
 														<label class="control-label" for="input_button_{{ button['page_code'] }}_status"><span data-toggle="tooltip" title="{{ help_button_status }}">{{ entry_status }}</span></label>
 														<input type="hidden" name="payment_paypal_setting[button][{{ button['page_code'] }}][status]" value="0" />
-														<input type="checkbox" name="payment_paypal_setting[button][{{ button['page_code'] }}][status]" value="1" class="switch" {% if button['status'] %}checked="checked"{% endif %} />
+														<input type="checkbox" name="payment_paypal_setting[button][{{ button['page_code'] }}][status]" value="1" class="switch" {% if button['status'] %} checked="checked" {% endif %} />
 													</div>
 												</div>
 											</div>
@@ -265,9 +274,9 @@
 														<div class="form-group">
 															<label class="control-label" for="input_button_{{ button['page_code'] }}_funding_{{ button_funding['code'] }}">{{ attribute(_context, button_funding['name']) }}</label>
 															<select name="payment_paypal_setting[button][{{ button['page_code'] }}][funding][{{ button_funding['code'] }}]" id="input_button_{{ button['page_code'] }}_funding_{{ button_funding['code'] }}" class="form-control control-paypal-button" funding_code="{{ button_funding['code'] }}">
-																<option value="0" {% if (button['funding'][button_funding['code']] == 0) %}selected="selected"{% endif %}>{{ text_auto }}</option>
-																<option value="1" {% if (button['funding'][button_funding['code']] == 1) %}selected="selected"{% endif %}>{{ text_enabled }}</option>
-																<option value="2" {% if (button['funding'][button_funding['code']] == 2) %}selected="selected"{% endif %}>{{ text_disabled }}</option>	
+																<option value="0" {% if (button['funding'][button_funding['code']] == 0) %} selected="selected" {% endif %}>{{ text_auto }}</option>
+																<option value="1" {% if (button['funding'][button_funding['code']] == 1) %} selected="selected" {% endif %}>{{ text_enabled }}</option>
+																<option value="2" {% if (button['funding'][button_funding['code']] == 2) %} selected="selected" {% endif %}>{{ text_disabled }}</option>	
 															</select>
 														</div>
 														{% endfor %}
@@ -353,7 +362,7 @@ function updatePayPalButton(button_page_code, paypal_callback = '') {
 	var button_enable_funding = [];
 	var button_disable_funding = [];
 
-	$('.payment-paypal [id^=input_button_' + button_page_code + '_funding').each(function() {
+	$('.payment-paypal [id^=input_button_' + button_page_code + '_funding]').each(function() {
 		if ($(this).val() == 1) {
 			button_enable_funding.push($(this).attr('funding_code'));
 		}

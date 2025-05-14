@@ -21,7 +21,7 @@
 	</div>
 	<div id="paypal_card" class="paypal-card">
 		<div id="paypal_card_container" class="paypal-card-container paypal-spinner">
-			<div id="paypal_card_form" class="paypal-card-form well">
+			<div id="paypal_card_form" class="paypal-card-form">
 				<div class="card-info-holder-name clearfix">
 					<div id="card_holder_name" class="card-input-container"></div>
 				</div>
@@ -44,7 +44,7 @@
 						</label>
 					</div>
 					{% endif %}
-					<button type="button" id="paypal_card_button" class="btn paypal-card-button">{{ button_pay }}</button>
+					<button type="button" id="paypal_card_button" class="btn paypal-card-button" data-loading-text="{{ text_loading }}">{{ button_pay }}</button>
 				</div>
 			</div>
 			<div id="payments-sdk__contingency-lightbox"></div>
@@ -62,20 +62,20 @@ if (typeof PayPalAPI !== 'undefined') {
 {% else %}
 <div class="buttons">
 	<div class="pull-right">
-		<button type="button" id="button-confirm" class="btn btn-primary paypal-button-confirm" data-loading-text="{{ text_loading }}">{{ button_confirm }}</button>
+		<button type="button" id="button-confirm" class="btn btn-primary paypal-button-confirm" data-loading-text="{{ text_loading }}" onClick="loadPayPalModal()">{{ button_confirm }}</button>
 	</div>
 </div>
 <script type="text/javascript">
 
-$(document).on('click', '.paypal-button-confirm', function(event) {
-	$('.paypal-button-confirm').button('loading');
+function loadPayPalModal() {
+	$('.paypal-button-confirm').prop('disabled', true).button('loading');
 	
 	$('#paypal_modal').remove();
 	
 	$('body').append('<div id="paypal_modal" class="modal fade"></div>');
 	
 	$('#paypal_modal').load('index.php?route=extension/payment/paypal/modal #paypal_modal >', function() {		
-		$('.paypal-button-confirm').button('reset');
+		$('.paypal-button-confirm').prop('disabled', false).button('reset');
 		
 		$('#paypal_modal').modal('show');
 		
@@ -83,7 +83,7 @@ $(document).on('click', '.paypal-button-confirm', function(event) {
 			PayPalAPI.init();
 		}
 	});
-});
+}
 
 </script>
 {% endif %}

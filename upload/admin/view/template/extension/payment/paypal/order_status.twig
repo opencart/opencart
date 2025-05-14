@@ -34,6 +34,7 @@
 						<li class="nav-tab"><a href="{{ href_googlepay_button }}" class="tab"><i class="tab-icon tab-icon-googlepay-button"></i><span class="tab-title">{{ text_tab_googlepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_applepay_button }}" class="tab"><i class="tab-icon tab-icon-applepay-button"></i><span class="tab-title">{{ text_tab_applepay_button }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_card }}" class="tab"><i class="tab-icon tab-icon-card"></i><span class="tab-title">{{ text_tab_card }}</span></a></li>
+						<li class="nav-tab"><a href="{{ href_fastlane }}" class="tab"><i class="tab-icon tab-icon-fastlane"></i><span class="tab-title">{{ text_tab_fastlane }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_message_configurator }}" class="tab"><i class="tab-icon tab-icon-message-configurator"></i><span class="tab-title">{{ text_tab_message_configurator }}</span></a></li>
 						<li class="nav-tab"><a href="{{ href_message_setting }}" class="tab"><i class="tab-icon tab-icon-message-setting"></i><span class="tab-title">{{ text_tab_message_setting }}</span></a></li>
 						<li class="nav-tab active"><a href="{{ href_order_status }}" class="tab"><i class="tab-icon tab-icon-order-status"></i><span class="tab-title">{{ text_tab_order_status }}</span></a></li>
@@ -42,7 +43,7 @@
 					<div class="section-content">
 						<div class="row">
 							{% for column_paypal_order_status in setting['order_status']|batch(setting['order_status']|length / 2|round(1, 'ceil')) %}
-							<div class="col col-md-6">
+							<div class="col col-md-4">
 								{% for paypal_order_status in column_paypal_order_status %}
 								<div class="form-group">
 									<label class="control-label" for="input_order_status_{{ paypal_order_status['code'] }}">{{ attribute(_context, paypal_order_status['name']) }}</label>
@@ -59,6 +60,21 @@
 								{% endfor %}
 							</div>
 							{% endfor %}
+							<div class="col col-md-4">
+								<div class="form-group">
+									<label class="control-label" for="input_final_order_status"><span data-toggle="tooltip" title="{{ help_final_order_status }}">{{ entry_final_order_status }}</span></label>
+									<div class="well well-sm">
+										{% for order_status in order_statuses %}
+										<div class="checkbox">
+											<label class="control-label">
+												<input type="checkbox" name="payment_paypal_setting[final_order_status][]" value="{{ order_status['order_status_id'] }}" class="form-check-input form-check-input-mini" {% if order_status['order_status_id'] in setting['final_order_status'] %} checked="checked" {% endif %} />
+												{{ order_status['name'] }}
+											</label>
+										</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</form>

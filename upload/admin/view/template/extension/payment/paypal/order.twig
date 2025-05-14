@@ -1,155 +1,400 @@
-<div class="transaction-id">{{ text_transaction_id }}: <a href="{{ transaction_url }}" target="_blank">{{ transaction_id }}</a></div><br />
-<div class="transaction-status">{{ attribute(_context, 'text_transaction_' ~ transaction_status) }}</div><br />
-{% if (transaction_status == 'created') %}
-<button type="button" class="btn btn-primary button-capture-payment">{{ button_capture_payment }}</button>
-<button type="button" class="btn btn-primary button-reauthorize-payment">{{ button_reauthorize_payment }}</button>
-<button type="button" class="btn btn-primary button-void-payment">{{ button_void_payment }}</button>
-{% endif %}
-{% if (transaction_status == 'completed') %}
-<button type="button" class="btn btn-primary button-refund-payment">{{ button_refund_payment }}</button>
-{% endif %}
+<div class="row">
+	<div class="col-lg-6">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<td colspan="2">{{ text_payment_information }}</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ text_transaction_id }}</td>
+					<td>
+						<a href="{{ transaction_url }}" target="_blank">{{ transaction_id }}</a>
+						<input type="hidden" name="order_id" value="{{ order_id }}" id="input_order_id" />
+						<input type="hidden" name="country_code" value="{{ country_code }}" id="input_country_code" />
+					</td>
+				</tr>
+				<tr>
+					<td>{{ text_transaction_description }}</td>
+					<td>{{ attribute(_context, 'text_transaction_' ~ transaction_status) }}</td>
+				</tr>
+				{% if ((transaction_status == 'created') or (transaction_status == 'completed') or (transaction_status == 'partially_captured') or (transaction_status == 'partially_refunded')) %}
+				<tr>
+					<td>{{ text_transaction_comment }}</td>
+					<td>
+						<textarea name="transaction_comment" id="input_transaction_comment" class="form-control"></textarea>
+						<div class="checkbox">
+							<label><input type="checkbox" name="transaction_notify" value="1" id="input_transaction_notify">&nbsp;{{ text_transaction_notify }}</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ text_transaction_action }}</td>
+					<td>
+						{% if ((transaction_status == 'created') or (transaction_status == 'partially_captured')) %}
+						<div class="row" style="margin: 0px -4px">
+							<div class="col-lg-4" style="padding: 4px 4px;">
+								<button type="button" class="btn btn-primary btn-block button-capture-payment">{{ button_capture_payment }}</button>
+							</div>
+							<div class="col-lg-4" style="padding: 4px 4px;">
+								<input type="text" name="capture_amount" value="{{ capture_amount }}" id="input_capture_amount" class="form-control" />
+							</div>
+							<div class="col-lg-4" style="padding: 4px 4px;">
+								<div class="checkbox">
+									<label><input type="checkbox" name="final_capture" value="1" checked="checked" id="input_final_capture">&nbsp;{{ text_final_capture }}</label>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin: 0px -4px">
+							<div class="col-lg-4" style="padding: 4px 4px;">
+								<button type="button" class="btn btn-primary btn-block button-reauthorize-payment">{{ button_reauthorize_payment }}</button>
+							</div>
+							<div class="col-lg-4" style="padding: 4px 4px;">
+								<input type="text" name="reauthorize_amount" value="{{ reauthorize_amount }}" id="input_reauthorize_amount" class="form-control" />
+							</div>
+						</div>
+						<div class="row" style="margin: 0px -4px">
+							<div class="col-lg-4" style="padding: 4px 4px;">
+								<button type="button" class="btn btn-primary btn-block button-void-payment">{{ button_void_payment }}</button>
+							</div>
+						</div>
+						{% endif %}
+						{% if ((transaction_status == 'completed') or (transaction_status == 'partially_refunded')) %}
+						<div class="row" style="margin: 0px -4px">
+							<div class="col-lg-4" style="padding: 4px 4px;">
+								<button type="button" class="btn btn-primary btn-block button-refund-payment">{{ button_refund_payment }}</button>
+							</div>
+							<div class="col-lg-4" style="padding: 4px 4px;">
+								<input type="text" name="refund_amount" value="{{ refund_amount }}" id="input_refund_amount" class="form-control" />
+							</div>
+						</div>
+						{% endif %}
+					</td>
+				</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+	{% if (transaction_status == 'completed') %}
+	<div class="col-lg-6">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<td colspan="2">{{ text_tracker_information }}</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ text_tracking_number }}</td>
+					<td>
+						{% if tracking_number %}
+						{{ tracking_number }}
+						<input type="hidden" name="tracking_number" value="{{ tracking_number }}" id="input_tracking_number" />
+						{% else %}
+						<input type="text" name="tracking_number" value="{{ tracking_number }}" id="input_tracking_number" class="form-control" />
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td>{{ text_carrier_name }}</td>
+					<td>
+						{% if carrier_name %}
+						{{ carrier_name }}
+						<input type="hidden" name="carrier_name" value="{{ carrier_name }}" id="input_carrier_name" />
+						{% else %}
+						<input type="text" name="carrier_name" value="{{ carrier_name }}" id="input_carrier_name" class="form-control" />
+						{% endif %}
+					</td>
+				</tr>
+				{% if not tracking_number %}
+				<tr>
+					<td>{{ text_tracker_comment }}</td>
+					<td>
+						<textarea name="tracker_comment" id="input_tracker_comment" class="form-control"></textarea>
+						<div class="checkbox">
+							<label><input type="checkbox" name="tracker_notify" value="1" id="input_tracker_notify">&nbsp;{{ text_tracker_notify }}</label>
+						</div>
+					</td>
+				</tr>
+				{% endif %}
+				<tr>
+					<td>{{ text_tracker_action }}</td>
+					<td>
+						{% if tracking_number %}
+						<button class="btn btn-danger button-cancel-tracker"><i class="fa fa-minus-circle"></i> {{ button_cancel_tracker }}</button>
+						{% else %}
+						<button class="btn btn-primary button-create-tracker"><i class="fa fa-plus-circle"></i> {{ button_create_tracker }}</button>
+						{% endif %}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	{% endif %}
+</div>
 <script type="text/javascript">
 
-$('#tab-paypal').on('click', '.button-capture-payment', function() {
-	$.ajax({
-		type: 'post',
-		url: '{{ capture_url }}',
-		data: {'order_id' : '{{ order_id }}', 'transaction_id' : '{{ transaction_id }}'},
-		dataType: 'json',
-		beforeSend: function() {
-			$('#tab-paypal .btn').prop('disabled', true);
-		},
-		complete: function() {
-			$('#tab-paypal .btn').prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
+window.addEventListener('load', function () {
+	$('#tab-paypal').on('click', '.button-capture-payment', function() {
+		$.ajax({
+			type: 'post',
+			url: '{{ capture_payment_url }}',
+			data: {'order_id': $('#tab-paypal #input_order_id').val(), 'capture_amount': $('#tab-paypal #input_capture_amount').val(), 'final_capture': $('#tab-paypal #input_final_capture:checked').val(), 'comment': $('#tab-paypal #input_transaction_comment').val(), 'notify': $('#tab-paypal #input_transaction_notify:checked').val()},
+			dataType: 'json',
+			beforeSend: function() {
+				$('#tab-paypal .btn').prop('disabled', true);
+			},
+			complete: function() {
+				$('#tab-paypal .btn').prop('disabled', false);
+			},
+			success: function(json) {
+				$('.alert-dismissible').remove();
 			
-			if (json['error'] && json['error']['warning']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				if (json['error'] && json['error']['warning']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
-			}
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
+				}
 			
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
 				
-				$('#tab-paypal').load('{{ info_url }}');
+					updateTabPayPal();
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
+		});
+	});
+
+	$('#tab-paypal').on('click', '.button-reauthorize-payment', function() {
+		$.ajax({
+			type: 'post',
+			url: '{{ reauthorize_payment_url }}',
+			data: {'order_id': $('#tab-paypal #input_order_id').val(), 'reauthorize_amount': $('#tab-paypal #input_reauthorize_amount').val(), 'comment': $('#tab-paypal #input_transaction_comment').val(), 'notify': $('#tab-paypal #input_transaction_notify:checked').val()},
+			dataType: 'json',
+			beforeSend: function() {
+				$('#tab-paypal .btn').prop('disabled', true);
+			},
+			complete: function() {
+				$('#tab-paypal .btn').prop('disabled', false);
+			},
+			success: function(json) {
+				$('.alert-dismissible').remove();
+			
+				if (json['error'] && json['error']['warning']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
+				}
+			
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
+				
+					updateTabPayPal();
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	$('#tab-paypal').on('click', '.button-void-payment', function() {
+		$.ajax({
+			type: 'post',
+			url: '{{ void_payment_url }}',
+			data: {'order_id': $('#tab-paypal #input_order_id').val(), 'comment': $('#tab-paypal #input_transaction_comment').val(), 'notify': $('#tab-paypal #input_transaction_notify:checked').val()},
+			dataType: 'json',
+			beforeSend: function() {
+				$('#tab-paypal .btn').prop('disabled', true);
+			},
+			complete: function() {
+				$('#tab-paypal .btn').prop('disabled', false);
+			},
+			success: function(json) {
+				$('.alert-dismissible').remove();
+			
+				if (json['error'] && json['error']['warning']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
+				}
+			
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
+				
+					updateTabPayPal();
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	$('#tab-paypal').on('click', '.button-refund-payment', function() {
+		$.ajax({
+			type: 'post',
+			url: '{{ refund_payment_url }}',
+			data: {'order_id': $('#tab-paypal #input_order_id').val(), 'refund_amount': $('#tab-paypal #input_refund_amount').val(), 'comment': $('#tab-paypal #input_transaction_comment').val(), 'notify': $('#tab-paypal #input_transaction_notify:checked').val()},
+			dataType: 'json',
+			beforeSend: function() {
+				$('#tab-paypal .btn').prop('disabled', true);
+			},
+			complete: function() {
+				$('#tab-paypal .btn').prop('disabled', false);
+			},
+			success: function(json) {
+				$('.alert-dismissible').remove();
+			
+				if (json['error'] && json['error']['warning']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
+				}
+			
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({ scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
+				
+					updateTabPayPal();
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	$('#tab-paypal').on('click', '.button-create-tracker', function() {
+		$.ajax({
+			type: 'post',
+			url: '{{ create_tracker_url }}',
+			data: {'order_id': $('#tab-paypal #input_order_id').val(), 'country_code': $('#tab-paypal #input_country_code').val(), 'tracking_number': $('#tab-paypal #input_tracking_number').val(), 'carrier_name': $('#tab-paypal #input_carrier_name').val(), 'comment': $('#tab-paypal #input_tracker_comment').val(), 'notify': $('#tab-paypal #input_tracker_notify:checked').val()},
+			dataType: 'json',
+			beforeSend: function() {
+				$('#tab-paypal .btn').prop('disabled', true);
+			},
+			complete: function() {
+				$('#tab-paypal .btn').prop('disabled', false);
+			},
+			success: function(json) {
+				$('.alert-dismissible').remove();
+			
+				if (json['error'] && json['error']['warning']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
+				}
+			
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
+				
+					updateTabPayPal();
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+	
+	$('#tab-paypal').on('click', '.button-cancel-tracker', function() {
+		$.ajax({
+			type: 'post',
+			url: '{{ cancel_tracker_url }}',
+			data: {'order_id': $('#tab-paypal #input_order_id').val(), 'tracking_number': $('#tab-paypal #input_tracking_number').val()},
+			dataType: 'json',
+			beforeSend: function() {
+				$('#tab-paypal .btn').prop('disabled', true);
+			},
+			complete: function() {
+				$('#tab-paypal .btn').prop('disabled', false);
+			},
+			success: function(json) {
+				$('.alert-dismissible').remove();
+			
+				if (json['error'] && json['error']['warning']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
+				}
+			
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
+				
+					updateTabPayPal();
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	$('#tab-paypal #input_carrier_name').autocomplete({
+		'source': function(request, response) {
+			$.ajax({
+				type: 'post',
+				url: '{{ autocomplete_carrier_url }}',
+				data: {'filter_country_code': $('#tab-paypal #input_country_code').val(), 'filter_carrier_name': encodeURIComponent(request)},
+				dataType: 'json',
+				success: function(json) {
+					response($.map(json, function(item) {
+						return {
+							label: item['name'],
+							value: item['code']
+						}
+					}));
+				}
+			});
 		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		'select': function(item) {
+			$('#input_carrier_name').val(item['label']);
 		}
 	});
 });
 
-
-$('#tab-paypal').on('click', '.button-reauthorize-payment', function() {
-	$.ajax({
-		type: 'post',
-		url: '{{ reauthorize_url }}',
-		data: {'order_id' : '{{ order_id }}', 'transaction_id' : '{{ transaction_id }}'},
-		dataType: 'json',
-		beforeSend: function() {
-			$('#tab-paypal .btn').prop('disabled', true);
-		},
-		complete: function() {
-			$('#tab-paypal .btn').prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
-			
-			if (json['error'] && json['error']['warning']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-				$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
+function updateTabPayPal() {
+	$('#tab-paypal').load('{{ info_payment_url }}', function() {
+		$('#tab-paypal #input_carrier_name').autocomplete({
+			'source': function(request, response) {
+				$.ajax({
+					type: 'post',
+					url: '{{ autocomplete_carrier_url }}',
+					data: {'filter_country_code': $('#tab-paypal #input_country_code').val(), 'filter_carrier_name': encodeURIComponent(request)},
+					dataType: 'json',
+					success: function(json) {
+						response($.map(json, function(item) {
+							return {
+								label: item['name'],
+								value: item['code']
+							}
+						}));
+					}
+				});
+			},
+			'select': function(item) {
+				$('#input_carrier_name').val(item['label']);
 			}
-			
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-				$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
-				
-				$('#tab-paypal').load('{{ info_url }}');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
+		});
 	});
-});
-
-
-$('#tab-paypal').on('click', '.button-void-payment', function() {
-	$.ajax({
-		type: 'post',
-		url: '{{ void_url }}',
-		data: {'order_id' : '{{ order_id }}', 'transaction_id' : '{{ transaction_id }}'},
-		dataType: 'json',
-		beforeSend: function() {
-			$('#tab-paypal .btn').prop('disabled', true);
-		},
-		complete: function() {
-			$('#tab-paypal .btn').prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
-			
-			if (json['error'] && json['error']['warning']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-				$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
-			}
-			
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-				$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
-				
-				$('#tab-paypal').load('{{ info_url }}');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('#tab-paypal').on('click', '.button-refund-payment', function() {
-	$.ajax({
-		type: 'post',
-		url: '{{ refund_url }}',
-		data: {'order_id' : '{{ order_id }}', 'transaction_id' : '{{ transaction_id }}'},
-		dataType: 'json',
-		beforeSend: function() {
-			$('#tab-paypal .btn').prop('disabled', true);
-		},
-		complete: function() {
-			$('#tab-paypal .btn').prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
-			
-			if (json['error'] && json['error']['warning']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-				$('html, body').animate({scrollTop: $('#content > .container-fluid .alert-danger').offset().top}, 'slow');
-			}
-			
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-				$('html, body').animate({ scrollTop: $('#content > .container-fluid .alert-success').offset().top}, 'slow');
-				
-				$('#tab-paypal').load('{{ info_url }}');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
+	
+	$('#history').load('{{ info_order_history_url }}');
+}
 
 </script>

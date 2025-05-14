@@ -78,16 +78,4 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-	public function template() {
-
-	}
-
-	public function language() {
-
-	}
-
-	public function image() {
-
-	}
 }

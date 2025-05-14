@@ -172,7 +172,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// SSR
 			$this->load->model('setting/ssr');
 
 			$this->model_setting_ssr->editStatus($ssr_id, false);
@@ -205,7 +204,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// SSR
 			$this->load->model('setting/ssr');
 
 			foreach ($selected as $ssr_id) {

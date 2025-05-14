@@ -34,8 +34,6 @@ class MySQLi {
 
 		foreach ($required as $key) {
 			if (empty($option[$key])) {
-				echo 'MySQLi::__construct';
-
 				throw new \Exception('Error: Database ' . $key . ' required!');
 				exit();
 			}
@@ -80,29 +78,33 @@ class MySQLi {
 
 		$this->db = new \mysqli();
 
-		$this->db->report_mode = MYSQLI_REPORT_STRICT;
-
+		$this->db->report_mode = MYSQLI_REPORT_OFF;
 
 		if ($temp_ssl_key_file || $temp_ssl_cert_file || $temp_ssl_ca_file) {
 			$this->db->ssl_set($temp_ssl_key_file, $temp_ssl_cert_file, $temp_ssl_ca_file, null, null);
 
 			$this->db->real_connect($option['hostname'], $option['username'], $option['password'], $option['database'], $option['port'], null, MYSQLI_CLIENT_SSL);
 		} else {
+			$this->db->real_connect($option['hostname'], $option['username'], $option['password'], $option['database'], $option['port'], null);
+
+
+			//echo($this->db->connect_error);
+
+			if ($this->db->connect_error) {
+
+				/* Use your preferred error logging method here */
+				echo 'Connection error: ' . $this->db->connect_errno;
+
+			}
+
 			try {
 
-				$this->db->real_connect($option['hostname'], $option['username'], $option['password'], $option['database'], $option['port'], null);
-
-				if ($this->db->connect_error) {
-					/* Use your preferred error logging method here */
-					echo('Connection error: ' . $this->db->connect_error);
-
-				}
 
 
 			} catch (\mysqli_sql_exception $e) {
 				echo 'hjh';
 
-				throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!<br/>Message: ' . $e->getMessage());
+				//throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!<br/>Message: ' . $e->getMessage());
 			}
 
 		}

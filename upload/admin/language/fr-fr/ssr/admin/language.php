@@ -1,10 +1,10 @@
 <?php
-// Text
+// Texte
 $_['text_list']        = 'You have rendered the language list';
 $_['text_next']        = 'You have rendered %s to %s of %s languages';
 $_['text_success']     = 'Succès: Vous avez modifié les langages!';
 
-// Error
-$_['error_permission'] = 'Warning: You do not have permission to modify languages!';
-$_['error_directory']  = 'Warning: Directory %s does not exist or is not writable!';
-$_['error_file']       = 'Warning: File %s could not be written!';
+// Erreur
+$_['error_permission'] = 'Attention: Vous n\'avez pas l\'autorisation de modifier les langages!';
+$_['error_directory']  = 'Attention: Le répertoire %s n\'existe pas ou n\'est pas accessible en écriture!';
+$_['error_file']       = 'Attention: Impossible d\'écrire le fichier %s !';

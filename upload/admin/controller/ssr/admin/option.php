@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Ssr\Admin;
 /**
- * Class Custom Field
+ * Class Option
  *
  * @package Opencart\Admin\Controller\Ssr
  */
-class CustomField extends \Opencart\System\Engine\Controller {
+class Option extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *

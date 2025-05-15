@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Ssr\Admin;
 /**
- * Class Currency
+ * Class Store
  *
  * @package Opencart\Admin\Controller\Ssr
  */
-class Stores extends \Opencart\System\Engine\Controller {
+class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Generate
 	 *

@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Ssr\Catalog;
 /**
- * Class Country
+ * Class Return Reason
  *
  * @package Opencart\Admin\Controller\Ssr
  */
-class Country extends \Opencart\System\Engine\Controller {
+class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *

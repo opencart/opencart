@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Ssr\Catalog;
 /**
- * Class Manufacturer
+ * Class Product
  *
  * @package Opencart\Admin\Controller\Ssr
  */
-class Manufacturer extends \Opencart\System\Engine\Controller {
+class Product extends \Opencart\System\Engine\Controller {
 	/**
 	 * Generate
 	 *

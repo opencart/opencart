@@ -5,7 +5,7 @@
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th>{{ column_code }}</th>
-          <th>{{ column_action }}</th>
+          <th>{{ column_ssr_action }}</th>
           <th class="text-end d-none d-lg-table-cell">{{ column_sort_order }}</th>
           <th class="d-none d-lg-table-cell">{{ column_date_modified }}</th>
           <th class="text-end" style="width: 1px;">{{ column_action }}</th>
@@ -14,13 +14,13 @@
       <tbody>
         {% if ssrs %}
           {% for ssr in ssrs %}
-            <tr{% if not ssr.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not ssr.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ ssr.ssr_id }}" class="form-check-input"/></td>
               <td>{{ ssr.code }}</td>
               <td>{{ ssr.action }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ ssr.sort_order }}</td>
               <td class="d-none d-lg-table-cell">{{ ssr.date_modified }}</td>
-              <td class="text-end text-nowrap">{% if ssr.description %}
+              <td class="text-end text-nowrap text-decoration-none">{% if ssr.description %}
                   <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ssr-{{ ssr.ssr_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% else %}
                   <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>
@@ -37,7 +37,7 @@
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="7">{{ text_no_results }}</td>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

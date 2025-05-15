@@ -14,16 +14,16 @@
       <tbody>
         {% if customers %}
           {% for customer in customers %}
-            <tr{% if not customer.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not customer.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" class="form-check-input"/></td>
               <td>{{ customer.name }}</td>
               <td>{{ customer.email }}</td>
               <td>{{ customer.customer_group }}</td>
               <td class="d-none d-lg-table-cell">{{ customer.date_added }}</td>
-              <td class="text-end">
+              <td class="text-end text-nowrap text-decoration-none">
                 <div class="btn-group dropdown">
-                  <a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
-                  <button type="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle dropdown-toggle-split"><span class="fa-solid fa-caret-down"></span></button>
+                  <a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not customer.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a>
+                  <button type="button" data-bs-toggle="dropdown" class="{% if not customer.status %}btn btn-secondary{% else %}btn btn-primary{% endif %} dropdown-toggle dropdown-toggle-split"><span class="fa-solid fa-caret-down"></span></button>
                   <ul class="dropdown-menu dropdown-menu-end">
                     <li><h6 class="dropdown-header">{{ text_option }}</h6></li>
                     {% if customer.unlock %}
@@ -37,12 +37,13 @@
                       <li><a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fa-solid fa-lock"></i> {{ store.name }}</a></li>
                     {% endfor %}
                   </ul>
-                </div></td>
+                </div>
+              </td>
             </tr>
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="7">{{ text_no_results }}</td>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

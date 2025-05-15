@@ -4,8 +4,8 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="submit" form="form-customer-approval" formaction="{{ approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
-        <button type="submit" form="form-customer-approval" formaction="{{ deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fa-solid fa-circle-xmark"></i></button>
+        <button type="submit" form="form-customer-approval" formaction="{{ approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fa-solid fa-thumbs-up"></i></button>
+        <button type="submit" form="form-customer-approval" formaction="{{ deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-danger"><i class="fa-solid fa-thumbs-down"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">

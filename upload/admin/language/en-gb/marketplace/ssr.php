@@ -14,6 +14,7 @@ $_['entry_progress']       = 'Progress';
 
 // Column
 $_['column_code']          = 'SSR Code';
+$_['column_ssr_action']    = 'SSR Action';
 $_['column_progress']      = 'Progress';
 $_['column_sort_order']    = 'Sort Order';
 $_['column_date_modified'] = 'Date Modified';

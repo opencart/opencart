@@ -9,7 +9,7 @@ class PgSQL {
 	/**
 	 * @var mixed
 	 */
-	private $connection;
+	private $db;
 
 	/**
 	 * Constructor
@@ -34,11 +34,11 @@ class PgSQL {
 		}
 
 		if ($pg) {
-			$this->connection = $pg;
-			pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
+			$this->db = $pg;
+			pg_query($this->db, "SET CLIENT_ENCODING TO 'UTF8'");
 
 			// Sync PHP and DB time zones
-			pg_query($this->connection, "SET TIMEZONE = '" . $this->escape(date('P')) . "'");
+			pg_query($this->db, "SET TIMEZONE = '" . $this->escape(date('P')) . "'");
 		}
 	}
 
@@ -50,10 +50,10 @@ class PgSQL {
 	 * @return \stdClass
 	 */
 	public function query(string $sql): \stdClass {
-		$resource = pg_query($this->connection, $sql);
+		$resource = pg_query($this->db, $sql);
 
 		if ($resource === false) {
-			throw new \Exception('Error: ' . pg_last_error($this->connection) . '<br/>' . $sql);
+			throw new \Exception('Error: ' . pg_last_error($this->db) . '<br/>' . $sql);
 		}
 
 		$data = [];
@@ -80,7 +80,7 @@ class PgSQL {
 	 * @return string
 	 */
 	public function escape(string $value): string {
-		return pg_escape_string($this->connection, $value);
+		return pg_escape_string($this->db, $value);
 	}
 
 	/**
@@ -89,7 +89,7 @@ class PgSQL {
 	 * @return int
 	 */
 	public function countAffected(): int {
-		return pg_affected_rows($this->connection);
+		return pg_affected_rows($this->db);
 	}
 
 	/**
@@ -109,7 +109,7 @@ class PgSQL {
 	 * @return bool
 	 */
 	public function isConnected(): bool {
-		return pg_connection_status($this->connection) == PGSQL_CONNECTION_OK;
+		return pg_connection_status($this->db) == PGSQL_CONNECTION_OK;
 	}
 
 	/**
@@ -118,10 +118,10 @@ class PgSQL {
 	 * Closes the DB connection when this object is destroyed.
 	 */
 	public function __destruct() {
-		if ($this->connection) {
-			pg_close($this->connection);
+		if ($this->db) {
+			pg_close($this->db);
 
-			$this->connection = null;
+			$this->db = null;
 		}
 	}
 }

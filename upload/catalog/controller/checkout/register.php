@@ -136,15 +136,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['shipping_custom_field'] = [];
 		}
 
-		// Zone
-		$this->load->model('localisation/zone');
-
-		if ($data['payment_country_id'] == $data['shipping_country_id']) {
-			$data['shipping_zones'] = $data['payment_zones'];
-		} else {
-			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
-		}
-
 		// Custom Fields
 		$this->load->model('account/custom_field');
 

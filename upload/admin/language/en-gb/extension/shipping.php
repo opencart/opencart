@@ -10,6 +10,7 @@ $_['text_list']         = 'Shipping List';
 $_['column_name']       = 'Shipping Method';
 $_['column_status']     = 'Status';
 $_['column_sort_order'] = 'Sort Order';
+$_['column_code']       = 'Code';
 $_['column_action']     = 'Action';
 
 // Error

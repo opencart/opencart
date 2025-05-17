@@ -12,11 +12,11 @@
       <tbody>
         {% if topics %}
           {% for topic in topics %}
-            <tr{% if not topic.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not topic.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ topic.topic_id }}" class="form-check-input"/></td>
               <td>{{ topic.name }}</td>
               <td class="text-end">{{ topic.sort_order }}</td>
-              <td class="text-end"><a href="{{ topic.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end text-nowrap text-decoration-none"><a href="{{ topic.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not topic.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

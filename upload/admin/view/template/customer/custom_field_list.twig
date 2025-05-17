@@ -14,13 +14,13 @@
       <tbody>
         {% if custom_fields %}
           {% for custom_field in custom_fields %}
-            <tr{% if not custom_field.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not custom_field.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" class="form-check-input"/></td>
               <td>{{ custom_field.name }}</td>
               <td>{{ custom_field.location }}</td>
               <td>{{ custom_field.type }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ custom_field.sort_order }}</td>
-              <td class="text-end"><a href="{{ custom_field.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end text-nowrap text-decoration-none"><a href="{{ custom_field.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not custom_field.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

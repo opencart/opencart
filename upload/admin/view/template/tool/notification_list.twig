@@ -13,7 +13,7 @@
         {% if notifications %}
           {% set notification_row = 0 %}
           {% for notification in notifications %}
-            <tr id="notification-row-{{ notification_row }}"{% if not notification.status %} class="table-active opacity-50"{% endif %}>
+            <tr id="notification-row-{{ notification_row }}"{% if not notification.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ notification.notification_id }}" class="form-check-input"/></td>
               <td class="text-primary" style="width: 1px;"><i class="fa-regular fa-bell fa-3x"></i></td>
               <td><a href="{{ notification.view }}" class="text-primary{% if not notification.status %} font-weight-bold{% endif %}">{{ notification.title }}</a>
@@ -25,7 +25,7 @@
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="3">{{ text_no_results }}</td>
+            <td class="text-center" colspan="4">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

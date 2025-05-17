@@ -13,12 +13,12 @@
       <tbody>
         {% if zones %}
           {% for zone in zones %}
-            <tr{% if not zone.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not zone.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ zone.zone_id }}" class="form-check-input"/></td>
               <td>{{ zone.country }}</td>
               <td>{{ zone.name }}{% if zone.zone_id == zone_id %} <strong>({{ text_default }})</strong>{% endif %}</td>
               <td>{{ zone.code }}</td>
-              <td class="text-end"><a href="{{ zone.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end text-nowrap text-decoration-none"><a href="{{ zone.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not zone.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

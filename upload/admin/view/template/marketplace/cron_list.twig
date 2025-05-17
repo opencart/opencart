@@ -6,7 +6,7 @@
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th>{{ column_code }}</th>
           <th>{{ column_cycle }}</th>
-          <th>{{ column_action }}</th>
+          <th>{{ column_cron_action }}</th>
           <th class="d-none d-lg-table-cell">{{ column_date_added }}</th>
           <th class="d-none d-lg-table-cell">{{ column_date_modified }}</th>
           <th class="text-end">{{ column_action }}</th>
@@ -15,14 +15,14 @@
       <tbody>
         {% if crons %}
           {% for cron in crons %}
-            <tr{% if not cron.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not cron.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ cron.cron_id }}" class="form-check-input"/></td>
               <td>{{ cron.code }}</td>
               <td>{{ cron.cycle }}</td>
               <td>{{ cron.action }}</td>
               <td class="d-none d-lg-table-cell">{{ cron.date_added }}</td>
               <td class="d-none d-lg-table-cell">{{ cron.date_modified }}</td>
-              <td class="text-end text-nowrap">
+              <td class="text-end text-nowrap text-decoration-none">
                 {% if cron.description %}
                   <button type="button" data-bs-toggle="modal" data-bs-target="#modal-cron-{{ cron.cron_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% else %}

@@ -11,7 +11,7 @@
     <tbody>
       {% if extensions %}
         {% for extension in extensions %}
-          <tr{% if not extension.status %} class="table-active opacity-50"{% endif %}>
+          <tr{% if not extension.status %} class="text-decoration-uninstalled"{% else %} class="text-decoration-enabled"{% endif %}>
             <td>
               {% if extension.link %}
                 <a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a>
@@ -20,7 +20,7 @@
               {% endif %}</td>
             <td class="align-text-top">{{ extension.version }}</td>
             <td class="align-text-top">{{ extension.date_added }}</td>
-            <td class="text-end align-text-top text-nowrap">
+            <td class="text-end align-text-top text-nowrap text-decoration-none">
               <button type="button" data-bs-toggle="modal" data-bs-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
               {% if not extension.status %}
                 <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>

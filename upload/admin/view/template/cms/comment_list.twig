@@ -9,7 +9,7 @@
     <tbody>
       {% if comments %}
         {% for comment in comments %}
-          <tr{% if not comment.status %} class="table-active opacity-50"{% endif %}>
+          <tr>
             <td class="text-center" rowspan="2"><input type="checkbox" name="selected[]" value="{{ comment.article_comment_id }}" class="form-check-input"/></td>
             <td><a href="{{ comment.article_edit }}" target="_blank">{{ comment.article }}</a>
               <p>
@@ -26,7 +26,7 @@
             </td>
           </tr>
           <tr>
-            <td class="text-end">
+            <td class="text-end text-nowrap text-decoration-none">
               {% if comment.approve %}
                 <button type="button" value="{{ comment.approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
               {% else %}

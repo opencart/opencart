@@ -1,6 +1,6 @@
 <?php
 // Locale
-$_['code']                          = 'de';
+$_['code']                          = 'en-GB';
 $_['direction']                     = 'ltr';
 $_['date_format_short']             = 'Tag/Monat/Jahr';
 $_['date_format_long']              = 'l jS FY';

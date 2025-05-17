@@ -30,6 +30,7 @@ class MySQLi {
 			'username',
 			'database',
 			'port'
+
 		];
 
 		foreach ($required as $key) {
@@ -78,49 +79,25 @@ class MySQLi {
 
 		$this->db = new \mysqli();
 
-		$this->db->report_mode = MYSQLI_REPORT_OFF;
+		$this->db->report_mode = MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ERROR;
 
 		if ($temp_ssl_key_file || $temp_ssl_cert_file || $temp_ssl_ca_file) {
 			$this->db->ssl_set($temp_ssl_key_file, $temp_ssl_cert_file, $temp_ssl_ca_file, null, null);
 
-			$this->db->real_connect($option['hostname'], $option['username'], $option['password'], $option['database'], $option['port'], null, MYSQLI_CLIENT_SSL);
+			$ssl = MYSQLI_CLIENT_SSL;
 		} else {
-			$this->db->real_connect($option['hostname'], $option['username'], $option['password'], $option['database'], $option['port'], null);
-
-
-			//echo($this->db->connect_error);
-
-			if ($this->db->connect_error) {
-
-				/* Use your preferred error logging method here */
-				echo 'Connection error: ' . $this->db->connect_errno;
-
-			}
-
-			try {
-
-
-
-			} catch (\mysqli_sql_exception $e) {
-				echo 'hjh';
-
-				//throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!<br/>Message: ' . $e->getMessage());
-			}
-
+			$ssl = 0;
 		}
 
+		if (@$this->db->real_connect($option['hostname'], $option['username'], $option['password'], $option['database'], $option['port'], null, MYSQLI_CLIENT_SSL) or throw new \Exception('Error: Could not connect to the database please make sure the database server, username and password is correct!')) {
+			$this->db->set_charset('utf8mb4');
 
+			$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
+			$this->query("SET FOREIGN_KEY_CHECKS = 0");
 
-
-
-		$this->db->set_charset('utf8mb4');
-
-		$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
-		$this->query("SET FOREIGN_KEY_CHECKS = 0");
-
-		// Sync PHP and DB time zones
-		$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
-
+			// Sync PHP and DB time zones
+			$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
+		}
 	}
 
 	/**

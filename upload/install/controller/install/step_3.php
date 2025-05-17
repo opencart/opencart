@@ -131,10 +131,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 
 				$db = new \Opencart\System\Library\DB($option);
 			} catch (\Exception $e) {
-
-				echo $e->getMessage();
-				
-				$json['error']['warning'] = $e->getMessage();
+				$json['error']['warning'] = $this->language->get('error_db_connect');
 			}
 		}
 

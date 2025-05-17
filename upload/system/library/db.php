@@ -93,7 +93,7 @@ class DB {
 	}
 
 	/**
-	 * Get Last Id
+	 * Get Last ID
 	 *
 	 * Get the last ID gets the primary key that was returned after creating a row in a table.
 	 *

@@ -29,6 +29,11 @@ class Error extends \Opencart\System\Engine\Controller {
 	 * @return bool
 	 */
 	public function error(int $code, string $message, string $file, int $line): bool {
+		// error suppressed with @
+		if (!(error_reporting() & $code)) {
+			return false;
+		}
+
 		switch ($code) {
 			case E_NOTICE:
 			case E_USER_NOTICE:

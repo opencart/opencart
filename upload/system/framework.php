@@ -34,6 +34,11 @@ $registry->set('log', $log);
 
 // Error Handler
 set_error_handler(function(int $code, string $message, string $file, int $line) use ($log, $config) {
+	// error suppressed with @
+	if (!(error_reporting() & $code)) {
+		return false;
+	}
+
 	switch ($code) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
@@ -57,7 +62,7 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 	}
 
 	if ($config->get('error_display')) {
-		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+		echo $error . ': ' . $message . ' in ' . $file . ' on line ' . $line . "\n";
 	} else {
 		header('Location: ' . $config->get('error_page'));
 		exit();
@@ -72,16 +77,18 @@ set_exception_handler(function(\Throwable $e) use ($log, $config): void {
 	$output .= 'File: ' . $e->getFile() . "\n";
 	$output .= 'Line: ' . $e->getLine() . "\n\n";
 
-	foreach ($e->getTrace() as $key => $trace) {
-		$output .= 'Backtrace: ' . $key . "\n";
-		$output .= 'File: ' . $trace['file'] . "\n";
-		$output .= 'Line: ' . $trace['line'] . "\n";
+	if ($config->get('error_debug')) {
+		foreach ($e->getTrace() as $key => $trace) {
+			$output .= 'Backtrace: ' . $key . "\n";
+			$output .= 'File: ' . $trace['file'] . "\n";
+			$output .= 'Line: ' . $trace['line'] . "\n";
 
-		if (isset($trace['class'])) {
-			$output .= 'Class: ' . $trace['class'] . "\n";
+			if (isset($trace['class'])) {
+				$output .= 'Class: ' . $trace['class'] . "\n";
+			}
+
+			$output .= 'Function: ' . $trace['function'] . "\n\n";
 		}
-
-		$output .= 'Function: ' . $trace['function'] . "\n\n";
 	}
 
 	if ($config->get('error_log')) {

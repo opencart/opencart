@@ -25,6 +25,24 @@ class Database extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			if (defined('DB_SSL_KEY')) {
+				$db_ssl_key = DB_SSL_KEY;
+			} else {
+				$db_ssl_key = '';
+			}
+
+			if (defined('DB_SSL_CERT')) {
+				$db_ssl_cert = DB_SSL_CERT;
+			} else {
+				$db_ssl_cert = '';
+			}
+
+			if (defined('DB_SSL_CA')) {
+				$db_ssl_ca = DB_SSL_CA;
+			} else {
+				$db_ssl_ca = '';
+			}
+
 			if (defined('DB_PORT')) {
 				$port = DB_PORT;
 			} else {
@@ -37,10 +55,10 @@ class Database extends \Opencart\System\Engine\Controller {
 				'username' => DB_USERNAME,
 				'password' => DB_PASSWORD,
 				'database' => DB_DATABASE,
-				'port'     => $port,
-				'ssl_key'  => DB_SSL_KEY,
-				'ssl_cert' => DB_SSL_CERT,
-				'ssl_ca'   => DB_SSL_CA
+				'port'     => DB_PORT,
+				'ssl_key'  => $db_ssl_key,
+				'ssl_cert' => $db_ssl_cert,
+				'ssl_ca'   => $db_ssl_ca
 			];
 
 			$this->registry->set('db', new \Opencart\System\Library\DB($option));

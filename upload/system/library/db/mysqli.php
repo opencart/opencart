@@ -89,7 +89,7 @@ class MySQLi {
 			$ssl = 0;
 		}
 
-		if (@$this->db->real_connect($option['hostname'], $option['username'], $option['password'], $option['database'], $option['port'], null, MYSQLI_CLIENT_SSL) or throw new \Exception('Error: Could not connect to the database please make sure the database server, username and password is correct!')) {
+		if (@$this->db->real_connect($option['hostname'], $option['username'], $option['password'], $option['database'], $option['port'], null, $ssl)) {
 			$this->db->set_charset('utf8mb4');
 
 			$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
@@ -97,6 +97,8 @@ class MySQLi {
 
 			// Sync PHP and DB time zones
 			$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
+		} else {
+			throw new \Exception('Error: Could not connect to the database please make sure the database server, username and password is correct!');
 		}
 	}
 

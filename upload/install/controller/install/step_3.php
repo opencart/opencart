@@ -129,7 +129,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 					'ssl_ca'   => html_entity_decode($this->request->post['db_ssl_ca'], ENT_QUOTES, 'UTF-8')
 				];
 
-				$db = new \Opencart\System\Library\DB($option);
+				$this->db = new \Opencart\System\Library\DB($option);
 			} catch (\Exception $e) {
 				$json['error']['warning'] = $this->language->get('error_db_connect');
 			}

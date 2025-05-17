@@ -25,31 +25,25 @@ class Database extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if (defined('DB_SSL_KEY')) {
-				$db_ssl_key = DB_SSL_KEY;
-			} else {
-				$db_ssl_key = '';
-			}
-
-			if (defined('DB_SSL_CERT')) {
-				$db_ssl_cert = DB_SSL_CERT;
-			} else {
-				$db_ssl_cert = '';
-			}
-
-			if (defined('DB_SSL_CA')) {
-				$db_ssl_ca = DB_SSL_CA;
-			} else {
-				$db_ssl_ca = '';
-			}
-
 			if (defined('DB_PORT')) {
 				$port = DB_PORT;
 			} else {
 				$port = ini_get('mysqli.default_port');
 			}
 
-			$this->registry->set('db', new \Opencart\System\Library\DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port, $db_ssl_key, $db_ssl_cert, $db_ssl_ca));
+			$option = [
+				'engine'   => DB_DRIVER, // mysqli, pdo or pgsql
+				'hostname' => DB_HOSTNAME,
+				'username' => DB_USERNAME,
+				'password' => DB_PASSWORD,
+				'database' => DB_DATABASE,
+				'port'     => $port,
+				'ssl_key'  => DB_SSL_KEY,
+				'ssl_cert' => DB_SSL_CERT,
+				'ssl_ca'   => DB_SSL_CA
+			];
+
+			$this->registry->set('db', new \Opencart\System\Library\DB($option));
 		}
 	}
 }

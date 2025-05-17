@@ -28,15 +28,17 @@ class PDO {
 	 * @param string $database
 	 * @param string $port
 	 */
-	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
-		if (!$port) {
+	public function __construct(array $option = []) {
+		if (isset($option['port'])) {
+			$port = $option['port'];
+		} else {
 			$port = '3306';
 		}
 
 		try {
-			$pdo = new \PDO('mysql:host=' . $hostname . ';port=' . $port . ';dbname=' . $database . ';charset=utf8mb4', $username, $password, [\PDO::ATTR_PERSISTENT => false, \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci']);
+			$pdo = new \PDO('mysql:host=' . $option['hostname'] . ';port=' . $port . ';dbname=' . $option['database'] . ';charset=utf8mb4', $option['username'], $option['password'], [\PDO::ATTR_PERSISTENT => false, \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci']);
 		} catch (\PDOException $e) {
-			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
+			throw new \Exception('Error: Could not make a database link using ' . $option['username'] . '@' . $option['hostname'] . '!');
 		}
 
 		$this->connection = $pdo;

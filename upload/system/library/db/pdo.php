@@ -9,7 +9,7 @@ class PDO {
 	/**
 	 * @var \PDO|null
 	 */
-	private ?\PDO $connection;
+	private ?\PDO $db;
 	/**
 	 * @var array<string, string>
 	 */
@@ -41,7 +41,7 @@ class PDO {
 			throw new \Exception('Error: Could not make a database link using ' . $option['username'] . '@' . $option['hostname'] . '!');
 		}
 
-		$this->connection = $pdo;
+		$this->db = $pdo;
 
 		$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
 		$this->query("SET FOREIGN_KEY_CHECKS = 0");
@@ -60,7 +60,7 @@ class PDO {
 	public function query(string $sql) {
 		$sql = preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql);
 
-		$statement = $this->connection->prepare($sql);
+		$statement = $this->db->prepare($sql);
 
 		try {
 			if ($statement && $statement->execute($this->data)) {
@@ -121,7 +121,7 @@ class PDO {
 	 * @return ?int
 	 */
 	public function getLastId(): ?int {
-		$id = $this->connection->lastInsertId();
+		$id = $this->db->lastInsertId();
 
 		return $id ? (int)$id : null;
 	}
@@ -132,7 +132,7 @@ class PDO {
 	 * @return bool
 	 */
 	public function isConnected(): bool {
-		return $this->connection !== null;
+		return $this->db !== null;
 	}
 
 	/**
@@ -141,6 +141,6 @@ class PDO {
 	 * Closes the DB connection when this object is destroyed.
 	 */
 	public function __destruct() {
-		$this->connection = null;
+		$this->db = null;
 	}
 }

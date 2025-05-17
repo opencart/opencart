@@ -36,7 +36,6 @@ class MySQLi {
 		foreach ($required as $key) {
 			if (empty($option[$key])) {
 				throw new \Exception('Error: Database ' . $key . ' required!');
-				exit();
 			}
 		}
 

@@ -8,9 +8,9 @@ const registry = new Registry();
 
 const base = new URL(document.querySelector('base').href);
 
-let language = document.getElementById('input-language');
+let language = document.querySelector('html').lang.toLowerCase();
 
-registry.set('storage', new Storage('./catalog/view/data/' + base.host + '/' + language.value + '/'));
+registry.set('storage', new Storage('./catalog/view/data/' + base.host + '/' + language + '/'));
 registry.set('template', new Template());
 registry.set('Language', new Language());
 registry.set('config', new Config());

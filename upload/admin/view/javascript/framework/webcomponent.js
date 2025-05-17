@@ -6,7 +6,9 @@ import Config from './library/config.js';
 
 const registry = new Registry();
 
-registry.set('storage', new Storage('./view/data/en-gb/'));
+let language = document.querySelector('html').lang.toLowerCase();
+
+registry.set('storage', new Storage('./view/data/' + language + '/'));
 registry.set('template', new Template());
 registry.set('Language', new Language());
 registry.set('config', new Config());

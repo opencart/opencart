@@ -9,6 +9,7 @@
           <th class="d-none d-lg-table-cell"><a href="{{ sort_model }}"{% if sort == 'p.model' %} class="{{ order|lower }}"{% endif %}>{{ column_model }}</a></th>
           <th class="text-end"><a href="{{ sort_price }}"{% if sort == 'p.price' %} class="{{ order|lower }}"{% endif %}>{{ column_price }}</a></th>
           <th class="text-end"><a href="{{ sort_quantity }}"{% if sort == 'p.quantity' %} class="{{ order|lower }}"{% endif %}>{{ column_quantity }}</a></th>
+          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'p.status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -35,6 +36,12 @@
                 {% else %}
                   <span class="badge bg-success{% if not product.status %} bg-opacity-50{% endif %}">{{ product.quantity }}</span>
                 {% endif %}</td>
+              <td class="text-center">
+                <div class="form-switch form-switch-md">
+                  <input type="hidden" name="status" value="0"/>
+                  <input type="checkbox" name="status" value="{% if not product.status %}{{ product.enable }}{% else %}{{ product.disable }}{% endif %}" id="input-status" class="form-check-input text-center"{% if product.status %} checked{% endif %}/>
+                </div>
+              </td>
               <td class="text-end text-nowrap text-decoration-none">
                 {% if product.variant %}
                   <div class="btn-group">
@@ -49,7 +56,7 @@
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="7">{{ text_no_results }}</td>
+            <td class="text-center" colspan="8">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

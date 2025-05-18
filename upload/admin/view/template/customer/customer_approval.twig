@@ -112,7 +112,9 @@ $('#list').on('click', '.btn-success, .btn-danger', function(e) {
     });
 });
 
-$('#form-filter').on('submit', function() {
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
+
     let url = $(this).serialize();
 
     window.history.pushState({}, null, 'index.php?route=customer/customer_approval&user_token={{ user_token }}&' + url);

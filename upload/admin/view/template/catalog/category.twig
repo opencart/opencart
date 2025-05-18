@@ -91,7 +91,9 @@ $('#button-repair').on('click', function(e) {
     });
 });
 
-$('#form-filter').on('submit', function() {
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
+
     let url = $(this).serialize();
 
     window.history.pushState({}, null, 'index.php?route=catalog/category&user_token={{ user_token }}&' + url);

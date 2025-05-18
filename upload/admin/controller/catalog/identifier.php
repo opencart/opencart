@@ -98,7 +98,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		// Total Identifiers
-		$identifier_total = $this->model_catalog_identifier->getTotalIdentifiers($filter_data);
+		$identifier_total = $this->model_catalog_identifier->getTotalIdentifiers();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $identifier_total,

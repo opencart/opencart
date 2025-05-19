@@ -14,13 +14,13 @@
       <tbody>
         {% if currencies %}
           {% for currency in currencies %}
-            <tr{% if not currency.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
+            <tr{% if not currency.status %} class="table-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" class="form-check-input"/></td>
               <td>{{ currency.title }}{% if currency.code == code %} <strong>({{ text_default }})</strong>{% endif %}</td>
               <td>{{ currency.code }}</td>
               <td class="text-end">{{ currency.value }}</td>
               <td class="d-none d-lg-table-cell">{{ currency.date_modified }}</td>
-              <td class="text-end text-nowrap text-decoration-none"><a href="{{ currency.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not currency.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end text-nowrap"><a href="{{ currency.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not currency.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

@@ -13,12 +13,12 @@
       <tbody>
         {% if countries %}
           {% for country in countries %}
-            <tr{% if not country.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
+            <tr{% if not country.status %} class="table-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ country.country_id }}" class="form-check-input"/></td>
               <td>{{ country.name }}{% if country.country_id == country_id %} <strong>({{ text_default }})</strong>{% endif %}</td>
               <td>{{ country.iso_code_2 }}</td>
               <td>{{ country.iso_code_3 }}</td>
-              <td class="text-end text-nowrap text-decoration-none"><a href="{{ country.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not country.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end text-nowrap"><a href="{{ country.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not country.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

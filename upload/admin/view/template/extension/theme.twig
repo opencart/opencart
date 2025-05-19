@@ -14,7 +14,7 @@
           {% for extension in extensions %}
             <tr>
               <td><b>{{ extension.name }}</b></td>
-              <td class="text-end text-decoration-none">
+              <td class="text-end">
               {% if not extension.installed %}
                 <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
               {% else %}
@@ -24,9 +24,9 @@
             </tr>
             {% if extension.installed %}
               {% for store in extension.store %}
-                <tr{% if not store.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
+                <tr{% if not store.status %} class="table-disabled"{% endif %}>
                   <td>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
-                  <td class="text-end text-nowrap text-decoration-none"><a href="{{ store.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not store.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
+                  <td class="text-end text-nowrap"><a href="{{ store.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not store.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
                 </tr>
               {% endfor %}
             {% endif %}

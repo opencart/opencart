@@ -14,11 +14,11 @@
       <tbody>
         {% if extensions %}
           {% for extension in extensions %}
-            <tr{% if not extension.installed %} class="text-decoration-uninstalled"{% elseif not extension.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
+            <tr{% if not extension.installed %} class="table-disabled"{% endif %}>
               <td>{{ extension.name }}</td>
               <td class="text-end">{{ extension.sort_order }}</td>
               <td>{{ extension.code }}{% if extension.code == code %} <strong>({{ text_default }})</strong>{% endif %}</td>
-              <td class="text-end text-nowrap text-decoration-none">
+              <td class="text-end text-nowrap">
               {% if extension.installed %}
                 <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not extension.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a>
                 <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>

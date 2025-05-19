@@ -14,13 +14,13 @@
       <tbody>
         {% if articles %}
           {% for article in articles %}
-            <tr{% if not article.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
+            <tr{% if not article.status %} class="table-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ article.article_id }}" class="form-check-input"/></td>
               <td>{{ article.name }}</td>
               <td>{{ article.author }}</td>
               <td class="text-end">{{ article.rating }}</td>
               <td class="text-end">{{ article.date_added }}</td>
-              <td class="text-end text-nowrap text-decoration-none"><a href="{{ article.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not article.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end text-nowrap"><a href="{{ article.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not article.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

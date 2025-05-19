@@ -12,12 +12,12 @@
     <tbody>
       {% if authorizes %}
         {% for authorize in authorizes %}
-          <tr{% if not authorize.status %}  class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
+          <tr{% if not authorize.status %} class="table-disabled"{% endif %}>
             <td><a href="https://whatismyipaddress.com/ip/{{ user_login.ip }}" target="_blank">{{ authorize.ip }}</a></td>
             <td>{{ authorize.user_agent }}</td>
             <td>{{ authorize.date_added }}</td>
             <td>{{ authorize.date_expire }}</td>
-            <td class="text-end text-nowrap text-decoration-none"><a href="{{ authorize.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a></td>
+            <td class="text-end text-nowrap"><a href="{{ authorize.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a></td>
           </tr>
         {% endfor %}
       {% else %}

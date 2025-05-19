@@ -22,10 +22,6 @@ legend {
     margin-bottom: 15px;
 }
 
-a {
-    text-decoration: none;
-}
-
 #container {
     min-height: 100%;
     width: 100%;
@@ -470,6 +466,18 @@ a {
     line-height: 36px;
 }
 
+.form-switch .form-check-input {
+    background-color: var(--bs-danger);
+    border-color: var(--bs-danger-text-emphasis);
+    --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+    background-image: var(--bs-form-switch-bg);
+}
+
+.form-switch .form-check-input:checked {
+    background-color: var(--bs-success);
+    border-color: var(--bs-success-text-emphasis);
+}
+
 @media (min-width: 992px) {
     .col-form-label {
         text-align: right;
@@ -520,8 +528,13 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
     margin-left: 4px;
 }
 
-.table-disabled {
+.table-disabled td {
+    background-color: var(--bs-gray-200);
+    opacity: 0.8;
+}
 
+.table a {
+    text-decoration: none;
 }
 
 .table a.asc:after {
@@ -536,8 +549,21 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
     content: " \f107";
 }
 
+.table-responsive {
+    overflow: visible;
+}
+
+.table td {
+    position: relative;
+    vertical-align: middle;
+}
+
 .pagination {
     margin: 0;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
 }
 
 /* Cards */
@@ -883,40 +909,4 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
 
 .list-check.list-color-blue li::before {
     color: #02afe9;
-}
-
-.table-responsive {
-    overflow: visible;
-}
-
-td {
-    position: relative;
-	vertical-align: middle;
-}
-
-.text-decoration-disabled td {
-  text-decoration: none !important;
-  color: rgba(0, 0, 0, 0.5) !important;
-}
-
-.text-decoration-enabled td {
-  text-decoration: none !important;
-  color: rgba(0, 0, 0, 1.0) !important;
-}
-
-.text-decoration-uninstalled td {
-  text-decoration: line-through !important;
-  color: rgba(0, 0, 0, 0.5) !important;
-}
-
-.text-decoration-none td {
-  text-decoration: none !important;
-  color: rgba(255, 0, 0, 1.0) !important;
-}
-
-.text-decoration-uninstalled .text-decoration-none,
-.text-decoration-disabled .text-decoration-none,
-.text-decoration-enabled .text-decoration-none {
-  text-decoration: none !important;
-  color: rgba(0, 0, 0, 1.0) !important;
 }

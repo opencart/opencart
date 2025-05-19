@@ -13,12 +13,12 @@
       <tbody>
         {% if themes %}
           {% for theme in themes %}
-            <tr{% if not theme.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
+            <tr{% if not theme.status %} class="table-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ theme.theme_id }}" class="form-check-input"/></td>
               <td>{{ theme.route }}</td>
               <td>{{ theme.store }}</td>
               <td>{{ theme.date_added }}</td>
-              <td class="text-end text-nowrap text-decoration-none"><a href="{{ theme.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not theme.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a> <button type="button" value="{{ theme.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button></td>
+              <td class="text-end text-nowrap"><a href="{{ theme.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not theme.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a> <button type="button" value="{{ theme.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button></td>
             </tr>
           {% endfor %}
         {% else %}

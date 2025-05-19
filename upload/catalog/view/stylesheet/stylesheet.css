@@ -253,6 +253,9 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
     text-align: right;
   }
 }
+main {
+  padding-bottom: 20%;
+}
 /* footer */
 footer {
   border: 1px solid #000000;

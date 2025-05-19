@@ -312,6 +312,10 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
   }
 }
 
+main {
+  padding-bottom: 20%;
+}
+
 /* footer */
 footer {
   border: 1px solid #000000;

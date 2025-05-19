@@ -318,7 +318,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$data['text_unlock'] = $this->language->get('text_failed');
 		}
 
-		// Reset token so it cant be used again
+		// Reset token so it can't be used again
 		$this->model_account_customer->deleteTokenByCode($code);
 
 		// Logout customer

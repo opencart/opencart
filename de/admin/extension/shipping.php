@@ -10,6 +10,7 @@ $_['text_list']         = 'Versandliste';
 $_['column_name']       = 'Versandart';
 $_['column_status']     = 'Status';
 $_['column_sort_order'] = 'Sortierreihenfolge';
+$_['column_code']       = 'Code';
 $_['column_action']     = 'Aktionen';
 
 // Error

@@ -30,6 +30,7 @@ $_['entry_sort_order']       = 'Sortierreihenfolge';
 // Column
 $_['column_name']            = 'Name des Abonnementplans';
 $_['column_sort_order']      = 'Sortierreihenfolge';
+$_['column_status']          = 'Status';
 $_['column_action']          = 'Aktionen';
 
 // Help

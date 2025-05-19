@@ -1,0 +1,243 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i></button></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-puzzle-piece"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_progress }}</legend>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
+            <div class="col-sm-10 mt-2">
+              <div class="progress">
+                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+              </div>
+              <div id="progress-text"></div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_installed }}</legend>
+          <div id="extension">{{ list }}</div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#extension').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#extension').load(this.href);
+});
+
+// Upload
+$('#button-upload').on('click', function() {
+    var element = this;
+
+    if (!$('#button-upload').prop('disabled')) {
+        $('#form-upload').remove();
+
+        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
+
+        $('#form-upload input[name=\'file\']').trigger('click');
+
+        $('#form-upload input[name=\'file\']').on('change', function() {
+            if ((this.files[0].size / 1024) > {{ config_file_max_size }}) {
+                $(this).val('');
+
+                alert('{{ error_upload_size }}');
+            }
+
+            if (!this.files[0].name.endsWith('.ocmod.zip')) {
+                $(this).val('');
+
+                alert('{{ error_file_type }}');
+            }
+        });
+
+        if (typeof timer != 'undefined') {
+            clearInterval(timer);
+        }
+
+        timer = setInterval(function() {
+            if ($('#form-upload input[name=\'file\']').val() !== '') {
+                clearInterval(timer);
+
+                $.ajax({
+                    url: 'index.php?route=marketplace/installer.upload&user_token={{ user_token }}',
+                    type: 'post',
+                    data: new FormData($('#form-upload')[0]),
+                    dataType: 'json',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $(element).button('loading');
+                    },
+                    complete: function() {
+                        $(element).button('reset');
+                    },
+                    success: function(json) {
+                        if (json['error']) {
+                            $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        }
+
+                        if (json['success']) {
+                            $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                            $('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
+                });
+            }
+        }, 500);
+    }
+});
+
+// Install
+$('#extension').on('click', '.btn-success, .btn-warning', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $(element).button('loading');
+
+    var next = $(element).attr('href');
+
+    $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
+    $('#progress-text').html('');
+
+    var installer = function() {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#progress-bar').addClass('bg-danger');
+                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#progress-bar').addClass('bg-success');
+                    $('#progress-text').html('<div class="text-success">' + json['text'] + '</div>');
+                }
+
+                if (json['success']) {
+                    $('#progress-bar').addClass('bg-success').css('width', '100%');
+                    $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
+
+                    $(element).button('reset');
+
+                    $('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
+                }
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(installer);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).button('reset');
+            }
+        });
+    };
+
+    chain.attach(installer);
+});
+
+// Delete
+$('#extension').on('click', '.btn-danger', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    if (confirm('{{ text_confirm }}')) {
+        $.ajax({
+            url: $(element).attr('href'),
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                console.log(json);
+
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+});
+
+$('.tab-content .btn-danger').on('click', function() {
+    var element = this;
+
+    if (confirm('{{ text_confirm }}')) {
+        $.ajax({
+            url: $(element).attr('value'),
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#' + $(element).attr('data-oc-target')).val('');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+});
+//--></script>
+{{ footer }}

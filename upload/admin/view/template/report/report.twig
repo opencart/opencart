@@ -1,0 +1,46 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-report').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card mb-3">
+      <div class="card-header"><i class="fa-solid fa-chart-bar"></i> {{ text_type }}</div>
+      <div class="card-body">
+        <div class="card">
+          <div class="card-body bg-light">
+            <div class="input-group">
+              <select name="report" id="input-report" class="form-select">
+                {% for report in reports %}
+                  <option value="{{ report.href }}"{% if code == report.code %} selected{% endif %}>{{ report.text }}</option>
+                {% endfor %}
+              </select>
+              <div class="input-group-text"><i class="fa-solid fa-filter"></i>&nbsp;{{ text_filter }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="report"></div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#input-report').on('change', function(e) {
+    if ($(this).val()) {
+        $('#report').load(this.value);
+    }
+});
+
+$('#input-report').trigger('change');
+//--></script>
+{{ footer }}

@@ -1,0 +1,59 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      {% if developer_status %}
+        <div class="float-end">
+          <button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
+        </div>
+      {% endif %}
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% for row in rows %}
+      <div class="row">
+        {% for dashboard_1 in row %}
+          {% set class = 'col-lg-%s %s'|format(dashboard_1.width, 'col-md-3 col-sm-6') %}
+          {% for dashboard_2 in row %}
+            {% if dashboard_2.width > 3 %}
+              {% set class = 'col-lg-%s %s'|format(dashboard_1.width, 'col-md-12 col-sm-12') %}
+            {% endif %}
+          {% endfor %}
+          <div class="{{ class }} mb-3">{{ dashboard_1.output }}</div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+  {{ security }}
+</div>
+<script type="text/javascript"><!--
+$('#button-setting').on('click', function() {
+    $.ajax({
+        url: 'index.php?route=common/developer&user_token={{ user_token }}',
+        dataType: 'html',
+        beforeSend: function() {
+            $('#button-setting').button('loading');
+        },
+        complete: function() {
+            $('#button-setting').button('reset');
+        },
+        success: function(html) {
+            $('#modal-developer').remove();
+
+            $('body').prepend(html);
+
+            $('#modal-developer').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
+{{ footer }}

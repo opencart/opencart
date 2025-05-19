@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{{ column_date_added }}</th>
+        <th>{{ column_description }}</th>
+        <th class="text-end">{{ column_points }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if rewards %}
+        {% for reward in rewards %}
+          <tr>
+            <td>{{ reward.date_added }}</td>
+            <td>{{ reward.description }}</td>
+            <td class="text-end">{{ reward.points }}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td></td>
+          <td class="text-end"><b>{{ text_balance }}</b></td>
+          <td class="text-end">{{ balance }}</td>
+        </tr>
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="3">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

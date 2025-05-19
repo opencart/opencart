@@ -1,0 +1,58 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.0', '8.1', '8.2', '8.3', '8.4']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2, cs2pr
+
+      - name: Lint PHP Files
+        run: |
+          if find upload -type f -name "*.php" ! -path 'upload/system/storage/vendor/*' -exec php -l -n {} + | grep -q "Errors parsing"; then
+            echo "Syntax errors were found."
+            exit 1
+          else
+            echo "No syntax errors were detected."
+          fi
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/composer/files
+            ./.cache
+            ./.php-cs-fixer.cache
+          key: ${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ matrix.php }}-
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Check Code Style
+        if: matrix.php == '8.3'
+        run: |
+          php tools/php-cs-fixer.phar fix --dry-run --diff --ansi || true
+          php tools/php-cs-fixer.phar fix --dry-run --format=checkstyle | cs2pr
+
+      - name: Run PHPStan
+        run: php tools/phpstan.phar analyze --no-progress

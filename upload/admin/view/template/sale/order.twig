@@ -1,0 +1,148 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa-solid fa-print"></i></button>
+        <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa-solid fa-truck"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <button type="submit" data-oc-toggle="ajax" form="form-order" formaction="{{ delete }}"  data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div id="filter-order" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <form id="form-filter">
+              <div class="mb-3">
+                <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
+                <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">{{ entry_customer }}</label>
+                <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-customer" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-store" class="form-label">{{ entry_store }}</label>
+                <select name="filter_store_id" id="input-store" class="form-select">
+                  <option value=""></option>
+                  {% for store in stores %}
+                    <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="input-order-status" class="form-label">{{ entry_order_status }}</label>
+                <select name="filter_order_status_id" id="input-order-status" class="form-select">
+                  <option value=""></option>
+                  <option value="0"{% if filter_order_status_id == '0' %} selected{% endif %}>{{ text_missing }}</option>
+                  {% for order_status in order_statuses %}
+                    <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == filter_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="input-total" class="form-label">{{ entry_total }}</label>
+                <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
+                <input type="date" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
+                <input type="date" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label for="input-date-modified-from" class="form-label">{{ entry_date_modified_from }}</label>
+                <input type="date" name="filter_date_modified_from" value="{{ filter_date_modified_from }}" placeholder="{{ entry_date_modified_from }}" id="input-date-modified-from" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label for="input-date-modified-to" class="form-label">{{ entry_date_modified_to }}</label>
+                <input type="date" name="filter_date_modified_to" value="{{ filter_date_modified_to }}" placeholder="{{ entry_date_modified_to }}" id="input-date-modified-to" class="form-control"/>
+              </div>
+              <div class="text-end">
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-12">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#list').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#list').load(this.href);
+});
+
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
+
+    let url = $(this).serialize();
+
+    window.history.pushState({}, null, 'index.php?route=sale/order&user_token={{ user_token }}&' + url);
+
+    $('#list').load('index.php?route=sale/order.list&user_token={{ user_token }}&' + url);
+});
+
+$('#input-customer').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-customer').val(decodeHTMLEntities(item['label']));
+    }
+});
+
+$('input[name^=\'selected\']').on('change', function() {
+    $('#button-shipping, #button-invoice').prop('disabled', true);
+
+    var selected = $('input[name^=\'selected\']:checked');
+
+    if (selected.length) {
+        $('#button-invoice').prop('disabled', false);
+    }
+
+    for (i = 0; i < selected.length; i++) {
+        if ($(selected[i]).parent().find('input[name^=\'shipping_method\']').val()) {
+            $('#button-shipping').prop('disabled', false);
+            break;
+        }
+    }
+});
+
+$('#button-shipping, #button-invoice').prop('disabled', true);
+//--></script>
+{{ footer }}

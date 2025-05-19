@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="card-header">
+    <i class="fa-solid fa-filter"></i> {{ heading_title }}
+    <div class="float-end">
+      <button type="button" id="button-generate" class="btn btn-warning btn-sm"><i class="fa-solid fa-rotate"></i> {{ button_generate }}</button>
+    </div>
+  </div>
+  <div id="product-viewed" class="card-body">{{ list }}</div>
+</div>
+<script type="text/javascript"><!--
+$('#product-viewed').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#product-viewed').load(this.href);
+});
+
+$('#button-generate').on('click', function() {
+    var element = this;
+
+    $(element).button('loading');
+
+    var next = 'index.php?route=extension/opencart/report/product_viewed.generate&user_token={{ user_token }}';
+
+    var viewed = function() {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
+
+                    $('#product-viewed').load('index.php?route=extension/opencart/report/product_viewed.list&user_token={{ user_token }}');
+                }
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(viewed);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).button('reset');
+            }
+        });
+    };
+
+    chain.attach(viewed);
+});
+//--></script>

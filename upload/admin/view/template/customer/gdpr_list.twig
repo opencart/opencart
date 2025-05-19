@@ -1,0 +1,56 @@
+<form id="form-gdpr" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#gdpr">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th>{{ column_email }}</th>
+          <th>{{ column_request }}</th>
+          <th>{{ column_status }}</th>
+          <th class="d-none d-lg-table-cell">{{ column_date_added }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if gdprs %}
+          {% for gdpr in gdprs %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ gdpr.gdpr_id }}" class="form-check-input"/></td>
+              <td>
+                {% if gdpr.edit %}
+                  <a href="{{ gdpr.edit }}">{{ gdpr.email }}</a>
+                {% else %}
+                  {{ gdpr.email }}
+                {% endif %}</td>
+              <td>{{ gdpr.action }}</td>
+              <td>
+                {% if gdpr.status == '-1' %}
+                  <span class="badge bg-danger">{{ text_denied }}</span>
+                {% elseif gdpr.status == '0' %}
+                  <span class="badge bg-secondary">{{ text_unverified }}</span>
+                {% elseif gdpr.status == '1' %}
+                  <span class="badge bg-warning">{{ text_pending }}</span>
+                {% elseif gdpr.status == '2' %}
+                  <span class="badge bg-info">{{ text_processing }}</span>
+                {% elseif gdpr.status == '3' %}
+                  <span class="badge bg-success">{{ text_complete }}</span>
+                {% endif %}</td>
+              <td class="d-none d-lg-table-cell">{{ gdpr.date_added }}</td>
+              <td class="text-end text-nowrap"><button type="button" value="{{ gdpr.approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
+                <button type="button" value="{{ gdpr.deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fa-solid fa-circle-xmark"></i></button>
+                <button type="button" value="{{ gdpr.delete }}" data-bs-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

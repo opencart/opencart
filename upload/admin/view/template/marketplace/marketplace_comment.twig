@@ -1,0 +1,44 @@
+{% if comments %}
+  {% for comment in comments %}
+    <div id="comment-{{ comment.extension_comment_id }}" class="media">
+      <img src="{{ comment.image }}" alt="{{ comment.member }}" title="{{ comment.member }}" class="me-3 rounded-circle"/>
+      <div class="media-body">
+        <h5 class="mt-0">{{ comment.member }} <span>{{ comment.date_added }}</span></h5>
+        <p>{{ comment.comment }}</p>
+        <div class="reply">
+          <div>
+            {% if comment.reply %}
+              {% for reply in comment.reply %}
+                <div class="media">
+                  <img src="{{ reply.image }}" alt="{{ reply.member }}" title="{{ reply.member }}" class="me-3 rounded-circle"/>
+                  <div class="media-body">
+                    <h5 class="mt-0">{{ reply.member }} <span>{{ reply.date_added }}</h5>
+                    <p>{{ reply.comment }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+              {% if comment.next %}
+                <div class="text-center"><a href="{{ comment.next }}" class="btn btn-outline-secondary">{{ text_more }}</a></div>
+              {% endif %}
+            {% endif %}<a href="{{ comment.refresh }}" class="reply-refresh hide">{{ text_refresh }}</a>
+          </div>
+        </div>
+        <p class="text-end">
+          <button type="button" class="btn btn-link btn-sm">{{ button_reply }}</button>
+        </p>
+        <div class="reply-input-box" style="display: none;">
+          <div class="media">
+            <div class="media-body">
+              <div class="mb-3">
+                <label for="input-comment-{{ comment.extension_comment_id }}">{{ text_comment_add }}</label> <textarea name="comment" placeholder="{{ text_write }}" id="input-comment-{{ comment.extension_comment_id }}" class="form-control"></textarea>
+              </div>
+              <div class="text-end"><a href="{{ comment.add }}" class="btn btn-primary btn-sm">{{ button_comment }}</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  <br/>
+  <div class="text-center">{{ pagination }}</div>
+{% endif %}

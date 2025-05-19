@@ -1,0 +1,107 @@
+{{ header }}
+<div id="account-return" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">
+      {{ content_top }}
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_return_id }}</strong>
+            <br/>
+            {{ return_id }}
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_date_added }}</strong>
+            <br/>
+            {{ date_added }}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_order_id }}</strong>
+            <br/>
+            {{ order_id }}
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_date_ordered }}</strong>
+            <br/>
+            {{ date_ordered }}
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>{{ column_product }}</th>
+              <th>{{ column_model }}</th>
+              <th class="text-end">{{ column_quantity }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ product }}</td>
+              <td>{{ model }}</td>
+              <td class="text-end">{{ quantity }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_reason }}</strong>
+            <br/>
+            {{ reason }}
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_opened }}</strong>
+            <br/>
+            {{ opened }}
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_action }}</strong>
+            <br/>
+            {% if action %}{{ action }}{% else %}{{ text_tbc }}{% endif %}
+          </div>
+        </div>
+      </div>
+      {% if comment %}
+        <div class="form-control mb-3" style="min-height: 64px;">
+          <strong class="lead">{{ text_comment }}</strong>
+          <br/>
+          {{ comment }}
+        </div>
+      {% endif %}
+      <h2>{{ text_history }}</h2>
+      <div id="history">{{ history }}</div>
+      <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+//--></script>
+
+{{ footer }}

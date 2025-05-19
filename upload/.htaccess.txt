@@ -1,0 +1,89 @@
+##
+# READ THIS COMPLETELY IF YOU CHOOSE TO USE THIS FILE!
+#
+# 1.To use URL Alias you need to be running apache with mod_rewrite enabled.
+# 2. In your opencart directory rename .htaccess.txt (this file) to .htaccess
+#
+# For any support issues please visit: https://www.opencart.com
+#
+# The line 'Options +FollowSymLinks' may cause problems with some server configurations.
+# It is required for the use of Apache mod_rewrite, but it may have already been set by
+# your server administrator in a way that disallows changing it in this .htaccess file.
+# If you encounter problems (e.g. site is not loading), comment out this line by adding a # in front
+# FLOC is a feature suggested by Google, if this header shall not be set, disable the line
+# having 'interest-cohort' by adding a # in front
+##
+
+## No directory listings
+<IfModule mod_autoindex.c>
+  IndexIgnore *
+</IfModule>
+
+## No-Referrer-Header
+<IfModule mod_headers.c>
+  Header set Referrer-Policy "no-referrer"
+</IfModule>
+
+## Suppress mime type detection in browsers for unknown types and prevent FLOC
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Permissions-Policy "interest-cohort=()"
+</IfModule>
+
+## Can be commented out if causes errors, see notes above.
+Options +FollowSymlinks
+
+## Prevent Directory listing
+Options -Indexes
+
+## Prevent Direct Access to files
+<FilesMatch "(?i)((\.tpl|\.twig|\.ini|\.log|(?<!robots)\.txt))">
+ Require all denied
+## For apache 2.2 and older, replace "Require all denied" with these two lines :
+# Order deny,allow
+# Deny from all
+</FilesMatch>
+
+## SEO URL Settings
+RewriteEngine On
+## If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
+RewriteBase /
+## Rewrite Rules
+RewriteRule ^system/storage/(.*) index.php?route=error/not_found [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|webp|js|css|svg)
+RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
+
+## Optional error documents
+#ErrorDocument 400 /index.php?route=error/not_found
+#ErrorDocument 401 /index.php?route=error/permission
+#ErrorDocument 403 /index.php?route=error/not_found
+#ErrorDocument 404 /index.php?route=error/not_found
+#ErrorDocument 500 /index.php?route=error/not_found
+#ErrorDocument 503 /index.php?route=error/not_found
+
+## Additional Settings that may need to be enabled for some servers
+## Uncomment the commands by removing the # sign in front of it.
+## If you get an "Internal Server Error 500" after enabling any of the following settings, restore the # as this means your host doesn't allow that.
+
+# 1. If your cart only allows you to add one item at a time, it is possible register_globals is on. This may work to disable it:
+# php_flag register_globals off
+
+# 2. If your cart has magic quotes enabled, This may work to disable it:
+# php_flag magic_quotes_gpc Off
+
+# 3. Set max upload file size. Most hosts will limit this and not allow it to be overridden but you can try
+# php_value upload_max_filesize 999M
+
+# 4. set max post size. uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
+# php_value post_max_size 999M
+
+# 5. set max time script can take. uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
+# php_value max_execution_time 200
+
+# 6. set max time for input to be received. Uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
+# php_value max_input_time 200
+
+# 7. disable open_basedir limitations
+# php_admin_value open_basedir none

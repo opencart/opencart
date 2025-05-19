@@ -1,0 +1,46 @@
+<div id="comment-0">
+  {% if comments %}
+    {% for comment in comments %}
+      <div id="comment-{{ comment.article_comment_id }}" class="border mb-3">
+        <div class="p-2">
+          <p>{{ text_by }} {{ comment.author }} - {{ comment.date_added }}</p>
+          <p>{{ comment.comment }}</p>
+          <div class="text-end">
+            {% if logged %}
+              <button type="button" value="{{ comment.like }}" data-bs-toggle="tooltip" title="{{ button_like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
+              <button type="button" value="{{ comment.dislike }}" data-bs-toggle="tooltip" title="{{ button_dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
+              <button type="button" value="{{ comment.reply_add }}" data-oc-toggle="comment" data-oc-target="#reply-{{ comment.article_comment_id }}" data-oc-trigger="#button-refresh-{{ comment.article_comment_id }}" class="btn btn-secondary">{{ button_reply }}</button>
+            {% else %}
+              <a href="{{ login }}" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></a>
+              <a href="{{ login }}" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></a>
+              <a href="{{ login }}" class="btn btn-secondary">{{ button_login_reply }}</a>
+            {% endif %}
+          </div>
+        </div>
+        <div id="reply-{{ comment.article_comment_id }}">
+          <div id="reply-{{ comment.article_comment_id }}-0"></div>
+          <div class="text-center p-2 border-top">
+            <button type="button" value="{{ comment.reply }}" id="button-refresh-{{ comment.article_comment_id }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ comment.article_comment_id }}-0" class="btn btn-secondary d-none"><i class="fa fa-sync"></i></button>
+            {% if comment.reply_total %}
+              <button type="button" value="{{ comment.reply }}" data-oc-toggle="next" class="btn btn-secondary">{{ button_replies }} ({{ comment.reply_total }})</button>
+            {% else %}
+              <button type="button" class="btn btn-secondary" disabled>{{ button_replies }}</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    <div class="row">
+      <div class="col-sm-6 text-start">{{ pagination }}</div>
+      <div class="col-sm-6 text-end">{{ results }}</div>
+    </div>
+  {% else %}
+    {{ text_no_results }}
+  {% endif %}
+</div>
+<div class="text-center p-2">
+  <button type="button" value="{{ refresh }}" id="button-refresh" data-oc-toggle="refresh" data-oc-target="#comment-0" class="btn btn-secondary d-none"><i class="fa fa-sync"></i></button>
+</div>
+
+
+

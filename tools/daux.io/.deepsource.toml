@@ -1,0 +1,19 @@
+version = 1
+
+exclude_patterns = [
+  "**/node_modules/",
+  "**/*.min.js",
+  "**/*.pack.js"
+]
+
+[[analyzers]]
+name = "docker"
+enabled = true
+
+[[analyzers]]
+name = "php"
+enabled = true
+
+[[analyzers]]
+name = "javascript"
+enabled = true

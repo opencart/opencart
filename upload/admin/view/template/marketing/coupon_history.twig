@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="text-end">{{ column_order_id }}</th>
+        <th>{{ column_customer }}</th>
+        <th class="text-end">{{ column_amount }}</th>
+        <th>{{ column_date_added }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if histories %}
+        {% for history in histories %}
+          <tr>
+            <td class="text-end">{{ history.order_id }}</td>
+            <td>{{ history.customer }}</td>
+            <td class="text-end">{{ history.amount }}</td>
+            <td>{{ history.date_added }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

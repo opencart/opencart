@@ -1,0 +1,81 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax">
+              <div class="row mb-3">
+                <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
+                  <div id="error-name" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-limit" class="col-sm-2 col-form-label">{{ entry_limit }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="limit" value="{{ limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control"/>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-width" class="col-sm-2 col-form-label">{{ entry_width }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" required/>
+                  <div id="error-width" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-height" class="col-sm-2 col-form-label">{{ entry_height }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" required/>
+                  <div id="error-height" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-order" class="col-sm-2 col-form-label">{{ entry_order }}</label>
+                <div class="col-sm-10">
+                  <select name="order" id="input-order" class="form-select">
+                    <option value="DESC"{% if order == "DESC" %} selected {% endif %}>{{ text_desc }}</option>
+                    <option value="ASC"{% if order == "ASC" %} selected {% endif %}>{{ text_asc }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-sort" class="col-sm-2 col-form-label">{{ entry_sort }}</label>
+                <div class="col-sm-10">
+                  <select name="sort" id="input-sort" class="form-select">
+                    <option value="ad.name"{% if sort == "ad.name" %} selected {% endif %}>{{ text_sort_name }}</option>
+                    <option value="a.date_added"{% if sort == "a.date_added" %} selected {% endif %}>{{ text_sort_date }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="status" value="0"/>
+                    <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                  </div>
+                </div>
+              </div>
+          <input type="hidden" name="module_id" value="{{ module_id }}" id="input-module-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

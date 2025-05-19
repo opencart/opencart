@@ -1,0 +1,24 @@
+{{ text_date_added }} {{ date_added }}
+<br/>
+<br/>
+{{ text_subscription_status }}
+<br/>
+<br/>
+{{ subscription_status }}
+<br/>
+<br/>
+{% if comment %}
+  <br/>
+  <br/>
+  {{ text_comment }}
+  <br/>
+  <br/>
+  {{ comment }}
+  <br/>
+{% endif %}
+<br/>
+<br/>
+<a href="{{ store_url }}">{{ store_name }}</a>
+<br/>
+<br/>
+{{ text_footer }}

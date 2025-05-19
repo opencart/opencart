@@ -1,0 +1,14 @@
+<div class="tile tile-primary">
+  <div class="tile-heading">{{ heading_title }} <span class="float-end">
+    {% if percentage > 0 %}
+      <i class="fa-solid fa-caret-up"></i>
+    {% elseif percentage < 0 %}
+      <i class="fa-solid fa-caret-down"></i>
+    {% endif %}
+    {{ percentage }}%</span>
+  </div>
+  <div class="tile-body"><i class="fa-solid fa-credit-card"></i>
+    <h2 class="float-end">{{ total }}</h2>
+  </div>
+  <div class="tile-footer"><a href="{{ sale }}">{{ text_view }}</a></div>
+</div>

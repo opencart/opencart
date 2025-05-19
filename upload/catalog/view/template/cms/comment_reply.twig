@@ -1,0 +1,20 @@
+{% if replies %}
+  <div id="reply-{{ parent_id }}-{{ page }}">
+    {% for reply in replies %}
+      <div class="p-2 ps-5 border-top">
+        <p>{{ text_by }} {{ reply.author }} - {{ reply.date_added }}</p>
+        <p>{{ reply.comment }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+<div class="text-center p-2 border-top">
+  <button type="button" value="{{ refresh }}" id="button-refresh-{{ parent_id }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-{{ page }}" class="btn btn-secondary d-none"><i class="fa fa-sync"></i></button>
+  {% if not replies %}
+    <button type="button" class="btn btn-secondary" disabled>{{ button_replies }}</button>
+  {% elseif next %}
+    <button type="button" value="{{ next }}" data-oc-toggle="next" class="btn btn-secondary">{{ button_more }}</button>
+  {% else %}
+    <button type="button" class="btn btn-secondary" disabled>{{ button_more }}</button>
+  {% endif %}
+</div>

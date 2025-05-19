@@ -1,0 +1,138 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="button" id="button-generate" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-primary"><i class="fa-solid fa-sync"></i></button>
+        <button type="submit" form="form-ssr" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_ssr }}</div>
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_progress }}</legend>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
+            <div class="col-sm-10 mt-2">
+              <div class="progress">
+                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+              </div>
+              <div id="progress-text" class="form-text mb-2"></div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_render }}</legend>
+          <div id="list">{{ list }}</div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#list').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#list').load(this.href);
+});
+
+$('#list').on('click', '.btn-warning', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $(element).button('loading');
+
+    var next = $(element).attr('value');
+
+    $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
+    $('#progress-text').html('');
+
+    var ssr = function() {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#progress-bar').addClass('bg-danger');
+                    $('#progress-text').html(json['error']);
+
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#progress-text').html(json['text']);
+                }
+
+                if (json['success']) {
+                    $('#progress-bar').addClass('bg-success').css('width', '100%');
+                    $('#progress-text').html(json['success']);
+
+                    $(element).button('reset');
+
+                    $('#list').load('index.php?route=marketplace/ssr.list&user_token={{ user_token }}');
+                }
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(ssr);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).button('reset');
+            }
+        });
+    };
+
+    chain.attach(ssr);
+});
+
+$('#list').on('click', '.btn-success, .btn-danger', function(e) {
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#list').load($('#form-ssr').attr('data-oc-load'));
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
+{{ footer }}

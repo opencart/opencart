@@ -1,0 +1,59 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-weight-class" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-weight-class" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_title }}</label>
+            <div class="col-sm-10">
+              {% for language in languages %}
+                <div class="input-group">
+                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                  <input type="text" name="weight_class_description[{{ language.language_id }}][title]" value="{{ weight_class_description[language.language_id] ? weight_class_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title-{{ language.language_id }}" class="form-control" required/>
+                </div>
+                <div id="error-title-{{ language.language_id }}" class="invalid-feedback"></div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_unit }}</label>
+            <div class="col-sm-10">
+              {% for language in languages %}
+                <div class="input-group">
+                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                  <input type="text" name="weight_class_description[{{ language.language_id }}][unit]" value="{{ weight_class_description[language.language_id] ? weight_class_description[language.language_id].unit }}" placeholder="{{ entry_unit }}" id="input-unit-{{ language.language_id }}" class="form-control" required/>
+                </div>
+                <div id="error-unit-{{ language.language_id }}" class="invalid-feedback"></div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
+              <div class="form-text">{{ help_value }}</div>
+            </div>
+          </div>
+          <input type="hidden" name="weight_class_id" value="{{ weight_class_id }}" id="input-weight-class-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

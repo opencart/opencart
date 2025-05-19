@@ -1,0 +1,24 @@
+services:
+    -
+        class: \Tools\PHPStan\RegistryPropertyReflectionExtension
+        tags:
+            - phpstan.broker.propertiesClassReflectionExtension
+parameters:
+    level: 6
+    paths:
+        - ./upload/
+    excludePaths:
+        - ./tools/phpstan/
+        - ./upload/system/storage/vendor/
+        - ./upload/system/storage/cache/
+    tmpDir: .cache
+    ignoreErrors:
+        - '#^Access to an undefined property Opencart\\System\\Engine\\Proxy<Opencart\\Catalog\\Model\\Checkout\\Cart>::\$getTotals\.$#'
+        - '# always exists and is not #'
+        - '#^Constant [A-Z_]+ not found\.$#'
+        - '#^Empty array passed to foreach\.$#'
+        - '# is always (true|false)\.$#'
+        - '#^Method .* is unused\.$#'
+        - '#^Parameter \#2 \$value of method Opencart\\Admin\\Model\\Design\\SeoUrl::\S+\(\) expects string, int given\.$#'
+        - '#^Parameter \#\d+ \$\S+ of function \S+ expects .*(int|float|string).*, .*(int|float|string).* given\.$#'
+        - '#^Variable \$\S+ might not be defined\.$#'

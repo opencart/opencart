@@ -1,0 +1,25 @@
+<div class="list-group mb-3">
+  {% if not logged %}
+    <a href="{{ login }}" class="list-group-item">{{ text_login }}</a>
+    <a href="{{ register }}" class="list-group-item">{{ text_register }}</a>
+    <a href="{{ forgotten }}" class="list-group-item">{{ text_forgotten }}</a>
+  {% endif %}
+  <a href="{{ account }}" class="list-group-item">{{ text_account }}</a>
+  {% if logged %}
+    <a href="{{ edit }}" class="list-group-item">{{ text_edit }}</a>
+    <a href="{{ password }}" class="list-group-item">{{ text_password }}</a>
+  {% endif %}
+  <a href="{{ payment_method }}" class="list-group-item">{{ text_payment_method }}</a>
+  <a href="{{ address }}" class="list-group-item">{{ text_address }}</a>
+  <a href="{{ wishlist }}" class="list-group-item">{{ text_wishlist }}</a>
+  <a href="{{ order }}" class="list-group-item">{{ text_order }}</a>
+  <a href="{{ download }}" class="list-group-item">{{ text_download }}</a>
+  <a href="{{ subscription }}" class="list-group-item">{{ text_subscription }}</a>
+  <a href="{{ reward }}" class="list-group-item">{{ text_reward }}</a>
+  <a href="{{ return }}" class="list-group-item">{{ text_return }}</a>
+  <a href="{{ transaction }}" class="list-group-item">{{ text_transaction }}</a>
+  <a href="{{ newsletter }}" class="list-group-item">{{ text_newsletter }}</a>
+  {% if logged %}
+    <a href="{{ logout }}" class="list-group-item">{{ text_logout }}</a>
+  {% endif %}
+</div>

@@ -1,0 +1,31 @@
+<table class="table table-bordered">
+  <thead>
+    <th>{{ text_name }}</th>
+    <th>{{ text_date_added }}</th>
+    <th class="text-end">{{ text_action }}</th>
+  </thead>
+  <tbody>
+    {% if downloads %}
+      {% for download in downloads %}
+        <tr>
+          <td>{{ download.name }}</td>
+          <td>{{ download.date_added }}</td>
+          <td class="text-end">
+            <div class="dropdown">
+              <div class="btn-group">
+                <button type="button" value="{{ download.download }}" class="btn btn-primary"{% if not download.download %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</button>
+                <button type="button" data-bs-toggle="dropdown" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"><i class="fa-solid fa-caret-down"></i></button>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <a href="{{ download.install }}" class="dropdown-item{% if not download.install %} disabled{% endif %}"><i class="fa-solid fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="{{ download.uninstall }}" class="dropdown-item{% if not download.uninstall %} disabled{% endif %}"><i class="fa-solid fa-minus-circle fa-fw"></i> {{ text_uninstall }}</a> <a href="{{ download.delete }}" class="dropdown-item{% if not download.delete %} disabled{% endif %}"><i class="fa-regular fa-trash-can fa-fw"></i> {{ text_delete }}</a>
+                </div>
+              </div>
+            </div></td>
+        </tr>
+      {% endfor %}
+    {% else %}
+      <tr>
+        <td colspan="3" class="text-center">{{ text_no_results }}</td>
+      </tr>
+    {% endif %}
+  </tbody>
+</table>

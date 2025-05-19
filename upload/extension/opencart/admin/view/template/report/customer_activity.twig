@@ -1,0 +1,95 @@
+<div class="row">
+  <div id="filter-report" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+      <div class="card-body">
+      <form id="form-filter">
+        <div class="mb-3">
+          <label for="input-customer" class="form-label">{{ entry_customer }}</label>
+          <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+          <ul id="autocomplete-customer" class="dropdown-menu"></ul>
+        </div>
+        <div class="mb-3">
+          <label for="input-date-start" class="form-label">{{ entry_date_start }}</label>
+          <input type="date" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
+        </div>
+        <div class="mb-3">
+          <label for="input-date-end" class="form-label">{{ entry_date_end }}</label>
+          <input type="date" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
+        </div>
+        <div class="mb-3">
+          <label for="input-ip" class="form-label">{{ entry_ip }}</label>
+          <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
+        </div>
+        <div class="text-end">
+          <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+          <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <div class="col col-lg-9 col-md-12">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-chart-bar"></i> {{ heading_title }}</div>
+      <div id="customer-activity" class="card-body">{{ list }}</div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#customer-activity').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#customer-activity').load(this.href);
+});
+
+$('#button-filter').on('click', function() {
+    var url = '';
+
+    var filter_customer = $('#input-customer').val();
+
+    if (filter_customer) {
+        url += '&filter_customer=' + encodeURIComponent(filter_customer);
+    }
+
+    var filter_date_start = $('#input-date-start').val();
+
+    if (filter_date_start) {
+        url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
+    }
+
+    var filter_date_end = $('#input-date-end').val();
+
+    if (filter_date_end) {
+        url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
+    }
+
+    var filter_ip = $('#input-ip').val();
+
+    if (filter_ip) {
+        url += '&filter_ip=' + encodeURIComponent(filter_ip);
+    }
+
+    $('#customer-activity').load('index.php?route=extension/opencart/report/customer_activity.list&user_token={{ user_token }}' + url);
+});
+
+$('#input-customer').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-customer').val(item['label']);
+    }
+});
+//--></script>

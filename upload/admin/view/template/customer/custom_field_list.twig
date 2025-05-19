@@ -1,0 +1,38 @@
+<form id="form-custom-field" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#custom-field">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th><a href="{{ sort_name }}"{% if sort == 'cfd.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th><a href="{{ sort_location }}"{% if sort == 'cf.location' %} class="{{ order|lower }}"{% endif %}>{{ column_location }}</a></th>
+          <th><a href="{{ sort_type }}"{% if sort == 'cf.type' %} class="{{ order|lower }}"{% endif %}>{{ column_type }}</a></th>
+          <th class="text-end d-none d-lg-table-cell"><a href="{{ sort_sort_order }}"{% if sort == 'cf.sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if custom_fields %}
+          {% for custom_field in custom_fields %}
+            <tr{% if not custom_field.status %} class="table-active opacity-50"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" class="form-check-input"/></td>
+              <td>{{ custom_field.name }}</td>
+              <td>{{ custom_field.location }}</td>
+              <td>{{ custom_field.type }}</td>
+              <td class="text-end d-none d-lg-table-cell">{{ custom_field.sort_order }}</td>
+              <td class="text-end"><a href="{{ custom_field.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

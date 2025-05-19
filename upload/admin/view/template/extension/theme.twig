@@ -1,0 +1,40 @@
+{{ promotion }}
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>{{ column_name }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if extensions %}
+          {% for extension in extensions %}
+            <tr>
+              <td><b>{{ extension.name }}</b></td>
+              <td class="text-end">{% if not extension.installed %}
+                <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
+              {% else %}
+                <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
+              {% endif %}</td>
+            </tr>
+            {% if extension.installed %}
+              {% for store in extension.store %}
+                <tr{% if not store.status %} class="table-active opacity-50"{% endif %}>
+                  <td>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
+                  <td class="text-end text-nowrap"><a href="{{ store.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+                </tr>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="2">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</fieldset>

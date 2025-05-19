@@ -1,0 +1,33 @@
+{{ header }}
+<div id="content">
+  <div class="container-fluid">
+    <br/>
+    <br/>
+    <div class="row justify-content-sm-center">
+      <div class="col-sm-10 col-md-8 col-lg-5">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa-solid fa-redo"></i> {{ heading_title }}
+          </div>
+          <div class="card-body">
+            <form id="form-forgotten" action="{{ confirm }}" method="post" data-oc-toggle="ajax">
+              <p>{{ text_email }}</p>
+              <div class="mb-3">
+                <label for="input-email" class="form-label">{{ entry_email }}</label>
+                <div class="input-group">
+                  <div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
+                  <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+                </div>
+              </div>
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_reset }}</button>
+                <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

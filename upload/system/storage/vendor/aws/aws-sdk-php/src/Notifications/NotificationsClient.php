@@ -1,0 +1,51 @@
+<?php
+namespace Aws\Notifications;
+
+use Aws\AwsClient;
+
+/**
+ * This client is used to interact with the **AWS User Notifications** service.
+ * @method \Aws\Result associateChannel(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateChannelAsync(array $args = [])
+ * @method \Aws\Result createEventRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createEventRuleAsync(array $args = [])
+ * @method \Aws\Result createNotificationConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createNotificationConfigurationAsync(array $args = [])
+ * @method \Aws\Result deleteEventRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteEventRuleAsync(array $args = [])
+ * @method \Aws\Result deleteNotificationConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteNotificationConfigurationAsync(array $args = [])
+ * @method \Aws\Result deregisterNotificationHub(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deregisterNotificationHubAsync(array $args = [])
+ * @method \Aws\Result disassociateChannel(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateChannelAsync(array $args = [])
+ * @method \Aws\Result getEventRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getEventRuleAsync(array $args = [])
+ * @method \Aws\Result getNotificationConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getNotificationConfigurationAsync(array $args = [])
+ * @method \Aws\Result getNotificationEvent(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getNotificationEventAsync(array $args = [])
+ * @method \Aws\Result listChannels(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listChannelsAsync(array $args = [])
+ * @method \Aws\Result listEventRules(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listEventRulesAsync(array $args = [])
+ * @method \Aws\Result listNotificationConfigurations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listNotificationConfigurationsAsync(array $args = [])
+ * @method \Aws\Result listNotificationEvents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listNotificationEventsAsync(array $args = [])
+ * @method \Aws\Result listNotificationHubs(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listNotificationHubsAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result registerNotificationHub(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise registerNotificationHubAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateEventRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateEventRuleAsync(array $args = [])
+ * @method \Aws\Result updateNotificationConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateNotificationConfigurationAsync(array $args = [])
+ */
+class NotificationsClient extends AwsClient {}

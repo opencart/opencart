@@ -1,0 +1,119 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-rotate"></i> {{ text_upgrade }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_information }}</legend>
+          <div class="row mb-3">
+            <div class="col">
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_current_version }}</strong>
+                  <br/>
+                  <span{% if upgrade %} class="text-danger"{% endif %}>{{ current_version }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_latest_version }}</strong>
+                  <br/>
+                  {{ latest_version }}
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_date_added }}</strong>
+                  <br/>
+                  {{ date_added }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-control border rounded-start">
+            <div class="lead"><strong>{{ text_change }}</strong>
+              <br/>
+              {{ log }}
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_status }}</legend>
+          <div class="input-group input-group-lg">
+            <button type="button" id="button-upgrade" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fa-solid fa-level-up-alt"></i> {{ button_upgrade }}</button>
+            <input type="text" id="input-upgrade" value="{{ text_ready }}" class="form-control bg-white" readonly/>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-upgrade').on('click', function() {
+    var element = this;
+
+    $(element).button('loading');
+
+    if (confirm('{{ text_confirm }}')) {
+        $('#progress').html('{{ text_download|escape('js') }}');
+
+        var next = 'index.php?route=tool/upgrade.download&user_token={{ user_token }}&version={{ latest_version }}';
+
+        var upgrade = function() {
+            return $.ajax({
+                url: next,
+                dataType: 'json',
+                success: function(json) {
+                    console.log(json);
+
+                    $('#input-upgrade').removeClass('is-valid is-invalid');
+
+                    if (json['error']) {
+                        $('#input-upgrade').val(json['error']);
+                        $('#input-upgrade').addClass('is-invalid');
+
+                        $(element).button('reset');
+                    }
+
+                    if (json['text']) {
+                        $('#input-upgrade').val(json['text']);
+                    }
+
+                    if (json['success']) {
+                        $('#input-upgrade').val(json['success']);
+                        $('#input-upgrade').addClass('is-valid');
+
+                        $(element).button('reset');
+                    }
+
+                    if (json['next']) {
+                        next = json['next'];
+
+                        chain.attach(upgrade);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                    $(element).button('reset');
+                }
+            });
+        };
+
+        chain.attach(upgrade);
+    }
+});
+//--></script>
+{{ footer }}

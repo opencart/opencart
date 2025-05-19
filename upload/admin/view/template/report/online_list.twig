@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{{ column_ip }}</th>
+        <th>{{ column_customer }}</th>
+        <th>{{ column_url }}</th>
+        <th>{{ column_referer }}</th>
+        <th>{{ column_date_added }}</th>
+        <th class="text-end">{{ column_action }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if customers %}
+        {% for customer in customers %}
+          <tr>
+            <td><a href="https://whatismyipaddress.com/ip/{{ customer.ip }}" rel="noreferrer" target="_blank">{{ customer.ip }}</a></td>
+            <td>{{ customer.customer }}</td>
+            <td><a href="{{ customer.url }}" rel="noreferrer" target="_blank">{{ customer.url|split('', 30)|join('<br/>') }}</a></td>
+            <td>{% if customer.referer %}<a href="{{ customer.referer }}" rel="noreferrer" target="_blank">{{ customer.referer|split('', 30)|join('<br/>') }}</a>{% endif %}</td>
+            <td>{{ customer.date_added }}</td>
+            <td class="text-end">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>{% else %}<button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fa-solid fa-pencil"></i></button>{% endif %}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

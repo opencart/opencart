@@ -1,0 +1,36 @@
+{{ header }}
+<div id="product-manufacturer" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      {% if categories %}
+        <p><strong>{{ text_index }}</strong>
+          {% for category in categories %}
+            &nbsp;&nbsp;&nbsp;<a href="{{ category.href }}#{{ category.name }}">{{ category.name }}</a>
+          {% endfor %}
+        </p>
+        {% for category in categories %}
+          <h2 id="{{ category.name }}">{{ category.name }}</h2>
+          {% if category.manufacturer %}
+            {% for manufacturers in category.manufacturer|batch(4) %}
+              <div class="row mb-3">
+                {% for manufacturer in manufacturers %}
+                  <div class="col-sm-3"><a href="{{ manufacturer.href }}">{{ manufacturer.name }}</a></div>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <p>{{ text_no_results }}</p>
+        <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      {% endif %}
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

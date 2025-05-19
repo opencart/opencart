@@ -1,0 +1,470 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        {% if signature %}
+          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
+        {% else %}
+          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i></button>
+        {% endif %}
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div id="marketplace-extension-info" class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }}</div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-puzzle-piece"></i> {{ name }}</div>
+      <div class="card-body">
+        <div class="row extension-info">
+          <div class="col-md-8 col-lg-9">
+            {% if banner %}
+              <div id="banner" class="text-center img-thumbnail mb-3"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-fluid"/></div>
+            {% endif %}
+            <div class="row thumbnails">
+              {% for image in images %}
+                <div class="col-4 col-md-3 col-lg-2 mb-3"><a href="{{ image.popup }}"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-fluid img-thumbnail"/></a></div>
+              {% endfor %}
+            </div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tab-description" class="nav-link active" data-bs-toggle="tab">{{ tab_description }}</a></li>
+              <li class="nav-item"><a href="#tab-documentation" class="nav-link" data-bs-toggle="tab">{{ tab_documentation }}</a></li>
+              <li class="nav-item"><a href="#tab-download" class="nav-link" data-bs-toggle="tab">{{ tab_download }}</a></li>
+              <li class="nav-item"><a href="#tab-comment" class="nav-link" data-bs-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="tab-description" class="tab-pane fade show active">{{ description }}</div>
+              <div id="tab-documentation" class="tab-pane fade">{{ documentation }}</div>
+              <div id="tab-download" class="tab-pane fade">
+                <fieldset>
+                  <legend>{{ text_available }}</legend>
+                  <div id="download"></div>
+                </fieldset>
+              </div>
+              <div id="tab-comment" class="tab-pane">
+                <fieldset>
+                  <legend>{{ text_comment_add }}</legend>
+                  <div class="mb-3">
+                    <textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-history-comment" class="form-control"></textarea>
+                  </div>
+                  <div class="text-end">
+                    <button type="button" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
+                  </div>
+                </fieldset>
+                <br/>
+                <fieldset>
+                  <legend>{{ text_comment }}</legend>
+                  <div id="comment"></div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-3">
+
+            <div id="buy" class="card mb-3">
+              <div class="card-body">
+
+
+                {% if license == '1' and not purchased %}
+                  <div class="d-grid">
+                    <button type="button" id="button-buy" class="btn btn-success btn-lg">{{ button_purchase }}</button>
+                  </div>
+                {% endif %}
+
+
+
+                <div id="price" class="row">
+                  <div class="col-lg-5"><strong>{{ text_price }}</strong></div>
+                  <div class="col-lg-7 text-end">{% if license %}
+                    {{ price }}
+                    {% else %}
+                      {{ text_free }}
+                    {% endif %}
+                  </div>
+                </div>
+                <hr>
+                <ul class="list-check">
+                  <li>{{ text_partner }}</li>
+                  <li>{{ text_support }}</li>
+                  <li>{{ text_documentation }}</li>
+                </ul>
+                <hr>
+                <div class="row">
+                  <div class="col-md-5"><strong>{{ text_rating }}</strong></div>
+                  <div class="col-md-7 text-end">{% for i in 1..5 %}
+                    {% if rating < i %}
+                      <i class="fa-regular fa-star"></i>
+                    {% else %}
+                      <i class="fa-solid fa-star"></i>
+                    {% endif %}
+                    {% endfor %} ({{ rating_total }})
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-5"><strong>{{ text_compatibility }}</strong></div>
+                  <div class="col-md-7 text-end">{{ compatibility }}</div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-5"><strong>{{ text_date_modified }}</strong></div>
+                  <div class="col-md-7 text-end">{{ date_modified }}</div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-5"><strong>{{ text_date_added }}</strong></div>
+                  <div class="col-md-7 text-end">{{ date_added }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="sales" class="card mb-3">
+              <div class="card-body"><i class="fa-solid fa-shopping-cart"></i> <strong>{{ sales }}</strong> {{ text_sales }}</div>
+            </div>
+
+            <div id="sales" class="card mb-3">
+              <div class="card-body"><i class="fa-solid fa-download"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="media">
+                  <img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="me-3 rounded-circle">
+                  <div class="media-body">
+                    <h5 class="mt-0"><a href="{{ filter_member }}">{{ member_username }}</a></h5>
+                    <small>{{ text_member_since }} {{ member_date_added }}</small>
+                  </div>
+                </div>
+                <br/>
+                <div class="d-grid">
+                  <a href="{{ filter_member }}" class="btn btn-primary btn-lg mb-1">{{ button_view_all }}</a>
+                  <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-outline-secondary btn-lg">{{ button_support }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-api').on('click', function(e) {
+    $('#modal-api').remove();
+
+    $.ajax({
+        url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
+        dataType: 'html',
+        beforeSend: function() {
+            $('#button-api').button('loading');
+        },
+        complete: function() {
+            $('#button-api').button('reset');
+        },
+        success: function(html) {
+            $('body').append(html);
+
+            $('#modal-api').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
+<script type="text/javascript"><!--
+$('#button-buy').on('click', function(e) {
+    e.preventDefault();
+
+    $('#modal-purchase').remove();
+
+    html = '<div id="modal-purchase" class="modal">';
+    html += '  <div class="modal-dialog">';
+    html += '    <div class="modal-content">';
+    html += '      <div class="modal-header">';
+    html += '        <h5 class="modal-title">{{ text_purchase|escape('js') }}</h5>';
+    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+    html += '      </div>';
+    html += '      <div class="modal-body">';
+    html += '        <p>{{ text_pin|escape('js') }}</p>';
+    html += '        <p>{{ text_secure|escape('js') }}</p>';
+    html += '        <div class="mb-3">';
+    html += '          <label for="input-pin">{{ entry_pin|escape('js') }}</label>';
+    html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin|escape('js') }}" id="input-pin" class="form-control"/>';
+    html += '        </div>';
+    html += '        <div class="mb-3 text-end">';
+    html += '          <div class="text-end"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin|escape('js') }}</a></div>';
+    html += '          <button type="button" id="button-purchase" class="btn btn-primary btn-lg">{{ button_purchase|escape('js') }}</button>';
+    html += '        </div>';
+    html += '      </div>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+
+    $('body').append(html);
+
+    $('#modal-purchase').modal('show');
+});
+
+$('body').on('click', '#modal-purchase #button-purchase', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=marketplace/marketplace.purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
+        type: 'post',
+        data: $('#input-pin'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#modal-purchase .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#modal-purchase').modal('hide');
+
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Download
+$('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+
+$('#tab-download').on('click', '.btn-primary', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#download').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
+            }
+
+            if (json['success']) {
+                $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#tab-download').on('click', '.dropdown-item', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('href'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#download').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
+            }
+
+            if (json['success']) {
+                $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Comment
+$('#comment').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#comment').load(this.href);
+});
+
+$('#comment').load('index.php?route=marketplace/marketplace.comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
+
+// Add comment
+$('#button-comment').on('click', function() {
+    $.ajax({
+        url: 'index.php?route=marketplace/marketplace.addComment&user_token={{ user_token }}&extension_id={{ extension_id }}',
+        type: 'post',
+        dataType: 'json',
+        data: 'comment=' + encodeURIComponent($('#input-history-comment').val()),
+        beforeSend: function() {
+            $('#button-comment').button('loading');
+        },
+        complete: function() {
+            $('#button-comment').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#comment').load('index.php?route=marketplace/marketplace.comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
+
+                $('#input-history-comment').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Next replies
+$('#comment').on('click', '.btn-outline-secondary', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('href'),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $(element).parent().parent().parent().append(html);
+
+            $(element).parent().remove();
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Reply
+$('#comment').on('click', '.btn-link', function(e) {
+    e.preventDefault();
+
+    $(this).parent().parent().find('.reply-input-box').toggle();
+});
+
+// Add reply
+$('#comment').on('click', '.btn-primary', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('href'),
+        type: 'post',
+        dataType: 'json',
+        data: 'comment=' + encodeURIComponent($(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val()),
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $(element).parents('.reply-input-box').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $(element).parents('.reply-input-box').parents('.media').find('.reply-refresh').last().trigger('click');
+
+                $(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Refresh
+$('#comment').on('click', '.reply-refresh', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('href'),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $(element).parent().replaceWith(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$(document).ready(function() {
+    $('.thumbnails').magnificPopup({
+        type: 'image',
+        delegate: 'a',
+        gallery: {
+            enabled: true
+        }
+    });
+});
+//--></script>
+{{ footer }}

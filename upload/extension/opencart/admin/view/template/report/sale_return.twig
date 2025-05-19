@@ -1,0 +1,83 @@
+<div class="row">
+  <div id="filter-report" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+      <div class="card-body">
+      <form id="form-filter">
+        <div class="mb-3">
+          <label for="input-group" class="form-label">{{ entry_group }}</label>
+          <select name="filter_group" id="input-group" class="form-select">
+            {% for group in groups %}
+              <option value="{{ group.value }}"{% if group.value == filter_group %} selected{% endif %}>{{ group.text }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="input-status" class="form-label">{{ entry_return_status }}</label>
+          <select name="filter_return_status_id" id="input-status" class="form-select">
+            <option value="0">{{ text_all_status }}</option>
+            {% for return_status in return_statuses %}
+              <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == filter_return_status_id %} selected{% endif %}>{{ return_status.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="input-date-start" class="form-label">{{ entry_date_start }}</label>
+          <input type="date" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
+        </div>
+        <div class="mb-3">
+          <label for="input-date-end" class="form-label">{{ entry_date_end }}</label>
+          <input type="date" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
+        </div>
+        <div class="text-end">
+          <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+          <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <div class="col col-lg-9 col-md-12">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-chart-bar"></i> {{ heading_title }}</div>
+      <div id="sale-return" class="card-body">{{ list }}</div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#sale-return').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#sale-return').load(this.href);
+});
+
+$('#button-filter').on('click', function() {
+    var url = '';
+
+    var filter_group = $('#input-group').val();
+
+    if (filter_group) {
+        url += '&filter_group=' + encodeURIComponent(filter_group);
+    }
+
+    var filter_order_status_id = $('#input-order-status').val();
+
+    if (filter_order_status_id != 0) {
+        url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+    }
+
+    var filter_date_start = $('#input-date_start').val();
+
+    if (filter_date_start) {
+        url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
+    }
+
+    var filter_date_end = $('i#input-date-end').val();
+
+    if (filter_date_end) {
+        url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
+    }
+
+    $('#sale-return').load('index.php?route=extension/opencart/report/sale_return.list&user_token={{ user_token }}' + url);
+});
+//--></script>

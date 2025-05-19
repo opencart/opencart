@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>{{ column_filename }}</th>
+        <th>{{ column_size }}</th>
+        <th class="d-none d-lg-table-cell">{{ column_date_added }}</th>
+        <th class="text-end">{{ column_action }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if histories %}
+        {% for history in histories %}
+          <tr>
+            <td>{{ history.filename }}</td>
+            <td>{{ history.size }}</td>
+            <td class="d-none d-lg-table-cell">{{ history.date_added }}</td>
+            <td class="text-end">
+              <button type="button" value="{{ history.filename }}" data-bs-toggle="tooltip" title="{{ button_restore }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button>
+              <button type="button" onclick="location = '{{ history.download }}';" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fa-solid fa-download"></i></button>
+              <button type="button" value="{{ history.filename }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="4" class="text-center">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

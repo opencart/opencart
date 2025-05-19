@@ -1,0 +1,149 @@
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="input-group">
+    <span class="input-group-text"><i class="fa fa-truck"></i></span><input type="text" name="shipping_method" value="{{ shipping_method }}" placeholder="{{ entry_shipping_method }}" id="input-shipping-method" class="form-control" readonly/>
+    <button type="button" id="button-shipping-methods" class="btn btn-primary">{{ button_choose }}</button>
+  </div>
+  <input type="hidden" name="code" value="{{ code }}" id="input-shipping-code"/>
+  <div id="error-shipping-method" class="invalid-feedback"></div>
+</fieldset>
+<script type="text/javascript"><!--
+$('#button-shipping-methods').on('click', function() {
+    var element = this;
+
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/shipping_method.quote&language={{ language }}',
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                console.log(json);
+
+                $('#input-shipping-method').removeClass('is-invalid');
+                $('#error-shipping-method').removeClass('d-block');
+
+                if (json['error']) {
+                    $('#input-shipping-method').addClass('is-invalid');
+                    $('#error-shipping-method').html(json['error']).addClass('d-block');
+                }
+
+                if (json['shipping_methods']) {
+                    $('#modal-shipping').remove();
+
+                    html = '<div id="modal-shipping" class="modal">';
+                    html += '  <div class="modal-dialog modal-dialog-centered">';
+                    html += '    <div class="modal-content">';
+                    html += '      <div class="modal-header">';
+                    html += '        <h5 class="modal-title"><i class="fa fa-truck"></i> {{ text_shipping_method|escape('js') }}</h5>';
+                    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+                    html += '      </div>';
+                    html += '      <div class="modal-body">';
+                    html += '        <form id="form-shipping-method">';
+                    html += '          <p>{{ text_shipping|escape('js') }}</p>';
+
+                    var first = true;
+
+                    for (i in json['shipping_methods']) {
+                        html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
+
+                        if (!json['shipping_methods'][i]['error']) {
+                            for (j in json['shipping_methods'][i]['quote']) {
+                                html += '<div class="form-check">';
+
+                                var code = i + '-' + j.replaceAll('_', '-');
+
+                                html += '<input type="radio" name="shipping_method" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + code + '"';
+
+                                var method = $('#input-shipping-code').val();
+
+                                if ((json['shipping_methods'][i]['quote'][j]['code'] == method) || (!method && first)) {
+                                    html += ' checked';
+
+                                    first = false;
+                                }
+
+                                html += '/>';
+                                html += '  <label for="input-shipping-method-' + code + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
+                                html += '</div>';
+                            }
+                        } else {
+                            html += '<div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div>';
+                        }
+                    }
+
+                    html += '          <div class="text-end">';
+                    html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue|escape('js') }}</button>';
+                    html += '          </div>';
+                    html += '        </form>';
+                    html += '      </div>';
+                    html += '    </div>';
+                    html += '  </div>';
+                    html += '</div>';
+
+                    $('body').append(html);
+
+                    $('#modal-shipping').modal('show');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});
+
+$(document).on('submit', '#form-shipping-method', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/shipping_method.save&language={{ language }}',
+            type: 'post',
+            data: $('#form-shipping-method').serialize(),
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            beforeSend: function() {
+                $('#button-shipping-method').button('loading');
+            },
+            complete: function() {
+                $('#button-shipping-method').button('reset');
+            },
+            success: function(json) {
+                console.log(json);
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#modal-shipping').modal('hide');
+
+                    $('#input-shipping-method').val($('input[name=\'shipping_method\']:checked').parent().find('label').text());
+                    $('#input-shipping-code').val($('input[name=\'shipping_method\']:checked').val());
+
+                    $('#input-payment-method').val('');
+
+                    $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});
+//--></script>

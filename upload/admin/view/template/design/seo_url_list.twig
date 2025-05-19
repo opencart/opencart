@@ -1,0 +1,42 @@
+<form id="form-seo-url" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#seo-url">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th><a href="{{ sort_keyword }}"{% if sort == 'keyword' %} class="{{ order|lower }}"{% endif %}>{{ column_keyword }}</a></th>
+          <th><a href="{{ sort_key }}"{% if sort == 'key' %} class="{{ order|lower }}"{% endif %}>{{ column_key }}</a></th>
+          <th><a href="{{ sort_value }}"{% if sort == 'value' %} class="{{ order|lower }}"{% endif %}>{{ column_value }}</a></th>
+          <th><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
+          <th class="d-none d-lg-table-cell"><a href="{{ sort_store }}"{% if sort == 'store' %} class="{{ order|lower }}"{% endif %}>{{ column_store }}</a></th>
+          <th class="text-center d-none d-lg-table-cell"><a href="{{ sort_language }}"{% if sort == 'language' %} class="{{ order|lower }}"{% endif %}>{{ column_language }}</a></th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if seo_urls %}
+          {% for seo_url in seo_urls %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" class="form-check-input"/></td>
+              <td>{{ seo_url.keyword }}</td>
+              <td>{{ seo_url.key }}</td>
+              <td>{{ seo_url.value }}</td>
+              <td>{{ seo_url.sort_order }}</td>
+              <td class="d-none d-lg-table-cell">{{ seo_url.store }}</td>
+              <td class="text-center d-none d-lg-table-cell"><img src="{{ seo_url.image }}" alt="{{ seo_url.language }}" title="{{ seo_url.language }}"></td>
+              <td class="text-end"><a href="{{ seo_url.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

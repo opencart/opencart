@@ -1,0 +1,142 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    color: #545454;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin-top: 0;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    line-height: 1.5;
+
+}
+
+body, td, th, input, textarea, select, option {
+    color: #777777;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+fieldset {
+    margin-bottom: 20px;
+}
+
+legend {
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 15px;
+}
+
+#container {
+    min-height: 100%;
+    width: 100%;
+    position: relative;
+    background: #f6f6f6;
+    overflow: hidden;
+}
+
+.container {
+    padding: 0 20px;
+}
+
+/* Header */
+#header {
+    border-bottom: 1px solid #d8d8d8;
+    box-shadow: 0px 0px 3px #ccc;
+    z-index: 1000;
+    margin: 0;
+}
+
+#header .navbar-brand {
+    /*  padding: 11px 0px;*/
+}
+
+#header .navbar-brand img {
+    /*  padding: 1px 0px;*/
+}
+
+#content {
+    padding-bottom: 40px;
+}
+
+/* Footer */
+#footer {
+    height: 100px;
+    text-align: center;
+}
+
+.page-header {
+    vertical-align: middle;
+    margin: 20px 0 15px 0;
+    padding: 0;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.page-header h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    color: #4c4d5a;
+    display: inline-block;
+    margin-bottom: 15px;
+    text-shadow: 0 1px #fff;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-switch-lg {
+    font-size: 26px;
+    min-height: 36px;
+    line-height: 36px;
+}
+
+.form-control:hover {
+    border: 1px solid #b9b9b9;
+    border-top-color: #a0a0a0;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+div.required .form-label:not(span):before, td.required:before {
+    content: '* ';
+    color: #F00;
+    font-weight: bold;
+}
+
+.table thead td span[data-toggle="tooltip"]:after, label.form-label span:after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 600;
+    content: "\f059";
+    color: #1E91CF;
+    margin-left: 4px;
+}
+
+.table thead td {
+    font-weight: bold;
+}
+
+.table thead > tr > td, .table tbody > tr > td {
+    vertical-align: middle;
+}
+
+.table a.asc:after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 600;
+    content: " \f106";
+}
+
+.table a.desc:after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 600;
+    content: " \f107";
+}

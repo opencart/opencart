@@ -1,0 +1,283 @@
+<?php
+namespace Opencart\Admin\Controller\Marketing;
+/**
+ * Class Contact
+ *
+ * @package Opencart\Admin\Controller\Marketing
+ */
+class Contact extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
+		$this->load->language('marketing/contact');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
+		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		// Setting
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+
+		// Customer Groups
+		$this->load->model('customer/customer_group');
+
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('marketing/contact', $data));
+	}
+
+	/**
+	 * Send
+	 *
+	 * @throws \Exception
+	 *
+	 * @return void
+	 */
+	public function send(): void {
+		$this->load->language('marketing/contact');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'marketing/contact')) {
+			$json['error']['warning'] = $this->language->get('error_permission');
+		}
+
+		$required = [
+			'to'                => '',
+			'subject'           => '',
+			'message'           => '',
+			'store_id'          => 0,
+			'customer'          => [],
+			'customer_group_id' => 0,
+			'affiliate'         => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!$post_info['subject']) {
+			$json['error']['subject'] = $this->language->get('error_subject');
+		}
+
+		if (!$post_info['message']) {
+			$json['error']['message'] = $this->language->get('error_message');
+		}
+
+		if (!$json) {
+			// Setting
+			$this->load->model('setting/store');
+
+			$this->load->model('setting/setting');
+
+			// Customer
+			$this->load->model('customer/customer');
+
+			// Affiliate
+			$this->load->model('marketing/affiliate');
+
+			// Order
+			$this->load->model('sale/order');
+
+			$store_info = $this->model_setting_store->getStore($post_info['store_id']);
+
+			if ($store_info) {
+				$store_name = $store_info['name'];
+			} else {
+				$store_name = $this->config->get('config_name');
+			}
+
+			$setting = $this->model_setting_setting->getSetting('config', $post_info['store_id']);
+
+			$store_email = $setting['config_email'] ?? $this->config->get('config_email');
+
+			if (isset($this->request->get['page'])) {
+				$page = (int)$this->request->get['page'];
+			} else {
+				$page = 1;
+			}
+
+			$limit = 10;
+
+			$email_total = 0;
+
+			$emails = [];
+
+			switch ($post_info['to']) {
+				case 'newsletter':
+					$customer_data = [
+						'filter_newsletter' => 1,
+						'start'             => ($page - 1) * $limit,
+						'limit'             => $limit
+					];
+
+					$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
+
+					$results = $this->model_customer_customer->getCustomers($customer_data);
+
+					foreach ($results as $result) {
+						$emails[] = $result['email'];
+					}
+					break;
+				case 'customer_all':
+					$customer_data = [
+						'start' => ($page - 1) * $limit,
+						'limit' => $limit
+					];
+
+					$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
+
+					$results = $this->model_customer_customer->getCustomers($customer_data);
+
+					foreach ($results as $result) {
+						$emails[] = $result['email'];
+					}
+					break;
+				case 'customer_group':
+					$customer_data = [
+						'filter_customer_group_id' => $post_info['customer_group_id'],
+						'start'                    => ($page - 1) * $limit,
+						'limit'                    => $limit
+					];
+
+					$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
+
+					$results = $this->model_customer_customer->getCustomers($customer_data);
+
+					foreach ($results as $result) {
+						$emails[$result['customer_id']] = $result['email'];
+					}
+					break;
+				case 'customer':
+					if (!empty($post_info['customer'])) {
+						$email_total = count($post_info['customer']);
+
+						$customers = array_slice($post_info['customer'], ($page - 1) * $limit, $limit);
+
+						foreach ($customers as $customer_id) {
+							$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+
+							if ($customer_info) {
+								$emails[] = $customer_info['email'];
+							}
+						}
+					}
+					break;
+				case 'affiliate_all':
+					$affiliate_data = [
+						'start' => ($page - 1) * $limit,
+						'limit' => $limit
+					];
+
+					$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);
+
+					$results = $this->model_marketing_affiliate->getAffiliates($affiliate_data);
+
+					foreach ($results as $result) {
+						$emails[] = $result['email'];
+					}
+					break;
+				case 'affiliate':
+					if (!empty($post_info['affiliate'])) {
+						$affiliates = array_slice($post_info['affiliate'], ($page - 1) * $limit, $limit);
+
+						foreach ($affiliates as $affiliate_id) {
+							$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
+
+							if ($affiliate_info) {
+								$emails[] = $affiliate_info['email'];
+							}
+						}
+
+						$email_total = count($post_info['affiliate']);
+					}
+					break;
+				case 'product':
+					if (isset($post_info['product'])) {
+						$email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($post_info['product']);
+
+						$results = $this->model_sale_order->getEmailsByProductsOrdered($post_info['product'], ($page - 1) * $limit, $limit);
+
+						foreach ($results as $result) {
+							$emails[] = $result['email'];
+						}
+					}
+					break;
+			}
+
+			if ($emails) {
+				$start = ($page - 1) * $limit;
+				$end = $start > ($email_total - $limit) ? $email_total : ($start + $limit);
+
+				if ($end < $email_total) {
+					$json['text'] = sprintf($this->language->get('text_sent'), $start ?: 1, $end, $email_total);
+
+					$json['next'] = $this->url->link('marketing/contact.send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				} else {
+					$json['success'] = $this->language->get('text_success');
+
+					$json['next'] = '';
+				}
+
+				$message  = '<html dir="ltr" lang="' . $this->language->get('code') . '">' . "\n";
+				$message .= '  <head>' . "\n";
+				$message .= '    <title>' . $post_info['subject'] . '</title>' . "\n";
+				$message .= '    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
+				$message .= '  </head>' . "\n";
+				$message .= '  <body>' . html_entity_decode($post_info['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
+				$message .= '</html>' . "\n";
+
+				if ($this->config->get('config_mail_engine')) {
+					$mail_option = [
+						'parameter'     => $this->config->get('config_mail_parameter'),
+						'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
+						'smtp_username' => $this->config->get('config_mail_smtp_username'),
+						'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
+						'smtp_port'     => $this->config->get('config_mail_smtp_port'),
+						'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
+					];
+
+					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
+
+					foreach ($emails as $email) {
+						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+							$mail->setTo(trim($email));
+							$mail->setFrom($store_email);
+							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+							$mail->setSubject(html_entity_decode($post_info['subject'], ENT_QUOTES, 'UTF-8'));
+							$mail->setHtml($message);
+							$mail->send();
+						}
+					}
+				}
+			} else {
+				$json['error']['warning'] = $this->language->get('error_email');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+}

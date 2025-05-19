@@ -1,0 +1,36 @@
+<div style="width:570px; border: 1px solid #e1e1e1; margin-left: auto; margin-right: auto; border-radius: 4px; padding-top: 5px; padding-bottom: 15px; padding-left: 25px; padding-right: 25px;">
+  <table style="width:100%; font-size:16px; border:0;">
+    <thead>
+      <tr>
+        <th style="text-align: center; border-bottom: 1px solid #ddd; padding-top: 15px; padding-bottom: 15px;">
+          {% if logo %}
+            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;"/></a>
+          {% else %}
+            <a href="{{ store_url }}">{{ store }}</a>
+          {% endif %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center; border-bottom: 1px solid #ddd;"><h1>{{ text_welcome }}</h1></td>
+      </tr>
+      <tr>
+        <td style="line-height: 1.8;">
+          <p>{{ text_login }}</p>
+          <p>
+            <br/>
+          </p>
+          <p style="text-align: center;"><a href="{{ login }}" style="border-radius:4px; color:#fff; text-decoration: none; background-color: #01b3e8; padding-left:18px; padding-right:18px; padding-top:10px; padding-bottom:10px; font-size:18px; font-weight: bold;">{{ button_login }}</a></p>
+          <p>
+            <br/>
+          </p>
+          <p>{{ text_service }}</p>
+          <p>
+            {{ text_thanks }}
+            <br/>
+            <strong>{{ store }}</strong>
+          </p></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

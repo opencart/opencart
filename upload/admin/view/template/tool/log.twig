@@ -1,0 +1,86 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-triangle-exclamation"></i> {{ text_list }}</div>
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          {% set i = 0 %}
+          {% for log in logs %}
+            <li class="nav-item"><a href="#tab-log-{{ i }}" data-bs-toggle="tab" class="nav-link{% if i == 0 %} active{% endif %}">{{ log.name }}</a></li>
+            {% set i = i + 1 %}
+          {% endfor %}
+        </ul>
+        <div class="tab-content">
+          {% set i = 0 %}
+          {% for log in logs %}
+            <div id="tab-log-{{ i }}" class="tab-pane{% if i == 0 %} active{% endif %}">
+              {% if log.error %}
+                <div class="alert alert-danger">{{ log.error }}</div>
+              {% endif %}
+              <textarea name="log" wrap="off" rows="15" id="input-log-{{ i }}" class="form-control" readonly>{{ log.output }}</textarea>
+              <br/>
+              <div class="row row-cols-2">
+                <div class="col">
+                  <a href="{{ log.download }}" class="btn btn-primary w-100"{% if not log.download %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</a>
+                </div>
+                <div class="col">
+                  <button type="button" value="{{ log.clear }}" data-oc-target="input-log-{{ i }}" class="btn btn-danger w-100"><i class="fa-solid fa-eraser"></i> {{ button_clear }}</button>
+                </div>
+              </div>
+            </div>
+            {% set i = i + 1 %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('.tab-content .btn-danger').on('click', function() {
+    var element = this;
+
+    if (confirm('{{ text_confirm }}')) {
+        $.ajax({
+            url: $(element).attr('value'),
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#' + $(element).attr('data-oc-target')).val('');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+});
+//--></script>
+{{ footer }}

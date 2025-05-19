@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>{{ column_name }}</th>
+        <th class="text-end">{{ column_value }}</th>
+        <th class="text-end">{{ column_action }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if statistics %}
+        {% for statistic in statistics %}
+          <tr>
+            <td>{{ statistic.name }}</td>
+            <td class="text-end">{{ statistic.value }}</td>
+            <td class="text-end"><a href="{{ statistic.href }}" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="3">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>

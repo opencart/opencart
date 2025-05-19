@@ -1,0 +1,284 @@
+* [File types & encoding](#file-types)
+* [PHP tags](#php-tags)
+* [Indentation](#indentation)
+* [Spacing](#spacing)
+* [Whitespace](#whitespace)
+* [New lines](#new-lines)
+* [File naming](#file-naming)
+* [Class & method naming](#class-method-naming)
+* [Helper naming](#helper-naming)
+* [PHP variable naming](#php-variable-naming)
+* [User defined constants](#user-constants)
+* [PHP constants](#php-constants)
+* [HTML / CSS rules](#html-css)
+* [PHP CodeSniffer](#codesniffer)
+
+<a name="file-types" />
+
+<h2>File types & encoding</h2>
+
+<p>All PHP files with the exception of view/template files have the extension .php</p>
+
+<p>All view/template files have the extension .twig</p>
+
+<p>Line feeds are handled automatically by Git, the repo is managed using LF. When cloning all line feeds will be converted automatically to your native environment (CRLF for Windows, LF for Mac/Linux).</p>
+
+<a name="php-tags"/>
+
+<h2>PHP Tags</h2>
+
+<p>Short PHP opening tags and ASP tags are not supported. The characters should be lowercase.</p>
+
+<code>&?php</code>
+
+  <p>All PHP files must include a closing tag for versions before 2.0. PHP files in and after 2.0 will no longer have a closing tag.</p>
+
+```
+?>
+```
+
+<a name="indentation" />
+
+  <h2>Indentation</h2>
+
+  <p>PHP files must be indented using the TAB character. 4 space tabs are not supported.</p>
+
+  <p>HTML in template files (.twig) must be indented using 2 spaces, not 4 spaces or TABS. JavaScript must be indented using the TAB character.</p>
+
+<a name="spacing" />
+
+<h2>Spacing</h2>
+
+IF, WHILE, FOR etc should have a space before and after the brackets.
+
+<h5>Correct</h5>
+
+```
+if () {
+```
+
+###### Incorrect
+
+```
+if(){
+```
+
+ELSE etc should have a space after and before the curly braces
+
+###### Correct
+
+```
+} else {
+```
+
+###### Incorrect
+
+```
+}else{
+```
+
+Type casting does NOT have a space before the variable
+
+###### Correct
+
+```
+(int)$var
+```
+
+###### Incorrect
+
+```
+(int) $var
+```
+
+Setting a variable should always have a space before and after the equals sign
+
+###### Correct
+
+```
+$var = 1;
+```
+###### Incorrect
+
+```
+$var=1;
+```
+
+<a name="whitespace" />
+
+## Whitespace
+
+After any code, but before a new line - there should be no white space. The same is true for an empty line.
+
+After the closing PHP tag it is extremely important to remove any white space.
+
+<a name="new-lines" />
+
+## New Lines
+
+Opening curly braces do not go onto a new line, they will always have a space before and be on the same line.
+
+1 True Brace Style (1TBS) ([WIKI](http://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS))
+
+###### Correct
+
+```
+if ($my_example == 1) {
+
+class ModelExampleExample extends Model {
+
+public function addExample() {
+
+} else {
+```
+
+###### Incorrect
+
+```
+if ($my_example == 1)
+{
+
+class ModelExampleExample extends Model
+{
+
+public function addExample()
+{
+
+}
+else
+{
+```
+
+<a name="file-naming"/>
+
+## File naming
+
+All files should be in lower case and words separated by an underscore.
+
+<a name="class-method-naming"/>
+
+## Class & method naming
+
+Class names and method names should be camel case.
+
+###### Correct
+
+```
+class ModelExampleExample extends Model
+
+public function addExample()
+```
+
+###### Incorrect
+
+```
+class model_exampleexample extends Model
+
+public function add_example()
+```
+
+A method scope should always be cast.
+
+###### Correct
+
+```
+public function addExample()
+```
+
+###### Incorrect
+
+```
+function addExample()
+```
+
+<a name="helper-naming"/>
+
+## PHP Function (helpers) naming
+
+Helper function names should be lower case and an underscore used to separate words.
+
+<a name="php-variable-naming"/>
+
+## PHP variable naming
+
+PHP variables should be lower case and an underscore used to separate words.
+
+###### Correct
+
+```
+$var = 123;
+$new_var = 12345;
+```
+
+###### Incorrect
+
+```
+$Var = 123;
+$newVar = 12345;
+```
+
+<a name="user-constants"/>
+
+## User defined constants
+
+User defined constants are set as upper case.
+
+###### Correct
+
+```
+define('MY_VAR', 'My constant string value');
+```
+
+###### Incorrect
+
+```
+define('my_var', 'My constant string value');
+```
+
+<a name="php-constants"/>
+
+## PHP constants
+
+These types of constant (true,false,null) are set as lower case
+
+###### Correct
+
+```
+$my_var = true;
+```
+
+###### Incorrect
+
+```
+$my_var = TRUE;
+```
+
+<a name="html-css"/>
+
+## HTML / CSS rules
+
+Class names and id's should be hyphenated and not use an underscore
+
+###### Correct
+
+```
+class="my-class"
+```
+###### Incorrect
+
+```
+class="my_class"
+```
+
+<a name="codesniffer"/>
+
+## PHP CodeSniffer
+
+There is a [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) standard here:
+https://github.com/opencart/opencart/tree/master/tests/phpcs/OpenCart
+
+You can use this with a command along the following lines if you have PHP_CodeSniffer installed:
+
+```
+phpcs --standard=phpcs.xml opencart
+```

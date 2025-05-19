@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8"/>
+  <title>{{ title }}</title>
+  <base href="{{ base }}"/>
+  <link href="{{ bootstrap_css }}" type="text/css" rel="stylesheet"/>
+  <link href="{{ icons }}" type="text/css" rel="stylesheet"/>
+  <script src="{{ jquery }}" type="text/javascript"></script>
+  <script src="{{ bootstrap_js }}" type="text/javascript"></script>
+  <link href="{{ stylesheet }}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  {% for order in orders %}
+    <div style="page-break-after: always;">
+      <h1>{{ text_invoice }} #{{ order.order_id }}</h1>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_invoice }}</strong>
+              <br/>
+              {% if order.invoice_no %}
+                {{ order.invoice_no }}
+              {% else %}
+                &nbsp;
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_order_id }}</strong>
+              <br/>
+              {{ order.order_id }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_date_added }}</strong>
+              <br/>
+              {{ order.date_added }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_store }}</strong>
+              <br/>
+              {{ order.store_name }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_store_address }}</strong>
+              <br/>
+              {{ order.store_address }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_store_telephone }}</strong>
+              <br/>
+              {{ order.store_telephone }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_store_email }}</strong>
+              <br/>
+              {{ order.store_email }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_payment_method }}</strong>
+              <br/>
+              {{ order.payment_method }}
+            </div>
+          </div>
+        </div>
+        {% if order.shipping_method %}
+          <div class="col">
+            <div class="form-control-plaintext p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_shipping_method }}</strong>
+                <br/>
+                {{ order.shipping_method }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="row">
+        {% if order.payment_address %}
+          <div class="col">
+            <div class="form-control-plaintext p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_payment_address }}</strong>
+                <br/>
+                {{ order.payment_address }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if order.shipping_address %}
+          <div class="col">
+            <div class="form-control-plaintext p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_shipping_address }}</strong>
+                <br/>
+                {{ order.shipping_address }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>{{ column_product }}</th>
+            <th>{{ column_model }}</th>
+            <th class="text-end">{{ column_quantity }}</th>
+            <th class="text-end">{{ column_price }}</th>
+            <th class="text-end">{{ column_total }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in order.product %}
+            <tr>
+              <td>{{ product.name }}
+                {% for option in product.option %}
+                  <br/>
+                  <small> - {{ option.name }}: {{ option.value }}</small>
+                {% endfor %}
+
+                {% if product.reward %}
+                  <br/>
+                  <small> - {{ text_points }} {{ product.reward }}</small>
+                {% endif %}
+
+                {% if product.subscription %}
+                  <br/>
+                  <small> - {{ text_subscription }} {{ product.subscription }} </small>
+                {% endif %}</td>
+
+              <td>{{ product.model }}</td>
+              <td class="text-end">{{ product.quantity }}</td>
+              <td class="text-end">{{ product.price }}</td>
+              <td class="text-end">{{ product.total }}</td>
+            </tr>
+          {% endfor %}
+          {% for total in order.total %}
+            <tr>
+              <td class="text-end" colspan="4"><b>{{ total.title }}</b></td>
+              <td class="text-end">{{ total.text }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if order.comment %}
+        <div class="row">
+          <div class="col">
+            <div class="form-control-plaintext p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_comment }}</strong>
+                <br/>
+                {{ order.comment }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+</body>
+</html>

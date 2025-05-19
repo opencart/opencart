@@ -1,0 +1,69 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{{ column_name }}</th>
+        <th>{{ column_version }}</th>
+        <th>{{ column_date_added }}</th>
+        <th class="text-end" style="min-width: 105px;">{{ column_action }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if extensions %}
+        {% for extension in extensions %}
+          <tr{% if not extension.status %} class="table-active opacity-50"{% endif %}>
+            <td>
+              {% if extension.link %}
+                <a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a>
+              {% else %}
+                {{ extension.name }}
+              {% endif %}</td>
+            <td class="align-text-top">{{ extension.version }}</td>
+            <td class="align-text-top">{{ extension.date_added }}</td>
+            <td class="text-end align-text-top text-nowrap">
+              <button type="button" data-bs-toggle="modal" data-bs-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+              {% if not extension.status %}
+                <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
+                <a href="{{ extension.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
+              {% else %}
+                <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fa-solid fa-minus-circle"></i></a>
+                <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" disabled><i class="fa-regular fa-trash-can"></i></button>
+              {% endif %}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>
+{% for extension in extensions %}
+  <div id="extension-install-{{ extension.extension_install_id }}" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">{{ entry_name }}</label> <input type="text" value="{{ extension.name }}" class="form-control" readonly/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_description }}</label>
+            <textarea rows="5" class="form-control" readonly>{{ extension.description }}</textarea>
+          </div>
+          <div>
+            <label class="form-label">{{ entry_code }}</label> <input type="text" value="{{ extension.code }}" class="form-control" readonly/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}

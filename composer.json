@@ -1,0 +1,35 @@
+{
+  "name": "opencart/opencart",
+  "description": "OpenCart",
+  "type": "project",
+  "keywords": [
+    "opencart",
+    "ecommerce",
+    "framework",
+    "opensource"
+  ],
+  "homepage": "https://www.opencart.com/",
+  "license": "GPL-3.0-or-later",
+  "support": {
+    "email": "support@opencart.com",
+    "issues": "https://github.com/opencart/opencart/issues",
+    "forum": "https://forum.opencart.com/",
+    "wiki": "https://github.com/opencart/opencart/wiki",
+    "source": "https://github.com/opencart/opencart/releases",
+    "docs": "http://docs.opencart.com/"
+  },
+  "config": {
+    "vendor-dir": "upload/system/storage/vendor/"
+  },
+  "require": {
+    "php": ">=8.0.2",
+    "scssphp/scssphp": "^1.10.0",
+    "twig/twig": "^3.18.0",
+    "aws/aws-sdk-php": "^3.336.13"
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "Tools\\PHPStan\\": "tools/phpstan/"
+      }
+  }
+}

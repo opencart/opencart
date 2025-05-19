@@ -1,0 +1,50 @@
+version: '3'
+services:
+  opencart:
+    build: tools
+    user: 1000:1000
+    ports:
+      - "80:80"
+    volumes:
+      - ./upload:/var/www/html
+    depends_on:
+      - mysql
+    command: >
+      bash -c "if [ ! -f /var/www/html/install.lock ]; then
+                 wait-for-it mysql:3306 -t 60 &&
+                 cp config-dist.php config.php
+                 cp admin/config-dist.php admin/config.php
+                 php /var/www/html/install/cli_install.php install --username admin --password admin --email email@example.com --http_server http://localhost/ --db_driver mysqli --db_hostname mysql --db_username root --db_password opencart --db_database opencart --db_port 3306 --db_prefix oc_;
+                 touch /var/www/html/install.lock;
+               fi &&
+               apache2-foreground"
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=opencart
+      - MYSQL_DATABASE=opencart
+
+  adminer:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+
+  redis:
+    image: redis:latest
+
+  memcached:
+    image: memcached:latest
+
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=opencart
+      - POSTGRES_DB=opencart

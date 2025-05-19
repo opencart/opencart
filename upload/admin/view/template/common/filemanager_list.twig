@@ -1,0 +1,57 @@
+<div class="row mb-3">
+  <div class="col-sm-5">
+    <a href="{{ parent }}" id="button-parent" data-bs-toggle="tooltip" title="{{ button_parent }}" class="btn btn-light"><i class="fa-solid fa-level-up-alt"></i></a>
+    <a href="{{ refresh }}" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fa-solid fa-rotate"></i></a>
+    <button type="button" data-bs-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="fa-solid fa-upload"></i></button>
+    <button type="button" data-bs-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-light"><i class="fa-solid fa-folder"></i></button>
+    <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+    <input type="hidden" name="directory" value="{{ directory }}" id="input-directory"/>
+  </div>
+  <div class="col-sm-7">
+    <div class="input-group">
+      <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" id="input-search" class="form-control"/>
+      <button type="button" id="button-search" data-bs-toggle="tooltip" title="{{ button_search }}" class="btn btn-primary"><i class="fa-solid fa-search"></i></button>
+    </div>
+  </div>
+</div>
+<div id="modal-folder" class="row mb-3" style="display: none;">
+  <div class="col-sm-12">
+    <div class="input-group">
+      <div class="input-group">
+        <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" id="input-folder" class="form-control"/>
+        <button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+<hr/>
+<div class="row row-cols-sm-3 row-cols-lg-4">
+  {% set path_row = 0 %}
+  {% for directory in directories %}
+    <div class="mb-3">
+      <div class="mb-1" style="min-height: 140px;">
+        <a href="{{ directory.href }}" class="directory mb-1"><i class="fa-solid fa-folder fa-5x"></i></a>
+      </div>
+      <div class="form-check">
+        <label for="input-path-{{ path_row }}" class="form-check-label">{{ directory.name }}</label>
+        <input type="checkbox" name="path[]" value="{{ directory.path }}" id="input-path-{{ path_row }}" class="form-check-input"/>
+      </div>
+    </div>
+    {% set path_row = path_row + 1 %}
+  {% endfor %}
+  {% for image in images %}
+    <div class="mb-3">
+      <div class="mb-1" style="min-height: 140px;">
+        <a href="{{ image.href }}" class="thumbnail mb-1"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-fluid"/></a>
+      </div>
+      <div class="form-check">
+        <label for="input-path-{{ path_row }}" class="form-check-label">{{ image.name }}</label>
+        <input type="checkbox" name="path[]" value="{{ image.path }}" id="input-path-{{ path_row }}" class="form-check-input"/>
+      </div>
+    </div>
+    {% set path_row = path_row + 1 %}
+  {% endfor %}
+</div>
+{% if pagination %}
+  <div class="modal-footer">{{ pagination }}</div>
+{% endif %}

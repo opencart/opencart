@@ -1,0 +1,33 @@
+<?php
+// Texte
+$_['text_subject']               = '%s - Abonnement %s';
+$_['text_greeting']              = 'Merci pour votre intérêt pour le produit %s. Votre demande d\'abonnement a été reçue et sera traitée une fois le paiement confirmé.';
+$_['text_link']                  = 'Pour consulter votre abonnement, cliquez sur le lien ci-dessous:';
+$_['text_promotion']             = 'Succès: Une fonctionnalité promotionnelle a été ajoutée avec succès à cet abonnement!';
+$_['text_subscription_duration'] = '%s tous les %d %s pour %d paiement(s)';
+$_['text_subscription_cancel']   = '%s tous les %d %s jusqu\'à annulation';
+$_['text_subscription_detail']   = 'Détails de l\'abonnement';
+$_['text_instruction']           = 'Instructions';
+$_['text_orders_id']             = 'ID de commande:';
+$_['text_date_added']            = 'Date d\'ajout:';
+$_['text_order_status']          = 'Statut de la commande:';
+$_['text_payment_method']        = 'Méthode de paiement:';
+$_['text_payment_address']       = 'Adresse de facturation';
+$_['text_email']                 = 'E-mail:';
+$_['text_telephone']             = 'Téléphone:';
+$_['text_ip']                    = 'Adresse IP:';
+$_['text_products']              = 'Produits';
+$_['text_product']               = 'Produit';
+$_['text_model']                 = 'Modèle';
+$_['text_quantity']              = 'Quantité';
+$_['text_price']                 = 'Prix';
+$_['text_order_total']           = 'Totaux de la commande';
+$_['text_total']                 = 'Total';
+$_['text_comment']               = 'Les commentaires pour votre abonnement sont:';
+$_['text_description']           = 'Description';
+$_['text_day']                   = 'jour';
+$_['text_week']                  = 'semaine';
+$_['text_semi_month']            = 'quinzaine';
+$_['text_month']                 = 'mois';
+$_['text_year']                  = 'an';
+$_['text_footer']                = 'Veuillez répondre à cet e-mail si vous avez des questions.';

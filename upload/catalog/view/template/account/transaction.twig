@@ -1,0 +1,44 @@
+{{ header }}
+<div id="account-transaction" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <p>{{ text_total }} <b>{{ total }}</b>.</p>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>{{ column_date_added }}</th>
+            <th>{{ column_description }}</th>
+            <th class="text-end">{{ column_amount }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if transactions %}
+            {% for transaction in transactions %}
+              <tr>
+                <td>{{ transaction.date_added }}</td>
+                <td>{{ transaction.description }}</td>
+                <td class="text-end">{{ transaction.amount }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td class="text-center" colspan="3">{{ text_no_results }}</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+      <div class="row mb-3">
+        <div class="col-sm-6 text-start">{{ pagination }}</div>
+        <div class="col-sm-6 text-end">{{ results }}</div>
+      </div>
+      <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

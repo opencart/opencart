@@ -1,0 +1,86 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-marketing" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-marketing" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-report" data-bs-toggle="tab" class="nav-link">{{ tab_report }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="tab-general" class="tab-pane active">
+              <div class="row mb-3">
+                <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
+                  <div id="error-name" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                <div class="col-sm-10">
+                  <textarea name="description" rows="5" placeholder="{{ entry_description }}" id="input-description" class="form-control">{{ description }}</textarea>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" required/>
+                  <div class="form-text">{{ help_code }}</div>
+                  <div id="error-code" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-example" class="col-sm-2 col-form-label">{{ entry_example }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="example1" value="" placeholder="{{ entry_example }}" id="input-example1" class="form-control"/>
+                  <br/>
+                  <input type="text" name="example2" value="" placeholder="{{ entry_example }}" id="input-example2" class="form-control"/>
+                  <div class="form-text">{{ help_example }}</div>
+                </div>
+              </div>
+            </div>
+            <div id="tab-report" class="tab-pane">
+              <fieldset>
+                <legend>{{ text_report }}</legend>
+                <div id="report">{{ report }}</div>
+              </fieldset>
+            </div>
+          </div>
+          <input type="hidden" name="marketing_id" value="{{ marketing_id }}" id="input-marketing-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#input-code').on('keyup', function(e) {
+    $('#input-example1').attr('value', '{{ store }}?tracking=' + $('#input-code').val());
+
+    $('#input-example2').attr('value', '{{ store }}index.php?route=common/home&tracking=' + $('#input-code').val());
+});
+
+$('#input-code').trigger('keyup');
+
+$('#report').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#report').load(this.href);
+});
+//--></script>
+{{ footer }}

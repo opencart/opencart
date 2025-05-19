@@ -1,0 +1,55 @@
+<form id="form-customer" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#customer">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th><a href="{{ sort_email }}"{% if sort == 'c.email' %} class="{{ order|lower }}"{% endif %}>{{ column_email }}</a></th>
+          <th><a href="{{ sort_customer_group }}"{% if sort == 'customer_group' %} class="{{ order|lower }}"{% endif %}>{{ column_customer_group }}</a></th>
+          <th class="d-none d-lg-table-cell"><a href="{{ sort_date_added }}"{% if sort == 'c.date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if customers %}
+          {% for customer in customers %}
+            <tr{% if not customer.status %} class="table-active opacity-50"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" class="form-check-input"/></td>
+              <td>{{ customer.name }}</td>
+              <td>{{ customer.email }}</td>
+              <td>{{ customer.customer_group }}</td>
+              <td class="d-none d-lg-table-cell">{{ customer.date_added }}</td>
+              <td class="text-end">
+                <div class="btn-group dropdown">
+                  <a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
+                  <button type="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle dropdown-toggle-split"><span class="fa-solid fa-caret-down"></span></button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><h6 class="dropdown-header">{{ text_option }}</h6></li>
+                    {% if customer.unlock %}
+                      <li><a href="{{ customer.unlock }}" data-oc-toggle="unlock" class="dropdown-item"><i class="fa-solid fa-unlock"></i> {{ text_unlock }}</a></li>
+                    {% else %}
+                      <li><a href="#" class="dropdown-item disabled"><i class="fa-solid fa-unlock"></i> {{ text_unlock }}</a></li>
+                    {% endif %}
+                    <li><hr class="dropdown-divider"></li>
+                    <li><h6 class="dropdown-header">{{ text_login }}</h6></li>
+                    {% for store in customer.store %}
+                      <li><a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fa-solid fa-lock"></i> {{ store.name }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

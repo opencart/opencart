@@ -1,0 +1,171 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-download" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-download" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-report" data-bs-toggle="tab" class="nav-link">{{ tab_report }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="tab-general" class="tab-pane active">
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
+                <div class="col-sm-10">
+                  {% for language in languages %}
+                    <div class="input-group">
+                      <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                      <input type="text" name="download_description[{{ language.language_id }}][name]" value="{{ download_description[language.language_id] ? download_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
+                    </div>
+                    <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-filename" class="col-sm-2 col-form-label">{{ entry_filename }}</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <button type="button" id="button-upload" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
+                    <input type="text" name="filename" value="{{ filename }}" placeholder="{{ entry_filename }}" id="input-filename" class="form-control" required/>
+                    <button type="button" id="button-download" class="btn btn-outline-secondary"{% if not filename %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</button>
+                  </div>
+                  <div class="form-text">{{ help_filename }}</div>
+                  <div id="error-filename" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-mask" class="col-sm-2 col-form-label">{{ entry_mask }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="mask" value="{{ mask }}" placeholder="{{ entry_mask }}" id="input-mask" class="form-control" required/>
+                  <div class="form-text">{{ help_mask }}</div>
+                  <div id="error-mask" class="invalid-feedback"></div>
+                </div>
+              </div>
+            </div>
+            <div id="tab-report" class="tab-pane">
+              <fieldset>
+                <legend>{{ text_report }}</legend>
+                <div id="report">{{ report }}</div>
+              </fieldset>
+            </div>
+          </div>
+          <input type="hidden" name="download_id" value="{{ download_id }}" id="input-download-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#report').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#report').load(this.href);
+});
+
+$('#button-upload').on('click', function() {
+    var element = this;
+
+    $('#form-upload').remove();
+
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
+
+    var $fileInput = $('#form-upload input[name=\'file\']');
+
+    $fileInput.trigger('click');
+
+    // If the file is canceled before being selected
+    $fileInput[0].addEventListener('cancel', function(e) {
+        $('#form-upload').remove();
+    });
+
+    $fileInput.on('change', function() {
+        if (this.files[0].size > {{ config_file_max_size }}) {
+            $(this).val('');
+
+            $('#form-upload').remove();
+
+            alert('{{ error_upload_size }}');
+        }
+    });
+
+    if (typeof timer !== 'undefined') {
+        clearInterval(timer);
+    }
+
+    var timer = setInterval(function() {
+        if ($fileInput.val() !== '') {
+            clearInterval(timer);
+
+            $.ajax({
+                url: 'index.php?route=catalog/download.upload&user_token={{ user_token }}',
+                type: 'post',
+                dataType: 'json',
+                data: new FormData($('#form-upload')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $(element).button('loading');
+                },
+                complete: function() {
+                    $(element).button('reset');
+                },
+                success: function(json) {
+                    if (json['error']) {
+                        alert(json['error']);
+                    }
+
+                    if (json['success']) {
+                        alert(json['success']);
+
+                        $('#input-filename').val(json['filename']);
+                        $('#input-mask').val(json['mask']);
+
+                        $('#button-download').prop('disabled', false);
+
+                        $('#form-upload').remove();
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                    $('#form-upload').remove();
+                }
+            });
+        }
+    }, 500);
+});
+
+$('#input-filename').on('change', function(e) {
+    var value = $(this).val();
+
+    if (value != '') {
+        $('#button-download').prop('disabled', false);
+    } else {
+        $('#button-download').prop('disabled', true);
+    }
+});
+
+$('#button-download').on('click', function(e) {
+    e.preventDefault();
+    
+    location = 'index.php?route=catalog/download.download&user_token=' + getURLVar('user_token') + '&filename=' + $('#input-filename').val();
+});
+//--></script>
+{{ footer }}

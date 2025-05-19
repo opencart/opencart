@@ -1,0 +1,76 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-seo-url" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-seo-url" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3">
+            <label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
+            <div class="col-sm-10">
+              <select name="store_id" id="input-store" class="form-select">
+                {% for store in stores %}
+                  <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected{% endif %}>{{ store.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
+            <div class="col-sm-10">
+              <select name="language_id" id="input-language" class="form-select">
+                {% for language in languages %}
+                  <option value="{{ language.language_id }}"{% if language.language_id == language_id %} selected{% endif %}>{{ language.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-key" class="col-sm-2 col-form-label">{{ entry_key }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" required/>
+              <div id="error-key" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control" required/>
+              <div id="error-value" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-keyword" class="col-sm-2 col-form-label">{{ entry_keyword }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" required/>
+              <div class="form-text">{{ help_keyword }}</div>
+              <div id="error-keyword" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+              <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              <div class="form-text">{{ help_sort_order }}</div>
+            </div>
+          </div>
+          <input type="hidden" name="seo_url_id" value="{{ seo_url_id }}" id="input-seo-url-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

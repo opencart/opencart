@@ -1,0 +1,83 @@
+{% if promotions %}
+  <h3>{{ text_featured }}</h3>
+  <div class="row">
+    {% for extension in promotions %}
+      {% if extension %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+          <section>
+            <div class="extension-preview text-center">
+              <a href="{{ extension.href }}">
+                <div class="extension-description"></div>
+                <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-fluid"/> </a>
+            </div>
+            <div class="extension-name">
+              <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
+              {{ extension.price }}
+            </div>
+            <div class="extension-rate">
+              <div class="row">
+                <div class="col-6">
+                  {% for i in 1..5 %}
+                    {% if extension.rating < i %}
+                      <i class="fa-regular fa-star"></i>
+                    {% else %}
+                      <i class="fa-solid fa-star"></i>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="col-6">
+                  <div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <hr/>
+{% endif %}
+
+{% if extensions %}
+  <div class="row">
+    {% for extension in extensions %}
+
+      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+        <section>
+          <div class="extension-preview text-center">
+            <a href="{{ extension.href }}">
+              <div class="extension-description"></div>
+              <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-fluid"/> </a>
+          </div>
+          <div class="extension-name">
+            <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
+            {{ extension.price }}
+          </div>
+          <div class="extension-rate">
+            <div class="row">
+              <div class="col-6">
+                {% for i in 1..5 %}
+                  {% if extension.rating < i %}
+                    <i class="fa-regular fa-star"></i>
+                  {% else %}
+                    <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <div class="col-6">
+                <div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-center">{{ text_no_results }}</p>
+{% endif %}
+
+<div class="row">
+  <div class="col-sm-12 text-center">{{ pagination }}</div>
+</div>

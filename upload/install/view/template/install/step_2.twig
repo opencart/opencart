@@ -1,0 +1,298 @@
+{{ header }}
+<div id="content">
+  <div class="page-header">
+    <div class="container">
+      <h1>{{ heading_title }}</h1>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_step_2 }}</div>
+      <div class="card-body">
+        <form id="form-step-2">
+          <fieldset>
+            <legend>{{ text_install_php }}</legend>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td class="w-25"><b>{{ text_setting }}</b></td>
+                  <td class="w-25"><b>{{ text_current }}</b></td>
+                  <td class="w-25"><b>{{ text_required }}</b></td>
+                  <td class="w-25 text-center"><b>{{ text_status }}</b></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ text_version }}</td>
+                  <td>{{ php_version }}</td>
+                  <td>8.0+</td>
+                  <td class="text-center">
+                    {% if version %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if open_basedir %} class="table-danger"{% endif %}>
+                  <td>{{ text_open_basedir }}</td>
+                  <td>{% if not open_basedir %}
+                    <span class="text-success">{{ open_basedir_current }}</span>
+                  {% else %}
+                    <span class="text-danger"> {{ open_basedir_current }}</span>
+                    {% endif %}</td>
+                  <td>{{ open_basedir_required }}</td>
+                  <td class="text-center">{% if not open_basedir %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if magic_quotes_gpc %} class="table-danger"{% endif %}>
+                  <td>{{ text_magic }}</td>
+                  <td>{% if magic_quotes_gpc %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_off }}</td>
+                  <td class="text-center">
+                    {% if not error_magic_quotes_gpc %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if register_globals %} class="table-danger"{% endif %}>
+                  <td>{{ text_global }}</td>
+                  <td>{% if register_globals %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_off }}</td>
+                  <td class="text-center">
+                    {% if not register_globals %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if not file_uploads %} class="table-danger"{% endif %}>
+                  <td>{{ text_file_upload }}</td>
+                  <td>{% if file_uploads %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_on }}</td>
+                  <td class="text-center">{% if file_uploads %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if session_auto_start %} class="table-danger"{% endif %}>
+                  <td>{{ text_session }}</td>
+                  <td>{% if session_auto_start %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_off }}</td>
+                  <td class="text-center">{% if not session_auto_start %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
+          <fieldset>
+            <legend>{{ text_install_extension }}</legend>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td class="w-25"><b>{{ text_extension }}</b></td>
+                  <td class="w-25"><b>{{ text_current }}</b></td>
+                  <td class="w-25"><b>{{ text_required }}</b></td>
+                  <td class="w-25 text-center"><b>{{ text_status }}</b></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr{% if not db %} class="table-danger"{% endif %}>
+                  <td>{{ text_db }}</td>
+                  <td>{% if db %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_on }}</td>
+                  <td class="text-center">{% if db %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if not gd %} class="table-danger"{% endif %}>
+                  <td>{{ text_gd }}</td>
+                  <td>{% if gd %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_on }}</td>
+                  <td class="text-center">{% if gd %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if not curl %} class="table-danger"{% endif %}>
+                  <td>{{ text_curl }}</td>
+                  <td>{% if curl %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_on }}</td>
+                  <td class="text-center">{% if curl %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if not openssl %} class="table-danger"{% endif %}>
+                  <td>{{ text_openssl }}</td>
+                  <td>{% if openssl %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_on }}</td>
+                  <td class="text-center">{% if openssl %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if not zlib %} class="table-danger"{% endif %}>
+                  <td>{{ text_zlib }}</td>
+                  <td>{% if zlib %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_on }}</td>
+                  <td class="text-center">{% if zlib %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if not zip %} class="table-danger"{% endif %}>
+                  <td>{{ text_zip }}</td>
+                  <td>{% if zip %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_on }}</td>
+                  <td class="text-center">{% if zip %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+                {% if not iconv %}
+                  <tr{% if not mbstring %} class="table-danger"{% endif %}>
+                    <td>{{ text_mbstring }}</td>
+                    <td>{% if mbstring %}
+                        {{ text_on }}
+                      {% else %}
+                        {{ text_off }}
+                      {% endif %}</td>
+                    <td>{{ text_on }}</td>
+                    <td class="text-center">{% if mbstring %}
+                        <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                      {% else %}
+                        <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                      {% endif %}</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </fieldset>
+          <fieldset>
+            <legend>{{ text_install_file }}</legend>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td><b>{{ text_file }}</b></td>
+                  <td><b>{{ text_status }}</b></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr{% if error_catalog_config %} class="table-danger"{% endif %}>
+                  <td>{{ catalog_config }}</td>
+                  <td>{% if not error_catalog_config %}
+                      <span class="text-success">{{ text_writable }}</span>
+                    {% else %}
+                      <span class="text-danger">{{ error_catalog_config }}</span>
+                    {% endif %}</td>
+                </tr>
+                <tr{% if error_admin_config %} class="table-danger"{% endif %}>
+                  <td>{{ admin_config }}</td>
+                  <td>{% if not error_admin_config %}
+                      <span class="text-success">{{ text_writable }}</span>
+                    {% else %}
+                      <span class="text-danger">{{ error_admin_config }}</span>
+                    {% endif %}</td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
+          <div class="row mt-3">
+            <div class="col"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+            <div class="col text-end"><button type="submit" id="button-continue" class="btn btn-primary">{{ button_continue }}</button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#form-step-2').on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=install/step_2.save&language={{ language }}',
+        type: 'post',
+        data: $('#form-step-2').serialize(),
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-continue').prop('disabled', true);
+        },
+        complete: function() {
+            $('#button-continue').prop('disabled', false);
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
+
+            if (json['error']) {
+                $('#form-step-2').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
+{{ footer }}

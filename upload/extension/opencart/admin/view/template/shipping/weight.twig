@@ -1,0 +1,82 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-shipping" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form id="form-shipping" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            {% for geo_zone in geo_zones %}
+              <li class="nav-item"><a href="#tab-geo-zone{{ geo_zone.geo_zone_id }}" data-bs-toggle="tab" class="nav-link">{{ geo_zone.name }}</a></li>
+            {% endfor %}
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="row mb-3">
+                <label for="input-tax-class" class="col-sm-2 col-form-label">{{ entry_tax_class }}</label>
+                <div class="col-sm-10">
+                  <select name="shipping_weight_tax_class_id" id="input-tax-class" class="form-select">
+                    <option value="0">{{ text_none }}</option>
+                    {% for tax_class in tax_classes %}
+                      <option value="{{ tax_class.tax_class_id }}"{% if tax_class.tax_class_id == shipping_weight_tax_class_id %} selected{% endif %}>{{ tax_class.title }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="shipping_weight_status" value="0"/>
+                    <input type="checkbox" name="shipping_weight_status" value="1" id="input-status" class="form-check-input"{% if shipping_weight_status %} checked{% endif %}/>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="shipping_weight_sort_order" value="{{ shipping_weight_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                </div>
+              </div>
+            </div>
+            {% for geo_zone in geo_zones %}
+              <div class="tab-pane" id="tab-geo-zone{{ geo_zone.geo_zone_id }}">
+                <div class="row mb-3">
+                  <label for="input-rate-{{ geo_zone.geo_zone_id }}" class="col-sm-2 col-form-label">{{ entry_rate }}</label>
+                  <div class="col-sm-10">
+                    <textarea name="shipping_weight_{{ geo_zone.geo_zone_id }}_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate-{{ geo_zone.geo_zone_id }}" class="form-control">{{ shipping_weight_geo_zone_rate[geo_zone.geo_zone_id] ? shipping_weight_geo_zone_rate[geo_zone.geo_zone_id] }}</textarea>
+                    <div class="form-text text-muted">{{ help_rate }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="shipping_weight_{{ geo_zone.geo_zone_id }}_status" value="0"/>
+                      <input type="checkbox" name="shipping_weight_{{ geo_zone.geo_zone_id }}_status" value="1" id="input-status-{{ geo_zone.geo_zone_id }}" class="form-check-input"{% if shipping_weight_geo_zone_status[geo_zone.geo_zone_id] %} checked{% endif %}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

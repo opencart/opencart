@@ -14,6 +14,7 @@ $_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie L
 // Column
 $_['column_title']            = 'Information Titel';
 $_['column_sort_order']       = 'Sortierreihenfolge';
+$_['column_status']           = 'Status';
 $_['column_action']           = 'Aktionen';
 
 // Entry

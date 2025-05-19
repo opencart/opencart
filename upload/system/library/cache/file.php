@@ -87,15 +87,18 @@ class File {
 	 * Destructor
 	 */
 	public function __destruct() {
-		if ($files && mt_rand(1, 100) == 1) {
+		
+		if (mt_rand(1, 100) == 1) {
+		
 			$files = glob(DIR_CACHE . 'cache.*');
+			if ($files) {
+				foreach ($files as $file) {
+					$time = substr(strrchr($file, '.'), 1);
 
-			foreach ($files as $file) {
-				$time = substr(strrchr($file, '.'), 1);
-
-				if ($time < time()) {
-					if (!@unlink($file)) {
-						clearstatcache(false, $file);
+					if ($time < time()) {
+						if (!@unlink($file)) {
+							clearstatcache(false, $file);
+						}
 					}
 				}
 			}

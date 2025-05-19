@@ -87,9 +87,9 @@ class File {
 	 * Destructor
 	 */
 	public function __destruct() {
-		$files = glob(DIR_CACHE . 'cache.*');
-
 		if ($files && mt_rand(1, 100) == 1) {
+			$files = glob(DIR_CACHE . 'cache.*');
+
 			foreach ($files as $file) {
 				$time = substr(strrchr($file, '.'), 1);
 

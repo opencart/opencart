@@ -39,7 +39,7 @@
               <td class="text-center">
                 <div class="form-switch form-switch-lg">
                   <input type="hidden" name="status" value="0"/>
-                  <input type="checkbox" name="status" value="{% if not product.status %}{{ product.enable }}{% else %}{{ product.disable }}{% endif %}" class="form-check-input text-center"{% if product.status %} checked{% endif %}/>
+                  <input type="checkbox" name="status" value="{% if not product.status %}{{ product.enable }}{% else %}{{ product.disable }}{% endif %}" class="form-check-input"{% if product.status %} checked{% endif %}/>
                 </div>
               </td>
               <td class="text-end text-nowrap">

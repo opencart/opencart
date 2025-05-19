@@ -124,7 +124,11 @@ class Information extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_information->getInformations($filter_data);
 
 		foreach ($results as $result) {
-			$data['informations'][] = ['edit' => $this->url->link('catalog/information.form', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url)] + $result;
+			$data['informations'][] = [
+				'edit' 		=> $this->url->link('catalog/information.form', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url),
+				'enable'	=> $this->url->link('catalog/information.enable', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url),
+				'disable'	=> $this->url->link('catalog/information.disable', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';
@@ -138,6 +142,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		// Sorts
 		$data['sort_title'] = $this->url->link('catalog/information.list', 'user_token=' . $this->session->data['user_token'] . '&sort=id.title' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/information.list', 'user_token=' . $this->session->data['user_token'] . '&sort=i.sort_order' . $url);
+		$data['sort_status'] = $this->url->link('catalog/information.list', 'user_token=' . $this->session->data['user_token'] . '&sort=i.status' . $url);
 
 		$url = '';
 
@@ -166,6 +171,72 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['order'] = $order;
 
 		return $this->load->view('catalog/information_list', $data);
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('catalog/information');
+
+		$json = [];
+
+		if (isset($this->request->get['information_id'])) {
+			$information_id = (int)$this->request->get['information_id'];
+		} else {
+			$information_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/information')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// information
+			$this->load->model('catalog/information');
+
+			$this->model_catalog_information->editStatus($information_id, true);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('catalog/information');
+
+		$json = [];
+
+		if (isset($this->request->get['information_id'])) {
+			$information_id = (int)$this->request->get['information_id'];
+		} else {
+			$information_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/information')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// information
+			$this->load->model('catalog/information');
+
+			$this->model_catalog_information->editStatus($information_id, false);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

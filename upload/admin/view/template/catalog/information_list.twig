@@ -6,22 +6,29 @@
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th><a href="{{ sort_title }}"{% if sort == 'id.title' %} class="{{ order|lower }}"{% endif %}>{{ column_title }}</a></th>
           <th class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'i.sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
+          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'i.status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
         {% if informations %}
           {% for information in informations %}
-            <tr{% if not information.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not information.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ information.information_id }}" class="form-check-input"/></td>
               <td>{{ information.title }}</td>
               <td class="text-end">{{ information.sort_order }}</td>
-              <td class="text-end"><a href="{{ information.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-center">
+                <div class="form-switch form-switch-md">
+                  <input type="hidden" name="status" value="0"/>
+                  <input type="checkbox" name="status" value="{% if not information.status %}{{ information.enable }}{% else %}{{ information.disable }}{% endif %}" id="input-status" class="form-check-input text-center"{% if information.status %} checked{% endif %}/>
+                </div>
+              </td>
+              <td class="text-end text-nowrap text-decoration-none"><a href="{{ information.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not information.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="4">{{ text_no_results }}</td>
+            <td class="text-center" colspan="5">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

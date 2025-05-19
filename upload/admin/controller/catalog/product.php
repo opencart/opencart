@@ -318,6 +318,14 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -373,6 +381,8 @@ class Product extends \Opencart\System\Engine\Controller {
 				'image'   => $this->model_tool_image->resize($image, 40, 40),
 				'price'   => $this->currency->format($result['price'], $this->config->get('config_currency')),
 				'special' => $special,
+				'enable'  => $this->url->link('catalog/product.enable', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
+				'disable' => $this->url->link('catalog/product.disable', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
 				'edit'    => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['master_id'] ? '&master_id=' . $result['master_id'] : '') . $url),
 				'variant' => (!$result['master_id'] ? $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&master_id=' . $result['product_id'] . $url) : '')
 			] + $result;
@@ -428,6 +438,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['sort_price'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.price' . $url);
 		$data['sort_quantity'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.quantity' . $url);
 		$data['sort_order'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.sort_order' . $url);
+		$data['sort_status'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.status' . $url);
 
 		$url = '';
 
@@ -492,6 +503,72 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['order'] = $order;
 
 		return $this->load->view('catalog/product_list', $data);
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('catalog/product');
+
+		$json = [];
+
+		if (isset($this->request->get['product_id'])) {
+			$product_id = (int)$this->request->get['product_id'];
+		} else {
+			$product_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/product')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// product
+			$this->load->model('catalog/product');
+
+			$this->model_catalog_product->editStatus($product_id, true);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('catalog/product');
+
+		$json = [];
+
+		if (isset($this->request->get['product_id'])) {
+			$product_id = (int)$this->request->get['product_id'];
+		} else {
+			$product_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/product')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// product
+			$this->load->model('catalog/product');
+
+			$this->model_catalog_product->editStatus($product_id, false);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

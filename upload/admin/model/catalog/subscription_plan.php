@@ -180,7 +180,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 
 		$sort_data = [
 			'spd.name',
-			'sp.sort_order'
+			'sp.sort_order',
+			'sp.status'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
@@ -210,6 +211,26 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return $query->rows;
+	}
+
+	/**
+	 * Edit Status
+	 *
+	 * Edit subscription_plan status record in the database.
+	 *
+	 * @param int  $subscription_plan_id primary key of the subscription_plan record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/subscription_plan');
+	 *
+	 * $this->model_catalog_subscription_plan->editStatus($subscription_plan_id, $status);
+	 */
+	public function editStatus(int $subscription_plan_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription_plan` SET `status` = '" . (bool)$status . "' WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 	}
 
 	/**

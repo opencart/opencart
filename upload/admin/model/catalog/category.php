@@ -439,7 +439,8 @@ class Category extends \Opencart\System\Engine\Model {
 
 		$sort_data = [
 			'name',
-			'sort_order'
+			'sort_order',
+			'c1.status'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
@@ -513,6 +514,26 @@ class Category extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Edit Status
+	 *
+	 * Edit category status record in the database.
+	 *
+	 * @param int  $category_id primary key of the category record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/category');
+	 *
+	 * $this->model_catalog_category->editStatus($category_id, $status);
+	 */
+	public function editStatus(int $category_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `status` = '" . (bool)$status . "' WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
 	/**

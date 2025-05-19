@@ -496,7 +496,13 @@ a {
 }
 
 /* required */
-label.required:before, label:has(+ * *[required]):before, label:has(+ *[required]):before {
+label:has(+ div *[required]):before {
+    content: '* ';
+    color: red;
+    font-weight: bold;
+}
+
+label.required:before, label:has(+ input:required):before, label:has(+ select:required):before, label:has(+ textarea:required):before {
     content: '* ';
     color: red;
     font-weight: bold;
@@ -886,4 +892,31 @@ label.required:before, label:has(+ * *[required]):before, label:has(+ *[required
 td {
     position: relative;
 	vertical-align: middle;
+}
+
+.text-decoration-disabled td {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.text-decoration-enabled td {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 1.0) !important;
+}
+
+.text-decoration-uninstalled td {
+  text-decoration: line-through !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.text-decoration-none td {
+  text-decoration: none !important;
+  color: rgba(255, 0, 0, 1.0) !important;
+}
+
+.text-decoration-uninstalled .text-decoration-none,
+.text-decoration-disabled .text-decoration-none,
+.text-decoration-enabled .text-decoration-none {
+  text-decoration: none !important;
+  color: rgba(0, 0, 0, 1.0) !important;
 }

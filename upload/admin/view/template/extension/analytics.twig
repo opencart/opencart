@@ -12,19 +12,23 @@
       <tbody>
         {% if extensions %}
           {% for extension in extensions %}
-            <tr>
+            <tr{% if not extension.installed %} class="text-decoration-uninstalled"{% elseif not extension.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td><b>{{ extension.name }}</b></td>
-              <td class="text-end">{% if not extension.installed %}
-                <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
-              {% else %}
+              <td class="text-end text-nowrap text-decoration-none">
+              {% if extension.installed %}
                 <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
-              {% endif %}</td>
+              {% else %}
+                <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
+              {% endif %}
+              </td>
             </tr>
             {% if extension.installed %}
               {% for store in extension.store %}
-                <tr{% if not store.status %} class="table-active opacity-50"{% endif %}>
+                <tr{% if not store.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
                   <td>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
-                  <td class="text-end text-nowrap"><a href="{{ store.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+                  <td class="text-end text-nowrap text-decoration-none">
+                    <a href="{{ store.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not store.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a>
+                  </td>
                 </tr>
               {% endfor %}
             {% endif %}

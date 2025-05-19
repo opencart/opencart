@@ -181,8 +181,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['categories'][] = [
-				'image' => $this->model_tool_image->resize($image, 40, 40),
-				'edit'  => $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
+				'image'		=> $this->model_tool_image->resize($image, 40, 40),
+				'edit'		=> $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url),
+				'enable'	=> $this->url->link('catalog/category.enable', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url),
+				'disable'	=> $this->url->link('catalog/category.disable', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
 			] + $result;
 		}
 
@@ -197,6 +199,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+		$data['sort_status'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=c1.status' . $url);
 
 		$url = '';
 
@@ -233,6 +236,72 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['order'] = $order;
 
 		return $this->load->view('catalog/category_list', $data);
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('catalog/category');
+
+		$json = [];
+
+		if (isset($this->request->get['category_id'])) {
+			$category_id = (int)$this->request->get['category_id'];
+		} else {
+			$category_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/category')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Category
+			$this->load->model('catalog/category');
+
+			$this->model_catalog_category->editStatus($category_id, true);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('catalog/category');
+
+		$json = [];
+
+		if (isset($this->request->get['category_id'])) {
+			$category_id = (int)$this->request->get['category_id'];
+		} else {
+			$category_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/category')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Category
+			$this->load->model('catalog/category');
+
+			$this->model_catalog_category->editStatus($category_id, false);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

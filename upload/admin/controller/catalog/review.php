@@ -237,6 +237,8 @@ class Review extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['reviews'][] = [
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'enable'  => $this->url->link('catalog/review.enable', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url),
+				'disable' => $this->url->link('catalog/review.disable', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url),
 				'edit'       => $this->url->link('catalog/review.form', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url)
 			] + $result;
 		}
@@ -274,6 +276,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['sort_author'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.author' . $url);
 		$data['sort_rating'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.rating' . $url);
 		$data['sort_date_added'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_added' . $url);
+		$data['sort_status'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.status' . $url);
 
 		$url = '';
 
@@ -328,6 +331,72 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['order'] = $order;
 
 		return $this->load->view('catalog/review_list', $data);
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('catalog/review');
+
+		$json = [];
+
+		if (isset($this->request->get['review_id'])) {
+			$review_id = (int)$this->request->get['review_id'];
+		} else {
+			$review_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/review')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// review
+			$this->load->model('catalog/review');
+
+			$this->model_catalog_review->editStatus($review_id, true);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('catalog/review');
+
+		$json = [];
+
+		if (isset($this->request->get['review_id'])) {
+			$review_id = (int)$this->request->get['review_id'];
+		} else {
+			$review_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/review')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// review
+			$this->load->model('catalog/review');
+
+			$this->model_catalog_review->editStatus($review_id, false);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

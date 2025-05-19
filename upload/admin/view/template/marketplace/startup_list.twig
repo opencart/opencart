@@ -13,12 +13,12 @@
       <tbody>
         {% if startups %}
           {% for startup in startups %}
-            <tr{% if not startup.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not startup.status %} class="text-decoration-disabled"{% else %} class="text-decoration-enabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ startup.startup_id }}" class="form-check-input"/></td>
               <td>{{ startup.code }}</td>
               <td>{{ startup.action }}</td>
               <td class="text-end">{{ startup.sort_order }}</td>
-              <td class="text-end text-nowrap">{% if startup.description %}
+              <td class="text-end text-nowrap text-decoration-none">{% if startup.description %}
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-startup-{{ startup.startup_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
               {% else %}
                 <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>

@@ -125,7 +125,11 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_subscription_plan->getSubscriptionPlans($filter_data);
 
 		foreach ($results as $result) {
-			$data['subscription_plans'][] = ['edit' => $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url)] + $result;
+			$data['subscription_plans'][] = [
+				'edit' => $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url),
+				'enable'	=> $this->url->link('catalog/subscription_plan.enable', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url),
+				'disable'	=> $this->url->link('catalog/subscription_plan.disable', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';
@@ -139,6 +143,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=spd.name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sp.sort_order' . $url);
+		$data['sort_status'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sp.status' . $url);
 
 		$url = '';
 
@@ -167,6 +172,72 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$data['order'] = $order;
 
 		return $this->load->view('catalog/subscription_plan_list', $data);
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('catalog/subscription_plan');
+
+		$json = [];
+
+		if (isset($this->request->get['subscription_plan_id'])) {
+			$subscription_plan_id = (int)$this->request->get['subscription_plan_id'];
+		} else {
+			$subscription_plan_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/subscription_plan')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// subscription_plan
+			$this->load->model('catalog/subscription_plan');
+
+			$this->model_catalog_subscription_plan->editStatus($subscription_plan_id, true);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('catalog/subscription_plan');
+
+		$json = [];
+
+		if (isset($this->request->get['subscription_plan_id'])) {
+			$subscription_plan_id = (int)$this->request->get['subscription_plan_id'];
+		} else {
+			$subscription_plan_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/subscription_plan')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// subscription_plan
+			$this->load->model('catalog/subscription_plan');
+
+			$this->model_catalog_subscription_plan->editStatus($subscription_plan_id, false);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

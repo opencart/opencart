@@ -87,7 +87,7 @@ class File {
 	 * Destructor
 	 */
 	public function __destruct() {
-		if ($files && mt_rand(1, 100) == 1) {
+		if (mt_rand(1, 100) == 1) {
 			$files = glob(DIR_CACHE . 'cache.*');
 
 			foreach ($files as $file) {

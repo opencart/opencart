@@ -16,6 +16,7 @@ $_['text_month']           = 'Month';
 // Column
 $_['column_code']          = 'CRON Code';
 $_['column_cycle']         = 'Cycle';
+$_['column_cron_action']   = 'CRON Action';
 $_['column_date_added']    = 'Date Added';
 $_['column_date_modified'] = 'Date Modified';
 $_['column_action']        = 'Action';

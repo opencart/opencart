@@ -867,38 +867,48 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
+		if (isset($this->request->get['store_id'])) {
+			$store_id = (int)$this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			return new \Opencart\System\Engine\Action('error/permission');
+		}
+
+		// Store
+		if ($store_id) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($store_id);
+
+			if (!$store_info) {
+				return new \Opencart\System\Engine\Action('error/not_found');
+			}
+		}
+
 		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
-		if ($customer_info) {
-			// Create token to login with
-			$token = oc_token(64);
-
-			$this->model_customer_customer->editToken($customer_id, $token);
-
-			// Store
-			if (isset($this->request->get['store_id'])) {
-				$store_id = (int)$this->request->get['store_id'];
-			} else {
-				$store_id = 0;
-			}
-
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore($store_id);
-
-			if ($store_info) {
-				$this->response->redirect($store_info['url'] . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']) . '&login_token=' . $token);
-			} else {
-				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']) . '&login_token=' . $token);
-			}
-
-			return null;
-		} else {
+		if (!$customer_info) {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
+
+		// Create login token
+		$token = oc_token(32);
+
+		$this->model_customer_customer->addToken($customer_id, 'login', $token);
+
+		if ($store_id) {
+			$this->response->redirect($store_info['url'] . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']) . '&code=' . $token);
+		} else {
+			$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']) . '&code=' . $token);
+		}
+
+		return null;
 	}
 
 	/**

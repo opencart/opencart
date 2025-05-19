@@ -586,6 +586,24 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Token By Code
+	 *
+	 * @param string $code
+	 * @param int    $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/customer');
+	 *
+	 * $this->model_account_customer->deleteToken($customer_id);
+	 */
+	public function deleteTokenByCode(string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `code` = '" . $this->db->escape($code) . "'");
+	}
+
+	/**
 	 * Get Token By Code
 	 *
 	 * @param string $code
@@ -604,23 +622,5 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_token` `ct` LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ct`.`customer_id` = `c`.`customer_id`) WHERE `ct`.`code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
-	}
-
-	/**
-	 * Delete Token By Code
-	 *
-	 * @param string $code
-	 * @param int    $customer_id primary key of the customer record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('account/customer');
-	 *
-	 * $this->model_account_customer->deleteToken($customer_id);
-	 */
-	public function deleteTokenByCode(string $code): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 }

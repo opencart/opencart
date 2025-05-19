@@ -20,7 +20,7 @@
               <td class="text-center">
                 <div class="form-switch form-switch-lg">
                   <input type="hidden" name="status" value="0"/>
-                  <input type="checkbox" name="status" value="{% if not information.status %}{{ information.enable }}{% else %}{{ information.disable }}{% endif %}" id="input-status" class="form-check-input text-center"{% if information.status %} checked{% endif %}/>
+                  <input type="checkbox" name="status" value="{% if not information.status %}{{ information.enable }}{% else %}{{ information.disable }}{% endif %}" class="form-check-input text-center"{% if information.status %} checked{% endif %}/>
                 </div>
               </td>
               <td class="text-end text-nowrap"><a href="{{ information.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not information.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>

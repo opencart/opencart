@@ -24,7 +24,7 @@
               <td class="text-center">
                 <div class="form-switch form-switch-lg">
                   <input type="hidden" name="status" value="0"/>
-                  <input type="checkbox" name="status" value="{% if not review.status %}{{ review.enable }}{% else %}{{ review.disable }}{% endif %}" id="input-status" class="form-check-input text-center"{% if review.status %} checked{% endif %}/>
+                  <input type="checkbox" name="status" value="{% if not review.status %}{{ review.enable }}{% else %}{{ review.disable }}{% endif %}" class="form-check-input text-center"{% if review.status %} checked{% endif %}/>
                 </div>
               </td>
               <td class="text-end text-nowrap"><a href="{{ review.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not review.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>

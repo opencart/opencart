@@ -52,8 +52,8 @@
           </fieldset>
           <br/>
           <fieldset>
-            <legend> {{ text_ip_list }}</legend>
-            <div id="ip"></div>
+            <legend>{{ text_ip_list }}</legend>
+            <div id="ip">{{ ip }}</div>
           </fieldset>
         </form>
       </div>
@@ -66,8 +66,6 @@ $('#ip').on('click', '.pagination a', function(e) {
 
     $('#ip').load(this.href);
 });
-
-$('#ip').load('index.php?route=extension/opencart/fraud/ip.ip&user_token={{ user_token }}');
 
 $('#button-ip-add').on('click', function() {
     $.ajax({

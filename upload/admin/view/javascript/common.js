@@ -177,13 +177,34 @@ $(document).on('submit', 'form', function(e) {
         var method = $(button).attr('formmethod') || $(form).attr('method') || 'post';
         var enctype = $(button).attr('formenctype') || $(form).attr('enctype') || 'application/x-www-form-urlencoded';
 
-        console.log(e);
+
+
+
+        console.log($(form).attr('data-oc-load'));
+
+        console.log('Element');
         console.log(element);
-        console.log('action ' + action);
-        console.log('button ' + button);
-        console.log('method ' + method);
-        console.log('enctype ' + enctype);
+
+        console.log('Form');
+        console.log(form);
+
+        console.log('Action');
+        console.log(action);
+
+        console.log('Button');
+        console.log(button);
+
+        console.log('Method');
+        console.log(method);
+
+        console.log('Enctype');
+        console.log(enctype);
+
+        console.log('Data');
         console.log($(element).serialize());
+
+        console.log('Event');
+        console.log(e);
 
         // https://github.com/opencart/opencart/issues/9690
         if (typeof CKEDITOR != 'undefined') {

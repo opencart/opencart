@@ -3,7 +3,6 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" id="button-generate" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-primary"><i class="fa-solid fa-sync"></i></button>
         <button type="submit" form="form-ssr" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -28,6 +27,7 @@
                 <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
               </div>
               <div id="progress-text" class="form-text mb-2"></div>
+              <button type="button" id="button-generate" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-primary"><i class="fa-solid fa-play"></i> {{ button_generate }}</button>
             </div>
           </div>
         </fieldset>

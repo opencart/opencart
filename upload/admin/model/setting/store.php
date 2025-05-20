@@ -51,6 +51,15 @@ class Store extends \Opencart\System\Engine\Model {
 			$this->model_design_seo_url->addSeoUrl($result['key'], $result['value'], $result['keyword'], $store_id, $result['language_id'], $result['sort_order']);
 		}
 
+		// Populate countries
+		$this->load->model('localisation/country');
+
+		$results = $this->model_localisation_country->getCountries();
+
+		foreach ($results as $result) {
+			$this->model_localisation_country->addStore($result['country_id'], $store_id);
+		}
+
 		$this->cache->delete('store');
 
 		return $store_id;

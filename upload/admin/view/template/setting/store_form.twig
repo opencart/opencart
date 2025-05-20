@@ -277,9 +277,25 @@
                         <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
                         <div class="col-sm-10">
                           <div class="form-switch form-switch-lg">
-                            <input type="hidden" name="config_product_count" value="0"/> <input type="checkbox" name="config_product_count" value="1" id="input-product-count" class="form-check-input"{% if config_product_count %} checked{% endif %}/>
+                            <input type="hidden" name="config_product_count" value="0"/>
+                            <input type="checkbox" name="config_product_count" value="1" id="input-product-count" class="form-check-input"{% if config_product_count %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_product_count }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-cms">{{ text_cms }}</button></h2>
+                  <div id="collapse-cms" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                    <div class="accordion-body">
+                      <div class="row mb-3">
+                        <label for="input-article-description-length" class="col-sm-2 col-form-label">{{ entry_article_description_length }}</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="config_article_description_length" value="{{ config_article_description_length }}" placeholder="{{ entry_article_description_length }}" id="input-article-description-length" class="form-control" required/>
+                          <div class="form-text">{{ help_article_description_length }}</div>
+                          <div id="error-article-description-length" class="invalid-feedback"></div>
                         </div>
                       </div>
                     </div>

@@ -125,14 +125,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($this->user->hasPermission('access', 'catalog/identifier')) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_identifier'),
-					'href'     => $this->url->link('catalog/identifier', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
 			if ($this->user->hasPermission('access', 'catalog/download')) {
 				$catalog[] = [
 					'name'     => $this->language->get('text_download'),
@@ -584,6 +576,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				$localisation[] = [
 					'name'     => $this->language->get('text_currency'),
 					'href'     => $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
+			if ($this->user->hasPermission('access', 'localisation/identifier')) {
+				$localisation[] = [
+					'name'     => $this->language->get('text_identifier'),
+					'href'     => $this->url->link('localisation/identifier', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}

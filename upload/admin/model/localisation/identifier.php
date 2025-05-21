@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Admin\Model\Catalog;
+namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Identifier
  *
- * Can be loaded using $this->load->model('catalog/identifier');
+ * Can be loaded using $this->load->model('localisation/identifier');
  *
  * @package Opencart\Admin\Model\Catalog
  */
@@ -27,7 +27,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *     'status'     => 0,
 	 * ];
 	 *
-	 * $this->load->model('catalog/identifier');
+	 * $this->load->model('localisation/identifier');
 	 *
 	 * $identifier_id = $this->model_catalog_identifier->addIdentifier($identifier_data);
 	 */
@@ -61,7 +61,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *     'status'     => 1,
 	 * ];
 	 *
-	 * $this->load->model('catalog/identifier');
+	 * $this->load->model('localisation/identifier');
 	 *
 	 * $this->model_catalog_identifier->editIdentifier($identifier_id, $identifier_data);
 	 */
@@ -82,7 +82,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/identifier');
+	 * $this->load->model('localisation/identifier');
 	 *
 	 * $this->model_catalog_identifier->deleteIdentifier($identifier_id);
 	 */
@@ -103,7 +103,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/identifier');
+	 * $this->load->model('localisation/identifier');
 	 *
 	 * $identifier_info = $this->model_catalog_identifier->getIdentifier($identifier_id);
 	 */
@@ -144,7 +144,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *     'limit' => 10
 	 * ];
 	 *
-	 * $this->load->model('catalog/identifier');
+	 * $this->load->model('localisation/identifier');
 	 *
 	 * $results = $this->model_catalog_identifier->getIdentifiers($filter_data);
 	 */
@@ -179,7 +179,7 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/identifier');
+	 * $this->load->model('localisation/identifier');
 	 *
 	 * $identifier_total = $this->model_catalog_identifier->getTotalIdentifiers();
 	 */

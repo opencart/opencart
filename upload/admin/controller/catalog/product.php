@@ -768,7 +768,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Product Identifiers
-		$this->load->model('catalog/identifier');
+		$this->load->model('localisation/identifier');
 
 		$data['identifiers'] = $this->model_catalog_identifier->getIdentifiers();
 
@@ -1301,7 +1301,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Identifier
-		$this->load->model('catalog/identifier');
+		$this->load->model('localisation/identifier');
 
 		foreach ($post_info['product_code'] as $key => $product_code) {
 			$identifier_info = $this->model_catalog_identifier->getIdentifier($product_code['identifier_id']);

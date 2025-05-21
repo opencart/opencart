@@ -27,22 +27,14 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-$('#list').on('click', '.form-check-input', function(e) {
+$('#list').on('change', '.form-switch .form-check-input', function(e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
         url: $(element).val(),
-        type: 'post',
-        data: $('#information input[name=\'selected[]\']:checked'),
         dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
         success: function(json) {
             $('.alert-dismissible').remove();
 

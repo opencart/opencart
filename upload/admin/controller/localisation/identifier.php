@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Catalog;
+namespace Opencart\Admin\Controller\Localisation;
 /**
  * Class Identifier
  *
@@ -12,7 +12,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('catalog/identifier');
+		$this->load->language('localisation/identifier');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -31,11 +31,11 @@ class Identifier extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/identifier', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/identifier', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/identifier.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/identifier.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('localisation/identifier.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/identifier.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -45,7 +45,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/identifier', $data));
+		$this->response->setOutput($this->load->view('localisation/identifier', $data));
 	}
 
 	/**
@@ -54,7 +54,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function list(): void {
-		$this->load->language('catalog/identifier');
+		$this->load->language('localisation/identifier');
 
 		$this->response->setOutput($this->getList());
 	}
@@ -77,7 +77,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('catalog/identifier.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('localisation/identifier.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Identifiers
 		$data['identifiers'] = [];
@@ -87,29 +87,29 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('catalog/identifier');
+		$this->load->model('localisation/identifier');
 
-		$results = $this->model_catalog_identifier->getIdentifiers($filter_data);
+		$results = $this->model_localisation_identifier->getIdentifiers($filter_data);
 
 		foreach ($results as $result) {
-			$data['identifiers'][] = ['edit' => $this->url->link('catalog/identifier.form', 'user_token=' . $this->session->data['user_token'] . '&identifier_id=' . $result['identifier_id'] . $url)] + $result;
+			$data['identifiers'][] = ['edit' => $this->url->link('localisation/identifier.form', 'user_token=' . $this->session->data['user_token'] . '&identifier_id=' . $result['identifier_id'] . $url)] + $result;
 		}
 
 		$url = '';
 
 		// Total Identifiers
-		$identifier_total = $this->model_catalog_identifier->getTotalIdentifiers();
+		$identifier_total = $this->model_localisation_identifier->getTotalIdentifiers();
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $identifier_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/identifier.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/identifier.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($identifier_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($identifier_total - $this->config->get('config_pagination_admin'))) ? $identifier_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $identifier_total, ceil($identifier_total / $this->config->get('config_pagination_admin')));
 
-		return $this->load->view('catalog/identifier_list', $data);
+		return $this->load->view('localisation/identifier_list', $data);
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function form(): void {
-		$this->load->language('catalog/identifier');
+		$this->load->language('localisation/identifier');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -139,17 +139,17 @@ class Identifier extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/identifier', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('localisation/identifier', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('catalog/identifier.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('catalog/identifier', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('localisation/identifier.save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('localisation/identifier', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Identifier
 		if (isset($this->request->get['identifier_id'])) {
-			$this->load->model('catalog/identifier');
+			$this->load->model('localisation/identifier');
 
-			$identifier_info = $this->model_catalog_identifier->getIdentifier((int)$this->request->get['identifier_id']);
+			$identifier_info = $this->model_localisation_identifier->getIdentifier((int)$this->request->get['identifier_id']);
 		}
 
 		if (!empty($identifier_info)) {
@@ -186,7 +186,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/identifier_form', $data));
+		$this->response->setOutput($this->load->view('localisation/identifier_form', $data));
 	}
 
 	/**
@@ -195,11 +195,11 @@ class Identifier extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function save(): void {
-		$this->load->language('catalog/identifier');
+		$this->load->language('localisation/identifier');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'catalog/identifier')) {
+		if (!$this->user->hasPermission('modify', 'localisation/identifier')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
@@ -220,9 +220,9 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		}
 
 		// Identifier
-		$this->load->model('catalog/identifier');
+		$this->load->model('localisation/identifier');
 
-		$identifier_info = $this->model_catalog_identifier->getIdentifierByCode($post_info['code']);
+		$identifier_info = $this->model_localisation_identifier->getIdentifierByCode($post_info['code']);
 
 		if ($identifier_info && (!$post_info['identifier_id'] || ($identifier_info['identifier_id'] != $post_info['identifier_id']))) {
 			$json['error']['code'] = $this->language->get('error_exists');
@@ -230,9 +230,9 @@ class Identifier extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!$post_info['identifier_id']) {
-				$json['identifier_id'] = $this->model_catalog_identifier->addIdentifier($this->request->post);
+				$json['identifier_id'] = $this->model_localisation_identifier->addIdentifier($this->request->post);
 			} else {
-				$this->model_catalog_identifier->editIdentifier($post_info['identifier_id'], $this->request->post);
+				$this->model_localisation_identifier->editIdentifier($post_info['identifier_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -248,7 +248,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function delete(): void {
-		$this->load->language('catalog/identifier');
+		$this->load->language('localisation/identifier');
 
 		$json = [];
 
@@ -258,16 +258,16 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
-		if (!$this->user->hasPermission('modify', 'catalog/identifier')) {
+		if (!$this->user->hasPermission('modify', 'localisation/identifier')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
 			// Identifier
-			$this->load->model('catalog/identifier');
+			$this->load->model('localisation/identifier');
 
 			foreach ($selected as $identifier_id) {
-				$this->model_catalog_identifier->deleteIdentifier($identifier_id);
+				$this->model_localisation_identifier->deleteIdentifier($identifier_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

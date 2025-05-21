@@ -18,51 +18,155 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 
 		try {
 			$ssrs = [];
+			/*
+			$ssrs[] = [
+				'code'   => 'article',
+				'action' => 'ssr/catalog/article'
+			];
 
-			//$ssrs[] = [
-			//	'code'   => 'article',
-			//	'action' => 'ssr/article'
-			//];
+			$ssrs[] = [
+				'code'   => 'banner',
+				'action' => 'ssr/catalog/banner'
+			];
 
-			//$ssrs[] = [
-			//	'code'   => 'category',
-			//	'action' => 'ssr/category'
-			//];
+
+			$ssrs[] = [
+				'code'   => 'category',
+				'action' => 'ssr/catalog/category'
+			];
+			*/
 
 			$ssrs[] = [
 				'code'   => 'country',
-				'action' => 'ssr/country'
+				'action' => 'ssr/catalog/country'
+			];
+
+			$ssrs[] = [
+				'code'   => 'country',
+				'action' => 'ssr/admin/country'
+			];
+
+			/*
+			$ssrs[] = [
+				'code'   => 'currency',
+				'action' => 'ssr/catalog/currency'
 			];
 
 			$ssrs[] = [
 				'code'   => 'currency',
-				'action' => 'ssr/currency'
+				'action' => 'ssr/admin/currency'
 			];
 
-			//$ssrs[] = [
-			//	'code'   => 'information',
-			//	'action' => 'ssr/information'
-			//];
+			$ssrs[] = [
+				'code'   => 'custom_field',
+				'action' => 'ssr/catalog/custom_field'
+			];
+
+			$ssrs[] = [
+				'code'   => 'custom_field',
+				'action' => 'ssr/admin/custom_field'
+			];
+
+			$ssrs[] = [
+				'code'   => 'customer_group',
+				'action' => 'ssr/catalog/customer_group'
+			];
+
+			$ssrs[] = [
+				'code'   => 'customer_group',
+				'action' => 'ssr/admin/customer_group'
+			];
+
+			$ssrs[] = [
+				'code'   => 'information',
+				'action' => 'ssr/catalog/information'
+			];
 
 			$ssrs[] = [
 				'code'   => 'language',
-				'action' => 'ssr/language'
+				'action' => 'ssr/catalog/language'
 			];
 
-			//$ssrs[] = [
-			//	'code'   => 'manufacturer',
-			//	'action' => 'ssr/manufacturer'
-			//];
+			$ssrs[] = [
+				'code'   => 'language',
+				'action' => 'ssr/admin/language'
+			];
 
-			//$ssrs[] = [
-			//	'code'   => 'product',
-			//	'action' => 'ssr/product'
-			//];
+			$ssrs[] = [
+				'code'   => 'length_class',
+				'action' => 'ssr/catalog/length_class'
+			];
 
-			//$ssrs[] = [
-			//	'code'   => 'topic',
-			//	'action' => 'ssr/topic'
-			//];
+			$ssrs[] = [
+				'code'   => 'length_class',
+				'action' => 'ssr/admin/length_class'
+			];
+
+			$ssrs[] = [
+				'code'   => 'manufacturer',
+				'action' => 'ssr/catalog/manufacturer'
+			];
+
+			$ssrs[] = [
+				'code'   => 'option',
+				'action' => 'ssr/catalog/option'
+			];
+
+			$ssrs[] = [
+				'code'   => 'order_status',
+				'action' => 'ssr/admin/order_status'
+			];
+
+			$ssrs[] = [
+				'code'   => 'product',
+				'action' => 'ssr/catalog/product'
+			];
+
+			$ssrs[] = [
+				'code'   => 'return_reason',
+				'action' => 'ssr/catalog/return_reason'
+			];
+
+			$ssrs[] = [
+				'code'   => 'return_reason',
+				'action' => 'ssr/admin/return_reason'
+			];
+
+			$ssrs[] = [
+				'code'   => 'store',
+				'action' => 'ssr/catalog/store'
+			];
+
+			$ssrs[] = [
+				'code'   => 'store',
+				'action' => 'ssr/admin/store'
+			];
+
+			$ssrs[] = [
+				'code'   => 'topic',
+				'action' => 'ssr/catalog/topic'
+			];
+
+			$ssrs[] = [
+				'code'   => 'translation',
+				'action' => 'ssr/catalog/translation'
+			];
+
+			$ssrs[] = [
+				'code'   => 'translation',
+				'action' => 'ssr/admin/translation'
+			];
+
+			$ssrs[] = [
+				'code'   => 'weight_class',
+				'action' => 'ssr/catalog/weight_class'
+			];
+
+			$ssrs[] = [
+				'code'   => 'weight_class',
+				'action' => 'ssr/admin/weight_class'
+			];
+			*/
 
 			foreach ($ssrs as $ssr) {
 				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ssr` WHERE `code` = '" . $this->db->escape($ssr['code']) . "'");

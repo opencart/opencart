@@ -1120,9 +1120,9 @@ VALUES (1, 0),
 --
 
 INSERT INTO `oc_coupon` (`name`, `code`, `type`, `discount`, `logged`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`)
-VALUES ('-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '2020-01-01', 10, '10', 0, '2009-01-27 13:55:03'),
-       ('Free Shipping', '3333', 'P', '0.0000', 0, 1, '100.0000', '2014-01-01', '2014-02-01', 10, '10', 0, '2009-03-14 21:13:53'),
-       ('-10.00 Discount', '1111', 'F', '10.0000', 0, 0, '10.0000', '2014-01-01', '2020-01-01', 100000, '10000', 0, '2009-03-14 21:15:18');
+VALUES ('-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '2020-01-01', 10, '10', 0, NOW()),
+       ('Free Shipping', '3333', 'P', '0.0000', 0, 1, '100.0000', '2014-01-01', '2014-02-01', 10, '10', 0, NOW()),
+       ('-10.00 Discount', '1111', 'F', '10.0000', 0, 0, '10.0000', '2014-01-01', '2020-01-01', 100000, '10000', 0, NOW());
 
 -----------------------------------------------------------
 
@@ -1131,9 +1131,9 @@ VALUES ('-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '
 --
 
 INSERT INTO `oc_cron` (`code`, `description`, `cycle`, `action`, `status`, `date_added`, `date_modified`)
-VALUES ('currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
-       ('gdpr', 'Deletes and send emails to customers who have requested their GPDR data to be deleted.', 'day', 'cron/gdpr', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
-       ('subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, '2014-09-25 14:40:00', '2014-09-25 14:40:00');
+VALUES ('currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, NOW(), NOW()),
+       ('gdpr', 'Deletes and send emails to customers who have requested their GPDR data to be deleted.', 'day', 'cron/gdpr', 1, NOW(), NOW()),
+       ('subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, NOW(), NOW());
 
 -----------------------------------------------------------
 
@@ -1142,14 +1142,14 @@ VALUES ('currency', 'Updates currency conversion values.', 'day', 'cron/currency
 --
 
 INSERT INTO `oc_currency` (`title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`)
-VALUES ('Pound Sterling', 'GBP', '£', '', '2', 0.61250001, 1, '2014-09-25 14:40:00'),
-       ('US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2014-09-25 14:40:00'),
-       ('Euro', 'EUR', '', '€', '2', 0.78460002, 1, '2014-09-25 14:40:00'),
-       ('Hong Kong Dollar', 'HKD', 'HK$', '', '2', 7.82224000, 0, '2018-02-16 12:00:00'),
-       ('Indian Rupee', 'INR', '₹', '', '2', 64.40000000, 0, '2018-02-16 12:00:00'),
-       ('Russian Ruble', 'RUB', '', '₽', '2', 56.40360000, 0, '2018-02-16 12:00:00'),
-       ('Chinese Yuan Renminbi', 'CNY', '¥', '', '2', 6.34510000, 0, '2018-02-16 12:00:00'),
-       ('Australian Dollar', 'AUD', '$', '', '2', 1.26544000, 0, '2018-02-16 12:00:00');
+VALUES ('Pound Sterling', 'GBP', '£', '', '2', 0.61250001, 1, NOW()),
+       ('US Dollar', 'USD', '$', '', '2', 1.00000000, 1, NOW()),
+       ('Euro', 'EUR', '', '€', '2', 0.78460002, 1, NOW()),
+       ('Hong Kong Dollar', 'HKD', 'HK$', '', '2', 7.82224000, 0, NOW()),
+       ('Indian Rupee', 'INR', '₹', '', '2', 64.40000000, 0, NOW()),
+       ('Russian Ruble', 'RUB', '', '₽', '2', 56.40360000, 0, NOW()),
+       ('Chinese Yuan Renminbi', 'CNY', '¥', '', '2', 6.34510000, 0, NOW()),
+       ('Australian Dollar', 'AUD', '$', '', '2', 1.26544000, 0, NOW());
 
 -----------------------------------------------------------
 
@@ -1458,7 +1458,7 @@ VALUES ('opencart', 'currency', 'ecb'),
 --
 
 INSERT INTO `oc_extension_install` (`extension_install_id`, `extension_id`, `extension_download_id`, `name`, `description`, `code`, `version`, `author`, `link`, `status`, `date_added`)
-VALUES (1, 0, 0, 'OpenCart Default Extensions', 'This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.', 'opencart', '1.0', 'OpenCart Ltd', 'https://www.opencart.com', 1, '2020-08-29 15:35:39');
+VALUES (1, 0, 0, 'OpenCart Default Extensions', 'This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.', 'opencart', '1.0', 'OpenCart Ltd', 'https://www.opencart.com', 1, NOW());
 
 -----------------------------------------------------------
 
@@ -2181,26 +2181,26 @@ VALUES (2, 1, 'Processing'),
 --
 
 INSERT INTO `oc_product` (`product_id`, `master_id`, `model`, `location`, `variant`, `override`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `rating`, `sort_order`, `status`, `date_added`, `date_modified`)
-VALUES (28, 0, 'Product 1', '', '', '', 939, 7, 'catalog/demo/htc_touch_hd_1.jpg', 5, 1, 100.0000, 200, 9, '2009-02-03', 146.40000000, 2, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, '2009-02-03 16:06:50', '2011-09-30 01:05:39'),
-       (29, 0, 'Product 2', '', '', '', 999, 6, 'catalog/demo/palm_treo_pro_1.jpg', 6, 1, 279.9900, 0, 9, '2009-02-03', 133.00000000, 2, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, '2009-02-03 16:42:17', '2011-09-30 01:06:08'),
-       (30, 0, 'Product 3', '', '', '', 7, 6, 'catalog/demo/canon_eos_5d_1.jpg', 9, 1, 100.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, '2009-02-03 16:59:00', '2011-09-30 01:05:23'),
-       (31, 0, 'Product 4', '', '', '', 1000, 6, 'catalog/demo/nikon_d300_1.jpg', 0, 1, 80.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, '2009-02-03 17:00:10', '2011-09-30 01:06:00'),
-       (32, 0, 'Product 5', '', '', '', 999, 6, 'catalog/demo/ipod_touch_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, '2009-02-03 17:07:26', '2011-09-30 01:07:22'),
-       (33, 0, 'Product 6', '', '', '', 1000, 6, 'catalog/demo/samsung_syncmaster_941bw.jpg', 0, 1, 200.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, '2009-02-03 17:08:31', '2011-09-30 01:06:29'),
-       (34, 0, 'Product 7', '', '', '', 1000, 6, 'catalog/demo/ipod_shuffle_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, '2009-02-03 18:07:54', '2011-09-30 01:07:17'),
-       (35, 0, 'Product 8', '', '', '', 1000, 5, '', 0, 0, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, '2009-02-03 18:08:31', '2011-09-30 01:06:17'),
-       (36, 0, 'Product 9', '', '', '', 994, 6, 'catalog/demo/ipod_nano_1.jpg', 8, 0, 100.0000, 100, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, '2009-02-03 18:09:19', '2011-09-30 01:07:12'),
-       (40, 0, 'product 11', '', '', '', 970, 5, 'catalog/demo/iphone_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 10.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, '2009-02-03 21:07:12', '2025-03-24 17:49:15'),
-       (41, 0, 'Product 14', '', '', '', 977, 5, 'catalog/demo/imac_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, '2009-02-03 21:07:26', '2011-09-30 01:06:44'),
-       (42, 0, 'Product 15', '', '', '', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '2009-02-04', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 1, '2009-02-03 21:07:37', '2011-09-30 00:46:19'),
-       (43, 0, 'Product 16', '', '', '', 929, 5, 'catalog/demo/macbook_1.jpg', 8, 0, 100.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, '2009-02-03 21:07:49', '2025-03-24 17:29:43'),
-       (44, 0, 'Product 17', '', '', '', 1000, 5, 'catalog/demo/macbook_air_1.jpg', 8, 1, 1000.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, '2009-02-03 21:08:00', '2011-09-30 01:05:53'),
-       (45, 0, 'Product 18', '', '', '', 998, 5, 'catalog/demo/macbook_pro_1.jpg', 8, 1, 2000.0000, 0, 100, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, '2009-02-03 21:08:17', '2011-09-15 22:22:01'),
-       (46, 0, 'Product 19', '', '', '', 1000, 5, 'catalog/demo/sony_vaio_1.jpg', 10, 1, 1000.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, '2009-02-03 21:08:29', '2011-09-30 01:06:39'),
-       (47, 0, 'Product 21', '', '', '', 1000, 5, 'catalog/demo/hp_1.jpg', 7, 1, 100.0000, 400, 9, '2009-02-03', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 0, 1, 0, 0, 1, '2009-02-03 21:08:40', '2025-03-22 16:22:17'),
-       (48, 0, 'product 20', 'test 2', '', '', 995, 5, 'catalog/demo/ipod_classic_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-08', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, '2009-02-08 17:21:51', '2011-09-30 01:07:06'),
-       (49, 0, 'SAM1', '', '', '', 0, 8, 'catalog/demo/samsung_tab_1.jpg', 0, 1, 199.9900, 0, 9, '2011-04-25', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 1, 1, '2011-04-26 08:57:34', '2011-09-30 01:06:23'),
-       (50, 42, 'Product 15', '', '{\"208\":\"\",\"217\":\"\",\"209\":\"\",\"222\":\"\",\"219\":\"\",\"221\":\"\",\"220\":\"\"}', '{\"status\":\"1\"}', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '2009-02-04', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 0, '2025-03-22 16:42:29', '2025-03-22 16:43:18');
+VALUES (28, 0, 'Product 1', '', '', '', 939, 7, 'catalog/demo/htc_touch_hd_1.jpg', 5, 1, 100.0000, 200, 9, '2009-02-03', 146.40000000, 2, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (29, 0, 'Product 2', '', '', '', 999, 6, 'catalog/demo/palm_treo_pro_1.jpg', 6, 1, 279.9900, 0, 9, '2009-02-03', 133.00000000, 2, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (30, 0, 'Product 3', '', '', '', 7, 6, 'catalog/demo/canon_eos_5d_1.jpg', 9, 1, 100.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (31, 0, 'Product 4', '', '', '', 1000, 6, 'catalog/demo/nikon_d300_1.jpg', 0, 1, 80.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (32, 0, 'Product 5', '', '', '', 999, 6, 'catalog/demo/ipod_touch_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (33, 0, 'Product 6', '', '', '', 1000, 6, 'catalog/demo/samsung_syncmaster_941bw.jpg', 0, 1, 200.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (34, 0, 'Product 7', '', '', '', 1000, 6, 'catalog/demo/ipod_shuffle_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (35, 0, 'Product 8', '', '', '', 1000, 5, '', 0, 0, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (36, 0, 'Product 9', '', '', '', 994, 6, 'catalog/demo/ipod_nano_1.jpg', 8, 0, 100.0000, 100, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (40, 0, 'product 11', '', '', '', 970, 5, 'catalog/demo/iphone_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 10.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (41, 0, 'Product 14', '', '', '', 977, 5, 'catalog/demo/imac_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (42, 0, 'Product 15', '', '', '', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '2009-02-04', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 1, NOW(), NOW()),
+       (43, 0, 'Product 16', '', '', '', 929, 5, 'catalog/demo/macbook_1.jpg', 8, 0, 100.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (44, 0, 'Product 17', '', '', '', 1000, 5, 'catalog/demo/macbook_air_1.jpg', 8, 1, 1000.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (45, 0, 'Product 18', '', '', '', 998, 5, 'catalog/demo/macbook_pro_1.jpg', 8, 1, 2000.0000, 0, 100, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (46, 0, 'Product 19', '', '', '', 1000, 5, 'catalog/demo/sony_vaio_1.jpg', 10, 1, 1000.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (47, 0, 'Product 21', '', '', '', 1000, 5, 'catalog/demo/hp_1.jpg', 7, 1, 100.0000, 400, 9, '2009-02-03', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 0, 1, 0, 0, 1, NOW(), NOW()),
+       (48, 0, 'product 20', 'test 2', '', '', 995, 5, 'catalog/demo/ipod_classic_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-08', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (49, 0, 'SAM1', '', '', '', 0, 8, 'catalog/demo/samsung_tab_1.jpg', 0, 1, 199.9900, 0, 9, '2011-04-25', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 1, 1, NOW(), NOW()),
+       (50, 42, 'Product 15', '', '{\"208\":\"\",\"217\":\"\",\"209\":\"\",\"222\":\"\",\"219\":\"\",\"221\":\"\",\"220\":\"\"}', '{\"status\":\"1\"}', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '2009-02-04', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 0, NOW(), NOW());
 
 -----------------------------------------------------------
 
@@ -2843,35 +2843,38 @@ VALUES (0, 1, 'product_id', '47', 'hp-lp3065', 1),
 --
 
 INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status`, `sort_order`, `date_modified`)
-VALUES ('article', '', 'ssr/catalog/article', 0, 0, '2025-04-01 18:12:16'),
-       ('banner', '', 'ssr/catalog/banner', 0, 0, '2025-04-01 18:12:16'),
-       ('category', '', 'ssr/catalog/category', 0, 0, '2025-04-01 18:12:16'),
-       ('country', '', 'ssr/catalog/country', 1, 0, '2025-04-01 18:12:16'),
-       ('country', '', 'ssr/admin/country', 1, 0, '2025-04-01 18:12:16'),
-       ('currency', '', 'ssr/catalog/currency', 1, 0, '2025-04-01 18:12:16'),
-       ('currency', '', 'ssr/admin/currency', 1, 0, '2025-04-01 18:12:16'),
-       ('custom_field', '', 'ssr/catalog/custom_field', 0, 0, '2025-04-01 18:12:16'),
-       ('custom_field', '', 'ssr/admin/custom_field', 0, 0, '2025-04-01 18:12:16'),
-       ('customer_group', '', 'ssr/catalog/customer_group', 1, 0, '2025-04-01 18:12:16'),
-       ('customer_group', '', 'ssr/admin/customer_group', 1, 0, '2025-04-01 18:12:16'),
-       ('information', '', 'ssr/catalog/information', 0, 0, '2025-04-01 18:12:16'),
-       ('language', '', 'ssr/catalog/language', 1, 0, '2025-04-01 18:12:16'),
-       ('language', '', 'ssr/admin/language', 1, 0, '2025-04-01 18:12:16'),
-       ('length_class', '', 'ssr/catalog/length_class', 0, 0, '2025-04-01 18:12:16'),
-       ('length_class', '', 'ssr/admin/length_class', 0, 0, '2025-04-01 18:12:16'),
-       ('manufacturer', '', 'ssr/catalog/manufacturer', 0, 0, '2025-04-01 18:12:16'),
-       ('option', '', 'ssr/admin/option', 0, 0, '2025-04-01 18:12:16'),
-       ('order_status', '', 'ssr/admin/order_status', 0, 0, '2025-04-01 18:12:16'),
-       ('product', '', 'ssr/catalog/product', 0, 0, '2025-04-01 18:12:16'),
-       ('return_reason', '', 'ssr/catalog/return_reason', 0, 0, '2025-04-01 18:12:16'),
-       ('return_reason', '', 'ssr/admin/return_reason', 0, 0, '2025-04-01 18:12:16'),
-       ('store', '', 'ssr/catalog/store', 1, 0, '2025-04-01 18:12:16'),
-       ('store', '', 'ssr/admin/store', 1, 0, '2025-04-01 18:12:16'),
-       ('topic', '', 'ssr/catalog/topic', 0, 0, '2025-04-01 18:12:16'),
-       ('translation', '', 'ssr/catalog/translation', 0, 0, '2025-04-01 18:12:16'),
-       ('translation', '', 'ssr/admin/translation', 0, 0, '2025-04-01 18:12:16'),
-       ('weight_class', '', 'ssr/catalog/weight_class', 0, 0, '2025-04-01 18:12:16'),
-       ('weight_class', '', 'ssr/admin/weight_class', 0, 0, '2025-04-01 18:12:16');
+VALUES ('country', '', 'ssr/catalog/country', 1, 0, NOW()),
+       ('country', '', 'ssr/admin/country', 1, 0, NOW());
+
+-- VALUES ('article', '', 'ssr/catalog/article', 0, 0, '2025-04-01 18:12:16'),
+--        ('banner', '', 'ssr/catalog/banner', 0, 0, '2025-04-01 18:12:16'),
+--        ('category', '', 'ssr/catalog/category', 0, 0, '2025-04-01 18:12:16'),
+--        ('country', '', 'ssr/catalog/country', 1, 0, '2025-04-01 18:12:16'),
+--        ('country', '', 'ssr/admin/country', 1, 0, '2025-04-01 18:12:16'),
+--        ('currency', '', 'ssr/catalog/currency', 1, 0, '2025-04-01 18:12:16'),
+--        ('currency', '', 'ssr/admin/currency', 1, 0, '2025-04-01 18:12:16'),
+--        ('custom_field', '', 'ssr/catalog/custom_field', 0, 0, '2025-04-01 18:12:16'),
+--        ('custom_field', '', 'ssr/admin/custom_field', 0, 0, '2025-04-01 18:12:16'),
+--        ('customer_group', '', 'ssr/catalog/customer_group', 1, 0, '2025-04-01 18:12:16'),
+--       ('customer_group', '', 'ssr/admin/customer_group', 1, 0, '2025-04-01 18:12:16'),
+--        ('information', '', 'ssr/catalog/information', 0, 0, '2025-04-01 18:12:16'),
+--        ('language', '', 'ssr/catalog/language', 1, 0, '2025-04-01 18:12:16'),
+--        ('language', '', 'ssr/admin/language', 1, 0, '2025-04-01 18:12:16'),
+--        ('length_class', '', 'ssr/catalog/length_class', 0, 0, '2025-04-01 18:12:16'),
+--        ('length_class', '', 'ssr/admin/length_class', 0, 0, '2025-04-01 18:12:16'),
+--        ('manufacturer', '', 'ssr/catalog/manufacturer', 0, 0, '2025-04-01 18:12:16'),
+--       ('option', '', 'ssr/admin/option', 0, 0, '2025-04-01 18:12:16'),
+ --       ('order_status', '', 'ssr/admin/order_status', 0, 0, '2025-04-01 18:12:16'),
+--       ('product', '', 'ssr/catalog/product', 0, 0, '2025-04-01 18:12:16'),
+--      ('return_reason', '', 'ssr/catalog/return_reason', 0, 0, '2025-04-01 18:12:16'),
+--       ('return_reason', '', 'ssr/admin/return_reason', 0, 0, '2025-04-01 18:12:16'),
+--      ('store', '', 'ssr/catalog/store', 1, 0, '2025-04-01 18:12:16'),
+--     ('store', '', 'ssr/admin/store', 1, 0, '2025-04-01 18:12:16'),
+--      ('topic', '', 'ssr/catalog/topic', 0, 0, '2025-04-01 18:12:16'),
+--    ('translation', '', 'ssr/catalog/translation', 0, 0, '2025-04-01 18:12:16'),
+--       ('translation', '', 'ssr/admin/translation', 0, 0, '2025-04-01 18:12:16'),
+--      ('weight_class', '', 'ssr/catalog/weight_class', 0, 0, '2025-04-01 18:12:16'),
+--       ('weight_class', '', 'ssr/admin/weight_class', 0, 0, '2025-04-01 18:12:16');
 
 -----------------------------------------------------------
 

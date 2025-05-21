@@ -23,6 +23,8 @@ $_['session_engine']     = 'db'; // db or file
 // Actions
 $_['action_pre_action']  = [
 	'startup/setting',
+	'startup/extension',
+	'startup/event',
 	'startup/seo_url',
 	'startup/session',
 	'startup/language',
@@ -30,11 +32,9 @@ $_['action_pre_action']  = [
 	'startup/currency',
 	'startup/tax',
 	'startup/application',
-	'startup/extension',
 	'startup/startup',
 	'startup/marketing',
 	'startup/error',
-	'startup/event',
 	'startup/sass',
 	'startup/api',
 	'startup/maintenance',
@@ -63,5 +63,9 @@ $_['action_event']      = [
 	'language/*/after' => [
 		0 => 'startup/language.after',
 		1 => 'event/translation'
+	],
+	'routes/modifyKeyValue' => [
+		0 => 'event/routes.skipCommonHome',
+		1 => 'event/routes.skipCurrentLanguage'
 	]
 ];

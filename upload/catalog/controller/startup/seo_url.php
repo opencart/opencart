@@ -42,6 +42,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 					}
 				}
 
+				$this->event->trigger('routes/modifyParams');
+
 				if (!isset($this->request->get['route'])) {
 					$this->request->get['route'] = $this->config->get('action_default');
 				}
@@ -95,14 +97,14 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		foreach ($parts as $part) {
 			$pair = explode('=', $part);
 
-			if (isset($pair[0])) {
-				$key = (string)$pair[0];
-			}
+			$key = $pair[0] ?? null;
+			$value = $pair[1] ?? null;
 
-			if (isset($pair[1])) {
-				$value = (string)$pair[1];
-			} else {
-				$value = '';
+			$results = [];
+			$this->event->trigger('routes/modifyKeyValue', [&$key, &$value, &$results]);
+			if (in_array(false, $results, true)) {
+				unset($query[$key]);
+				continue;
 			}
 
 			$index = $key . '=' . $value;

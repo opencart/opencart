@@ -136,41 +136,45 @@ class Country extends \Opencart\System\Engine\Controller {
 							$store_info = $this->model_setting_store->getStore($store_id);
 						}
 
-						foreach ($languages as $language) {
-							$country_description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
+						if ($store_info) {
+							foreach ($languages as $language) {
+								$country_description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
 
-							if (!$country_description_info) {
-								continue;
-							}
+								if (!$country_description_info) {
+									continue;
+								}
 
-							$base = DIR_CATALOG . 'view/data/';
-							$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-							$filename = 'country-' . $country['country_id'] . '.json';
+								print_r($store_info);
 
-							if (!oc_directory_create($base . $directory, 0777)) {
-								$json['error'] = sprintf($this->language->get('error_directory'), $directory);
+								$base = DIR_CATALOG . 'view/data/';
+								$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+								$filename = 'country-' . $country['country_id'] . '.json';
 
-								break;
-							}
+								if (!oc_directory_create($base . $directory, 0777)) {
+									$json['error'] = sprintf($this->language->get('error_directory'), $directory);
 
-							$zone_data = [];
+									break;
+								}
 
-							$zones = $this->model_localisation_zone->getZonesByCountryId($country['country_id']);
+								$zone_data = [];
 
-							foreach ($zones as $zone) {
-								if ($zone['status']) {
-									$zone_description_info = $this->model_localisation_zone->getDescription($zone['zone_id'], $language['language_id']);
+								$zones = $this->model_localisation_zone->getZonesByCountryId($country['country_id']);
 
-									if ($zone_description_info) {
-										$zone_data[] = $zone_description_info + $zone;
+								foreach ($zones as $zone) {
+									if ($zone['status']) {
+										$zone_description_info = $this->model_localisation_zone->getDescription($zone['zone_id'], $language['language_id']);
+
+										if ($zone_description_info) {
+											$zone_data[] = $zone_description_info + $zone;
+										}
 									}
 								}
-							}
 
-							if (!file_put_contents($base . $directory . $filename, json_encode($country_description_info + $country + ['zone' => $zone_data]))) {
-								$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
+								if (!file_put_contents($base . $directory . $filename, json_encode($country_description_info + $country + ['zone' => $zone_data]))) {
+									$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
 
-								break;
+									break;
+								}
 							}
 						}
 					}

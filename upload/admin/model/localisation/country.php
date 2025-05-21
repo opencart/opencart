@@ -498,6 +498,25 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Stores By Store ID
+	 *
+	 * Delete country stores by store records in the database.
+	 *
+	 * @param int $store_id primary key of the store record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $this->model_localisation_country->deleteStoresByStoreId($store_id);
+	 */
+	public function deleteStoresByStoreId(int $store_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
+	}
+
+	/**
 	 * Get Stores
 	 *
 	 * Get the record of the information store records in the database.

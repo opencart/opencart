@@ -1,0 +1,127 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="container-fluid px-6 py-4">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">{{ heading_title }}</h1>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+  <a href="{{ order_link }}" class="bg-purple-500 text-white rounded-xl p-6 shadow-md">
+    <h2 class="text-lg font-semibold">Total Orders</h2>
+    <p class="text-3xl font-bold mt-2">0</p>
+  </a>
+  <a href="{{ order_link }}" class="bg-pink-500 text-white rounded-xl p-6 shadow-md">
+    <h2 class="text-lg font-semibold">Total Sales</h2>
+    <p class="text-3xl font-bold mt-2">0</p>
+  </a>
+  <a href="{{ customer_link }}" class="bg-yellow-400 text-white rounded-xl p-6 shadow-md">
+    <h2 class="text-lg font-semibold">Customers</h2>
+    <p class="text-3xl font-bold mt-2">0</p>
+  </a>
+  <a href="{{ report_link }}" class="bg-red-500 text-white rounded-xl p-6 shadow-md">
+    <h2 class="text-lg font-semibold">Reports</h2>
+    <p class="text-3xl font-bold mt-2">0</p>
+  </a>
+</div>
+    <!-- Charts -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Daily Sales Summary</h3>
+        <canvas id="lineChart"></canvas>
+      </div>
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4"> Historic Sales Stat</h3>
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctxLine = document.getElementById('lineChart').getContext('2d');
+const chart = new Chart(ctxLine, {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Weekly Sales',
+            data: [],
+            backgroundColor: 'rgba(75,192,192,0.2)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return 'Sales: ' + context.parsed.y.toFixed(2);
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value.toFixed(2);
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Fetch real data via AJAX
+fetch('index.php?route=common/dashboard/getChartData&user_token={{ user_token }}')
+    .then(response => response.json())
+    .then(data => {
+        chart.data.labels = data.labels;
+        chart.data.datasets[0].data = data.data;
+        chart.update();
+    });
+  const ctxBar = document.getElementById('barChart').getContext('2d');
+new Chart(ctxBar, {
+  type: 'bar',
+  data: {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    datasets: [{
+      label: 'Orders',
+      data: [0, 0, 0, 0, 0, 0, 0],
+      backgroundColor: 'rgba(153, 102, 255, 0.6)',
+      borderColor: 'rgba(153, 102, 255, 1)',
+      borderWidth: 1
+    }]
+  }
+});
+</script>
+<script type="text/javascript"><!--
+$('#button-setting').on('click', function() {
+    $.ajax({
+        url: 'index.php?route=common/developer&user_token={{ user_token }}',
+        dataType: 'html',
+        beforeSend: function() {
+            $('#button-setting').button('loading');
+        },
+        complete: function() {
+            $('#button-setting').button('reset');
+        },
+        success: function(html) {
+            $('#modal-developer').remove();
+
+            $('body').prepend(html);
+
+            $('#modal-developer').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
+{{ footer }}

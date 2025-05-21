@@ -1,0 +1,45 @@
+{{ header }}
+<div id="content">
+  <div class="container-fluid">
+    <br/>
+    <br/>
+    <div class="row justify-content-sm-center">
+      <div class="col-sm-10 col-md-8 col-lg-5">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-lock"></i> {{ text_login }}</div>
+          <div class="card-body">
+            <form id="form-login" action="{{ login }}" method="post" data-oc-toggle="ajax">
+              {% if error_warning %}
+                <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+              {% endif %}
+              {% if success %}
+                <div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+              {% endif %}
+              <div class="mb-3">
+                <label for="input-username" class="form-label">{{ entry_username }}</label>
+                <div class="input-group">
+                  <div class="input-group-text"><i class="fa-solid fa-user"></i></div>
+                  <input type="text" name="username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="input-password" class="form-label">{{ entry_password }}</label>
+                <div class="input-group mb-2">
+                  <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
+                  <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
+                </div>
+                {% if forgotten %}
+                <div class="mb-3"><a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
+                {% endif %}
+              </div>
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_login }}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

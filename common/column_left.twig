@@ -1,0 +1,114 @@
+<nav id="column-left">
+	<div id="navigation"><span class="fa-solid fa-bars"></span> {{ text_navigation }}</div>
+	<ul id="menu">
+		{% set i = 0 %}
+		{% for menu in menus %}
+			<li id="{{ menu.id }}">
+				{% if menu.href %}
+					<a href="{{ menu.href }}"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
+				{% else %}
+					<a href="#collapse-{{ i }}" data-bs-toggle="collapse" class="parent collapsed"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
+				{% endif %}
+				{% if menu.children %}
+					<ul id="collapse-{{ i }}" class="collapse">
+						{% set j = 0 %}
+						{% for children_1 in menu.children %}
+							<li>{% if children_1.href %}
+									<a href="{{ children_1.href }}">{{ children_1.name }}</a>
+								{% else %}
+									<a href="#collapse-{{ i }}-{{ j }}" data-bs-toggle="collapse" class="parent collapsed">{{ children_1.name }}</a>
+								{% endif %}
+								{% if children_1.children %}
+									<ul id="collapse-{{ i }}-{{ j }}" class="collapse">
+										{% set k = 0 %}
+										{% for children_2 in children_1.children %}
+											<li>{% if children_2.href %}
+													<a href="{{ children_2.href }}">{{ children_2.name }}</a>
+												{% else %}
+													<a href="#collapse-{{ i }}-{{ j }}-{{ k }}" data-bs-toggle="collapse" class="parent collapsed">{{ children_2.name }}</a>
+												{% endif %}
+												{% if children_2.children %}
+													<ul id="collapse-{{ i }}-{{ j }}-{{ k }}" class="collapse">
+														{% for children_3 in children_2.children %}
+															<li><a href="{{ children_3.href }}">{{ children_3.name }}</a></li>
+														{% endfor %}
+													</ul>
+												{% endif %}</li>
+											{% set k = k + 1 %}
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</li>
+							{% set j = j + 1 %}
+						{% endfor %}
+					</ul>
+				{% endif %}
+			</li>
+			{% set i = i + 1 %}
+		{% endfor %}
+	</ul>
+	{% if statistics_status %}
+		<div id="stats">
+			<ul>
+				<li>
+					<div>{{ text_complete_status }} <span class="float-end">{{ complete_status }}%</span></div>
+					<div class="progress">
+						<div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ complete_status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ complete_status }}%"><span class="sr-only">{{ complete_status }}%</span></div>
+					</div>
+				</li>
+				<li>
+					<div>{{ text_processing_status }} <span class="float-end">{{ processing_status }}%</span></div>
+					<div class="progress">
+						<div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{ processing_status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ processing_status }}%"><span class="sr-only">{{ processing_status }}%</span></div>
+					</div>
+				</li>
+				<li>
+					<div>{{ text_other_status }} <span class="float-end">{{ other_status }}%</span></div>
+					<div class="progress">
+						<div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{ other_status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ other_status }}%"><span class="sr-only">{{ other_status }}%</span></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	{% endif %}
+</nav>
+<nav class="bg-white text-gray-800 h-screen shadow-md w-64 fixed top-0 left-0 z-30 overflow-y-auto px-4 py-6">
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-xl font-bold tracking-wide">{{ heading_title }}</h2>
+    <button class="text-gray-500 hover:text-gray-700 md:hidden">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <ul class="space-y-2">
+  {% for menu in menus %}
+    {% if menu.children %}
+      <li x-data="{ open: false }">
+        <button @click="open = !open" class="w-full flex items-center justify-between text-sm text-gray-700 hover:bg-gray-100 p-2 rounded-md">
+          <span><i class="{{ menu.icon }} mr-2"></i>{{ menu.name }}</span>
+          <i :class="open ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="text-xs"></i>
+        </button>
+        <ul x-show="open" x-transition class="ml-4 mt-1 space-y-1">
+          {% for child in menu.children %}
+            <li>
+              <a href="{{ child.href }}" class="block text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md">
+                <i class="{{ child.icon }} mr-2 text-xs"></i>{{ child.name }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% else %}
+      <li>
+        <a href="{{ menu.href }}" class="flex items-center text-sm text-gray-700 hover:bg-gray-100 p-2 rounded-md">
+          <i class="{{ menu.icon }} mr-2"></i>{{ menu.name }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+
+
+
+</nav>
+

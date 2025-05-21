@@ -213,19 +213,9 @@ class Store extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$key = md5($sql);
+		$query = $this->db->query($sql);
 
-		$store_data = $this->cache->get('store.' . $key);
-
-		if (!$store_data) {
-			$query = $this->db->query($sql);
-
-			$store_data = $query->rows;
-
-			$this->cache->set('store.' . $key, $store_data);
-		}
-
-		return $store_data;
+		return $query->rows;
 	}
 
 	/**

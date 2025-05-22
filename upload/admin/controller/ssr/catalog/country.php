@@ -144,8 +144,6 @@ class Country extends \Opencart\System\Engine\Controller {
 									continue;
 								}
 
-								print_r($store_info);
-
 								$base = DIR_CATALOG . 'view/data/';
 								$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
 								$filename = 'country-' . $country['country_id'] . '.json';

@@ -67,14 +67,25 @@ class Event {
 	 * @return mixed
 	 */
 	public function trigger(string $event, array $args = []) {
-		foreach ($this->data as $value) {
+		foreach ($this->data as $k => $value) {
+			//// Check if the event name matches the registered trigger using regex
 			if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
-				$value['action']->execute($this->registry, $args);
-			}
-		}
-
-		return '';
-	}
+            //Lazy load: only create Action object if it's not already instantiated
+            if (is_string($value['action'])) {
+                $value['action'] = new Action($value['action']); // Instantiate Action from string path
+                $this->data[$k] = $value; // Cache it back to avoid repeating this in future triggers
+            }
+            // Execute the action with the registry and arguments
+            $result = $value['action']->execute($this->registry, $args);
+				// If the result is non-null and not an exception, return it early (first match wins)
+            if (!is_null($result) && !($result instanceof \Exception)) {
+                return $result;
+            }
+        }
+    }
+// If no matching event handled it meaningfully, return an empty string
+    return '';
+}
 
 	/**
 	 * Unregister

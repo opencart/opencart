@@ -27,19 +27,7 @@
         {% endif %}
         <div class="col-sm">
           <h1>{{ heading_title }}</h1>
-          {% if review_status %}
-            <div class="rating">
-              {% for i in 1..5 %}
-                {% if rating < i %}
-                  <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span>
-                {% else %}
-                  <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span>
-                {% endif %}
-              {% endfor %}
-            </div>
-          {% endif %}
-
-          <ul class="list-unstyled">
+          <ul class="list-unstyled mb-1">
             {% if manufacturer %}
               <li>{{ text_manufacturer }}: <strong><a href="{{ manufacturers }}">{{ manufacturer }}</a></strong></li>
             {% endif %}
@@ -52,7 +40,17 @@
             {% endif %}
             <li>{{ text_stock }}: <strong><span class="text-{% if stock %}success{% else %}danger{% endif %}">{{ stock_status }}</span></strong></li>
           </ul>
-
+          {% if review_status %}
+            <div class="rating">
+              {% for i in 1..5 %}
+                {% if rating < i %}
+                  <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span>
+                {% else %}
+                  <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
           {% if price %}
             <ul class="list-unstyled">
               {% if not special %}

@@ -30,7 +30,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/store');
 
-			$stores = $stores + $this->model_setting_store->getStores();
+			$stores = array_merge($stores, $this->model_setting_store->getStores());
 
 			$this->load->model('localisation/language');
 
@@ -86,7 +86,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/store');
 
-			$stores = $stores + $this->model_setting_store->getStores();
+			$stores = array_merge($stores, $this->model_setting_store->getStores());
 
 			$this->load->model('localisation/language');
 

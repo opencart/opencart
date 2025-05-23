@@ -961,20 +961,16 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
-		$data['stores'] = [];
+		$stores = [];
 
-		$data['stores'][] = [
+		$stores[] = [
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
+			'name'     => $this->config->get('config_name')
 		];
 
 		$this->load->model('setting/store');
 
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = $result;
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		if ($product_id) {
 			$data['product_store'] = $this->model_catalog_product->getStores($product_id);

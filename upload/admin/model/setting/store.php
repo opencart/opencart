@@ -159,6 +159,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		$this->model_setting_setting->deleteSettingsByStoreId($store_id);
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$this->model_localisation_country->deleteStoresByStoreId($store_id);

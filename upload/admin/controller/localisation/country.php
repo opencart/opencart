@@ -356,20 +356,16 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
-		$data['stores'] = [];
+		$stores = [];
 
-		$data['stores'][] = [
+		$stores[] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		];
 
 		$this->load->model('setting/store');
 
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = $result;
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		if (!empty($country_info)) {
 			$data['country_store'] = $this->model_localisation_country->getStores($country_info['country_id']);

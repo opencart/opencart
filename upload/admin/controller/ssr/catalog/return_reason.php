@@ -34,7 +34,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/store');
 
-			$stores = $stores + $this->model_setting_store->getStores();
+			$stores = array_merge($stores, $this->model_setting_store->getStores());
 
 			// Get all languages so we don't need to keep querying te DB
 			$this->load->model('localisation/language');
@@ -297,7 +297,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/store');
 
-			$stores = $stores + $this->model_setting_store->getStores();
+			$stores = array_merge($stores, $this->model_setting_store->getStores());
 
 			foreach ($stores as $store) {
 				foreach ($languages as $language) {

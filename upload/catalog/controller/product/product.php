@@ -372,13 +372,13 @@ class Product extends \Opencart\System\Engine\Controller {
 			if ($product_info['master_id']) {
 				$master_id = (int)$product_info['master_id'];
 			} else {
-				$master_id = (int)$this->request->get['product_id'];
+				$master_id = (int)$product_id;
 			}
 
 			$product_options = $this->model_catalog_product->getOptions($master_id);
 
 			foreach ($product_options as $option) {
-				if ((int)$this->request->get['product_id'] && !isset($product_info['override']['variant'][$option['product_option_id']])) {
+				if ($product_id && !isset($product_info['override']['variant'][$option['product_option_id']])) {
 					$product_option_value_data = [];
 
 					foreach ($option['product_option_value'] as $option_value) {
@@ -442,7 +442,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['minimum'] = 1;
 			}
 
-			$data['share'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . (int)$this->request->get['product_id']);
+			$data['share'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id);
 
 			// Attribute Groups
 			$data['attribute_groups'] = $this->model_catalog_product->getAttributes($product_id);
@@ -465,7 +465,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->config->get('config_product_report_status')) {
-				$this->model_catalog_product->addReport($this->request->get['product_id'], oc_get_ip());
+				$this->model_catalog_product->addReport($product_id, oc_get_ip());
 			}
 
 			$data['language'] = $this->config->get('config_language');

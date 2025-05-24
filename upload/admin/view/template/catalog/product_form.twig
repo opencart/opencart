@@ -55,7 +55,8 @@
                             {% if master_id %}
                               <div class="input-group-text">
                                 <div class="form-switch">
-                                  <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].name %} checked{% endif %}/> <label for="input-variant-name-{{ language.language_id }}" class="form-check-label"></label>
+                                  <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].name %} checked{% endif %}/>
+                                  <label for="input-variant-name-{{ language.language_id }}" class="form-check-label"></label>
                                 </div>
                               </div>
                             {% endif %}
@@ -91,7 +92,8 @@
                             {% if master_id %}
                               <div class="input-group-text">
                                 <div class="form-switch">
-                                  <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_title]" value="1" id="input-variant-meta-title-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-title-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_title %} checked{% endif %}/> <label for="input-variant-meta-title-{{ language.language_id }}" class="form-check-label"></label>
+                                  <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_title]" value="1" id="input-variant-meta-title-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-title-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_title %} checked{% endif %}/>
+                                  <label for="input-variant-meta-title-{{ language.language_id }}" class="form-check-label"></label>
                                 </div>
                               </div>
                             {% endif %}

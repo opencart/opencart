@@ -35,8 +35,13 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$code = $data['code'];
 
-		$data['name'] = $data['languages'][$code]['name'];
-		$data['image'] = $data['languages'][$code]['image'];
+		if (isset($data['languages'][$code])) {
+			$data['name'] = $data['languages'][$code]['name'];
+			$data['image'] = $data['languages'][$code]['image'];
+		} else {
+			$data['name'] = '';
+			$data['image'] = '';
+		}
 
 		// Build the url
 		$url_data = $this->request->get;

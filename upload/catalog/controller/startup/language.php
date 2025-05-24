@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
+use Opencart\System\Engine\Action;
 /**
  * Class Language
  *
@@ -16,7 +17,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(): ?\Opencart\System\Engine\Action {
 		// Languages
 		$this->load->model('localisation/language');
 
@@ -24,14 +25,20 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$language_info = [];
 
-		// Set default language
 		if (isset(self::$languages[$this->config->get('config_language_catalog')])) {
+			$language_info = self::$languages[$this->config->get('config_language_catalog')];
+		}
+
+		// Set default language
+		if (!isset($this->request->get['language']) && !isset($this->request->get['language'])) {
 			$language_info = self::$languages[$this->config->get('config_language_catalog')];
 		}
 
 		// If GET has language var
 		if (isset($this->request->get['language']) && isset(self::$languages[$this->request->get['language']])) {
 			$language_info = self::$languages[$this->request->get['language']];
+		} else {
+			$this->request->get['route'] = 'error/not_found';
 		}
 
 		if ($language_info) {
@@ -46,6 +53,8 @@ class Language extends \Opencart\System\Engine\Controller {
 
 			$this->load->language('default');
 		}
+
+		return null;
 	}
 
 	/**

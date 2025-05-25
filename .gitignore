@@ -3,6 +3,9 @@
 /upload/config.php
 /upload/admin/config.php
 
+# Install Files
+/upload/install.lock
+
 # Catalog JSON Files
 /upload/catalog/view/data/*
 !/upload/catalog/view/data/index.html

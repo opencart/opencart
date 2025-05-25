@@ -19,7 +19,7 @@ services:
                apache2-foreground"
 
   mysql:
-    image: mysql:5.7
+    image: mariadb
     ports:
       - "3306:3306"
     environment:

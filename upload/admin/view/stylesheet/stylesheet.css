@@ -530,7 +530,6 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
 
 .table-disabled td {
     background-color: var(--bs-gray-200);
-    opacity: 0.8;
 }
 
 .table a {

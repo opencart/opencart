@@ -23,6 +23,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['language'] = $this->config->get('config_language');
+		$data['currency'] = $this->session->data['currency'];
 
 		return $this->load->view('checkout/shipping_method', $data);
 	}

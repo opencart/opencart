@@ -130,13 +130,13 @@ class WishList extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$price = $this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax'));
 				} else {
 					$price = false;
 				}
 
 				if ((float)$product_info['special']) {
-					$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$special = $this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax'));
 				} else {
 					$special = false;
 				}
@@ -154,6 +154,8 @@ class WishList extends \Opencart\System\Engine\Controller {
 				$this->model_account_wishlist->deleteWishlist($this->customer->getId(), $result['product_id']);
 			}
 		}
+
+		$data['currency'] = $this->session->data['currency'];
 
 		return $this->load->view('account/wishlist_list', $data);
 	}

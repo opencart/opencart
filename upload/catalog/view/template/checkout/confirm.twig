@@ -33,9 +33,8 @@
                 </li>
               {% endif %}
             </ul>
-
           </td>
-          <td class="text-end">{{ product.total }}</td>
+          <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>
         </tr>
       {% endfor %}
     </tbody>
@@ -43,7 +42,7 @@
       {% for total in totals %}
         <tr>
           <td class="text-end"><strong>{{ total.title }}</strong></td>
-          <td class="text-end">{{ total.text }}</td>
+          <td class="text-end"><x-currency code="{{ currency }}" amount="{{ total.value }}"></x-currency></td>
         </tr>
       {% endfor %}
     </tfoot>

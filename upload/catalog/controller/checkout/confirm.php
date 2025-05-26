@@ -318,17 +318,13 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			$data['products'][] = [
 				'subscription' => $subscription,
-				'price'        => $price_status ? $product['price_text'] : '',
-				'total'        => $price_status ? $product['total_text'] : '',
+				'price'        => $price_status ? $product['price'] : '',
+				'total'        => $price_status ? $product['total'] : '',
 				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			] + $product;
 		}
 
-		$data['totals'] = [];
-
-		foreach ($totals as $total) {
-			$data['totals'][] = ['text' => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
-		}
+		$data['totals'] = $totals;
 
 		// Validate if payment method has been set.
 		if (isset($this->session->data['payment_method'])) {
@@ -344,6 +340,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['payment'] = '';
 		}
+
+		$data['currency'] = $this->session->data['currency'];
 
 		// Validate if payment method has been set.
 		return $this->load->view('checkout/confirm', $data);

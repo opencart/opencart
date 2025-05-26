@@ -37,9 +37,10 @@
               <td>{{ text_price }}</td>
               {% for product in products %}
                 <td>{% if not product.special %}
-                    {{ product.price }}
+                    <x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency>
                   {% else %}
-                    <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+                    <span class="price-new"><x-currency code="{{ currency }}" amount="{{ product.special }}"></x-currency></span>
+                    <span class="price-old"><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></span>
                   {% endif %}</td>
               {% endfor %}
             </tr>
@@ -120,7 +121,8 @@
               <td class="text-center">
                 <form action="{{ cart_add }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
                   <button type="submit" id="button-confirm" class="btn btn-primary btn-block">{{ button_cart }}</button>
-                  <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
+                  <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+                  <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
                   <a href="{{ product.remove }}" class="btn btn-danger btn-block">{{ button_remove }}</a>
                 </form>
               </td>

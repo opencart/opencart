@@ -28,9 +28,9 @@
               {% if product.price %}
                 <div class="price">
                   {% if not product.special %}
-                    {{ product.price }}
+                    <x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency>
                   {% else %}
-                    <b>{{ product.special }}</b> <s>{{ product.price }}</s>
+                    <strong>{{ product.special }}</strong> <s><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></s>
                   {% endif %}
                 </div>
               {% endif %}</td>

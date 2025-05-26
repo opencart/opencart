@@ -74,7 +74,7 @@
                   <hr>
                 </li>
                 {% for discount in discounts %}
-                  <li>{{ discount.quantity }}{{ text_discount }}{{ discount.price }}</li>
+                  <li>{{ discount.quantity }}{{ text_discount }}<x-currency code="{{ currency }}" amount="{{ discount.price }}"></x-currency></li>
                 {% endfor %}
               {% endif %}
             </ul>
@@ -102,7 +102,7 @@
                           {% for option_value in option.product_option_value %}
                             <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
                               {% if option_value.price %}
-                                ({{ option_value.price_prefix }}{{ option_value.price }})
+                                ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
                               {% endif %}</option>
                           {% endfor %}
                         </select>
@@ -121,7 +121,7 @@
                                   <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
                                 {{ option_value.name }}
                                 {% if option_value.price %}
-                                  ({{ option_value.price_prefix }}{{ option_value.price }})
+                                  ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
                                 {% endif %}</label>
                             </div>
                           {% endfor %}
@@ -141,7 +141,7 @@
                                   <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
                                 {{ option_value.name }}
                                 {% if option_value.price %}
-                                  ({{ option_value.price_prefix }}{{ option_value.price }})
+                                  ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
                                 {% endif %}</label>
                             </div>
                           {% endfor %}
@@ -184,14 +184,16 @@
 
                     {% if option.type == 'time' %}
                       <div class="mb-3{% if option.required %} required{% endif %}">
-                        <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="time" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                        <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
+                        <input type="time" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                         <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                       </div>
                     {% endif %}
 
                     {% if option.type == 'datetime' %}
                       <div class="mb-3{% if option.required %} required{% endif %}">
-                        <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="datetime-local" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                        <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
+                        <input type="datetime-local" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                         <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                       </div>
                     {% endif %}

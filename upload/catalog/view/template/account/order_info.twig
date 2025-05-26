@@ -121,8 +121,8 @@
                   </form>
                 </td>
                 <td class="text-end">{{ product.quantity }}</td>
-                <td class="text-end">{{ product.price }}</td>
-                <td class="text-end">{{ product.total }}</td>
+                <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.price }}" value="{{ currency_value }}"></x-currency></td>
+                <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}" value="{{ currency_value }}"></x-currency></td>
                 <td class="text-end text-nowrap" style="width: 1px;">
                   <div class="d-grid">
                     <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_reorder }}</button>
@@ -136,7 +136,7 @@
               <tr>
                 <td colspan="2"></td>
                 <td class="text-end"><strong>{{ total.title }}</strong></td>
-                <td class="text-end">{{ total.text }}</td>
+                <td class="text-end"><x-currency code="{{ currency }}" amount="{{ total.value }}" value="{{ currency_value }}"></x-currency></td>
                 <td></td>
               </tr>
             {% endfor %}

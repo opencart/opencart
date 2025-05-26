@@ -61,8 +61,8 @@
               {% if product.minimum %}
                 <small class="invalid-feedback d-block">{{ product.minimum }}</small>
               {% endif %}</td>
-            <td class="text-end">{{ product.price }}</td>
-            <td class="text-end">{{ product.total }}</td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>
           </tr>
         {% endfor %}
       </tbody>

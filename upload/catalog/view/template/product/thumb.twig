@@ -7,12 +7,13 @@
       {% if price %}
         <div class="price">
           {% if not special %}
-            <span class="price-new">{{ price }}</span>
+            <span class="price-new"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span>
           {% else %}
-            <span class="price-new">{{ special }}</span> <span class="price-old">{{ price }}</span>
+            <span class="price-new"><x-currency code="{{ currency }}" amount="{{ special }}"></x-currency></span>
+            <span class="price-old"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span>
           {% endif %}
           {% if tax %}
-            <span class="price-tax">{{ text_tax }} {{ tax }}</span>
+            <span class="price-tax">{{ text_tax }} <x-currency code="{{ currency }}" amount="{{ tax }}"></x-currency></span>
           {% endif %}
         </div>
       {% endif %}

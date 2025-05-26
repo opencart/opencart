@@ -155,8 +155,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'subscription' => $subscription,
 				'stock'        => $product['stock_status'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
 				'minimum'      => !$product['minimum_status'] ? sprintf($this->language->get('error_minimum'), $product['minimum']) : 0,
-				'price'        => $price_status ? $product['price_text'] : '',
-				'total'        => $price_status ? $product['total_text'] : '',
+				'price'        => $price_status ? $product['price'] : '',
+				'total'        => $price_status ? $product['total'] : '',
 				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
 				'remove'       => $this->url->link('checkout/cart.remove', 'language=' . $this->config->get('config_language') . '&key=' . $product['cart_id'])
 			] + $product;
@@ -173,7 +173,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
 			foreach ($totals as $result) {
-				$data['totals'][] = ['text' => $price_status ? $this->currency->format($result['value'], $this->session->data['currency']) : ''] + $result;
+				$data['totals'][] = ['text' => $price_status ? $result['value'] : ''] + $result;
 			}
 		}
 
@@ -198,6 +198,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 		}
+
+		$data['currency'] = $this->session->data['currency'];
 
 		return $this->load->view('checkout/cart_list', $data);
 	}

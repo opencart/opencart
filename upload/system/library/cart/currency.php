@@ -69,9 +69,9 @@ class Currency {
 			$value = $this->currencies[$currency]['value'];
 		}
 
-		$amount = $value ? (float)$number * $value : (float)$number;
+		$number = round($number, $decimal_place);
 
-		$amount = round($amount, $decimal_place);
+		$amount = $value ? (float)$number * $value : (float)$number;
 
 		if (!$format) {
 			return $amount;

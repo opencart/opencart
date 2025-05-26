@@ -69,7 +69,7 @@ export class WebComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, value_old, value_new) {
-        let event = new CustomEvent('attribute:' + name, {
+        let event = new CustomEvent('[' + name + ']', {
             bubbles: true,
             cancelable: true,
             detail: {

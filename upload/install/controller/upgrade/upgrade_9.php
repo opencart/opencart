@@ -18,6 +18,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 
 		try {
 			$ssrs = [];
+
 			/*
 			$ssrs[] = [
 				'code'   => 'article',
@@ -46,7 +47,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 				'action' => 'ssr/admin/country'
 			];
 
-			/*
+
 			$ssrs[] = [
 				'code'   => 'currency',
 				'action' => 'ssr/catalog/currency'
@@ -57,6 +58,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 				'action' => 'ssr/admin/currency'
 			];
 
+			/*
 			$ssrs[] = [
 				'code'   => 'custom_field',
 				'action' => 'ssr/catalog/custom_field'
@@ -81,6 +83,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 				'code'   => 'information',
 				'action' => 'ssr/catalog/information'
 			];
+			*/
 
 			$ssrs[] = [
 				'code'   => 'language',
@@ -91,7 +94,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 				'code'   => 'language',
 				'action' => 'ssr/admin/language'
 			];
-
+			/*
 			$ssrs[] = [
 				'code'   => 'length_class',
 				'action' => 'ssr/catalog/length_class'

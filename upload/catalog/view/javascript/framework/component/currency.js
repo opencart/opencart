@@ -1,6 +1,7 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XCurrency extends WebComponent {
+    static observed = ['code', 'amount', 'value'];
     currencies = [];
 
     get code() {
@@ -12,7 +13,7 @@ class XCurrency extends WebComponent {
     }
 
     get amount() {
-        return this.getAttribute('code');
+        return parseFloat(this.getAttribute('amount'));
     }
 
     set amount(amount) {
@@ -45,7 +46,7 @@ class XCurrency extends WebComponent {
 
     get value() {
         if (this.hasAttribute('value')) {
-            return this.getAttribute('value');
+            return parseFloat(this.getAttribute('value')).toFixed(this.decimal_place);
         }
 
         if (this.currencies[this.code]) {
@@ -59,25 +60,11 @@ class XCurrency extends WebComponent {
         this.setAttribute('value', value);
     }
 
-    get decimal_point() {
-        if (this.currencies[this.code]) {
-            return this.currencies[this.code]['decimal_point'];
-        } else {
-            return '.';
-        }
-    }
-
-    get thousand_point() {
-        if (this.currencies[this.code]) {
-            return this.currencies[this.code]['thousand_point'];
-        } else {
-            return ',';
-        }
-    }
-
     event = {
         connected: async () => {
             this.addEventListener('[code]', this.event.format);
+            this.addEventListener('[amount]', this.event.format);
+            this.addEventListener('[value]', this.event.format);
 
             let response = this.storage.fetch('localisation/currency');
 
@@ -87,36 +74,37 @@ class XCurrency extends WebComponent {
         onloaded: (currencies) => {
             this.currencies = currencies;
         },
-        onchange: (e) => {
-            this.value = e.target.value;
-        },
         format: () => {
-            let code = this.hasAttribute('value');
-            let amount = this.hasAttribute('amount');
-
-            if (number == null || !isFinite(number)) {
-                throw new TypeError("number is not valid");
-            }
-
-            let amount = parseFloat(amount).toFixed(decimals);
-
-            amount = this.value ? number * value : number;
-
-            amount = round(amount, $decimal_place);
-
             let string = '';
 
             if (this.symbol_left) {
-                string += this.symbol_left;
+               string += this.symbol_left;
             }
 
-            string += number_format(amount, this.decimal_place, this.decimal_point, this.thousand_point);
+            let option = {
+                style: 'currency',
+                currency: this.code,
+                currencyDisplay: 'symbol',
+                currencySign: 'standard',
+                minimumIntegerDigits: 1,
+                minimumFractionDigits: this.decimal_place,
+            };
 
-            if (symbol_right) {
-                string += symbol_right;
+            let formater = new Intl.NumberFormat(document.querySelector('html').lang, option);
+
+            let part = formater.formatToParts(this.amount * this.value);
+
+            part.shift();
+
+            for (let i = 0; i < part.length; i++) {
+                string += part[i].value;
             }
 
-            this.innerHTML = '';
+            if (this.symbol_right) {
+                string += this.symbol_right;
+            }
+
+            this.innerHTML = string;
         }
     };
 }

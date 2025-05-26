@@ -323,7 +323,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$total_data = [];
 
 		foreach ($totals as $total) {
-			$total_data[] = ['text' => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
+			$total_data[] = ['text' => $total['value']] + $total;
 		}
 
 		return $total_data;

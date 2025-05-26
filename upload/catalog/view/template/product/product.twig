@@ -54,13 +54,17 @@
           {% if price %}
             <ul class="list-unstyled">
               {% if not special %}
-                <li><h2><span class="price-new">{{ price }}</span></h2></li>
+                <li>
+                  <h2><span class="price-new"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span></h2>
+                </li>
               {% else %}
-                <li><span class="price-old">{{ price }}</span></li>
-                <li><h2><span class="price-new">{{ special }}</span></h2></li>
+                <li><span class="price-old"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span></li>
+                <li>
+                  <h2><span class="price-new"><x-currency code="{{ currency }}" amount="{{ special }}"></x-currency></span></h2>
+                </li>
               {% endif %}
               {% if tax %}
-                <li>{{ text_tax }} {{ tax }}</li>
+                <li>{{ text_tax }} <x-currency code="{{ currency }}" amount="{{ tax }}"></x-currency></li>
               {% endif %}
               {% if points %}
                 <li>{{ text_points }} {{ points }}</li>

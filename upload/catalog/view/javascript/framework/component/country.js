@@ -44,7 +44,7 @@ class XCountry extends WebComponent {
 
             this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '"' + (this.hasAttribute('required') ? ' required' : '') + '>' + this.default + '</select>';
 
-            this.addEventListener('attribute:value', this.event.changeValue);
+            this.addEventListener('[value]', this.event.changeValue);
 
             this.element = this.querySelector('select');
 

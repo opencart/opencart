@@ -2844,7 +2844,11 @@ VALUES (0, 1, 'product_id', '47', 'hp-lp3065', 1),
 
 INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status`, `sort_order`, `date_modified`)
 VALUES ('country', '', 'ssr/catalog/country', 1, 0, NOW()),
-       ('country', '', 'ssr/admin/country', 1, 0, NOW());
+       ('country', '', 'ssr/admin/country', 1, 0, NOW()),
+       ('currency', '', 'ssr/catalog/currency', 1, 0, '2025-04-01 18:12:16'),
+       ('currency', '', 'ssr/admin/currency', 1, 0, '2025-04-01 18:12:16'),
+       ('language', '', 'ssr/catalog/language', 1, 0, '2025-04-01 18:12:16'),
+       ('language', '', 'ssr/admin/language', 1, 0, '2025-04-01 18:12:16');
 
 -- VALUES ('article', '', 'ssr/catalog/article', 0, 0, '2025-04-01 18:12:16'),
 --        ('banner', '', 'ssr/catalog/banner', 0, 0, '2025-04-01 18:12:16'),
@@ -2856,25 +2860,25 @@ VALUES ('country', '', 'ssr/catalog/country', 1, 0, NOW()),
 --        ('custom_field', '', 'ssr/catalog/custom_field', 0, 0, '2025-04-01 18:12:16'),
 --        ('custom_field', '', 'ssr/admin/custom_field', 0, 0, '2025-04-01 18:12:16'),
 --        ('customer_group', '', 'ssr/catalog/customer_group', 1, 0, '2025-04-01 18:12:16'),
---       ('customer_group', '', 'ssr/admin/customer_group', 1, 0, '2025-04-01 18:12:16'),
+--        ('customer_group', '', 'ssr/admin/customer_group', 1, 0, '2025-04-01 18:12:16'),
 --        ('information', '', 'ssr/catalog/information', 0, 0, '2025-04-01 18:12:16'),
 --        ('language', '', 'ssr/catalog/language', 1, 0, '2025-04-01 18:12:16'),
 --        ('language', '', 'ssr/admin/language', 1, 0, '2025-04-01 18:12:16'),
 --        ('length_class', '', 'ssr/catalog/length_class', 0, 0, '2025-04-01 18:12:16'),
 --        ('length_class', '', 'ssr/admin/length_class', 0, 0, '2025-04-01 18:12:16'),
 --        ('manufacturer', '', 'ssr/catalog/manufacturer', 0, 0, '2025-04-01 18:12:16'),
---       ('option', '', 'ssr/admin/option', 0, 0, '2025-04-01 18:12:16'),
- --       ('order_status', '', 'ssr/admin/order_status', 0, 0, '2025-04-01 18:12:16'),
---       ('product', '', 'ssr/catalog/product', 0, 0, '2025-04-01 18:12:16'),
---      ('return_reason', '', 'ssr/catalog/return_reason', 0, 0, '2025-04-01 18:12:16'),
---       ('return_reason', '', 'ssr/admin/return_reason', 0, 0, '2025-04-01 18:12:16'),
---      ('store', '', 'ssr/catalog/store', 1, 0, '2025-04-01 18:12:16'),
---     ('store', '', 'ssr/admin/store', 1, 0, '2025-04-01 18:12:16'),
---      ('topic', '', 'ssr/catalog/topic', 0, 0, '2025-04-01 18:12:16'),
---    ('translation', '', 'ssr/catalog/translation', 0, 0, '2025-04-01 18:12:16'),
---       ('translation', '', 'ssr/admin/translation', 0, 0, '2025-04-01 18:12:16'),
---      ('weight_class', '', 'ssr/catalog/weight_class', 0, 0, '2025-04-01 18:12:16'),
---       ('weight_class', '', 'ssr/admin/weight_class', 0, 0, '2025-04-01 18:12:16');
+--        ('option', '', 'ssr/admin/option', 0, 0, '2025-04-01 18:12:16'),
+--        ('order_status', '', 'ssr/admin/order_status', 0, 0, '2025-04-01 18:12:16'),
+--        ('product', '', 'ssr/catalog/product', 0, 0, '2025-04-01 18:12:16'),
+--        ('return_reason', '', 'ssr/catalog/return_reason', 0, 0, '2025-04-01 18:12:16'),
+--        ('return_reason', '', 'ssr/admin/return_reason', 0, 0, '2025-04-01 18:12:16'),
+--        ('store', '', 'ssr/catalog/store', 1, 0, '2025-04-01 18:12:16'),
+--        ('store', '', 'ssr/admin/store', 1, 0, '2025-04-01 18:12:16'),
+--        ('topic', '', 'ssr/catalog/topic', 0, 0, '2025-04-01 18:12:16'),
+--        ('translation', '', 'ssr/catalog/translation', 0, 0, '2025-04-01 18:12:16'),
+--        ('translation', '', 'ssr/admin/translation', 0, 0, '2025-04-01 18:12:16'),
+--        ('weight_class', '', 'ssr/catalog/weight_class', 0, 0, '2025-04-01 18:12:16'),
+--        ('weight_class', '', 'ssr/admin/weight_class', 0, 0, '2025-04-01 18:12:16');
 
 -----------------------------------------------------------
 

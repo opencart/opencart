@@ -240,15 +240,15 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($language_info)) {
-			$data['locale'] = $language_info['locale'];
-		} else {
-			$data['locale'] = '';
-		}
-
-		if (!empty($language_info)) {
 			$data['extension'] = $language_info['extension'];
 		} else {
 			$data['extension'] = '';
+		}
+
+		if (!empty($language_info)) {
+			$data['locale'] = $language_info['locale'];
+		} else {
+			$data['locale'] = '';
 		}
 
 		if (!empty($language_info)) {

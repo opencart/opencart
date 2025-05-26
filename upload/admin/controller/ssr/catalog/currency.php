@@ -10,6 +10,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 * Generate
 	 *
 	 * @return void
+	 *
 	 */
 	public function index() {
 		$this->load->language('ssr/catalog/currency');
@@ -54,9 +55,18 @@ class Currency extends \Opencart\System\Engine\Controller {
 						break;
 					}
 
-					$file = $base . $directory . $filename;
+					$currency_data = [];
 
-					if (!file_put_contents($file, json_encode($currencies))) {
+					$this->language->load('default', '', $language['code']);
+
+					foreach ($currencies as $currency) {
+						$currency_data[$currency['code']] = $currency + [
+							'decimal_point'  => $this->language->get('decimal_point'),
+							'thousand_point' => $this->language->get('thousand_point')
+						];
+					}
+
+					if (!file_put_contents($base . $directory . $filename, json_encode($currencies))) {
 						$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
 
 						break;

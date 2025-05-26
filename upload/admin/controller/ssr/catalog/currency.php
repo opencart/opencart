@@ -66,7 +66,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 						];
 					}
 
-					if (!file_put_contents($base . $directory . $filename, json_encode($currencies))) {
+					if (!file_put_contents($base . $directory . $filename, json_encode($currency_data))) {
 						$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
 
 						break;

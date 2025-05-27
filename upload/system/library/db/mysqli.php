@@ -78,7 +78,7 @@ class MySQLi {
 
 		$this->db = new \mysqli();
 
-		$this->db->report_mode = MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ERROR;
+		mysqli_report(flags: MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 		if ($temp_ssl_key_file || $temp_ssl_cert_file || $temp_ssl_ca_file) {
 			$this->db->ssl_set($temp_ssl_key_file, $temp_ssl_cert_file, $temp_ssl_ca_file, null, null);

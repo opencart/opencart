@@ -25,21 +25,15 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$language_info = [];
 
-		if (isset(self::$languages[$this->config->get('config_language_catalog')])) {
-			$language_info = self::$languages[$this->config->get('config_language_catalog')];
-		}
-
 		// Set default language
-		if (!isset($this->request->get['language']) && !isset($this->request->get['language'])) {
+		if (isset(self::$languages[$this->config->get('config_language_catalog')])) {
 			$language_info = self::$languages[$this->config->get('config_language_catalog')];
 		}
 
 		// If GET has language var
 		if (isset($this->request->get['language']) && isset(self::$languages[$this->request->get['language']])) {
 			$language_info = self::$languages[$this->request->get['language']];
-		} else {
-			$this->request->get['route'] = 'error/not_found';
-		}
+		} 
 
 		if ($language_info) {
 			// If extension switch add language directory
@@ -52,6 +46,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->config->set('config_language', $language_info['code']);
 
 			$this->load->language('default');
+		} else {
+			$this->request->get['route'] = 'error/not_found';
 		}
 
 		return null;

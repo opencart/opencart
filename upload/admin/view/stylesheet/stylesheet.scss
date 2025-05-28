@@ -1,5 +1,8 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
 
+// Import fonts
+@import 'fonts/fontawesome/css/all.min.css';
+
 // Custom OpenCart variables
 $blue:       #1e91cf;
 $indigo:     #6610f2;
@@ -46,7 +49,7 @@ $breadcrumb-item-padding:   .3rem;
 $breadcrumb-divider-color:  $gray-400;
 $breadcrumb-divider:        "\f105";
 
-@import "scss/bootstrap";
+@import 'scss/bootstrap';
 
 @each $color, $value in $theme-colors {
   .btn-#{$color} {

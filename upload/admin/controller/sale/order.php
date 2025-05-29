@@ -392,7 +392,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['orders'][] = [
 				'order_status'    => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
-				'total'           => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+				'total'           => $result['total'],
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified'   => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'shipping_method' => $shipping_method,
@@ -756,10 +756,10 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if (!empty($order_info)) {
 			$data['currency_code'] = $order_info['currency_code'];
-			$currency_value = $order_info['currency_value'];
+			$data['currency_value'] = $order_info['currency_value'];
 		} else {
 			$data['currency_code'] = $this->config->get('config_currency');
-			$currency_value = 1;
+			$data['currency_value'] = 1;
 		}
 
 		// Products
@@ -802,7 +802,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			if ($subscription_info) {
 				if ($subscription_info['trial_status']) {
-					$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $this->config->get('config_currency'));
+					$trial_price = $subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0);
 					$trial_cycle = $subscription_info['trial_cycle'];
 					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 					$trial_duration = $subscription_info['trial_duration'];
@@ -810,15 +810,15 @@ class Order extends \Opencart\System\Engine\Controller {
 					$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 				}
 
-				$price = $this->currency->format($subscription_info['price'] + ($this->config->get('config_tax') ? $subscription_info['tax'] : 0), $this->config->get('config_currency'));
+				$price = $subscription_info['price'] + ($this->config->get('config_tax') ? $subscription_info['tax'] : 0);
 				$cycle = $subscription_info['cycle'];
 				$frequency = $this->language->get('text_' . $subscription_info['frequency']);
 				$duration = $subscription_info['duration'];
 
 				if ($subscription_info['duration']) {
-					$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $data['currency_code'], $price, $data['currency_value'], $cycle, $frequency, $duration);
 				} else {
-					$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $data['currency_code'], $price, $data['currency_value'], $cycle, $frequency);
 				}
 
 				$subscription_plan_id = $subscription_info['subscription_plan_id'];
@@ -839,20 +839,14 @@ class Order extends \Opencart\System\Engine\Controller {
 				'subscription_plan'    => $subscription_plan,
 				'subscription_plan_id' => $subscription_plan_id,
 				'subscription_edit'    => $subscription_edit,
-				'price'                => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $data['currency_code'], $currency_value),
-				'total'                => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $data['currency_code'], $currency_value),
+				'price'                => $product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0),
+				'total'                => $product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0),
 				'product_edit'         => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
 			] + $product;
 		}
 
 		// Totals
-		$data['order_totals'] = [];
-
-		$totals = $this->model_sale_order->getTotals($order_id);
-
-		foreach ($totals as $total) {
-			$data['order_totals'][] = ['text' => $this->currency->format($total['value'], $data['currency_code'], $currency_value)] + $total;
-		}
+		$data['order_totals'] = $this->model_sale_order->getTotals($order_id);
 
 		// Customers
 		if (!empty($order_info)) {
@@ -1311,13 +1305,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['lang'] = $this->language->get('code');
 
 		// Hard coding css paths so that they can be replaced via the event's system.
-		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
-		$data['icons'] = 'view/stylesheet/fonts/fontawesome/css/all.min.css';
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
-
-		// Hard coding scripts so they can be replaced via the events system.
-		$data['jquery'] = 'view/javascript/jquery/jquery-3.7.1.min.js';
-		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		// Order
 		$this->load->model('sale/order');
@@ -1504,38 +1492,29 @@ class Order extends \Opencart\System\Engine\Controller {
 						'option'       => $option_data,
 						'subscription' => $description,
 						'quantity'     => $product['quantity'],
-						'price'        => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-						'total'        => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+						'price'        => $product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0),
+						'total'        => $product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0)
 					];
-				}
-
-				$total_data = [];
-
-				$totals = $this->model_sale_order->getTotals($order_id);
-
-				foreach ($totals as $total) {
-					$total_data[] = ['text' => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])] + $total;
 				}
 
 				$data['orders'][] = [
 					'order_id'         => $order_id,
 					'invoice_no'       => $invoice_no,
 					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
-					'store_name'       => $order_info['store_name'],
 					'store_url'        => rtrim($order_info['store_url'], '/'),
 					'store_address'    => nl2br($store_address),
 					'store_email'      => $store_email,
 					'store_telephone'  => $store_telephone,
-					'email'            => $order_info['email'],
-					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,
 					'shipping_method'  => ($order_info['shipping_method'] ? $order_info['shipping_method']['name'] : ''),
 					'payment_address'  => $payment_address,
 					'payment_method'   => $order_info['payment_method']['name'],
 					'product'          => $product_data,
-					'total'            => $total_data,
+					'total'            => $this->model_sale_order->getTotals($order_id),
 					'comment'          => nl2br($order_info['comment'])
-				];
+				] + $order_info;
+
+
 			}
 		}
 
@@ -1557,13 +1536,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['lang'] = $this->language->get('code');
 
 		// Hard coding CSS so they can be replaced via the event's system.
-		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
-		$data['icons'] = 'view/stylesheet/fonts/fontawesome/css/all.min.css';
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
-
-		// Hard coding scripts so they can be replaced via the event's system.
-		$data['jquery'] = 'view/javascript/jquery/jquery-3.7.1.min.js';
-		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		// Order
 		$this->load->model('sale/order');

@@ -153,8 +153,8 @@
                       <input type="hidden" name="product[{{ order_product_row }}][subscription_plan_id]" value="{{ order_product.subscription_plan_id }}"/>
                     </td>
                     <td class="text-end">{{ order_product.quantity }}</td>
-                    <td class="text-end">{{ order_product.price }}</td>
-                    <td class="text-end">{{ order_product.total }}</td>
+                    <td class="text-end"><x-currency code="{{ currency_code }}" amount="{{ order_product.price }}" value="{{ currency_value }}"></x-currency></td>
+                    <td class="text-end"><x-currency code="{{ currency_code }}" amount="{{ order_product.total }}" value="{{ currency_value }}"></x-currency></td>
                     <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set order_product_row = order_product_row + 1 %}
@@ -1298,7 +1298,7 @@ $('#input-product').autocomplete({
                         html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 
                         if (option_value['price']) {
-                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                            html += ' (' + option_value['price_prefix'] + '<x-currency code="{{ currency_code }}" amount="' + option_value['price'] + '" value="{{ currency_value }}"></x-currency>)';
                         }
 
                         html += '</option>';
@@ -1321,7 +1321,7 @@ $('#input-product').autocomplete({
                         html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 
                         if (option_value['price']) {
-                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                            html += ' (' + option_value['price_prefix'] + '<x-currency code="{{ currency_code }}" amount="' + option_value['price'] + '" value="{{ currency_value }}"></x-currency>)';
                         }
 
                         html += '</option>';
@@ -1345,7 +1345,7 @@ $('#input-product').autocomplete({
                         html += '  <label for="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-label">' + option_value['name'];
 
                         if (option_value['price']) {
-                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                            html += ' (' + option_value['price_prefix'] + '<x-currency code="{{ currency_code }}" amount="' + option_value['price'] + '" value="{{ currency_value }}"></x-currency>)';
                         }
 
                         html += '  </label>';
@@ -1370,7 +1370,7 @@ $('#input-product').autocomplete({
                         html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 
                         if (option_value['price']) {
-                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                            html += ' (' + option_value['price_prefix'] + '<x-currency code="{{ currency_code }}" amount="' + option_value['price'] + '" value="{{ currency_value }}"></x-currency>)';
                         }
 
                         html += '</option>';
@@ -2283,8 +2283,8 @@ function cart_render(products, totals, shipping_required) {
             html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
             html += '  </td>';
             html += '  <td class="text-end">' + product['quantity'] + '</td>';
-            html += '  <td class="text-end">' + product['price'] + '</td>';
-            html += '  <td class="text-end">' + product['total'] + '</td>';
+            html += '  <td class="text-end"><x-currency code="{{ currency_code }}" amount="' + product['price'] + '" value="{{ currency_value }}"></x-currency></td>';
+            html += '  <td class="text-end"><x-currency code="{{ currency_code }}" amount="' + product['total'] + '" value="{{ currency_value }}"></x-currency></td>';
             html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
             html += '</tr>';
 

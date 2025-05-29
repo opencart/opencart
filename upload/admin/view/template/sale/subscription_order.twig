@@ -14,7 +14,7 @@
           <tr>
             <td class="text-end"><a href="{{ order.view }}" target="_blank">{{ order.order_id }}</a></td>
             <td>{{ order.order_status }}</td>
-            <td class="text-end">{{ order.total }}</td>
+            <td class="text-end"><x-currency code="{{ order.currency_code }}" amount="{{ order.total }}" value="{{ order.currency_value }}"></x-currency></td>
             <td>{{ order.date_added }}</td>
           </tr>
         {% endfor %}

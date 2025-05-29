@@ -317,7 +317,7 @@
                 <div class="form-control rounded-start">
                   <div class="lead"><strong>{{ text_commission }}</strong>
                     <br/>
-                    <div id="output-commission">{{ commission }}</div>
+                    <div id="output-commission"><x-currency code="{{ currency_code }}" amount="{{ commission }}" value="{{ currency_value }}"></x-currency></div>
                   </div>
                 </div>
                 {% if not commission_total %}
@@ -2199,7 +2199,7 @@ $('#button-confirm').on('click', function() {
                 }
 
                 if (json['commission']) {
-                    $('#output-commission').html(json['commission']);
+                    $('#output-commission').html('<x-currency code="{{ currency_code }}" amount="' + json['commission'] + '" value="{{ currency_value }}"></x-currency>');
                     $('#button-commission-add').prop('disabled', false);
                     $('#button-commission-remove').prop('disabled', false);
                 } else {

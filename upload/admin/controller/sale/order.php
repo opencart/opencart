@@ -972,7 +972,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Commission
 		if (!empty($order_info) && (float)$order_info['commission']) {
-			$data['commission'] = $this->currency->format($order_info['commission'], $this->config->get('config_currency'));
+			$data['commission'] = $order_info['commission'];
 		} else {
 			$data['commission'] = '';
 		}
@@ -1008,14 +1008,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Totals
-		$data['order_totals'] = [];
-
 		if (!empty($order_info)) {
-			$totals = $this->model_sale_order->getTotals($order_id);
-
-			foreach ($totals as $total) {
-				$data['order_totals'][] = ['text' => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])] + $total;
-			}
+			$data['order_totals'] = $this->model_sale_order->getTotals($order_id);
+		} else {
+			$data['order_totals'] = [];
 		}
 
 		// Order Statuses
@@ -1467,22 +1463,23 @@ class Order extends \Opencart\System\Engine\Controller {
 
 					if ($subscription_info) {
 						if ($subscription_info['trial_status']) {
-							$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+							$trial_price = $subscription_info['trial_price'];
 							$trial_cycle = $subscription_info['trial_cycle'];
 							$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 							$trial_duration = $subscription_info['trial_duration'];
 
-							$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+							$description .= sprintf($this->language->get('text_subscription_trial'), $order_info['currency_code'], $trial_price, $order_info['currency_value'], $trial_cycle, $trial_frequency, $trial_duration);
 						}
-						$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
+
+						$price = $subscription_info['price'];
 						$cycle = $subscription_info['cycle'];
 						$frequency = $this->language->get('text_' . $subscription_info['frequency']);
 						$duration = $subscription_info['duration'];
 
 						if ($subscription_info['duration']) {
-							$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+							$description .= sprintf($this->language->get('text_subscription_duration'), $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency, $duration);
 						} else {
-							$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+							$description .= sprintf($this->language->get('text_subscription_cancel'), $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency);
 						}
 					}
 

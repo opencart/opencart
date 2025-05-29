@@ -348,7 +348,7 @@
             {% for order_total in order_totals %}
               <tr>
                 <td class="text-end"><strong>{{ order_total.title }}</strong></td>
-                <td class="text-end" style="width: 1px;">{{ order_total.text }}</td>
+                <td class="text-end" style="width: 1px;"><x-currency code="{{ currency_code }}" amount="{{ order_total.value }}" value="{{ currency_value }}"></x-currency></td>
               </tr>
             {% endfor %}
           </tbody>

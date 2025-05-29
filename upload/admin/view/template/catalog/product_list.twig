@@ -22,12 +22,13 @@
               <td>{{ product.name }}</td>
               <td class="d-none d-lg-table-cell">{{ product.model }}</td>
               <td class="text-end">
-                {% if product.special %}<span style="text-decoration: line-through;">{{ product.price }}</span>
+                {% if product.special %}<s><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></s>
                   <br/>
-                  <div class="text-danger">{{ product.special }}</div>
+                  <div class="text-danger"><x-currency code="{{ currency }}" amount="{{ product.special }}"></x-currency></div>
                 {% else %}
-                  {{ product.price }}
-                {% endif %}</td>
+                  <x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency>
+                {% endif %}
+              </td>
               <td class="text-end">
                 {% if product.quantity <= 0 %}
                   <span class="badge bg-warning{% if not product.status %} bg-opacity-50{% endif %}">{{ product.quantity }}</span>

@@ -1149,12 +1149,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['transactions'][] = [
-				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			] + $result;
 		}
 
-		$data['balance'] = $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency'));
+		$data['balance'] = $this->model_customer_customer->getTransactionTotal($customer_id);
 
 		// Total Transactions
 		$transaction_total = $this->model_customer_customer->getTotalTransactions($customer_id);
@@ -1168,6 +1167,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($transaction_total - $limit)) ? $transaction_total : ((($page - 1) * $limit) + $limit), $transaction_total, ceil($transaction_total / $limit));
+
+		$data['currency'] = $this->config->get('config_currency');
 
 		return $this->load->view('customer/customer_transaction', $data);
 	}

@@ -769,13 +769,21 @@
                                           {{ text_no }}
                                         {% endif %}
                                         <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="{{ product_option_value.subtract }}"/></td>
-                                      <td class="text-end">{{ product_option_value.price_prefix }}{{ product_option_value.price }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/></td>
+                                      <td class="text-end">
+                                        {{ product_option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ product_option_value.price }}"></x-currency>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/>
+                                      </td>
                                       <td class="text-end">{{ product_option_value.points_prefix }}{{ product_option_value.points }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
                                       <td class="text-end">{{ product_option_value.weight_prefix }}{{ product_option_value.weight }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
-                                      <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button> <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
+                                      <td class="text-end">
+                                        <button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button>
+                                        <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
+                                      </td>
                                     </tr>
                                     {% set option_value_row = option_value_row + 1 %}
                                   {% endfor %}
@@ -834,7 +842,7 @@
                               {% for option_value in option.product_option_value %}
                                 <option value="{{ option_value.product_option_value_id }}"{% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %} selected{% endif %}>{{ option_value.name }}
                                   {% if option_value.price %}
-                                    ({{ option_value.price_prefix }}{{ option_value.price }})
+                                    ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>
                                   {% endif %}</option>
                               {% endfor %}
                             </select>
@@ -859,10 +867,10 @@
                                 <div class="form-check">
                                   <input type="radio" name="variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %} checked{% endif %}/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">
                                     {% if option_value.image %}
-                                      <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+                                      <img src="{{ option_value.image }}" alt="{{ option_value.name }}" class="img-thumbnail"/>{% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}
-                                      ({{ option_value.price_prefix }}{{ option_value.price }})
+                                      ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
                                     {% endif %}</label>
                                 </div>
                               {% endfor %}
@@ -888,10 +896,11 @@
                                 <div class="form-check">
                                   <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %} checked{% endif %}/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">
                                     {% if option_value.image %}
-                                      <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+                                      <img src="{{ option_value.image }}" alt="{{ option_value.name }}" class="img-thumbnail"/>
+                                    {% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}
-                                      ({{ option_value.price_prefix }}{{ option_value.price }})
+                                      ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
                                     {% endif %}</label>
                                 </div>
                               {% endfor %}

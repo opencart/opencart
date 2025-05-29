@@ -98,8 +98,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
-		$data['currency'] = $this->session->data['currency'];
-
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -376,7 +374,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['continue'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 			$data['language'] = $this->config->get('config_language');
-			$data['currency'] = $order_info['currency_code'];
+			$data['currency_code'] = $order_info['currency_code'];
 			$data['currency_value'] = $order_info['currency_value'];
 
 			$data['column_left'] = $this->load->controller('common/column_left');

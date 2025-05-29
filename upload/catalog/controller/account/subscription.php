@@ -84,9 +84,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$duration = $result['duration'];
 
 			if ($duration) {
-				$description .= sprintf($this->language->get('text_subscription_duration'), $result['currency'], $price, $cycle, $frequency, $duration);
+				$description .= sprintf($this->language->get('text_subscription_duration'), $result['currency'], $price, $result['currency_value'], $cycle, $frequency, $duration);
 			} else {
-				$description .= sprintf($this->language->get('text_subscription_cancel'), $result['currency'], $price, $cycle, $frequency);
+				$description .= sprintf($this->language->get('text_subscription_cancel'), $result['currency'], $price, $result['currency_value'], $cycle, $frequency);
 			}
 
 			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($result['subscription_status_id']);
@@ -360,7 +360,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 				$trial_duration = $subscription_info['trial_duration'];
 
-				$data['description'] .= sprintf($this->language->get('text_subscription_trial'), $subscription_info['currency_code'], $trial_price, $subscription_info['currency_value'], $trial_cycle, $trial_frequency, $trial_duration);
+				$data['description'] .= sprintf($this->language->get('text_subscription_trial'), $subscription_info['currency_code'], $trial_price, $result['currency_value'], $subscription_info['currency_value'], $trial_cycle, $trial_frequency, $trial_duration);
 			}
 
 			$price = $subscription_info['price'] + ($this->config->get('config_tax') ? $result['trial_tax'] : 0);
@@ -369,9 +369,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$duration = $subscription_info['duration'];
 
 			if ($duration) {
-				$data['description'] .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+				$data['description'] .= sprintf($this->language->get('text_subscription_duration'), $subscription_info['currency_code'], $price, $result['currency_value'], $cycle, $frequency, $duration);
 			} else {
-				$data['description'] .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+				$data['description'] .= sprintf($this->language->get('text_subscription_cancel'), $subscription_info['currency_code'], $price, $result['currency_value'], $cycle, $frequency);
 			}
 
 			$data['date_next'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_next']));
@@ -398,7 +398,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['continue'] = $this->url->link('account/subscription', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url);
 
 			$data['language'] = $this->config->get('config_language');
-			$data['currency'] = $subscription_info['currency'];
+			$data['currency_code'] = $subscription_info['currency_code'];
+			$data['currency_value'] = $subscription_info['currency_value'];
 
 			$data['customer_token'] = $this->session->data['customer_token'];
 

@@ -291,8 +291,19 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 
 		try {
 			// Database
-			$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_ssl_key, $db_ssl_cert, $db_ssl_ca);
+			$db = new \Opencart\System\Library\DB([
+				'engine' => $db_driver,
+				'hostname' => $db_hostname,
+				'username' => $db_username,
+				'password' => $db_password,
+				'database' => $db_database,
+				'port' => $db_port,
+				'ssl_key' => $db_ssl_key,
+				'ssl_cert' => $db_ssl_cert,
+				'ssl_ca' => $db_ssl_ca
+			]);
 		} catch (\Exception $e) {
+			echo $e->getMessage();
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
 

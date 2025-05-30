@@ -45,11 +45,6 @@ $carousel-indicator-active-opacity: .9;
 
 @import "scss/bootstrap";
 
-body {
-  width: 100%;
-  height: 100%;
-}
-
 h1, h2, h3, h4, h5, h6 {
   color: #444;
 }
@@ -68,25 +63,6 @@ label {
 /* Chrome border line */
 button:focus {
   outline: none !important;
-}
-
-/* container */
-#container {
-  width: 100%;
-  min-height: 100%;
-  position: absolute;
-  margin-bottom: 300px;
-}
-
-/* content */
-#content, #column-left, #column-right {
-  padding-bottom: 730px;
-}
-
-@media (min-width: 576px) {
-  #content, #column-left, #column-right {
-    padding-bottom: 400px;
-  }
 }
 
 #alert {
@@ -359,16 +335,9 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
   }
 }
 
-main {
-  padding-bottom: 20%;
-}
-
 /* footer */
 footer {
   border: 1px solid #000000;
-  position: absolute;
-  bottom: -1px;
-  width: 100%;
   padding-top: 30px;
   background-color: #303030;
   border-top: 1px solid #ddd;

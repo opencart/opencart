@@ -74,31 +74,50 @@ class Error extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function exception(\Throwable $e): void {
-		$output  = 'Error: ' . $e->getMessage() . "\n";
-		$output .= 'File: ' . $e->getFile() . "\n";
-		$output .= 'Line: ' . $e->getLine() . "\n\n";
+    // Construct the initial error message with basic exception details
+    $output  = 'Error: ' . $e->getMessage() . "\n";
+    $output .= 'File: ' . $e->getFile() . "\n";
+    $output .= 'Line: ' . $e->getLine() . "\n\n";
 
-		foreach ($e->getTrace() as $key => $trace) {
-			$output .= 'Backtrace: ' . $key . "\n";
-			$output .= 'File: ' . $trace['file'] . "\n";
-			$output .= 'Line: ' . $trace['line'] . "\n";
+    // Iterate over the stack trace for detailed debugging info
+    foreach ($e->getTrace() as $key => $trace) {
+        $output .= 'Backtrace: ' . $key . "\n";
 
-			if (isset($trace['class'])) {
-				$output .= 'Class: ' . $trace['class'] . "\n";
-			}
+        // Safely add file info if available
+        if (isset($trace['file'])) {
+            $output .= 'File: ' . $trace['file'] . "\n";
+        }
 
-			$output .= 'Function: ' . $trace['function'] . "\n\n";
-		}
+        // Safely add line info if available
+        if (isset($trace['line'])) {
+            $output .= 'Line: ' . $trace['line'] . "\n";
+        }
 
-		if ($this->config->get('config_error_log')) {
-			$this->log->write(trim($output));
-		}
+        // Add class name if available (e.g., for object-oriented traces)
+        if (isset($trace['class'])) {
+            $output .= 'Class: ' . $trace['class'] . "\n";
+        }
 
-		if ($this->config->get('config_error_display')) {
-			echo $output;
-		} else {
-			header('Location: ' . $this->config->get('error_page'));
-			exit();
-		}
-	}
+        // Add the function name (almost always present, but still checked for safety)
+        if (isset($trace['function'])) {
+            $output .= 'Function: ' . $trace['function'] . "\n";
+        }
+
+        $output .= "\n"; // Add spacing between trace entries
+    }
+
+    // Log the error if logging is enabled in configuration
+    if ($this->config->get('config_error_log')) {
+        $this->log->write(trim($output));
+    }
+
+    // Display the error if error display is enabled; otherwise, redirect to the error page
+    if ($this->config->get('config_error_display')) {
+        echo $output;
+    } else {
+        header('Location: ' . $this->config->get('error_page'));
+        exit();
+    }
+}
+
 }

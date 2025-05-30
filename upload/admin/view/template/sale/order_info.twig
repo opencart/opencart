@@ -2008,7 +2008,7 @@ $('#button-payment-methods').on('click', function() {
                         for (j in json['payment_methods'][i]['option']) {
                             payment_method[json['payment_methods'][i]['option'][j]['code']] = json['payment_methods'][i]['option'][j];
 
-                            html += '<div class="form-check">';
+                            html += '<div class="form-check mb-3">';
                             html += '  <input type="radio" name="choose_payment" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + k + '"';
 
                             if (json['payment_methods'][i]['option'][j]['code'] == $('#input-payment-method-code').val()) {

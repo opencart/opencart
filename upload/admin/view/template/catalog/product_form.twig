@@ -282,9 +282,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <div id="input-subtract" class="form-switch form-switch-lg">
-                        <input type="hidden" name="subtract" value="0"/> <input type="checkbox" name="subtract" value="1" class="form-check-input"{% if subtract %} checked{% endif %}/>
-                      </div>
+                      <x-switch name="subtract" value="{{ subtract }}" input-id="input-subtract"></x-switch>
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-switch">
@@ -352,9 +350,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <div id="input-shipping" class="form-switch form-switch-lg">
-                        <input type="hidden" name="shipping" value="0"/> <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
-                      </div>
+                      <x-switch name="shipping" value="{{ shipping }}" input-id="input-shipping"></x-switch>
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-switch">
@@ -453,10 +449,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <div class="form-switch form-switch-lg">
-                        <input type="hidden" name="status" value="0"/>
-                        <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
-                      </div>
+                      <x-switch name="status" value="{{ status }}" input-id="input-status"></x-switch>
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-switch">
@@ -650,7 +643,8 @@
                       <th>{{ entry_text }}</th>
                       <th>{% if master_id %}
                           <div class="form-switch float-end">
-                            <input type="checkbox" name="override[product_attribute]" value="1" id="input-variant-product-attribute" data-oc-toggle="switch" data-oc-target="#product-attribute" class="form-check-input"{% if override.product_attribute %} checked{% endif %}/> <label for="input-variant-product-attribute" class="form-check-label"></label>
+                            <input type="checkbox" name="override[product_attribute]" value="1" id="input-variant-product-attribute" data-oc-toggle="switch" data-oc-target="#product-attribute" class="form-check-input"{% if override.product_attribute %} checked{% endif %}/>
+                            <label for="input-variant-product-attribute" class="form-check-label"></label>
                           </div>
                         {% endif %}</th>
                     </tr>
@@ -1108,11 +1102,7 @@
                             <option value="S"{% if product_discount.type == 'S' %} selected{% endif %}>{{ text_subtract }}</option>
                             <option value="P"{% if product_discount.type == 'P' %} selected{% endif %}>{{ text_percentage }}</option>
                           </select></td>
-                        <td>
-                          <div class="form-switch form-switch-lg">
-                            <input type="hidden" name="product_discount[{{ discount_row }}][special]" value="0"/> <input type="checkbox" name="product_discount[{{ discount_row }}][special]" value="1" class="form-check-input"{% if product_discount.special %} checked{% endif %}/>
-                          </div>
-                        </td>
+                        <td><x-switch name="product_discount[{{ discount_row }}][special]" value="{{ product_discount.special }}"></x-switch></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
@@ -1220,11 +1210,14 @@
                     <thead>
                       <tr>
                         <th>{{ entry_customer_group }}</th>
-                        <th class="text-end">{{ entry_reward }}&nbsp;&nbsp;{% if master_id %}
+                        <th class="text-end">{{ entry_reward }}&nbsp;&nbsp;
+                          {% if master_id %}
                           <div class="form-switch float-end">
-                            <input type="checkbox" name="override[product_reward]" value="1" id="input-variant-product-reward" data-oc-toggle="switch" data-oc-target="#product-reward" class="form-check-input"{% if override.product_reward %} checked{% endif %}/> <label for="input-variant-product-reward" class="form-check-label"></label>
+                            <input type="checkbox" name="override[product_reward]" value="1" id="input-variant-product-reward" data-oc-toggle="switch" data-oc-target="#product-reward" class="form-check-input"{% if override.product_reward %} checked{% endif %}/>
+                            <label for="input-variant-product-reward" class="form-check-label"></label>
                           </div>
-                          {% endif %}</th>
+                          {% endif %}
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1856,10 +1849,7 @@ $('#button-discount').on('click', function() {
     html += '    <option value="S">{{ text_subtract }}</option>';
     html += '    <option value="P">{{ text_percentage }}</option>';
     html += '  </select></td>';
-    html += '  <td><div class="form-switch form-switch-lg">';
-    html += '    <input type="hidden" name="product_discount[' + discount_row + '][special]" value="0"/>';
-    html += '    <input type="checkbox" name="product_discount[' + discount_row + '][special]" value="1" class="form-check-input"/>';
-    html += '  </div></td>';
+    html += '  <td><x-switch name="product_discount[' + discount_row + '][special]" value="0"></x-switch></td>';
     html += '  <td><input type="date" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="{{ entry_date_start|escape('js') }}" class="form-control"/></td>';
     html += '  <td><input type="date" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="{{ entry_date_end|escape('js') }}" class="form-control"/></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#discount-row-' + discount_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';

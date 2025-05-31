@@ -21,12 +21,28 @@ class XZone extends WebComponent {
         }
     }
 
+    get id() {
+        if (this.hasAttribute('input-id')) {
+            return this.getAttribute('input-id');
+        } else {
+            return '';
+        }
+    }
+
+    get class() {
+        if (this.hasAttribute('input-class')) {
+            return this.getAttribute('input-class');
+        } else {
+            return '';
+        }
+    }
+
     event = {
         connected: async () => {
             this.default = this.innerHTML;
 
             // Create the select element
-            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.default + '</select>';
+            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.id + '" class="' + this.class + '">' + this.default + '</select>';
 
             this.addEventListener('[value]', this.event.changeValue);
 

@@ -56,10 +56,7 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
             <div class="col-sm-10">
-              <div class="form-switch form-switch-lg">
-                <input type="hidden" name="postcode_required" value="0"/>
-                <input type="checkbox" name="postcode_required" value="1" id="input-status" class="form-check-input"{% if postcode_required %} checked{% endif %}/>
-              </div>
+              <x-switch name="postcode_required" value="{{ postcode_required }}" input-id="input-postcode"></x-switch>
             </div>
           </div>
           <div class="row mb-3">
@@ -78,10 +75,7 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <div class="form-switch form-switch-lg">
-                <input type="hidden" name="status" value="0"/>
-                <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
-              </div>
+              <x-switch name="status" value="{{ status }}" input-id="input-status"></x-switch>
             </div>
           </div>
           <input type="hidden" name="country_id" value="{{ country_id }}" id="input-country-id"/>

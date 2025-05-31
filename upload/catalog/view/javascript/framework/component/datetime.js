@@ -23,12 +23,6 @@ class XCurrency extends WebComponent {
         connected: async () => {
             this.addEventListener('[format]', this.event.format);
             this.addEventListener('[value]', this.event.format);
-
-
-
-        },
-        onloaded: () => {
-
         },
         format: () => {
             let string = '';

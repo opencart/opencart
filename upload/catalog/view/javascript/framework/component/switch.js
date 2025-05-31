@@ -9,17 +9,21 @@ class XSwitch extends WebComponent {
     }
 
     set value(value) {
-        if (this.getAttribute('value') != value) {
-            this.setAttribute('value', value);
-        }
-
-        if (this.element.value != value) {
-            this.element.value = value;
+        if (this.value != value) {
+            if (value == 1) {
+                this.setAttribute('value', 1);
+                this.element.setAttribute('checked', '');
+            } else {
+                this.setAttribute('value', 0);
+                this.element.removeAttribute('checked');
+            }
         }
     }
 
     event = {
         connected: async () => {
+            this.addEventListener('[value]', this.event.changeValue);
+
             let html = '';
 
             html += '<div class="form-switch form-switch-lg">';
@@ -29,14 +33,12 @@ class XSwitch extends WebComponent {
 
             this.innerHTML = html;
 
-            this.addEventListener('[value]', this.event.changeValue);
-
             this.element = this.querySelector('input[type=\'checkbox\']');
 
             this.element.addEventListener('change', this.event.onchange);
         },
         onchange: (e) => {
-            this.setAttribute('value', e.target.checked ? e.target.value : 0);
+            this.value = e.target.checked ? 1 : 0;
         },
         changeValue: (e) => {
             this.value = e.detail.value_new;
@@ -45,4 +47,3 @@ class XSwitch extends WebComponent {
 }
 
 customElements.define('x-switch', XSwitch);
-

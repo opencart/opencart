@@ -38,11 +38,27 @@ class XCountry extends WebComponent {
         return this.getAttribute('postcode');
     }
 
+    get id() {
+        if (this.hasAttribute('input-id')) {
+            return this.getAttribute('input-id');
+        } else {
+            return '';
+        }
+    }
+
+    get class() {
+        if (this.hasAttribute('input-class')) {
+            return this.getAttribute('input-class');
+        } else {
+            return '';
+        }
+    }
+
     event = {
         connected: async () => {
             this.default = this.innerHTML;
 
-            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '"' + (this.hasAttribute('required') ? ' required' : '') + '>' + this.default + '</select>';
+            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.id + '" class="' + this.class + '"' + (this.hasAttribute('required') ? ' required' : '') + '>' + this.default + '</select>';
 
             this.addEventListener('[value]', this.event.changeValue);
 

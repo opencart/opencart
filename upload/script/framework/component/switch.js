@@ -20,15 +20,31 @@ class XSwitch extends WebComponent {
         }
     }
 
+    get id() {
+        if (this.hasAttribute('input-id')) {
+            return this.getAttribute('input-id');
+        } else {
+            return '';
+        }
+    }
+
+    get class() {
+        if (this.hasAttribute('input-class')) {
+            return this.getAttribute('input-class');
+        } else {
+            return '';
+        }
+    }
+
     event = {
         connected: async () => {
             this.addEventListener('[value]', this.event.changeValue);
 
             let html = '';
 
-            html += '<div class="form-switch form-switch-lg">';
+            html += '<div class="' + this.class + '">';
             html += '  <input type="hidden" name="' + this.getAttribute('name') + '" value="0"/>';
-            html += '  <input type="checkbox" name="' + this.getAttribute('name') + '" value="1" id="' + this.getAttribute('input-id') + '" class="form-check-input"' + (this.value == 1 ? ' checked' : '') + '/>';
+            html += '  <input type="checkbox" name="' + this.getAttribute('name') + '" value="1" id="' + this.id + '" class="form-check-input"' + (this.value == 1 ? ' checked' : '') + '/>';
             html += '</div>';
 
             this.innerHTML = html;

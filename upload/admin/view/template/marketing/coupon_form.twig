@@ -76,18 +76,14 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_logged }}</label>
                 <div class="col-sm-10">
-                  <div class="form-switch form-switch-lg">
-                    <input type="hidden" name="logged" value="0"/> <input type="checkbox" name="logged" value="1" id="input-logged" class="form-check-input"{% if logged %} checked{% endif %}/>
-                  </div>
+                  <x-switch name="logged" value="{{ logged }}" input-id="input-logged"></x-switch>
                   <div class="form-text">{{ help_logged }}</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-                  <div class="form-switch form-switch-lg">
-                    <input type="hidden" name="shipping" value="0"/> <input type="checkbox" name="shipping" value="1" id="input-shipping" class="form-check-input"{% if shipping %} checked{% endif %}/>
-                  </div>
+                  <x-switch name="shipping" value="{{ shipping }}" input-id="input-shipping"></x-switch>
                 </div>
               </div>
               <div class="row mb-3">
@@ -157,9 +153,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <div class="form-switch form-switch-lg">
-                    <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
-                  </div>
+                  <x-switch name="status" value="{{ status }}" input-id="input-status"></x-switch>
                 </div>
               </div>
             </div>

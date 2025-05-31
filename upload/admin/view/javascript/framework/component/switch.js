@@ -26,9 +26,9 @@ class XSwitch extends WebComponent {
 
             let html = '';
 
-            html += '<div class="form-switch form-switch-lg">';
+            html += '<div class="' + this.getAttribute('input-class') + '">';
             html += '  <input type="hidden" name="' + this.getAttribute('name') + '" value="0"/>';
-            html += '  <input type="checkbox" name="' + this.getAttribute('name') + '" value="1" id="' + this.getAttribute('input-id') + '" class="form-check-input"' + (this.value == 1 ? ' checked' : '') + '/>';
+            html += '  <input type="checkbox" name="' + this.getAttribute('name') + '" value="1" class="form-check-input"' + (this.value == 1 ? ' checked' : '') + '/>';
             html += '</div>';
 
             this.innerHTML = html;
@@ -36,6 +36,10 @@ class XSwitch extends WebComponent {
             this.element = this.querySelector('input[type=\'checkbox\']');
 
             this.element.addEventListener('change', this.event.onchange);
+
+            if (this.hasAttribute('input-id')) {
+                this.element.setAttribute('id', this.getAttribute('input-id'));
+            }
         },
         onchange: (e) => {
             this.value = e.target.checked ? 1 : 0;

@@ -493,8 +493,6 @@ $('#input-customer-group').on('change', function() {
 $('#input-customer-group').trigger('change');
 
 $(document).on('change', '#input-address-match', function() {
-    console.log($(this).prop('checked'));
-
     if ($(this).prop('checked')) {
         $('#shipping-address').hide();
     } else {

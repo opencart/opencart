@@ -1004,7 +1004,7 @@
                             <option value="S"{% if product_discount.type == 'S' %} selected{% endif %}>{{ text_subtract }}</option>
                             <option value="P"{% if product_discount.type == 'P' %} selected{% endif %}>{{ text_percentage }}</option>
                           </select></td>
-                        <td><x-switch name="product_discount[{{ discount_row }}][special]" value="{{ product_discount.special }}"></x-switch></td>
+                        <td><x-switch name="product_discount[{{ discount_row }}][special]" value="{{ product_discount.special }}" input-class="form-switch form-switch-lg"></x-switch></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>

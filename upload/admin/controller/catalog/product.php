@@ -149,6 +149,8 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['copy'] = $this->url->link('catalog/product.copy', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('catalog/product.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('catalog/product.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('catalog/product.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('catalog/product.getList');
 
@@ -381,8 +383,6 @@ class Product extends \Opencart\System\Engine\Controller {
 				'image'   => $this->model_tool_image->resize($image, 40, 40),
 				'price'   => $result['price'],
 				'special' => $special,
-				'enable'  => $this->url->link('catalog/product.enable', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
-				'disable' => $this->url->link('catalog/product.disable', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
 				'edit'    => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['master_id'] ? '&master_id=' . $result['master_id'] : '') . $url),
 				'variant' => (!$result['master_id'] ? $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&master_id=' . $result['product_id'] . $url) : '')
 			] + $result;

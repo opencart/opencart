@@ -12,14 +12,12 @@
   <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
   <textarea name="comment" rows="4" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
-
 {% if text_agree %}
 <div class="text-end">
   <label for="input-checkout-agree" class="form-check-label">{{ text_agree }}</label>
   <x-switch name="agree" value="{{ agree }}" input-id="input-checkout-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline me-0"></x-switch>
 </div>
 {% endif %}
-
 <script type="text/javascript"><!--
 $('#button-payment-methods').on('click', function() {
     var element = this;

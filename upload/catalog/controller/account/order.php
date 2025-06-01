@@ -448,7 +448,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['histories'][] = [
-				'comment'    => nl2br($result['comment']),
+				'comment'    => $result['notify'] ? nl2br($result['comment']) : '',
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			] + $result;
 		}

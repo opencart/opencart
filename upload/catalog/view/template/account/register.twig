@@ -195,7 +195,7 @@
         {{ captcha }}
         <div class="text-end">
           {% if text_agree %}
-            <label class="form-check-label">{{ text_agree }}</label>
+            <label for="input-agree" class="form-check-label">{{ text_agree }}</label>
             <x-switch name="agree" value="0" input-id="input-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline align-top"></x-switch>
           {% endif %}
           <button type="submit" class="btn btn-primary">{{ button_continue }}</button>

@@ -210,7 +210,7 @@ $('#input-comment').on('keydown', function() {
 });
 
 /* Agree to terms */
-$('#input-checkout-agree').on('change', function() {
+$(document).on('change', '#input-checkout-agree', function() {
     var element = this;
 
     chain.attach(function() {

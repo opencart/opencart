@@ -34,7 +34,7 @@ class Upgrade12 extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// order
+			// Order
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'payment_code'");
 
 			if ($query->num_rows) {

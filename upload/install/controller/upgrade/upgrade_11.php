@@ -116,7 +116,7 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 			if ($this->model_upgrade_upgrade->hasField('customer_affiliate', 'payment')) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "customer_affiliate` SET `payment_method` = `payment`");
 
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_affiliate` DROP COLUMN `payment`");
+				$this->model_upgrade_upgrade->dropField('customer_affiliate', 'payment');
 			}
 			
 			// API
@@ -128,13 +128,11 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 			if ($this->model_upgrade_upgrade->hasField('cart', 'recurring_id')) {
 				$this->db->query("TRUNCATE TABLE `" . DB_PREFIX . "cart`");
 
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` DROP COLUMN `recurring_id`");
+				$this->model_upgrade_upgrade->dropField('cart', 'recurring_id');
 			}
 
 			// Addresses
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "address' AND COLUMN_NAME = 'default'");
-
-			if (!$query->num_rows) {
+			if (!$this->model_upgrade_upgrade->hasField('address', 'default')) {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` ADD COLUMN `default` tinyint(1) NOT NULL AFTER `custom_field`");
 			}
 

@@ -808,15 +808,17 @@ $('#button-shipping-methods').on('click', function() {
             if (json['shipping_methods']) {
                 var k = 0;
 
+                html += '<ul class="list-unstyled">';
+
                 for (i in json['shipping_methods']) {
-                    html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
+                    html += '<li class="mb-3"><strong>' + json['shipping_methods'][i]['name'] + '</strong>';
+                    html += '<ul class="list-unstyled mt-2">';
 
                     if (!json['shipping_methods'][i]['error']) {
                         for (j in json['shipping_methods'][i]['quote']) {
                             shipping_method[json['shipping_methods'][i]['quote'][j]['code']] = json['shipping_methods'][i]['quote'][j];
 
-                            html += '<div class="form-check">';
-                            html += '  <input type="radio" name="choose_shipping" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + k + '"';
+                            html += '<li><input type="radio" name="choose_shipping" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + k + '"';
 
                             if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method-code').val()) {
                                 html += ' checked';
@@ -824,15 +826,20 @@ $('#button-shipping-methods').on('click', function() {
 
                             html += '/>';
 
-                            html += '  <label for="input-shipping-method-' + k + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
-                            html += '</div>';
+                            html += '  <label for="input-shipping-method-' + k + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - <x-currency code="' + $('#input-currency').val() + '" amount="' + json['shipping_methods'][i]['quote'][j]['cost'] + '"></x-currency></label>';
+                            html += '</li>';
 
                             k++;
                         }
                     } else {
-                        html += '<div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div>';
+                        html += '<li><div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div></li>';
                     }
+
+                    html += '</ul>';
+                    html += '</li>';
                 }
+
+                html += '</ul>';
 
                 $('#shipping-methods').html(html);
 
@@ -905,15 +912,17 @@ $('#button-payment-methods').on('click', function() {
             if (json['payment_methods']) {
                 var k = 0;
 
+                html += '<ul class="list-unstyled">';
+
                 for (i in json['payment_methods']) {
-                    html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
+                    html += '<li><p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
+                    html += '<ul class="list-unstyled mt-2">';
 
                     if (!json['payment_methods'][i]['error']) {
                         for (j in json['payment_methods'][i]['option']) {
                             payment_method[json['payment_methods'][i]['option'][j]['code']] = json['payment_methods'][i]['option'][j];
 
-                            html += '<div class="form-check">';
-                            html += '  <input type="radio" name="choose_payment" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + k + '"';
+                            html += '<li><input type="radio" name="choose_payment" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + k + '"';
 
                             if (json['payment_methods'][i]['option'][j]['code'] == $('#input-payment-method-code').val()) {
                                 html += ' checked';
@@ -921,14 +930,19 @@ $('#button-payment-methods').on('click', function() {
 
                             html += '/>';
                             html += '  <label for="input-payment-method-' + k + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
-                            html += '</div>';
+                            html += '</li>';
 
                             k++;
                         }
                     } else {
-                        html += '<div class="alert alert-danger">' + json['payment_methods'][i]['error'] + '</div>';
+                        html += '<li><div class="alert alert-danger">' + json['payment_methods'][i]['error'] + '</div></li>';
                     }
+
+                    html += '</ul>';hhhh
+                    html += '</li>';
                 }
+
+                html += '</ul>';
 
                 $('#payment-methods').html(html);
 

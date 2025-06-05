@@ -297,7 +297,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_manufacturer->addDescription($manufacturer_id, $language_id, $manufacturer_data);
 	 */
 	public function addDescription(int $manufacturer_id, int $language_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_description` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_description` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `meta_title` = '" . $this->db->escape((string)$data['meta_title']) . "', `meta_description` = '" . $this->db->escape((string)$data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape((string)$data['meta_keyword']) . "'");
 	}
 
 	/**

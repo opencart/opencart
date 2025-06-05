@@ -43,6 +43,14 @@ class Country extends \Opencart\System\Engine\Controller {
 					}
 				}
 
+				$sort_order = [];
+
+				foreach ($country_data as $key => $value) {
+					$sort_order[$key] = $value['name'];
+				}
+
+				array_multisort($sort_order, SORT_ASC, $country_data);
+
 				$base = DIR_APPLICATION . 'view/data/';
 				$directory = $language['code'] . '/localisation/';
 				$filename = 'country.json';

@@ -14,34 +14,25 @@ class Sass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$files = glob(DIR_APPLICATION . 'view/stylesheet/*.scss');
+		$file = DIR_APPLICATION . 'view/stylesheet/stylesheet.css';
 
-		if ($files) {
-			foreach ($files as $file) {
-				// Get the filename
-				$filename = basename($file, '.scss');
+		if (!is_file($file) || $this->config->get('developer_sass')) {
+			$scss = new \ScssPhp\ScssPhp\Compiler();
+			$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/');
 
-				$stylesheet = DIR_APPLICATION . 'view/stylesheet/' . $filename . '.css';
+			$output = $scss->compileString('@import "stylesheet.scss"')->getCss();
 
-				if (!is_file($stylesheet) || !$this->config->get('developer_sass')) {
-					$scss = new \ScssPhp\ScssPhp\Compiler();
-					$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/');
+			$handle = fopen($file, 'w');
 
-					$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
+			flock($handle, LOCK_EX);
 
-					$handle = fopen($stylesheet, 'w');
+			fwrite($handle, $output);
 
-					flock($handle, LOCK_EX);
+			fflush($handle);
 
-					fwrite($handle, $output);
+			flock($handle, LOCK_UN);
 
-					fflush($handle);
-
-					flock($handle, LOCK_UN);
-
-					fclose($handle);
-				}
-			}
+			fclose($handle);
 		}
 	}
 }

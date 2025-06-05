@@ -346,7 +346,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['affiliates'][] = [
-				'balance'    => $this->currency->format(is_numeric($result['balance']) ? (float)$result['balance'] : 0, $this->config->get('config_currency')),
+				'balance'    => (float)$result['balance'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'customer'   => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']),
 				'edit'       => $this->url->link('marketing/affiliate.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url)
@@ -458,6 +458,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		$data['limit'] = $limit;
+
+		$data['currency'] = $this->config->get('config_currency');
 
 		return $this->load->view('marketing/affiliate_list', $data);
 	}

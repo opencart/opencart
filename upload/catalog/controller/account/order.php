@@ -98,8 +98,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
-		$data['currency'] = $this->session->data['currency'];
-
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -286,11 +284,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// Subscription
 			$this->load->model('account/subscription');
-
-			// Product
 			$this->load->model('catalog/product');
-
-			// Upload
 			$this->load->model('tool/upload');
 
 			// Products
@@ -325,23 +319,23 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				if ($order_subscription_info) {
 					if ($order_subscription_info['trial_status']) {
-						$trial_price = $this->currency->format($order_subscription_info['trial_price'] + ($this->config->get('config_tax') ? $order_subscription_info['trial_tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
+						$trial_price = $order_subscription_info['trial_price'] + ($this->config->get('config_tax') ? $order_subscription_info['trial_tax'] : 0);
 						$trial_cycle = $order_subscription_info['trial_cycle'];
 						$trial_frequency = $this->language->get('text_' . $order_subscription_info['trial_frequency']);
 						$trial_duration = $order_subscription_info['trial_duration'];
 
-						$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+						$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $order_info['currency_code'], $trial_price, $order_info['currency_value'], $trial_cycle, $trial_frequency, $trial_duration);
 					}
 
-					$price = $this->currency->format($order_subscription_info['price'] + ($this->config->get('config_tax') ? $order_subscription_info['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
+					$price = $order_subscription_info['price'] + ($this->config->get('config_tax') ? $order_subscription_info['tax'] : 0);
 					$cycle = $order_subscription_info['cycle'];
 					$frequency = $this->language->get('text_' . $order_subscription_info['frequency']);
 					$duration = $order_subscription_info['duration'];
 
 					if ($order_subscription_info['duration']) {
-						$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+						$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency, $duration);
 					} else {
-						$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+						$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency);
 					}
 
 					$subscription_plan_id = $order_subscription_info['subscription_plan_id'];
@@ -380,7 +374,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['continue'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 			$data['language'] = $this->config->get('config_language');
-			$data['currency'] = $order_info['currency_code'];
+			$data['currency_code'] = $order_info['currency_code'];
 			$data['currency_value'] = $order_info['currency_value'];
 
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -454,7 +448,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['histories'][] = [
-				'comment'    => nl2br($result['comment']),
+				'comment'    => $result['notify'] ? nl2br($result['comment']) : '',
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			] + $result;
 		}

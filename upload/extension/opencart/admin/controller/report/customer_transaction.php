@@ -150,13 +150,9 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['customers'][] = [
-				'customer'       => $result['customer'],
-				'email'          => $result['email'],
-				'customer_group' => $result['customer_group'],
-				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'           => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
-			];
+				'status' => $result['status'],
+				'edit'   => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
+			] + $result;
 		}
 
 		$url = '';
@@ -186,6 +182,8 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
+
+		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

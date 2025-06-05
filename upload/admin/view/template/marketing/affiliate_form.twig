@@ -34,8 +34,7 @@
                     <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control"{% if customer_id %} disabled{% endif %} required autocomplete="off"/>
                     <ul id="autocomplete-customer" class="dropdown-menu"></ul>
                     <div id="error-customer" class="invalid-feedback"></div>
-                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
-                    <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/> <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
                   </div>
                 </div>
 
@@ -200,82 +199,25 @@
                   <label class="col-sm-2 col-form-label">{{ entry_payment_method }}</label>
                   <div class="col-sm-10">
                     <div class="form-check">
-                      <input type="radio" name="payment_method" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment_method == 'cheque' %} checked{% endif %}/>
-                      <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
+                      <input type="radio" name="payment_method" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment_method == 'cheque' %} checked{% endif %}/> <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
                     </div>
                     <div class="form-check">
-                      <input type="radio" name="payment_method" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment_method == 'paypal' %} checked{% endif %}/>
-                      <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
+                      <input type="radio" name="payment_method" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment_method == 'paypal' %} checked{% endif %}/> <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
                     </div>
                     <div class="form-check">
-                      <input type="radio" name="payment_method" value="bank" id="input-payment-bank" class="form-check-input"{% if payment_method == 'bank' %} checked{% endif %}/>
-                      <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
+                      <input type="radio" name="payment_method" value="bank" id="input-payment-bank" class="form-check-input"{% if payment_method == 'bank' %} checked{% endif %}/> <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
                     </div>
                     <div id="error-payment-method" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div id="payment-cheque" class="payment">
-                  <div class="row mb-3">
-                    <label for="input-cheque" class="col-sm-2 col-form-label">{{ entry_cheque }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" required/>
-                      <div id="error-cheque" class="invalid-feedback"></div>
-                    </div>
-                  </div>
-                </div>
-                <div id="payment-paypal" class="payment">
-                  <div class="row mb-3">
-                    <label for="input-paypal" class="col-sm-2 col-form-label">{{ entry_paypal }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" required/>
-                      <div id="error-paypal" class="invalid-feedback"></div>
-                    </div>
-                  </div>
-                </div>
-                <div id="payment-bank" class="payment">
-                  <div class="row mb-3">
-                    <label for="input-bank-name" class="col-sm-2 col-form-label">{{ entry_bank_name }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="bank_name" value="{{ bank_name }}" placeholder="{{ entry_bank_name }}" id="input-bank-name" class="form-control"/>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="input-bank-branch-number" class="col-sm-2 col-form-label">{{ entry_bank_branch_number }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="bank_branch_number" value="{{ bank_branch_number }}" placeholder="{{ entry_bank_branch_number }}" id="input-bank-branch-number" class="form-control"/>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="input-bank-swift-code" class="col-sm-2 col-form-label">{{ entry_bank_swift_code }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control"/>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="input-bank-account-name" class="col-sm-2 col-form-label">{{ entry_bank_account_name }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" required/>
-                      <div id="error-bank-account-name" class="invalid-feedback"></div>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="input-bank-account-number" class="col-sm-2 col-form-label">{{ entry_bank_account_number }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" required/>
-                      <div id="error-bank-account-number" class="invalid-feedback"></div>
-                    </div>
-                  </div>
-                </div>
+                <div id="payment-method"></div>
               </fieldset>
               <fieldset>
                 <legend>{{ text_other }}</legend>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
-                    <div class="form-switch form-switch-lg">
-                      <input type="hidden" name="status" value="0"/>
-                      <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
-                    </div>
+                    <x-switch name="status" value="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
                   </div>
                 </div>
               </fieldset>
@@ -336,6 +278,58 @@
     </div>
   </div>
 </div>
+<template id="template-cheque">
+  <div class="row mb-3">
+    <label for="input-cheque" class="col-sm-2 col-form-label">{{ entry_cheque }}</label>
+    <div class="col-sm-10">
+      <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" required/>
+      <div id="error-cheque" class="invalid-feedback"></div>
+    </div>
+  </div>
+</template>
+<template id="template-paypal">
+  <div class="row mb-3">
+    <label for="input-paypal" class="col-sm-2 col-form-label">{{ entry_paypal }}</label>
+    <div class="col-sm-10">
+      <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" required/>
+      <div id="error-paypal" class="invalid-feedback"></div>
+    </div>
+  </div>
+</template>
+<template id="template-bank">
+  <div class="row mb-3">
+    <label for="input-bank-name" class="col-sm-2 col-form-label">{{ entry_bank_name }}</label>
+    <div class="col-sm-10">
+      <input type="text" name="bank_name" value="{{ bank_name }}" placeholder="{{ entry_bank_name }}" id="input-bank-name" class="form-control"/>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-bank-branch-number" class="col-sm-2 col-form-label">{{ entry_bank_branch_number }}</label>
+    <div class="col-sm-10">
+      <input type="text" name="bank_branch_number" value="{{ bank_branch_number }}" placeholder="{{ entry_bank_branch_number }}" id="input-bank-branch-number" class="form-control"/>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-bank-swift-code" class="col-sm-2 col-form-label">{{ entry_bank_swift_code }}</label>
+    <div class="col-sm-10">
+      <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control"/>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-bank-account-name" class="col-sm-2 col-form-label">{{ entry_bank_account_name }}</label>
+    <div class="col-sm-10">
+      <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" required/>
+      <div id="error-bank-account-name" class="invalid-feedback"></div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-bank-account-number" class="col-sm-2 col-form-label">{{ entry_bank_account_number }}</label>
+    <div class="col-sm-10">
+      <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" required/>
+      <div id="error-bank-account-number" class="invalid-feedback"></div>
+    </div>
+  </div>
+</template>
 <script type="text/javascript"><!--
 $('#input-customer').autocomplete({
     'source': function(request, response) {
@@ -479,9 +473,7 @@ $('#report').on('click', '.pagination a', function(e) {
 });
 
 $('input[name=\'payment_method\']').on('change', function() {
-    $('.payment').hide();
-
-    $('#payment-' + this.value).show();
+    $('#payment-method').html($('#template-' + this.value).html());
 });
 
 $('input[name=\'payment_method\']:checked').trigger('change');

@@ -156,7 +156,7 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'points'         => $result['points'],
 				'orders'         => $result['orders'],
-				'total'          => $this->currency->format((float)$result['total'], $this->config->get('config_currency')),
+				'total'          => (float)$result['total'],
 				'edit'           => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
 		}
@@ -188,6 +188,8 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
+
+		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

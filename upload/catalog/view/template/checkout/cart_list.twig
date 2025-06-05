@@ -70,7 +70,7 @@
         {% for total in totals %}
           <tr>
             <td colspan="4" class="text-end"><strong>{{ total.title }}</strong></td>
-            <td class="text-end">{{ total.text }}</td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ total.value }}"></x-currency></td>
           </tr>
         {% endfor %}
       </tfoot>

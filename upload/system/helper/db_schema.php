@@ -6857,8 +6857,13 @@ function oc_db_schema() {
 				'type' => 'varchar(5)'
 			],
 			[
-				'name' => 'currency',
+				'name' => 'currency_code',
 				'type' => 'varchar(3)'
+			],
+			[
+				'name'    => 'currency_value',
+				'type'    => 'decimal(15,8)',
+				'default' => '1.00000000'
 			],
 			[
 				'name' => 'date_added',

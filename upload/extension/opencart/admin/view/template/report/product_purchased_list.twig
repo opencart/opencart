@@ -15,7 +15,7 @@
             <td class="text-start">{{ product.name }}</td>
             <td class="text-start">{{ product.model }}</td>
             <td class="text-end">{{ product.quantity }}</td>
-            <td class="text-end">{{ product.total }}</td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>
           </tr>
         {% endfor %}
       {% else %}

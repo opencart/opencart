@@ -13,13 +13,13 @@
           <tr>
             <td>{{ transaction.date_added }}</td>
             <td>{{ transaction.description }}</td>
-            <td class="text-end">{{ transaction.amount }}</td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ transaction.amount }}"></x-currency></td>
           </tr>
         {% endfor %}
         <tr>
           <td>&nbsp;</td>
           <td class="text-end"><b>{{ text_balance }}</b></td>
-          <td class="text-end">{{ balance }}</td>
+          <td class="text-end"><x-currency code="{{ currency }}" amount="{{ balance }}"></x-currency></td>
         </tr>
       {% else %}
         <tr>

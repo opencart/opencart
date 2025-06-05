@@ -31,7 +31,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['agree'])) {
 			$data['agree'] = $this->session->data['agree'];
 		} else {
-			$data['agree'] = '';
+			$data['agree'] = 0;
 		}
 
 		// Information

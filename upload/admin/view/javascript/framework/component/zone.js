@@ -28,7 +28,7 @@ class XZone extends WebComponent {
             // Create the select element
             this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.default + '</select>';
 
-            this.addEventListener('attribute:value', this.event.changeValue);
+            this.addEventListener('[value]', this.event.changeValue);
 
             this.element = this.querySelector('select');
 
@@ -37,7 +37,7 @@ class XZone extends WebComponent {
             // Country Element
             this.target = document.getElementById(this.getAttribute('target'));
 
-            this.target.addEventListener('attribute:value', this.event.changeCountry.bind(this));
+            this.target.addEventListener('[value]', this.event.changeCountry.bind(this));
 
             if (this.target.value != 0) {
                 let response = this.storage.fetch('localisation/country-' + this.target.value);

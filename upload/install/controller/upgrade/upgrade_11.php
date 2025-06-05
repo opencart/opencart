@@ -17,10 +17,37 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-			// customer_activity
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_activity' AND COLUMN_NAME = 'activity_id'");
+			$this->load->model('upgrade/upgrade');
 
-			if ($query->num_rows) {
+			// customer
+			$query = $this->db->query("SELECT `customer_id`, `custom_field` FROM `" . DB_PREFIX . "customer` WHERE `custom_field` LIKE 'a:%'");
+
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['custom_field'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+				}
+			}
+
+			// customer_activity
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity` WHERE `data` LIKE 'a:%'");
+
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['data'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
+				}
+			}
+
+			// address
+			$query = $this->db->query("SELECT `address_id`, `custom_field` FROM `" . DB_PREFIX . "address` WHERE `custom_field` LIKE 'a:%'");
+
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['custom_field'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `address_id` = '" . (int)$result['address_id'] . "'");
+				}
+			}
+
+			// customer_activity
+			if ($this->model_upgrade_upgrade->hasField('customer_activity', 'activity_id')) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `customer_activity_id` = `activity_id` WHERE `customer_activity_id` IS NULL or `customer_activity_id` = ''");
 			}
 
@@ -86,35 +113,26 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 			}
 
 			// affiliate payment > payment_method
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_affiliate' AND COLUMN_NAME = 'payment'");
-
-			if ($query->num_rows) {
+			if ($this->model_upgrade_upgrade->hasField('customer_affiliate', 'payment')) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "customer_affiliate` SET `payment_method` = `payment`");
 
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_affiliate` DROP COLUMN `payment`");
+				$this->model_upgrade_upgrade->dropField('customer_affiliate', 'payment');
 			}
 			
-			// Api
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "api' AND COLUMN_NAME = 'name'");
-
-			if ($query->num_rows) {
+			// API
+			if ($this->model_upgrade_upgrade->hasField('api', 'name')) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `name` = `username` WHERE `username` IS NULL or `username` = ''");
 			}
 
 			// Cart - Subscriptions
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "cart' AND COLUMN_NAME = 'subscription_plan_id'");
-
-			if (!$query->num_rows) {
+			if ($this->model_upgrade_upgrade->hasField('cart', 'recurring_id')) {
 				$this->db->query("TRUNCATE TABLE `" . DB_PREFIX . "cart`");
 
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` DROP COLUMN `recurring_id`");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` ADD COLUMN `subscription_plan_id` int(11) NOT NULL AFTER `product_id`");
+				$this->model_upgrade_upgrade->dropField('cart', 'recurring_id');
 			}
 
 			// Addresses
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "address' AND COLUMN_NAME = 'default'");
-
-			if (!$query->num_rows) {
+			if (!$this->model_upgrade_upgrade->hasField('address', 'default')) {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` ADD COLUMN `default` tinyint(1) NOT NULL AFTER `custom_field`");
 			}
 

@@ -35,7 +35,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$price_status = false;
 		}
 
-		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($total, $this->session->data['currency']));
+		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->session->data['currency'], $total);
 
 		// Products
 		$data['products'] = [];
@@ -65,9 +65,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			if ($product['subscription']) {
 				if ($product['subscription']['duration']) {
-					$subscription .= sprintf($this->language->get('text_subscription_duration'), $price_status ?? $product['subscription']['price_text'], $product['subscription']['cycle'], $product['subscription']['frequency'], $product['subscription']['duration']);
+					$subscription .= sprintf($this->language->get('text_subscription_duration'), $this->session->data['currency'], $price_status ?? $product['subscription']['price'], $product['subscription']['cycle'], $product['subscription']['frequency'], $product['subscription']['duration']);
 				} else {
-					$subscription .= sprintf($this->language->get('text_subscription_cancel'), $price_status ?? $product['subscription']['price_text'], $product['subscription']['cycle'], $product['subscription']['frequency']);
+					$subscription .= sprintf($this->language->get('text_subscription_cancel'), $this->session->data['currency'], $price_status ?? $product['subscription']['price'], $product['subscription']['cycle'], $product['subscription']['frequency']);
 				}
 			}
 

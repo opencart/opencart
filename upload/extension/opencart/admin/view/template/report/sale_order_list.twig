@@ -19,7 +19,7 @@
             <td class="text-end">{{ order.orders }}</td>
             <td class="text-end">{{ order.products }}</td>
             <td class="text-end">{{ order.tax }}</td>
-            <td class="text-end">{{ order.total }}</td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ order.total }}"></x-currency></td>
           </tr>
         {% endfor %}
       {% else %}

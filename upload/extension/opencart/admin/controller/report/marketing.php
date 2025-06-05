@@ -157,7 +157,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 				'code'     => $result['code'],
 				'clicks'   => $result['clicks'],
 				'orders'   => $result['orders'],
-				'total'    => $this->currency->format((float)$result['total'], $this->config->get('config_currency')),
+				'total'    => (float)$result['total'],
 				'save'     => $this->url->link('marketing/marketing/edit', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'])
 			];
 		}
@@ -189,6 +189,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_order_status_id'] = $filter_order_status_id;
+
+		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

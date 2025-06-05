@@ -13,9 +13,10 @@
   <textarea name="comment" rows="4" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
 {% if text_agree %}
-  <div class="form-switch form-switch-lg form-check-reverse mt-3">
-    <label for="input-checkout-agree" class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" id="input-checkout-agree" class="form-check-input"{% if agree %} checked{% endif %}/>
-  </div>
+<div class="text-end">
+  <label for="input-checkout-agree" class="form-check-label">{{ text_agree }}</label>
+  <x-switch name="agree" value="{{ agree }}" input-id="input-checkout-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline me-0"></x-switch>
+</div>
 {% endif %}
 <script type="text/javascript"><!--
 $('#button-payment-methods').on('click', function() {
@@ -209,7 +210,7 @@ $('#input-comment').on('keydown', function() {
 });
 
 /* Agree to terms */
-$('#input-checkout-agree').on('change', function() {
+$(document).on('change', '#input-checkout-agree', function() {
     var element = this;
 
     chain.attach(function() {

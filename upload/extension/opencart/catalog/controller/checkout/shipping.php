@@ -32,7 +32,6 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['language'] = $this->config->get('config_language');
-			$data['currency'] = $this->session->data['currency'];
 
 			return $this->load->view('extension/opencart/checkout/shipping', $data);
 		}

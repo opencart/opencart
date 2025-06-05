@@ -6,18 +6,15 @@
       {% if config_checkout_guest %}
         <div class="col mb-3">
           <div class="form-check form-check-inline">
-            <input type="radio" name="account" value="1" id="input-register" class="form-check-input"{% if account %} checked{% endif %}/>
-            <label for="input-register" class="form-check-label">{{ text_register }}</label>
+            <input type="radio" name="account" value="1" id="input-register" class="form-check-input"{% if account %} checked{% endif %}/> <label for="input-register" class="form-check-label">{{ text_register }}</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="radio" name="account" value="0" id="input-guest" class="form-check-input"{% if not account %} checked{% endif %}/>
-            <label for="input-guest" class="form-check-label">{{ text_guest }}</label>
+            <input type="radio" name="account" value="0" id="input-guest" class="form-check-input"{% if not account %} checked{% endif %}/> <label for="input-guest" class="form-check-label">{{ text_guest }}</label>
           </div>
         </div>
       {% endif %}
       <div class="col mb-3{% if customer_groups|length <= 1 %} d-none{% endif %}">
-        <label class="form-label">{{ entry_customer_group }}</label>
-        <select name="customer_group_id" id="input-customer-group" class="form-select" required>
+        <label class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select" required>
           {% for customer_group in customer_groups %}
             <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
           {% endfor %}
@@ -34,14 +31,12 @@
         <div id="error-lastname" class="invalid-feedback"></div>
       </div>
       <div class="col mb-3">
-        <label for="input-email" class="form-label">{{ entry_email }}</label>
-        <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
+        <label for="input-email" class="form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
         <div id="error-email" class="invalid-feedback"></div>
       </div>
       {% if config_telephone_display %}
         <div class="col mb-3">
-          <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
-          <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"{% if config_telephone_required %} required{% endif %}/>
+          <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"{% if config_telephone_required %} required{% endif %}/>
           <div id="error-telephone" class="invalid-feedback"></div>
         </div>
       {% endif %}
@@ -263,8 +258,9 @@
 
         {% if shipping_required %}
           <div class="col mb-3">
-            <x-switch name="address_match" value="1" input-id="input-address-match" input-class="form-switch form-switch-lg form-check-inline me-0"></x-switch>
-            <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
+            <div class="form-check">
+              <input type="checkbox" name="address_match" value="1" id="input-address-match" class="form-check-input" checked/> <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
+            </div>
           </div>
         {% endif %}
 
@@ -407,7 +403,7 @@
       {% endfor %}
     </div>
   </fieldset>
-  <div class="row row-cols-1 row-cols-md-2">
+  <div id class="row row-cols-1 row-cols-md-2">
     <div id="password" class="col mb-2">
       <fieldset>
         <legend>{{ text_your_password }}</legend>
@@ -421,19 +417,31 @@
     </div>
     <div class="col mb-3">{{ captcha }}</div>
   </div>
-  <div class="mb-3">
+  <div id class="hstack">
     <div>
-      <x-switch name="agree" value="0" input-id="input-newsletter" input-class="form-switch form-switch-lg form-check-inline me-0"></x-switch>
+      <div class="form-switch form-switch-lg">
+        <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
+      </div>
+    </div>
+    <div>
       <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label>
     </div>
-    {% if text_agree %}
+  </div>
+  {% if text_agree %}
+    <div class="hstack">
       <div>
-        <x-switch name="agree" value="{{ agree }}" input-id="input-register-agree" input-class="form-switch form-switch-lg form-check-inline me-0"></x-switch>
+        <div id="register-agree" class="form-switch form-switch-lg">
+          <input type="checkbox" name="agree" value="1" id="input-register-agree" class="form-check-input"{% if agree %} checked{% endif %}/>
+        </div>
+      </div>
+      <div>
         <label for="input-register-agree" class="form-check-label">{{ text_agree }}</label>
       </div>
-    {% endif %}
+    </div>
+  {% endif %}
+  <div class="mt-3">
+    <button type="submit" id="button-register" class="btn btn-primary mt-2">{{ button_continue }}</button>
   </div>
-  <button type="submit" id="button-register" class="btn btn-primary mt-2">{{ button_continue }}</button>
 </form>
 <script type="text/javascript"><!--
 // Account
@@ -492,7 +500,7 @@ $('#input-customer-group').on('change', function() {
 
 $('#input-customer-group').trigger('change');
 
-$(document).on('change', '#input-address-match', function() {
+$('#input-address-match').on('change', function() {
     if ($(this).prop('checked')) {
         $('#shipping-address').hide();
     } else {

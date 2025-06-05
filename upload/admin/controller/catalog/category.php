@@ -67,8 +67,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['repair'] = $this->url->link('catalog/category.repair', 'user_token=' . $this->session->data['user_token']);
 		$data['add'] = $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/category.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('catalog/category.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('catalog/category.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('catalog/category.getList');
 
@@ -183,8 +181,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['categories'][] = [
-				'image' => $this->model_tool_image->resize($image, 40, 40),
-				'edit'	=> $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
+				'image'		=> $this->model_tool_image->resize($image, 40, 40),
+				'edit'		=> $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url),
+				'enable'	=> $this->url->link('catalog/category.enable', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url),
+				'disable'	=> $this->url->link('catalog/category.disable', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
 			] + $result;
 		}
 

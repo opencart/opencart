@@ -22,29 +22,35 @@
               <td>{{ product.name }}</td>
               <td class="d-none d-lg-table-cell">{{ product.model }}</td>
               <td class="text-end">
-                {% if product.special %}<s><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></s>
+                {% if product.special %}<span style="text-decoration: line-through;">{{ product.price }}</span>
                   <br/>
-                  <div class="text-danger"><x-currency code="{{ currency }}" amount="{{ product.special }}"></x-currency></div>
+                  <div class="text-danger">{{ product.special }}</div>
                 {% else %}
-                  <x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency>
-                {% endif %}
-              </td>
+                  {{ product.price }}
+                {% endif %}</td>
               <td class="text-end">
                 {% if product.quantity <= 0 %}
-                  <span class="badge bg-warning">{{ product.quantity }}</span>
+                  <span class="badge bg-warning{% if not product.status %} bg-opacity-50{% endif %}">{{ product.quantity }}</span>
                 {% elseif product.quantity <= 5 %}
-                  <span class="badge bg-danger">{{ product.quantity }}</span>
+                  <span class="badge bg-danger{% if not product.status %} bg-opacity-50{% endif %}">{{ product.quantity }}</span>
                 {% else %}
-                  <span class="badge bg-success">{{ product.quantity }}</span>
+                  <span class="badge bg-success{% if not product.status %} bg-opacity-50{% endif %}">{{ product.quantity }}</span>
                 {% endif %}</td>
-              <td class="text-center"><x-switch name="status" value="{{ product.status }}" input-class="form-switch form-switch-lg"></x-switch></td>
+              <td class="text-center">
+                <div class="form-switch form-switch-lg">
+                  <input type="hidden" name="status" value="0"/>
+                  <input type="checkbox" name="status" value="{% if not product.status %}{{ product.enable }}{% else %}{{ product.disable }}{% endif %}" class="form-check-input"{% if product.status %} checked{% endif %}/>
+                </div>
+              </td>
               <td class="text-end text-nowrap">
                 {% if product.variant %}
+
                   <div class="btn-group">
                     <a href="{{ product.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"><i class="fa-solid fa-caret-down"></i></button>
                     <div class="dropdown-menu dropdown-menu-end"><a href="{{ product.variant }}" class="dropdown-item"><i class="fa-solid fa-plus"></i> {{ text_variant_add }}</a></div>
                   </div>
+
                 {% else %}
                   <a href="{{ product.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></a>
                 {% endif %}</td>

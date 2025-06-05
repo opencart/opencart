@@ -94,19 +94,10 @@ class XCurrency extends WebComponent {
 
             let part = formater.formatToParts(this.amount * this.value);
 
-            let allowed = [
-                'minusSign',
-                'integer',
-                'group',
-                'decimal',
-                'fraction',
-                'literal'
-            ];
+            part.shift();
 
             for (let i = 0; i < part.length; i++) {
-                if (allowed.includes(part[i].type)) {
-                    string += part[i].value;
-                }
+                string += part[i].value;
             }
 
             if (this.symbol_right) {

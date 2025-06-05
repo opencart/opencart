@@ -22,8 +22,6 @@ class Upgrade14 extends \Opencart\System\Engine\Controller {
 
 			if (!$this->model_upgrade_upgrade->hasField('country', 'address_format_id')) {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "country` ADD COLUMN `address_format_id` int(11) NOT NULL AFTER `address_format`");
-
-
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "country` DROP COLUMN `address_format`");
 			}
 

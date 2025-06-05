@@ -46,8 +46,6 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('catalog/information.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/information.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('catalog/information.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('catalog/information.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('catalog/information.getList');
 
@@ -126,7 +124,11 @@ class Information extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_information->getInformations($filter_data);
 
 		foreach ($results as $result) {
-			$data['informations'][] = ['edit' => $this->url->link('catalog/information.form', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url)] + $result;
+			$data['informations'][] = [
+				'edit' 		=> $this->url->link('catalog/information.form', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url),
+				'enable'	=> $this->url->link('catalog/information.enable', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url),
+				'disable'	=> $this->url->link('catalog/information.disable', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';

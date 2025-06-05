@@ -1,4 +1,4 @@
-<form id="form-affiliate" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+<form id="form-affiliate" method="post" data-oc-load="{{ action }}" data-oc-target="#list">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -20,7 +20,7 @@
               <td><a href="{{ affiliate.customer }}">{{ affiliate.name }}</a></td>
               <td class="d-none d-lg-table-cell">{{ affiliate.tracking }}</td>
               <td class="text-end">{{ affiliate.commission }}</td>
-              <td class="text-end d-none d-lg-table-cell"><x-currency code="{{ currency }}" amount="{{ affiliate.balance }}"></x-currency></td>
+              <td class="text-end d-none d-lg-table-cell">{{ affiliate.balance }}</td>
               <td class="d-none d-lg-table-cell">{{ affiliate.date_added }}</td>
               <td class="text-end text-nowrap"><a href="{{ affiliate.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not affiliate.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>

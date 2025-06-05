@@ -8,7 +8,7 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <p>{{ text_total }} <strong><x-currency code="{{ currency }}" amount="{{ total }}"></x-currency></strong>.</p>
+      <p>{{ text_total }} <b>{{ total }}</b>.</p>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -23,7 +23,7 @@
               <tr>
                 <td>{{ transaction.date_added }}</td>
                 <td>{{ transaction.description }}</td>
-                <td class="text-end"><x-currency code="{{ currency }}" amount="{{ transaction.amount }}"></x-currency></td>
+                <td class="text-end">{{ transaction.amount }}</td>
               </tr>
             {% endfor %}
           {% else %}

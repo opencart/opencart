@@ -256,8 +256,10 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			}
 
 			// Alter events table
-			if ($this->model_upgrade_upgrade->hasField('event', 'date_added')) {
-				$this->model_upgrade_upgrade->dropField('event', 'date_added');
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "event' AND COLUMN_NAME = 'date_added'");
+
+			if ($query->num_rows) {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "event` DROP COLUMN `date_added`");
 			}
 
 			// Update current keys

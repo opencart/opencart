@@ -151,7 +151,16 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		// Total Products
 		$product_total = $this->model_extension_opencart_report_product_purchased->getTotalPurchased($filter_data);
 
-		$data['products'] = $this->model_extension_opencart_report_product_purchased->getPurchased($filter_data);
+		$results = $this->model_extension_opencart_report_product_purchased->getPurchased($filter_data);
+
+		foreach ($results as $result) {
+			$data['products'][] = [
+				'name'     => $result['name'],
+				'model'    => $result['model'],
+				'quantity' => $result['quantity'],
+				'total'    => $this->currency->format($result['total'], $this->config->get('config_currency'))
+			];
+		}
 
 		$url = '';
 
@@ -180,8 +189,6 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_order_status_id'] = $filter_order_status_id;
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

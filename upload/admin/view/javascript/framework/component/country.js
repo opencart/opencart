@@ -44,7 +44,7 @@ class XCountry extends WebComponent {
 
             this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '"' + (this.hasAttribute('required') ? ' required' : '') + '>' + this.default + '</select>';
 
-            this.addEventListener('[value]', this.event.changeValue);
+            this.addEventListener('attribute:value', this.event.changeValue);
 
             this.element = this.querySelector('select');
 
@@ -83,7 +83,7 @@ class XCountry extends WebComponent {
             }
         },
         onchange: (e) => {
-            this.value = e.target.value;
+           this.value = e.target.value;
         },
         changeValue: (e) => {
             this.value = e.detail.value_new;

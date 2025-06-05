@@ -17,7 +17,12 @@
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ information.information_id }}" class="form-check-input"/></td>
               <td>{{ information.title }}</td>
               <td class="text-end">{{ information.sort_order }}</td>
-              <td class="text-center"><x-switch name="status" value="{{ information.status }}" input-class="form-switch form-switch-lg"></x-switch></td>
+              <td class="text-center">
+                <div class="form-switch form-switch-lg">
+                  <input type="hidden" name="status" value="0"/>
+                  <input type="checkbox" name="status" value="{% if not information.status %}{{ information.enable }}{% else %}{{ information.disable }}{% endif %}" class="form-check-input"{% if information.status %} checked{% endif %}/>
+                </div>
+              </td>
               <td class="text-end text-nowrap"><a href="{{ information.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not information.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}

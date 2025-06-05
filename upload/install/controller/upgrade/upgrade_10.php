@@ -45,8 +45,10 @@ class Upgrade10 extends \Opencart\System\Engine\Controller {
 			$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = 'radio' WHERE `type` = 'image'");
 
 			// product_option
-			if ($this->model_upgrade_upgrade->hasField('product_option', 'option_value')) {
-				$this->model_upgrade_upgrade->dropField('product_option', 'option_value');
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_option' AND COLUMN_NAME = 'option_value'");
+
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "product_option` SET `option_value` = 'value'");
 			}
 
 			// tags

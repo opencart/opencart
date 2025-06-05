@@ -189,7 +189,7 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'title'      => $result['title'],
 				'orders'     => $result['orders'],
-				'total'      => $result['total']
+				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			];
 		}
 
@@ -225,8 +225,6 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

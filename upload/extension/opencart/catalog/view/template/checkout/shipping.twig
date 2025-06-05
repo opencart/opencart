@@ -98,7 +98,7 @@
                               }
 
                               html += '/>';
-                              html += '  <label for="input-shipping-method-' + code + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - <x-currency code="{{ currency }}" amount="' + json['shipping_methods'][i]['quote'][j]['cost'] + '"></x-currency></label>';
+                              html += '  <label for="input-shipping-method-' + code + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
                               html += '</div>';
                           }
                       } else {

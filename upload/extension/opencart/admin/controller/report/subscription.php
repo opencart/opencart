@@ -184,9 +184,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['subscriptions'][] = [
-				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
-				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end']))
-			] + $result;
+				'date_start'    => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
+				'date_end'      => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
+				'subscriptions' => $result['subscriptions'],
+				'products'      => $result['products'],
+				'tax'           => $this->currency->format((float)$result['tax'], $this->config->get('config_currency')),
+				'total'         => $this->currency->format((float)$result['total'], $this->config->get('config_currency'))
+			];
 		}
 
 		$url = '';
@@ -221,8 +225,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_subscription_status_id'] = $filter_subscription_status_id;
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

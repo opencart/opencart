@@ -65,7 +65,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['transactions'][] = [
-				'amount'     => $result['amount'],
+				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			] + $result;
 		}
@@ -83,11 +83,9 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($transaction_total - $limit)) ? $transaction_total : ((($page - 1) * $limit) + $limit), $transaction_total, ceil($transaction_total / $limit));
 
-		$data['total'] = $this->customer->getBalance();
+		$data['total'] = $this->currency->format($this->customer->getBalance(), $this->session->data['currency']);
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

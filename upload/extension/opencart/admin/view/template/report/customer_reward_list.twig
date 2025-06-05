@@ -22,7 +22,7 @@
             <td class="text-start">{{ customer.status }}</td>
             <td class="text-end">{{ customer.points }}</td>
             <td class="text-end">{{ customer.orders }}</td>
-            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ customer.total }}"></x-currency></td>
+            <td class="text-end">{{ customer.total }}</td>
             <td class="text-end"><a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
           </tr>
         {% endfor %}

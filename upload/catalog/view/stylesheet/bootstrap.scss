@@ -1,0 +1,115 @@
+// Custom OpenCart variables
+$blue:       #229ac8;
+$indigo:     #6610f2;
+$purple:     #6f42c1;
+$pink:       #d63384;
+$red:        #da4f49;
+$orange:     #fd7e14;
+$yellow:     #faa732;
+$green:      #198754;
+$teal:       #20c997;
+$cyan:       #0dcaf0;
+$white:      #fff;
+$gray-100:   #f8f9fa;
+$gray-200:   #e9ecef;
+$gray-300:   #dee2e6;
+$gray-400:   #ced4da;
+$gray-500:   #adb5bd;
+$gray-600:   #6c757d;
+$gray-700:   #495057;
+$gray-800:   #343a40;
+$gray-900:   #212529;
+$black:      #000;
+
+$enable-caret:                       false;
+$line-height-base:                   1.8;
+$input-btn-padding-y:                .35rem;
+$border-radius:                      .25rem;
+$border-radius-sm:                   .2rem;
+$border-radius-lg:                   .3rem;
+$border-radius-xl:                   .3rem;
+$border-radius-2xl:                  .3rem;
+$font-size-base:                     .8125rem;
+// $line-height-base:                   1.4;
+$carousel-control-color:             rgba(0, 0, 0, 0.8);
+$carousel-control-width:             30px;
+$carousel-indicator-width:           9px;
+$carousel-indicator-height:          9px;
+$carousel-indicator-hit-area-height: 10px;
+$carousel-indicator-spacer:          5px;
+$carousel-indicator-opacity:         .5;
+$carousel-indicator-active-bg:       rgba(0, 0, 0, 0.9);
+$carousel-indicator-active-opacity:  .9;
+
+
+
+@import "scss/bootstrap";
+
+
+
+// Custom OpenCart styles
+.input-group-lg > .form-control,
+.input-group-lg > .form-select,
+.input-group-lg > .input-group-text,
+.input-group-lg > .btn {
+  height: #{$input-height-lg};
+}
+.input-group-sm > .form-control,
+.input-group-sm > .form-select,
+.input-group-sm > .input-group-text,
+.input-group-sm > .btn {
+  height: #{$input-height-sm};
+}
+.btn-light {
+  --bs-btn-border-color: var(--bs-gray-300);
+}
+.carousel {
+  border: 4px solid #{$white};
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  margin-bottom: 50px;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  z-index: 2;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all .3s ease;
+  font-size: 40px;
+  color: rgba(0,0,0,0.8);
+}
+.carousel-control-prev {
+  left: auto;
+}
+.carousel-control-next {
+  right: auto;
+}
+.carousel .carousel-control-prev {
+  opacity: 0;
+  left: -20px;
+}
+.carousel .carousel-control-next {
+  opacity: 0;
+  right: -20px;
+}
+.carousel:hover .carousel-control-prev {
+  opacity: 0.7;
+  left: 0px;
+}
+.carousel:hover .carousel-control-next {
+  opacity: 0.7;
+  right: 0px;
+}
+.carousel-indicators {
+  bottom: -50px;
+  [data-bs-target] {
+    border-radius: 20px;
+    border: 1px solid #000000;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+  }
+  li:hover {
+    opacity: .7;
+  }
+  .active {
+    opacity: $carousel-indicator-active-opacity;
+  }
+}

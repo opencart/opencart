@@ -67,7 +67,7 @@ export class WebComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, value_old, value_new) {
-        let event = new CustomEvent('[' + name + ']', {
+        let event = new CustomEvent('attribute:' + name, {
             bubbles: false,
             cancelable: true,
             detail: {
@@ -82,8 +82,6 @@ export class WebComponent extends HTMLElement {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    import('./component/currency.js');
     import('./component/country.js');
-    import('./component/switch.js');
     import('./component/zone.js');
 });

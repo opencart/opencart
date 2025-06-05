@@ -143,8 +143,8 @@
                       <input type="hidden" name="product[{{ subscription_product_row }}][subscription_plan_id]" value="{{ subscription_plan_id }}"/>
                     </td>
                     <td class="text-end">{{ subscription_product.quantity }}</td>
-                    <td class="text-end"><x-currency code="{{ currency }}" amount="{{ subscription_product.trial_price }}"></x-currency></td>
-                    <td class="text-end"><x-currency code="{{ currency }}" amount="{{ subscription_product.price }}"></x-currency></td>
+                    <td class="text-end">{{ subscription_product.trial_price }}</td>
+                    <td class="text-end">{{ subscription_product.price }}</td>
                     <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set subscription_product_row = subscription_product_row + 1 %}
@@ -276,7 +276,10 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_notify }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="notify" value="{{ notify }}" input-id="input-notify" input-class="form-switch form-switch-lg"></x-switch>
+                    <div class="form-switch form-switch-lg">
+                      <input type="hidden" name="notify" value="0"/>
+                      <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
+                    </div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -490,7 +493,7 @@ $('#input-product').autocomplete({
                         html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 
                         if (option_value['price']) {
-                            html += ' (' + option_value['price_prefix'] + '<x-currency code="{{ currency_code }}" amount="' + option_value['price'] + '"></x-currency>)';
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
                         }
 
                         html += '</option>';
@@ -513,7 +516,7 @@ $('#input-product').autocomplete({
                         html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 
                         if (option_value['price']) {
-                            html += ' (' + option_value['price_prefix'] + '<x-currency code="{{ currency_code }}" amount="' + option_value['price'] + '"></x-currency>)';
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
                         }
 
                         html += '</option>';
@@ -537,7 +540,7 @@ $('#input-product').autocomplete({
                         html += '  <label for="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-label">' + option_value['name'];
 
                         if (option_value['price']) {
-                            html += ' (' + option_value['price_prefix'] + '<x-currency code="{{ currency_code }}" amount="' + option_value['price'] + '"></x-currency>)';
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
                         }
 
                         html += '  </label>';
@@ -562,7 +565,7 @@ $('#input-product').autocomplete({
                         html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
 
                         if (option_value['price']) {
-                            html += ' (' + option_value['price_prefix'] + '<x-currency code="{{ currency_code }}" amount="' + option_value['price'] + '"></x-currency>)';
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
                         }
 
                         html += '</option>';
@@ -726,8 +729,8 @@ $('#form-product-add').on('submit', function(e) {
                         html += '    <input type="hidden" name="product[' + subscription_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
                         html += '  </td>';
                         html += '  <td class="text-end">' + product['quantity'] + '</td>';
-                        html += '  <td class="text-end"><x-currency code="{{ currency_code }}" amount="' + product['price'] + '"></x-currency></td>';
-                        html += '  <td class="text-end"><x-currency code="{{ currency_code }}" amount="' + product['total'] + '"></x-currency></td>';
+                        html += '  <td class="text-end">' + product['price_text'] + '</td>';
+                        html += '  <td class="text-end">' + product['total_text'] + '</td>';
                         html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
                         html += '</tr>';
 
@@ -808,17 +811,15 @@ $('#button-shipping-methods').on('click', function() {
             if (json['shipping_methods']) {
                 var k = 0;
 
-                html += '<ul class="list-unstyled">';
-
                 for (i in json['shipping_methods']) {
-                    html += '<li class="mb-3"><strong>' + json['shipping_methods'][i]['name'] + '</strong>';
-                    html += '<ul class="list-unstyled mt-2">';
+                    html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
 
                     if (!json['shipping_methods'][i]['error']) {
                         for (j in json['shipping_methods'][i]['quote']) {
                             shipping_method[json['shipping_methods'][i]['quote'][j]['code']] = json['shipping_methods'][i]['quote'][j];
 
-                            html += '<li><input type="radio" name="choose_shipping" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + k + '"';
+                            html += '<div class="form-check">';
+                            html += '  <input type="radio" name="choose_shipping" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + k + '"';
 
                             if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method-code').val()) {
                                 html += ' checked';
@@ -826,20 +827,15 @@ $('#button-shipping-methods').on('click', function() {
 
                             html += '/>';
 
-                            html += '  <label for="input-shipping-method-' + k + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - <x-currency code="' + $('#input-currency').val() + '" amount="' + json['shipping_methods'][i]['quote'][j]['cost'] + '"></x-currency></label>';
-                            html += '</li>';
+                            html += '  <label for="input-shipping-method-' + k + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
+                            html += '</div>';
 
                             k++;
                         }
                     } else {
-                        html += '<li><div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div></li>';
+                        html += '<div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div>';
                     }
-
-                    html += '</ul>';
-                    html += '</li>';
                 }
-
-                html += '</ul>';
 
                 $('#shipping-methods').html(html);
 
@@ -912,17 +908,15 @@ $('#button-payment-methods').on('click', function() {
             if (json['payment_methods']) {
                 var k = 0;
 
-                html += '<ul class="list-unstyled">';
-
                 for (i in json['payment_methods']) {
-                    html += '<li><p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
-                    html += '<ul class="list-unstyled mt-2">';
+                    html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
 
                     if (!json['payment_methods'][i]['error']) {
                         for (j in json['payment_methods'][i]['option']) {
                             payment_method[json['payment_methods'][i]['option'][j]['code']] = json['payment_methods'][i]['option'][j];
 
-                            html += '<li><input type="radio" name="choose_payment" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + k + '"';
+                            html += '<div class="form-check">';
+                            html += '  <input type="radio" name="choose_payment" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + k + '"';
 
                             if (json['payment_methods'][i]['option'][j]['code'] == $('#input-payment-method-code').val()) {
                                 html += ' checked';
@@ -930,19 +924,14 @@ $('#button-payment-methods').on('click', function() {
 
                             html += '/>';
                             html += '  <label for="input-payment-method-' + k + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
-                            html += '</li>';
+                            html += '</div>';
 
                             k++;
                         }
                     } else {
-                        html += '<li><div class="alert alert-danger">' + json['payment_methods'][i]['error'] + '</div></li>';
+                        html += '<div class="alert alert-danger">' + json['payment_methods'][i]['error'] + '</div>';
                     }
-
-                    html += '</ul>';
-                    html += '</li>';
                 }
-
-                html += '</ul>';
 
                 $('#payment-methods').html(html);
 

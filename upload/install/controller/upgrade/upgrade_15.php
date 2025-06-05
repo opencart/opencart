@@ -44,19 +44,15 @@ class Upgrade15 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 15, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['success'] = $this->language->get('text_success');
 
 			$url = '';
-
-			if (isset($this->request->get['version'])) {
-				$url .= '&version=' . $this->request->get['version'];
-			}
 
 			if (isset($this->request->get['admin'])) {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['next'] = $this->url->link('upgrade/upgrade_16', $url, true);
+			$json['redirect'] = $this->url->link('install/step_4', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -146,7 +146,7 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 				'name'   => $result['name'],
 				'code'   => $result['code'],
 				'orders' => $result['orders'],
-				'total'  => $result['total'],
+				'total'  => $this->currency->format($result['total'], $this->config->get('config_currency')),
 				'edit'   => $this->url->link('marketing/coupon.edit', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $result['coupon_id'])
 			];
 		}
@@ -173,8 +173,6 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

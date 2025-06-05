@@ -149,8 +149,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['copy'] = $this->url->link('catalog/product.copy', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('catalog/product.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('catalog/product.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('catalog/product.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('catalog/product.getList');
 
@@ -373,7 +371,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			foreach ($product_discounts as $product_discount) {
 				if (($product_discount['date_start'] == '0000-00-00' || strtotime($product_discount['date_start']) < time()) && ($product_discount['date_end'] == '0000-00-00' || strtotime($product_discount['date_end']) > time())) {
-					$special = $product_discount['price'];
+					$special = $this->currency->format($product_discount['price'], $this->config->get('config_currency'));
 
 					break;
 				}
@@ -381,8 +379,10 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['products'][] = [
 				'image'   => $this->model_tool_image->resize($image, 40, 40),
-				'price'   => $result['price'],
+				'price'   => $this->currency->format($result['price'], $this->config->get('config_currency')),
 				'special' => $special,
+				'enable'  => $this->url->link('catalog/product.enable', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
+				'disable' => $this->url->link('catalog/product.disable', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . $url),
 				'edit'    => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['master_id'] ? '&master_id=' . $result['master_id'] : '') . $url),
 				'variant' => (!$result['master_id'] ? $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&master_id=' . $result['product_id'] . $url) : '')
 			] + $result;
@@ -501,8 +501,6 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		return $this->load->view('catalog/product_list', $data);
 	}
@@ -1232,8 +1230,6 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['report'] = $this->getReport();
 
-		$data['currency'] = $this->config->get('config_currency');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -1590,7 +1586,7 @@ class Product extends \Opencart\System\Engine\Controller {
 								'product_option_value_id' => $product_option_value['product_option_value_id'],
 								'option_value_id'         => $product_option_value['option_value_id'],
 								'name'                    => $option_value_info['name'],
-								'price'                   => (float)$product_option_value['price'] ? $product_option_value['price'] : false,
+								'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
 								'price_prefix'            => $product_option_value['price_prefix']
 							];
 						}
@@ -1616,15 +1612,15 @@ class Product extends \Opencart\System\Engine\Controller {
 				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($product_subscription['subscription_plan_id']);
 
 				if ($subscription_plan_info) {
-					$price = $product_subscription['price'];
+					$price = $this->currency->format($product_subscription['price'], $this->config->get('config_currency'));
 					$cycle = $subscription_plan_info['cycle'];
 					$frequency = $this->language->get('text_' . $subscription_plan_info['frequency']);
 					$duration = $subscription_plan_info['duration'];
 
 					if ($subscription_plan_info['duration']) {
-						$description = sprintf($this->language->get('text_subscription_duration'), $this->config->get('config_currency'), $price, $cycle, $frequency, $duration);
+						$description = sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
 					} else {
-						$description = sprintf($this->language->get('text_subscription_cancel'), $this->config->get('config_currency'), $price, $cycle, $frequency);
+						$description = sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 					}
 
 					$subscription_plan_data[] = [

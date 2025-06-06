@@ -79,11 +79,7 @@ class MySQLi {
 		$this->db = new \mysqli();
 
 		// Check PHP version to use appropriate method
-		if (version_compare(PHP_VERSION, '8.1.0', '>=')) {
-			mysqli_report(MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ERROR);
-		} else {
-			$this->db->report_mode = MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ERROR;
-		}
+		mysqli_report(flags: MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 		if ($temp_ssl_key_file || $temp_ssl_cert_file || $temp_ssl_ca_file) {
 			$this->db->ssl_set($temp_ssl_key_file, $temp_ssl_cert_file, $temp_ssl_ca_file, null, null);
@@ -125,7 +121,7 @@ class MySQLi {
 				}
 
 				$result = new \stdClass();
-				$result->num_rows = $query->num_rows;
+				$result->num_rows = (int)$query->num_rows;
 				$result->row = $data[0] ?? [];
 				$result->rows = $data;
 

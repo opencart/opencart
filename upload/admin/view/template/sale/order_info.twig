@@ -1595,7 +1595,7 @@ $('#input-payment-address').on('change', function() {
 
                 if (json['custom_field'][i] instanceof Array) {
                     for (j = 0; j < json['custom_field'][i].length; j++) {
-                        $('#input-payment-custom-field-value-' + item.custom_field[i][j]).prop('checked', true);
+                        $('#input-payment-custom-field-value-' + json['custom_field'][i][j]).prop('checked', true);
                     }
                 }
             }

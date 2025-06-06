@@ -39,64 +39,21 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 		return false;
 	}
 
-	switch ($code) {
-		case E_NOTICE:
-		case E_USER_NOTICE:
-			$error = 'Notice';
-			break;
-		case E_WARNING:
-		case E_USER_WARNING:
-			$error = 'Warning';
-			break;
-		case E_ERROR:
-		case E_USER_ERROR:
-			$error = 'Fatal Error';
-			break;
-		default:
-			$error = 'Unknown';
-			break;
-	}
-
-	if ($config->get('error_log')) {
-		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
-	}
-
-	if ($config->get('error_display')) {
-		echo $error . ': ' . $message . ' in ' . $file . ' on line ' . $line . "\n";
-	} else {
-		header('Location: ' . $config->get('error_page'));
-		exit();
-	}
+	throw new \Exception($message, $code, 0, $file, $line);
 
 	return true;
 });
 
 // Exception Handler
 set_exception_handler(function(\Throwable $e) use ($log, $config): void {
-	$output  = 'Error: ' . $e->getMessage() . "\n";
-	$output .= 'File: ' . $e->getFile() . "\n";
-	$output .= 'Line: ' . $e->getLine() . "\n\n";
-
-	if ($config->get('error_debug')) {
-		foreach ($e->getTrace() as $key => $trace) {
-			$output .= 'Backtrace: ' . $key . "\n";
-			$output .= 'File: ' . $trace['file'] . "\n";
-			$output .= 'Line: ' . $trace['line'] . "\n";
-
-			if (isset($trace['class'])) {
-				$output .= 'Class: ' . $trace['class'] . "\n";
-			}
-
-			$output .= 'Function: ' . $trace['function'] . "\n\n";
-		}
-	}
+	$error = $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
 
 	if ($config->get('error_log')) {
-		$log->write(trim($output));
+		$log->write($error);
 	}
 
 	if ($config->get('error_display')) {
-		echo $output;
+		echo $error;
 	} else {
 		header('Location: ' . $config->get('error_page'));
 		exit();

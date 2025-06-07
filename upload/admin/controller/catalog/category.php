@@ -248,11 +248,11 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['category_id'])) {
-			$category_id = (int)$this->request->get['category_id'];
-		} else {
-			$category_id = 0;
-		}
+        if (isset($this->request->post['selected'])) {
+            $selected = (array)$this->request->post['selected'];
+        } else {
+            $selected = [];
+        }
 
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -262,8 +262,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			// Category
 			$this->load->model('catalog/category');
 
-			$this->model_catalog_category->editStatus($category_id, true);
-
+            foreach ($selected as $category_id) {
+                $this->model_catalog_category->editStatus($category_id, true);
+            }
+            
 			$json['success'] = $this->language->get('text_success');
 		}
 
@@ -281,11 +283,11 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['category_id'])) {
-			$category_id = (int)$this->request->get['category_id'];
-		} else {
-			$category_id = 0;
-		}
+        if (isset($this->request->post['selected'])) {
+            $selected = (array)$this->request->post['selected'];
+        } else {
+            $selected = [];
+        }
 
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -295,7 +297,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			// Category
 			$this->load->model('catalog/category');
 
-			$this->model_catalog_category->editStatus($category_id, false);
+            foreach ($selected as $category_id) {
+                $this->model_catalog_category->editStatus($category_id, false);
+            }
+
 
 			$json['success'] = $this->language->get('text_success');
 		}

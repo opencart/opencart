@@ -39,21 +39,19 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 		return false;
 	}
 
-	throw new \Exception($message, $code, 0, $file, $line);
+	throw new \Exception($message . ' in ' . $file . ' on line ' . $line, $code);
 
 	return true;
 });
 
 // Exception Handler
 set_exception_handler(function(\Throwable $e) use ($log, $config): void {
-	$error = $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
-
 	if ($config->get('error_log')) {
-		$log->write($error);
+		$log->write($e->getMessage());
 	}
 
 	if ($config->get('error_display')) {
-		echo $error;
+		echo $e->getMessage();
 	} else {
 		header('Location: ' . $config->get('error_page'));
 		exit();

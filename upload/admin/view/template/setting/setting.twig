@@ -278,7 +278,7 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_currency_auto }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="config_currency_auto" value="{{ config_currency_auto }}" input-id="input-currency-auto" input-class="form-switch form-switch-lg"></x-switch>
+                    <x-switch name="config_currency_auto" value="1" input-id="input-currency-auto" input-class="form-switch form-switch-lg"{% if config_currency_auto %} checked{% endif %}></x-switch>
                     <div class="form-text">{{ help_currency_auto }}</div>
                   </div>
                 </div>
@@ -332,7 +332,7 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_product_count" value="{{ config_product_count }}" input-id="input-product-count" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_product_count" value="1" input-id="input-product-count" input-class="form-switch form-switch-lg"{% if config_product_count %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_product_count }}</div>
                         </div>
                       </div>
@@ -355,7 +355,7 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_product_report }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_product_report_status" value="{{ config_product_report_status }}" input-id="input-product-report" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_product_report_status" value="1" input-id="input-product-report" input-class="form-switch form-switch-lg"{% if config_product_report_status %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_product_report }}</div>
                         </div>
                       </div>
@@ -369,21 +369,21 @@
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_review_status }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_review_status" value="{{ config_review_status }}" input-id="input-review-status" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_review_status" value="1" input-id="input-review-status" input-class="form-switch form-switch-lg"{% if config_review_status %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_review }}</div>
                         </div>
                       </div>
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_review_purchased }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_review_purchased" value="{{ config_review_purchased }}" input-id="input-review-purchased" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_review_purchased" value="1" input-id="input-review-purchased" input-class="form-switch form-switch-lg"{% if config_review_purchased %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_review_purchased }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_review_guest }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_review_guest" value="{{ config_review_guest }}" input-id="input-review-guest" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_review_guest" value="1" input-id="input-review-guest" input-class="form-switch form-switch-lg"{% if config_review_guest %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_review_guest }}</div>
                         </div>
                       </div>
@@ -405,14 +405,14 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_comment_status }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_comment_status" value="{{ config_comment_status }}" input-id="input-comment-status" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_comment_status" value="1" input-id="input-comment-status" input-class="form-switch form-switch-lg"{% if config_comment_status %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_comment_status }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_comment_approve }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_comment_approve" value="{{ config_comment_approve }}" input-id="input-comment-approve" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_comment_approve" value="1" input-id="input-comment-approve" input-class="form-switch form-switch-lg"{% if config_comment_approve %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_comment_approve }}</div>
                         </div>
                       </div>
@@ -471,7 +471,7 @@
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_tax" value="{{ config_tax }}" input-id="input-tax" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_tax" value="1" input-id="input-tax" input-class="form-switch form-switch-lg"{% if config_tax %} checked{% endif %}></x-switch>
                         </div>
                       </div>
                       <div class="row mb-3">
@@ -506,7 +506,7 @@
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_online }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_customer_online" value="{{ config_customer_online }}" input-id="input-customer-online" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_customer_online" value="1" input-id="input-customer-online" input-class="form-switch form-switch-lg"{% if config_customer_online %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_customer_online }}</div>
                         </div>
                       </div>
@@ -523,14 +523,14 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_activity }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_customer_activity" value="{{ config_customer_activity }}" input-id="input-customer-activity" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_customer_activity" value="1" input-id="input-customer-activity" input-class="form-switch form-switch-lg"{% if config_customer_activity %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_customer_activity }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_search }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_customer_search" value="{{ config_customer_search }}" input-id="input-customer-search" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_customer_search" value="1" input-id="input-customer-search" input-class="form-switch form-switch-lg"{% if config_customer_search %} checked{% endif %}></x-switch>
                         </div>
                       </div>
                       <div class="row mb-3">
@@ -561,20 +561,20 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_customer_price" value="{{ config_customer_price }}" input-id="input-customer-price" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_customer_price" value="1" input-id="input-customer-price" input-class="form-switch form-switch-lg"{% if config_customer_price %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_customer_price }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_telephone_display }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_telephone_display" value="{{ config_telephone_display }}" input-id="input-telephone-display" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_telephone_display" value="1" input-id="input-telephone-display" input-class="form-switch form-switch-lg"{% if config_telephone_display %} checked{% endif %}></x-switch>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_telephone_required }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_telephone_required" value="{{ config_telephone_required }}" input-id="input-telephone-required" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_telephone_required" value="1" input-id="input-telephone-required" input-class="form-switch form-switch-lg"{% if config_telephone_required %} checked{% endif %}></x-switch>
                         </div>
                       </div>
                       <div class="row mb-3">
@@ -594,7 +594,7 @@
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label">{{ entry_2fa }}</label>
                           <div class="col-sm-10">
-                            <x-switch name="config_2fa" value="{{ config_2fa }}" input-id="input-2fa" input-class="form-switch form-switch-lg"></x-switch>
+                            <x-switch name="config_2fa" value="1" input-id="input-2fa" input-class="form-switch form-switch-lg"{% if config_2fa %} checked{% endif %}></x-switch>
                             <div class="form-text">{{ help_2fa }}</div>
                           </div>
                         </div>
@@ -654,28 +654,28 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_cart_weight" value="{{ config_cart_weight }}" input-id="input-cart-weight" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_cart_weight" value="1" input-id="input-cart-weight" input-class="form-switch form-switch-lg"{% if config_cart_weight %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_cart_weight }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_checkout_guest" value="{{ config_checkout_guest }}" input-id="input-checkout-guest" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_checkout_guest" value="1" input-id="input-checkout-guest" input-class="form-switch form-switch-lg"{% if config_checkout_guest %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_checkout_guest }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_payment_address }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_checkout_payment_address" value="{{ config_checkout_payment_address }}" input-id="input-checkout-payment-address" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_checkout_payment_address" value="1" input-id="input-checkout-payment-address" input-class="form-switch form-switch-lg"{% if config_checkout_payment_address %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_checkout_payment_address }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_shipping_address }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_checkout_shipping_address" value="{{ config_checkout_shipping_address }}" input-id="input-checkout-shipping-address" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_checkout_shipping_address" value="1" input-id="input-checkout-shipping-address" input-class="form-switch form-switch-lg"{% if config_checkout_shipping_address %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_checkout_shipping_address }}</div>
                         </div>
                       </div>
@@ -871,21 +871,21 @@
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_stock_display" value="{{ config_stock_display }}" input-id="input-stock-display" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_stock_display" value="1" input-id="input-stock-display" input-class="form-switch form-switch-lg"{% if config_stock_display %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_stock_display }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_stock_warning }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_stock_warning" value="{{ config_stock_warning }}" input-id="input-stock-warning" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_stock_warning" value="1" input-id="input-stock-warning" input-class="form-switch form-switch-lg"{% if config_stock_warning %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_stock_warning }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_stock_checkout" value="{{ config_stock_checkout }}" input-id="input-stock-checkout" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_stock_checkout" value="1" input-id="input-stock-checkout" input-class="form-switch form-switch-lg"{% if config_stock_checkout %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_stock_checkout }}</div>
                         </div>
                       </div>
@@ -910,7 +910,7 @@
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_affiliate_status }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_affiliate_status" value="{{ config_affiliate_status }}" input-id="input-affiliate-status" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_affiliate_status" value="1" input-id="input-affiliate-status" input-class="form-switch form-switch-lg"{% if config_affiliate_status %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_affiliate_status }}</div>
                         </div>
                       </div>
@@ -927,14 +927,14 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_affiliate_approval }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_affiliate_approval" value="{{ config_affiliate_approval }}" input-id="input-affiliate-approval" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_affiliate_approval" value="1" input-id="input-affiliate-approval" input-class="form-switch form-switch-lg"{% if config_affiliate_approval %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_affiliate_approval }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_affiliate_auto }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_affiliate_auto" value="{{ config_affiliate_auto }}" input-id="input-affiliate-auto" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_affiliate_auto" value="1" input-id="input-affiliate-auto" input-class="form-switch form-switch-lg"{% if config_affiliate_auto %} checked{% endif %}></x-switch>
                           <div class="form-text">{{ help_affiliate_auto }}</div>
                         </div>
                       </div>
@@ -1308,7 +1308,7 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_maintenance }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="config_maintenance" value="{{ config_maintenance }}" input-id="input-maintenance" input-class="form-switch form-switch-lg"></x-switch>
+                    <x-switch name="config_maintenance" value="1" input-id="input-maintenance" input-class="form-switch form-switch-lg"{% if config_maintenance %} checked{% endif %}></x-switch>
                     <div class="form-text">{{ help_maintenance }}</div>
                   </div>
                 </div>
@@ -1333,7 +1333,7 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_seo_url }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="config_seo_url" value="{{ config_seo_url }}" input-id="input-seo-url" input-class="form-switch form-switch-lg"></x-switch>
+                    <x-switch name="config_seo_url" value="1" input-id="input-seo-url" input-class="form-switch form-switch-lg"{% if config_seo_url %} checked{% endif %}></x-switch>
                     <div class="form-text">{{ help_seo_url }}</div>
                   </div>
                 </div>
@@ -1350,7 +1350,7 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_user_2fa }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="config_user_2fa" value="{{ config_user_2fa }}" input-id="input-user-2fa" input-class="form-switch form-switch-lg"></x-switch>
+                    <x-switch name="config_user_2fa" value="1" input-id="input-user-2fa" input-class="form-switch form-switch-lg"{% if config_user_2fa %} checked{% endif %}></x-switch>
                     <div class="form-text">{{ help_user_2fa }}</div>
                   </div>
                 </div>
@@ -1393,7 +1393,7 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_shared }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="config_shared" value="{{ config_shared }}" input-id="input-shared" input-class="form-switch form-switch-lg"></x-switch>
+                    <x-switch name="config_shared" value="1" input-id="input-shared" input-class="form-switch form-switch-lg"{% if config_shared %} checked{% endif %}></x-switch>
                     <div class="form-text">{{ help_shared }}</div>
                   </div>
                 </div>
@@ -1430,13 +1430,13 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_error_display }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="config_error_display" value="{{ config_error_display }}" input-id="input-error-display" input-class="form-switch form-switch-lg"></x-switch>
+                    <x-switch name="config_error_display" value="1" input-id="input-error-display" input-class="form-switch form-switch-lg"{% if config_error_display %} checked{% endif %}></x-switch>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_error_log }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="config_error_log" value="{{ config_error_log }}" input-id="input-error-log" input-class="form-switch form-switch-lg"></x-switch>
+                    <x-switch name="config_error_log" value="1" input-id="input-error-log" input-class="form-switch form-switch-lg"{% if config_error_log %} checked{% endif %}></x-switch>
                   </div>
                 </div>
                 <div class="row mb-3">

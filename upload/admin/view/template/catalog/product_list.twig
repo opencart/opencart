@@ -37,7 +37,7 @@
                 {% else %}
                   <span class="badge bg-success">{{ product.quantity }}</span>
                 {% endif %}</td>
-              <td class="text-center"><x-switch name="status" value="{{ product.status }}" input-class="form-switch form-switch-lg"></x-switch></td>
+              <td class="text-center"><x-switch name="status" value="1" input-class="form-switch form-switch-lg"{% if product.status %} checked{% endif %}></x-switch></td>
               <td class="text-end text-nowrap">
                 {% if product.variant %}
                   <div class="btn-group">

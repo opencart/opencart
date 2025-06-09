@@ -17,7 +17,7 @@
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ subscription_plan.subscription_plan_id }}" class="form-check-input"/></td>
               <td>{{ subscription_plan.name }}</td>
               <td class="text-end">{{ subscription_plan.sort_order }}</td>
-              <td class="text-center"><x-switch name="status" value="{{ subscription_plan.status }}" input-class="form-switch form-switch-lg"></x-switch></td>
+              <td class="text-center"><x-switch name="status" value="1" input-class="form-switch form-switch-lg"{% if subscription_plan.status %} checked{% endif %}></x-switch></td>
               <td class="text-end text-nowrap"><a href="{{ subscription_plan.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not subscription_plan.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}

@@ -13,7 +13,7 @@
           <div class="row mb-3 mb-0">
             <label class="col-md-3 col-form-label">{{ entry_newsletter }}</label>
             <div class="col-md-9">
-              <x-switch name="newsletter" value="{{ newsletter }}" input-id="input-newsletter" input-class="form-switch form-switch-lg"></x-switch>
+              <x-switch name="newsletter" value="1" input-id="input-newsletter" input-class="form-switch form-switch-lg"{% if newsletter %} checked{% endif %}></x-switch>
             </div>
           </div>
         </fieldset>

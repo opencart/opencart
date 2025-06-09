@@ -15,7 +15,7 @@
 {% if text_agree %}
 <div class="text-end">
   <label for="input-checkout-agree" class="form-check-label">{{ text_agree }}</label>
-  <x-switch name="agree" value="{{ agree }}" input-id="input-checkout-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline me-0"></x-switch>
+  <x-switch name="agree" value="1" input-id="input-checkout-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline me-0"{% if agree %} checked{% endif %}></x-switch>
 </div>
 {% endif %}
 <script type="text/javascript"><!--

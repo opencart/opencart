@@ -76,14 +76,14 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_logged }}</label>
                 <div class="col-sm-10">
-                  <x-switch name="logged" value="{{ logged }}" input-id="input-logged" input-class="form-switch form-switch-lg"></x-switch>
+                  <x-switch name="logged" value="1" input-id="input-logged" input-class="form-switch form-switch-lg"{% if logged %} checked{% endif %}></x-switch>
                   <div class="form-text">{{ help_logged }}</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
-                  <x-switch name="shipping" value="{{ shipping }}" input-id="input-shipping" input-class="form-switch form-switch-lg"></x-switch>
+                  <x-switch name="shipping" value="1" input-id="input-shipping" input-class="form-switch form-switch-lg"{% if shipping %} checked{% endif %}></x-switch>
                 </div>
               </div>
               <div class="row mb-3">
@@ -153,7 +153,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <x-switch name="status" value="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
+                  <x-switch name="status" value="1" input-id="input-status" input-class="form-switch form-switch-lg"{% if status %} checked{% endif %}></x-switch>
                 </div>
               </div>
             </div>

@@ -177,9 +177,6 @@ $(document).on('submit', 'form', function(e) {
         var method = $(button).attr('formmethod') || $(form).attr('method') || 'post';
         var enctype = $(button).attr('formenctype') || $(form).attr('enctype') || 'application/x-www-form-urlencoded';
 
-
-
-
         console.log($(form).attr('data-oc-load'));
 
         console.log('Element');

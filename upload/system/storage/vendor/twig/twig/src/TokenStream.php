@@ -25,7 +25,7 @@ final class TokenStream
     private $current = 0;
     private $source;
 
-    public function __construct(array $tokens, Source $source = null)
+    public function __construct(array $tokens, ?Source $source = null)
     {
         $this->tokens = $tokens;
         $this->source = $source ?: new Source('', '');

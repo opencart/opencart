@@ -4128,6 +4128,71 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'menu',
+		'field' => [
+			[
+				'name'           => 'menu_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'route',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'path',
+				'type' => 'text'
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'int(3)'
+			]
+		],
+		'primary' => [
+			'menu_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'menu_description',
+		'field' => [
+			[
+				'name' => 'menu_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(64)'
+			]
+		],
+		'primary' => [
+			'menu_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'modification',
 		'field' => [
 			[
@@ -7286,6 +7351,48 @@ function oc_db_schema() {
 				'table' => 'language',
 				'field' => 'language_id'
 			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'task',
+		'field' => [
+			[
+				'name'           => 'task_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(32)'
+			],
+			[
+				'name' => 'action',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'args',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '1'
+			],
+			[
+				'name'    => 'response',
+				'type'    => 'text'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'task_id'
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',

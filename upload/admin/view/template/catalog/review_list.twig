@@ -21,7 +21,7 @@
               <td>{{ review.author }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ review.rating }}</td>
               <td>{{ review.date_added }}</td>
-              <td class="text-center"><x-switch name="status" value="1" input-class="form-switch form-switch-lg"{% if review.status %} checked{% endif %}></x-switch></td>
+              <td class="text-center"><x-switch name="status" value="1" checked="{{ review.status }}" input-class="form-switch form-switch-lg"></x-switch></td>
               <td class="text-end text-nowrap"><a href="{{ review.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not review.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}

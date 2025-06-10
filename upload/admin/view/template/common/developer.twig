@@ -27,7 +27,7 @@
             </tr>
             <tr>
               <td>{{ text_sass }}</td>
-              <td><x-switch name="developer_sass" value="1" input-id="input-developer-sass" input-class="form-switch form-switch-lg"{% if developer_sass %} checked{% endif %}></x-switch></td>
+              <td><x-switch name="developer_sass" value="1" checked="{{ developer_sass }}" input-id="input-developer-sass" input-class="form-switch form-switch-lg"></x-switch></td>
               <td class="text-end"><button type="button" value="sass" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
             </tr>
             <tr>

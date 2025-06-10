@@ -263,7 +263,7 @@
 
         {% if shipping_required %}
           <div class="col mb-3">
-            <x-switch name="address_match" value="1" input-id="input-address-match" input-class="form-switch form-switch-lg form-check-inline me-0"{% if address_match %} checked{% endif %}></x-switch>
+            <x-switch name="address_match" value="1" checked="{{ address_match }}" input-id="input-address-match" input-class="form-switch form-switch-lg form-check-inline me-0"></x-switch>
             <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
           </div>
         {% endif %}
@@ -428,7 +428,7 @@
     </div>
     {% if text_agree %}
       <div>
-        <x-switch name="agree" value="1" input-id="input-register-agree" input-class="form-switch form-switch-lg form-check-inline me-0"{% if agree %} checked{% endif %}></x-switch>
+        <x-switch name="agree" value="1" checked="{{ agree }}" input-id="input-register-agree" input-class="form-switch form-switch-lg form-check-inline me-0"></x-switch>
         <label for="input-register-agree" class="form-check-label">{{ text_agree }}</label>
       </div>
     {% endif %}

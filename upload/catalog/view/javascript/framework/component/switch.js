@@ -5,22 +5,18 @@ class XSwitch extends WebComponent {
     element = HTMLInputElement;
 
     get checked() {
-        return this.hasAttribute('checked');
+        return this.getAttribute('checked') == 1 ? 1 : 0;
     }
 
     set checked(value) {
-        let checked = Boolean(value);
-
-        if (checked) {
-            this.setAttribute('checked', '');
-        } else {
-            this.removeAttribute('checked');
+        if (this.checked != value) {
+            this.setAttribute('checked', value);
         }
     }
 
     event = {
         connected: async () => {
-            this.addEventListener('[checked]', this.event.ontoggle);
+            this.addEventListener('[checked]', this.event.onchecked);
 
             let html  = '';
 
@@ -40,16 +36,10 @@ class XSwitch extends WebComponent {
             }
         },
         onchange: (e) => {
-            this.checked = e.target.checked;
+            this.checked = e.target.checked ? 1 : 0;
         },
-        ontoggle: (e) => {
-            console.log(e);
-
-            if (e.detail.value_new !== null) {
-                this.element.setAttribute('checked', '');
-            } else {
-                this.element.removeAttribute('checked');
-            }
+        onchecked: (e) => {
+            this.element.checked = e.detail.value_new == 1 ? true : false;
         }
     };
 }

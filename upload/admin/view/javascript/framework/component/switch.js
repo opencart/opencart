@@ -1,34 +1,28 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XSwitch extends WebComponent {
-    static observed = ['value'];
+    static observed = ['checked'];
     element = HTMLInputElement;
 
-    get value() {
-        return this.getAttribute('value');
+    get checked() {
+        return this.getAttribute('checked') == 1 ? 1 : 0;
     }
 
-    set value(value) {
-        if (this.value != value) {
-            if (value == 1) {
-                this.setAttribute('value', 1);
-                this.element.setAttribute('checked', '');
-            } else {
-                this.setAttribute('value', 0);
-                this.element.removeAttribute('checked');
-            }
+    set checked(value) {
+        if (this.checked != value) {
+            this.setAttribute('checked', value);
         }
     }
 
     event = {
         connected: async () => {
-            this.addEventListener('[value]', this.event.changeValue);
+            this.addEventListener('[checked]', this.event.onchecked);
 
-            let html = '';
+            let html  = '';
 
             html += '<div class="' + this.getAttribute('input-class') + '">';
-            html += '  <input type="hidden" name="' + this.getAttribute('name') + '" value="0"/>';
-            html += '  <input type="checkbox" name="' + this.getAttribute('name') + '" value="1" class="form-check-input"' + (this.value == 1 ? ' checked' : '') + '/>';
+            html += '  <input type="hidden" name="' + this.getAttribute('name') + '" value=""/>';
+            html += '  <input type="checkbox" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '" class="form-check-input"' + (this.checked ? ' checked' : '') + '/>';
             html += '</div>';
 
             this.innerHTML = html;
@@ -42,10 +36,10 @@ class XSwitch extends WebComponent {
             }
         },
         onchange: (e) => {
-            this.value = e.target.checked ? 1 : 0;
+            this.checked = e.target.checked ? 1 : 0;
         },
-        changeValue: (e) => {
-            this.value = e.detail.value_new;
+        onchecked: (e) => {
+            this.element.checked = e.detail.value_new == 1 ? true : false;
         }
     };
 }

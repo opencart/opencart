@@ -4140,6 +4140,10 @@ function oc_db_schema() {
 				'type' => 'varchar(64)'
 			],
 			[
+				'name' => 'type',
+				'type' => 'varchar(8)'
+			],
+			[
 				'name' => 'route',
 				'type' => 'varchar(64)'
 			],

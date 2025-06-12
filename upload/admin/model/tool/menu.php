@@ -30,6 +30,8 @@ class Menu extends \Opencart\System\Engine\Model {
 
 		$menu_id = $this->db->getLastId();
 
+		$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `path` = '" . $this->db->escape('0_' . !$data['path'] ? $menu_id : $data['path'] . '_' . $menu_id) . "' WHERE `menu_id` = '" . (int)$menu_id . "'");
+
 		foreach ($data['menu_description'] as $language_id => $menu_description) {
 			$this->model_tool_menu->addDescription($menu_id, $language_id, $menu_description);
 		}
@@ -38,7 +40,13 @@ class Menu extends \Opencart\System\Engine\Model {
 	}
 
 	public function editMenu(int $menu_id, array $data): int {
+		$menu_info = $this->getMenu($menu_id);
+
 		$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `code` = '" . $this->db->escape($data['code']) . "', `route` = '" . $this->db->escape($data['route']) . "', `path` = '" . $this->db->escape($data['path']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE `menu_id` = '" . (int)$menu_id . "'");
+
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `code` = '" . $this->db->escape($data['code']) . "', `route` = '" . $this->db->escape($data['route']) . "', `path` = '" . $this->db->escape($data['path']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE `path` LIKE '" . (int)$menu_id . "'");
+
 
 		$this->model_tool_menu->deleteDescriptions($menu_id);
 
@@ -144,14 +152,8 @@ class Menu extends \Opencart\System\Engine\Model {
 	 *
 	 * $results = $this->model_tool_menu->getMenus();
 	 */
-	public function getMenus(int $parent_id = 0): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu` `m` LEFT JOIN `" . DB_PREFIX . "menu_description` `md` ON (`m`.`menu_id` = `md`.`menu_id`) WHERE `m`.`parent_id` = '" . (int)$parent_id . "'");
-
-		if ($query->row) {
-			foreach ($query->rows as $result) {
-				//getMenus
-			}
-		}
+	public function getMenus(): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu` `m` LEFT JOIN `" . DB_PREFIX . "menu_description` `md` ON (`m`.`menu_id` = `md`.`menu_id`) ORDER BY `m`.`path` ASC");
 
 		return $query->rows;
 	}

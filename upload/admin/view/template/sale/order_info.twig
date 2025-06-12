@@ -86,7 +86,8 @@
                 {% for currency in currencies %}
                   <option value="{{ currency.code }}"{% if currency.code == currency_code %} selected{% endif %}>{{ currency.title }}</option>
                 {% endfor %}
-              </select> <label for="input-currency">{{ entry_currency }}</label>
+              </select>
+              <label for="input-currency">{{ entry_currency }}</label>
             </div>
           </div>
         </div>
@@ -106,8 +107,7 @@
               {% if order_products %}
                 {% for order_product in order_products %}
                   <tr>
-                    <td>
-                      <a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a>
+                    <td><a href="{{ order_product.product_edit }}" target="_blank">{{ order_product.name }}</a>
                       <div id="error-product-{{ order_product_row }}-product" class="invalid-feedback mt-0"></div>
                       <ul class="list-unstyled mb-0">
                         <li>
@@ -497,7 +497,8 @@
             <div id="error-email" class="invalid-feedback"></div>
           </div>
           <div class="mb-3{% if config_telephone_required %} required{% endif %}">
-            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
+            <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
             <div id="error-telephone" class="invalid-feedback"></div>
           </div>
 

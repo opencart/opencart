@@ -9,7 +9,7 @@ $_['datetime_format']               = 'd/m/YH:i:s';
 $_['decimal_point']                 = '.';
 $_['thousand_point']                = ',';
 
-// Text
+// Textn
 $_['text_yes']                      = 'Ja';
 $_['text_no']                       = 'NEIN';
 $_['text_on']                       = 'An';

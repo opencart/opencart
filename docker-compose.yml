@@ -25,6 +25,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=opencart
       - MYSQL_DATABASE=opencart
+    volumes:
+      - mysql-data:/var/lib/mysql
 
   adminer:
     image: adminer:latest
@@ -37,6 +39,8 @@ services:
 
   redis:
     image: redis:latest
+    volumes:
+        - redis-data:/data
 
   memcached:
     image: memcached:latest
@@ -47,3 +51,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=opencart
       - POSTGRES_DB=opencart
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+    mysql-data:
+    postgres-data:
+    redis-data:

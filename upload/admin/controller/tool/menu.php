@@ -102,9 +102,9 @@ class Menu extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('tool/menu', 'user_token=' . $this->session->data['user_token']);
 
 		// Menu
-		if (isset($this->request->get['menu_id'])) {
-			$this->load->model('tool/menu');
+		$this->load->model('tool/menu');
 
+		if (isset($this->request->get['menu_id'])) {
 			$menu_info = $this->model_tool_menu->getMenu((int)$this->request->get['menu_id']);
 		}
 
@@ -129,6 +129,12 @@ class Menu extends \Opencart\System\Engine\Controller {
 			$data['code'] = $menu_info['code'];
 		} else {
 			$data['code'] = '';
+		}
+
+		if (!empty($menu_info)) {
+			$data['type'] = $menu_info['type'];
+		} else {
+			$data['type'] = '';
 		}
 
 		if (!empty($menu_info)) {
@@ -161,9 +167,6 @@ class Menu extends \Opencart\System\Engine\Controller {
 				'path' => $result['path']
 			];
 		}
-
-
-		//$data['menus'] = $this->model_tool_menu->getMenus();
 
 		if (!empty($menu_info)) {
 			$data['path'] = $menu_info['path'];

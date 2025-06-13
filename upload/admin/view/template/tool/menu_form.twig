@@ -46,12 +46,12 @@
             <div class="col-sm-10">
 
               <div class="form-check">
-                <input type="radio" name="type" value="link" id="input-link" class="form-check-input"/>
+                <input type="radio" name="type" value="link" id="input-link" class="form-check-input"{% if type == 'link' %} checked {% endif %}/>
                 <label for="input-link" class="form-check-label">{{ text_link }}</label>
               </div>
 
               <div class="form-check">
-                <input type="radio" name="type" value="dropdown" id="input-dropdown" class="form-check-input"/>
+                <input type="radio" name="type" value="dropdown" id="input-dropdown" class="form-check-input"{% if type == 'dropdown' %} checked {% endif %}/>
                 <label for="input-dropdown" class="form-check-label">{{ text_dropdown }}</label>
               </div>
 
@@ -92,12 +92,17 @@
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
-$(document).on('change', '.form-check-input', function() {
+$(document).on('change', 'input[name=\'type\']:checked', function(e) {
     var element = this;
 
-
+    if ($(element).val() == 'dropdown') {
+        $('#input-route').prop('disabled', true);
+    } else {
+        $('#input-route').prop('disabled', false);
+    }
 });
+
+$('input[name=\'type\']:checked').trigger('change');
 //--></script>
 {{ footer }}

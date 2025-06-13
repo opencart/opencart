@@ -29,8 +29,44 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
+			$parent = [
+				'catalog',
+				'cms',
+				'extension',
+				'design',
+				'sale',
+				'customer',
+				'marketing',
+				'system',
+				'report',
+			];
+
 			// Catalog
 			$catalog = [];
+
+			$this->load->model('tool/menu');
+
+			$results = $this->model_tool_menu->getMenuByCode('catalog');
+
+			foreach ($results as $result) {
+				$menus = $this->model_tool_menu->getMenus($result['menu_id']);
+
+
+
+				if ($this->user->hasPermission('access', $result['route'])) {
+					$catalog[] = [
+						'name'     => $result['name'],
+						'href'     => $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']),
+						'children' => []
+					];
+				}
+			}
+
+
+
+
+
+
 
 			if ($this->user->hasPermission('access', 'catalog/category')) {
 				$catalog[] = [
@@ -732,6 +768,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			// Tools
 			$maintenance = [];
+
+			if ($this->user->hasPermission('access', 'tool/menu')) {
+				$maintenance[] = [
+					'name'     => $this->language->get('text_menu'),
+					'href'     => $this->url->link('tool/menu', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
 
 			if ($this->user->hasPermission('access', 'tool/upgrade')) {
 				$maintenance[] = [

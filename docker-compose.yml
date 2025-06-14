@@ -1,6 +1,9 @@
 services:
   opencart:
-    build: tools
+    build:
+      context: ./docker/php
+      args:
+        - PHP_VERSION=8.4
     user: 1000:1000
     ports:
       - "80:80"

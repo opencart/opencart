@@ -30,7 +30,7 @@ class Menu extends \Opencart\System\Engine\Model {
 
 		$menu_id = $this->db->getLastId();
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `path` = '" . $this->db->escape('0_' . !$data['path'] ? $menu_id : $data['path'] . '_' . $menu_id) . "' WHERE `menu_id` = '" . (int)$menu_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `path` = '" . $this->db->escape($data['path'] . '_' . $menu_id) . "' WHERE `menu_id` = '" . (int)$menu_id . "'");
 
 		foreach ($data['menu_description'] as $language_id => $menu_description) {
 			$this->model_tool_menu->addDescription($menu_id, $language_id, $menu_description);
@@ -44,9 +44,9 @@ class Menu extends \Opencart\System\Engine\Model {
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `code` = '" . $this->db->escape($data['code']) . "', `route` = '" . $this->db->escape($data['route']) . "', `path` = '" . $this->db->escape($data['path']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE `menu_id` = '" . (int)$menu_id . "'");
 
-
-		$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `code` = '" . $this->db->escape($data['code']) . "', `route` = '" . $this->db->escape($data['route']) . "', `path` = '" . $this->db->escape($data['path']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE `path` LIKE '" . (int)$menu_id . "'");
-
+		if ($menu_info['path'] != $data['path']) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `path` = REPLACE(`path`, '" . $this->db->escape($menu_info['path']) . "_', '" . $this->db->escape($data['path']) . "_') WHERE `path` LIKE '" . $this->db->escape($menu_info['path']) . "_%'");
+		}
 
 		$this->model_tool_menu->deleteDescriptions($menu_id);
 

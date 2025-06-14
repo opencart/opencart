@@ -176,34 +176,6 @@
                       <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
                     {% endif %}</td>
                 </tr>
-                <tr{% if not zlib %} class="table-danger"{% endif %}>
-                  <td>{{ text_zlib }}</td>
-                  <td>{% if zlib %}
-                      {{ text_on }}
-                    {% else %}
-                      {{ text_off }}
-                    {% endif %}</td>
-                  <td>{{ text_on }}</td>
-                  <td class="text-center">{% if zlib %}
-                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
-                    {% else %}
-                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
-                    {% endif %}</td>
-                </tr>
-                <tr{% if not zip %} class="table-danger"{% endif %}>
-                  <td>{{ text_zip }}</td>
-                  <td>{% if zip %}
-                      {{ text_on }}
-                    {% else %}
-                      {{ text_off }}
-                    {% endif %}</td>
-                  <td>{{ text_on }}</td>
-                  <td class="text-center">{% if zip %}
-                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
-                    {% else %}
-                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
-                    {% endif %}</td>
-                </tr>
                 {% if not iconv %}
                   <tr{% if not mbstring %} class="table-danger"{% endif %}>
                     <td>{{ text_mbstring }}</td>

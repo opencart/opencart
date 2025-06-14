@@ -44,8 +44,6 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
 		$data['text_openssl'] = $this->language->get('text_openssl');
-		$data['text_zlib'] = $this->language->get('text_zlib');
-		$data['text_zip'] = $this->language->get('text_zip');
 		$data['text_mbstring'] = $this->language->get('text_mbstring');
 		$data['text_file'] = $this->language->get('text_file');
 		$data['text_directory'] = $this->language->get('text_directory');
@@ -102,8 +100,6 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['gd'] = extension_loaded('gd');
 		$data['curl'] = extension_loaded('curl');
 		$data['openssl'] = function_exists('openssl_encrypt');
-		$data['zlib'] = extension_loaded('zlib');
-		$data['zip'] = extension_loaded('zip');
 		$data['iconv'] = function_exists('iconv');
 		$data['mbstring'] = extension_loaded('mbstring');
 
@@ -203,14 +199,6 @@ class Step2 extends \Opencart\System\Engine\Controller {
 
 		if (!function_exists('openssl_encrypt')) {
 			$json['error'] = $this->language->get('error_openssl');
-		}
-
-		if (!extension_loaded('zlib')) {
-			$json['error'] = $this->language->get('error_zlib');
-		}
-
-		if (!extension_loaded('zip')) {
-			$json['error'] = $this->language->get('error_zip');
 		}
 
 		if (!function_exists('iconv') && !extension_loaded('mbstring')) {

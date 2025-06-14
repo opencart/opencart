@@ -42,12 +42,54 @@ Please be very clear on your commit messages and pull request, empty pull reques
 
 Your code standards should match the [OpenCart coding standards](https://github.com/opencart/opencart/wiki/Coding-standards). We use an automated code scanner to check for most basic mistakes - if the test fails your pull request will be rejected.
 
-## How to run the application Locally (Docker Image)
+## Local Development with Docker
 
-### Windows OS
+This project includes a Docker-based environment for local development.
 
-* make sure you have Docker Desktop installed on your Local Machine
-* in the terminal in the file containing the projects run `docker-compose up -d`
+### Prerequisites
+
+* You must have Docker and Docker Compose installed on your machine. [Docker Desktop](https://www.docker.com/products/docker-desktop/) is the easiest way to get them.
+
+> **For Windows Users:** It is **strongly recommended** to use the WSL 2 (Windows Subsystem for Linux) backend for Docker Desktop. Without it, file system performance will be extremely slow, making the application nearly unusable. Docker Desktop will typically prompt you to enable WSL 2 during installation.
+
+### Getting Started
+
+1. Clone the repository to your local machine.
+2. Navigate to the project's root directory in your terminal.
+3. Run the following command to build and start all services:
+
+	```bash
+	docker-compose up -d
+	```
+
+After the process is complete, your OpenCart store will be available at `http://localhost`. The Adminer database management tool will be available at `http://localhost:8080`.
+
+### Common Commands
+
+* **To stop the environment:**
+	```bash
+	docker-compose down
+	```
+* **To view the logs from all services:**
+	```bash
+	docker-compose logs -f
+	```
+
+### Changing the PHP Version
+
+The environment uses PHP 8.4 by default. You can easily switch to a different version by editing the `build.args` in the `docker-compose.yml` file.
+
+For example, to use PHP 8.2:
+
+```yaml
+# in docker-compose.yml
+services:
+  opencart:
+    build:
+      context: ./docker/php
+      args:
+        - PHP_VERSION=8.2 # Change this value
+```
 
 ## Versioning
 

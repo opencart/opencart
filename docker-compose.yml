@@ -7,10 +7,10 @@ services:
     volumes:
       - ./upload:/var/www/html
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     command: >
       bash -c "if [ ! -f /var/www/html/install.lock ]; then
-                 wait-for-it mysql:3306 -t 60 &&
                  cp config-dist.php config.php;
                  cp admin/config-dist.php admin/config.php;
                  php /var/www/html/install/cli_install.php install --username admin --password admin --email email@example.com --http_server http://localhost/ --db_driver mysqli --db_hostname mysql --db_username root --db_password opencart --db_database opencart --db_port 3306 --db_prefix oc_;
@@ -23,15 +23,21 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=opencart
-      - MYSQL_DATABASE=opencart
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-opencart}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-opencart}
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-opencart}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   adminer:
     image: adminer:latest
     environment:
       ADMINER_DEFAULT_SERVER: mysql
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     ports:
       - "8080:8080"
 
@@ -44,6 +50,6 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=opencart
-      - POSTGRES_DB=opencart
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-opencart}
+      - POSTGRES_DB=${POSTGRES_DB:-opencart}

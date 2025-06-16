@@ -19,7 +19,6 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-menu" action="{{ save }}" method="post" data-oc-toggle="ajax">
-
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
@@ -32,7 +31,6 @@
               {% endfor %}
             </div>
           </div>
-
           <div class="row mb-3">
             <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
             <div class="col-sm-10">
@@ -40,37 +38,18 @@
               <div id="error-code" class="invalid-feedback"></div>
             </div>
           </div>
-
-          <div class="row mb-3">
-            <label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
-            <div class="col-sm-10">
-
-              <div class="form-check">
-                <input type="radio" name="type" value="link" id="input-link" class="form-check-input"{% if type == 'link' %} checked {% endif %}/>
-                <label for="input-link" class="form-check-label">{{ text_link }}</label>
-              </div>
-
-              <div class="form-check">
-                <input type="radio" name="type" value="dropdown" id="input-dropdown" class="form-check-input"{% if type == 'dropdown' %} checked {% endif %}/>
-                <label for="input-dropdown" class="form-check-label">{{ text_dropdown }}</label>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="row mb-3">
+          <div class="row mb-3{% if type != 'link' %} d-none{% endif %}">
             <label for="input-route" class="col-sm-2 col-form-label">{{ entry_route }}</label>
             <div class="col-sm-10">
-              <input type="text" name="route" value="{{ route }}" placeholder="{{ entry_route }}" id="input-route" class="form-control" required/>
+              <input type="text" name="route" value="{{ route }}" placeholder="{{ entry_route }}" id="input-route" class="form-control" {% if type == 'link' %} required{% endif %}/>
               <div id="error-route" class="invalid-feedback"></div>
             </div>
           </div>
-
           <div class="row mb-3">
             <label for="input-path" class="col-sm-2 col-form-label">{{ entry_path }}</label>
             <div class="col-sm-10">
               <select name="path" id="input-path" class="form-select">
-                <option value="0"></option>
+
                 {% for menu in menus %}
                   <option value="{{ menu.path }}"{% if menu.path == path %} selected{% endif %}>{{ menu.name }}</option>
                 {% endfor %}
@@ -78,31 +57,16 @@
               <div id="error-path" class="invalid-feedback"></div>
             </div>
           </div>
-
           <div class="row mb-3">
             <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>
           </div>
-
           <input type="hidden" name="menu_id" value="{{ menu_id }}" id="input-menu-id"/>
         </form>
       </div>
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$(document).on('change', 'input[name=\'type\']:checked', function(e) {
-    var element = this;
-
-    if ($(element).val() == 'dropdown') {
-        $('#input-route').prop('disabled', true);
-    } else {
-        $('#input-route').prop('disabled', false);
-    }
-});
-
-$('input[name=\'type\']:checked').trigger('change');
-//--></script>
 {{ footer }}

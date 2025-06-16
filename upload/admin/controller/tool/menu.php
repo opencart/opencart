@@ -30,7 +30,8 @@ class Menu extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/menu', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['add'] = $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token']);
+		$data['dropdown_add'] = $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=dropdown');
+		$data['link_add'] = $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=link');
 		$data['delete'] = $this->url->link('tool/menu.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('tool/menu.getList');
@@ -68,7 +69,20 @@ class Menu extends \Opencart\System\Engine\Controller {
 		$results = $this->model_tool_menu->getMenus();
 
 		foreach ($results as $result) {
-			$data['menus'][] = ['edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&menu_id=' . $result['menu_id'])] + $result;
+			$pos = strpos($result['path'], '_');
+
+			if ($pos !== false) {
+				$name = $this->language->get('text_' . substr($result['path'], 0, $pos));
+			} else {
+				$name = $this->language->get('text_' . $result['path']);
+			}
+
+
+
+			$data['menus'][] = [
+				'name' => $name . ' > ' . $result['name'],
+				'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $result['type'] . '&menu_id=' . $result['menu_id'])
+			] + $result;
 		}
 
 		return $this->load->view('tool/menu_list', $data);
@@ -84,7 +98,19 @@ class Menu extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['text_form'] = !isset($this->request->get['menu_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		if (isset($this->request->get['menu_id'])) {
+			$menu_id = (int)$this->request->get['menu_id'];
+		} else {
+			$menu_id = 0;
+		}
+
+		if (isset($this->request->get['type'])) {
+			$type = (string)$this->request->get['type'];
+		} else {
+			$type = 'dropdown';
+		}
+
+		$data['text_form'] = !$menu_id ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['breadcrumbs'] = [];
 
@@ -98,7 +124,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/menu', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('tool/menu.save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('tool/menu.save', 'user_token=' . $this->session->data['user_token'] . '&type=' . $type);
 		$data['back'] = $this->url->link('tool/menu', 'user_token=' . $this->session->data['user_token']);
 
 		// Menu
@@ -131,17 +157,17 @@ class Menu extends \Opencart\System\Engine\Controller {
 			$data['code'] = '';
 		}
 
-		if (!empty($menu_info)) {
-			$data['type'] = $menu_info['type'];
-		} else {
-			$data['type'] = '';
-		}
+		$data['type'] = $type;
 
 		if (!empty($menu_info)) {
 			$data['route'] = $menu_info['route'];
 		} else {
 			$data['route'] = '';
 		}
+
+		$data['menus'] = [];
+
+		$this->load->model('tool/menu');
 
 		$paths = [
 			'catalog',
@@ -152,20 +178,26 @@ class Menu extends \Opencart\System\Engine\Controller {
 			'customer',
 			'marketing',
 			'system',
-			'report',
+			'report'
 		];
 
-		$data['menus'] = [];
-
-		$this->load->model('tool/menu');
-
-		$results = $this->model_tool_menu->getMenus();
-
-		foreach ($results as $result) {
+		foreach ($paths as $path) {
 			$data['menus'][] = [
-				'name' => str_repeat(' --- ', strlen($result['path'])) . $result['name'],
-				'path' => $result['path']
+				'name' => $this->language->get('text_' . $path),
+				'path' => $path
 			];
+
+			$results = $this->model_tool_menu->getMenus($path .'_%');
+
+			foreach ($results as $result) {
+				if ($result['type'] == 'dropdown') {
+
+					$data['menus'][] = [
+						'name' => str_repeat(' --- ', substr_count($result['path'], '_')) . $result['name'],
+						'path' => $result['path']
+					];
+				}
+			}
 		}
 
 		if (!empty($menu_info)) {
@@ -197,6 +229,12 @@ class Menu extends \Opencart\System\Engine\Controller {
 	public function save(): void {
 		$this->load->language('tool/menu');
 
+		if (isset($this->request->get['type'])) {
+			$type = (string)$this->request->get['type'];
+		} else {
+			$type = 'dropdown';
+		}
+
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'tool/menu')) {
@@ -208,10 +246,10 @@ class Menu extends \Opencart\System\Engine\Controller {
 			'menu_description' => [],
 			'code'             => '',
 			'route'            => '',
-			'parent_id'        => 0
+			'path'             => ''
 		];
 
-		$post_info = $this->request->post + $required;
+		$post_info = $this->request->post + $required + ['type' => $type];
 
 		foreach ((array)$post_info['menu_description'] as $language_id => $value) {
 			if (!oc_validate_length((string)$value['name'], 1, 255)) {
@@ -235,7 +273,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
-		if (!$post_info['route']) {
+		if ($type == 'link' && !$post_info['route']) {
 			$json['error']['route'] = $this->language->get('error_route');
 		}
 

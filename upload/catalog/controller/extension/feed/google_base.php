@@ -63,9 +63,70 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 						}
 
 						$currencies = array(
-							'USD',
-							'EUR',
-							'GBP'
+							'USD', // US Dollar
+							'EUR', // Euro
+							'GBP', // British Pound
+							'ARS', // Argentinian Peso
+							'AUD', // Australian Dollar
+							'BHD', // Bahraini Dinar
+							'BYN', // Belarusian Ruble
+							'BRL', // Brazilian Real
+							'CAD', // Canadian Dollar
+							'ARS', // Argentinian Peso
+							'AUD', // Australian Dollar
+							'BHD', // Bahraini Dinar
+							'BYN', // Belarusian Ruble
+							'BRL', // Brazilian Real
+							'CAD', // Canadian Dollar
+							'CLP', // Chilean Peso
+							'COP', // Colombian Peso
+							'CZK', // Czech Koruna
+							'DKK', // Danish Krone
+							'EGP', // Egyptian Pound
+							'ETB', // Ethiopian Birr
+							'GEL', // Georgian Lari
+							'GHS', // Ghanaian Cedi
+							'HKD', // Hong Kong Dollar
+							'HUF', // Hungarian Forint
+							'INR', // Indian Rupee
+							'IDR', // Indonesian Rupiah
+							'ILS', // Israeli New Shekel
+							'JPY', // Japanese Yen
+							'JOD', // Jordanian Dinar
+							'KZT', // Kazakhstani Tenge
+							'KES', // Kenyan Shilling
+							'KWD', // Kuwaiti Dinar
+							'LBP', // Lebanese Pound
+							'MYR', // Malaysia Ringgit
+							'MUR', // Mauritian Rupee
+							'MXN', // Mexican Peso
+							'NZD', // New Zealand Dollar
+							'NGN', // Nigerian Naira
+							'NOK', // Norwegian Krone
+							'OMR', // Omani Rial
+							'PYG', // Paraguay Guarani
+							'PEN', // Peruvian Sol
+							'PHP', // Philippine Peso
+							'PLN', // Poland Złoty
+							'RON', // Romanian Leu
+							'RUB', // Russian Ruble
+							'SAR', // Saudi Riyal
+							'SGD', // Singapore Dollar
+							'ZAR', // South African Rand
+							'KRW', // South Korean Won
+							'SEK', // Swedish Krona
+							'CHF', // Swiss Franc
+							'TWD', // New Taiwan Dollar
+							'TZS'. // Tanzanian Shilling
+							'THB', // Thai Baht
+							'TRY', // Turkish Lira
+							'UGX', // Ugandan Shilling
+							'UAH', // Ukrainian Hryvnia
+							'AED', // United Arab Emirates Dirham
+							'UYU', // Uruguayan Peso
+							'UZS', // Uzbekistani Som
+							'VND', // Vietnamese Dong
+							'ZMW'  // Zambian Kwacha
 						);
 
 						if (in_array($this->session->data['currency'], $currencies)) {
@@ -77,9 +138,9 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 						}
 
 						if ((float)$product['special']) {
-							$output .= '  <g:price>' .  $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
+							$output .= '  <g:price>' .  $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id']), $currency_code, $currency_value, false) . ' ' . $currency_code . '</g:price>';
 						} else {
-							$output .= '  <g:price>' . $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
+							$output .= '  <g:price>' . $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $currency_code, $currency_value, false) . ' ' . $currency_code . '</g:price>';
 						}
 
 						$output .= '  <g:google_product_category>' . $google_base_category['google_base_category_id'] . '</g:google_product_category>';

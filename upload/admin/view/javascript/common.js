@@ -425,7 +425,7 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
             });
 
             // Click
-            $dropdown.on('click', 'a', function(e) {
+            $dropdown.on('mousedown', 'a', function(e) {
                 e.preventDefault();
 
                 var value = $(this).attr('href');

@@ -2,25 +2,32 @@
 # It defaults to 8.4 if no 'PHP_VERSION' build-arg is passed from docker-compose.
 ARG PHP_VERSION=8.4
 
-FROM php:${PHP_VERSION}-apache
+FROM php:${PHP_VERSION}-fpm-alpine
 
-# Copy the advanced PHP extension installer.
-RUN apt-get update && apt-get install -y --no-install-recommends unzip
-
+# Install PHP extensions
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-
-# Install only the extensions that are missing from the base image but required by OpenCart.
-# opcache is also included for performance improvements.
 RUN install-php-extensions \
     @composer \
     gd \
     mysqli \
+    pdo_mysql \
+    pdo_pgsql \
     zip \
-    opcache
+    opcache \
+    apcu \
+    redis \
+    memcached
 
-# Set entrypoint script for container startup.
-COPY --chown=www-data:www-data entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+# Copy OpenCart's original php.ini
+COPY upload/php.ini /usr/local/etc/php/conf.d/opencart.ini
 
-# Enable mod_rewrite for SEO-friendly URLs, as it's not enabled by default.
-RUN a2enmod rewrite
+# Copy OpenCart entrypoint
+COPY docker/php/docker-opencart-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-opencart-entrypoint.sh
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Use OpenCart entrypoint
+ENTRYPOINT ["docker-opencart-entrypoint.sh"]
+CMD ["php-fpm"]

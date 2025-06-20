@@ -1,19 +1,44 @@
+name: opencart
+
 services:
-  opencart:
+  apache:
+    container_name: opencart-apache
     build:
-      context: ./docker/php
-      args:
-        - PHP_VERSION=8.4
-    user: 1000:1000
+      context: .
+      dockerfile: docker/apache/Dockerfile
     ports:
       - "80:80"
     volumes:
       - ./upload:/var/www/html
     depends_on:
+      php:
+        condition: service_healthy
+    networks:
+      - opencart
+
+  php:
+    container_name: opencart-php
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        - PHP_VERSION=8.4
+    volumes:
+      - ./upload:/var/www/html
+    depends_on:
       mysql:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep php-fpm || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - opencart
 
   mysql:
+    container_name: opencart-mysql
     image: mariadb
     ports:
       - "3306:3306"
@@ -27,8 +52,11 @@ services:
       retries: 5
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - opencart
 
   adminer:
+    container_name: opencart-adminer
     image: adminer:latest
     profiles: [adminer]
     environment:
@@ -38,18 +66,27 @@ services:
         condition: service_healthy
     ports:
       - "8080:8080"
+    networks:
+      - opencart
 
   redis:
+    container_name: opencart-redis
     image: redis:latest
     profiles: [redis]
     volumes:
-        - redis-data:/data
+      - redis-data:/data
+    networks:
+      - opencart
 
   memcached:
+    container_name: opencart-memcached
     image: memcached:latest
     profiles: [memcached]
+    networks:
+      - opencart
 
   postgres:
+    container_name: opencart-postgres
     image: postgres:latest
     profiles: [postgres]
     environment:
@@ -58,8 +95,15 @@ services:
       - POSTGRES_DB=${POSTGRES_DB:-opencart}
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    networks:
+      - opencart
 
 volumes:
     mysql-data:
     postgres-data:
     redis-data:
+
+networks:
+  opencart:
+    driver: bridge
+    name: opencart-network

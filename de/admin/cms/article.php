@@ -16,6 +16,7 @@ $_['text_keyword']            = 'Verwenden Sie keine Leerzeichen, ersetzen Sie L
 $_['column_name']             = 'Artikelname';
 $_['column_author']           = 'Autor';
 $_['column_rating']           = 'Bewertungen';
+$_['column_status']           = 'Status';
 $_['column_date_added']       = 'Datum hinzugefügt';
 $_['column_action']           = 'Aktionen';
 

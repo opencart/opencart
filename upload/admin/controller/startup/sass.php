@@ -16,7 +16,7 @@ class Sass extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$file = DIR_APPLICATION . 'view/stylesheet/stylesheet.css';
 
-		if (!is_file($file) || $this->config->get('developer_sass')) {
+		if (!is_file($file) || !$this->config->get('developer_sass')) {
 			$scss = new \ScssPhp\ScssPhp\Compiler();
 			$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/');
 

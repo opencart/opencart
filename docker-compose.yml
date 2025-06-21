@@ -1,6 +1,9 @@
 services:
   opencart:
-    build: tools
+    build:
+      context: ./docker/php
+      args:
+        - PHP_VERSION=8.4
     user: 1000:1000
     ports:
       - "80:80"
@@ -30,6 +33,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - mysql-data:/var/lib/mysql
 
   adminer:
     image: adminer:latest
@@ -43,6 +48,8 @@ services:
 
   redis:
     image: redis:latest
+    volumes:
+        - redis-data:/data
 
   memcached:
     image: memcached:latest
@@ -53,3 +60,10 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-opencart}
       - POSTGRES_DB=${POSTGRES_DB:-opencart}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+    mysql-data:
+    postgres-data:
+    redis-data:

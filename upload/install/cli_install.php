@@ -435,16 +435,22 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
 
-		if ($option['db_ssl_key']) {
+		if (!empty($option['db_ssl_key'])) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
+		} else {
+			$output .= 'define(\'DB_SSL_KEY\', \'\');' . "\n";
 		}
 
-		if ($option['db_ssl_cert']) {
+		if (!empty($option['db_ssl_cert'])) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
+		} else {
+			$output .= 'define(\'DB_SSL_CERT\', \'\');' . "\n";
 		}
 
-		if ($option['db_ssl_ca']) {
+		if (!empty($option['db_ssl_ca'])) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
+		} else {
+			$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
 		}
 
 		$file = fopen(DIR_OPENCART . 'config.php', 'w');
@@ -488,16 +494,22 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n\n";
 
-		if ($option['db_ssl_key']) {
+		if (!empty($option['db_ssl_key'])) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
+		} else {
+			$output .= 'define(\'DB_SSL_KEY\', \'\');' . "\n";
 		}
 
-		if ($option['db_ssl_cert']) {
+		if (!empty($option['db_ssl_cert'])) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
+		} else {
+			$output .= 'define(\'DB_SSL_CERT\', \'\');' . "\n";
 		}
 
-		if ($option['db_ssl_ca']) {
+		if (!empty($option['db_ssl_ca'])) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
+		} else {
+			$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
 		}
 
 		$output .= '// OpenCart API' . "\n";

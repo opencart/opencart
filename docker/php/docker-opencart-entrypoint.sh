@@ -1,0 +1,50 @@
+#!/bin/sh
+set -e
+
+echo "--- OpenCart initialization ---"
+
+# Check if OpenCart needs installation
+if [ ! -f /var/www/html/install.lock ] && [ -f /var/www/html/install/cli_install.php ]; then
+    echo "--- Starting OpenCart installation ---"
+
+    # Copy config files if they don't exist
+    if [ -f /var/www/html/config-dist.php ] && [ ! -f /var/www/html/config.php ]; then
+        cp /var/www/html/config-dist.php /var/www/html/config.php
+    fi
+
+    if [ -f /var/www/html/admin/config-dist.php ] && [ ! -f /var/www/html/admin/config.php ]; then
+        cp /var/www/html/admin/config-dist.php /var/www/html/admin/config.php
+    fi
+
+    # Run installer
+    php /var/www/html/install/cli_install.php install \
+        --username admin \
+        --password admin \
+        --email email@example.com \
+        --http_server http://localhost/ \
+        --db_driver mysqli \
+        --db_hostname mysql \
+        --db_username root \
+        --db_password opencart \
+        --db_database opencart \
+        --db_port 3306 \
+        --db_prefix oc_ \
+        && touch /var/www/html/install.lock \
+        && echo "--- OpenCart installation completed ---" \
+        || echo "--- OpenCart installation failed ---"
+fi
+
+# Copy .htaccess.txt to .htaccess if needed
+if [ -f /var/www/html/.htaccess.txt ] && [ ! -f /var/www/html/.htaccess ]; then
+    cp /var/www/html/.htaccess.txt /var/www/html/.htaccess
+    echo "--- Copied .htaccess.txt to .htaccess ---"
+fi
+
+# Fix permissions for OpenCart files
+echo "--- Fixing file permissions ---"
+chown -R www-data:www-data /var/www/html
+find /var/www/html -type d -exec chmod 755 {} \;
+find /var/www/html -type f -exec chmod 644 {} \;
+
+# Call the original entrypoint with all arguments
+exec docker-php-entrypoint "$@"

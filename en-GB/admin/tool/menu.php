@@ -42,4 +42,5 @@ $_['error_warning']     = 'Warning: Please check the form carefully for errors!'
 $_['error_permission']  = 'Warning: You do not have permission to modify menus!';
 $_['error_name']        = 'Menu Name must be between 1 and 64 characters!';
 $_['error_code']        = 'Code must be between 1 and 64 characters!';
+$_['error_exists']      = 'Code already in use!';
 $_['error_route']       = 'Route required!';

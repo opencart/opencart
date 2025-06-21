@@ -22,9 +22,12 @@
               <td>{{ product.name }}</td>
               <td class="d-none d-lg-table-cell">{{ product.model }}</td>
               <td class="text-end">
-                {% if product.special %}<s><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></s>
+                {% if product.special %}<s>
+                  <x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></s>
                   <br/>
-                  <div class="text-danger"><x-currency code="{{ currency }}" amount="{{ product.special }}"></x-currency></div>
+                  <div class="text-danger">
+                    <x-currency code="{{ currency }}" amount="{{ product.special }}"></x-currency>
+                  </div>
                 {% else %}
                   <x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency>
                 {% endif %}
@@ -37,7 +40,11 @@
                 {% else %}
                   <span class="badge bg-success">{{ product.quantity }}</span>
                 {% endif %}</td>
-              <td class="text-center"><x-switch name="status" value="1" checked="{{ product.status }}" input-class="form-switch form-switch-lg"></x-switch></td>
+              <td class="text-center">{% if product.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
               <td class="text-end text-nowrap">
                 {% if product.variant %}
                   <div class="btn-group">

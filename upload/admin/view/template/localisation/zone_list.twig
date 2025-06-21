@@ -7,6 +7,7 @@
           <th><a href="{{ sort_country }}"{% if sort == 'c.name' %} class="{{ order|lower }}"{% endif %}>{{ column_country }}</a></th>
           <th><a href="{{ sort_name }}"{% if sort == 'z.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
           <th><a href="{{ sort_code }}"{% if sort == 'z.code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></th>
+          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -18,6 +19,12 @@
               <td>{{ zone.country }}</td>
               <td>{{ zone.name }}{% if zone.zone_id == zone_id %} <strong>({{ text_default }})</strong>{% endif %}</td>
               <td>{{ zone.code }}</td>
+              <td>{{ zone.code }}</td>
+              <td class="text-center">{% if zone.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
               <td class="text-end text-nowrap"><a href="{{ zone.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not zone.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}

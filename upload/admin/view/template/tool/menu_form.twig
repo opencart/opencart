@@ -41,7 +41,7 @@
           <div class="row mb-3{% if type != 'link' %} d-none{% endif %}">
             <label for="input-route" class="col-sm-2 col-form-label">{{ entry_route }}</label>
             <div class="col-sm-10">
-              <input type="text" name="route" value="{{ route }}" placeholder="{{ entry_route }}" id="input-route" class="form-control" {% if type == 'link' %} required{% endif %}/>
+              <input type="text" name="route" value="{{ route }}" placeholder="{{ entry_route }}" id="input-route" class="form-control"{% if type == 'link' %} required{% endif %}/>
               <div id="error-route" class="invalid-feedback"></div>
             </div>
           </div>
@@ -49,7 +49,6 @@
             <label for="input-path" class="col-sm-2 col-form-label">{{ entry_path }}</label>
             <div class="col-sm-10">
               <select name="path" id="input-path" class="form-select">
-
                 {% for menu in menus %}
                   <option value="{{ menu.path }}"{% if menu.path == path %} selected{% endif %}>{{ menu.name }}</option>
                 {% endfor %}

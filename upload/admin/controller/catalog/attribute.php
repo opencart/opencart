@@ -371,13 +371,13 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_name'])) {
 			// Attributes
-			$this->load->model('catalog/attribute');
-
 			$filter_data = [
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
 				'limit'       => $this->config->get('config_autocomplete_limit')
 			];
+
+			$this->load->model('catalog/attribute');
 
 			$results = $this->model_catalog_attribute->getAttributes($filter_data);
 
@@ -390,13 +390,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$sort_order = [];
-
-		foreach ($json as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $json);
+		array_multisort(array_column($json, 'name'), SORT_ASC, $json);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

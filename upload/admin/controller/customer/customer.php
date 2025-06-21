@@ -314,17 +314,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['customers'][] = [
-				'customer_id'    => $result['customer_id'],
-				'name'           => $result['name'],
-				'email'          => $result['email'],
-				'store_id'       => $result['store_id'],
-				'customer_group' => $result['customer_group'],
-				'status'         => $result['status'],
-				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'unlock'         => $unlock,
-				'store'          => $store_data,
-				'edit'           => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url)
-			];
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'unlock'     => $unlock,
+				'store'      => $store_data,
+				'edit'       => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';
@@ -672,6 +666,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
+			'customer_id'       => 0,
 			'store_id'          => 0,
 			'language_id'       => 0,
 			'customer_group_id' => 0,
@@ -1555,13 +1550,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$sort_order = [];
-
-		foreach ($json as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $json);
+		array_multisort(array_column($json, 'name'), SORT_ASC, $json);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

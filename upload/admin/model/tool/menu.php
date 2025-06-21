@@ -30,8 +30,6 @@ class Menu extends \Opencart\System\Engine\Model {
 
 		$menu_id = $this->db->getLastId();
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `path` = '" . $this->db->escape($data['path'] . '_' . $menu_id) . "' WHERE `menu_id` = '" . (int)$menu_id . "'");
-
 		foreach ($data['menu_description'] as $language_id => $menu_description) {
 			$this->model_tool_menu->addDescription($menu_id, $language_id, $menu_description);
 		}
@@ -45,7 +43,7 @@ class Menu extends \Opencart\System\Engine\Model {
 		if ($menu_info) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `code` = '" . $this->db->escape($data['code']) . "', `type` = '" . $this->db->escape($data['type']) . "', `route` = '" . $this->db->escape($data['route']) . "', `path` = '" . $this->db->escape($data['path']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE `menu_id` = '" . (int)$menu_id . "'");
 
-			$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `path` = REPLACE(`path`, '" . $this->db->escape($menu_info['path']) . "_', '" . $this->db->escape($data['path']) . "_') WHERE `path` LIKE '" . $this->db->escape($menu_info['path']) . "_%'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "menu` SET `path` = REPLACE(`path`, '" . $this->db->escape($menu_info['path']) . "', '" . $this->db->escape($data['path']) . "') WHERE `path` LIKE '" . $this->db->escape($menu_info['path']) . "_%'");
 
 			$this->model_tool_menu->deleteDescriptions($menu_id);
 
@@ -137,18 +135,16 @@ class Menu extends \Opencart\System\Engine\Model {
 	 *
 	 * $results = $this->model_tool_menu->getMenus();
 	 */
-	public function getMenus($path = ''): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "menu` `m` LEFT JOIN `" . DB_PREFIX . "menu_description` `md` ON (`m`.`menu_id` = `md`.`menu_id`)";
+	public function getMenus(): array {
+		$menu_data = [];
 
-		if ($path) {
-			$sql .= " WHERE `m`.`path` LIKE '" . $this->db->escape($path) . "'";
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu` `m` LEFT JOIN `" . DB_PREFIX . "menu_description` `md` ON (`m`.`menu_id` = `md`.`menu_id`) ORDER BY `m`.`sort_order` ASC");
+
+		foreach ($query->rows as $result) {
+			$menu_data[$result['code']] = $result;
 		}
 
-		$sql .= " ORDER BY `m`.`path` ASC, `m`.`sort_order` ASC";
-
-		$query = $this->db->query($sql);
-
-		return $query->rows;
+		return $menu_data;
 	}
 
 	/**

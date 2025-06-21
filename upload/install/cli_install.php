@@ -210,8 +210,14 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$error .= 'ERROR: OpenCart will not work with session.auto_start enabled!' . "\n";
 		}
 
-		if (!extension_loaded('mysqli')) {
-			$error .= 'ERROR: MySQLi extension needs to be loaded for OpenCart to work!' . "\n";
+		$db = [
+			'mysqli',
+			'pdo',
+			'pgsql'
+		];
+
+		if (!array_filter($db, 'extension_loaded')) {
+			$error .= 'ERROR: A database extension needs to be loaded in the php.ini for OpenCart to work!' . "\n";
 		}
 
 		if (!extension_loaded('gd')) {
@@ -222,12 +228,12 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$error .= 'ERROR: CURL extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
-		if (!function_exists('openssl_encrypt')) {
-			$error .= 'ERROR: OpenSSL extension needs to be loaded for OpenCart to work!' . "\n";
+		if (!function_exists('iconv') && !extension_loaded('mbstring')) {
+			$error .= 'ERROR: iconv OR mbstring extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
-		if (!extension_loaded('zlib')) {
-			$error .= 'ERROR: ZLIB extension needs to be loaded for OpenCart to work!' . "\n";
+		if (!function_exists('openssl_encrypt')) {
+			$error .= 'ERROR: OpenSSL extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!is_file(DIR_OPENCART . 'config.php')) {

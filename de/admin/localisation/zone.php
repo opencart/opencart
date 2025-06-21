@@ -13,6 +13,7 @@ $_['text_filter']            = 'Filter';
 $_['column_name']            = 'Zonenname';
 $_['column_code']            = 'Zonencode';
 $_['column_country']         = 'Land';
+$_['column_status']          = 'Status';
 $_['column_action']          = 'Aktionen';
 
 // Entry

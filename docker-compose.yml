@@ -29,7 +29,7 @@ services:
       mysql:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "pgrep php-fpm || exit 1"]
+      test: ["CMD-SHELL", "php-fpm -t || exit 1"]
       interval: 2s
       timeout: 1s
       retries: 3

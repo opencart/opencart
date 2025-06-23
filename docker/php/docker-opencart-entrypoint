@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 echo "--- OpenCart initialization ---"
@@ -43,6 +43,12 @@ fi
 # Fix permissions for OpenCart files
 echo "--- Fixing file permissions ---"
 chown -R www-data:www-data /var/www/html
+
+# Allow www-data to create storage directories outside webroot for security
+echo "--- Setting permissions for storage relocation ---"
+chown www-data:www-data /var/www
+chmod 755 /var/www
+
 find /var/www/html -type d -exec chmod 755 {} \;
 find /var/www/html -type f -exec chmod 644 {} \;
 

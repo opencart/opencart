@@ -224,6 +224,7 @@ class Topic extends \Opencart\System\Engine\Model {
 
 		$sort_data = [
 			'td.name',
+			't.status',
 			't.sort_order'
 		];
 

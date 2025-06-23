@@ -29,6 +29,27 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
+			$menus = [];
+
+			$this->load->model('tool/menu');
+
+			$results = $this->model_tool_menu->getMenus();
+
+			foreach ($results as $result) {
+				if (!array_key_exists($result['code'], $menus)) {
+					$menus[$result['code']] = $result;
+				} else {
+					$menus[$result['code']] = array_merge($result, $menus[$result['code']]);
+				}
+
+				// add to parent
+				if ($result['parent']) {
+					$menus[$result['parent']]['children'][$result['code']] = $menus[$result['code']];
+
+					unset($menus[$result['code']]);
+				}
+			}
+
 			$paths = [
 				'catalog',
 				'cms',
@@ -36,25 +57,27 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'design',
 				'sale',
 				'customer',
-				'marketing',
-				'system',
-				'report'
+				//'marketing',
+				//'system',
+				//'report'
 			];
 
-			$this->load->model('tool/menu');
-
 			foreach ($paths as $path) {
-				//$data['menus'][] = [
-				//	'name' => $this->language->get('text_' . $path),
-				//	'path' => $path
-				//];
+				if ($menus[$path]) {
+					$data['menus'][] = [
+						'name'     => $this->language->get('text_' . $path),
+						'parent'   => '',
+						'children' => $path
+						//''
+					];
+				}
 			}
+
 
 			// Catalog
 			$catalog = [];
-			/*
-			$menus = $this->model_tool_menu->getMenus($result['menu_id']);
 
+			/*
 			if ($this->user->hasPermission('access', $result['route'])) {
 				$catalog[] = [
 					'name'     => $result['name'],

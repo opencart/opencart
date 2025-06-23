@@ -6,6 +6,7 @@
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
           <th><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></th>
+          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
@@ -17,6 +18,11 @@
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ language.language_id }}" class="form-check-input"/></td>
               <td>{{ language.name }}{% if language.code == code %} <strong>({{ text_default }})</strong>{% endif %}</td>
               <td>{{ language.code }}</td>
+              <td class="text-center">{% if language.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
               <td class="text-end">{{ language.sort_order }}</td>
               <td class="text-end text-nowrap"><a href="{{ language.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not language.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>

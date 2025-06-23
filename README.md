@@ -91,6 +91,30 @@ services:
         - PHP_VERSION=8.2 # Change this value
 ```
 
+### Using Docker Compose Profiles for Optional Services
+
+By default, only the core services (`opencart`, `mysql`) are started.
+Optional services such as **Adminer**, **Redis**, **Memcached**, and **PostgreSQL** can be enabled using [Docker Compose profiles](https://docs.docker.com/compose/profiles/).
+
+To enable one or more optional services, use the `--profile` flag:
+
+- **Start with Adminer:**
+    ```bash
+    docker-compose --profile adminer up -d
+    ```
+- **Start with Redis and Memcached:**
+    ```bash
+    docker-compose --profile redis --profile memcached up -d
+    ```
+- **Start all optional services:**
+    ```bash
+    docker-compose --profile adminer --profile redis --profile memcached --profile postgres up -d
+    ```
+
+If you do not specify the `--profile` flag, only the core services will be started.
+
+> **Tip:** You can combine any profiles as needed for your development workflow.
+
 ## Versioning
 
 The version is broken down into 4 points e.g 1.2.3.4 We use MAJOR.MINOR.FEATURE.PATCH to describe the version numbers.

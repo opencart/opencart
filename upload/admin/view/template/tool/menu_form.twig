@@ -50,7 +50,7 @@
             <div class="col-sm-10">
               <select name="parent" id="input-parent" class="form-select">
                 {% for menu in menus %}
-                  <option value="{{ menu.code }}"{% if menu.parent == code %} selected{% endif %}>{{ menu.name }}</option>
+                  <option value="{{ menu.code }}"{% if menu.code == parent %} selected{% endif %}>{{ menu.name }}</option>
                   {% for children_1 in menu.children %}
                     <option value="{{ children_1.code }}"{% if children_1.code == parent %} selected{% endif %}>&nbsp;&nbsp;&nbsp;{{ children_1.name }}</option>
                     {% for children_2 in children_1.children %}

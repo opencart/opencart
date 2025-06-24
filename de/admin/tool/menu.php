@@ -30,7 +30,7 @@ $_['column_action']     = 'Aktionen';
 $_['entry_name']        = 'Menu Name';
 $_['entry_code']        = 'Code';
 $_['entry_route']       = 'Route';
-$_['entry_path']        = 'Übergeordnete Kategorie';
+$_['entry_parent']      = 'Übergeordnete Kategorie';
 $_['entry_sort_order']  = 'Sortierreihenfolge';
 
 // Button

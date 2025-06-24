@@ -117,7 +117,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 							'SEK', // Swedish Krona
 							'CHF', // Swiss Franc
 							'TWD', // New Taiwan Dollar
-							'TZS'. // Tanzanian Shilling
+							'TZS', // Tanzanian Shilling
 							'THB', // Thai Baht
 							'TRY', // Turkish Lira
 							'UGX', // Ugandan Shilling

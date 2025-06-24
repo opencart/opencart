@@ -30,7 +30,7 @@ $_['column_action']     = 'Action';
 $_['entry_name']        = 'Menu Name';
 $_['entry_code']        = 'Code';
 $_['entry_route']       = 'Route';
-$_['entry_path']        = 'Parent';
+$_['entry_parent']      = 'Parent';
 $_['entry_sort_order']  = 'Sort Order';
 
 // Button

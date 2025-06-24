@@ -21,6 +21,8 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			// Level 2 cannot have children
 
 			// Menu
+			$data['menus'] = [];
+
 			$data['menus'][] = [
 				'id'       => 'menu-dashboard',
 				'icon'     => 'fa-solid fa-home',
@@ -29,49 +31,111 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$menus = [];
-
 			$this->load->model('tool/menu');
 
 			$results = $this->model_tool_menu->getMenus();
 
+			$results['catalog'] = [
+				'code'     => 'catalog',
+				'icon'     => 'fa-solid fa-tag',
+				'name'     => $this->language->get('text_catalog'),
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => []
+			];
+
+			$results['cms'] = [
+				'code'     => 'cms',
+				'icon'     => 'fa-solid fa-newspaper',
+				'name'     => $this->language->get('text_cms'),
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => []
+			];
+
+			$results['extension'] = [
+				'code'     => 'extension',
+				'icon'     => 'fa-solid fa-puzzle-piece',
+				'name'     => $this->language->get('text_extension'),
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => []
+			];
+
+			$results['design'] = [
+				'code'     => 'design',
+				'icon'     => 'fa-solid fa-tag',
+				'name'     => $this->language->get('text_design'),
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => []
+			];
+
+			$results['sale'] = [
+				'code'     => 'sale',
+				'icon'     => 'fa-solid fa-shopping-cart',
+				'name'     => $this->language->get('text_sale'),
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => []
+			];
+
+			$results['customer'] = [
+				'code'     => 'customer',
+				'icon'     => 'fa-solid fa-user',
+				'name'     => $this->language->get('text_customer'),
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => []
+			];
+
+			$results['marketing'] = [
+				'code'     => 'marketing',
+				'icon'     => 'fa-solid fa-share-alt',
+				'name'     => $this->language->get('text_marketing'),
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => []
+			];
+
+			$results['system'] = [
+				'code'     => 'system',
+				'icon'     => 'fa-solid fa-cog',
+				'name'     => $this->language->get('text_system'),
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => []
+			];
+
+			$results['report'] = [
+				'code'     => 'report',
+				'icon'     => 'fa-solid fa-chart-bar',
+				'name'     => $this->language->get('text_reports'),
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => []
+			];
+
 			foreach ($results as $result) {
-				if (!array_key_exists($result['code'], $menus)) {
-					$menus[$result['code']] = $result;
+				if (!array_key_exists($result['code'], $data['menus'])) {
+					$data['menus'][$result['code']] = $result;
+
+					if ($result['type'] == 'link') {
+						$data['menus'][$result['code']]['href'] = $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']);
+					}
 				} else {
-					$menus[$result['code']] = array_merge($result, $menus[$result['code']]);
+					$data['menus'][$result['code']] = array_merge($data['menus'][$result['code']] + $result);
 				}
 
 				// add to parent
 				if ($result['parent']) {
-					$menus[$result['parent']]['children'][$result['code']] = $menus[$result['code']];
+					$data['menus'][$result['parent']]['children'][$result['code']] = $data['menus'][$result['code']];
 
-					unset($menus[$result['code']]);
+					unset($data['menus'][$result['code']]);
 				}
 			}
 
-			$paths = [
-				'catalog',
-				'cms',
-				'extension',
-				'design',
-				'sale',
-				'customer',
-				//'marketing',
-				//'system',
-				//'report'
-			];
 
-			foreach ($paths as $path) {
-				if ($menus[$path]) {
-					$data['menus'][] = [
-						'name'     => $this->language->get('text_' . $path),
-						'parent'   => '',
-						'children' => $path
-						//''
-					];
-				}
-			}
 
 
 			// Catalog
@@ -85,7 +149,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 					'children' => []
 				];
 			}
-			*/
+
 			if ($this->user->hasPermission('access', 'catalog/category')) {
 				$catalog[] = [
 					'name'     => $this->language->get('text_category'),
@@ -333,13 +397,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($marketplace) {
-				$data['menus'][] = [
-					'id'       => 'menu-extension',
-					'icon'     => 'fa-solid fa-puzzle-piece',
-					'name'     => $this->language->get('text_extension'),
-					'href'     => '',
-					'children' => $marketplace
-				];
+
 			}
 
 			// Design
@@ -422,15 +480,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($sale) {
-				$data['menus'][] = [
-					'id'       => 'menu-sale',
-					'icon'     => 'fa-solid fa-shopping-cart',
-					'name'     => $this->language->get('text_sale'),
-					'href'     => '',
-					'children' => $sale
-				];
-			}
+
 
 			// Customer
 			$customer = [];
@@ -520,15 +570,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($marketing) {
-				$data['menus'][] = [
-					'id'       => 'menu-marketing',
-					'icon'     => 'fa-solid fa-share-alt',
-					'name'     => $this->language->get('text_marketing'),
-					'href'     => '',
-					'children' => $marketing
-				];
-			}
+
 
 			// Anti-Fraud
 			$fraud = [];
@@ -843,15 +885,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($system) {
-				$data['menus'][] = [
-					'id'       => 'menu-system',
-					'icon'     => 'fa-solid fa-cog',
-					'name'     => $this->language->get('text_system'),
-					'href'     => '',
-					'children' => $system
-				];
-			}
+
 
 			$report = [];
 
@@ -888,6 +922,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 					'children' => $report
 				];
 			}
+	*/
 
 			// Stats
 			if ($this->user->hasPermission('access', 'report/statistics')) {

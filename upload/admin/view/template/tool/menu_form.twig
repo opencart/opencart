@@ -46,11 +46,20 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label for="input-path" class="col-sm-2 col-form-label">{{ entry_path }}</label>
+            <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_parent }}</label>
             <div class="col-sm-10">
-              <select name="path" id="input-path" class="form-select">
+              <select name="parent" id="input-parent" class="form-select">
                 {% for menu in menus %}
-                  <option value="{{ menu.path }}"{% if menu.path == path %} selected{% endif %}>{{ menu.name }}</option>
+                  <option value="{{ menu.code }}"{% if menu.parent == code %} selected{% endif %}>{{ menu.name }}</option>
+                  {% for children_1 in menu.children %}
+                    <option value="{{ children_1.code }}"{% if children_1.code == parent %} selected{% endif %}>&nbsp;&nbsp;&nbsp;{{ children_1.name }}</option>
+                    {% for children_2 in children_1.children %}
+                      <option value="{{ children_2.code }}"{% if children_2.code == parent %} selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ children_2.name }}</option>
+                      {% for children_3 in children_2.children %}
+                        <option value="{{ children_3.code }}"{% if children_3.code == parent %} selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ children_3.name }}</option>
+                      {% endfor %}
+                    {% endfor %}
+                  {% endfor %}
                 {% endfor %}
               </select>
               <div id="error-path" class="invalid-feedback"></div>

@@ -9,7 +9,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - .:/var/www/public_html
+      - .:/var/www
     depends_on:
       php:
         condition: service_healthy
@@ -24,7 +24,7 @@ services:
       args:
         - PHP_VERSION=8.4
     volumes:
-      - .:/var/www/public_html
+      - .:/var/www
     depends_on:
       mysql:
         condition: service_healthy

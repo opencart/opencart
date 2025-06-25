@@ -56,5 +56,9 @@
 /.cache
 /.php-cs-fixer.cache
 
+# ENV
+.env
+.env.docker
+
 # Docker-specific artifacts
 /public_html

@@ -367,6 +367,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		// SEO
+		$this->load->model('design/seo_url');
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', $product_id);
 
 		if (isset($data['product_seo_url'])) {

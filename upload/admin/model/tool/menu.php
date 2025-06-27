@@ -148,6 +148,7 @@ class Menu extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu` `m` LEFT JOIN `" . DB_PREFIX . "menu_description` `md` ON (`m`.`menu_id` = `md`.`menu_id`) ORDER BY `m`.`sort_order` ASC");
 
+		// Index
 		foreach ($query->rows as $result) {
 			$menu_data[$result['code']] = $result;
 		}

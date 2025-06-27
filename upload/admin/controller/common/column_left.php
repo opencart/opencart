@@ -124,7 +124,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 						$data['menus'][$result['code']]['href'] = $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']);
 					}
 				} else {
-					$data['menus'][$result['code']] = array_merge($data['menus'][$result['code']] + $result);
+					$data['menus'][$result['code']] = array_merge($data['menus'][$result['code']], $result);
 				}
 
 				// add to parent
@@ -135,11 +135,37 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// Anti-Fraud
+			/*
+			$fraud = [];
 
+			$this->load->model('setting/extension');
 
+			$results = $this->model_setting_extension->getExtensionsByType('fraud');
 
-			// Catalog
-			$catalog = [];
+			foreach ($results as $result) {
+				if ($this->config->get('fraud_' . $result['code'] . '_status')) {
+					$this->load->language('extension/' . $result['extension'] . '/fraud/' . $result['code'], $result['code']);
+
+					$fraud[] = [
+						'name'     => $this->language->get($result['code'] . '_heading_title'),
+						'href'     => $this->url->link('extension/' . $result['extension'] . '/fraud/' . $result['code'], 'user_token=' . $this->session->data['user_token']),
+						'children' => []
+					];
+				}
+			}
+
+			if ($fraud) {
+				$data['menus'][] = [
+					'id'       => 'menu-fraud',
+					'icon'     => 'fa-solid fa-share-alt',
+					'name'     => $this->language->get('text_antifraud'),
+					'href'     => '',
+					'children' => $fraud
+				];
+			}
+			*/
+
 
 			/*
 			if ($this->user->hasPermission('access', $result['route'])) {
@@ -147,56 +173,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 					'name'     => $result['name'],
 					'href'     => $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']),
 					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/category')) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_category'),
-					'href'     => $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/product')) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_product'),
-					'href'     => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/subscription_plan')) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_subscription_plan'),
-					'href'     => $this->url->link('catalog/subscription_plan', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			$filter = [];
-
-			if ($this->user->hasPermission('access', 'catalog/filter')) {
-				$filter[] = [
-					'name'     => $this->language->get('text_filter'),
-					'href'     => $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/filter_group')) {
-				$filter[] = [
-					'name'     => $this->language->get('text_filter_group'),
-					'href'     => $this->url->link('catalog/filter_group', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($filter) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_filter'),
-					'href'     => '',
-					'children' => $filter
 				];
 			}
 
@@ -277,339 +253,12 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$cms = [];
-
-			if ($this->user->hasPermission('access', 'cms/topic')) {
-				$cms[] = [
-					'name'     => $this->language->get('text_topic'),
-					'href'     => $this->url->link('cms/topic', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'cms/article')) {
-				$cms[] = [
-					'name'     => $this->language->get('text_article'),
-					'href'     => $this->url->link('cms/article', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'cms/comment')) {
-				$cms[] = [
-					'name'     => $this->language->get('text_comment'),
-					'href'     => $this->url->link('cms/comment', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'cms/antispam')) {
-				$cms[] = [
-					'name'     => $this->language->get('text_antispam'),
-					'href'     => $this->url->link('cms/antispam', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($cms) {
-				$data['menus'][] = [
-					'id'       => 'menu-cms',
-					'icon'     => 'fa-solid fa-newspaper',
-					'name'     => $this->language->get('text_cms'),
-					'href'     => '',
-					'children' => $cms
-				];
-			}
-
-			// Extension
-			$marketplace = [];
-
-			if ($this->user->hasPermission('access', 'marketplace/marketplace')) {
-				$marketplace[] = [
-					'name'     => $this->language->get('text_marketplace'),
-					'href'     => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketplace/installer')) {
-				$marketplace[] = [
-					'name'     => $this->language->get('text_installer'),
-					'href'     => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketplace/extension')) {
-				$marketplace[] = [
-					'name'     => $this->language->get('text_extension'),
-					'href'     => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketplace/modification')) {
-				$marketplace[] = [
-					'name'     => $this->language->get('text_modification'),
-					'href'     => $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketplace/task')) {
-				$marketplace[] = [
-					'name'     => $this->language->get('text_task'),
-					'href'     => $this->url->link('marketplace/task', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketplace/ssr')) {
-				$marketplace[] = [
-					'name'     => $this->language->get('text_ssr'),
-					'href'     => $this->url->link('marketplace/ssr', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketplace/startup')) {
-				$marketplace[] = [
-					'name'     => $this->language->get('text_startup'),
-					'href'     => $this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketplace/event')) {
-				$marketplace[] = [
-					'name'     => $this->language->get('text_event'),
-					'href'     => $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketplace/cron')) {
-				$marketplace[] = [
-					'name'     => $this->language->get('text_cron'),
-					'href'     => $this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($marketplace) {
-
-			}
-
-			// Design
-			$design = [];
-
-			if ($this->user->hasPermission('access', 'design/layout')) {
-				$design[] = [
-					'name'     => $this->language->get('text_layout'),
-					'href'     => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'design/theme')) {
-				$design[] = [
-					'name'     => $this->language->get('text_theme'),
-					'href'     => $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'design/translation')) {
-				$design[] = [
-					'name'     => $this->language->get('text_language_editor'),
-					'href'     => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'design/banner')) {
-				$design[] = [
-					'name'     => $this->language->get('text_banner'),
-					'href'     => $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'design/seo_url')) {
-				$design[] = [
-					'name'     => $this->language->get('text_seo_url'),
-					'href'     => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($design) {
-				$data['menus'][] = [
-					'id'       => 'menu-design',
-					'icon'     => 'fa-solid fa-desktop',
-					'name'     => $this->language->get('text_design'),
-					'href'     => '',
-					'children' => $design
-				];
-			}
-
-			// Sales
-			$sale = [];
-
-			if ($this->user->hasPermission('access', 'sale/order')) {
-				$sale[] = [
-					'name'     => $this->language->get('text_order'),
-					'href'     => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'sale/subscription')) {
-				$sale[] = [
-					'name'     => $this->language->get('text_subscription'),
-					'href'     => $this->url->link('sale/subscription', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'sale/returns')) {
-				$sale[] = [
-					'name'     => $this->language->get('text_return'),
-					'href'     => $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
 
 
 
-			// Customer
-			$customer = [];
-
-			if ($this->user->hasPermission('access', 'customer/customer')) {
-				$customer[] = [
-					'name'     => $this->language->get('text_customer'),
-					'href'     => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'customer/customer_group')) {
-				$customer[] = [
-					'name'     => $this->language->get('text_customer_group'),
-					'href'     => $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'customer/customer_approval')) {
-				$customer[] = [
-					'name'     => $this->language->get('text_customer_approval'),
-					'href'     => $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'customer/gdpr')) {
-				$customer[] = [
-					'name'     => $this->language->get('text_gdpr'),
-					'href'     => $this->url->link('customer/gdpr', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'customer/custom_field')) {
-				$customer[] = [
-					'name'     => $this->language->get('text_custom_field'),
-					'href'     => $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($customer) {
-				$data['menus'][] = [
-					'id'       => 'menu-customer',
-					'icon'     => 'fa-solid fa-user',
-					'name'     => $this->language->get('text_customer'),
-					'href'     => '',
-					'children' => $customer
-				];
-			}
-
-			// Marketing
-			$marketing = [];
-
-			if ($this->user->hasPermission('access', 'marketing/affiliate')) {
-				$marketing[] = [
-					'name'     => $this->language->get('text_affiliate'),
-					'href'     => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketing/marketing')) {
-				$marketing[] = [
-					'name'     => $this->language->get('text_marketing'),
-					'href'     => $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketing/coupon')) {
-				$marketing[] = [
-					'name'     => $this->language->get('text_coupon'),
-					'href'     => $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'marketing/contact')) {
-				$marketing[] = [
-					'name'     => $this->language->get('text_contact'),
-					'href'     => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
 
 
 
-			// Anti-Fraud
-			$fraud = [];
-
-			$this->load->model('setting/extension');
-
-			$results = $this->model_setting_extension->getExtensionsByType('fraud');
-
-			foreach ($results as $result) {
-				if ($this->config->get('fraud_' . $result['code'] . '_status')) {
-					$this->load->language('extension/' . $result['extension'] . '/fraud/' . $result['code'], $result['code']);
-
-					$fraud[] = [
-						'name'     => $this->language->get($result['code'] . '_heading_title'),
-						'href'     => $this->url->link('extension/' . $result['extension'] . '/fraud/' . $result['code'], 'user_token=' . $this->session->data['user_token']),
-						'children' => []
-					];
-				}
-			}
-
-			if ($fraud) {
-				$data['menus'][] = [
-					'id'       => 'menu-fraud',
-					'icon'     => 'fa-solid fa-share-alt',
-					'name'     => $this->language->get('text_antifraud'),
-					'href'     => '',
-					'children' => $fraud
-				];
-			}
-
-			$marketing = [];
-
-			if ($this->user->hasPermission('access', 'marketing/affiliate')) {
-				$marketing[] = [
-					'name'     => $this->language->get('text_affiliate'),
-					'href'     => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
 
 			// System
 			$system = [];
@@ -623,39 +272,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 
 			// Users
-			$user = [];
 
-			if ($this->user->hasPermission('access', 'user/user')) {
-				$user[] = [
-					'name'     => $this->language->get('text_users'),
-					'href'     => $this->url->link('user/user', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'user/user_permission')) {
-				$user[] = [
-					'name'     => $this->language->get('text_user_group'),
-					'href'     => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'user/api')) {
-				$user[] = [
-					'name'     => $this->language->get('text_api'),
-					'href'     => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($user) {
-				$system[] = [
-					'name'     => $this->language->get('text_users'),
-					'href'     => '',
-					'children' => $user
-				];
-			}
 
 			// Localisation
 			$localisation = [];

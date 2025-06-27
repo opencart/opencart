@@ -64,38 +64,41 @@ class Menu extends \Opencart\System\Engine\Controller {
 	public function getList(): string {
 		$data['action'] = $this->url->link('tool/menu.list', 'user_token=' . $this->session->data['user_token']);
 
+		$tree = [];
+
+		$stack = [];
+
 		$this->load->model('tool/menu');
 
-		$menus = $this->model_tool_menu->getMenus();
+		$results = $this->model_tool_menu->getMenus();
 
-		foreach ($menus as $key_1 => $menu_1) {
-			$children_data = [];
+		foreach ($results as $result) {
+			$result['children'] = [];
 
-			foreach ($menus as $key_2 => $menu_2) {
-				if ($key_1 == $menu_2['parent']) {
-					$children_data[$key_2] = $menu_2;
-				}
+			$code   = $result['code'];
+			$parent = $result['parent'];
+
+			if (!array_key_exists($code, $tree)) {
+				$tree[$code] = $result;
+			} else {
+				$tree[$code] = array_merge($result, $tree[$code]);
 			}
 
-			$menus[$key_1] = $menu_1 + ['children' => $children_data];
-		}
-
-		$menu_data = [];
-
-		foreach ($menus as $key_1 => $menu_1) {
-			if ($menu_1['children']) {
-				foreach ($menu_1['children'] as $key_2 => $child) {
-					$menus[$key_1] = &$child;
-
-					unset($menus[$key_2]);
-				}
-
+			if (!array_key_exists($parent, $tree)) {
+				$stack[$parent] = &$tree[$parent];
 			}
+
+			if (!array_key_exists($code, $tree)) {
+				$tree[$code] = $result;
+			}
+
+			$tree[$parent]['children'][$code] = &$tree[$code];
+
+			unset($stack[$code]);
 		}
 
-		print_r($menus);
+		unset($tree);
 
-		/*
 		$paths = [
 			'catalog',
 			'cms',
@@ -109,85 +112,44 @@ class Menu extends \Opencart\System\Engine\Controller {
 		];
 
 		foreach ($paths as $path) {
-			// Make path into an array
-			$item = [$menu_data[$path]];
+			if (isset($stack[$path])) {
+				$results = $stack[$path]['children'];
 
-			// While the path array is still populated keep looping through
-			while (count($item) != 0) {
-				$next = array_shift($item);
+				// Level 1
+				foreach ($results as $result) {
+					$data['menus'][] = [
+						'name' => $this->language->get('text_' . $path) . ' &gt ' . $result['name'],
+						'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $result['type'] . '&menu_id=' . $result['menu_id'])
+					] + $result;
 
-				print_r($next);
+					// Level 2
+					foreach ($result['children'] as $children_1) {
+						$data['menus'][] = [
+							'name' => $this->language->get('text_' . $path) . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'],
+							'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_1['type'] . '&menu_id=' . $children_1['menu_id'])
+						] + $children_1;
 
-				if (($next)) {
+						// Level 3
+						foreach ($children_1['children'] as $children_2) {
+							$data['menus'][] = [
+								'name' => $this->language->get('text_' . $path) . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'] . ' &gt ' . $children_2['name'],
+								'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_2['type'] . '&menu_id=' . $children_2['menu_id'])
+							] + $children_2;
 
-					foreach (array_diff(scandir($next), ['..', '.']) as $file) {
-						// If directory add to path array
-						$directory[] = $next . '/' . $file;
-					}
-				}
-
-				// Add the file to the files to be deleted array
-				$files[] = $next;
-			}
-		}
-
-
-		$children_data = [];
-
-		foreach ($menus as $menu_2) {
-			if ($menu_1['parent'] == $menu_1['code']) {
-
-
-			}
-		}
-	}
-
-	if ($menu_2['parent'] == $menu_1['code']) {
-
-
-		foreach ($menus as $menu_3) {
-			if ($menu_1['parent']) {
-				$code = $menu_1['parent'];
-
-				$menu_1[$code]['parent'];
-
-			}
-		}
-	}
-
-				$paths = [
-					'catalog',
-					'cms',
-					'extension',
-					'design',
-					'sale',
-					'customer',
-					'marketing',
-					'system',
-					'report'
-				];
-
-				foreach ($paths as $path) {
-					foreach ($results as $result) {
-						$part = explode('_', $result['path']);
-
-						array_shift($part);
-
-						$name = $this->language->get('text_' . $path);
-
-						foreach ($part as $menu_id) {
-							if (isset($results[$menu_id])) {
-								$name .= ' > ' . $results[$menu_id]['name'];
+							// Level 4
+							foreach ($children_2['children'] as $children_3) {
+								$data['menus'][] = [
+									'name' => $this->language->get('text_' . $path) . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'] . ' &gt ' . $children_2['name'] . ' &gt ' . $children_3['name'],
+									'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_3['type'] . '&menu_id=' . $children_3['menu_id'])
+								] + $children_3;
 							}
 						}
-
-						$data['menus'][] = [
-							'name' => $name . ' > ' . $result['name'],
-							'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $result['type'] . '&menu_id=' . $result['menu_id'])
-						] + $result;
 					}
 				}
-		*/
+
+			}
+		}
+
 		return $this->load->view('tool/menu_list', $data);
 	}
 
@@ -268,6 +230,19 @@ class Menu extends \Opencart\System\Engine\Controller {
 			$data['route'] = '';
 		}
 
+		// Build Tree
+		$recursion = function($data = [], $parent = '') use (&$recursion) {
+			$menu_data = [];
+
+			if (isset($data[$parent])) {
+				foreach ($data[$parent]['children'] as $child) {
+					$menu_data[$child['code']] = $child + ['children' => $recursion($data, $child['code'])];
+				}
+			}
+
+			return $menu_data;
+		};
+
 		$data['menus'] = [];
 
 		$paths = [
@@ -282,22 +257,43 @@ class Menu extends \Opencart\System\Engine\Controller {
 			'report'
 		];
 
-		foreach ($paths as $path) {
-			$data['menus'][] = [
-				'name'   => $this->language->get('text_' . $path),
-				'parent' => $path . '_dropdown'
-			];
+		$menus = [];
 
-			$results = $this->model_tool_menu->getMenus($path);
+		$results = $this->model_tool_menu->getMenus();
 
-			foreach ($results as $result) {
-				if ($result['type'] == 'dropdown') {
+
+		foreach ($test as $result) {
+			foreach ($result['children'] as $children_1) {
+				$data['menus'][] = [
+						'name' => $name . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'],
+						'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_1['type'] . '&menu_id=' . $children_1['menu_id'])
+					] + $children_1;
+
+				foreach ($children_1['children'] as $children_2) {
 					$data['menus'][] = [
-						'name'   => $result['name'],
-						'parent' => $result['parent']
-					];
+							'name' => $name . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'] . ' &gt ' . $children_2['name'],
+							'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_2['type'] . '&menu_id=' . $children_2['menu_id'])
+						] + $children_2;
+
+					foreach ($children_2['children'] as $children_3) {
+						$data['menus'][] = [
+								'name' => $name . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'] . ' &gt ' . $children_2['name'] . ' &gt ' . $children_3['name'],
+								'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_3['type'] . '&menu_id=' . $children_3['menu_id'])
+							] + $children_3;
+					}
 				}
 			}
+		}
+
+
+		foreach ($paths as $path) {
+			$data['menus'][$path] = [
+				'name'     => $this->language->get('text_' . $path),
+				'code'     => $path,
+				'type'     => 'dropdown',
+				'parent'   => '',
+				'children' => $recursion($results, $path)
+			];
 		}
 
 		if (!empty($menu_info)) {
@@ -378,7 +374,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 
 		$menu_info = $this->model_tool_menu->getMenuByCode($post_info['code']);
 
-		if (!in_array($post_info['code'], $protect) || ($menu_info && ($post_info['menu_id'] != $menu_info['menu_id']))) {
+		if (in_array($post_info['code'], $protect) || ($menu_info && ($post_info['menu_id'] != $menu_info['menu_id']))) {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
 

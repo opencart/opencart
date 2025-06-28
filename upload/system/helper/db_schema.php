@@ -4148,8 +4148,8 @@ function oc_db_schema() {
 				'type' => 'varchar(64)'
 			],
 			[
-				'name' => 'path',
-				'type' => 'text'
+				'name' => 'parent',
+				'type' => 'varchar(64)'
 			],
 			[
 				'name' => 'sort_order',
@@ -7397,6 +7397,40 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'task_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'task_log',
+		'field' => [
+			[
+				'name'           => 'task_log_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'task_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'comment',
+				'type' => 'text'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '1'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'task_log_id'
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',

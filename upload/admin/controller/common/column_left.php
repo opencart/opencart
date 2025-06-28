@@ -36,23 +36,25 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			$stack = [];
 
 			foreach ($results as $code => $result) {
-				if (!array_key_exists($result['parent'], $stack)) {
-					$menu[$result['parent']] = &$stack[$result['parent']];
-				}
-
-				if (!array_key_exists($code, $stack)) {
-					$stack[$code] = ['children' => []] + $result;
-
-					if ($result['type'] == 'link') {
-						$stack[$code]['href'] = $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']);
+				if ($this->user->hasPermission('access', $result['route'])) {
+					if (!array_key_exists($result['parent'], $stack)) {
+						$menu[$result['parent']] = &$stack[$result['parent']];
 					}
-				} else {
-					$stack[$code] = array_merge($result, $stack[$code]);
+
+					if (!array_key_exists($code, $stack)) {
+						$stack[$code] = ['children' => []] + $result;
+
+						if ($result['type'] == 'link') {
+							$stack[$code]['href'] = $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']);
+						}
+					} else {
+						$stack[$code] = array_merge($result, $stack[$code]);
+					}
+
+					$stack[$result['parent']]['children'][$code] = &$stack[$code];
+
+					unset($menu[$code]);
 				}
-
-				$stack[$result['parent']]['children'][$code] = &$stack[$code];
-
-				unset($menu[$code]);
 			}
 
 			unset($stack);
@@ -64,7 +66,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'icon'     => 'fa-solid fa-tag',
 				'name'     => $this->language->get('text_catalog'),
 				'type'     => 'dropdown',
-				'parent'   => '',
 				'children' => []
 			];
 
@@ -73,7 +74,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'icon'     => 'fa-solid fa-newspaper',
 				'name'     => $this->language->get('text_cms'),
 				'type'     => 'dropdown',
-				'parent'   => '',
 				'children' => []
 			];
 
@@ -82,7 +82,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'icon'     => 'fa-solid fa-puzzle-piece',
 				'name'     => $this->language->get('text_extension'),
 				'type'     => 'dropdown',
-				'parent'   => '',
 				'children' => []
 			];
 
@@ -91,7 +90,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'icon'     => 'fa-solid fa-tag',
 				'name'     => $this->language->get('text_design'),
 				'type'     => 'dropdown',
-				'parent'   => '',
 				'children' => []
 			];
 
@@ -100,7 +98,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'icon'     => 'fa-solid fa-shopping-cart',
 				'name'     => $this->language->get('text_sale'),
 				'type'     => 'dropdown',
-				'parent'   => '',
 				'children' => []
 			];
 
@@ -109,7 +106,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'icon'     => 'fa-solid fa-user',
 				'name'     => $this->language->get('text_customer'),
 				'type'     => 'dropdown',
-				'parent'   => '',
 				'children' => []
 			];
 
@@ -118,7 +114,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'icon'     => 'fa-solid fa-share-alt',
 				'name'     => $this->language->get('text_marketing'),
 				'type'     => 'dropdown',
-				'parent'   => '',
 				'children' => []
 			];
 
@@ -127,7 +122,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'icon'     => 'fa-solid fa-cog',
 				'name'     => $this->language->get('text_system'),
 				'type'     => 'dropdown',
-				'parent'   => '',
 				'children' => []
 			];
 
@@ -136,7 +130,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'icon'     => 'fa-solid fa-chart-bar',
 				'name'     => $this->language->get('text_reports'),
 				'type'     => 'dropdown',
-				'parent'   => '',
 				'children' => []
 			];
 
@@ -150,8 +143,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
-			/*
 			// Anti-Fraud
 			$fraud = [];
 
@@ -173,254 +164,12 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			if ($fraud) {
 				$data['menus'][] = [
-					'id'       => 'menu-fraud',
+					'code'     => 'menu-fraud',
 					'icon'     => 'fa-solid fa-share-alt',
 					'name'     => $this->language->get('text_antifraud'),
-					'href'     => '',
 					'children' => $fraud
 				];
 			}
-			*/
-
-			/*
-			if ($this->user->hasPermission('access', $result['route'])) {
-				$catalog[] = [
-					'name'     => $result['name'],
-					'href'     => $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-
-
-
-			// System
-			$system = [];
-
-			if ($this->user->hasPermission('access', 'setting/setting')) {
-				$system[] = [
-					'name'     => $this->language->get('text_setting'),
-					'href'     => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			// Users
-			// Localisation
-
-			if ($this->user->hasPermission('access', 'localisation/subscription_status')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_subscription_status'),
-					'href'     => $this->url->link('localisation/subscription_status', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			// Returns
-			$returns = [];
-
-			if ($this->user->hasPermission('access', 'localisation/return_status')) {
-				$returns[] = [
-					'name'     => $this->language->get('text_return_status'),
-					'href'     => $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/return_action')) {
-				$returns[] = [
-					'name'     => $this->language->get('text_return_action'),
-					'href'     => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/return_reason')) {
-				$returns[] = [
-					'name'     => $this->language->get('text_return_reason'),
-					'href'     => $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($returns) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_return'),
-					'href'     => '',
-					'children' => $returns
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/country')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_country'),
-					'href'     => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/zone')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_zone'),
-					'href'     => $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/geo_zone')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_geo_zone'),
-					'href'     => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			// Tax
-			$tax = [];
-
-			if ($this->user->hasPermission('access', 'localisation/tax_class')) {
-				$tax[] = [
-					'name'     => $this->language->get('text_tax_class'),
-					'href'     => $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/tax_rate')) {
-				$tax[] = [
-					'name'     => $this->language->get('text_tax_rate'),
-					'href'     => $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($tax) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_tax'),
-					'href'     => '',
-					'children' => $tax
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/length_class')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_length_class'),
-					'href'     => $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/weight_class')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_weight_class'),
-					'href'     => $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/address_format')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_address_format'),
-					'href'     => $this->url->link('localisation/address_format', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($localisation) {
-				$system[] = [
-					'name'     => $this->language->get('text_localisation'),
-					'href'     => '',
-					'children' => $localisation
-				];
-			}
-
-			// Tools
-			$maintenance = [];
-
-			if ($this->user->hasPermission('access', 'tool/menu')) {
-				$maintenance[] = [
-					'name'     => $this->language->get('text_menu'),
-					'href'     => $this->url->link('tool/menu', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'tool/upgrade')) {
-				$maintenance[] = [
-					'name'     => $this->language->get('text_upgrade'),
-					'href'     => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'tool/backup')) {
-				$maintenance[] = [
-					'name'     => $this->language->get('text_backup'),
-					'href'     => $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'tool/upload')) {
-				$maintenance[] = [
-					'name'     => $this->language->get('text_upload'),
-					'href'     => $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'tool/log')) {
-				$maintenance[] = [
-					'name'     => $this->language->get('text_log'),
-					'href'     => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($maintenance) {
-				$system[] = [
-					'name'     => $this->language->get('text_maintenance'),
-					'href'     => '',
-					'children' => $maintenance
-				];
-			}
-
-			$report = [];
-
-			if ($this->user->hasPermission('access', 'report/report')) {
-				$report[] = [
-					'name'     => $this->language->get('text_reports'),
-					'href'     => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'report/online')) {
-				$report[] = [
-					'name'     => $this->language->get('text_online'),
-					'href'     => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'report/statistics')) {
-				$report[] = [
-					'name'     => $this->language->get('text_statistics'),
-					'href'     => $this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($report) {
-				$data['menus'][] = [
-					'id'       => 'menu-report',
-					'icon'     => 'fa-solid fa-chart-bar',
-					'name'     => $this->language->get('text_reports'),
-					'href'     => '',
-					'children' => $report
-				];
-			}
-			*/
 
 			// Stats
 			if ($this->user->hasPermission('access', 'report/statistics')) {

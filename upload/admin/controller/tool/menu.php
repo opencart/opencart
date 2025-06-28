@@ -172,7 +172,6 @@ class Menu extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('tool/menu.save', 'user_token=' . $this->session->data['user_token'] . '&type=' . $type);
 		$data['back'] = $this->url->link('tool/menu', 'user_token=' . $this->session->data['user_token']);
 
-		// Menu
 		$this->load->model('tool/menu');
 
 		if (isset($this->request->get['menu_id'])) {
@@ -290,7 +289,6 @@ class Menu extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['type'])) {
 			$type = (string)$this->request->get['type'];
 		} else {
-
 			$type = 'dropdown';
 		}
 
@@ -340,10 +338,30 @@ class Menu extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
 
-
-
 		if ($type == 'link' && !$post_info['route']) {
 			$json['error']['route'] = $this->language->get('error_route');
+		}
+
+		$previous = [];
+
+		$results = $this->model_tool_menu->getMenus();
+
+		$parent	= $menu_info['code'];
+
+		while ($parent) {
+			if (isset($results[$parent])) {
+				$parent = $results[$parent]['parent'];
+
+				$previous[] = $parent;
+			} else {
+				$parent = [];
+			}
+		}
+
+		print_r($previous);
+
+		if (in_array($parent, $previous)) {
+
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {

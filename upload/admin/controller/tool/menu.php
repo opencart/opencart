@@ -64,7 +64,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 	public function getList(): string {
 		$data['action'] = $this->url->link('tool/menu.list', 'user_token=' . $this->session->data['user_token']);
 
-		$tree = [];
+		$menu = [];
 
 		$stack = [];
 
@@ -72,32 +72,23 @@ class Menu extends \Opencart\System\Engine\Controller {
 
 		$results = $this->model_tool_menu->getMenus();
 
-		foreach ($results as $result) {
-			$result['children'] = [];
+		foreach ($results as $code => $result) {
+			if (!array_key_exists($result['parent'], $stack)) {
+				$menu[$result['parent']] = &$stack[$result['parent']];
+			}
 
-			$code   = $result['code'];
-			$parent = $result['parent'];
-
-			if (!array_key_exists($code, $tree)) {
-				$tree[$code] = $result;
+			if (!array_key_exists($code, $stack)) {
+				$stack[$code] = $result + ['children' => []];
 			} else {
-				$tree[$code] = array_merge($result, $tree[$code]);
+				$stack[$code] = array_merge($result, $stack[$code]);
 			}
 
-			if (!array_key_exists($parent, $tree)) {
-				$stack[$parent] = &$tree[$parent];
-			}
+			$stack[$result['parent']]['children'][$code] = &$stack[$code];
 
-			if (!array_key_exists($code, $tree)) {
-				$tree[$code] = $result;
-			}
-
-			$tree[$parent]['children'][$code] = &$tree[$code];
-
-			unset($stack[$code]);
+			unset($menu[$code]);
 		}
 
-		unset($tree);
+		unset($stack);
 
 		$paths = [
 			'catalog',
@@ -112,11 +103,9 @@ class Menu extends \Opencart\System\Engine\Controller {
 		];
 
 		foreach ($paths as $path) {
-			if (isset($stack[$path])) {
-				$results = $stack[$path]['children'];
-
+			if (isset($menu[$path])) {
 				// Level 1
-				foreach ($results as $result) {
+				foreach ($menu[$path]['children'] as $result) {
 					$data['menus'][] = [
 						'name' => $this->language->get('text_' . $path) . ' &gt ' . $result['name'],
 						'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $result['type'] . '&menu_id=' . $result['menu_id'])
@@ -135,18 +124,9 @@ class Menu extends \Opencart\System\Engine\Controller {
 								'name' => $this->language->get('text_' . $path) . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'] . ' &gt ' . $children_2['name'],
 								'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_2['type'] . '&menu_id=' . $children_2['menu_id'])
 							] + $children_2;
-
-							// Level 4
-							foreach ($children_2['children'] as $children_3) {
-								$data['menus'][] = [
-									'name' => $this->language->get('text_' . $path) . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'] . ' &gt ' . $children_2['name'] . ' &gt ' . $children_3['name'],
-									'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_3['type'] . '&menu_id=' . $children_3['menu_id'])
-								] + $children_3;
-							}
 						}
 					}
 				}
-
 			}
 		}
 
@@ -230,20 +210,31 @@ class Menu extends \Opencart\System\Engine\Controller {
 			$data['route'] = '';
 		}
 
-		// Build Tree
-		$recursion = function($data = [], $parent = '') use (&$recursion) {
-			$menu_data = [];
+		$menu = [];
 
-			if (isset($data[$parent])) {
-				foreach ($data[$parent]['children'] as $child) {
-					$menu_data[$child['code']] = $child + ['children' => $recursion($data, $child['code'])];
+		$results = $this->model_tool_menu->getMenus();
+
+		$stack = [];
+
+		foreach ($results as $code => $result) {
+			//if ($result['type'] == 'dropdown') {
+				if (!array_key_exists($result['parent'], $stack)) {
+					$menu[$result['parent']] = &$stack[$result['parent']];
 				}
-			}
 
-			return $menu_data;
-		};
+				if (!array_key_exists($code, $stack)) {
+					$stack[$code] = ['children' => []] + $result;
+				} else {
+					$stack[$code] = array_merge($result, $stack[$code]);
+				}
 
-		$data['menus'] = [];
+				$stack[$result['parent']]['children'][$code] = &$stack[$code];
+
+				unset($menu[$code]);
+			//}
+		}
+
+		unset($stack);
 
 		$paths = [
 			'catalog',
@@ -257,42 +248,15 @@ class Menu extends \Opencart\System\Engine\Controller {
 			'report'
 		];
 
-		$menus = [];
-
-		$results = $this->model_tool_menu->getMenus();
-
-
-		foreach ($test as $result) {
-			foreach ($result['children'] as $children_1) {
-				$data['menus'][] = [
-						'name' => $name . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'],
-						'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_1['type'] . '&menu_id=' . $children_1['menu_id'])
-					] + $children_1;
-
-				foreach ($children_1['children'] as $children_2) {
-					$data['menus'][] = [
-							'name' => $name . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'] . ' &gt ' . $children_2['name'],
-							'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_2['type'] . '&menu_id=' . $children_2['menu_id'])
-						] + $children_2;
-
-					foreach ($children_2['children'] as $children_3) {
-						$data['menus'][] = [
-								'name' => $name . ' &gt ' . $result['name'] . ' &gt ' . $children_1['name'] . ' &gt ' . $children_2['name'] . ' &gt ' . $children_3['name'],
-								'edit' => $this->url->link('tool/menu.form', 'user_token=' . $this->session->data['user_token'] . '&type=' . $children_3['type'] . '&menu_id=' . $children_3['menu_id'])
-							] + $children_3;
-					}
-				}
-			}
-		}
-
+		//print_r($menu);
 
 		foreach ($paths as $path) {
-			$data['menus'][$path] = [
+			$data['menus'][] = [
 				'name'     => $this->language->get('text_' . $path),
 				'code'     => $path,
 				'type'     => 'dropdown',
 				'parent'   => '',
-				'children' => $recursion($results, $path)
+				'children' => isset($menu[$path]) ? $menu[$path]['children'] : []
 			];
 		}
 

@@ -9,6 +9,7 @@ $_['text_download']          = 'Downloads';
 $_['text_log']               = 'Fehlerprotokolle';
 $_['text_event']             = 'Veranstaltungen';
 $_['text_extension']         = 'Erweiterungen';
+$_['text_fraud']             = 'Betrugsbekämpfung';
 $_['text_marketing']         = 'Marketing';
 $_['text_navigation']        = 'Navigation';
 $_['text_reports']           = 'Berichte';

@@ -248,8 +248,6 @@ class Menu extends \Opencart\System\Engine\Controller {
 			'report'
 		];
 
-		//print_r($menu);
-
 		foreach ($paths as $path) {
 			$data['menus'][] = [
 				'name'     => $this->language->get('text_' . $path),
@@ -341,6 +339,8 @@ class Menu extends \Opencart\System\Engine\Controller {
 		if (in_array($post_info['code'], $protect) || ($menu_info && ($post_info['menu_id'] != $menu_info['menu_id']))) {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
+
+
 
 		if ($type == 'link' && !$post_info['route']) {
 			$json['error']['route'] = $this->language->get('error_route');

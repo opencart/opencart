@@ -36,7 +36,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			$stack = [];
 
 			foreach ($results as $code => $result) {
-				if ($this->user->hasPermission('access', $result['route'])) {
+				if ($result['type'] == 'dropdown' || $this->user->hasPermission('access', $result['route'])) {
 					if (!array_key_exists($result['parent'], $stack)) {
 						$menu[$result['parent']] = &$stack[$result['parent']];
 					}

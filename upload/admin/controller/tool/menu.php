@@ -217,7 +217,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 		$stack = [];
 
 		foreach ($results as $code => $result) {
-			//if ($result['type'] == 'dropdown') {
+			if ($result['type'] == 'dropdown') {
 				if (!array_key_exists($result['parent'], $stack)) {
 					$menu[$result['parent']] = &$stack[$result['parent']];
 				}
@@ -231,7 +231,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 				$stack[$result['parent']]['children'][$code] = &$stack[$code];
 
 				unset($menu[$code]);
-			//}
+			}
 		}
 
 		unset($stack);

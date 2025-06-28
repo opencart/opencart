@@ -3,9 +3,7 @@
 	<ul id="menu">
 		{% set i = 0 %}
 		{% for menu in menus %}
-
-			<li id="{{ menu.code }}">
-
+			<li id="menu-{{ menu.code }}">
         {% if menu.href %}
 					<a href="{{ menu.href }}"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
 				{% else %}

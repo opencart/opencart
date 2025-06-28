@@ -17,10 +17,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ((string)$this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->load->language('common/column_left');
 
-			// Create a 3 level menu array
-			// Level 2 cannot have children
-
-			// Menu
 			$data['menus'] = [];
 
 			$data['menus'][] = [
@@ -31,11 +27,39 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
+			$menu = [];
+
 			$this->load->model('tool/menu');
 
 			$results = $this->model_tool_menu->getMenus();
 
-			$results['catalog'] = [
+			$stack = [];
+
+			foreach ($results as $code => $result) {
+				if (!array_key_exists($result['parent'], $stack)) {
+					$menu[$result['parent']] = &$stack[$result['parent']];
+				}
+
+				if (!array_key_exists($code, $stack)) {
+					$stack[$code] = ['children' => []] + $result;
+
+					if ($result['type'] == 'link') {
+						$stack[$code]['href'] = $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']);
+					}
+				} else {
+					$stack[$code] = array_merge($result, $stack[$code]);
+				}
+
+				$stack[$result['parent']]['children'][$code] = &$stack[$code];
+
+				unset($menu[$code]);
+			}
+
+			unset($stack);
+
+			$paths = [];
+
+			$paths[] = [
 				'code'     => 'catalog',
 				'icon'     => 'fa-solid fa-tag',
 				'name'     => $this->language->get('text_catalog'),
@@ -44,7 +68,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$results['cms'] = [
+			$paths[] = [
 				'code'     => 'cms',
 				'icon'     => 'fa-solid fa-newspaper',
 				'name'     => $this->language->get('text_cms'),
@@ -53,7 +77,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$results['extension'] = [
+			$paths[] = [
 				'code'     => 'extension',
 				'icon'     => 'fa-solid fa-puzzle-piece',
 				'name'     => $this->language->get('text_extension'),
@@ -62,7 +86,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$results['design'] = [
+			$paths[] = [
 				'code'     => 'design',
 				'icon'     => 'fa-solid fa-tag',
 				'name'     => $this->language->get('text_design'),
@@ -71,7 +95,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$results['sale'] = [
+			$paths[] = [
 				'code'     => 'sale',
 				'icon'     => 'fa-solid fa-shopping-cart',
 				'name'     => $this->language->get('text_sale'),
@@ -80,7 +104,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$results['customer'] = [
+			$paths[] = [
 				'code'     => 'customer',
 				'icon'     => 'fa-solid fa-user',
 				'name'     => $this->language->get('text_customer'),
@@ -89,7 +113,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$results['marketing'] = [
+			$paths[] = [
 				'code'     => 'marketing',
 				'icon'     => 'fa-solid fa-share-alt',
 				'name'     => $this->language->get('text_marketing'),
@@ -98,7 +122,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$results['system'] = [
+			$paths[] = [
 				'code'     => 'system',
 				'icon'     => 'fa-solid fa-cog',
 				'name'     => $this->language->get('text_system'),
@@ -107,7 +131,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$results['report'] = [
+			$paths[] = [
 				'code'     => 'report',
 				'icon'     => 'fa-solid fa-chart-bar',
 				'name'     => $this->language->get('text_reports'),
@@ -116,27 +140,19 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			foreach ($results as $result) {
-				if (!array_key_exists($result['code'], $data['menus'])) {
-					$data['menus'][$result['code']] = $result;
+			foreach ($paths as $path) {
+				if (isset($menu[$path['code']])) {
+					$children = $menu[$path['code']]['children'];
 
-					if ($result['type'] == 'link') {
-						$data['menus'][$result['code']]['href'] = $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']);
+					if ($children) {
+						$data['menus'][] = ['children' => $children] + $path;
 					}
-				} else {
-					$data['menus'][$result['code']] = array_merge($data['menus'][$result['code']], $result);
-				}
-
-				// add to parent
-				if ($result['parent']) {
-					$data['menus'][$result['parent']]['children'][$result['code']] = $data['menus'][$result['code']];
-
-					unset($data['menus'][$result['code']]);
 				}
 			}
 
-			// Anti-Fraud
+
 			/*
+			// Anti-Fraud
 			$fraud = [];
 
 			$this->load->model('setting/extension');
@@ -166,7 +182,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 			*/
 
-
 			/*
 			if ($this->user->hasPermission('access', $result['route'])) {
 				$catalog[] = [
@@ -175,87 +190,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 					'children' => []
 				];
 			}
-
-			// Attributes
-			$attribute = [];
-
-			if ($this->user->hasPermission('access', 'catalog/attribute')) {
-				$attribute[] = [
-					'name'     => $this->language->get('text_attribute'),
-					'href'     => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/attribute_group')) {
-				$attribute[] = [
-					'name'     => $this->language->get('text_attribute_group'),
-					'href'     => $this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($attribute) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_attribute'),
-					'href'     => '',
-					'children' => $attribute
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/option')) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_option'),
-					'href'     => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/manufacturer')) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_manufacturer'),
-					'href'     => $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/download')) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_download'),
-					'href'     => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/review')) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_review'),
-					'href'     => $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/information')) {
-				$catalog[] = [
-					'name'     => $this->language->get('text_information'),
-					'href'     => $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($catalog) {
-				$data['menus'][] = [
-					'id'       => 'menu-catalog',
-					'icon'     => 'fa-solid fa-tag',
-					'name'     => $this->language->get('text_catalog'),
-					'href'     => '',
-					'children' => $catalog
-				];
-			}
-
-
-
-
 
 
 
@@ -272,58 +206,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 
 			// Users
-
-
 			// Localisation
-			$localisation = [];
-
-			if ($this->user->hasPermission('access', 'localisation/location')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_location'),
-					'href'     => $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/language')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_language'),
-					'href'     => $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/currency')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_currency'),
-					'href'     => $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/identifier')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_identifier'),
-					'href'     => $this->url->link('localisation/identifier', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/stock_status')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_stock_status'),
-					'href'     => $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
-			if ($this->user->hasPermission('access', 'localisation/order_status')) {
-				$localisation[] = [
-					'name'     => $this->language->get('text_order_status'),
-					'href'     => $this->url->link('localisation/order_status', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
 
 			if ($this->user->hasPermission('access', 'localisation/subscription_status')) {
 				$localisation[] = [
@@ -502,8 +385,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-
-
 			$report = [];
 
 			if ($this->user->hasPermission('access', 'report/report')) {
@@ -539,7 +420,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 					'children' => $report
 				];
 			}
-	*/
+			*/
 
 			// Stats
 			if ($this->user->hasPermission('access', 'report/statistics')) {

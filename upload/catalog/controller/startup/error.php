@@ -34,7 +34,7 @@ class Error extends \Opencart\System\Engine\Controller {
 			return false;
 		}
 
-		throw new \Exception($message . ' in ' . $file . ' on line ' . $line, $code);
+		throw new \ErrorException($message, 0, $code, $file, $line);
 
 		return true;
 	}
@@ -46,13 +46,15 @@ class Error extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function exception(\Throwable $e): void {
+	public function exception(object $e): void {
+		$message = $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
+
 		if ($this->config->get('config_error_log')) {
-			$this->log->write($e->getMessage());
+			$this->log->write($message);
 		}
 
 		if ($this->config->get('config_error_display')) {
-			echo $e->getMessage();
+			echo $message;
 		} else {
 			header('Location: ' . $this->config->get('error_page'));
 			exit();

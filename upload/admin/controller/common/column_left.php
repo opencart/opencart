@@ -27,38 +27,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'children' => []
 			];
 
-			$menu = [];
-
-			$this->load->model('tool/menu');
-
-			$results = $this->model_tool_menu->getMenus();
-
-			$stack = [];
-
-			foreach ($results as $code => $result) {
-				if ($result['type'] == 'dropdown' || $this->user->hasPermission('access', $result['route'])) {
-					if (!array_key_exists($result['parent'], $stack)) {
-						$menu[$result['parent']] = &$stack[$result['parent']];
-					}
-
-					if (!array_key_exists($code, $stack)) {
-						$stack[$code] = ['children' => []] + $result;
-
-						if ($result['type'] == 'link') {
-							$stack[$code]['href'] = $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']);
-						}
-					} else {
-						$stack[$code] = array_merge($result, $stack[$code]);
-					}
-
-					$stack[$result['parent']]['children'][$code] = &$stack[$code];
-
-					unset($menu[$code]);
-				}
-			}
-
-			unset($stack);
-
 			$paths = [];
 
 			$paths[] = [
@@ -132,6 +100,36 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				'type'     => 'dropdown',
 				'children' => []
 			];
+
+			$menu = [];
+
+			$this->load->model('tool/menu');
+
+			$results = $this->model_tool_menu->getMenus();
+
+			$stack = [];
+
+			foreach ($results as $code => $result) {
+				if ($result['type'] == 'link') {
+					$result['href']  = $this->url->link($result['route'], 'user_token=' . $this->session->data['user_token']);
+				}
+
+				if (!array_key_exists($result['parent'], $stack)) {
+					$menu[$result['parent']] = &$stack[$result['parent']];
+				}
+
+				if (!array_key_exists($code, $stack)) {
+					$stack[$code] = ['children' => []] + $result;
+				} else {
+					$stack[$code] = array_merge($result, $stack[$code]);
+				}
+
+				$stack[$result['parent']]['children'][$code] = &$stack[$code];
+
+				unset($menu[$code]);
+			}
+
+			unset($stack);
 
 			foreach ($paths as $path) {
 				if (isset($menu[$path['code']])) {

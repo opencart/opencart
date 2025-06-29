@@ -64,32 +64,6 @@ class Menu extends \Opencart\System\Engine\Controller {
 	public function getList(): string {
 		$data['action'] = $this->url->link('tool/menu.list', 'user_token=' . $this->session->data['user_token']);
 
-		$menu = [];
-
-		$stack = [];
-
-		$this->load->model('tool/menu');
-
-		$results = $this->model_tool_menu->getMenus();
-
-		foreach ($results as $code => $result) {
-			if (!array_key_exists($result['parent'], $stack)) {
-				$menu[$result['parent']] = &$stack[$result['parent']];
-			}
-
-			if (!array_key_exists($code, $stack)) {
-				$stack[$code] = $result + ['children' => []];
-			} else {
-				$stack[$code] = array_merge($result, $stack[$code]);
-			}
-
-			$stack[$result['parent']]['children'][$code] = &$stack[$code];
-
-			unset($menu[$code]);
-		}
-
-		unset($stack);
-
 		$paths = [
 			'catalog',
 			'cms',
@@ -101,6 +75,32 @@ class Menu extends \Opencart\System\Engine\Controller {
 			'system',
 			'report'
 		];
+
+		$menu = [];
+
+		$this->load->model('tool/menu');
+
+		$results = $this->model_tool_menu->getMenus();
+
+		$stack = [];
+
+		foreach ($results as $code => $result) {
+			if (!array_key_exists($result['parent'], $stack)) {
+				$menu[$result['parent']] = &$stack[$result['parent']];
+			}
+
+			if (!array_key_exists($code, $stack)) {
+				$stack[$code] = ['children' => []] + $result;
+			} else {
+				$stack[$code] = array_merge($result, $stack[$code]);
+			}
+
+			$stack[$result['parent']]['children'][$code] = &$stack[$code];
+
+			unset($menu[$code]);
+		}
+
+		unset($stack);
 
 		foreach ($paths as $path) {
 			if (isset($menu[$path])) {
@@ -209,6 +209,18 @@ class Menu extends \Opencart\System\Engine\Controller {
 			$data['route'] = '';
 		}
 
+		$paths = [
+			'catalog',
+			'cms',
+			'extension',
+			'design',
+			'sale',
+			'customer',
+			'marketing',
+			'system',
+			'report'
+		];
+
 		$menu = [];
 
 		$results = $this->model_tool_menu->getMenus();
@@ -234,18 +246,6 @@ class Menu extends \Opencart\System\Engine\Controller {
 		}
 
 		unset($stack);
-
-		$paths = [
-			'catalog',
-			'cms',
-			'extension',
-			'design',
-			'sale',
-			'customer',
-			'marketing',
-			'system',
-			'report'
-		];
 
 		foreach ($paths as $path) {
 			$data['menus'][] = [
@@ -342,26 +342,34 @@ class Menu extends \Opencart\System\Engine\Controller {
 			$json['error']['route'] = $this->language->get('error_route');
 		}
 
-		$previous = [];
+		if ($menu_info) {
+			$menu = [];
 
-		$results = $this->model_tool_menu->getMenus();
+			$results = $this->model_tool_menu->getMenus();
 
-		$parent	= $menu_info['code'];
-
-		while ($parent) {
-			if (isset($results[$parent])) {
-				$parent = $results[$parent]['parent'];
-
-				$previous[] = $parent;
-			} else {
-				$parent = [];
+			foreach ($results as $result) {
+				$menu[$result['parent']]['children'][] = $result['code'];
 			}
-		}
 
-		print_r($previous);
+			$protect = [];
 
-		if (in_array($parent, $previous)) {
+			$children = $menu[$menu_info['code']]['children'];
 
+			while ($children) {
+				$next = array_shift($children);
+
+				if (isset($menu[$next])) {
+					$protect[] = $next;
+
+					foreach ($menu[$next]['children'] as $value) {
+						$children[] = $value;
+					}
+				}
+			}
+
+			if (in_array($post_info['parent'], $protect)) {
+				$json['error']['parent'] = $this->language->get('error_parent');
+			}
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {
@@ -370,9 +378,9 @@ class Menu extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!$post_info['menu_id']) {
-				$json['menu_id'] = $this->model_tool_menu->addMenu($post_info);
+			  $json['menu_id'] = $this->model_tool_menu->addMenu($post_info);
 			} else {
-				$this->model_tool_menu->editMenu($post_info['menu_id'], $post_info);
+			  $this->model_tool_menu->editMenu($post_info['menu_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

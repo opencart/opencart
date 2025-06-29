@@ -44,4 +44,4 @@ $_['error_name']        = 'Menu Name must be between 1 and 64 characters!';
 $_['error_code']        = 'Code must be between 1 and 64 characters!';
 $_['error_exists']      = 'Code already in use!';
 $_['error_route']       = 'Route required!';
-$_['error_parent']      = 'You can not set a parent to !';
+$_['error_parent']      = 'You can not set parent to a child!';

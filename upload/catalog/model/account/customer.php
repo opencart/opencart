@@ -267,16 +267,16 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/customer');
 	 *
-	 * $this->model_account_customer->deleteHistory($customer_id);
+	 * $this->model_account_customer->deleteHistories($customer_id);
 	 */
-	public function deleteHistory(int $customer_id): void {
+	public function deleteHistories(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_history` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**
-	 * Delete Ip
+	 * Delete Ips
 	 *
-	 * Delete customer ip record in the database.
+	 * Delete customer ip records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 *
@@ -286,9 +286,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/customer');
 	 *
-	 * $this->model_account_customer->deleteIp($customer_id);
+	 * $this->model_account_customer->deleteIps($customer_id);
 	 */
-	public function deleteIp(int $customer_id): void {
+	public function deleteIps(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_ip` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
@@ -480,9 +480,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Customer Authorize
+	 * Delete Customer Authorizes
 	 *
-	 * Delete customer authorize record in the database.
+	 * Delete customer authorize records in the database.
 	 *
 	 * @param int $customer_id           primary key of the customer record
 	 * @param int $customer_authorize_id primary key of the customer authorize record
@@ -493,9 +493,9 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/customer');
 	 *
-	 * $this->model_account_customer->deleteAuthorize($customer_id, $customer_authorize_id);
+	 * $this->model_account_customer->deleteAuthorizes($customer_id, $customer_authorize_id);
 	 */
-	public function deleteAuthorize(int $customer_id, int $customer_authorize_id = 0): void {
+	public function deleteAuthorizes(int $customer_id, int $customer_authorize_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		if ($customer_authorize_id) {
@@ -519,7 +519,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/customer');
 	 *
-	 * $this->model_account_customer->deleteAuthorizes($customer_id);
+	 * $this->model_account_customer->deleteAuthorizeByToken($customer_id);
 	 */
 	public function deleteAuthorizeByToken(int $customer_id, string $token): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_authorize` WHERE `customer_id` = '" . (int)$customer_id . "' AND `token` = '" . $this->db->escape($token) . "'");

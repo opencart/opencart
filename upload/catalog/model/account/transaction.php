@@ -31,9 +31,9 @@ class Transaction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Transaction
+	 * Delete Transactions
 	 *
-	 * Delete customer transaction record in the database.
+	 * Delete customer transaction records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $order_id    primary key of the order record
@@ -44,9 +44,9 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/transaction');
 	 *
-	 * $this->model_account_transaction->deleteTransaction($customer_id, $order_id);
+	 * $this->model_account_transaction->deleteTransactions($customer_id, $order_id);
 	 */
-	public function deleteTransaction(int $customer_id, int $order_id = 0): void {
+	public function deleteTransactions(int $customer_id, int $order_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		if ($order_id) {

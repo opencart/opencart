@@ -151,7 +151,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 					'remove'  => $this->url->link('account/wishlist.remove', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id'] . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''))
 				] + $product_info;
 			} else {
-				$this->model_account_wishlist->deleteWishlist($this->customer->getId(), $result['product_id']);
+				$this->model_account_wishlist->deleteWishlists($this->customer->getId(), $result['product_id']);
 			}
 		}
 
@@ -239,7 +239,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 			// Wishlist
 			$this->load->model('account/wishlist');
 
-			$this->model_account_wishlist->deleteWishlist($this->customer->getId(), $product_id);
+			$this->model_account_wishlist->deleteWishlists($this->customer->getId(), $product_id);
 
 			$json['success'] = $this->language->get('text_remove');
 		}

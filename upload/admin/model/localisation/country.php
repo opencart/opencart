@@ -521,7 +521,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the information store records in the database.
 	 *
-	 * @param int $information_id primary key of the store record
+	 * @param int $country_id primary key of the store record
 	 *
 	 * @return array<int, int> store records that have store ID
 	 *
@@ -529,7 +529,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/information');
 	 *
-	 * $stores = $this->model_catalog_information->getStores($istore_id);
+	 * $stores = $this->model_catalog_information->getStores($country_id);
 	 */
 	public function getStores(int $country_id): array {
 		$country_store_data = [];

@@ -345,7 +345,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 *
 	 * Edit review status record in the database.
 	 *
-	 * @param int  $product_id primary key of the product record
+	 * @param int  $review_id primary key of the product record
 	 * @param bool $status
 	 *
 	 * @return void

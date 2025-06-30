@@ -133,8 +133,6 @@ class Menu extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the menu records in the database.
 	 *
-	 * @param array<string, mixed> $data array of filters
-	 *
 	 * @return array<int, array<string, mixed>> menu records
 	 *
 	 * @example

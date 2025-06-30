@@ -589,7 +589,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Delete Token By Code
 	 *
 	 * @param string $code
-	 * @param int    $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 *
@@ -597,7 +596,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/customer');
 	 *
-	 * $this->model_account_customer->deleteToken($customer_id);
+	 * $this->model_account_customer->deleteTokenByCode($code);
 	 */
 	public function deleteTokenByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `code` = '" . $this->db->escape($code) . "'");

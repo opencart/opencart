@@ -882,7 +882,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'code'             => 'tax_class',
 					'type'             => 'link',
 					'route'            => 'localisation/tax_class',
-					'parent'           => 'localisation',
+					'parent'           => 'tax',
 					'sort_order'       => 1
 				];
 
@@ -895,7 +895,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'code'             => 'tax_rate',
 					'type'             => 'link',
 					'route'            => 'localisation/tax_rate',
-					'parent'           => 'localisation',
+					'parent'           => 'tax',
 					'sort_order'       => 2
 				];
 

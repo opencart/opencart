@@ -120,7 +120,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 				if (!array_key_exists($code, $stack)) {
 					$stack[$code] = ['children' => []] + $result;
-				} else {
+				} elseif ($stack[$code]) {
 					$stack[$code] = array_merge($result, $stack[$code]);
 				}
 

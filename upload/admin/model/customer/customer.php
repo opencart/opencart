@@ -1374,7 +1374,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Get the record of the customer authorize record in the database.
 	 *
 	 * @param int $customer_authorize_id
-	 * @param int $user_authorize_id     primary key of the user authorize record
 	 *
 	 * @return array<string, mixed> authorize record that has user authorize ID
 	 *
@@ -1489,7 +1488,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * Delete Token By Code
 	 *
 	 * @param string $code
-	 * @param int    $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 *

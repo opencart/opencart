@@ -18,8 +18,11 @@ namespace Opencart\Install\Model\Upgrade;
 class Upgrade extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Record
-	 * 
-	 * @return void
+	 *
+	 * @param $table
+	 * @param $data
+	 *
+	 * @return int
 	 */
 	public function addRecord($table, $data): int {
 		$implode = [];
@@ -56,9 +59,9 @@ class Upgrade extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Get Records
-	 * 
+	 *
 	 * @param string $table
-	 * 
+	 *
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getRecords(string $table): array {
@@ -69,9 +72,9 @@ class Upgrade extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Has Table
-	 * 
+	 *
 	 * @param string $table
-	 * 
+	 *
 	 * @return int
 	 */
 	public function hasTable(string $table): int {
@@ -82,10 +85,10 @@ class Upgrade extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Has Field
-	 * 
+	 *
 	 * @param string $table
 	 * @param string $field
-	 * 
+	 *
 	 * @return int
 	 */
 	public function hasField(string $table, string $field): int {
@@ -96,9 +99,9 @@ class Upgrade extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Drop Table
-	 * 
+	 *
 	 * @param string $table
-	 * 
+	 *
 	 * @return void
 	 */
 	public function dropTable(string $table): void {
@@ -109,10 +112,10 @@ class Upgrade extends \Opencart\System\Engine\Model {
 
 	/**
 	 * Drop Field
-	 * 
+	 *
 	 * @param string $table
 	 * @param string $field
-	 * 
+	 *
 	 * @return void
 	 */
 	public function dropField(string $table, string $field): void {

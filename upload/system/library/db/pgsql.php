@@ -21,6 +21,18 @@ class PgSQL {
 	 * @param string $port
 	 */
 	public function __construct(array $option = []) {
+		$required = [
+			'hostname',
+			'username',
+			'database'
+		];
+
+		foreach ($required as $key) {
+			if (empty($option[$key])) {
+				throw new \Exception('Error: Database ' . $key . ' required!');
+			}
+		}
+
 		if (isset($option['port'])) {
 			$port = $option['port'];
 		} else {
@@ -30,7 +42,7 @@ class PgSQL {
 		try {
 			$pg = @pg_connect('host=' . $option['hostname'] . ' port=' . $port . ' user=' . $option['username'] . ' password=' . $option['password'] . ' dbname=' . $option['database'] . ' options=\'--client_encoding=UTF8\' ');
 		} catch (\Exception $e) {
-			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
+			throw new \Exception('Error: Could not connect to the database please make sure the database server, username and password is correct!');
 		}
 
 		if ($pg) {

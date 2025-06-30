@@ -29,6 +29,18 @@ class PDO {
 	 * @param string $port
 	 */
 	public function __construct(array $option = []) {
+		$required = [
+			'hostname',
+			'username',
+			'database'
+		];
+
+		foreach ($required as $key) {
+			if (empty($option[$key])) {
+				throw new \Exception('Error: Database ' . $key . ' required!');
+			}
+		}
+
 		if (isset($option['port'])) {
 			$port = $option['port'];
 		} else {
@@ -38,7 +50,7 @@ class PDO {
 		try {
 			$pdo = new \PDO('mysql:host=' . $option['hostname'] . ';port=' . $port . ';dbname=' . $option['database'] . ';charset=utf8mb4', $option['username'], $option['password'], [\PDO::ATTR_PERSISTENT => false, \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci']);
 		} catch (\PDOException $e) {
-			throw new \Exception('Error: Could not make a database link using ' . $option['username'] . '@' . $option['hostname'] . '!');
+			throw new \Exception('Error: Could not connect to the database please make sure the database server, username and password is correct!');
 		}
 
 		$this->db = $pdo;

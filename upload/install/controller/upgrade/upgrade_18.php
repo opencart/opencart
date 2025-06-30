@@ -20,11 +20,10 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 			$menu_query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "menu`");
 
 			if (!$menu_query->row['total']) {
-				$menu_data = [];
+				$results = [];
 
 				// Catalog
-				$menu_data[] = [
-					'menu_id'    => 1,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Categories'
@@ -37,8 +36,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 2,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Products'
@@ -51,8 +49,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 3,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Subscription Plans'
@@ -66,8 +63,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 				];
 
 				// Filters
-				$menu_data[] = [
-					'menu_id'          => 4,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Filters'
@@ -80,8 +76,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 4
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 5,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Filters'
@@ -94,8 +89,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 6,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Filter Groups'
@@ -109,8 +103,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 				];
 
 				// Attributes
-				$menu_data[] = [
-					'menu_id'          => 7,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Attributes'
@@ -123,8 +116,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 5
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 8,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Attributes'
@@ -137,8 +129,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 9,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Attribute Group'
@@ -151,8 +142,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 10,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Options'
@@ -165,8 +155,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 6
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 11,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Manufacturers'
@@ -179,8 +168,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 7
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 12,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Downloads'
@@ -193,8 +181,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 8
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 13,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Reviews'
@@ -207,8 +194,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 9
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 14,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Informations'
@@ -222,8 +208,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 				];
 
 				// CMS
-				$menu_data[] = [
-					'menu_id'          => 15,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Topics'
@@ -236,8 +221,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 16,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Articles'
@@ -250,8 +234,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 17,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Comments'
@@ -264,8 +247,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 3
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 18,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Anti-Spam'
@@ -279,8 +261,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 				];
 
 				// Extensions
-				$menu_data[] = [
-					'menu_id'          => 19,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Marketplace'
@@ -293,8 +274,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 20,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Installer'
@@ -307,8 +287,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 21,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Extensions'
@@ -321,8 +300,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 3
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 22,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Modifications'
@@ -335,8 +313,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 4
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 23,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Task'
@@ -349,8 +326,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 5
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 24,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Static Site Rendering'
@@ -363,8 +339,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 6
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 25,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Startup'
@@ -377,8 +352,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 7
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 26,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Events'
@@ -391,8 +365,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 8
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 27,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'CRON Jobs'
@@ -406,8 +379,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 				];
 
 				// Design
-				$menu_data[] = [
-					'menu_id'          => 28,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Layouts'
@@ -420,8 +392,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 29,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Theme Editor'
@@ -434,8 +405,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 30,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Translation'
@@ -448,8 +418,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 3
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 31,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Banner'
@@ -462,8 +431,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 4
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 32,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'SEO URL'
@@ -476,8 +444,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 5
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 33,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Orders'
@@ -490,8 +457,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 34,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Subscription'
@@ -504,8 +470,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 35,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Returns'
@@ -518,8 +483,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 3
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 36,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Customers'
@@ -532,8 +496,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 37,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Customer Groups'
@@ -546,8 +509,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 38,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Customer Approvals'
@@ -560,8 +522,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 3
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 39,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'GDPR'
@@ -574,8 +535,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 4
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 40,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Custom Field'
@@ -588,8 +548,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 5
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 41,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Affiliate'
@@ -602,8 +561,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 42,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Marketing'
@@ -616,8 +574,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 43,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Coupons'
@@ -630,8 +587,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 3
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 44,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Mail'
@@ -644,8 +600,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 4
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 45,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Settings'
@@ -658,8 +613,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 46,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Users'
@@ -672,8 +626,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 47,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Users'
@@ -686,8 +639,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 48,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'User Groups'
@@ -700,8 +652,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 49,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'API'
@@ -714,8 +665,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 50,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Localisation'
@@ -728,8 +678,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 3
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 51,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Store Locations'
@@ -742,8 +691,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 52,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Languages'
@@ -756,8 +704,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 53,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Currencies'
@@ -770,8 +717,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 3
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 54,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Identifier'
@@ -784,8 +730,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 4
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 55,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Stock Status'
@@ -798,8 +743,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 5
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 56,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Order Status'
@@ -812,8 +756,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 6
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 57,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Subscription Status'
@@ -826,8 +769,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 7
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 58,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Returns'
@@ -840,11 +782,10 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 8
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 59,
+				$results[] = [
 					'menu_description' => [
 						1 => [
-							'name' => 'Return Status'
+							'name' => 'Return Statuses'
 						]
 					],
 					'code'             => 'return_status',
@@ -854,8 +795,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 60,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Return Actions'
@@ -868,11 +808,10 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 61,
+				$results[] = [
 					'menu_description' => [
 						1 => [
-							'name' => 'Return Reason'
+							'name' => 'Return Reasons'
 						]
 					],
 					'code'             => 'return_reason',
@@ -882,8 +821,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 3
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 62,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Countries'
@@ -896,8 +834,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 9
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 63,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Zones'
@@ -910,8 +847,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 10
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 64,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Geo Zones'
@@ -924,8 +860,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 11
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 65,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Taxes'
@@ -938,8 +873,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 12
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 66,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Tax Classes'
@@ -952,8 +886,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 67,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Tax Rates'
@@ -966,8 +899,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 68,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Length Classes'
@@ -980,8 +912,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 13
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 69,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Weight Classes'
@@ -994,8 +925,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 14
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 70,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Address Format'
@@ -1008,8 +938,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 15
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 71,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Maintenance'
@@ -1022,8 +951,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 4
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 72,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Admin Menu'
@@ -1036,8 +964,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 1
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 73,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Upgrade'
@@ -1050,8 +977,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 2
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 74,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Backup &amp; Restore'
@@ -1064,8 +990,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 4
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 75,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Uploads'
@@ -1078,8 +1003,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 5
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 76,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Error Log'
@@ -1092,8 +1016,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'sort_order'       => 6
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 77,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Reports'
@@ -1102,12 +1025,11 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'code'             => 'report_2',
 					'type'             => 'link',
 					'route'            => 'tool/report',
-					'parent'           => 'maintenance',
+					'parent'           => 'report',
 					'sort_order'       => 7
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 78,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Who\'s Online'
@@ -1116,12 +1038,11 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'code'             => 'online',
 					'type'             => 'link',
 					'route'            => 'tool/online',
-					'parent'           => 'maintenance',
+					'parent'           => 'report',
 					'sort_order'       => 8
 				];
 
-				$menu_data[] = [
-					'menu_id'          => 79,
+				$results[] = [
 					'menu_description' => [
 						1 => [
 							'name' => 'Statistics'
@@ -1130,12 +1051,29 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					'code'             => 'statistics',
 					'type'             => 'link',
 					'route'            => 'tool/statistics',
-					'parent'           => 'maintenance',
+					'parent'           => 'report',
 					'sort_order'       => 9
 				];
 
+				$this->load->model('upgrade/upgrade');
 
+				foreach ($results as $result) {
+					$menu_description = $result['menu_description'];
 
+					unset($result['menu_description']);
+
+					$menu_id = $this->model_upgrade_upgrade->addRecord('menu', $result);
+
+					foreach ($menu_description as $key => $value) {
+						$menu_description_data = [
+							'menu_id'     => $menu_id,
+							'language_id' => $key,
+							'name'        => $value['name']
+						];
+
+						$this->model_upgrade_upgrade->addRecord('menu_description', $menu_description_data);
+					}
+				}
 			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());

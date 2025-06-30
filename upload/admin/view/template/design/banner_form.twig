@@ -59,7 +59,10 @@
                             <input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" id="input-image-{{ language.language_id }}-{{ image_row }}-title" class="form-control"/>
                             <div id="error-image-{{ language.language_id }}-{{ image_row }}-title" class="invalid-feedback"></div>
                           </td>
-                          <td style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" id="input-image-{{ language.language_id }}-{{ image_row }}-link" class="form-control"/></td>
+                          <td style="width: 30%;">
+                            <input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" id="input-image-{{ language.language_id }}-{{ image_row }}-link" class="form-control"/>
+                            <div id="error-image-{{ language.language_id }}-{{ image_row }}-link" class="invalid-feedback"></div>
+                          </td>
                           <td class="text-center">
                             <div class="border rounded d-block" style="max-width: 300px;">
                               <img src="{{ banner_image.thumb }}" alt="" title="" id="thumb-image-{{ language.language_id }}-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>

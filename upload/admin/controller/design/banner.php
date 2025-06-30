@@ -311,6 +311,10 @@ class Banner extends \Opencart\System\Engine\Controller {
 					if (!oc_validate_length($value['title'], 2, 64)) {
 						$json['error']['image_' . $language_id . '_' . $key . '_title'] = $this->language->get('error_title');
 					}
+
+					if (!empty($value['link']) && !oc_validate_url($value['link'])) {
+						$json['error']['image_' . $language_id . '_' . $key . '_link'] = $this->language->get('error_link');
+					}
 				}
 			}
 		}

@@ -143,7 +143,7 @@ if (!function_exists('str_contains')) {
 // File Handling Functions
 
 // 1. Reading a file
-function oc_file_read($file) {
+function oc_file_read($file): string {
 	if (is_file($file)) {
 		return file_get_contents($file);
 	}
@@ -152,19 +152,18 @@ function oc_file_read($file) {
 }
 
 // 2. Writing to a file
-function oc_file_write($file, $content) {
-	return file_put_contents($file, $content) !== false;
+function oc_file_write($file, $content, $append = false): bool {
+	if ($append) {
+		return file_put_contents($file, $content) !== false;
+	} else {
+		return file_put_contents($file, $content, FILE_APPEND) !== false;
+	}
 }
 
-// 3. Appending to a file
-function oc_file_append($filename, $content) {
-	return file_put_contents($filename, $content, FILE_APPEND) !== false;
-}
-
-// 6. Deleting a file
-function oc_file_delete($path) {
-	if (is_file($path)) {
-		return unlink($path);
+// 3. Deleting a file
+function oc_file_delete($file): bool {
+	if (is_file($file)) {
+		return unlink($file);
 	}
 
 	return false;
@@ -172,8 +171,46 @@ function oc_file_delete($path) {
 
 // Directory Handling Functions
 
-// 1. Creating a directory
-function oc_directory_create($path, $permissions = 0777) {
+// 1. Reading directory contents
+function oc_directory_read($directory, $recursive = false, $regex = '') {
+	$files = [];
+
+	if (is_dir($directory)) {
+		$stack = [rtrim($directory, '/')];
+
+		while (count($stack) != 0) {
+			$next = array_shift($stack);
+
+			$results = scandir($next);
+
+			foreach ($results as $result) {
+				if ($result == '.' || $result == '..') {
+					continue;
+				}
+
+				$file = $next . '/' . $result;
+
+				if (is_dir($file) && $recursive) {
+					$stack[] = $file;
+				}
+
+				// Add the file to the files to be deleted array
+				if ($regex && !preg_match($regex, $file)) {
+					continue;
+				}
+
+				$files[] = $file;
+			}
+		}
+	}
+
+	sort($files);
+
+	return $files;
+}
+
+// 2. Creating a directory
+function oc_directory_create($path, $name, $permission = 0777) {
 	$path_new = '';
 
 	$directories = explode('/', rtrim($path, '/'));
@@ -186,7 +223,7 @@ function oc_directory_create($path, $permissions = 0777) {
 		}
 
 		// To fix storage location
-		if (!is_dir($path_new . '/') && !mkdir($path_new . '/', $permissions)) {
+		if (!is_dir($path_new . '/') && !mkdir($path_new . '/', $permission)) {
 			return false;
 		}
 	}
@@ -194,58 +231,145 @@ function oc_directory_create($path, $permissions = 0777) {
 	return true;
 }
 
-// 2. Removing a directory
-function oc_directory_remove($path) {
+// 3. Removing a directory
+function oc_directory_delete($path) {
 	$files = [];
 
-	// Make path into an array
-	$directory = [$path];
+	if (is_dir($path)) {
+		// Make path into an array
+		$directory = [$path];
 
-	// While the path array is still populated keep looping through
-	while (count($directory) != 0) {
-		$next = array_shift($directory);
+		// While the path array is still populated keep looping through
+		while (count($directory) != 0) {
+			$next = array_shift($directory);
 
-		if (is_dir($next)) {
-			foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-				// If directory add to path array
-				$directory[] = $file;
+			if (is_dir($next)) {
+				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+					// If directory add to path array
+					$directory[] = $file;
+				}
 			}
+
+			// Add the file to the files to be deleted array
+			$files[] = $next;
 		}
 
-		// Add the file to the files to be deleted array
-		$files[] = $next;
-	}
-
-	// Reverse sort the file array
-	rsort($files);
-
-	foreach ($files as $file) {
-		// If file just delete
-		if (is_file($file)) {
-			unlink($file);
-		}
-
-		// If directory use the remove directory function
-		if (is_dir($file)) {
-			rmdir($file);
-		}
-	}
-
-	return true;
-}
-
-// 3. Reading directory contents
-function oc_directory_read($directory) {
-	$contents = [];
-
-	if (is_dir($directory)) {
-		$files = scandir($directory);
+		// Reverse sort the file array
+		rsort($files);
 
 		foreach ($files as $file) {
-			if ($file != '.' && $file != '..') {
-				$contents[] = $file;
+			// If file just delete
+			if (is_file($file)) {
+				unlink($file);
+			}
+
+			// If directory use the remove directory function
+			if (is_dir($file)) {
+				rmdir($file);
 			}
 		}
+
+		return true;
 	}
-	return $contents;
+
+	return false;
 }
+
+/**
+ * Validate Length
+ *
+ * @param string $string
+ * @param int    $minimum
+ * @param int    $maximum
+ *
+ * @return bool
+ */
+function oc_validate_length(string $string, int $minimum, int $maximum): bool {
+	return oc_strlen(trim($string)) >= $minimum && oc_strlen(trim($string)) <= $maximum;
+}
+
+/**
+ * Validate Email
+ *
+ * @param string $email The email to validate
+ *
+ * @return bool
+ */
+function oc_validate_email(string $email): bool {
+	if (oc_strlen($email) > 96) {
+		return false;
+	}
+
+	if (oc_strrpos($email, '@') === false) {
+		return false;
+	}
+
+	if (function_exists('idn_to_ascii')) {
+		$local = oc_substr($email, 0, oc_strrpos($email, '@'));
+
+		$domain = oc_substr($email, (oc_strrpos($email, '@') + 1));
+
+		$email = $local . '@' . idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+	}
+
+	return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
+/**
+ * Validate Regular Expression
+ *
+ * @param string $string  The string to validate
+ * @param string $pattern The regular expression pattern
+ *
+ * @return bool
+ */
+function oc_validate_regex(string $string, string $pattern): bool {
+	$option = ['regexp' => html_entity_decode($pattern, ENT_QUOTES, 'UTF-8')];
+
+	return filter_var($string, FILTER_VALIDATE_REGEXP, ['options' => $option]);
+}
+
+/**
+ * Validate IP
+ *
+ * @param string $ip
+ *
+ * @return bool
+ */
+function oc_validate_ip(string $ip): bool {
+	return filter_var($ip, FILTER_VALIDATE_IP);
+}
+
+/**
+ * Validate Filename
+ *
+ * @param string $filename
+ *
+ * @return bool
+ */
+function oc_validate_filename(string $filename): bool {
+	return !preg_match('/[^a-zA-Z\p{Cyrillic}0-9\.\-\_]+/u', $filename);
+}
+
+/**
+ * Validate URL
+ *
+ * @param string $url
+ *
+ * @return bool
+ */
+function oc_validate_url(string $url): bool {
+	return filter_var($url, FILTER_VALIDATE_URL);
+}
+
+/**
+ * Validate SEO URL
+ *
+ * @param string $keyword
+ *
+ * @return bool
+ */
+function oc_validate_path(string $keyword): bool {
+	return !preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\-\_]+/u', $keyword);
+}
+

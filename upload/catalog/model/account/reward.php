@@ -31,9 +31,9 @@ class Reward extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Reward
+	 * Delete Rewards
 	 *
-	 * Delete customer reward record in the database.
+	 * Delete customer reward records in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $order_id    primary key of the order record
@@ -44,9 +44,9 @@ class Reward extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/reward');
 	 *
-	 * $this->model_account_reward->deleteReward($customer_id, $order_id);
+	 * $this->model_account_reward->deleteRewards($customer_id, $order_id);
 	 */
-	public function deleteReward(int $customer_id, int $order_id = 0): void {
+	public function deleteRewards(int $customer_id, int $order_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		if ($order_id) {

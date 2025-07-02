@@ -7379,12 +7379,11 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'args',
-				'type' => 'varchar(255)'
+				'type' => 'text'
 			],
 			[
 				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '1'
+				'type'    => 'varchar(16)'
 			],
 			[
 				'name'    => 'response',

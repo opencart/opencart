@@ -17,7 +17,7 @@ class Promotion extends \Opencart\System\Engine\Controller {
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL, 'https://www.opencart.com/index.php?route=api/install');
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);

@@ -17,7 +17,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			// Gets the latest information from opencart.com about news, updates and security.
 			curl_setopt($curl, CURLOPT_URL, OPENCART_SERVER . 'index.php?route=api/notification');
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
@@ -37,7 +37,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			if (isset($notification['notification'])) {
 				$this->load->model('tool/notification');
-				
+
 				foreach ($notification['notifications'] as $result) {
 					$notification_info = $this->model_tool_notification->addNotification($result['notification_id']);
 

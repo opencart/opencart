@@ -259,32 +259,10 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'startup/startup'
 		];
 
-		$files = [];
-
 		// Make path into an array
-		$path = [DIR_APPLICATION . 'controller/*'];
-
-		// While the path array is still populated keep looping through
-		while (count($path) != 0) {
-			$next = array_shift($path);
-
-			foreach (glob($next . '/*') as $file) {
-				// If directory add to path array
-				if (is_dir($file)) {
-					$path[] = $file;
-				}
-
-				// Add the file to the files to be deleted array
-				if (is_file($file) && substr($file, strrpos($file, '.')) == '.php') {
-					$files[] = $file;
-				}
-			}
-		}
-
-		// Sort the file array
-		sort($files);
-
 		$data['permissions'] = [];
+
+		$files = oc_directory_read(DIR_APPLICATION . 'controller/', true, '/\.php$/');
 
 		foreach ($files as $file) {
 			$controller = substr($file, strlen(DIR_APPLICATION . 'controller/'));
@@ -299,12 +277,12 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$data['extensions'] = [];
 
 		// Extension permissions
-		$results = glob(DIR_EXTENSION . '*/admin/controller/{,*/,*/*/,*/*/*/}*.php', GLOB_BRACE);
+		$files = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/.+\.php$/');
 
-		foreach ($results as $result) {
-			$path = substr($result, strlen(DIR_EXTENSION));
+		foreach ($files as $file) {
+			$controller = substr($file, strlen(DIR_EXTENSION));
 
-			$data['extensions'][] = 'extension/' . str_replace('admin/controller/', '', substr($path, 0, strrpos($path, '.')));
+			$data['extensions'][] = 'extension/' . str_replace('admin/controller/', '', substr($controller, 0, strrpos($controller, '.')));
 		}
 
 		if (isset($user_group_info['permission']['access'])) {

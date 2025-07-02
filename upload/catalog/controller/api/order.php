@@ -415,7 +415,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// 7. Validate affiliate if set
-		if (isset($thid->request->post['affiliate_id']) && !isset($this->session->data['affiliate_id'])) {
+		if (isset($this->request->post['affiliate_id']) && !isset($this->session->data['affiliate_id'])) {
 			$output['error']['affiliate'] = $this->language->get('error_affiliate');
 		}
 

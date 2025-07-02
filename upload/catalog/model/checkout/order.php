@@ -972,7 +972,7 @@ class Order extends \Opencart\System\Engine\Model {
 				if ($order_info['affiliate_id']) {
 					$this->load->model('account/transaction');
 
-					$this->model_account_transaction->deleteTransaction($order_info['customer_id'], $order_id);
+					$this->model_account_transaction->deleteTransactions($order_info['customer_id'], $order_id);
 				}
 			}
 

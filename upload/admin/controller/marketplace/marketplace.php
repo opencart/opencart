@@ -114,8 +114,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
 			$data['error_warning'] = $this->language->get('error_api');
-		} elseif (isset($response_info['error'])) {
-			$data['error_warning'] = $response_info['error'];
 		} else {
 			$data['error_warning'] = '';
 		}

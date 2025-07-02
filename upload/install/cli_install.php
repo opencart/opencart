@@ -87,6 +87,8 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 	}
 
 	throw new \ErrorException($message, 0, $code, $file, $line);
+
+	return true;
 });
 
 /**
@@ -303,10 +305,10 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 				'username' => $db_username,
 				'password' => $db_password,
 				'database' => $db_database,
-				'port' => $db_port,
-				'ssl_key' => $db_ssl_key,
+				'port'     => $db_port,
+				'ssl_key'  => $db_ssl_key,
 				'ssl_cert' => $db_ssl_cert,
-				'ssl_ca' => $db_ssl_ca
+				'ssl_ca'   => $db_ssl_ca
 			]);
 		} catch (\Exception $e) {
 			echo $e->getMessage();

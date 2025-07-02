@@ -172,7 +172,7 @@ function oc_file_delete($file): bool {
 // Directory Handling Functions
 
 // 1. Reading directory contents
-function oc_directory_read($directory, $recursive = false, $regex = '') {
+function oc_directory_read($directory, $recursive = false, $regex = ''): array {
 	$files = [];
 
 	if (is_dir($directory)) {

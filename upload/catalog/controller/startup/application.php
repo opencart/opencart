@@ -20,8 +20,5 @@ class Application extends \Opencart\System\Engine\Controller {
 
 		// Cart
 		$this->registry->set('cart', new \Opencart\System\Library\Cart\Cart($this->registry));
-
-		// Validation
-		$this->load->helper('validation');
 	}
 }

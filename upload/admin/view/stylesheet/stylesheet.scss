@@ -274,6 +274,37 @@ legend {
     }
 }
 
+.breadcrumb {
+    display: inline-block;
+    flex-wrap: nowrap;
+}
+
+.breadcrumb-item a {
+    color: #999999;
+}
+
+.breadcrumb-item:last-child a {
+    color: #1e91cf;
+}
+
+.breadcrumb-item {
+    text-shadow: 0 1px #fff;
+    font-size: .9231rem;
+    display: inline-block;
+
+    &::before {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 600;
+        font-size: .7692rem;
+        color: #BBBBBB;
+        float: none;
+    }
+
+    &+ .breadcrumb-item::before {
+        float: none;
+    }
+}
+
 #column-left {
     width: 235px;
     height: 100%;

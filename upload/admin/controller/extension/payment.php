@@ -25,7 +25,7 @@ class Payment extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/payment/*.php');
+		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/payment\/.+\.php$/');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

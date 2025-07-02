@@ -26,7 +26,7 @@ class Other extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/other/*.php');
+		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/other\/.+\.php$/');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

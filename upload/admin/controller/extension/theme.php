@@ -25,7 +25,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/theme/*.php');
+		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/theme\/.+\.php$/');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

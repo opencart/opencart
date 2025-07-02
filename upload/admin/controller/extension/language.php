@@ -25,7 +25,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/language/*.php');
+		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/language\/.+\.php$/');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

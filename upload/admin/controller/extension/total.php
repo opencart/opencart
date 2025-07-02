@@ -25,7 +25,7 @@ class Total extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/total/*.php');
+		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/total\/.+\.php$/');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

@@ -39,7 +39,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 		// Extension
 		$this->load->model('setting/extension');
 
-		$files = glob(DIR_APPLICATION . 'controller/extension/*.php');
+		$files = oc_directory_read(DIR_APPLICATION . 'controller/extension/', false, '/\.php$/');
 
 		foreach ($files as $file) {
 			$extension = basename($file, '.php');
@@ -47,9 +47,11 @@ class Extension extends \Opencart\System\Engine\Controller {
 			$this->load->language('extension/' . $extension, $extension);
 
 			if ($this->user->hasPermission('access', 'extension/' . $extension)) {
+				$extension_total = count(oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/' . $extension . '\/.+\.php$/'));
+
 				$data['categories'][] = [
 					'code' => $extension,
-					'text' => $this->language->get($extension . '_heading_title') . ' (' . count(glob(DIR_EXTENSION . '*/admin/controller/' . $extension . '/*.php')) . ')',
+					'text' => $this->language->get($extension . '_heading_title') . ' (' . $extension_total. ')',
 					'href' => $this->url->link('extension/' . $extension, 'user_token=' . $this->session->data['user_token'])
 				];
 			}

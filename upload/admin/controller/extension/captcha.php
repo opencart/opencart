@@ -26,7 +26,7 @@ class Captcha extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/captcha/*.php');
+		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/captcha\/.+\.php$/');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

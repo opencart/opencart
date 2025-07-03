@@ -25,8 +25,8 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * $task_id = $this->model_setting_task->addTask($code, $description, $cycle, $action, $status);
 	 */
-	public function addTask(string $code, string $description, string $cycle, string $action, bool $status): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "task` SET `code` = '" . $this->db->escape($code) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW()");
+	public function addTask(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "task` SET `code` = '" . $this->db->escape($data['code']) . "', `description` = '" . $this->db->escape($data['description']) . "', `action` = '" . $this->db->escape($data['action']) . "', `args` = '" . $this->db->escape(!empty($data['args']) ? json_encode($data['args']) : '') . "', `status` = '" . $this->db->escape($data['status']) . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
@@ -102,8 +102,8 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_setting_task->editStatus($task_id, $status);
 	 */
-	public function editStatus(int $task_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `status` = '" . (bool)$status . "' WHERE `task_id` = '" . (int)$task_id . "'");
+	public function editStatus(int $task_id, string $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `status` = '" . $this->db->escape($status) . "' WHERE `task_id` = '" . (int)$task_id . "'");
 	}
 
 	/**

@@ -36,9 +36,6 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$data['delete'] = $this->url->link('marketplace/task.delete', 'user_token=' . $this->session->data['user_token']);
 
-		// Example task URL
-		$data['task'] = HTTP_CATALOG . 'index.php?route=task/task';
-
 		$data['list'] = $this->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];

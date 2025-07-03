@@ -13,22 +13,23 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new cron record in the database.
 	 *
-	 * @param string $code
-	 * @param string $description
-	 * @param string $cycle
-	 * @param string $action
-	 * @param bool   $status
+	 * @param array $data
 	 *
 	 * @return int
 	 *
 	 * @example
 	 *
+	 * $cron_data = [
+	 *
+	 *
+	 * ]
+	 *
 	 * $this->load->model('setting/cron');
 	 *
-	 * $cron_id = $this->model_setting_cron->addCron($code, $description, $cycle, $action, $status);
+	 * $cron_id = $this->model_setting_cron->addCron($cron_data);
 	 */
-	public function addCron(string $code, string $description, string $cycle, string $action, bool $status): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($code) . "', `description` = '" . $this->db->escape($description) . "', `cycle` = '" . $this->db->escape($cycle) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW(), `date_modified` = NOW()");
+	public function addCron(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($data['code']) . "', `description` = '" . $this->db->escape($data['description']) . "', `cycle` = '" . $this->db->escape($data['cycle']) . "', `action` = '" . $this->db->escape($data['action']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		return $this->db->getLastId();
 	}

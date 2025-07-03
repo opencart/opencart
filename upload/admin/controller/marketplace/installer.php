@@ -87,7 +87,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		// Look for any new extensions
-		$files = glob(DIR_STORAGE . 'marketplace/*.ocmod.zip');
+		$files = oc_directory_read(DIR_STORAGE . 'marketplace/', false, '/.+\.ocmod\.zip$/');
 
 		foreach ($files as $file) {
 			$code = basename($file, '.ocmod.zip');
@@ -674,40 +674,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = [];
-
-			// Make path into an array
-			$directory = [DIR_EXTENSION . $extension_install_info['code'] . '/'];
-
-			// While the path array is still populated keep looping through
-			while (count($directory) != 0) {
-				$next = array_shift($directory);
-
-				if (is_dir($next)) {
-					foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-						// If directory add to path array
-						$directory[] = $file;
-					}
-				}
-
-				// Add the file to the files to be deleted array
-				$files[] = $next;
-			}
-
-			// Reverse sort the file array
-			rsort($files);
-
-			foreach ($files as $file) {
-				// If file just delete
-				if (is_file($file)) {
-					unlink($file);
-				}
-
-				// If directory use the remove directory function
-				if (is_dir($file)) {
-					rmdir($file);
-				}
-			}
+			oc_directory_delete(DIR_EXTENSION . $extension_install_info['code'] . '/');
 
 			// Remove extension directory and files
 			$results = $this->model_setting_extension->getPathsByExtensionInstallId($extension_install_id);
@@ -800,12 +767,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
-
-			// Remove file
-			if (is_file($file)) {
-				unlink($file);
-			}
+			oc_file_delete(DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip');
 
 			$this->model_setting_extension->deleteInstall($extension_install_id);
 

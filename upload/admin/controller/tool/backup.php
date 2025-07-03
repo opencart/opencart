@@ -84,7 +84,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		$data['histories'] = [];
 
-		$files = glob(DIR_STORAGE . 'backup/*.sql');
+		$files = oc_directory_read(DIR_STORAGE . 'backup/', false, '/.+\.sql$/');
 
 		foreach ($files as $file) {
 			$size = filesize($file);

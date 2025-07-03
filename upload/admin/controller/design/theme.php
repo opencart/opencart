@@ -184,67 +184,39 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		// We grab the files from the default template directory
-		$files = [];
-
-		$path = DIR_CATALOG . 'view/template/';
-
-		$directory = [$path];
-
-		while (count($directory) != 0) {
-			$next = array_shift($directory);
-
-			if (is_dir($next)) {
-				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					$directory[] = $file;
-				}
-			}
-
-			// Add the file to the files to be deleted array
-			$files[] = $next;
-		}
-
-		sort($files);
+		$directory = DIR_CATALOG . 'view/template/';
 
 		$data['templates'] = [];
 
+		$files = oc_directory_read($directory, true);
+
+		sort($files);
+
 		foreach ($files as $file) {
-			if (is_file($file)) {
-				$data['templates'][] = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
+			$template = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
+
+			if ($template) {
+				$data['templates'][] = $template;
 			}
 		}
 
 		// We grab the files from the extension template directory
 		$data['extensions'] = [];
 
-		$extensions = glob(DIR_EXTENSION . '*', GLOB_ONLYDIR);
+		$directories = oc_directory_read(DIR_EXTENSION, false);
 
-		foreach ($extensions as $extension) {
-			$extension = basename($extension);
+		foreach ($directories as $directory) {
+			$extension = basename($directory);
 
-			$path = DIR_EXTENSION . $extension . '/catalog/view/template';
+			$path = DIR_EXTENSION . $extension . '/catalog/view/template/';
 
-			$directory = [$path];
-
-			$files = [];
-
-			while (count($directory) != 0) {
-				$next = array_shift($directory);
-
-				if (is_dir($next)) {
-					foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-						$directory[] = $file;
-					}
-				}
-
-				// Add the file to the files to be deleted array
-				$files[] = $next;
-			}
-
-			sort($files);
+			$files = oc_directory_read($path, true, '/.+\.twig$/');
 
 			foreach ($files as $file) {
-				if (is_file($file)) {
-					$data['extensions'][] = 'extension/' . $extension . substr(substr($file, 0, strrpos($file, '.')), strlen($path));
+				$template = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
+
+				if ($template) {
+					$data['extensions'][] = 'extension/' . $extension . '/' . $template;
 				}
 			}
 		}

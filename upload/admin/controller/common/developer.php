@@ -65,13 +65,11 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = glob(DIR_CACHE . 'cache.*');
+			$files = oc_directory_read(DIR_CACHE);
 
-			if ($files) {
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					}
+			foreach ($files as $file) {
+				if (str_starts_with(basename($file), 'cache.') && is_file($file)) {
+					oc_delete_file($file);
 				}
 			}
 
@@ -97,20 +95,12 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$directories = glob(DIR_CACHE . 'template/*', GLOB_ONLYDIR);
+			$directories = oc_directory_read(DIR_CACHE . 'template/');
 
 			if ($directories) {
 				foreach ($directories as $directory) {
-					$files = glob($directory . '/*');
-
-					foreach ($files as $file) {
-						if (is_file($file)) {
-							unlink($file);
-						}
-					}
-
 					if (is_dir($directory)) {
-						rmdir($directory);
+						oc_directory_delete($directory);
 					}
 				}
 			}

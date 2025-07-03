@@ -85,7 +85,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$files = [];
 
 		// Get directories and files
-		$paths = array_diff(scandir($directory), ['..', '.']);
+		$paths = oc_directory_read($base . $directory, true);
 
 		foreach ($paths as $value) {
 			if ($filter_name && !str_starts_with($value, $filter_name)) {

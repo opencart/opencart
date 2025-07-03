@@ -297,8 +297,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls By Key Value
 	 *
-	 * @param string $key
-	 * @param string $value
+	 * @param string     $key
+	 * @param int|string $value
 	 *
 	 * @return array<int, array<int, string>>
 	 *
@@ -308,7 +308,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * $results = $this->model_design_seo_url->getSeoUrlsByKeyValue($key, $value);
 	 */
-	public function getSeoUrlsByKeyValue(string $key, string $value): array {
+	public function getSeoUrlsByKeyValue(string $key, int|string $value): array {
 		$seo_url_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'");

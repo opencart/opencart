@@ -414,7 +414,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 			$this->load->model('tool/menu');
 
 			foreach ($selected as $menu_id) {
-				$this->model_tool_menu->deleteMenu($menu_id);
+				$this->model_tool_menu->deleteMenu((int)$menu_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

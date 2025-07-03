@@ -11,7 +11,7 @@ class Related extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return ?\Opencart\System\Engine\Action
+	 * @return string
 	 */
 	public function index(): string {
 		$this->load->language('product/related');
@@ -71,6 +71,5 @@ class Related extends \Opencart\System\Engine\Controller {
 		}
 
 		return $this->load->view('product/related', $data);
-
 	}
 }

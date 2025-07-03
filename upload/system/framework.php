@@ -40,8 +40,6 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 	}
 
 	throw new \ErrorException($message, 0, $code, $file, $line);
-
-	return true;
 });
 
 // Exception Handler

@@ -9,6 +9,7 @@
           <th class="text-end"><a href="{{ sort_discount }}"{% if sort == 'discount' %} class="{{ order|lower }}"{% endif %}>{{ column_discount }}</a></th>
           <th class="d-none d-lg-table-cell"><a href="{{ sort_date_start }}"{% if sort == 'date_start' %} class="{{ order|lower }}"{% endif %}>{{ column_date_start }}</a></th>
           <th class="d-none d-lg-table-cell"><a href="{{ sort_date_end }}"{% if sort == 'date_end' %} class="{{ order|lower }}"{% endif %}>{{ column_date_end }}</a></th>
+          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -22,7 +23,12 @@
               <td class="text-end">{{ coupon.discount }}</td>
               <td class="d-none d-lg-table-cell">{{ coupon.date_start }}</td>
               <td class="d-none d-lg-table-cell">{{ coupon.date_end }}</td>
-              <td class="text-end text-nowrap"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not coupon.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-center">{% if coupon.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
+              <td class="text-end text-nowrap"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

@@ -7,6 +7,7 @@
           <th><a href="{{ sort_name }}"{% if sort == 'cfd.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
           <th><a href="{{ sort_location }}"{% if sort == 'cf.location' %} class="{{ order|lower }}"{% endif %}>{{ column_location }}</a></th>
           <th><a href="{{ sort_type }}"{% if sort == 'cf.type' %} class="{{ order|lower }}"{% endif %}>{{ column_type }}</a></th>
+          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'cf.status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th class="text-end d-none d-lg-table-cell"><a href="{{ sort_sort_order }}"{% if sort == 'cf.sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
@@ -19,13 +20,18 @@
               <td>{{ custom_field.name }}</td>
               <td>{{ custom_field.location }}</td>
               <td>{{ custom_field.type }}</td>
+              <td class="text-center">{% if custom_field.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
               <td class="text-end d-none d-lg-table-cell">{{ custom_field.sort_order }}</td>
-              <td class="text-end text-nowrap"><a href="{{ custom_field.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not custom_field.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end text-nowrap"><a href="{{ custom_field.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

@@ -7,6 +7,7 @@
       <thead>
         <tr>
           <th>{{ column_name }}</th>
+          <th class="text-center">{{ column_status }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -15,26 +16,40 @@
           {% for extension in extensions %}
             <tr{% if not extension.installed %} class="table-disabled"{% endif %}>
               <td><b>{{ extension.name }}</b></td>
+              <td class="text-center">{% if extension.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
               <td class="text-end text-nowrap">
                 {% if extension.installed %}
+
                   {% if extension.module %}
                     <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></a>
                   {% else %}
-                    <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not extension.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a>
+                    <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
                   {% endif %}
+
                 {% else %}
-                  <button type="button" class="btn btn-secondary" disabled="disabled"><i class="fa-solid fa-pencil"></i></button>
+                  <button type="button" class="btn btn-primary disabled" disabled="disabled"><i class="fa-solid fa-pencil"></i></button>
                 {% endif %}
+
                 {% if not extension.installed %}
                   <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
                 {% else %}
                   <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
                 {% endif %}
+
               </td>
             </tr>
             {% for module in extension.module %}
               <tr{% if not module.status %} class="table-disabled"{% endif %}>
                 <td>&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-folder-open"></i>&nbsp;&nbsp;&nbsp;{{ module.name }}</td>
+                <td class="text-center">{% if extension.status %}
+                    <span class="badge bg-success">{{ text_enabled }}</span>
+                  {% else %}
+                    <span class="badge bg-danger">{{ text_disabled }}</span>
+                  {% endif %}</td>
                 <td class="text-end text-nowrap"><a href="{{ module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not module.status %}btn btn-outline-secondary{% else %}btn btn-outline-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a> <a href="{{ module.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fa-regular fa-trash-can"></i></a></td>
               </tr>
             {% endfor %}

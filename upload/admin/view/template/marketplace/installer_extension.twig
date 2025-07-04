@@ -4,6 +4,7 @@
       <tr>
         <th>{{ column_name }}</th>
         <th>{{ column_version }}</th>
+        <th class="text-center">{{ column_status }}</th>
         <th>{{ column_date_added }}</th>
         <th class="text-end" style="min-width: 105px;">{{ column_action }}</th>
       </tr>
@@ -18,9 +19,14 @@
               {% else %}
                 {{ extension.name }}
               {% endif %}</td>
-            <td class="align-text-top">{{ extension.version }}</td>
-            <td class="align-text-top">{{ extension.date_added }}</td>
-            <td class="text-end align-text-top text-nowrap">
+            <td>{{ extension.version }}</td>
+            <td class="text-center">{% if extension.status %}
+                <span class="badge bg-success">{{ text_enabled }}</span>
+              {% else %}
+                <span class="badge bg-danger">{{ text_disabled }}</span>
+              {% endif %}</td>
+            <td>{{ extension.date_added }}</td>
+            <td class="text-end text-nowrap">
               <button type="button" data-bs-toggle="modal" data-bs-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
               {% if not extension.status %}
                 <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
@@ -56,8 +62,7 @@
             <label class="form-label">{{ entry_name }}</label> <input type="text" value="{{ extension.name }}" class="form-control" readonly/>
           </div>
           <div class="mb-3">
-            <label class="form-label">{{ entry_description }}</label>
-            <textarea rows="5" class="form-control" readonly>{{ extension.description }}</textarea>
+            <label class="form-label">{{ entry_description }}</label> <textarea rows="5" class="form-control" readonly>{{ extension.description }}</textarea>
           </div>
           <div>
             <label class="form-label">{{ entry_code }}</label> <input type="text" value="{{ extension.code }}" class="form-control" readonly/>

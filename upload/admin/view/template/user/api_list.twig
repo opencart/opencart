@@ -5,6 +5,7 @@
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th><a href="{{ sort_username }}"{% if sort == 'username' %} class="{{ order|lower }}"{% endif %}>{{ column_username }}</a></th>
+          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th><a href="{{ sort_date_added }}"{% if sort == 'date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></th>
           <th><a href="{{ sort_date_modified }}"{% if sort == 'date_modified' %} class="{{ order|lower }}"{% endif %}>{{ column_date_modified }}</a></th>
           <th class="text-end">{{ column_action }}</th>
@@ -16,9 +17,14 @@
             <tr{% if not api.status %} class="table-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ api.api_id }}" class="form-check-input"/></td>
               <td>{{ api.username }}</td>
+              <td class="text-center">{% if api.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
               <td>{{ api.date_added }}</td>
               <td>{{ api.date_modified }}</td>
-              <td class="text-end text-nowrap"><a href="{{ api.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not api.status %}btn btn-secondary{% else %}btn btn-primary{% endif %}"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end text-nowrap"><a href="{{ api.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

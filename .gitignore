@@ -55,3 +55,6 @@
 /.DS_Store
 /.cache
 /.php-cs-fixer.cache
+
+# Docker-specific artifacts
+/public_html

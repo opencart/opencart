@@ -190,8 +190,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$files = oc_directory_read($directory, true);
 
-		sort($files);
-
 		foreach ($files as $file) {
 			$template = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
 

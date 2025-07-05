@@ -14,11 +14,23 @@ class PgSQL {
 	/**
 	 * Constructor
 	 *
-	 * @param string $hostname
-	 * @param string $username
-	 * @param string $password
-	 * @param string $database
-	 * @param string $port
+	 * @param array<string, mixed> $option Database connection options array with keys:
+	 *                                     - 'hostname' (string, required): Database server hostname
+	 *                                     - 'username' (string, required): Database username
+	 *                                     - 'password' (string, required): Database password
+	 *                                     - 'database' (string, required): Database name
+	 *                                     - 'port' (string, optional): Database port (default: '5432')
+	 *
+	 * @throws \Exception If database connection fails
+	 *
+	 * @example
+	 * $pgsql = new PgSQL([
+	 *     'hostname' => 'localhost',
+	 *     'username' => 'postgres',
+	 *     'password' => 'password',
+	 *     'database' => 'opencart',
+	 *     'port'     => '5432'
+	 * ]);
 	 */
 	public function __construct(array $option = []) {
 		if (isset($option['port'])) {
@@ -45,9 +57,13 @@ class PgSQL {
 	/**
 	 * Query
 	 *
-	 * @param string $sql
+	 * Execute SQL query and return result object
 	 *
-	 * @return \stdClass
+	 * @param string $sql SQL query to execute
+	 *
+	 * @return \stdClass Query result with row, rows, and num_rows properties
+	 *
+	 * @throws \Exception If query execution fails
 	 */
 	public function query(string $sql): \stdClass {
 		$resource = pg_query($this->db, $sql);
@@ -75,9 +91,11 @@ class PgSQL {
 	/**
 	 * Escape
 	 *
-	 * @param string $value
+	 * Escape string value for safe SQL usage
 	 *
-	 * @return string
+	 * @param string $value String value to escape
+	 *
+	 * @return string Escaped string value
 	 */
 	public function escape(string $value): string {
 		return pg_escape_string($this->db, $value);
@@ -86,7 +104,9 @@ class PgSQL {
 	/**
 	 * Count Affected
 	 *
-	 * @return int
+	 * Get number of rows affected by the last query
+	 *
+	 * @return int Number of affected rows
 	 */
 	public function countAffected(): int {
 		return pg_affected_rows($this->db);
@@ -95,7 +115,11 @@ class PgSQL {
 	/**
 	 * Get Last Id
 	 *
-	 * @return int
+	 * Get the last inserted sequence value
+	 *
+	 * @return int Last inserted ID
+	 *
+	 * @throws \Exception If sequence value cannot be retrieved
 	 */
 	public function getLastId(): int {
 		$query = $this->query("SELECT LASTVAL() AS `id`");
@@ -106,7 +130,9 @@ class PgSQL {
 	/**
 	 * Is Connected
 	 *
-	 * @return bool
+	 * Check if database connection is active
+	 *
+	 * @return bool True if connected, false otherwise
 	 */
 	public function isConnected(): bool {
 		return pg_connection_status($this->db) == PGSQL_CONNECTION_OK;
@@ -115,7 +141,9 @@ class PgSQL {
 	/**
 	 * Destructor
 	 *
-	 * Closes the DB connection when this object is destroyed.
+	 * Closes the database connection when object is destroyed
+	 *
+	 * @return void
 	 */
 	public function __destruct() {
 		if ($this->db) {

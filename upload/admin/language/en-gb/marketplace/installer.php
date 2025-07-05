@@ -16,6 +16,7 @@ $_['text_xml']               = 'Install OCMOD files';
 $_['column_image']           = 'Image';
 $_['column_name']            = 'Extension Name';
 $_['column_version']         = 'Version';
+$_['column_status']          = 'Status';
 $_['column_date_added']      = 'Date Added';
 $_['column_action']          = 'Action';
 

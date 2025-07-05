@@ -372,42 +372,32 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
 
 		if (!empty($language_info)) {
-			$path = glob(DIR_CATALOG . 'language/' . $language_info['code'] . '/*');
+			$directory = DIR_CATALOG . 'language/' . $language_info['code'] . '/';
 
-			while (count($path) != 0) {
-				$next = array_shift($path);
+			$files = oc_directory_read($directory, true, '/.+\.php$/');
 
-				foreach ((array)glob($next . '/*') as $file) {
-					if (is_dir($file)) {
-						$path[] = $file;
-					}
+			foreach ($files as $file) {
+				$template = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
 
-					if (substr($file, -4) == '.php') {
-						$json[] = substr(substr($file, strlen(DIR_CATALOG . 'language/' . $language_info['code'] . '/')), 0, -4);
-					}
+				if ($template) {
+					$json[] = $template;
 				}
 			}
 
-			$path = glob(DIR_EXTENSION . '*/catalog/language/' . $language_info['code'] . '/*');
+			$directories = oc_directory_read(DIR_EXTENSION, false);
 
-			while (count($path) != 0) {
-				$next = array_shift($path);
+			foreach ($directories as $directory) {
+				$extension = basename($directory);
 
-				foreach ((array)glob($next . '/*') as $file) {
-					if (is_dir($file)) {
-						$path[] = $file;
-					}
+				$path = DIR_EXTENSION . $extension . '/catalog/language/' . $language_info['code'] . '/';
 
-					if (substr($file, -4) == '.php') {
-						$new_path = substr($file, strlen(DIR_EXTENSION));
+				$files = oc_directory_read($path, true, '/.+\.php/');
 
-						$code = substr($new_path, 0, strpos($new_path, '/'));
+				foreach ($files as $file) {
+					$language = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
 
-						$length = strlen(DIR_EXTENSION . $code . '/catalog/language/' . $language_info['code'] . '/');
-
-						$route = substr(substr($file, $length), 0, -4);
-
-						$json[] = 'extension/' . $code . '/' . $route;
+					if ($language) {
+						$json[] = 'extension/' . $extension . '/' . $language;
 					}
 				}
 			}

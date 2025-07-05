@@ -173,8 +173,6 @@ class Identifier extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the total number of identifier records in the database.
 	 *
-	 * @param array<string, mixed> $data array of filters
-	 *
 	 * @return int total number of identifier records
 	 *
 	 * @example

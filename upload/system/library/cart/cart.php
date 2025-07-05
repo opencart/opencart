@@ -306,12 +306,11 @@ class Cart {
 	/**
 	 * Add
 	 *
-	 * @param int          $product_id           primary key of the product record
-	 * @param int          $quantity
-	 * @param array<mixed> $option
-	 * @param int          $subscription_plan_id primary key of the subscription plan record
-	 * @param array        $override
-	 * @param float        $price
+	 * @param int   $product_id primary key of the product record
+	 * @param int   $quantity
+	 * @param array $option
+	 * @param int   $subscription_plan_id primary key of the subscription plan record
+	 * @param array $override
 	 *
 	 * @return void
 	 *

@@ -130,7 +130,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 	/**
 	 * Ip
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function getIps(): string {
 		$this->load->language('extension/opencart/fraud/ip');

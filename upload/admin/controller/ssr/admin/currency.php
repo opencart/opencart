@@ -6,7 +6,7 @@ namespace Opencart\Admin\Controller\Ssr\Admin;
  * @package Opencart\Admin\Controller\Ssr
  */
 class Currency extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('ssr/admin/currency');
 
 		$json = [];
@@ -51,7 +51,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('ssr/admin/currency');
 
 		$json = [];

@@ -15,7 +15,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return void
+	 * @return ?\Opencart\System\Engine\Action
 	 */
 	public function index(): ?\Opencart\System\Engine\Action {
 		// Languages

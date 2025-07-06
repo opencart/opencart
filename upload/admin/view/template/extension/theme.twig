@@ -28,7 +28,7 @@
               {% for store in extension.store %}
                 <tr{% if not store.status %} class="table-disabled"{% endif %}>
                   <td>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
-                  <td class="text-center">{% if extension.status %}
+                  <td class="text-center">{% if store.status %}
                       <span class="badge bg-success">{{ text_enabled }}</span>
                     {% else %}
                       <span class="badge bg-danger">{{ text_disabled }}</span>

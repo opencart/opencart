@@ -250,7 +250,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/*
-     * Get Description
+	 * Get Description
 	 *
 	 * Get the record of the country description records in the database.
 	 *

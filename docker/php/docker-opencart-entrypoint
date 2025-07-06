@@ -1,23 +1,32 @@
 #!/bin/bash
 set -e
 
+# Create a symbolic link to make the upload directory the document root.
+# The -n flag is crucial to replace the symlink correctly if it exists.
+ln -sfn /var/www/upload /var/www/public_html
+
 echo "--- OpenCart initialization ---"
 
+# Change to the correct working directory after the symlink is created
+cd /var/www/public_html
+
 # Check if OpenCart needs installation
-if [ ! -f /var/www/html/install.lock ] && [ -f /var/www/html/install/cli_install.php ]; then
+if [ ! -f /var/www/public_html/install.lock ] && [ -f /var/www/public_html/install/cli_install.php ]; then
     echo "--- Starting OpenCart installation ---"
 
     # Copy config files if they don't exist
-    if [ -f /var/www/html/config-dist.php ] && [ ! -f /var/www/html/config.php ]; then
-        cp /var/www/html/config-dist.php /var/www/html/config.php
+    if [ -f /var/www/public_html/config-dist.php ] && [ ! -s /var/www/public_html/config.php ]; then
+        cp /var/www/public_html/config-dist.php /var/www/public_html/config.php
+        echo "--- Copied config-dist.php to config.php ---"
     fi
 
-    if [ -f /var/www/html/admin/config-dist.php ] && [ ! -f /var/www/html/admin/config.php ]; then
-        cp /var/www/html/admin/config-dist.php /var/www/html/admin/config.php
+    if [ -f /var/www/public_html/admin/config-dist.php ] && [ ! -s /var/www/public_html/admin/config.php ]; then
+        cp /var/www/public_html/admin/config-dist.php /var/www/public_html/admin/config.php
+        echo "--- Copied admin/config-dist.php to admin/config.php ---"
     fi
 
     # Run installer
-    php /var/www/html/install/cli_install.php install \
+    php /var/www/public_html/install/cli_install.php install \
         --username admin \
         --password admin \
         --email email@example.com \
@@ -29,28 +38,26 @@ if [ ! -f /var/www/html/install.lock ] && [ -f /var/www/html/install/cli_install
         --db_database opencart \
         --db_port 3306 \
         --db_prefix oc_ \
-        && touch /var/www/html/install.lock \
+        && touch /var/www/public_html/install.lock \
         && echo "--- OpenCart installation completed ---" \
         || echo "--- OpenCart installation failed ---"
 fi
 
 # Copy .htaccess.txt to .htaccess if needed
-if [ -f /var/www/html/.htaccess.txt ] && [ ! -f /var/www/html/.htaccess ]; then
-    cp /var/www/html/.htaccess.txt /var/www/html/.htaccess
+if [ -f /var/www/public_html/.htaccess.txt ] && [ ! -f /var/www/public_html/.htaccess ]; then
+    cp /var/www/public_html/.htaccess.txt /var/www/public_html/.htaccess
     echo "--- Copied .htaccess.txt to .htaccess ---"
 fi
 
-# Fix permissions for OpenCart files
-echo "--- Fixing file permissions ---"
-chown -R www-data:www-data /var/www/html
+# Fix ownership for all files by targeting the real directory.
+echo "--- Fixing ownership on /var/www/upload ---"
+chown -R www-data:www-data /var/www/upload
+echo "--- Ownership fixed ---"
 
-# Allow www-data to create storage directories outside webroot for security
+# Set permissions for storage relocation
 echo "--- Setting permissions for storage relocation ---"
 chown www-data:www-data /var/www
 chmod 755 /var/www
-
-find /var/www/html -type d -exec chmod 755 {} \;
-find /var/www/html -type f -exec chmod 644 {} \;
 
 # Call the original entrypoint with all arguments
 exec docker-php-entrypoint "$@"

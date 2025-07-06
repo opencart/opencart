@@ -26,7 +26,7 @@ COPY docker/php/docker-opencart-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-opencart-entrypoint
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /var/www
 
 # Use OpenCart entrypoint
 ENTRYPOINT ["docker-opencart-entrypoint"]

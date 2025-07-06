@@ -51,9 +51,9 @@ function oc_strlen(string $string): int {
  * @param string $needle
  * @param int    $offset
  *
- * @return false|int
+ * @return int|false
  */
-function oc_strpos(string $string, string $needle, int $offset = 0) {
+function oc_strpos(string $string, string $needle, int $offset = 0): int|false {
 	return mb_strpos($string, $needle, $offset);
 }
 
@@ -62,9 +62,9 @@ function oc_strpos(string $string, string $needle, int $offset = 0) {
  * @param string $needle
  * @param int    $offset
  *
- * @return false|int
+ * @return int|false
  */
-function oc_strrpos(string $string, string $needle, int $offset = 0) {
+function oc_strrpos(string $string, string $needle, int $offset = 0): int|false {
 	return mb_strrpos($string, $needle, $offset);
 }
 
@@ -143,7 +143,7 @@ if (!function_exists('str_contains')) {
 // File Handling Functions
 
 // 1. Reading a file
-function oc_file_read($file): string {
+function oc_file_read(string $file): string|false {
 	if (is_file($file)) {
 		return file_get_contents($file);
 	}
@@ -152,16 +152,16 @@ function oc_file_read($file): string {
 }
 
 // 2. Writing to a file
-function oc_file_write($file, $content, $append = false): bool {
+function oc_file_write(string $file, string $content, bool $append = false): bool {
 	if ($append) {
-		return file_put_contents($file, $content) !== false;
-	} else {
 		return file_put_contents($file, $content, FILE_APPEND) !== false;
+	} else {
+		return file_put_contents($file, $content) !== false;
 	}
 }
 
 // 3. Deleting a file
-function oc_file_delete($file): bool {
+function oc_file_delete(string $file): bool {
 	if (is_file($file)) {
 		return unlink($file);
 	}
@@ -172,7 +172,7 @@ function oc_file_delete($file): bool {
 // Directory Handling Functions
 
 // 1. Reading directory contents
-function oc_directory_read($directory, $recursive = false, $regex = ''): array {
+function oc_directory_read(string $directory, bool $recursive = false, string $regex = ''): array {
 	$files = [];
 
 	if (is_dir($directory)) {
@@ -210,7 +210,7 @@ function oc_directory_read($directory, $recursive = false, $regex = ''): array {
 }
 
 // 2. Creating a directory
-function oc_directory_create($path, $name, $permission = 0777) {
+function oc_directory_create(string $path, string $name, int $permission = 0777): bool {
 	$path_new = '';
 
 	$directories = explode('/', rtrim($path, '/'));
@@ -232,7 +232,7 @@ function oc_directory_create($path, $name, $permission = 0777) {
 }
 
 // 3. Removing a directory
-function oc_directory_delete($path) {
+function oc_directory_delete(string $path): bool {
 	$files = [];
 
 	if (is_dir($path)) {
@@ -372,4 +372,3 @@ function oc_validate_url(string $url): bool {
 function oc_validate_path(string $keyword): bool {
 	return !preg_match('/[^\p{Latin}\p{Cyrillic}\p{Greek}0-9\/\-\_]+/u', $keyword);
 }
-

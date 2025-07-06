@@ -13,9 +13,7 @@ class Menu extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new menu record in the database.
 	 *
-	 * @param string $code
-	 * @param string $route
-	 * @param bool   $status
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 *
@@ -37,6 +35,14 @@ class Menu extends \Opencart\System\Engine\Model {
 		return $menu_id;
 	}
 
+	/**
+	 * Edit Menu
+	 *
+	 * @param int                  $menu_id primary key of the menu record
+	 * @param array<string, mixed> $data    array of data
+	 *
+	 * @return void
+	 */
 	public function editMenu(int $menu_id, array $data): void {
 		$menu_info = $this->getMenu($menu_id);
 
@@ -57,6 +63,7 @@ class Menu extends \Opencart\System\Engine\Model {
 	 * Delete Menu By Code
 	 *
 	 * @param int $menu_id
+	 * @param string $menu_id primary key of the menu record
 	 *
 	 * @return void
 	 *
@@ -132,8 +139,6 @@ class Menu extends \Opencart\System\Engine\Model {
 	 * Get Menu(s)
 	 *
 	 * Get the record of the menu records in the database.
-	 *
-	 * @param array<string, mixed> $data array of filters
 	 *
 	 * @return array<int, array<string, mixed>> menu records
 	 *

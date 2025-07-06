@@ -35,7 +35,7 @@ class Api {
 		$this->language = $language;
 	}
 
-	public function send(string $route, $data = []) {
+	public function send(string $route, $data = []): array {
 		$time = time();
 
 		// Build hash string

@@ -522,20 +522,16 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
-		$data['stores'] = [];
+		$stores = [];
 
-		$data['stores'][] = [
+		$stores[] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		];
 
 		$this->load->model('setting/store');
 
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = $result;
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		if (!empty($customer_info)) {
 			$data['store_id'] = $customer_info['store_id'];
@@ -581,6 +577,12 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['email'] = $customer_info['email'];
 		} else {
 			$data['email'] = '';
+		}
+
+		if (!empty($customer_info)) {
+			$data['author'] = $customer_info['author'];
+		} else {
+			$data['author'] = '';
 		}
 
 		if (!empty($customer_info)) {
@@ -682,6 +684,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			'firstname'         => '',
 			'lastname'          => '',
 			'email'             => '',
+			'author'            => '',
 			'telephone'         => '',
 			'custom_field'      => [],
 			'newsletter'        => 0,
@@ -705,6 +708,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
+		if (!empty($post_info['author']) && !oc_validate_length($post_info['author'], 3, 64)) {
+			$json['error']['author'] = $this->language->get('error_author');
+		}
+
 		// Customer
 		$this->load->model('customer/customer');
 
@@ -712,6 +719,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if ($customer_info && (!$post_info['customer_id'] && ($post_info['customer_id'] != $customer_info['customer_id']))) {
 			$json['error']['warning'] = $this->language->get('error_exists');
+		}
+
+		if ($customer_info && isset($post_info['author']) && !empty($post_info['author']) && (bool)$this->model_customer_customer->getTotalCustomersByAuthor($post_info['author'])) {
+			$json['error']['warning'] = $this->language->get('error_author_taken');
 		}
 
 		if ($this->config->get('config_telephone_required') && !oc_validate_length($post_info['telephone'], 3, 32)) {
@@ -867,38 +878,48 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
+		if (isset($this->request->get['store_id'])) {
+			$store_id = (int)$this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			return new \Opencart\System\Engine\Action('error/permission');
+		}
+
+		// Store
+		if ($store_id) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($store_id);
+
+			if (!$store_info) {
+				return new \Opencart\System\Engine\Action('error/not_found');
+			}
+		}
+
 		// Customer
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
-		if ($customer_info) {
-			// Create token to login with
-			$token = oc_token(64);
-
-			$this->model_customer_customer->editToken($customer_id, $token);
-
-			// Store
-			if (isset($this->request->get['store_id'])) {
-				$store_id = (int)$this->request->get['store_id'];
-			} else {
-				$store_id = 0;
-			}
-
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore($store_id);
-
-			if ($store_info) {
-				$this->response->redirect($store_info['url'] . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']) . '&login_token=' . $token);
-			} else {
-				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']) . '&login_token=' . $token);
-			}
-
-			return null;
-		} else {
+		if (!$customer_info) {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
+
+		// Create login token
+		$token = oc_token(32);
+
+		$this->model_customer_customer->addToken($customer_id, 'login', $token);
+
+		if ($store_id) {
+			$this->response->redirect($store_info['url'] . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']) . '&code=' . $token);
+		} else {
+			$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']) . '&code=' . $token);
+		}
+
+		return null;
 	}
 
 	/**
@@ -1143,12 +1164,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['transactions'][] = [
-				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			] + $result;
 		}
 
-		$data['balance'] = $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency'));
+		$data['balance'] = $this->model_customer_customer->getTransactionTotal($customer_id);
 
 		// Total Transactions
 		$transaction_total = $this->model_customer_customer->getTotalTransactions($customer_id);
@@ -1162,6 +1182,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($transaction_total - $limit)) ? $transaction_total : ((($page - 1) * $limit) + $limit), $transaction_total, ceil($transaction_total / $limit));
+
+		$data['currency'] = $this->config->get('config_currency');
 
 		return $this->load->view('customer/customer_transaction', $data);
 	}

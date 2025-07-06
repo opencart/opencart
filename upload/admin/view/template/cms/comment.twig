@@ -3,11 +3,12 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-comment').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="button" id="button-rating" data-bs-toggle="tooltip" title="{{ button_rating }}" class="btn btn-light"><i class="fa-solid fa-sync"></i></button>
-        <button type="submit" form="form-comment" formaction="{{ approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
-        <button type="submit" form="form-comment" formaction="{{ spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-warning"><i class="fa-solid fa-ban"></i></button>
-        <button type="submit" form="form-comment" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+        <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fa-solid fa-sync"></i></button>
+        <button type="button" id="button-enable" form="form-comment" value="{{ enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>
+        <button type="button" id="button-disable" form="form-comment" value="{{ disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
+        <button type="button" id="button-spam" form="form-comment" value="{{ spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" class="btn btn-warning"><i class="fa-solid fa-ban"></i></button>
+		<button type="button" id="button-add" form="form-comment" onclick="openCommentDialog(this);" data-bs-toggle="tooltip" title="{{ button_comment }}" class="btn btn-info"><i class="fa-solid fa-comment-medical"></i></button>
+        <button type="button" id="button-delete" form="form-comment" value="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -25,23 +26,55 @@
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label for="input-keyword" class="form-label">{{ entry_keyword }}</label>
-                <input type="text" name="filter_keyword" value="" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
+                <label for="input-article" class="form-label">{{ entry_article }}</label> <input type="text" name="filter_article" value="{{ filter_article }}" placeholder="{{ entry_article }}" id="input-article" data-oc-target="autocomplete-article" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-article" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-article" class="form-label">{{ entry_article }}</label>
-                <input type="text" name="filter_article" value="" placeholder="{{ entry_article }}" id="input-article" class="form-control"/>
+                <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" data-oc-target="autocomplete-author" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-author" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-customer" class="form-label">{{ entry_customer }}</label>
-                <input type="text" name="filter_customer" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+                <label for="input-admin" class="form-label">{{ entry_author_type }}</label>
+                <select name="filter_admin" id="input-admin" class="form-select"/>
+                  <option value=""></option>
+                  <option value="1"{% if filter_admin == '1' %} selected{% endif %}>{{ entry_author_customer }}</option>
+                  <option value="0"{% if filter_admin == '0' %} selected{% endif %}>{{ entry_author_admin }}</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="input-comment" class="form-label">{{ entry_comment }}</label> <input type="text" name="filter_comment" value="{{ filter_comment }}" placeholder="{{ entry_comment }}" id="input-comment" data-oc-target="autocomplete-comment" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-comment" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-customer" class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-customer" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-comment-type" class="form-label">{{ entry_comment_type }}</label>
+                <select name="filter_comment_type" id="input-comment-type" class="form-select"/>
+                  <option value=""></option>
+                  <option value="0"{% if filter_comment_type == '0' %} selected{% endif %}>{{ entry_comment_comment }}</option>
+                  <option value="1"{% if filter_comment_type == '1' %} selected{% endif %}>{{ entry_comment_reply }}</option>
+                </select>
+              </div>
+			  <div class="mb-3">
+                <label for="input-rating-from" class="form-label">{{ entry_rating }}</label>
+                <div class="row">
+                  <div class="col">
+                    <input type="text" name="filter_rating_from" value="" placeholder="{{ entry_rating_from }}" id="input-rating-from" class="form-control">
+                  </div>
+                  <label class="col-auto col-form-label px-0"><i class="fa-solid fa-minus"></i></label>
+                  <div class="col">
+                    <input type="text" name="filter_rating_to" value="" placeholder="{{ entry_rating_to }}" id="input-rating-to" class="form-control">
+                  </div>
+                </div>
               </div>
               <div class="mb-3">
                 <label for="input-status" class="form-label">{{ entry_status }}</label>
-                <select name="filter_status" id="input-status" class="form-control"/>
+                <select name="filter_status" id="input-status" class="form-select"/>
                   <option value=""></option>
-                  <option value="0">{{ text_disabled }}</option>
-                  <option value="1">{{ text_enabled }}</option>
+                  <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                  <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -78,7 +111,79 @@ $('#list').on('click', '.pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-$('#list').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
+
+    let url = $(this).serialize();
+
+	// Get selected Sort item text and twiddle to get 'sort' and 'order'.
+	var sel = $('#form-comment #input-sort').children("option:selected").html();
+	var lcText = sel.toLowerCase();
+
+	// Oldest and Lowest = ASC. Latest and Highest = DESC
+	var sort = lcText.includes('{{ text_rating_needle }}') ? 'rating' : 'date_added';
+	var order = (lcText.includes('{{ text_oldest_needle }}') || lcText.includes('{{ text_lowest_needle }}')) ? 'ASC' : 'DESC';
+	var sortOrder = '&sort=' + sort + '&order=' + order;
+
+    window.history.pushState({}, null, 'index.php?route=cms/comment&user_token={{ user_token }}&' + url + sortOrder);
+
+    $('#list').load('index.php?route=cms/comment.list&user_token={{ user_token }}&' + url + sortOrder);
+});
+
+$('#button-enable, #button-disable, #button-spam, #button-delete').on('click', function () {
+	if (this.id == 'button-spam') {
+		if (!confirm('{{ text_confirm_spam }}')) {
+			return;
+		}
+	} else {
+		if (!confirm('{{ text_confirm }}')) {
+			return;
+		}
+	}
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+		type: 'post',
+		data: $('#form-comment input[name^=\'selected\']:checked').serialize(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#list').load($('#form-comment').attr('data-oc-load'));
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#list').on('click', '[id^=button-enable-], [id^=button-disable-], [id^=button-spam-], [id^=button-delete-]', function() {
+	if (this.id.startsWith('button-spam')) {
+		if (!confirm('{{ text_confirm_spam }}')) {
+			return;
+		}
+	} else if (this.id.startsWith('button-delete')) {
+		if (!confirm('{{ text_confirm }}')) {
+			return;
+		}
+	}
+
     var element = this;
 
     $.ajax({
@@ -94,31 +199,65 @@ $('#list').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#list').load($('#form-comment').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#form-filter').on('submit', function() {
-    let url = $(this).serialize();
+$('#input-article').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=cms/comment.autocomplete&user_token={{ user_token }}&filter_article=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['article_comment_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-article').val(decodeHTMLEntities(item['label']));
+    }
+});
 
-    window.history.pushState({}, null, 'index.php?route=cms/comment&user_token={{ user_token }}&' + url);
-
-    $('#list').load('index.php?route=cms/comment.list&user_token={{ user_token }}' + url);
+$('#input-author').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=cms/comment.autocomplete&user_token={{ user_token }}&filter_author=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-author').val(decodeHTMLEntities(item['label']));
+    }
 });
 
 $('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=cms/comment.autocomplete&user_token={{ user_token }}&filter_customer=' + encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -135,15 +274,15 @@ $('#input-customer').autocomplete({
     }
 });
 
-$('#input-email').autocomplete({
+$('#form-comment-edit #input-customer-modal').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
+            url: 'index.php?route=cms/comment.autocomplete&user_token={{ user_token }}&filter_customers=' + encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {
                     return {
-                        label: item['email'],
+                        label: item['name'],
                         value: item['customer_id']
                     }
                 }));
@@ -151,16 +290,16 @@ $('#input-email').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-email').val(decodeHTMLEntities(item['label']));
+        $('#form-comment-edit #input-customer-modal').val(decodeHTMLEntities(item['label']));
     }
 });
 
-$('#button-rating').on('click', function() {
+$('#button-refresh').on('click', function() {
     var element = this;
 
     $(element).button('loading');
 
-    var next = 'index.php?route=cms/comment.rating&user_token={{ user_token }}';
+    var next = 'index.php?route=cms/comment.refresh&user_token={{ user_token }}';
 
     var rate = function() {
         return $.ajax({
@@ -187,7 +326,7 @@ $('#button-rating').on('click', function() {
 
                     $(element).button('reset');
 
-                    $('#comment').load($('#form-comment').attr('data-oc-load'));
+					$('#list').load($('#form-comment').attr('data-oc-load'));
                 }
 
                 if (json['next']) {

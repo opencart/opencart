@@ -59,6 +59,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 		$data['firstname'] = $customer_info['firstname'];
 		$data['lastname'] = $customer_info['lastname'];
 		$data['email'] = $customer_info['email'];
+		$data['author'] = $customer_info['author'];
 		$data['telephone'] = $customer_info['telephone'];
 
 		// Custom Fields
@@ -104,6 +105,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 			'firstname' => '',
 			'lastname'  => '',
 			'email'     => '',
+			'author'    => '',
 			'telephone' => ''
 		];
 
@@ -128,11 +130,19 @@ class Edit extends \Opencart\System\Engine\Controller {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
+			if (!empty($post_info['author']) && !oc_validate_length($post_info['author'], 3, 64)) {
+				$json['error']['author'] = $this->language->get('error_author');
+			}
+
 			// Customer
 			$this->load->model('account/customer');
 
 			if (($this->customer->getEmail() != $post_info['email']) && $this->model_account_customer->getTotalCustomersByEmail($post_info['email'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
+			}
+
+			if (!empty($post_info['author']) && ($this->customer->getAuthor() != $post_info['author']) && $this->model_account_customer->getTotalCustomersByAuthor($post_info['author'])) {
+				$json['error']['warning'] = $this->language->get('error_author_taken');
 			}
 
 			if ($this->config->get('config_telephone_required') && !oc_validate_length($post_info['telephone'], 3, 32)) {
@@ -168,6 +178,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 				'firstname'         => $post_info['firstname'],
 				'lastname'          => $post_info['lastname'],
 				'email'             => $post_info['email'],
+				'author'            => $post_info['author'],
 				'telephone'         => $post_info['telephone'],
 				'custom_field'      => $post_info['custom_field'] ?? []
 			];

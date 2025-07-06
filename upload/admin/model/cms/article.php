@@ -175,7 +175,11 @@ class Article extends \Opencart\System\Engine\Model {
 
 		$this->model_cms_article->deleteDescriptions($article_id);
 		$this->model_cms_article->deleteStores($article_id);
-		$this->model_cms_article->deleteCommentsByArticleId($article_id);
+
+		// Comment
+		$this->load->model('cms/comment');
+
+		$this->model_cms_comment->deleteCommentsByArticleId($article_id);
 
 		// SEO
 		$this->load->model('design/seo_url');
@@ -241,7 +245,8 @@ class Article extends \Opencart\System\Engine\Model {
 			'ad.name',
 			'a.author',
 			'a.rating',
-			'a.date_added'
+			'a.date_added',
+			'a.status'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
@@ -315,6 +320,28 @@ class Article extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Edit Status
+	 *
+	 * Edit article status record in the database.
+	 *
+	 * @param int  $article_id primary key of the article record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('cms/article');
+	 *
+	 * $this->model_cms_article->editStatus($article_id, $status);
+	 */
+	public function editStatus(int $article_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "article` SET `status` = '" . (bool)$status . "' WHERE `article_id` = '" . (int)$article_id . "'");
+
+		$this->cache->delete('article');
 	}
 
 	/**
@@ -603,280 +630,6 @@ class Article extends \Opencart\System\Engine\Model {
 	 */
 	public function getTotalLayoutsByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Edit Comment Status
-	 *
-	 * Edit article comment status record in the database.
-	 *
-	 * @param int  $article_comment_id primary key of the article comment record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('cms/article');
-	 *
-	 * $this->model_cms_article->editCommentStatus($article_comment_id, $status);
-	 */
-	public function editCommentStatus(int $article_comment_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `status` = '" . (bool)$status . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
-
-		$this->cache->delete('topic');
-	}
-
-	/**
-	 * Edit Comment Rating
-	 *
-	 * Edit article comment rating record in the database.
-	 *
-	 * @param int $article_id         primary key of the article record
-	 * @param int $article_comment_id primary key of the article comment record
-	 * @param int $rating
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('cms/article');
-	 *
-	 * $this->model_cms_article->editCommentRating($article_id, $article_comment_id, $rating);
-	 */
-	public function editCommentRating(int $article_id, int $article_comment_id, int $rating): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `rating` = '" . (int)$rating . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `article_id` = '" . (int)$article_id . "'");
-	}
-
-	/**
-	 * Delete Comment
-	 *
-	 * Delete article comment record in the database.
-	 *
-	 * @param int $article_comment_id primary key of the article comment record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('cms/article');
-	 *
-	 * $this->model_cms_article->deleteComment($article_comment_id);
-	 */
-	public function deleteComment(int $article_comment_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
-
-		$this->cache->delete('topic');
-	}
-
-	/**
-	 * Delete Comments by article ID
-	 *
-	 * Delete article comments by article records in the database.
-	 *
-	 * @param int $article_id primary key of the article record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('cms/article');
-	 *
-	 * $this->model_cms_article->deleteCommentsByArticleId($article_id);
-	 */
-	public function deleteCommentsByArticleId(int $article_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'");
-
-		$this->cache->delete('topic');
-	}
-
-	/**
-	 * Get Comment
-	 *
-	 * Get the record of the article comment record in the database.
-	 *
-	 * @param int $article_comment_id primary key of the article comment record
-	 *
-	 * @return array<string, mixed> comment record that has article comment ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('cms/article');
-	 *
-	 * $comment_info = $this->model_cms_article->getComment($article_comment_id);
-	 */
-	public function getComment(int $article_comment_id): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "article_comment` WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
-
-		return $query->row;
-	}
-
-	/**
-	 * Get Ratings
-	 *
-	 * Get the record of the article rating records in the database.
-	 *
-	 * @param int $article_id         primary key of the article record
-	 * @param int $article_comment_id primary key of the article comment record
-	 *
-	 * @return array<int, array<string, mixed>> rating records that have article ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('cms/article');
-	 *
-	 * $results = $this->model_cms_article->getRatings($article_id, $article_comment_id);
-	 */
-	public function getRatings(int $article_id, int $article_comment_id = 0): array {
-		$sql = "SELECT rating, COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_rating` WHERE `article_id` = '" . (int)$article_id . "'";
-
-		if ($article_comment_id) {
-			$sql .= " AND `article_comment_id` = '" . (int)$article_comment_id . "'";
-		}
-
-		$sql .= " GROUP BY rating";
-
-		$query = $this->db->query($sql);
-
-		return $query->rows;
-	}
-
-	/**
-	 * Get Comments
-	 *
-	 * Get the record of the article comment records in the database.
-	 *
-	 * @param array<string, mixed> $data array of filters
-	 *
-	 * @return array<int, array<string, mixed>> comment records
-	 *
-	 * @example
-	 *
-	 * $filter_data = [
-	 *     'filter_keyword'   => 'Keyword',
-	 *     'filter_article'   => 'Article Name',
-	 *     'filter_customer'  => 'John Doe',
-	 *     'filter_status'    => 1,
-	 *     'filter_date_from' => '2021-01-01',
-	 *     'filter_date_to'   => '2021-01-31',
-	 *     'start'            => 0,
-	 *     'limit'            => 10
-	 * ];
-	 *
-	 * $this->load->model('cms/article');
-	 *
-	 * $results = $this->model_cms_article->getComments($filter_data);
-	 */
-	public function getComments(array $data = []): array {
-		$sql = "SELECT *, `ac`.`rating`, `ac`.`status`, `ac`.`date_added` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-
-		$implode = [];
-
-		if (!empty($data['filter_keyword'])) {
-			$sql .= " AND LCASE(`ac`.`comment`) LIKE '" . $this->db->escape('%' . oc_strtolower($data['filter_keyword']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_article'])) {
-			$sql .= " AND LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_article']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_customer_id'])) {
-			$sql .= " AND `ac`.`customer_id` = '" . (int)$data['filter_customer_id'] . "'";
-		}
-
-		if (!empty($data['filter_author'])) {
-			$sql .= " AND LCASE(`ac`.`author`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_author']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_status'])) {
-			$sql .= " AND `ac`.`status` = '" . (bool)$data['filter_status'] . "'";
-		}
-
-		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(`ac`.`date_added`) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
-		}
-
-		$sql .= " ORDER BY `ac`.`date_added` DESC";
-
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-
-		$query = $this->db->query($sql);
-
-		return $query->rows;
-	}
-
-	/**
-	 * Get Total Comments
-	 *
-	 * Get the total number of article comment records in the database.
-	 *
-	 * @param array<string, mixed> $data array of filters
-	 *
-	 * @return int total number of comment records
-	 *
-	 * @example
-	 *
-	 * $filter_data = [
-	 *     'filter_keyword'   => 'Keyword',
-	 *     'filter_article'   => 'Article Name',
-	 *     'filter_customer'  => 'John Doe',
-	 *     'filter_status'    => 1,
-	 *     'filter_date_from' => '2021-01-01',
-	 *     'filter_date_to'   => '2021-01-31',
-	 *     'start'            => 0,
-	 *     'limit'            => 10
-	 * ];
-	 *
-	 * $this->load->model('cms/article');
-	 *
-	 * $comment_total = $this->model_cms_article->getTotalComments($filter_data);
-	 */
-	public function getTotalComments(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`)";
-
-		$implode = [];
-
-		if (!empty($data['filter_keyword'])) {
-			$implode[] = "LCASE(`ac`.`comment`) LIKE '" . $this->db->escape('%' . oc_strtolower($data['filter_keyword']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_article'])) {
-			$implode[] = "LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_article']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_customer_id'])) {
-			$implode[] = "`ac`.`customer_id` = '" . (int)$data['filter_customer_id'] . "'";
-		}
-
-		if (!empty($data['filter_author'])) {
-			$implode[] = "LCASE(`ac`.`author`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_author']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_status'])) {
-			$implode[] = "`ac`.`status` = '" . (bool)$data['filter_status'] . "'";
-		}
-
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(`ac`.`date_added`) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

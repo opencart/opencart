@@ -118,15 +118,35 @@ class Article extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->load->model('cms/article');
+		$this->load->model('cms/comment');
 
-		$results = $this->model_cms_article->getArticles($filter_data);
+		$articles = $this->model_cms_article->getArticles($filter_data);
 
-		foreach ($results as $result) {
+		foreach ($articles as $article) {
+			$total_rating = 0;
+
+			// Comment Ratings
+			$ratings = $this->model_cms_comment->getCommentRatings($article['article_id']);
+
+			foreach ($ratings as $rating) {
+				$total_rating += $rating['rating'];
+			}
+
+			if (count($ratings)) {
+				$total_rating = ($total_rating / (count($ratings)));
+			} 
+
+			// Likes
+			$likes = $this->calculateLikes($article['article_id']);
+
 			$data['articles'][] = [
-				'rating'     => (int)$result['rating'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id'] . $url)
-			] + $result;
+				'rating'     => (int)$total_rating,
+				'likes'      => (int)$likes,
+				'date_added' => date($this->language->get('date_format_short'), strtotime($article['date_added'])),
+				'edit'       => $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $article['article_id'] . $url),
+				'enable'     => $this->url->link('cms/article.enable', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $article['article_id'] . $url),
+				'disable'    => $this->url->link('cms/article.disable', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $article['article_id'] . $url)
+			] + $article;
 		}
 
 		$url = '';
@@ -142,6 +162,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$data['sort_author'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.author' . $url);
 		$data['sort_rating'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.rating' . $url);
 		$data['sort_date_added'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.date_added' . $url);
+		$data['sort_status'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.status' . $url);
 
 		$url = '';
 
@@ -170,6 +191,96 @@ class Article extends \Opencart\System\Engine\Controller {
 		$data['order'] = $order;
 
 		return $this->load->view('cms/article_list', $data);
+	}
+
+	/**
+	 * Calculate Likes
+	 *
+	 * @return int
+	 */
+	public function calculateLikes(int $article_id): int {
+		$this->load->model('cms/comment');
+
+		$total_rating = 0;
+
+		// Likes
+		$ratings = $this->model_cms_comment->getLikes($article_id);
+
+		foreach ($ratings as $rating) {
+			if ($rating['rating'] == 1) {
+				$total_rating += $rating['total'];
+			} else {
+				$total_rating -= $rating['total'];
+			}
+		}
+
+		return $total_rating;
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('cms/article');
+
+		$json = [];
+
+		if (isset($this->request->get['article_id'])) {
+			$article_id = (int)$this->request->get['article_id'];
+		} else {
+			$article_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/article')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Article
+			$this->load->model('cms/article');
+
+			$this->model_cms_article->editStatus($article_id, true);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('cms/article');
+
+		$json = [];
+
+		if (isset($this->request->get['article_id'])) {
+			$article_id = (int)$this->request->get['article_id'];
+		} else {
+			$article_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/article')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Article
+			$this->load->model('cms/article');
+
+			$this->model_cms_article->editStatus($article_id, false);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**
@@ -273,20 +384,16 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
-		$data['stores'] = [];
+		$stores = [];
 
-		$data['stores'][] = [
+		$stores[] = [
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
+			'name'     => $this->config->get('config_name')
 		];
 
 		$this->load->model('setting/store');
 
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = $result;
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		if (!empty($article_info)) {
 			$data['article_store'] = $this->model_cms_article->getStores($article_info['article_id']);
@@ -447,11 +554,11 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Rating
+	 * Refresh
 	 *
 	 * @return void
 	 */
-	public function rating(): void {
+	public function refresh(): void {
 		$this->load->language('cms/article');
 
 		$json = [];
@@ -467,37 +574,34 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('cms/article');
+			$this->load->model('cms/comment');
+
 			$limit = 100;
 
-			// Articles
 			$filter_data = [
-				'sort'  => 'date_added',
-				'order' => 'ASC',
-				'start' => ($page - 1) * $limit,
-				'limit' => $limit
+				'sort'  => 'ad.name',
+				'order' => 'ASC'
 			];
 
-			$this->load->model('cms/article');
+			// Articles
+			$articles = $this->model_cms_article->getArticles($filter_data);
 
-			$results = $this->model_cms_article->getArticles($filter_data);
+			foreach ($articles as $article) {
+				$total_rating = 0;
 
-			foreach ($results as $result) {
-				$like = 0;
-				$dislike = 0;
-
-				$ratings = $this->model_cms_article->getRatings($result['article_id']);
+				// Comment Ratings
+				$ratings = $this->model_cms_comment->getCommentRatings($article['article_id']);
 
 				foreach ($ratings as $rating) {
-					if ($rating['rating'] == 1) {
-						$like = $rating['total'];
-					}
-
-					if ($rating['rating'] == 0) {
-						$dislike = $rating['total'];
-					}
+					$total_rating += $rating['rating'];
 				}
 
-				$this->model_cms_article->editRating($result['article_id'], $like - $dislike);
+				if (count($ratings)) {
+					$total_rating = ($total_rating / (count($ratings)));
+				} 
+
+				$this->model_cms_article->editRating($article['article_id'], $total_rating);
 			}
 
 			// Total Articles
@@ -509,7 +613,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			if ($end < $article_total) {
 				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $article_total);
 
-				$json['next'] = $this->url->link('cms/article.rating', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('cms/article.refresh', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 

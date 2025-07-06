@@ -920,3 +920,7 @@ td {
   text-decoration: none !important;
   color: rgba(0, 0, 0, 1.0) !important;
 }
+
+.checked {
+  color: orange;
+}

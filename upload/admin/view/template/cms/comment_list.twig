@@ -1,45 +1,72 @@
-<form id="form-comment" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#comment">
+<form id="form-comment" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#form-comment">
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
-        <th>{{ column_comment }}</th>
+        <th class="text-center align-middle" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+        <th class="align-middle" width="65%">{{ column_comment }}</th>
+        <th class="text-end">
+		  <div class="input-group">
+			<label for="input-sort" class="input-group-text">{{ text_sort }}</label>
+			<select id="input-sort" class="form-select input-sm">
+        	  {% for sorts in sorts %}
+          		<option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
+        	  {% endfor %}
+			</select>
+		  </div>
+        </th>
       </tr>
     </thead>
     <tbody>
       {% if comments %}
         {% for comment in comments %}
           <tr>
-            <td class="text-center" rowspan="2"><input type="checkbox" name="selected[]" value="{{ comment.article_comment_id }}" class="form-check-input"/></td>
-            <td><a href="{{ comment.article_edit }}" target="_blank">{{ comment.article }}</a>
-              <p>
+            <td class="text-center" rowspan="3"><input type="checkbox" name="selected[]" value="{{ comment.article_comment_id }}" class="form-check-input"/></td>
+            <td style="border-right:none;"{% if comment.parent_id %} class="bg-info bg-opacity-25"{% else %} class="bg-success bg-opacity-25"{% endif %}>
                 {% if comment.customer_edit %}
-                  <small>{{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></small>
+                  <a href="{{ comment.customer_edit }}" target="_blank"><i class="{% if comment.safe %}fa-solid fa-user text-primary{% elseif comment.commenter %}fa-solid fa-user{% else %}fa-regular fa-user text-secondary{% endif %} me-1"></i></a><a href="{{ comment.base_filter_url }}{% if comment.author %}&filter_author={{ comment.author }}{% else %}&filter_customer={{ comment.customer }}{% endif %}">{% if comment.author %}{{ comment.author }}{% else %}{{ comment.customer }}{% endif %}</a>
                 {% else %}
-                  <small> - {{ text_by }} {{ comment.author }}</small>
+				  <a href="{{ comment.base_filter_url }}&filter_admin=0"><i class="fa-solid fa-user text-success me-2"></i>{{ text_admin_author }}</a>
                 {% endif %}
-                <small> - {{ comment.date_added }}</small>
-                <br/>
-                <small>{{ text_rating }} {{ comment.rating }}</small>
-              </p>
-              <p>{{ comment.comment }}</p>
+			    {% if comment.rating %}
+		    	  &nbsp;&ndash;&nbsp;
+		    	  {% for i in 1..5 %}
+    		  	    {% if i <= comment.rating %}<span class="fa fa-star fa-xs checked"></span>{% else %}<span class="fa fa-star fa-xs"></span>{% endif %}
+  		          {% endfor %}
+			    {% endif %}
+			    {% if comment.parent_id > '0' %}
+		    	  &nbsp;&ndash;&nbsp;<small>{{ text_reply_to }}<a href="{{ comment.parent_customer_edit }}" target="_blank"><i class="fa-solid fa-user ms-1 me-1"></i></a><a href="{{ comment.base_filter_url }}{% if comment.parent_author %}&filter_author={{ comment.parent_author }}{% else %}&filter_customer={{ comment.parent_customer }}{% endif %}">{% if comment.parent_author %}{{ comment.parent_author }}{% else %}{{ comment.parent_customer }}{% endif %}</a></small>
+			    {% endif %}
+			</td>
+            <td style="border-left:none;"{% if comment.parent_id %} class="text-end align-top bg-info bg-opacity-25"{% else %} class="text-end align-top bg-success bg-opacity-25"{% endif %}>
+			  <small>{{ comment.date_added }}</small>
+			</td>
+          </tr>
+          <tr>
+            <td colspan="2"{% if not comment.status %} class="bg-secondary bg-opacity-10"{% else %}{% if comment.parent_id %} class="bg-success bg-opacity-10"{% else %} class="bg-success bg-opacity-10"{% endif %}{% endif %}>
+			  {% if comment.parent_id == '0' %}<i class="fa-solid fa-comment text-secondary me-1"></i>{% else %}<i class="fa-solid fa-comment-dots text-secondary me-1"></i>{% endif %}:&ensp;<a href="{{ comment.base_filter_url }}&filter_article={{ comment.article }}">{{ comment.article }}</a>&nbsp;<a href="{{ comment.article_edit }}" target="_blank"><i class="fa-solid fa-square-arrow-up-right me-1"></i></a>
+              <p class="mt-3">{{ comment.comment }}</p>
             </td>
           </tr>
           <tr>
-            <td class="text-end text-nowrap text-decoration-none">
-              {% if comment.approve %}
-                <button type="button" value="{{ comment.approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
+            <td colspan="2" class="text-end text-nowrap text-decoration-none pb-4">
+              {% if not comment.status %}
+                <button type="button" id="button-enable-{{ comment.article_comment_id }}" value="{{ comment.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-sm btn-success"><i class="fa-solid fa-plus-circle"></i></button>
               {% else %}
-                <button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>
+                <button type="button" class="btn btn-sm btn-success" disabled><i class="fa-solid fa-check"></i></button>
+                <button type="button" id="button-disable-{{ comment.article_comment_id }}" value="{{ comment.disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-sm btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
               {% endif %}
-              <button type="button" value="{{ comment.spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" class="btn btn-warning"><i class="fa-solid fa-ban"></i></button>
-              <button type="button" value="{{ comment.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+              <button type="button" id="button-spam-{{ comment.article_comment_id }}" value="{{ comment.spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-ban"></i></button>
+              {% if not comment.parent_id %}
+				<button type="button" id="button-reply-{{ comment.article_comment_id }}" onclick="openCommentDialog(this);" data-bs-toggle="tooltip" title="{{ button_reply }}" class="btn btn-sm btn-info" data-is-add-reply="1" data-edit-url="{{ comment.edit_url }}" data-article-comment-id="0" data-parent-id="{{ comment.article_comment_id }}" data-status="{{ comment.status }}"><i class="fa-solid fa-reply"></i></button>
+              {% endif %}
+			  <button type="button" id="button-editcomment-{{ comment.article_comment_id }}" onclick="openCommentDialog(this);" data-bs-toggle="tooltip" title="{{ button_edit }}" class="{% if not comment.status %}btn btn-sm btn-secondary{% else %}btn btn-sm btn-primary{% endif %}" data-edit-url="{{ comment.edit_url }}" data-article-comment-id="{{ comment.article_comment_id }}" data-parent-id="{{ comment.parent_id }}" data-status="{{ comment.status }}"><i class="fa-solid fa-pencil"></i></button>
+              <button type="button" id="button-delete-{{ comment.article_comment_id }}" value="{{ comment.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
             </td>
           </tr>
         {% endfor %}
       {% else %}
         <tr>
-          <td class="text-center" colspan="2">{{ text_no_results }}</td>
+          <td colspan="3" class="text-center">{{ text_no_results }}</td>
         </tr>
       {% endif %}
     </tbody>
@@ -49,3 +76,320 @@
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>
+
+<div id="comment-modal" class="modal text-start">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	  <form id="form-comment-edit">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3" id="article-id">
+            <label class="form-label required">{{ entry_article }}</label>
+			<select name="article_id" id="input-article-id" class="form-select"></select>
+          </div>
+		  <div class="mb-3 form-group">
+		    <label for="input-customer-modal" class="form-label" id="customer-label">{{ entry_customer }}</label><small id="small-cust-id" class="ms-1 d-none">(<span id="span-cust-id">0</span>)</small>
+		    <div class="input-group mb-1">
+			  <input type="text" name="customer_name" id="input-customer-modal" value="" placeholder="{{ entry_customer_elipsis }}" data-oc-target="autocomplete-customer-modal" class="form-control" autocomplete="off"/>
+			  <ul id="autocomplete-customer-modal" class="dropdown-menu"><li></li></ul>
+			  <div class="input-group-append d-none" id="button-append">
+			    <button class="btn btn-outline-secondary" type="button" id="button-addon">X</button>
+			  </div>
+		    </div>
+		    <div id="customer-name-help" class="form-control-static small text-secondary ms-1 d-none">{{ text_customer_help }}</div>
+		  </div>
+          <div class="mb-3" id="rating">
+            <label class="form-label required">{{ entry_rating }}</label>
+            <div id="input-rating">
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="1" id="input-rating-1" class="form-check-input"/>
+                <label for="input-rating-1" class="form-check-label">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="2" id="input-rating-2" class="form-check-input"/>
+                <label for="input-rating-2" class="form-check-label">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="3" id="input-rating-3" class="form-check-input"/>
+                <label for="input-rating-3" class="form-check-label">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="4" id="input-rating-4" class="form-check-input"/>
+                <label for="input-rating-4" class="form-check-label">4</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="5" id="input-rating-5" class="form-check-input"/>
+                <label for="input-rating-5" class="form-check-label">5</label>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label required">{{ entry_comment }}</label>
+            <textarea name="comment" id="input-comment" rows="5" class="form-control"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_status }}</label>
+            <div class="form-switch form-switch-lg">
+              <input type="hidden" name="status" value="0"/>
+              <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input text-center"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+		  <input type="hidden" name="parent_id" id="input-parent-id" value="0"/>
+          <input type="hidden" name="article_comment_id" value="0" id="input-article-comment-id"/>
+		  <input type="hidden" name="customer_id" id="input-customer-id" value="0"/>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ button_cancel }}</button>
+		  <button type="button" id="button-save" class="btn btn-primary btn-block button-savecomment" onclick="saveComment();"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+        </div>
+	  </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript"><!--
+// Sort Menu changed
+$('#form-comment #input-sort').on('change', function(e) {
+    $('#list').load($(this).val());
+});
+
+// Modal Dialog
+function openCommentDialog(element) {
+	// Get 'data' properties from clicked button
+	var parentId = $(element).data('parent-id');
+	var articleCommentId = $(element).data('article-comment-id');
+	var status = $(element).data('status');
+
+	// Only exists via Reply button
+	var isAddReply = $(element).data('is-add-reply') ?? 0;
+
+    $('.alert-dismissible').remove();
+
+	$.ajax({
+		url: 'index.php?route=cms/comment.getArticleSelectOptions&user_token={{ user_token }}',
+		type: 'get',
+		cache: false
+	}).done(function(data) {
+		$('#comment-modal select[name=\'article_id\']').html(data);
+	});
+
+	// Edit
+    if (articleCommentId) {
+		if (parentId) {
+			// Edit Reply
+			$('.modal-title').html('<i class="fa-solid fa-info-circle"></i> {{ text_edit_reply }}');
+			$('#form-comment-edit #rating').addClass('d-none');
+		} else {
+			// Edit Comment
+			$('.modal-title').html('<i class="fa-solid fa-info-circle"></i> {{ text_edit_comment }}');
+			$('#form-comment-edit #rating').removeClass('d-none');
+		}
+
+		$.ajax({
+			url: $(element).data('edit-url'),
+        	type: 'get',
+			cache: false,
+        	dataType: 'json',
+        	success: function(json) {
+				if (json['error']) {
+                    $('#form-comment').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+				} else if (json['warning']) {
+                    $('#form-comment').prepend('<div class="alert alert-warning alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+				}
+
+				if (json['item_info']) {
+					// Set Hidden input item values
+					$('#form-comment-edit #input-parent-id').val(json['item_info']['parent_id']);
+					$('#form-comment-edit input[name=\'article_comment_id\']').val(json['item_info']['article_comment_id']);
+
+					// Article ID
+					$('#form-comment-edit select[name=\'article_id\']').val(json['item_info']['article_id']);
+					$('#form-comment-edit select[name=\'article_id\']').prop('disabled', true);
+
+					// Customer label and placeholder text
+					$('#form-comment-edit #customer-label').html('{{ entry_customer }}');
+					$('#form-comment-edit #input-customer-modal').attr('placeholder', '{{ entry_customer }}');
+
+					// Customer 'clear' button and help text
+					$('#form-comment-edit #button-append').addClass('d-none');
+					$('#form-comment-edit #customer-name-help').addClass('d-none');
+
+					// Customer ID
+					$('#form-comment-edit #input-customer-id').val(json['item_info']['customer_id']);
+					$('#form-comment-edit #span-cust-id').html(json['item_info']['customer_id']);
+					$('#form-comment-edit #small-cust-id').removeClass('d-none');
+
+					// Customer Name
+					$('#form-comment-edit input[name=\'customer_name\']').prop('disabled', true);
+
+					if (json['item_info']['customer']) {
+						$('#form-comment-edit input[name=\'customer_name\']').val(json['item_info']['customer']);
+					} else {
+						$('#form-comment-edit input[name=\'customer_name\']').val('{{ text_admin_customer }}');
+					}
+
+					// Rating
+					$('#form-comment-edit input[name=\'rating\']').prop('checked', false);
+					$('#form-comment-edit input[name=\'rating\'][value=' + json['item_info']['rating'] + ']').prop('checked', true);
+
+					// Comment
+					$('#form-comment-edit textarea[name=\'comment\']').html(json['item_info']['comment']).val();
+
+					// Status
+					$('#form-comment-edit input[name=\'status\']').prop('checked', false);
+					$('#form-comment-edit input[name=\'status\'][value=' + json['item_info']['status'] + ']').prop('checked', true);
+
+					// Show the modal
+					$('#comment-modal').modal('show');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	} else {
+		// Add
+		if (isAddReply) {
+			// Add Reply
+			$('.modal-title').html('<i class="fa-solid fa-info-circle"></i> {{ text_add_reply }}');
+			$('#form-comment-edit #customer-label').html('{{ entry_reply_as }}');
+
+			// Set Hidden input item values
+			$('#form-comment-edit #input-parent-id').val(parentId);
+			$('#form-comment-edit input[name=\'article_comment_id\']').val(articleCommentId);
+
+			// Article ID
+			$('#form-comment-edit select[name=\'article_id\']').val($(element).data('article-id'));
+			$('#form-comment-edit select[name=\'article_id\']').prop('disabled', true);
+
+			// Ratings
+			$('#form-comment-edit input[name=\'rating\']').prop('checked', false);
+			$('#form-comment-edit #rating').addClass('d-none');
+		} else {
+			// Add Comment
+			$('.modal-title').html('<i class="fa-solid fa-info-circle"></i> {{ text_add_comment }}');
+			$('#form-comment-edit #customer-label').html('{{ entry_comment_as }}');
+
+			// Set Hidden input item values
+			$('#form-comment-edit #input-parent-id').val(0);
+			$('#form-comment-edit input[name=\'article_comment_id\']').val(0);
+
+			// Article ID
+			$('#form-comment-edit select[name=\'article_id\']').val(0);
+			$('#form-comment-edit select[name=\'article_id\']').prop('disabled', false);
+
+			// Ratings
+			$('#form-comment-edit input[name=\'rating\']').prop('checked', false);
+			$('#form-comment-edit #rating').removeClass('d-none');
+		}
+
+		// Customer 'clear' button and help text
+		$('#form-comment-edit #button-append').removeClass('d-none');
+		$('#form-comment-edit #customer-name-help').removeClass('d-none');
+
+		// Customer ID
+		$('#form-comment-edit #input-customer-id').val(0);
+		$('#form-comment-edit #span-cust-id').html(0);
+		$('#form-comment-edit #small-cust-id').addClass('d-none');
+
+		// Customer Name
+		$('#form-comment-edit input[name=\'customer_name\']').val('');
+		$('#form-comment-edit input[name=\'customer_name\']').prop('disabled', false);
+
+		// Comment
+		$('#form-comment-edit textarea[name=\'comment\']').html('').val();
+
+		// Status
+		$('#form-comment-edit input[name=\'status\']').prop('checked', false);
+
+		// Show the modal
+		$('#comment-modal').modal('show');
+	}
+}
+
+// After-close function.
+$('#comment-modal').on('hidden.bs.modal', function() {
+	$('#list').load($('#form-comment').attr('data-oc-load'));
+});
+
+// Clear Customer ID and Name
+$('#button-addon').click(function() {
+	// Customer ID
+	$('#form-comment-edit #input-customer-id').val(0);
+	$('#form-comment-edit #span-cust-id').html(0);
+	$('#form-comment-edit #small-cust-id').addClass('d-none');
+
+	// Customer Name
+	$('#form-comment-edit input[name=\'customer_name\']').val('');
+});
+
+// Get customer_id by iterating through dropdown menu items 
+$('#form-comment-edit .dropdown-menu').on('click', function() {
+	var dropdownId = $(this).attr('id');
+
+	var listItems = $('#form-comment-edit .dropdown-menu li a');
+
+	if (dropdownId == 'autocomplete-customer-modal'){
+		let currentName = $('#form-comment-edit #input-customer-modal').val();
+
+		listItems.each(function(idx, li) {
+			let name = $(li).html();
+			let id = $(li).attr('href');
+
+			if (name == currentName) {
+				// Customer ID
+				$('#form-comment-edit #input-customer-id').val(id);
+				$('#form-comment-edit #span-cust-id').html(id);
+				$('#form-comment-edit #small-cust-id').removeClass('d-none');
+
+				// Customer Name
+				$('#form-comment-edit input[name=\'customer_name\']').val(currentName);
+
+				return;
+			}
+		});
+	}
+});
+
+function saveComment() {
+	// Enable disabled items to include in POST data
+	$('#form-comment-edit select[name=\'article_id\']').prop('disabled', false);
+
+    $.ajax({
+        url: 'index.php?route=cms/comment.save&user_token={{ user_token }}',
+        type: 'post',
+        dataType: 'json',
+        data: $('#form-comment-edit').serialize(),
+        beforeSend: function() {
+            $('#button-save').button('loading');
+        },
+        complete: function() {
+            $('#button-save').button('reset');
+			$('#form-comment-edit select[name=\'article_id\']').prop('disabled', true);
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#form-comment-edit .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+            }
+
+            if (json['success']) {
+                $('#form-comment-edit .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                window.location.reload();
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+//--></script>

@@ -16,7 +16,9 @@ $_['text_keyword']            = 'Do not use spaces, instead replace spaces with 
 $_['column_name']             = 'Article Name';
 $_['column_author']           = 'Author';
 $_['column_rating']           = 'Rating';
+$_['column_likes']            = 'Likes';
 $_['column_date_added']       = 'Date Added';
+$_['column_status']           = 'Status';
 $_['column_action']           = 'Action';
 
 // Entry
@@ -36,7 +38,7 @@ $_['entry_keyword']           = 'Keyword';
 $_['entry_layout']            = 'Layout Override';
 
 // Button
-$_['button_rating']           = 'Calculate Ratings';
+$_['button_refresh']          = 'Refresh Ratings';
 
 // Error
 $_['error_warning']           = 'Warning: Please check the form carefully for errors!';

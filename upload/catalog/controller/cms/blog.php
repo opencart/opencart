@@ -184,11 +184,15 @@ class Blog extends \Opencart\System\Engine\Controller {
 				$image = '';
 			}
 
+			// Likes
+			$likes = $this->calculateLikes($result['article_id'], 0);
+
 			$data['articles'][] = [
 				'description'   => $description,
 				'image'         => $image,
 				'filter_author' => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&author=' . $result['author'] . $url),
 				'comment_total' => $this->model_cms_article->getTotalComments($result['article_id'], ['parent_id' => 0]),
+				'total_likes' 	=> $likes,
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'href'          => $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&article_id=' . $result['article_id'] . $url)
 			] + $result;
@@ -404,9 +408,22 @@ class Blog extends \Opencart\System\Engine\Controller {
 				$data['image'] = '';
 			}
 
-			$data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
-			$data['author'] = $article_info['author'];
+			// Customer
+			$this->load->model('account/customer');
+
+			// Author
+			$data['author'] = ($this->customer->isLogged()) ? $this->customer->getAuthor() : '';
+
+			// Create a login token to prevent brute force attacks
+			$this->session->data['comment_token'] = oc_token(32);
+
+			$data['rating'] = $article_info['rating'];
+			$data['blog_url'] = $this->url->link('cms/blog.info', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . $url);
+
+			// Use 'article_author' to prevent conflict with Customer 'author'.
+			$data['article_author'] = $article_info['author'];
 			$data['filter_author'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&author=' . $article_info['author']);
+			$data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($article_info['date_added']));
 
 			$data['tags'] = [];
@@ -425,6 +442,10 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['comment'] = $this->config->get('config_comment_status') ? $this->load->controller('cms/comment') : '';
 			$data['comment_total'] = $this->model_cms_article->getTotalComments($article_id, ['parent_id' => 0]);
 
+			// Likes
+			$data['article_comment_id'] = '0';
+			$data['total_likes'] = $this->calculateLikes($article_id);
+
 			$data['continue'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -440,5 +461,29 @@ class Blog extends \Opencart\System\Engine\Controller {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Calculate Likes
+	 *
+	 * @return int
+	 */
+	public function calculateLikes(int $article_id): int {
+		$this->load->model('cms/article');
+
+		$total_rating = 0;
+
+		// Likes
+		$ratings = $this->model_cms_article->getLikes($article_id);
+
+		foreach ($ratings as $rating) {
+			if ($rating['rating'] == 1) {
+				$total_rating += $rating['total'];
+			} else {
+				$total_rating -= $rating['total'];
+			}
+		}
+
+		return $total_rating;
 	}
 }

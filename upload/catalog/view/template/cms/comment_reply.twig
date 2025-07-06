@@ -1,20 +1,48 @@
 {% if replies %}
   <div id="reply-{{ parent_id }}-{{ page }}">
-    {% for reply in replies %}
-      <div class="p-2 ps-5 border-top">
-        <p>{{ text_by }} {{ reply.author }} - {{ reply.date_added }}</p>
-        <p>{{ reply.comment }}</p>
-      </div>
-    {% endfor %}
+  {% for reply in replies %}
+	<div class="ms-5 pt-2 pb-0 pe-2 border-top">
+	  <div class="float-end">
+	    {% if reply.edit %}
+	    <span class="lh-sm">
+		  <button type="button" value="{{ reply.edit }}" data-oc-toggle="reply" data-oc-target="#reply-0" data-oc-trigger="#button-refresh" data-article-comment-id="{{ reply.article_comment_id }}" data-reply-rating="{{ reply.rating }}" data-reply-comment="{{ reply.comment }}" data-reply-author="{{ reply.author }}" class="btn btn-link btn-sm p-0 m-0 me-2"><i class="fa fa-pencil text-primary me-1"></i><span class="text-primary">{{ text_edit_icon }}</span></button>
+		  <button type="button" value="{{ reply.delete }}" data-oc-toggle="delete" data-oc-target="#reply-0" data-oc-trigger="#button-refresh" class="btn btn-link btn-sm p-0 m-0 me-2"><i class="fa fa-trash-can text-danger me-1"></i><span class="text-danger">{{ text_delete_icon }}</span></button>
+	    </span>
+	    {% endif %}
+	  </div>
+	  <p><i class="fa-solid fa-user me-2{% if reply.is_admin %} text-success{% elseif reply.edit %} text-primary{% else %} text-dark{% endif %}"></i>{{ reply.author }} - {{ reply.date_added }}<span id="likes-{{ reply.article_comment_id }}" class="d-inline">{% if reply.total_likes < 0 %} - <i class="fa fa-thumbs-down text-danger ms-1 me-2"></i>{{ reply.total_likes }}{% elseif reply.total_likes > 0 %} - <i class="fa fa-thumbs-up text-primary ms-1 me-2"></i>{{ reply.total_likes }}{% endif %}</span></p>
+	  <p class="comment">{{ reply.comment }}</p>
+    </div>
+	<div class="ps-5 pt-0 pb-3 pe-2">
+      {% if logged %}
+        {% if reply.customer_can_like == '1' %}
+		  <div id="like-dislike-{{ reply.article_comment_id }}" class="d-inline{% if reply.customer_did_like == '0' or reply.customer_did_like == '1' %} d-none{% endif %}" data-article-comment-id="{{ reply.article_comment_id }}">
+            <button type="button" value="{{ reply.like }}" data-bs-toggle="tooltip" title="{{ button_like }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-thumbs-up"></i> {{ text_like_icon }}</button><span class="ps-1"></span>
+            <button type="button" value="{{ reply.dislike }}" data-bs-toggle="tooltip" title="{{ button_dislike }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-thumbs-down"></i> {{ text_dislike_icon }}</button><span class="ps-1"></span>
+		  </div>
+		  <div id="undo-like-{{ reply.article_comment_id }}" class="d-inline{% if reply.customer_did_like != '1' %} d-none{% endif %}" data-article-comment-id="{{ reply.article_comment_id }}">
+            <button type="button" value="{{ reply.dislike }}" data-bs-toggle="tooltip" title="{{ button_undo_like }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-undo"></i> {{ text_undo_like_icon }}</button><span class="ps-1"></span>
+		  </div>
+		  <div id="undo-dislike-{{ reply.article_comment_id }}" class="d-inline{% if reply.customer_did_like != '0' %} d-none{% endif %}" data-article-comment-id="{{ reply.article_comment_id }}">
+            <button type="button" value="{{ reply.like }}" data-bs-toggle="tooltip" title="{{ button_undo_dislike }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-undo"></i> {{ text_undo_dislike_icon }}</button><span class="ps-1"></span>
+		  </div>
+        {% endif %}
+      {% else %}
+        <a href="{{ login }}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-thumbs-up"></i> {{ text_like_icon }}</a><span class="ps-1"></span>
+        <a href="{{ login }}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-thumbs-down"></i> {{ text_dislike_icon }}</a><span class="ps-1"></span>
+      {% endif %}
+    </div>
+  {% endfor %}
   </div>
 {% endif %}
 <div class="text-center p-2 border-top">
-  <button type="button" value="{{ refresh }}" id="button-refresh-{{ parent_id }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-{{ page }}" class="btn btn-secondary d-none"><i class="fa fa-sync"></i></button>
+  <button type="button" value="{{ refresh }}" id="button-refresh-{{ parent_id }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ parent_id }}-{{ page }}" class="btn btn-secondary btn-sm d-none"><i class="fa fa-sync"></i></button>
+  <button type="button" value="{{ parent_id }}" data-oc-toggle="hide" class="btn btn-secondary btn-sm ms-1 me-1">{{ button_hide_replies }}</button>
   {% if not replies %}
-    <button type="button" class="btn btn-secondary" disabled>{{ button_replies }}</button>
+    <button type="button" class="btn btn-secondary btn-sm" disabled>{{ button_view_replies }}</button>
   {% elseif next %}
-    <button type="button" value="{{ next }}" data-oc-toggle="next" class="btn btn-secondary">{{ button_more }}</button>
+    <button type="button" value="{{ next }}" data-oc-toggle="next" class="btn btn-secondary btn-sm">{{ button_more }}</button>
   {% else %}
-    <button type="button" class="btn btn-secondary" disabled>{{ button_more }}</button>
+    <button type="button" class="btn btn-secondary btn-sm" disabled>{{ button_more }}</button>
   {% endif %}
 </div>

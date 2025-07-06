@@ -45,6 +45,10 @@ class Customer {
 	/**
 	 * @var string
 	 */
+	private string $author = '';
+	/**
+	 * @var string
+	 */
 	private string $telephone = '';
 	/**
 	 * @var bool
@@ -79,6 +83,7 @@ class Customer {
 				$this->lastname = $customer_query->row['lastname'];
 				$this->customer_group_id = $customer_query->row['customer_group_id'];
 				$this->email = $customer_query->row['email'];
+				$this->author = $customer_query->row['author'];
 				$this->telephone = $customer_query->row['telephone'];
 				$this->newsletter = $customer_query->row['newsletter'];
 				$this->safe = (bool)$customer_query->row['safe'];
@@ -131,6 +136,7 @@ class Customer {
 			$this->lastname = $customer_query->row['lastname'];
 			$this->customer_group_id = $customer_query->row['customer_group_id'];
 			$this->email = $customer_query->row['email'];
+			$this->author = $customer_query->row['author'];
 			$this->telephone = $customer_query->row['telephone'];
 			$this->newsletter = $customer_query->row['newsletter'];
 			$this->safe = (bool)$customer_query->row['safe'];
@@ -161,6 +167,7 @@ class Customer {
 		$this->lastname = '';
 		$this->customer_group_id = 0;
 		$this->email = '';
+		$this->author = '';
 		$this->telephone = '';
 		$this->newsletter = false;
 		$this->safe = false;
@@ -243,6 +250,27 @@ class Customer {
 	 */
 	public function getEmail(): string {
 		return $this->email;
+	}
+
+	/**
+	 * Get Author
+	 *
+	 * If 'author' is empty, the customer name is returned.
+	 *
+	 * @return string
+	 *
+	 * @example
+	 *
+	 * $customer = $this->customer->getAuthor();
+	 */
+	public function getAuthor(): string {
+		$author = $this->author;
+		
+		if (!$author) {
+			$author = $this->firstname . ' ' . $this->lastname;
+		}
+
+		return $author;
 	}
 
 	/**

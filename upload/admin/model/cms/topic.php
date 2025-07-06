@@ -224,7 +224,8 @@ class Topic extends \Opencart\System\Engine\Model {
 
 		$sort_data = [
 			'td.name',
-			't.sort_order'
+			't.sort_order',
+			't.status'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
@@ -290,6 +291,28 @@ class Topic extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic`");
 
 		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Edit Status
+	 *
+	 * Edit topic status record in the database.
+	 *
+	 * @param int  $topic_id primary key of the topic record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('cms/topic');
+	 *
+	 * $this->model_cms_topic->editStatus($topic_id, $status);
+	 */
+	public function editStatus(int $topic_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "topic` SET `status` = '" . (bool)$status . "' WHERE `topic_id` = '" . (int)$topic_id . "'");
+
+		$this->cache->delete('topic');
 	}
 
 	/**
@@ -492,7 +515,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * $this->model_cms_topic->addLayout($topic_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $topic_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `topic_id` = '" . (int)$topic_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**
@@ -508,10 +531,10 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('cms/topic');
 	 *
-	 * $this->model_cms_topic->deleteLayouts($article_id);
+	 * $this->model_cms_topic->deleteLayouts($topic_id);
 	 */
 	public function deleteLayouts(int $topic_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$topic_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `topic_id` = '" . (int)$topic_id . "'");
 	}
 
 	/**

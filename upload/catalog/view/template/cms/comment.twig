@@ -1,14 +1,25 @@
-<div class="text-center">
+<div class="text-start">
   {% if logged %}
-    <button type="button" value="{{ like }}" data-bs-toggle="tooltip" title="{{ button_like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
-    <button type="button" value="{{ dislike }}" data-bs-toggle="tooltip" title="{{ button_dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
-    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" class="btn btn-secondary">{{ button_comment }}</button>
+	{% if customer_can_like == '1' %}
+	  <div id="like-dislike-{{ article_comment_id }}" class="d-inline{% if customer_did_like == '0' or customer_did_like == '1' %} d-none{% endif %}" data-article-comment-id="{{ article_comment_id }}">
+    	<button type="button" value="{{ like }}" data-bs-toggle="tooltip" title="{{ button_like }}" data-oc-toggle="rate" class="btn btn-secondary btn-sm"><i class="fa fa-thumbs-up"></i> {{ text_like_icon }}</button><span class="ps-1"></span>
+    	<button type="button" value="{{ dislike }}" data-bs-toggle="tooltip" title="{{ button_dislike }}" data-oc-toggle="rate" class="btn btn-secondary btn-sm"><i class="fa fa-thumbs-down"></i> {{ text_dislike_icon }}</button><span class="ps-1"></span>
+	  </div>
+	  <div id="undo-like-{{ article_comment_id }}" class="d-inline{% if customer_did_like != '1' %} d-none{% endif %}" data-article-comment-id="{{ article_comment_id }}">
+		<button type="button" value="{{ dislike }}" data-bs-toggle="tooltip" title="{{ button_undo_like }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-undo"></i> {{ text_undo_like_icon }}</button><span class="ps-1"></span>
+	  </div>
+	  <div id="undo-dislike-{{ article_comment_id }}" class="d-inline{% if customer_did_like != '0' %} d-none{% endif %}" data-article-comment-id="{{ article_comment_id }}">
+		<button type="button" value="{{ like }}" data-bs-toggle="tooltip" title="{{ button_undo_dislike }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-undo"></i> {{ text_undo_dislike_icon }}</button><span class="ps-1"></span>
+	  </div>
+	{% endif %}
+    <button type="button" value="{{ comment_add }}" data-oc-toggle="comment" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" class="btn btn-secondary btn-sm"><i class="fa fa-comment"></i> {{ text_comment_icon }}</button><span class="ps-1"></span>
   {% else %}
-    <a href="{{ login }}" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></a>
-    <a href="{{ login }}" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></a>
-    <a href="{{ login }}" class="btn btn-secondary">{{ button_login }}</a>
+    <a href="{{ login }}" class="btn btn-secondary btn-sm"><i class="fa fa-thumbs-up"></i> {{ text_like_icon }}</a><span class="ps-1"></span>
+    <a href="{{ login }}" class="btn btn-secondary btn-sm"><i class="fa fa-thumbs-down"></i> {{ text_dislike_icon }}</a><span class="ps-1"></span>
+    <a href="{{ login }}" class="btn btn-secondary btn-sm">{{ button_login_comment }}</a><span class="ps-1"></span>
   {% endif %}
 </div>
+<div id="comments-anchor"/></div>
 <hr/>
 <div class="row mb-3">
   <div class="col">
@@ -30,15 +41,40 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">{{ text_write }}</h5>
+        <h5 class="modal-title">{{ text_add_comment }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <form id="form-comment" action="" data-oc-target="" data-oc-trigger="">
-          <div class="mb-3">
+          <div class="mb-3 d-none" id="author-block">
             <label for="input-author" class="form-label">{{ entry_author }}</label>
-            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" required/>
-            <div id="error-author" class="invalid-feedback"></div>
+            <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" disabled/>
+			<small id="author-help" class="form-text text-muted">{{ text_author_help }}</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label required">{{ entry_rating }}</label>
+            <div id="input-rating">
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="1" id="input-rating-1" class="form-check-input"/>
+                <label for="input-rating-1" class="form-check-label">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="2" id="input-rating-2" class="form-check-input"/>
+                <label for="input-rating-2" class="form-check-label">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="3" id="input-rating-3" class="form-check-input"/>
+                <label for="input-rating-3" class="form-check-label">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="4" id="input-rating-4" class="form-check-input"/>
+                <label for="input-rating-4" class="form-check-label">4</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="rating" value="5" id="input-rating-5" class="form-check-input"/>
+                <label for="input-rating-5" class="form-check-label">5</label>
+              </div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="input-comment" class="form-label">{{ entry_comment }}</label>
@@ -49,7 +85,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" id="button-comment" form="form-comment" class="btn btn-primary">{{ button_comment }}</button>
+        <button type="submit" id="button-comment" form="form-comment" class="btn btn-primary">{{ button_save_comment }}</button>
       </div>
     </div>
   </div>
@@ -65,15 +101,133 @@ $('#input-sort').on('change', function(e) {
     $('#comment').load($(this).val());
 });
 
-// Add Comment
-$('#cms-blog').on('click', '[data-oc-toggle=\'comment\']', function(e) {
+// Delete a Comment or a Reply
+$('#cms-blog').on('click', '[data-oc-toggle=\'delete\']', function(e) {
     e.preventDefault();
 
     var element = this;
 
+	if (!confirm('{{ text_confirm }}')) {
+		return false;
+	}
+
+    $.ajax({
+        url: $(element).val(),
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Add or Edit a Reply
+$('#cms-blog').on('click', '[data-oc-toggle=\'reply\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+    let articleCommentId = $(element).data('article-comment-id') ?? 0;
+
     $('#form-comment').attr('action', $(element).val());
     $('#form-comment').attr('data-oc-target', $(element).attr('data-oc-target'));
     $('#form-comment').attr('data-oc-trigger', $(element).attr('data-oc-trigger'));
+
+    $('.alert-dismissible').remove();
+
+    if (articleCommentId) {
+		// Edit Reply
+		$('.modal-title').html('<i class="fa-solid fa-info-circle"></i> {{ text_edit_reply }}');
+		$('#button-comment').html('{{ button_save_reply }}');
+
+		// Author
+		$('#input-author').val($(element).data('reply-author'));
+		$('#author-block').addClass('d-none');
+
+		// Substitute <br/> in comment with newline char
+		var comment = $(element).data('reply-comment');
+		let text = comment.replace(/<br\s*\/?>/mg,"\r");
+		$('#input-comment').val(text);
+	} else {
+		// Add Reply
+		$('.modal-title').html('<i class="fa-solid fa-info-circle"></i> {{ text_add_reply }}');
+		$('#button-comment').html('{{ button_add_reply }}');
+
+		// Author
+		$('#input-author').val('{{ author }}');
+		$('#author-block').removeClass('d-none');
+
+		$('#input-comment').val('');
+	}
+
+	// Set rating to 0. Replies do not have a rating.
+	$('#form-comment input[name=\'rating\']').prop('checked', false);
+	$('#form-comment #input-rating').parent().hide();
+
+	$('#form-comment #input-captcha').val('');
+
+    $('#modal-comment').modal('show');
+});
+
+// Add or Edit a Comment
+$('#cms-blog').on('click', '[data-oc-toggle=\'comment\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+    var articleCommentId = $(element).data('article-comment-id') ?? 0;
+
+    $('#form-comment').attr('action', $(element).val());
+    $('#form-comment').attr('data-oc-target', $(element).attr('data-oc-target'));
+    $('#form-comment').attr('data-oc-trigger', $(element).attr('data-oc-trigger'));
+
+    $('.alert-dismissible').remove();
+
+    if (articleCommentId) {
+		// Edit Comment
+		$('.modal-title').html('<i class="fa-solid fa-info-circle"></i> {{ text_edit_comment }}');
+		$('#button-comment').html('{{ button_save_comment }}');
+
+		// Author
+		$('#input-author').val($(element).data('comment-author'));
+		$('#author-block').addClass('d-none');
+
+		// Substitute <br/> in comment with newline char
+		var comment = $(element).data('comment-comment');
+		let text = comment.replace(/<br\s*\/?>/mg,"\r");
+		$('#input-comment').val(text);
+
+    	var rating = $(element).data('comment-rating');
+		$('#form-comment input[name=\'rating\']').prop('checked', false);
+		$('#form-comment input[name=\'rating\'][value=' + rating + ']').prop('checked', true);
+	} else {
+		// Add Comment
+		$('.modal-title').html('<i class="fa-solid fa-info-circle"></i> {{ text_add_comment }}');
+		$('#button-comment').html('{{ button_add_comment }}');
+
+		// Author
+		$('#input-author').val('{{ author }}');
+		$('#author-block').removeClass('d-none');
+
+		$('#input-comment').val('');
+		$('#form-comment input[name=\'rating\']').prop('checked', false);
+	}
+
+	$('#form-comment #input-rating').parent().show();
+
+	$('#form-comment #input-captcha').val('');
 
     $('#modal-comment').modal('show');
 });
@@ -117,9 +271,9 @@ $('#form-comment').on('submit', function(e) {
             }
 
             if (json['success']) {
-                $('#modal-comment .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-comment').val('');
+			    $('#modal-comment').modal('hide');
 
                 $($('#form-comment').attr('data-oc-trigger')).trigger('click');
             }
@@ -130,29 +284,50 @@ $('#form-comment').on('submit', function(e) {
     });
 });
 
-// More
+// View Replies
 $('#comment').on('click', '[data-oc-toggle=\'next\']', function(e) {
     e.preventDefault();
 
     var element = this;
+    var buttonClass = $(element).attr('class');
 
     $.ajax({
         url: $(element).val(),
         dataType: 'html',
         beforeSend: function() {
+			$(element).removeClass(buttonClass);
+			$(element).addClass('btn btn-secondary btn-sm');
+
             $(element).button('loading');
         },
         complete: function() {
+			$(element).removeClass('btn btn-secondary btn-sm');
+			$(element).addClass(buttonClass);
+
             $(element).button('reset');
+			$(element).attr('disabled', true);
         },
         success: function(html) {
-            $(element).parent().before(html);
-            $(element).parent().remove();
+            $(element).parent().after(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+});
+
+// Hide Replies
+$('#comment').on('click', '[data-oc-toggle=\'hide\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+	let parentId = $(element).val();
+	let elementId = '#reply-' + parentId + '-1';
+
+	$(elementId).remove();
+	$(element).parent().remove();	
+
+	$('#view-replies-' + parentId).attr('disabled', false);
 });
 
 // Refresh
@@ -182,19 +357,28 @@ $('#comment').on('click', '[data-oc-toggle=\'refresh\']', function(e) {
     });
 });
 
-// Rating
+// Rate
 $('#comment-container').on('click', '[data-oc-toggle=\'rate\']', function(e) {
     e.preventDefault();
 
     var element = this;
+    var buttonClass = $(element).attr('class');
+    var parentClass = $(element).parent().attr('class');
+	var articleCommentId = $(element).parent().data('article-comment-id');
 
     $.ajax({
         url: $(element).val(),
         dataType: 'json',
         beforeSend: function() {
+			$(element).removeClass(buttonClass);
+			$(element).addClass('btn btn-secondary btn-sm');
+
             $(element).button('loading');
         },
         complete: function() {
+			$(element).removeClass('btn btn-secondary btn-sm');
+			$(element).addClass(buttonClass);
+
             $(element).button('reset');
         },
         success: function(json) {
@@ -206,6 +390,29 @@ $('#comment-container').on('click', '[data-oc-toggle=\'rate\']', function(e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+				$(element).parent().removeClass(parentClass);
+				$(element).parent().addClass(parentClass + ' d-none');
+				
+				// Show the appropriate like/dislike button block
+				if (json['liked'] == '0') {
+					$('#undo-dislike-' + articleCommentId).removeClass('d-none');
+				} else if (json['liked'] == '1') {
+					$('#undo-like-' + articleCommentId).removeClass('d-none');
+				} else {
+					$('#like-dislike-' + articleCommentId).removeClass('d-none');
+				}
+
+				// Update the like/dislike icon and counter
+				if (json['total_likes'] < '0') {
+					// Match style in comment_list.twig (id=like-dislike)
+					$('#likes-' + articleCommentId).html(' - <i class="fa fa-thumbs-down text-danger ms-1 me-2"></i>' + json['total_likes']);
+				} else if (json['total_likes'] > '0') {
+					// Match style in comment_list.twig (id=like-dislike)
+					$('#likes-' + articleCommentId).html(' - <i class="fa fa-thumbs-up text-primary ms-1 me-2"></i>' + json['total_likes']);
+				} else {
+					$('#likes-' + articleCommentId).html('');
+				}
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

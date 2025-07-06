@@ -26,6 +26,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'firstname'         => 'John',
 	 *     'lastname'          => 'Doe',
 	 *     'email'             => 'demo@opencart.com',
+	 *     'author'            => 'My Pen Name',
 	 *     'telephone'         => '1234567890',
 	 *     'custom_field'      => [],
 	 *     'newsletter'        => 0,
@@ -40,7 +41,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * $customer_id = $this->model_customer_customer->addCustomer($customer_data);
 	 */
 	public function addCustomer(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape(oc_strtolower($data['email'])) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode([])) . "', `newsletter` = '" . (isset($data['newsletter']) ? (bool)$data['newsletter'] : 0) . "', `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `status` = '" . (isset($data['status']) ? (bool)$data['status'] : 0) . "', `safe` = '" . (isset($data['safe']) ? (bool)$data['safe'] : 0) . "', `commenter` = '" . (isset($data['commenter']) ? (bool)$data['commenter'] : 0) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape(oc_strtolower($data['email'])) . "', `author` = '" . $this->db->escape($data['author']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode([])) . "', `newsletter` = '" . (isset($data['newsletter']) ? (bool)$data['newsletter'] : 0) . "', `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `status` = '" . (isset($data['status']) ? (bool)$data['status'] : 0) . "', `safe` = '" . (isset($data['safe']) ? (bool)$data['safe'] : 0) . "', `commenter` = '" . (isset($data['commenter']) ? (bool)$data['commenter'] : 0) . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
@@ -64,6 +65,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	 *     'firstname'         => 'John',
 	 *     'lastname'          => 'Doe',
 	 *     'email'             => 'demo@opencart.com',
+	 *     'author'            => 'My Pen Name',
 	 *     'telephone'         => '1234567890',
 	 *     'custom_field'      => [],
 	 *     'newsletter'        => 0,
@@ -78,31 +80,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	 * $this->model_customer_customer->editCustomer($customer_id, $customer_data);
 	 */
 	public function editCustomer(int $customer_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape(oc_strtolower($data['email'])) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode([])) . "', `newsletter` = '" . (isset($data['newsletter']) ? (bool)$data['newsletter'] : 0) . "', `status` = '" . (isset($data['status']) ? (bool)$data['status'] : 0) . "', `safe` = '" . (isset($data['safe']) ? (bool)$data['safe'] : 0) . "', `commenter` = '" . (isset($data['commenter']) ? (bool)$data['commenter'] : 0) . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape(oc_strtolower($data['email'])) . "', `author` = '" . $this->db->escape($data['author']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : json_encode([])) . "', `newsletter` = '" . (isset($data['newsletter']) ? (bool)$data['newsletter'] : 0) . "', `status` = '" . (isset($data['status']) ? (bool)$data['status'] : 0) . "', `safe` = '" . (isset($data['safe']) ? (bool)$data['safe'] : 0) . "', `commenter` = '" . (isset($data['commenter']) ? (bool)$data['commenter'] : 0) . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		if ($data['password']) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
 		}
-	}
-
-	/**
-	 * Edit Token
-	 *
-	 * Edit customer token record in the database.
-	 *
-	 * @param int    $customer_id primary key of the customer record
-	 * @param string $token
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('customer/customer');
-	 *
-	 * $this->model_customer_customer->editToken($customer_id, $token);
-	 */
-	public function editToken(int $customer_id, string $token): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**
@@ -152,6 +134,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->deleteTransactions($customer_id);
 		$this->deleteWishlists($customer_id);
 		$this->deleteIps($customer_id);
+		$this->deleteTokens($customer_id);
 
 		// Affiliate
 		$this->load->model('marketing/affiliate');
@@ -1303,6 +1286,25 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Customers By Author
+	 *
+	 * @param string $author
+	 *
+	 * @return int
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $customer_total = $this->model_customer_customer->getTotalCustomersByAuthor($author);
+	 */
+	public function getTotalCustomersByAuthor(string $author): int {
+		$query = $this->db->query("SELECT COUNT(DISTINCT `customer_id`) AS `total` FROM `" . DB_PREFIX . "customer` WHERE LCASE(`author`) = '" . $this->db->escape(oc_strtolower($author)) . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Get Total Login Attempts
 	 *
 	 * Get the total number of customer login records in the database.
@@ -1343,25 +1345,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Reset Authorizes
-	 *
-	 * Edit customer authorize record in the database.
-	 *
-	 * @param int $customer_id primary key of the customer record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('customer/customer');
-	 *
-	 * $this->model_account_customer->resetAuthorizes($customer_id);
-	 */
-	public function resetAuthorizes(int $customer_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
-	}
-
-	/**
 	 * Delete Authorizes
 	 *
 	 * Delete customer authorize records in the database.
@@ -1385,6 +1368,25 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 
 		$this->db->query($sql);
+	}
+
+	/**
+	 * Reset Authorizes
+	 *
+	 * Edit customer authorize record in the database.
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $this->model_account_customer->resetAuthorizes($customer_id);
+	 */
+	public function resetAuthorizes(int $customer_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**
@@ -1489,5 +1491,36 @@ class Customer extends \Opencart\System\Engine\Model {
 		} else {
 			return 0;
 		}
+	}
+
+	/*
+	 * Add Token
+	 */
+	public function addToken(int $customer_id, string $type, string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `customer_id` = '" . (int)$customer_id . "' AND `type` = '" . $this->db->escape($type) . "'");
+
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_token` SET `customer_id` = '" . (int)$customer_id . "', `code` = '" . $this->db->escape($code) . "', `type` = '" . $this->db->escape($type) . "', `date_added` = NOW()");
+	}
+
+	public function deleteTokens(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
+	 * Delete Token By Code
+	 *
+	 * @param string $code
+	 * @param int    $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/customer');
+	 *
+	 * $this->model_account_customer->deleteToken($customer_id);
+	 */
+	public function deleteTokenByCode(string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 }

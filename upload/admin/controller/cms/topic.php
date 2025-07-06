@@ -76,13 +76,13 @@ class Topic extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 't.sort_order';
+			$sort = 't.status';
 		}
 
 		if (isset($this->request->get['order'])) {
 			$order = (string)$this->request->get['order'];
 		} else {
-			$order = 'ASC';
+			$order = 'DESC';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -122,7 +122,11 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_topic->getTopics($filter_data);
 
 		foreach ($results as $result) {
-			$data['topics'][] = ['edit' => $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . $url)] + $result;
+			$data['topics'][] = [
+				'edit'    => $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . $url),
+				'enable'  => $this->url->link('cms/topic.enable', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . $url),
+				'disable' => $this->url->link('cms/topic.disable', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . $url)
+			] + $result;
 		}
 
 		$url = '';
@@ -135,7 +139,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		// Sorts
 		$data['sort_name'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=bcd.name' . $url);
-		$data['sort_sort_order'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=bc.sort_order' . $url);
+		$data['sort_sort_order'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=t.sort_order' . $url);
+		$data['sort_status'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=t.status' . $url);
 
 		$url = '';
 
@@ -164,6 +169,72 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$data['order'] = $order;
 
 		return $this->load->view('cms/topic_list', $data);
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('cms/topic');
+
+		$json = [];
+
+		if (isset($this->request->get['topic_id'])) {
+			$topic_id = (int)$this->request->get['topic_id'];
+		} else {
+			$topic_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/topic')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// topic
+			$this->load->model('cms/topic');
+
+			$this->model_cms_topic->editStatus($topic_id, true);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('cms/topic');
+
+		$json = [];
+
+		if (isset($this->request->get['topic_id'])) {
+			$topic_id = (int)$this->request->get['topic_id'];
+		} else {
+			$topic_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/topic')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// topic
+			$this->load->model('cms/topic');
+
+			$this->model_cms_topic->editStatus($topic_id, false);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**
@@ -250,20 +321,16 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
-		$data['stores'] = [];
+		$stores = [];
 
-		$data['stores'][] = [
+		$stores[] = [
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
+			'name'     => $this->config->get('config_name')
 		];
 
 		$this->load->model('setting/store');
 
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = $result;
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		if (!empty($topic_info)) {
 			$data['topic_store'] = $this->model_cms_topic->getStores($topic_info['topic_id']);

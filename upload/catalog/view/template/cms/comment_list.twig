@@ -1,30 +1,49 @@
 <div id="comment-0">
   {% if comments %}
     {% for comment in comments %}
-      <div id="comment-{{ comment.article_comment_id }}" class="border mb-3">
-        <div class="p-2">
-          <p>{{ text_by }} {{ comment.author }} - {{ comment.date_added }}</p>
-          <p>{{ comment.comment }}</p>
-          <div class="text-end">
-            {% if logged %}
-              <button type="button" value="{{ comment.like }}" data-bs-toggle="tooltip" title="{{ button_like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
-              <button type="button" value="{{ comment.dislike }}" data-bs-toggle="tooltip" title="{{ button_dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
-              <button type="button" value="{{ comment.reply_add }}" data-oc-toggle="comment" data-oc-target="#reply-{{ comment.article_comment_id }}" data-oc-trigger="#button-refresh-{{ comment.article_comment_id }}" class="btn btn-secondary">{{ button_reply }}</button>
-            {% else %}
-              <a href="{{ login }}" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></a>
-              <a href="{{ login }}" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></a>
-              <a href="{{ login }}" class="btn btn-secondary">{{ button_login_reply }}</a>
-            {% endif %}
-          </div>
+      <div id="comment-{{ comment.article_comment_id }}" class="border-top">
+    	<div class="ps-2 pt-2 pb-0 pe-2">
+		  <div class="float-end">
+	        {% if comment.edit %}
+	        <span class="lh-sm">
+			  <button type="button" value="{{ comment.edit }}" data-oc-toggle="comment" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" data-article-comment-id="{{ comment.article_comment_id }}" data-comment-rating="{{ comment.rating }}" data-comment-comment="{{ comment.comment }}" data-comment-author="{{ comment.author }}" class="btn btn-sm btn-link p-0 m-0 ms-2 me-2"><i class="fa fa-pencil text-primary me-1"></i><span class="text-primary">{{ text_edit_icon }}</span></button>
+			  {% if comment.reply_total == '0' %}
+			  	<button type="button" value="{{ comment.delete }}" data-oc-toggle="delete" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" class="btn btn-link btn-sm p-0 m-0 me-2"><i class="fa fa-trash-can text-danger me-1"></i><span class="text-danger">{{ text_delete_icon }}</span></button>
+	  	      {% endif %}
+	  	    </span>
+	  	    {% endif %}
+		    {{ text_stars_icon }}
+		    {% for i in 1..5 %}
+    		  {% if i <= comment.rating %}<span class="fa fa-star checked"></span>{% else %}<span class="fa fa-star"></span>{% endif %}
+  		    {% endfor %}
+		  </div>
+		  <p><i class="fa-solid fa-user me-2{% if comment.is_admin %} text-success{% elseif comment.edit %} text-primary{% else %} text-dark{% endif %}"></i>{{ comment.author }} - {{ comment.date_added }}<span id="likes-{{ comment.article_comment_id }}" class="d-inline">{% if comment.total_likes < 0 %} - <i class="fa fa-thumbs-down text-danger ms-1 me-2"></i>{{ comment.total_likes }}{% elseif comment.total_likes > 0 %} - <i class="fa fa-thumbs-up text-primary ms-1 me-2"></i>{{ comment.total_likes }}{% endif %}</span></p>
+		  <p class="comment">{{ comment.comment }}</p>
         </div>
         <div id="reply-{{ comment.article_comment_id }}">
           <div id="reply-{{ comment.article_comment_id }}-0"></div>
-          <div class="text-center p-2 border-top">
-            <button type="button" value="{{ comment.reply }}" id="button-refresh-{{ comment.article_comment_id }}" data-oc-toggle="refresh" data-oc-target="#reply-{{ comment.article_comment_id }}-0" class="btn btn-secondary d-none"><i class="fa fa-sync"></i></button>
-            {% if comment.reply_total %}
-              <button type="button" value="{{ comment.reply }}" data-oc-toggle="next" class="btn btn-secondary">{{ button_replies }} ({{ comment.reply_total }})</button>
+          <div class="ps-2 pt-0 pb-3 pe-2">
+            {% if logged %}
+              {% if comment.customer_can_like == '1' %}
+				<div id="like-dislike-{{ comment.article_comment_id }}" class="d-inline{% if comment.customer_did_like == '0' or comment.customer_did_like == '1' %} d-none{% endif %}" data-article-comment-id="{{ comment.article_comment_id }}">
+                  <button type="button" value="{{ comment.like }}" data-bs-toggle="tooltip" title="{{ button_like }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-thumbs-up"></i> {{ text_like_icon }}</button><span class="ps-1"></span>
+                  <button type="button" value="{{ comment.dislike }}" data-bs-toggle="tooltip" title="{{ button_dislike }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-thumbs-down"></i> {{ text_dislike_icon }}</button><span class="ps-1"></span>
+				</div>
+				<div id="undo-like-{{ comment.article_comment_id }}" class="d-inline{% if comment.customer_did_like != '1' %} d-none{% endif %}" data-article-comment-id="{{ comment.article_comment_id }}">
+                  <button type="button" value="{{ comment.dislike }}" data-bs-toggle="tooltip" title="{{ button_undo_like }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-undo"></i> {{ text_undo_like_icon }}</button><span class="ps-1"></span>
+				</div>
+				<div id="undo-dislike-{{ comment.article_comment_id }}" class="d-inline{% if comment.customer_did_like != '0' %} d-none{% endif %}" data-article-comment-id="{{ comment.article_comment_id }}">
+                  <button type="button" value="{{ comment.like }}" data-bs-toggle="tooltip" title="{{ button_undo_dislike }}" data-oc-toggle="rate" class="btn btn-outline-secondary btn-sm"><i class="fa fa-undo"></i> {{ text_undo_dislike_icon }}</button><span class="ps-1"></span>
+				</div>
+              {% endif %}
+			  <button type="button" value="{{ comment.reply_add }}" data-oc-toggle="reply" data-oc-target="#reply-0" data-oc-trigger="#button-refresh" class="btn btn-outline-secondary btn-sm"><i class="fa fa-reply"></i> {{ text_reply_icon }}</button><span class="ps-1"></span>
             {% else %}
-              <button type="button" class="btn btn-secondary" disabled>{{ button_replies }}</button>
+              <a href="{{ login }}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-thumbs-up"></i> {{ text_like_icon }}</a><span class="ps-1"></span>
+              <a href="{{ login }}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-thumbs-down"></i> {{ text_dislike_icon }}</a><span class="ps-1"></span>
+              <a href="{{ login }}" class="btn btn-outline-secondary btn-sm">{{ button_login_reply }}</a><span class="ps-1"></span>
+            {% endif %}
+            {% if comment.reply_total %}
+              <button type="button" id="view-replies-{{ comment.article_comment_id }}" value="{{ comment.reply }}" data-oc-toggle="next" class="btn btn-outline-secondary btn-sm">{{ button_view_replies }} ({{ comment.reply_total }})</button>
             {% endif %}
           </div>
         </div>
@@ -39,8 +58,5 @@
   {% endif %}
 </div>
 <div class="text-center p-2">
-  <button type="button" value="{{ refresh }}" id="button-refresh" data-oc-toggle="refresh" data-oc-target="#comment-0" class="btn btn-secondary d-none"><i class="fa fa-sync"></i></button>
+  <button type="button" value="{{ refresh }}" id="button-refresh" data-oc-toggle="refresh" data-oc-target="#comment-0" class="btn btn-secondary btn-sm d-none"><i class="fa fa-sync"></i></button>
 </div>
-
-
-

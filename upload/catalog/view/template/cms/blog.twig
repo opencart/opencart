@@ -43,6 +43,18 @@
       </div>
       {% if articles %}
         {% for article in articles %}
+		  <div class="float-end">
+	        {% if comment.edit %}
+	        <span class="lh-sm">
+			  <button type="button" value="{{ comment.edit }}" data-oc-toggle="comment" data-comment-id="{{ comment.article_comment_id }}" data-comment-author="{{ comment.author }}" data-comment-rating="{{ comment.rating }}" data-comment-comment="{{ comment.comment }}" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" class="btn btn-link btn-sm p-0 m-0 ms-2 me-2"><i class="fa fa-pencil text-primary me-1"></i><span class="text-primary">{{ text_edit_icon }}</span></button>
+			  <button type="button" value="{{ comment.delete }}" data-oc-toggle="delete" data-oc-target="#comment-0" data-oc-trigger="#button-refresh" class="btn btn-link btn-sm p-0 m-0 me-2"><i class="fa fa-trash-can text-danger me-1"></i><span class="text-danger">{{ text_delete_icon }}</span></button>
+	  	    </span>
+	  	    {% endif %}
+		    {{ text_stars_icon }}
+		    {% for i in 1..5 %}
+    		  {% if i <= article.rating %}<span class="fa fa-star checked"></span>{% else %}<span class="fa fa-star"></span>{% endif %}
+  		    {% endfor %}
+		  </div>
           <div class="mb-3">
             <h2><a href="{{ article.href }}">{{ article.name }}</a></h2>
             {% if article.image %}
@@ -52,6 +64,7 @@
               <li class="list-inline-item">{{ text_by }} <a href="{{ article.filter_author }}">{{ article.author }}</a></li>
               <li class="list-inline-item">{{ article.date_added }}</li>
               <li class="list-inline-item">{{ article.comment_total }} {{ text_comment }}</li>
+              <li class="list-inline-item"><span class="d-inline">{% if article.total_likes < 0 %}<i class="fa fa-thumbs-down text-danger me-2"></i>{{ article.total_likes }}{% elseif article.total_likes > 0 %}<i class="fa fa-thumbs-up text-primary me-2"></i>{{ article.total_likes }}{% endif %}</span></li>
             </ul>
             <p class="mb-3">{{ article.description }}</p>
             <div class="text-end"><a href="{{ article.href }}" class="btn btn-primary">{{ button_continue }}</a></div>

@@ -9,11 +9,22 @@
     {{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
+	  {% if rating %}
+	    <div class="float-end me-2">
+		  {{ text_stars_icon }}
+		  {% for i in 1..5 %}
+    		{% if i <= rating %}<span class="fa fa-star checked"></span>{% else %}<span class="fa fa-star"></span>{% endif %}
+  		  {% endfor %}
+	    </div>
+      {% endif %}
       <h1>{{ heading_title }}</h1>
       {% if image %}
         <img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail mb-2"/>
       {% endif %}
-      <p>{{ text_by }} <a href="{{ filter_author }}">{{ author }}</a> - {{ date_added }} - {{ comment_total }} {{ text_comment }}</p>
+      <p>
+        {{ text_by }} <a href="{{ filter_author }}">{{ article_author }}</a> - {{ date_added }} - <a href="{{ blog_url }}#comments-anchor">{{ comment_total }} {{ text_comment }}</a>
+        <span id="likes-{{ article_comment_id }}" class="d-inline">{% if total_likes < 0 %} - <i class="fa fa-thumbs-down text-danger ms-1 me-2"></i>{{ total_likes }}{% elseif total_likes > 0 %} - <i class="fa fa-thumbs-up text-primary ms-1 me-2"></i>{{ total_likes }}{% endif %}</span>
+      </p>
       <div>{{ description }}</div>
       {% if tags %}
         <p>{{ text_tags }}

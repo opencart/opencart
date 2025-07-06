@@ -66,8 +66,8 @@ class Menu extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_tool_menu->deleteMenuByCode($code);
 	 */
-	public function deleteMenu(string $menu_id): void {
-		$menu_info = $this->getMenu($menu_id);
+	public function deleteMenu(int $menu_id): void {
+		$menu_info = $this->getMenu((int)$menu_id);
 
 		if ($menu_info) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "menu` WHERE `menu_id` = '" . (int)$menu_id . "'");

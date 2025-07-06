@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
+// | 版权所有 2014~2025 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
 // | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
@@ -183,17 +183,18 @@ class BasicWeChat
      * 以POST获取接口数据并转为数组
      * @param string $url 接口地址
      * @param array $data 请求数据
-     * @param bool $buildToJson
+     * @param bool $toJson 转换JSON
+     * @param array $options 请求扩展数据
      * @return array
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    protected function httpPostForJson($url, array $data, $buildToJson = true)
+    protected function httpPostForJson($url, array $data, $toJson = true, array $options = [])
     {
         try {
-            $options = [];
-            if ($buildToJson) $options['headers'] = ['Content-Type: application/json'];
-            return Tools::json2arr(Tools::post($url, $buildToJson ? Tools::arr2json($data) : $data, $options));
+            $options['headers'] = isset($options['headers']) ? $options['headers'] : [];
+            if ($toJson) $options['headers'][] = 'Content-Type: application/json';
+            return Tools::json2arr(Tools::post($url, $toJson ? Tools::arr2json($data) : $data, $options));
         } catch (InvalidResponseException $exception) {
             if (!$this->isTry && in_array($exception->getCode(), ['40014', '40001', '41001', '42001'])) {
                 [$this->delAccessToken(), $this->isTry = true];
@@ -223,15 +224,15 @@ class BasicWeChat
      * 接口通用POST请求方法
      * @param string $url 接口URL
      * @param array $data POST提交接口参数
-     * @param bool $isBuildJson
+     * @param bool $toJson 是否转换为JSON参数
      * @return array
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    public function callPostApi($url, array $data, $isBuildJson = true)
+    public function callPostApi($url, array $data, $toJson = true, array $options = [])
     {
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, $data, $isBuildJson);
+        return $this->httpPostForJson($url, $data, $toJson, $options);
     }
 
     /**

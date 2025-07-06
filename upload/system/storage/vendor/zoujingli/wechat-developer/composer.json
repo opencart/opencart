@@ -30,6 +30,9 @@
     "ext-simplexml": "*"
   },
   "autoload": {
+    "files": [
+      "helper.php"
+    ],
     "classmap": [
       "We.php"
     ],

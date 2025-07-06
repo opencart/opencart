@@ -26,20 +26,25 @@
         "psr-4": { "ScssPhp\\ScssPhp\\Tests\\": "tests/" }
     },
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=8.1",
+        "ext-ctype": "*",
         "ext-json": "*",
-        "ext-ctype": "*"
+        "league/uri": "^7.4",
+        "league/uri-interfaces": "^7.4",
+        "scssphp/source-span": "^1.0",
+        "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
+        "symfony/polyfill-mbstring": "^1.30"
     },
     "suggest": {
-        "ext-mbstring": "For best performance, mbstring should be installed as it is faster than ext-iconv",
-        "ext-iconv": "Can be used as fallback when ext-mbstring is not available"
+        "ext-mbstring": "For best performance, mbstring should be installed as it is faster than the polyfill"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.4",
-        "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.3 || ^9.4",
+        "phpunit/phpunit": "^9.5.6",
         "sass/sass-spec": "*",
         "squizlabs/php_codesniffer": "~3.5",
         "symfony/phpunit-bridge": "^5.1",
+        "symfony/var-dumper": "^6.3",
         "thoughtbot/bourbon": "^7.0",
         "twbs/bootstrap": "~5.0",
         "twbs/bootstrap4": "4.6.1",
@@ -50,16 +55,16 @@
             "type": "package",
             "package": {
                 "name": "sass/sass-spec",
-                "version": "2022.08.19",
+                "version": "2024.06.24",
                 "source": {
                     "type": "git",
                     "url": "https://github.com/sass/sass-spec.git",
-                    "reference": "2bdc199723a3445d5badac3ac774105698f08861"
+                    "reference": "7ac806618da724333c60ad7b9c16b969470b9302"
                 },
                 "dist": {
                     "type": "zip",
-                    "url": "https://api.github.com/repos/sass/sass-spec/zipball/2bdc199723a3445d5badac3ac774105698f08861",
-                    "reference": "2bdc199723a3445d5badac3ac774105698f08861",
+                    "url": "https://api.github.com/repos/sass/sass-spec/zipball/7ac806618da724333c60ad7b9c16b969470b9302",
+                    "reference": "7ac806618da724333c60ad7b9c16b969470b9302",
                     "shasum": ""
                 }
             }
@@ -101,7 +106,6 @@
             }
         }
     ],
-    "bin": ["bin/pscss"],
     "config": {
         "sort-packages": true,
         "allow-plugins": {

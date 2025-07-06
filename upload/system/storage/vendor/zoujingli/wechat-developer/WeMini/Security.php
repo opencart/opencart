@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
+// | 版权所有 2014~2025 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
 // | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
@@ -36,7 +36,7 @@ class Security extends BasicWeChat
     public function imgSecCheck($media)
     {
         $url = 'https://api.weixin.qq.com/wxa/img_sec_check?access_token=ACCESS_TOKEN';
-        return $this->callPostApi($url, ['media' => $media], false);
+        return $this->callPostApi($url, ['media' => $media], false, ['headers' => ['Content-Type: application/octet-stream']]);
     }
 
     /**

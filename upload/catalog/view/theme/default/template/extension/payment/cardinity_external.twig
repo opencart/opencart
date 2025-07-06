@@ -1,0 +1,34 @@
+<html>
+   <head >
+      <title>Credit/Debit Card Payment By Cardinity</title>
+   </head>
+   <body>
+       <div>
+            <form name="checkout" method="POST" action="https://checkout.cardinity.com">
+
+                <input type="hidden" name="amount" value="{{ amount }}" />
+                <input type="hidden" name="country" value="{{ country }}" />
+                <input type="hidden" name="currency" value="{{ currency }}" />
+                <input type="hidden" name="order_id" value="{{ order_id }}" />
+                <input type="hidden" name="description" value="{{ description }}" />
+                <input type="hidden" name="return_url" value="{{ return_url }}" />
+                <input type="hidden" name="notification_url" value="{{ notification_url }}" />
+                <input type="hidden" name="project_id" value="{{ project_id }}" />
+                {% if email_address is not empty %}
+                    <input type="hidden" name="email_address" value="{{ email_address }}" />
+                {% endif %}
+                {% if mobile_phone_number is not empty %}
+                    <input type="hidden" name="mobile_phone_number" value="{{ mobile_phone_number }}" />
+                {% endif %}
+                <input type="hidden" name="signature" value="{{ signature }}" />
+
+                 <div class="buttons">
+                    <div class="pull-right">
+                        <input type="submit" value="{{ button_confirm }}" id="button-submit" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+                    </div>
+                </div>
+
+            </form>
+       </div>
+   </body>
+</html>

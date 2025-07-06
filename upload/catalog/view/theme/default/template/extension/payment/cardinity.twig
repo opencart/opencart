@@ -28,7 +28,7 @@
       <select name="exp_year" class="form-control">
        {% for year in years %}
         <option value="{{ year.value }}">{{ year.text }}</option>
-        {% endfor %}
+        {% endfor %}>
       </select>
     </div>
   </div>
@@ -39,14 +39,33 @@
     </div>
   </div>
   <div class="form-group">
-    <div class="col-sm-1 col-sm-offset-2">
-      <input id="button-confirm" type="button" value="{{ button_confirm }}" class="btn btn-primary" />
-    </div>
+  	<div class="col-sm-1 col-sm-offset-2">	
+	 	<div class="buttons">
+            <div class="pull-right">
+                <input id="button-confirm" type="button" value="{{ button_confirm}}" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+            </div>
+        </div>		
+    </div>	
   </div>
+
+	<input type='hidden' id='screen_width' name='screen_width' value=''/>
+	<input type='hidden' id='screen_height' name='screen_height' value=''/>
+	<input type='hidden' id='browser_language' name='browser_language' value=''/>
+	<input type='hidden' id='color_depth' name='color_depth' value=''/>
+	<input type='hidden' id='time_zone' name='time_zone' value=''/>
+
+
 </form>
 <div id="cardinity-3ds"></div>
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
+
+	document.getElementById("screen_width").value = screen.availWidth;
+    document.getElementById("screen_height").value = screen.availHeight;
+    document.getElementById("browser_language").value = navigator.language;
+    document.getElementById("color_depth").value = screen.colorDepth;
+    document.getElementById("time_zone").value = new Date().getTimezoneOffset();
+
 	$.ajax({
 		url: 'index.php?route=extension/payment/cardinity/send',
 		type: 'post',
@@ -63,6 +82,7 @@ $('#button-confirm').on('click', function() {
 		},
 		complete: function() {
 			$('#button-confirm').button('reset');
+			$('#button-confirm').button('loading').attr('disabled', false);
 		},
 		success: function(json) {
 			if (json['error']) {
@@ -94,6 +114,18 @@ $('#button-confirm').on('click', function() {
 					url: 'index.php?route=extension/payment/cardinity/threeDSecureForm',
 					type: 'post',
 					data: json['3ds'],
+					dataType: 'html',
+					success: function(html) {
+						$('#cardinity-3ds').html(html);
+					}
+				});
+			}
+
+			if (json['3dsv2']) {
+				$.ajax({
+					url: 'index.php?route=extension/payment/cardinity/threeDSecureFormV2',
+					type: 'post',
+					data: json['3dsv2'],
 					dataType: 'html',
 					success: function(html) {
 						$('#cardinity-3ds').html(html);

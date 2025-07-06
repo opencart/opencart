@@ -44,7 +44,7 @@ To enable the full `sass-spec` compatibility tests:
 
 Run the following command from the root directory to check the code for "sniffs".
 
-    vendor/bin/phpcs --standard=PSR12 --extensions=php bin src tests *.php
+    vendor/bin/phpcs --standard=PSR12 --extensions=php bin src tests
 
 ## Static Analysis
 

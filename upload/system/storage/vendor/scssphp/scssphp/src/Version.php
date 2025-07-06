@@ -17,7 +17,7 @@ namespace ScssPhp\ScssPhp;
  *
  * @author Leaf Corcoran <leafot@gmail.com>
  */
-class Version
+final class Version
 {
-    const VERSION = '1.12.1';
+    const VERSION = '2.0.1';
 }

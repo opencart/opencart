@@ -12,8 +12,10 @@
 namespace Twig\TokenParser;
 
 use Twig\Error\SyntaxError;
+use Twig\Node\EmptyNode;
 use Twig\Node\Expression\ConstantExpression;
 use Twig\Node\Node;
+use Twig\Node\Nodes;
 use Twig\Token;
 
 /**
@@ -34,7 +36,7 @@ final class UseTokenParser extends AbstractTokenParser
 {
     public function parse(Token $token): Node
     {
-        $template = $this->parser->getExpressionParser()->parseExpression();
+        $template = $this->parser->parseExpression();
         $stream = $this->parser->getStream();
 
         if (!$template instanceof ConstantExpression) {
@@ -44,26 +46,26 @@ final class UseTokenParser extends AbstractTokenParser
         $targets = [];
         if ($stream->nextIf('with')) {
             while (true) {
-                $name = $stream->expect(/* Token::NAME_TYPE */ 5)->getValue();
+                $name = $stream->expect(Token::NAME_TYPE)->getValue();
 
                 $alias = $name;
                 if ($stream->nextIf('as')) {
-                    $alias = $stream->expect(/* Token::NAME_TYPE */ 5)->getValue();
+                    $alias = $stream->expect(Token::NAME_TYPE)->getValue();
                 }
 
                 $targets[$name] = new ConstantExpression($alias, -1);
 
-                if (!$stream->nextIf(/* Token::PUNCTUATION_TYPE */ 9, ',')) {
+                if (!$stream->nextIf(Token::PUNCTUATION_TYPE, ',')) {
                     break;
                 }
             }
         }
 
-        $stream->expect(/* Token::BLOCK_END_TYPE */ 3);
+        $stream->expect(Token::BLOCK_END_TYPE);
 
-        $this->parser->addTrait(new Node(['template' => $template, 'targets' => new Node($targets)]));
+        $this->parser->addTrait(new Nodes(['template' => $template, 'targets' => new Nodes($targets)]));
 
-        return new Node();
+        return new EmptyNode($token->getLine());
     }
 
     public function getTag(): string

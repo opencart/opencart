@@ -69,7 +69,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 			foreach ($files as $file) {
 				if (str_starts_with(basename($file), 'cache.') && is_file($file)) {
-					oc_delete_file($file);
+					oc_file_delete($file);
 				}
 			}
 

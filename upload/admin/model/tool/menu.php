@@ -56,7 +56,7 @@ class Menu extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Menu By Code
 	 *
-	 * @param string $code
+	 * @param int $menu_id
 	 *
 	 * @return void
 	 *
@@ -64,7 +64,7 @@ class Menu extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('tool/menu');
 	 *
-	 * $this->model_tool_menu->deleteMenuByCode($code);
+	 * $this->model_tool_menu->deleteMenu($menu_id);
 	 */
 	public function deleteMenu(int $menu_id): void {
 		$menu_info = $this->getMenu((int)$menu_id);

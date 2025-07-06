@@ -24,6 +24,8 @@ class Url {
 	private string $path;
 	private string $query;
 	private string $fragment;
+	private ?string $user = null;
+	private ?string $pass = null;
 
 	/**
 	 * @var array<int, object>
@@ -33,7 +35,9 @@ class Url {
 	/**
 	 * Constructor
 	 *
-	 * @param string $url
+	 * Parses the URL string and sets the corresponding properties of the class.
+	 *
+	 * @param string $url The URL string to parse.
 	 */
 	public function __construct(string $url) {
 		$this->url = $url;
@@ -41,7 +45,9 @@ class Url {
 		$parts = parse_url($url);
 
 		foreach ($parts as $key => $value) {
-			$this->{$key} = $value;
+			if (property_exists($this, $key)) {
+				$this->{$key} = $value;
+			}
 		}
 	}
 

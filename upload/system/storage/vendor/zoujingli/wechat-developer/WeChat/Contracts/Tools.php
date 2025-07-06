@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
+// | 版权所有 2014~2025 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
 // | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
@@ -20,6 +20,32 @@ use WeChat\Exceptions\InvalidArgumentException;
 use WeChat\Exceptions\InvalidResponseException;
 use WeChat\Exceptions\LocalCacheException;
 
+// =====================================================
+// 配置缓存处理函数 ( 适配其他环境 )
+// -----------------------------------------------------
+// 数据缓存 (set|get|del) 操作可以将缓存写到任意位置或Redis
+// 文件缓存 (put) 只能写在本地服务器，还需要返回可读的文件路径
+// 未配置自定义缓存处理机制时，默认在 cache_path 写入文件缓存
+// // =====================================================
+// \WeChat\Contracts\Tools::$cache_callable = [
+//    'set' => function ($name, $value, $expired = 360) {
+//        var_dump(func_get_args());
+//         return $value;
+//    },
+//    'get' => function ($name) {
+//        var_dump(func_get_args());
+//        return $value;
+//    },
+//    'del' => function ($name) {
+//        var_dump(func_get_args());
+//        return true;
+//    },
+//    'put' => function ($name) {
+//        var_dump(func_get_args());
+//        return $filePath;
+//    },
+// ];
+
 /**
  * 网络请求支持
  * Class Tools
@@ -34,14 +60,14 @@ class Tools
     public static $cache_path = null;
 
     /**
-     * 缓存写入操作
+     * 缓存读写配置
      * @var array
      */
     public static $cache_callable = [
-        'set' => null, // 写入缓存
-        'get' => null, // 获取缓存
-        'del' => null, // 删除缓存
-        'put' => null, // 写入文件
+        'set' => null, // 写入缓存 ($name,$value='',$expired=3600):string
+        'get' => null, // 获取缓存 ($name):mixed|null
+        'del' => null, // 删除缓存 ($name):boolean
+        'put' => null, // 写入文件 ($name,$content):string
     ];
 
     /**
@@ -67,7 +93,7 @@ class Tools
 
     /**
      * 获取输入对象
-     * @return false|mixed|string
+     * @return string
      */
     public static function getRawInput()
     {
@@ -76,6 +102,16 @@ class Tools
         } else {
             return $GLOBALS['HTTP_RAW_POST_DATA'];
         }
+    }
+
+    /**
+     * 设置输入内容
+     * @param string $rawInput
+     * @return void
+     */
+    public static function setRawInput($rawInput)
+    {
+        $GLOBALS['HTTP_RAW_POST_DATA'] = $rawInput;
     }
 
     /**
@@ -353,7 +389,8 @@ class Tools
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        list($content) = [curl_exec($curl), curl_close($curl)];
+        $content = curl_exec($curl);
+        curl_close($curl);
         // 清理 CURL 缓存文件
         if (!empty(self::$cache_curl)) foreach (self::$cache_curl as $key => $file) {
             Tools::delCache($file);

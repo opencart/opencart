@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
+// | 版权所有 2014~2025 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
 // | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
@@ -25,6 +25,37 @@ use WePayV3\Contracts\BasicWePay;
  */
 class Transfers extends BasicWePay
 {
+
+    /**
+     * 新版商家转换到零钱
+     * @param $body
+     * @return array|string
+     * @throws \WeChat\Exceptions\InvalidDecryptException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @link https://pay.weixin.qq.com/doc/v3/merchant/4012716434
+     */
+    public function bills($body)
+    {
+        if (empty($body['appid'])) {
+            $body['appid'] = $this->config['appid'];
+        }
+        if (!empty($body['user_name'])) {
+            $body['user_name'] = $this->rsaEncode($body['user_name']);
+        }
+        return $this->doRequest('POST', '/v3/fund-app/mch-transfer/transfer-bills', json_encode($body, JSON_UNESCAPED_UNICODE), true);
+    }
+
+    /**
+     * 查询转账结果
+     * @param $out_bill_no
+     * @return array|string
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     */
+    public function billsQuery($out_bill_no)
+    {
+        return $this->doRequest('GET', "/v3/fund-app/mch-transfer/transfer-bills/out-bill-no/{$out_bill_no}", '', true);
+    }
+
     /**
      * 发起商家批量转账
      * @param array $body
@@ -42,9 +73,12 @@ class Transfers extends BasicWePay
             foreach ($body['transfer_detail_list'] as &$item) if (isset($item['user_name'])) {
                 $item['user_name'] = $this->rsaEncode($item['user_name']);
             }
-        }
-        if (empty($body['total_num'])) {
-            $body['total_num'] = count($body['transfer_detail_list']);
+            if (empty($body['total_num'])) {
+                $body['total_num'] = count($body['transfer_detail_list']);
+            }
+            if (empty($body['total_amount'])) {
+                $body['total_amount'] = array_sum(array_column($body['transfer_detail_list'], 'transfer_amount'));
+            }
         }
         return $this->doRequest('POST', '/v3/transfer/batches', json_encode($body, JSON_UNESCAPED_UNICODE), true);
     }

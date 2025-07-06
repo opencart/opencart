@@ -12,8 +12,9 @@
 namespace Twig\Node\Expression\Binary;
 
 use Twig\Compiler;
+use Twig\Node\Expression\ReturnBoolInterface;
 
-class GreaterEqualBinary extends AbstractBinary
+class GreaterEqualBinary extends AbstractBinary implements ReturnBoolInterface
 {
     public function compile(Compiler $compiler): void
     {
@@ -24,7 +25,7 @@ class GreaterEqualBinary extends AbstractBinary
         }
 
         $compiler
-            ->raw('(0 <= twig_compare(')
+            ->raw('(0 <= CoreExtension::compare(')
             ->subcompile($this->getNode('left'))
             ->raw(', ')
             ->subcompile($this->getNode('right'))

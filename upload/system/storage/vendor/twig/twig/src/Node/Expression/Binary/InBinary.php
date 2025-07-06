@@ -12,13 +12,14 @@
 namespace Twig\Node\Expression\Binary;
 
 use Twig\Compiler;
+use Twig\Node\Expression\ReturnBoolInterface;
 
-class InBinary extends AbstractBinary
+class InBinary extends AbstractBinary implements ReturnBoolInterface
 {
     public function compile(Compiler $compiler): void
     {
         $compiler
-            ->raw('twig_in_filter(')
+            ->raw('CoreExtension::inFilter(')
             ->subcompile($this->getNode('left'))
             ->raw(', ')
             ->subcompile($this->getNode('right'))

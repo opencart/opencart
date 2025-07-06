@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
+// | 版权所有 2014~2025 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
 // | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
@@ -350,6 +350,9 @@ abstract class BasicAliPay
      */
     private function getRootCertSN($sign)
     {
+        if (strlen($sign) < 500 && file_exists($sign)) {
+            $sign = file_get_contents($sign);
+        }
         $sn = null;
         $array = explode('-----END CERTIFICATE-----', $sign);
         for ($i = 0; $i < count($array) - 1; $i++) {

@@ -13,6 +13,7 @@ namespace Twig\TokenParser;
 
 use Twig\Error\SyntaxError;
 use Twig\Node\Node;
+use Twig\Node\Nodes;
 use Twig\Node\SetNode;
 use Twig\Token;
 
@@ -34,13 +35,13 @@ final class SetTokenParser extends AbstractTokenParser
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
-        $names = $this->parser->getExpressionParser()->parseAssignmentExpression();
+        $names = $this->parseAssignmentExpression();
 
         $capture = false;
-        if ($stream->nextIf(/* Token::OPERATOR_TYPE */ 8, '=')) {
-            $values = $this->parser->getExpressionParser()->parseMultitargetExpression();
+        if ($stream->nextIf(Token::OPERATOR_TYPE, '=')) {
+            $values = $this->parseMultitargetExpression();
 
-            $stream->expect(/* Token::BLOCK_END_TYPE */ 3);
+            $stream->expect(Token::BLOCK_END_TYPE);
 
             if (\count($names) !== \count($values)) {
                 throw new SyntaxError('When using set, you must have the same number of variables and assignments.', $stream->getCurrent()->getLine(), $stream->getSourceContext());
@@ -52,13 +53,13 @@ final class SetTokenParser extends AbstractTokenParser
                 throw new SyntaxError('When using set with a block, you cannot have a multi-target.', $stream->getCurrent()->getLine(), $stream->getSourceContext());
             }
 
-            $stream->expect(/* Token::BLOCK_END_TYPE */ 3);
+            $stream->expect(Token::BLOCK_END_TYPE);
 
             $values = $this->parser->subparse([$this, 'decideBlockEnd'], true);
-            $stream->expect(/* Token::BLOCK_END_TYPE */ 3);
+            $stream->expect(Token::BLOCK_END_TYPE);
         }
 
-        return new SetNode($capture, $names, $values, $lineno, $this->getTag());
+        return new SetNode($capture, $names, $values, $lineno);
     }
 
     public function decideBlockEnd(Token $token): bool
@@ -69,5 +70,18 @@ final class SetTokenParser extends AbstractTokenParser
     public function getTag(): string
     {
         return 'set';
+    }
+
+    private function parseMultitargetExpression(): Nodes
+    {
+        $targets = [];
+        while (true) {
+            $targets[] = $this->parser->parseExpression();
+            if (!$this->parser->getStream()->nextIf(Token::PUNCTUATION_TYPE, ',')) {
+                break;
+            }
+        }
+
+        return new Nodes($targets);
     }
 }

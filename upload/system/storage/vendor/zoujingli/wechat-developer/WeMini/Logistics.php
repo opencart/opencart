@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
+// | 版权所有 2014~2025 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
 // | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
@@ -110,7 +110,7 @@ class Logistics extends BasicWeChat
      */
     public function getQuota($data)
     {
-        $url = 'https://api.weixin.qq.com/cgi-bin/express/business/path/get?access_token=ACCESS_TOKEN';
+        $url = 'https://api.weixin.qq.com/cgi-bin/express/business/quota/get?access_token=ACCESS_TOKEN';
         return $this->callPostApi($url, $data, true);
     }
 
@@ -191,4 +191,47 @@ class Logistics extends BasicWeChat
         $url = 'https://api.weixin.qq.com/cgi-bin/express/delivery/path/update?access_token=ACCESS_TOKEN';
         return $this->callPostApi($url, $data, true);
     }
+
+
+    /**
+     * 绑定/解绑物流账号
+     * @param array $data
+     * @return array
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
+     */
+    public function bindAccount($data)
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/express/business/account/bind?access_token=ACCESS_TOKEN';
+        return $this->callPostApi($url, $data, true);
+    }
+
+
+    /**
+     * 获取所有绑定的物流账号
+     * @param array $data
+     * @return array
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
+     */
+    public function getAllAccount($data)
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/express/business/account/getall?access_token=ACCESS_TOKEN';
+        return $this->callPostApi($url, $data, true);
+    }
+
+    /**
+     * 批量获取运单数据
+     * @param array $data
+     * @return array
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
+     */
+    public function batchGetOrder($data)
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/express/business/order/batchget?access_token=ACCESS_TOKEN';
+        return $this->callPostApi($url, $data, true);
+    }
+
+
 }

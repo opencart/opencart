@@ -1,9 +1,13 @@
 {% if payment %}
+<div id="refund_alert" style="display: none" class="alert alert-success alert-dismissible">
+    <i class="fa fa-check-circle"></i> <span class="alert_body"></span>
+    <button type="button" class="close" data-dismiss="alert">×</button>
+</div>
 <table class="table table-bordered">
   <tr>
 	<td>{{ column_refund_history }}</td>
 	<td>
-		<table class="table table-bordered">
+		<table id='refund-list-table' class="table table-bordered">
 		  <thead>
 			<tr>
 			  <td class="text-left">{{ column_date }}</td>
@@ -44,9 +48,9 @@
 			<tr>
 			  <td>
 				  {% if refund_action %}
-				  <label class="control-label">{{ text_amount }}:</label>
+				  <label class="control-label">Amount:</label>
 				  <input id="refund-amount" text="text" name="refund_amount" value="{{ max_refund_amount }}" />
-				  <label class="control-label">{{ text_description }}:</label>
+				  <label class="control-label">Description:</label>
 				  <input id="refund-description" text="text" name="refund_description" value="" />
 				  <a class="btn btn-primary button-command" data-type="refund">{{ button_refund }}</a>
 				  {% else %}
@@ -60,10 +64,10 @@
   </tr>
 </table>
 {% else %}
-{{ error_transaction }}
+Unable to find transaction for this order.
 {% endif %}
 
-<script type="text/javascript"><!--
+<script type="text/javascript">
 $('.button-command').on('click', function() {
 	var confirm_text = '';
 
@@ -85,34 +89,29 @@ $('.button-command').on('click', function() {
 			dataType: 'json',
 			beforeSend: function() {
 				$('#button-settle').button('loading');
-
-				$('.alert').hide();
-
-				$('.alert').removeClass('alert-success alert-danger');
+				$('#refund_alert').hide();
+				$('#refund_alert').removeClass('alert-success alert-danger');
 			},
 			complete: function() {
 				$('#button-settle').button('reset');
 			},
 			success: function(json) {
 				if (json.error) {
-					$('.alert').show();
-
-					$('.alert').addClass('alert-danger');
-
-					$('.alert').html('<i class="fa fa-check-circle"></i> ' + json.error);
+					$('#refund_alert').show();
+					$('#refund_alert').addClass('alert-danger');
+					$('#refund_alert').html('<i class="fa fa-check-circle"></i> ' + json.error);
 				}
 
 				if (json.success) {
-					$('.alert').show();
-
-					$('.alert').addClass('alert-success');
-
-					$('.alert').html('<i class="fa fa-exclamation-circle"></i> ' + json.success);
+					$('#refund_alert').addClass('alert-success');
+					$('#refund_alert').html('<i class="fa fa-exclamation-circle"></i> ' + json.success);
+					$('#refund_alert').show();
 				}
-
-				getPayment('{{ payment_id }}');
+				if(json.refund) {
+                    $("#refund-list-table tbody").prepend('<tr><td>'+json.refund.date_added+'</td><td>'+json.refund.amount+'</td><td>'+json.refund.status+'</td><td>'+json.refund.description+'</td></tr>');
+                }
 			}
 		});
 	}
 });
-//--></script>
+</script>

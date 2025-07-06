@@ -1,0 +1,14 @@
+{% if success %}
+<form id="cardinity-3dsv2-form" name="ThreeDForm" method="POST" action="{{ acs_url }}">
+	<input type="hidden" name="creq" value="{{ creq }}" />
+	<input type="hidden" name="threeDSSessionData" value="{{ threeDSSessionData }}" />
+</form>
+<script type="text/javascript"><!--
+$('#cardinity-3dsv2-form').submit();
+//--></script>
+{% endif %}
+{% if redirect %}
+<script type="text/javascript"><!--
+location = '{{ redirect }}';
+//--></script>
+{% endif %}

@@ -1,5 +1,6 @@
 # WeChatDeveloper for PHP
-
+[![star](https://gitcode.com/ThinkAdmin/WeChatDeveloper/star/badge.svg)](https://gitcode.com/ThinkAdmin/ThinkAdmin)
+[![star](https://gitee.com/zoujingli/WeChatDeveloper/badge/star.svg?theme=gvp)](https://gitee.com/zoujingli/ThinkAdmin)
 [![Latest Stable Version](https://poser.pugx.org/zoujingli/wechat-developer/v/stable)](https://packagist.org/packages/zoujingli/wechat-developer)
 [![Total Downloads](https://poser.pugx.org/zoujingli/wechat-developer/downloads)](https://packagist.org/packages/zoujingli/wechat-developer)
 [![Monthly Downloads](https://poser.pugx.org/zoujingli/wechat-developer/d/monthly)](https://packagist.org/packages/zoujingli/wechat-developer)
@@ -43,8 +44,11 @@ WeChatDeveloper 是基于官方接口封装，在做微信开发前，必需先�
 ----
 WeChatDeveloper 为开源项目，允许把它用于任何地方，不受任何约束，欢迎 fork 项目。
 
-* Gitee 托管地址：https://gitee.com/zoujingli/WeChatDeveloper
-* GitHub 托管地址：https://github.com/zoujingli/WeChatDeveloper
+我们的代码仓库已移至 **Github**，而 **Gitee** 和 **Gitcode** 则仅作为国内镜像仓库，方便广大开发者获取和使用。若想提交 **PR** 或 **ISSUE** 请在 [WeChatDeveloper](https://github.com/zoujingli/WeChatDeveloper) 仓库进行操作，如果在其他仓库操作或提交问题将无法处理！
+
+* Gitee 仓库地址：https://gitee.com/zoujingli/WeChatDeveloper
+* GitHub 仓库地址：https://github.com/zoujingli/WeChatDeveloper
+* GitCode 仓库地址：https://gitcode.com/ThinkAdmin/WeChatDeveloper
 
 文件说明（后续会根据官方文档增加文件）
 ----
@@ -114,19 +118,65 @@ include "您的目录/WeChatDeveloper/include.php";
 2.1 接口实例所需参数
 
 ```php
-$config = [
-    'token'          => 'test',
-    'appid'          => 'wx60a43dd8161666d4',
-    'appsecret'      => '71308e96a204296c57d7cd4b21b883e8',
-    'encodingaeskey' => 'BJIUzE0gqlWy0GxfPp4J1oPTBmOrNDIGPNav1YFH5Z5',
-    // 配置商户支付参数（可选，在使用支付功能时需要）
-    'mch_id'         => "1235704602",
-    'mch_key'        => 'IKI4kpHjU94ji3oqre5zYaQMwLHuZPmj',
-    // 配置商户支付双向证书目录（可选，在使用退款|打款|红包时需要）
-    'ssl_key'        => '',
-    'ssl_cer'        => '',
-    // 缓存目录配置（可选，需拥有读写权限）
-    'cache_path'     => '',
+
+// =====================================================
+// 配置缓存处理函数（适配不同环境）
+// -----------------------------------------------------
+// - 数据缓存（set|get|del）：可存储到本地或 Redis
+// - 文件缓存（put）：仅支持本地存储，并返回可读的文件路径
+// - 若未设置自定义缓存处理，默认存储在 cache_path 目录
+// =====================================================
+// \WeChat\Contracts\Tools::$cache_callable = [
+//    'set' => function ($name, $value, $expired = 360) {
+//        var_dump(func_get_args());
+//        return $value;
+//    },
+//    'get' => function ($name) {
+//        var_dump(func_get_args());
+//        return $value;
+//    },
+//    'del' => function ($name) {
+//        var_dump(func_get_args());
+//        return true;
+//    },
+//    'put' => function ($name) {
+//        var_dump(func_get_args());
+//        return $filePath;
+//    },
+// ];
+
+return [
+    // 公众号 APPID（可选）
+    'appid'        => 'wx3760xxxxxxxxxxxx',
+    
+    // 微信商户号（必填）
+    'mch_id'       => '15293xxxxxx',
+    
+    // 微信商户 V3 接口密钥（必填）
+    'mch_v3_key'   => '98b7fxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+
+    // 商户证书序列号（可选）：用于请求签名
+    'cert_serial'  => '49055D67B2XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    
+    // 微信商户证书公钥（必填）：可填写证书内容或文件路径，仅用于提取序列号
+    'cert_public'  => $certPublic,
+    
+    // 微信商户证书私钥（必填）：可填写证书内容或文件路径，用于请求数据签名
+    'cert_private' => $certPrivate,
+
+    // 自定义证书包：支持平台证书或支付公钥（可填写文件路径或证书内容）
+    'cert_package' => [
+        'PUB_KEY_ID_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' => $certPayment
+    ],
+
+    // 微信平台证书或支付证书序列号（可选）
+    // 'mp_cert_serial'  => 'PUB_KEY_ID_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+
+    // 微信平台证书或支付证书内容（可选）
+    // 'mp_cert_content' => $certPayment,
+
+    // 运行时文件缓存路径（可选）
+    'cache_path'   => ''
 ];
 ```
 
@@ -289,8 +339,8 @@ try {
 
 本项目包含的第三方源码和二进制文件的版权信息将另行标注，请在对应文件查看。
 
-版权所有 Copyright © 2014-2023 by ThinkAdmin (https://thinkadmin.top) All rights reserved。
+版权所有 Copyright © 2014-2025 by ThinkAdmin (https://thinkadmin.top) All rights reserved。
 
 ## 赞助打赏，请作者喝杯茶 ~
 
-![赞助](https://doc.thinkadmin.top/static/img/pay.png)
+![赞助](https://thinkadmin.top/static/img/pay.png)

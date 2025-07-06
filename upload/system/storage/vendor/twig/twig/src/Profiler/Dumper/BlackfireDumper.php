@@ -24,7 +24,7 @@ final class BlackfireDumper
         $this->dumpProfile('main()', $profile, $data);
         $this->dumpChildren('main()', $profile, $data);
 
-        $start = sprintf('%f', microtime(true));
+        $start = \sprintf('%f', microtime(true));
         $str = <<<EOF
 file-format: BlackfireProbe
 cost-dimensions: wt mu pmu
@@ -40,20 +40,20 @@ EOF;
         return $str;
     }
 
-    private function dumpChildren(string $parent, Profile $profile, &$data)
+    private function dumpChildren(string $parent, Profile $profile, &$data): void
     {
         foreach ($profile as $p) {
             if ($p->isTemplate()) {
                 $name = $p->getTemplate();
             } else {
-                $name = sprintf('%s::%s(%s)', $p->getTemplate(), $p->getType(), $p->getName());
+                $name = \sprintf('%s::%s(%s)', $p->getTemplate(), $p->getType(), $p->getName());
             }
-            $this->dumpProfile(sprintf('%s==>%s', $parent, $name), $p, $data);
+            $this->dumpProfile(\sprintf('%s==>%s', $parent, $name), $p, $data);
             $this->dumpChildren($name, $p, $data);
         }
     }
 
-    private function dumpProfile(string $edge, Profile $profile, &$data)
+    private function dumpProfile(string $edge, Profile $profile, &$data): void
     {
         if (isset($data[$edge])) {
             ++$data[$edge]['ct'];

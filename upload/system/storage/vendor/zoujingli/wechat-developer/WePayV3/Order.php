@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
+// | 版权所有 2014~2025 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
 // | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
@@ -64,10 +64,10 @@ class Order extends BasicWePay
             $time = strval(time());
             $appid = $this->config['appid'];
             $nonceStr = Tools::createNoncestr();
-            if ($type === 'app') {
+            if ($type === self::WXPAY_APP) {
                 $sign = $this->signBuild(join("\n", [$appid, $time, $nonceStr, $result['prepay_id'], '']));
-                return ['partnerId' => $this->config['mch_id'], 'prepayId' => $result['prepay_id'], 'package' => 'Sign=WXPay', 'nonceStr' => $nonceStr, 'timeStamp' => $time, 'sign' => $sign];
-            } elseif ($type === 'jsapi') {
+                return ['appId' => $appid, 'partnerId' => $this->config['mch_id'], 'prepayId' => $result['prepay_id'], 'package' => 'Sign=WXPay', 'nonceStr' => $nonceStr, 'timeStamp' => $time, 'sign' => $sign];
+            } elseif ($type === self::WXPAY_JSAPI) {
                 $sign = $this->signBuild(join("\n", [$appid, $time, $nonceStr, "prepay_id={$result['prepay_id']}", '']));
                 return ['appId' => $appid, 'timestamp' => $time, 'timeStamp' => $time, 'nonceStr' => $nonceStr, 'package' => "prepay_id={$result['prepay_id']}", 'signType' => 'RSA', 'paySign' => $sign];
             } else {
@@ -104,11 +104,11 @@ class Order extends BasicWePay
 
     /**
      * 支付通知解析
-     * @param array $data
+     * @param array|null $data
      * @return array
      * @throws \WeChat\Exceptions\InvalidDecryptException
      */
-    public function notify(array $data = [])
+    public function notify($data = [])
     {
         if (empty($data)) {
             $data = json_decode(Tools::getRawInput(), true);

@@ -1,0 +1,58 @@
+{
+    "name": "guzzlehttp/oauth-subscriber",
+    "description": "Guzzle OAuth 1.0 subscriber",
+    "keywords": ["oauth", "guzzle"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Graham Campbell",
+            "email": "hello@gjcampbell.co.uk",
+            "homepage": "https://github.com/GrahamCampbell"
+        },
+        {
+            "name": "Michael Dowling",
+            "email": "mtdowling@gmail.com",
+            "homepage": "https://github.com/mtdowling"
+        },
+        {
+            "name": "George Mponos",
+            "email": "gmponos@gmail.com",
+            "homepage": "https://github.com/gmponos"
+        },
+        {
+            "name": "Tobias Nyholm",
+            "email": "tobias.nyholm@gmail.com",
+            "homepage": "https://github.com/Nyholm"
+        }
+    ],
+    "require": {
+        "php" : "^7.2.5 || ^8.0",
+        "guzzlehttp/guzzle": "^7.9",
+        "guzzlehttp/psr7": "^2.7"
+    },
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.8.2",
+        "phpunit/phpunit" : "^8.5.36 || ^9.6.15"
+    },
+    "autoload": {
+        "psr-4": {
+            "GuzzleHttp\\Subscriber\\Oauth\\": "src"
+        }
+    },
+    "suggest": {
+        "ext-openssl": "Required to sign using RSA-SHA1"
+    },
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        },
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}

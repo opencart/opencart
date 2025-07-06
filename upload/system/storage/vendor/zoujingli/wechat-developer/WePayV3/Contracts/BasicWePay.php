@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | WeChatDeveloper
 // +----------------------------------------------------------------------
-// | 版权所有 2014~2024 ThinkAdmin [ thinkadmin.top ]
+// | 版权所有 2014~2025 ThinkAdmin [ thinkadmin.top ]
 // +----------------------------------------------------------------------
 // | 官方网站: https://thinkadmin.top
 // +----------------------------------------------------------------------
@@ -39,7 +39,7 @@ abstract class BasicWePay
      * 实例对象静态缓存
      * @var array
      */
-    static $cache = [];
+    protected static $cache = [];
 
     /**
      * 自动配置平台证书
@@ -58,8 +58,9 @@ abstract class BasicWePay
         'cert_serial'     => '', // 商户证书序号，无需配置
         'cert_public'     => '', // 商户公钥内容，需要配置
         'cert_private'    => '', // 商户密钥内容，需要配置
-        'mp_cert_serial'  => '', // 平台证书序号，无需配置
-        'mp_cert_content' => '', // 平台证书内容，无需配置
+        'cert_package'    => [], // 平台证书或支付证书配置
+        'mp_cert_serial'  => '', // 平台证书序号，无需配置 ( 指定平台证书或支付公钥 )
+        'mp_cert_content' => '', // 平台证书内容，无需配置 ( 指定平台证书或支付公钥 )
     ];
 
     /**
@@ -117,9 +118,21 @@ abstract class BasicWePay
             Tools::$cache_path = $options['cache_path'];
         }
 
-        // 自动配置平台证书
-        if ($this->autoCert) {
-            $this->_autoCert();
+        // 批量设置自定义证书
+        if (isset($options['cert_package']) && is_array($options['cert_package'])) {
+            foreach ($options['cert_package'] as $key => $cert) {
+                $this->withCertContent($key, $cert);
+            }
+        }
+
+        // 自动配置平台证书或支付公钥
+        if (empty($options['mp_cert_serial']) || empty($options['mp_cert_content'])) {
+            if ($this->autoCert && !$this->withCertPayment()) {
+                $this->_autoCert();
+            }
+        } elseif ($this->withCertContent($options['mp_cert_serial'], $options['mp_cert_content'])) {
+            $this->config['mp_cert_serial'] = $options['mp_cert_serial'];
+            $this->config['mp_cert_content'] = $options['mp_cert_content'];
         }
 
         // 服务商参数支持
@@ -207,6 +220,83 @@ abstract class BasicWePay
     }
 
     /**
+     * 模拟发起上传请求
+     * @param string $pathinfo 请求路由
+     * @param string $filename 文件本地路径
+     * @param boolean $verify 是否验证
+     * @param boolean $isjson 返回JSON
+     * @return array|string
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     */
+    public function doUpload($pathinfo, $filename, $verify = false, $isjson = true)
+    {
+        $filedata = file_get_contents($filename);
+        $fileinfo = [
+            'sha256'   => hash("sha256", $filedata),
+            'filename' => basename($filename)
+        ];
+        $jsondata = json_encode($fileinfo);
+        list($time, $nonce) = [time(), uniqid() . rand(1000, 9999)];
+        $signstr = join("\n", ['POST', $pathinfo, $time, $nonce, $jsondata, '']);
+        // 生成签名
+        $sign = $this->signBuild($signstr);
+        // 生成数据签名TOKEN
+        $token = sprintf('mchid="%s",nonce_str="%s",timestamp="%d",serial_no="%s",signature="%s"',
+            $this->config['mch_id'], $nonce, $time, $this->config['cert_serial'], $sign
+        );
+        $location = (preg_match('|^https?://|', $pathinfo) ? '' : $this->base) . $pathinfo;
+        $boundary = mt_rand(100000000000000000, 999999999999999999);
+        $header = [
+            'Accept: application/json',
+            "Content-Type: multipart/form-data; boundary={$boundary}",
+            'User-Agent: https://thinkadmin.top',
+            "Authorization: WECHATPAY2-SHA256-RSA2048 {$token}",
+            "serial_no: {$this->config['mp_cert_serial']}",
+            "nonce_str: {$nonce}",
+            "signature: {$sign}"
+        ];
+        $line = [];
+        $line[] = "--{$boundary}";
+        $line[] = "Content-Disposition: form-data; name=\"meta\"";
+        $line[] = "Content-Type: application/json";
+        $line[] = "";
+        $line[] = $jsondata;
+        $line[] = "--{$boundary}";
+        $line[] = "Content-Disposition: form-data; name=\"file\"; filename=\"{$fileinfo['filename']}\";";
+        $line[] = "Content-Type: image/jpg";
+        $line[] = "";
+        $line[] = $filedata;
+        $line[] = "--{$boundary}--";
+        $postdata = join("\r\n", $line);
+        list($header, $content) = $this->_doRequestCurl('POST', $location, [
+            'data' => $postdata, 'header' => $header,
+        ]);
+        if ($verify) {
+            $headers = [];
+            foreach (explode("\n", $header) as $line) {
+                if (stripos($line, 'Wechatpay') !== false) {
+                    list($name, $value) = explode(':', $line);
+                    list(, $keys) = explode('wechatpay-', strtolower($name));
+                    $headers[$keys] = trim($value);
+                }
+            }
+            try {
+                if (empty($headers)) {
+                    return $isjson ? json_decode($content, true) : $content;
+                }
+                $string = join("\n", [$headers['timestamp'], $headers['nonce'], $content, '']);
+                if (!$this->signVerify($string, $headers['signature'], $headers['serial'])) {
+                    throw new InvalidResponseException('验证响应签名失败');
+                }
+            } catch (\Exception $exception) {
+                throw new InvalidResponseException($exception->getMessage(), $exception->getCode());
+            }
+        }
+        return $isjson ? json_decode($content, true) : $content;
+    }
+
+
+    /**
      * 通过CURL模拟网络请求
      * @param string $method 请求方法
      * @param string $location 请求方法
@@ -260,8 +350,11 @@ abstract class BasicWePay
      */
     protected function signVerify($data, $sign, $serial)
     {
-        $cert = $this->_getCert($serial);
-        return @openssl_verify($data, base64_decode($sign), openssl_x509_read($cert), 'sha256WithRSAEncryption');
+        if (stripos($serial, 'PUB_KEY_ID_') !== false && !empty($this->config['cert_package'][$serial])) {
+            return openssl_verify($data, base64_decode($sign), $this->config['cert_package'][$serial], OPENSSL_ALGO_SHA256);
+        } else {
+            return openssl_verify($data, base64_decode($sign), openssl_x509_read($this->_getCert($serial)), 'sha256WithRSAEncryption');
+        }
     }
 
     /**
@@ -274,14 +367,27 @@ abstract class BasicWePay
     protected function _getCert($serial = '')
     {
         $certs = $this->tmpFile("{$this->config['mch_id']}_certs");
-        if (empty($certs) || empty($certs[$serial]['content'])) {
+        if (empty($certs) || empty($certs[$serial]['serial']) || empty($certs[$serial]['content'])) {
             Cert::instance($this->config)->download();
             $certs = $this->tmpFile("{$this->config['mch_id']}_certs");
         }
-        if (empty($certs[$serial]['content']) || $certs[$serial]['expire'] < time()) {
-            throw new InvalidResponseException("读取平台证书失败！");
+        foreach ($certs as $cert) {
+            if (!empty($cert['serial']) && !empty($cert['content']) && $cert['expire'] > time()) {
+                $this->config['cert_package'][$cert['serial']] = $cert['content'];
+                if (empty($this->config['mp_cert_serial']) && (empty($serial) || $serial === $cert['serial'])) {
+                    $this->config['mp_cert_serial'] = $cert['serial'];
+                    $this->config['mp_cert_content'] = $cert['content'];
+                }
+            }
+        }
+        if (isset($this->config['cert_package'][$serial])) {
+            return $this->config['cert_package'][$serial];
+        } elseif (!empty($this->config['mp_cert_content'])) {
+            return $this->config['mp_cert_content'];
+        } elseif ($cert = $this->withCertPayment()) {
+            return $cert;
         } else {
-            return $certs[$serial]['content'];
+            throw new InvalidResponseException("读取平台证书失败！");
         }
     }
 
@@ -305,11 +411,13 @@ abstract class BasicWePay
             throw new InvalidResponseException("读取平台证书失败！");
         }
         foreach ($certs as $k => $v) if ($v['expire'] > time() + 10) {
-            $this->config['mp_cert_serial'] = $k;
-            $this->config['mp_cert_content'] = $v['content'];
-            break;
+            $this->config['cert_package'][$k] = $v['content'];
+            if (empty($this->config['mp_cert_serial'])) {
+                $this->config['mp_cert_serial'] = $k;
+                $this->config['mp_cert_content'] = $v['content'];
+            }
         }
-        if (empty($this->config['mp_cert_serial']) || empty($this->config['mp_cert_content'])) {
+        if (empty($this->config['cert_package'])) {
             throw new InvalidResponseException("自动配置平台证书失败！");
         }
     }
@@ -348,5 +456,42 @@ abstract class BasicWePay
         } else {
             throw new InvalidDecryptException('Rsa Encrypt Error.');
         }
+    }
+
+    /**
+     * 设置证书内容
+     * @param string $key 证书ID或序号
+     * @param string $cert 证书文本内容
+     * @return string
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     */
+    private function withCertContent($key, $cert)
+    {
+        if (substr(trim($cert), 0, 5) == '-----') {
+            $this->config['cert_package'][$key] = $cert;
+        } elseif (file_exists($cert)) {
+            $this->config['cert_package'][$key] = file_get_contents($cert);
+        } else {
+            throw new InvalidResponseException("证书设置失败！");
+        }
+        return $cert;
+    }
+
+    /**
+     * 获取支付证书
+     * @return mixed|string
+     */
+    private function withCertPayment()
+    {
+        foreach ($this->config['cert_package'] as $key => $cert) {
+            if (strpos($key, 'PUB_KEY_ID_') === 0) {
+                if (empty($this->config['mp_cert_serial']) || empty($this->config['mp_cert_content'])) {
+                    $this->config['mp_cert_serial'] = $key;
+                    $this->config['mp_cert_content'] = $cert;
+                }
+                return $cert;
+            }
+        }
+        return '';
     }
 }

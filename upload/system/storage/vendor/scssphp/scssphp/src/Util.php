@@ -12,9 +12,11 @@
 
 namespace ScssPhp\ScssPhp;
 
-use ScssPhp\ScssPhp\Base\Range;
-use ScssPhp\ScssPhp\Exception\RangeException;
-use ScssPhp\ScssPhp\Node\Number;
+use League\Uri\Contracts\UriInterface;
+use League\Uri\Uri;
+use ScssPhp\ScssPhp\StackTrace\Frame;
+use ScssPhp\ScssPhp\Util\StringUtil;
+use SourceSpan\FileSpan;
 
 /**
  * Utility functions
@@ -23,162 +25,109 @@ use ScssPhp\ScssPhp\Node\Number;
  *
  * @internal
  */
-class Util
+final class Util
 {
     /**
-     * Asserts that `value` falls within `range` (inclusive), leaving
-     * room for slight floating-point errors.
-     *
-     * @param string       $name  The name of the value. Used in the error message.
-     * @param Range        $range Range of values.
-     * @param array|Number $value The value to check.
-     * @param string       $unit  The unit of the value. Used in error reporting.
-     *
-     * @return mixed `value` adjusted to fall within range, if it was outside by a floating-point margin.
-     *
-     * @throws \ScssPhp\ScssPhp\Exception\RangeException
+     * Returns $string with every line indented $indentation spaces.
      */
-    public static function checkRange($name, Range $range, $value, $unit = '')
+    public static function indent(string $string, int $indentation): string
     {
-        $val = $value[1];
-        $grace = new Range(-0.00001, 0.00001);
-
-        if (! \is_numeric($val)) {
-            throw new RangeException("$name {$val} is not a number.");
-        }
-
-        if ($range->includes($val)) {
-            return $val;
-        }
-
-        if ($grace->includes($val - $range->first)) {
-            return $range->first;
-        }
-
-        if ($grace->includes($val - $range->last)) {
-            return $range->last;
-        }
-
-        throw new RangeException("$name {$val} must be between {$range->first} and {$range->last}$unit");
+        return implode("\n", array_map(function ($line) use ($indentation) {
+            return str_repeat(' ', $indentation) . $line;
+        }, explode("\n", $string)));
     }
 
     /**
      * Encode URI component
-     *
-     * @param string $string
-     *
-     * @return string
      */
-    public static function encodeURIComponent($string)
+    public static function encodeURIComponent(string $string): string
     {
         $revert = ['%21' => '!', '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')'];
 
         return strtr(rawurlencode($string), $revert);
     }
 
-    /**
-     * mb_chr() wrapper
-     *
-     * @param int $code
-     *
-     * @return string
-     */
-    public static function mbChr($code)
+    public static function frameForSpan(FileSpan $span, string $member, ?UriInterface $url = null): Frame
     {
-        // Use the native implementation if available, but not on PHP 7.2 as mb_chr(0) is buggy there
-        if (\PHP_VERSION_ID > 70300 && \function_exists('mb_chr')) {
-            return mb_chr($code, 'UTF-8');
-        }
-
-        if (0x80 > $code %= 0x200000) {
-            $s = \chr($code);
-        } elseif (0x800 > $code) {
-            $s = \chr(0xC0 | $code >> 6) . \chr(0x80 | $code & 0x3F);
-        } elseif (0x10000 > $code) {
-            $s = \chr(0xE0 | $code >> 12) . \chr(0x80 | $code >> 6 & 0x3F) . \chr(0x80 | $code & 0x3F);
-        } else {
-            $s = \chr(0xF0 | $code >> 18) . \chr(0x80 | $code >> 12 & 0x3F)
-                . \chr(0x80 | $code >> 6 & 0x3F) . \chr(0x80 | $code & 0x3F);
-        }
-
-        return $s;
+        return new Frame(
+            $url ?? $span->getSourceUrl() ?? Uri::new('-'),
+            $span->getStart()->getLine() + 1,
+            $span->getStart()->getColumn() + 1,
+            $member
+        );
     }
 
     /**
-     * mb_strlen() wrapper
+     * Returns the variable name (including the leading `$`) from a $span that
+     * covers a variable declaration, which includes the variable name as well as
+     * the colon and expression following it.
      *
-     * @param string $string
-     * @return int
+     * This isn't particularly efficient, and should only be used for error
+     * messages.
      */
-    public static function mbStrlen($string)
+    public static function declarationName(FileSpan $span): string
     {
-        // Use the native implementation if available.
-        if (\function_exists('mb_strlen')) {
-            return mb_strlen($string, 'UTF-8');
-        }
+        $text = $span->getText();
+        $pos = strpos($text, ':');
 
-        if (\function_exists('iconv_strlen')) {
-            return (int) @iconv_strlen($string, 'UTF-8');
-        }
-
-        throw new \LogicException('Either mbstring (recommended) or iconv is necessary to use Scssphp.');
+        return StringUtil::trimAsciiRight(substr($text, 0, $pos === false ? null : $pos));
     }
 
     /**
-     * mb_substr() wrapper
-     * @param string $string
-     * @param int $start
-     * @param null|int $length
-     * @return string
+     * Returns $name without a vendor prefix.
+     *
+     * If $name has no vendor prefix, it's returned as-is.
      */
-    public static function mbSubstr($string, $start, $length = null)
+    public static function unvendor(string $name): string
     {
-        // Use the native implementation if available.
-        if (\function_exists('mb_substr')) {
-            return mb_substr($string, $start, $length, 'UTF-8');
+        $length = \strlen($name);
+
+        if ($length < 2) {
+            return $name;
         }
 
-        if (\function_exists('iconv_substr')) {
-            if ($start < 0) {
-                $start = static::mbStrlen($string) + $start;
-                if ($start < 0) {
-                    $start = 0;
-                }
+        if ($name[0] !== '-') {
+            return $name;
+        }
+
+        if ($name[1] === '-') {
+            return $name;
+        }
+
+        for ($i = 2; $i < $length; $i++) {
+            if ($name[$i] === '-') {
+                return substr($name, $i + 1);
             }
-
-            if (null === $length) {
-                $length = 2147483647;
-            } elseif ($length < 0) {
-                $length = static::mbStrlen($string) + $length - $start;
-                if ($length < 0) {
-                    return '';
-                }
-            }
-
-            return (string)iconv_substr($string, $start, $length, 'UTF-8');
         }
 
-        throw new \LogicException('Either mbstring (recommended) or iconv is necessary to use Scssphp.');
+        return $name;
     }
 
     /**
-     * mb_strpos wrapper
-     * @param string $haystack
-     * @param string $needle
-     * @param int $offset
+     * Like {@see \SplObjectStorage::addAll()}, but for two-layer maps.
      *
-     * @return int|false
+     * This avoids copying inner maps from $source if possible.
+     *
+     * @template K1 of object
+     * @template K2 of object
+     * @template V
+     * @template Inner of \SplObjectStorage<K2, V>
+     *
+     * @param \SplObjectStorage<K1, Inner> $destination
+     * @param \SplObjectStorage<K1, Inner> $source
      */
-    public static function mbStrpos($haystack, $needle, $offset = 0)
+    public static function mapAddAll2(\SplObjectStorage $destination, \SplObjectStorage $source): void
     {
-        if (\function_exists('mb_strpos')) {
-            return mb_strpos($haystack, $needle, $offset, 'UTF-8');
-        }
+        foreach ($source as $key) {
+            $inner = $source->getInfo();
 
-        if (\function_exists('iconv_strpos')) {
-            return iconv_strpos($haystack, $needle, $offset, 'UTF-8');
-        }
+            $innerDestination = $destination[$key] ?? null;
 
-        throw new \LogicException('Either mbstring (recommended) or iconv is necessary to use Scssphp.');
+            if ($innerDestination !== null) {
+                $innerDestination->addAll($inner);
+            } else {
+                $destination[$key] = $inner;
+            }
+        }
     }
 }

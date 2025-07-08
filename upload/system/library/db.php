@@ -23,15 +23,33 @@ class DB {
 	/**
 	 * Constructor
 	 *
-	 * @param string $adaptor
-	 * @param string $hostname
-	 * @param string $username
-	 * @param string $password
-	 * @param string $database
-	 * @param string $port
-	 * @param string $ssl_key
-	 * @param string $ssl_cert
-	 * @param string $ssl_ca
+	 * Initialize database connection with provided options.
+	 *
+	 * @param array<string, mixed> $option database connection options
+	 *                                     - engine: Database engine (required)
+	 *                                     - hostname: Database server hostname (required)
+	 *                                     - username: Database username (required)
+	 *                                     - password: Database password (optional)
+	 *                                     - database: Database name (required)
+	 *                                     - port: Database port (required)
+	 *                                     - ssl_key: SSL key file path (optional)
+	 *                                     - ssl_cert: SSL certificate file path (optional)
+	 *                                     - ssl_ca: SSL CA file path (optional)
+	 *
+	 * @throws \Exception when required database parameters are missing or database engine cannot be loaded
+	 *
+	 * @example
+	 *
+	 * $db_config = [
+	 *     'engine'   => 'mysqli',
+	 *     'hostname' => 'localhost',
+	 *     'username' => 'user',
+	 *     'password' => 'pass',
+	 *     'database' => 'opencart',
+	 *     'port'     => '3306'
+	 * ];
+	 *
+	 * $db = new DB($db_config);
 	 */
 	public function __construct(array $option = []) {
 		$required = [

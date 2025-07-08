@@ -128,7 +128,21 @@ class Menu extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-
+	/**
+	 * Get Menu By Code
+	 *
+	 * Get the record of the menu by code in the database.
+	 *
+	 * @param string $code menu code
+	 *
+	 * @return array<string, mixed> menu record with description
+	 *
+	 * @example
+	 *
+	 * $this->load->model('tool/menu');
+	 *
+	 * $menu_info = $this->model_tool_menu->getMenuByCode($code);
+	 */
 	public function getMenuByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "menu` `m` LEFT JOIN `" . DB_PREFIX . "menu_description` `md` ON (`m`.`menu_id` = `md`.`menu_id`) WHERE `m`.`code` = '" . $this->db->escape($code) . "' AND `md`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 

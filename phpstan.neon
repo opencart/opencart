@@ -8,10 +8,8 @@ parameters:
     paths:
         - ./upload/
     excludePaths:
-        - ./system/storage/vendor/
-        - ./system/storage/cache/template/
+        - ./upload/system/library/cardinity/vendor/
         - ./upload/system/storage/vendor/
-        - ./upload/system/storage/cache/template/
     tmpDir: .cache
     ignoreErrors:
         - '#Class Event constructor invoked with 1 parameter, 4-5 required\.#'

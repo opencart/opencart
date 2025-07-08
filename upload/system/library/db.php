@@ -63,7 +63,6 @@ class DB {
 		foreach ($required as $key) {
 			if (empty($option[$key])) {
 				throw new \Exception('Error: Database ' . $key . ' required!');
-				exit();
 			}
 		}
 
@@ -73,7 +72,6 @@ class DB {
 			$this->adaptor = new $class($option);
 		} else {
 			throw new \Exception('Error: Could not load database adaptor ' . $option['engine'] . '!');
-			exit();
 		}
 	}
 

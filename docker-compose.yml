@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: docker/apache/Dockerfile
     ports:
-      - "80:80"
+      - "${HTTP_EXPOSE_PORT:-80}:${HTTP_PORT:-80}"
     volumes:
       - .:/var/www
     depends_on:
@@ -22,7 +22,21 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
       args:
-        - PHP_VERSION=8.4
+        - PHP_VERSION=${PHP_VERSION:-8.4}
+    ports:
+      - "${PHP_FPM_EXPOSE_PORT:-9000}:${PHP_FPM_PORT:-9000}"
+    environment:
+      - OPENCART_USERNAME=${OPENCART_USERNAME:-admin}
+      - OPENCART_PASSWORD=${OPENCART_PASSWORD:-admin}
+      - OPENCART_ADMIN_EMAIL=${OPENCART_ADMIN_EMAIL:-admin@example.com}
+      - OPENCART_HTTP_SERVER=${OPENCART_HTTP_SERVER:-http://localhost/}
+      - DB_DRIVER=${DB_DRIVER:-mysqli}
+      - DB_HOSTNAME=${DB_HOSTNAME:-mysql}
+      - DB_USERNAME=${DB_USERNAME:-opencart}
+      - DB_PASSWORD=${DB_PASSWORD:-opencart}
+      - DB_DATABASE=${DB_DATABASE:-opencart}
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_PREFIX=${DB_PREFIX:-oc_}
     volumes:
       - .:/var/www
     depends_on:
@@ -30,9 +44,10 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "php-fpm -t || exit 1"]
-      interval: 2s
-      timeout: 1s
-      retries: 3
+      interval: 1s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
     networks:
       - opencart
 
@@ -40,31 +55,35 @@ services:
     container_name: opencart-mysql
     image: mariadb
     ports:
-      - "3306:3306"
+      - "${DB_EXPOSE_PORT:-3306}:${DB_PORT:-3306}"
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-opencart}
-      - MYSQL_DATABASE=${MYSQL_DATABASE:-opencart}
-    healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-opencart}"]
-      interval: 2s
-      timeout: 2s
-      retries: 3
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-opencart}
+      - MARIADB_DATABASE=${DB_DATABASE:-opencart}
+      - MARIADB_USER=${DB_USERNAME:-opencart}
+      - MARIADB_PASSWORD=${DB_PASSWORD:-opencart}
     volumes:
       - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-opencart}"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+      start_period: 30s
     networks:
       - opencart
 
-  adminer:
-    container_name: opencart-adminer
-    image: adminer:latest
-    profiles: [adminer]
-    environment:
-      ADMINER_DEFAULT_SERVER: mysql
-    depends_on:
-      mysql:
-        condition: service_healthy
+  postgres:
+    container_name: opencart-postgres
+    image: postgres:latest
+    profiles: [postgres]
     ports:
-      - "8080:8080"
+      - "${DB_EXPOSE_PORT:-5432}:${DB_PORT:-5432}"
+    environment:
+      - POSTGRES_USER=${DB_USERNAME:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-opencart}
+      - POSTGRES_DB=${DB_DATABASE:-opencart}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - opencart
 
@@ -72,6 +91,8 @@ services:
     container_name: opencart-redis
     image: redis:latest
     profiles: [redis]
+    ports:
+      - "${CACHE_EXPOSE_PORT:-6379}:${CACHE_PORT:-6379}"
     volumes:
       - redis-data:/data
     networks:
@@ -81,26 +102,29 @@ services:
     container_name: opencart-memcached
     image: memcached:latest
     profiles: [memcached]
+    ports:
+      - "${CACHE_EXPOSE_PORT:-11211}:${CACHE_PORT:-11211}"
     networks:
       - opencart
 
-  postgres:
-    container_name: opencart-postgres
-    image: postgres:latest
-    profiles: [postgres]
+  adminer:
+    container_name: opencart-adminer
+    image: adminer:latest
+    profiles: [adminer]
+    ports:
+      - "${ADMINER_EXPOSE_PORT:-8080}:${ADMINER_PORT:-8080}"
     environment:
-      - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-opencart}
-      - POSTGRES_DB=${POSTGRES_DB:-opencart}
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - ADMINER_DEFAULT_SERVER=mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
     networks:
       - opencart
 
 volumes:
-    mysql-data:
-    postgres-data:
-    redis-data:
+  mysql-data:
+  postgres-data:
+  redis-data:
 
 networks:
   opencart:

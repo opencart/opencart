@@ -50,70 +50,98 @@ This project includes a Docker-based environment for local development.
 
 * You must have Docker and Docker Compose installed on your machine. [Docker Desktop](https://www.docker.com/products/docker-desktop/) is the easiest way to get them.
 
-> **For Windows Users:** It is **strongly recommended** to use the WSL 2 (Windows Subsystem for Linux) backend for Docker Desktop. Without it, file system performance will be extremely slow, making the application nearly unusable. Docker Desktop will typically prompt you to enable WSL 2 during installation.
+> [!IMPORTANT]
+>
+> **For Windows Users:**
+> It is **strongly recommended** to use the WSL 2 (Windows Subsystem for Linux) backend for Docker Desktop.
+> **You should install Docker _inside_ your WSL distribution (e.g., Ubuntu 24.04) for best performance.**
+> `\\wsl$\Ubuntu-24.04\home\youruser\opencart` (from Windows Explorer)
+> Without WSL 2, file system performance will be extremely slow, making the application nearly unusable.
+> Docker Desktop will typically prompt you to enable WSL 2 during installation.
+
+> [!NOTE]
+>
+> OpenCart itself does **not** use any `.env` file for its configuration.
+> The provided `.env.docker` file is **only** for configuring the Docker Compose environment.
+> To avoid confusion with classic development workflows, this file is named `.env.docker` and placed inside the `docker` directory.
+> Since Docker Compose looks for `.env` in the project root by default, you must always specify the path to the env file manually using `--env-file=./docker/.env.docker`.
 
 ### Getting Started
 
 1. Clone the repository to your local machine.
-2. Navigate to the project's root directory in your terminal.
-3. Run the following command to build and start all services:
-
-	```bash
-	docker-compose up -d
-	```
+2. Copy the example environment file:
+    ```bash
+    cp docker/.env.docker.example docker/.env.docker
+    ```
+3. Navigate to the project's root directory in your terminal.
+4. Build the images:
+    ```bash
+    docker compose --env-file=./docker/.env.docker build
+    ```
+5. Start all services:
+    ```bash
+    docker compose --env-file=./docker/.env.docker up -d
+    ```
 
 After the process is complete, your OpenCart store will be available at `http://localhost`. The Adminer database management tool will be available at `http://localhost:8080`.
 
 ### Common Commands
 
 * **To stop the environment:**
-	```bash
-	docker-compose down
-	```
+    ```bash
+    docker compose down
+    ```
 * **To view the logs from all services:**
-	```bash
-	docker-compose logs -f
-	```
+    ```bash
+    docker compose logs -f
+    ```
+* **To enter the PHP container:**
+    ```bash
+    docker compose exec php bash
+    ```
 
 ### Changing the PHP Version
 
-The environment uses PHP 8.4 by default. You can easily switch to a different version by editing the `build.args` in the `docker-compose.yml` file.
+The environment uses PHP 8.4 by default.
+You can easily switch to a different version by editing the `PHP_VERSION` variable in the `docker/.env.docker` file.
 
-For example, to use PHP 8.2:
+For example, to use PHP 8.2, open `docker/.env.docker` and set:
 
-```yaml
-# in docker-compose.yml
-services:
-  opencart:
-    build:
-      context: ./docker/php
-      args:
-        - PHP_VERSION=8.2 # Change this value
+```env
+PHP_VERSION=8.2
+```
+
+After changing the version, rebuild the images:
+
+```bash
+docker compose --env-file=./docker/.env.docker build
 ```
 
 ### Using Docker Compose Profiles for Optional Services
 
-By default, only the core services (`opencart`, `mysql`) are started.
+By default, only the core services (`apache`, `php`, `mysql`) are started.
 Optional services such as **Adminer**, **Redis**, **Memcached**, and **PostgreSQL** can be enabled using [Docker Compose profiles](https://docs.docker.com/compose/profiles/).
 
-To enable one or more optional services, use the `--profile` flag:
+To enable one or more optional services, use the `--profile` flag and specify your env file:
 
 - **Start with Adminer:**
     ```bash
-    docker-compose --profile adminer up -d
+    docker compose --env-file=./docker/.env.docker --profile adminer up -d
     ```
 - **Start with Redis and Memcached:**
     ```bash
-    docker-compose --profile redis --profile memcached up -d
+    docker compose --env-file=./docker/.env.docker --profile redis --profile memcached up -d
     ```
 - **Start all optional services:**
     ```bash
-    docker-compose --profile adminer --profile redis --profile memcached --profile postgres up -d
+    docker compose --env-file=./docker/.env.docker --profile adminer --profile redis --profile memcached --profile postgres up -d
     ```
 
 If you do not specify the `--profile` flag, only the core services will be started.
 
-> **Tip:** You can combine any profiles as needed for your development workflow.
+> [!TIP]
+>
+> You can combine any profiles as needed for your development workflow.
 
 ## Versioning
 

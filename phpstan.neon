@@ -8,7 +8,6 @@ parameters:
     paths:
         - ./upload/
     excludePaths:
-        - ./upload/system/library/cardinity/vendor/
         - ./upload/system/storage/vendor/
     tmpDir: .cache
     ignoreErrors:

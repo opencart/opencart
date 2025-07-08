@@ -207,7 +207,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 		$data['php_version_old'] = $this->external_mode_only;
 		$data['entry_log'] = $this->language->get('entry_log');
-		$data['yearNow'] = (int) Date("Y");
+		$data['yearNow'] = (int) date("Y");
 		$data['entry_log_action'] = $this->url->link('extension/payment/cardinity/getTransactions',  'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
 		
 

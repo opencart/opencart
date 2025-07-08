@@ -190,13 +190,17 @@ function oc_directory_read(string $directory, bool $recursive = false, string $r
 
 				$file = $next . '/' . $result;
 
-				if (is_dir($file) && $recursive) {
-					$stack[] = $file;
-				}
-
 				// Add the file to the files to be deleted array
 				if ($regex && !preg_match($regex, $file)) {
 					continue;
+				}
+
+				if (is_dir($file)) {
+					if ($recursive) {
+						$stack[] = $file;
+					}
+
+					$file = $file . '/';
 				}
 
 				$files[] = $file;
@@ -210,7 +214,7 @@ function oc_directory_read(string $directory, bool $recursive = false, string $r
 }
 
 // 2. Creating a directory
-function oc_directory_create(string $path, string $name, int $permission = 0777): bool {
+function oc_directory_create(string $path, int $permission = 0777): bool {
 	$path_new = '';
 
 	$directories = explode('/', rtrim($path, '/'));
@@ -222,8 +226,11 @@ function oc_directory_create(string $path, string $name, int $permission = 0777)
 			$path_new = $path_new . '/' . $directory;
 		}
 
-		// To fix storage location
-		if (!is_dir($path_new . '/') && !mkdir($path_new . '/', $permission)) {
+		if (is_dir($path_new . '/')) {
+			continue;
+		}
+
+		if (!mkdir($path_new . '/', $permission)) {
 			return false;
 		}
 	}
@@ -232,27 +239,9 @@ function oc_directory_create(string $path, string $name, int $permission = 0777)
 }
 
 // 3. Removing a directory
-function oc_directory_delete(string $path): bool {
-	$files = [];
-
-	if (is_dir($path)) {
-		// Make path into an array
-		$directory = [$path];
-
-		// While the path array is still populated keep looping through
-		while (count($directory) != 0) {
-			$next = array_shift($directory);
-
-			if (is_dir($next)) {
-				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					// If directory add to path array
-					$directory[] = $file;
-				}
-			}
-
-			// Add the file to the files to be deleted array
-			$files[] = $next;
-		}
+function oc_directory_delete(string $directory): bool {
+	if (is_dir($directory)) {
+		$files = oc_directory_read($directory, true);
 
 		// Reverse sort the file array
 		rsort($files);
@@ -267,6 +256,10 @@ function oc_directory_delete(string $path): bool {
 			if (is_dir($file)) {
 				rmdir($file);
 			}
+		}
+
+		if (is_dir($directory)) {
+			rmdir($directory);
 		}
 
 		return true;

@@ -5,6 +5,7 @@ if (!is_file('config.php')) {
 }
 
 // Config
+/** @phpstan-ignore-next-line requireOnce.fileNotFound */
 require_once('config.php');
 
 // Startup

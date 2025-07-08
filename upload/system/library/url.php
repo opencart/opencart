@@ -18,11 +18,29 @@ class Url {
 	 * @var string
 	 */
 	private string $url;
+	/**
+	 * @var string
+	 */
 	private string $scheme;
+	/**
+	 * @var string
+	 */
 	private string $host;
+	/**
+	 * @var int
+	 */
 	private int $port;
+	/**
+	 * @var string
+	 */
 	private string $path;
+	/**
+	 * @var string
+	 */
 	private string $query;
+	/**
+	 * @var string
+	 */
 	private string $fragment;
 
 	/**

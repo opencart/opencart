@@ -89,8 +89,8 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * Edit task status record in the database.
 	 *
-	 * @param int  $task_id primary key of the task record
-	 * @param bool $status
+	 * @param int    $task_id primary key of the task record
+	 * @param string $status
 	 *
 	 * @return void
 	 *

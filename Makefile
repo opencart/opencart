@@ -32,7 +32,7 @@ define check_service_running
 endef
 
 # List of all known targets.
-KNOWN_TARGETS := help setup build up down restart logs apache php mysql exec ps
+KNOWN_TARGETS := help init build up down restart logs apache php mysql exec ps
 
 # Phony targets are not files.
 .PHONY: $(KNOWN_TARGETS)
@@ -46,7 +46,7 @@ help: ## Show this help message
 	@echo "Usage: make <target> [options=\"...\"] [profiles=\"...\"]"
 	@echo ""
 	@echo "Core Commands:"
-	@echo -e "  $(OPENCART_COLOR)make setup$(COLOR_RESET)          - Initialize the project (copies .env.docker)"
+	@echo -e "  $(OPENCART_COLOR)make init$(COLOR_RESET)           - Initialize the project (copies .env.docker)"
 	@echo -e "  $(OPENCART_COLOR)make build$(COLOR_RESET)          - Build or rebuild Docker images"
 	@echo -e "  $(OPENCART_COLOR)make up$(COLOR_RESET)             - Start all services"
 	@echo -e "  $(OPENCART_COLOR)make down$(COLOR_RESET)           - Stop and remove all containers"
@@ -68,12 +68,14 @@ help: ## Show this help message
 	@echo "  make exec service=php command=\"composer --version\""
 	@echo ""
 	@echo "Links:"
-	@echo "  GitHub:        https://github.com/opencart/opencart"
-	@echo "  Documentation: https://docs.opencart.com/"
-	@echo "  Live Demo:     https://www.opencart.com/index.php?route=cms/demo"
+	@echo "  OpenCart:       https://www.opencart.com"
+	@echo "  Live Demo:      https://www.opencart.com/index.php?route=cms/demo"
+	@echo "  Documentation:  https://docs.opencart.com"
+	@echo "  Support Forums: https://forum.opencart.com"
+	@echo "  GitHub:         https://github.com/opencart/opencart"
 
 # --- Project Lifecycle Targets ---
-setup: ## Initialize the project (copies .env.docker)
+init: ## Initialize the project (copies .env.docker)
 	@if [ ! -f ./docker/.env.docker ]; then \
 		echo "Copying docker/.env.docker.example to docker/.env.docker..."; \
 		cp docker/.env.docker.example docker/.env.docker; \

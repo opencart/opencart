@@ -404,6 +404,22 @@ class Country extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "country_description` WHERE `language_id` = '" . (int)$language_id . "'");
 	}
 
+	/**
+	 * Get Description
+	 *
+	 * Get the record of the country description in the database.
+	 *
+	 * @param int $country_id  primary key of the country record
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return array<string, mixed> country description record
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $description = $this->model_localisation_country->getDescription($country_id, $language_id);
+	 */
 	public function getDescription(int $country_id, int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country_description` WHERE `country_id` = '" . (int)$country_id . "' AND `language_id` = '" . (int)$language_id . "'");
 
@@ -521,15 +537,15 @@ class Country extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the information store records in the database.
 	 *
-	 * @param int $country_id primary key of the store record
+	 * @param int $country_id primary key of the country record
 	 *
-	 * @return array<int, int> store records that have store ID
+	 * @return list<int> store IDs
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/information');
+	 * $this->load->model('localisation/country');
 	 *
-	 * $stores = $this->model_catalog_information->getStores($country_id);
+	 * $stores = $this->model_localisation_country->getStores($country_id);
 	 */
 	public function getStores(int $country_id): array {
 		$country_store_data = [];
@@ -537,12 +553,27 @@ class Country extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country_to_store` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		foreach ($query->rows as $result) {
-			$country_store_data[] = $result['store_id'];
+			$country_store_data[] = (int)$result['store_id'];
 		}
 
 		return $country_store_data;
 	}
 
+	/**
+	 * Get Countries By Store ID
+	 *
+	 * Get the record of countries associated with a specific store.
+	 *
+	 * @param int $store_id primary key of the store record
+	 *
+	 * @return array<string, mixed> country records with store associations
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $countries = $this->model_localisation_country->getCountriesByStoreId($store_id);
+	 */
 	public function getCountriesByStoreId(int $store_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country_to_store` `c2s` LEFT JOIN `" . DB_PREFIX . "country` `c` ON (`c2s`.`country_id` = `c`.`country_id`) WHERE `c2s`.`store_id` = '" . (int)$store_id . "'");
 

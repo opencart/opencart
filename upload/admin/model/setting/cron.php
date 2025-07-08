@@ -13,7 +13,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new cron record in the database.
 	 *
-	 * @param array $data
+	 * @param array<string, mixed> $data
 	 *
 	 * @return int
 	 *

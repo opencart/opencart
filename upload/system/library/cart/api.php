@@ -35,7 +35,15 @@ class Api {
 		$this->language = $language;
 	}
 
-	public function send(string $route, $data = []): array {
+	/**
+	 * Send
+	 *
+	 * @param string               $route
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function send(string $route, array $data = []): array {
 		$time = time();
 
 		// Build hash string

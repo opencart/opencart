@@ -11,7 +11,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function index(): void {
 		$this->load->language('ssr/information');
 
 		$json = [];

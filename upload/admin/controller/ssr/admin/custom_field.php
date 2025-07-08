@@ -26,7 +26,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('ssr/language');
 
 		$json = [];

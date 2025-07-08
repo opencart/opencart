@@ -11,7 +11,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function index(): void {
 		$this->load->language('ssr/category');
 
 		$json = [];
@@ -36,7 +36,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('ssr/category');
 
 		$json = [];

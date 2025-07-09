@@ -175,6 +175,8 @@ function oc_file_delete(string $file): bool {
 function oc_directory_read(string $directory, bool $recursive = false, string $regex = ''): array {
 	$files = [];
 
+	$directory = str_replace('\\', '/', realpath($directory));
+
 	if (is_dir($directory)) {
 		$stack = [rtrim($directory, '/')];
 
@@ -190,11 +192,6 @@ function oc_directory_read(string $directory, bool $recursive = false, string $r
 
 				$file = $next . '/' . $result;
 
-				// Add the file to the files to be deleted array
-				if ($regex && !preg_match($regex, $file)) {
-					continue;
-				}
-
 				if (is_dir($file)) {
 					if ($recursive) {
 						$stack[] = $file;
@@ -203,12 +200,17 @@ function oc_directory_read(string $directory, bool $recursive = false, string $r
 					$file = $file . '/';
 				}
 
+				// Add the file to the files to be deleted array
+				if ($regex && !preg_match($regex, $file)) {
+					continue;
+				}
+
 				$files[] = $file;
 			}
 		}
-	}
 
-	sort($files);
+		sort($files);
+	}
 
 	return $files;
 }

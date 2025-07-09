@@ -1,5 +1,4 @@
 <?php
-require_once DIR_SYSTEM . 'library/cardinity/cardinity-php-sdk.php';
 
 use Cardinity\Client;
 use Cardinity\Method\Payment;
@@ -187,7 +186,7 @@ class ModelExtensionPaymentCardinity extends Model {
 	/**
 	 * Encode data to Base64URL
 	 * @param string $data
-	 * @return boolean|string
+	 * @return bool|string
 	 */
 	function encodeBase64Url($data)
 	{
@@ -207,8 +206,8 @@ class ModelExtensionPaymentCardinity extends Model {
 	/**
 	 * Decode data from Base64URL
 	 * @param string $data
-	 * @param boolean $strict
-	 * @return boolean|string
+	 * @param bool $strict
+	 * @return bool|string
 	 */
 	function decodeBase64url($data, $strict = false)
 	{

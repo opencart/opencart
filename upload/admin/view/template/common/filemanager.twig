@@ -5,12 +5,10 @@
         <h5 class="modal-title">{{ heading_title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <div class="modal-body"></div>
+      <div class="modal-body">{{ list }}</div>
     </div>
   </div>
   <script type="text/javascript"><!--
-  $('#modal-image .modal-body').load('index.php?route=common/filemanager.list&user_token={{ user_token }}');
-
   $('#modal-image').on('click', '#button-parent', function(e) {
       e.preventDefault();
 

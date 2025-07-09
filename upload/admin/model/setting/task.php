@@ -13,9 +13,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new task record in the database.
 	 *
-	 * @param string $code
-	 * @param string $action
-	 * @param bool   $status
+	 * @param array{code: string, description: string, action: string, args?: mixed, status: string} $data
 	 *
 	 * @return int
 	 *
@@ -23,7 +21,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('setting/task');
 	 *
-	 * $task_id = $this->model_setting_task->addTask($code, $description, $cycle, $action, $status);
+	 * $task_id = $this->model_setting_task->addTask($data);
 	 */
 	public function addTask(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "task` SET `code` = '" . $this->db->escape($data['code']) . "', `description` = '" . $this->db->escape($data['description']) . "', `action` = '" . $this->db->escape($data['action']) . "', `args` = '" . $this->db->escape(!empty($data['args']) ? json_encode($data['args']) : '') . "', `status` = '" . $this->db->escape($data['status']) . "', `date_added` = NOW()");

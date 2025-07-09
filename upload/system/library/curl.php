@@ -27,8 +27,8 @@ class Curl {
 	/**
 	 * Set Option
 	 *
-	 * @param string $key
-	 * @param array  $data<string, mixed> array of data
+	 * @param string               $key
+	 * @param array<string, mixed> $data array of data
 	 *
 	 * @return void
 	 */
@@ -36,7 +36,15 @@ class Curl {
 		$this->option[$key] = $data;
 	}
 
-	public function send(string $route, $data = []): array {
+	/**
+	 * Send
+	 *
+	 * @param string               $route
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function send(string $route, array $data = []): array {
 		// Make remote call
 		$url  = 'http://' . $this->domain . $this->path . 'index.php?route=' . $route;
 

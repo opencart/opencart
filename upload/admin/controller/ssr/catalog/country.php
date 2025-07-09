@@ -96,7 +96,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function info() {
+	public function info(): void {
 		$this->load->language('ssr/catalog/country');
 
 		$json = [];
@@ -206,7 +206,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('ssr/catalog/language');
 
 		$json = [];

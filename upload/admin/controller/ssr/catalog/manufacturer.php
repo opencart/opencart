@@ -11,7 +11,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function index(): void {
 		$this->load->language('ssr/manufacturer');
 
 		$json = [];
@@ -56,7 +56,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function info() {
+	public function info(): void {
 		$this->load->language('ssr/manufacturer');
 
 		$json = [];
@@ -121,7 +121,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('catalog/manufacturer');
 
 		$json = [];

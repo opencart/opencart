@@ -1,63 +1,133 @@
 #!/bin/bash
 set -e
 
+echo "--- OpenCart initialization ---"
+
+# ================================================================
+# STEP 1: CREATE A SYMBOLIC LINK
+# ================================================================
 # Create a symbolic link to make the upload directory the document root.
 # The -n flag is crucial to replace the symlink correctly if it exists.
 ln -sfn /var/www/upload /var/www/public_html
 
-echo "--- OpenCart initialization ---"
-
 # Change to the correct working directory after the symlink is created
 cd /var/www/public_html
 
-# Check if OpenCart needs installation
-if [ ! -f /var/www/public_html/install.lock ] && [ -f /var/www/public_html/install/cli_install.php ]; then
+# ================================================================
+# STEP 2: SYNC ENVIRONMENT VARIABLES TO EXISTING CONFIGS
+# ================================================================
+
+CONFIG_FILE="config.php"
+ADMIN_CONFIG_FILE="admin/config.php"
+
+# Function to update a config value only if it differs from the environment variable
+update_config_if_changed() {
+    local file=$1
+    local key=$2
+    local env_value=$3
+
+    # Ensure the file exists and is not empty
+    if [ ! -f "$file" ] || [ ! -s "$file" ]; then
+        return
+    fi
+
+    # Extract the current value
+    local current_value=$(grep "define('$key'" "$file" | sed -n "s/.*define('$key',[ ]*'\([^']*\)').*$/\1/p")
+
+    # Update only if the value has changed
+    if [ "$current_value" != "$env_value" ]; then
+        echo "--- Value for '$key' in '$file' is outdated. Updating '$current_value' -> '$env_value' ---"
+
+        sed -i "s/define('$key',[ ]*'[^']*')/define('$key', '$env_value')/g" "$file"
+
+        echo "--- Updated '$key' to '$env_value' in '$file' ---"
+    fi
+}
+
+if [ -f "$CONFIG_FILE" ]; then
+    echo "--- STEP 2: Syncing environment variables to config.php ---"
+    update_config_if_changed "$CONFIG_FILE" "DB_DRIVER" "${DB_DRIVER:-mysqli}"
+    update_config_if_changed "$CONFIG_FILE" "DB_HOSTNAME" "${DB_HOSTNAME:-mysql}"
+    update_config_if_changed "$CONFIG_FILE" "DB_USERNAME" "${DB_USERNAME:-opencart}"
+    update_config_if_changed "$CONFIG_FILE" "DB_PASSWORD" "${DB_PASSWORD:-opencart}"
+    update_config_if_changed "$CONFIG_FILE" "DB_DATABASE" "${DB_DATABASE:-opencart}"
+    update_config_if_changed "$CONFIG_FILE" "DB_PORT" "${DB_PORT:-3306}"
+fi
+
+if [ -f "$ADMIN_CONFIG_FILE" ]; then
+    echo "--- STEP 2: Syncing environment variables to admin/config.php ---"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_DRIVER" "${DB_DRIVER:-mysqli}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_HOSTNAME" "${DB_HOSTNAME:-mysql}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_USERNAME" "${DB_USERNAME:-opencart}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_PASSWORD" "${DB_PASSWORD:-opencart}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_DATABASE" "${DB_DATABASE:-opencart}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_PORT" "${DB_PORT:-3306}"
+fi
+
+# ================================================================
+# STEP 3: OPENCART INSTALLATION (IF NEEDED)
+# ================================================================
+
+if [ ! -f "install.lock" ] && [ -f "install/cli_install.php" ]; then
     echo "--- Starting OpenCart installation ---"
 
     # Copy config files if they don't exist
-    if [ -f /var/www/public_html/config-dist.php ] && [ ! -s /var/www/public_html/config.php ]; then
-        cp /var/www/public_html/config-dist.php /var/www/public_html/config.php
+    if [ -f "config-dist.php" ] && [ ! -s "config.php" ]; then
+        cp "config-dist.php" "config.php"
         echo "--- Copied config-dist.php to config.php ---"
     fi
 
-    if [ -f /var/www/public_html/admin/config-dist.php ] && [ ! -s /var/www/public_html/admin/config.php ]; then
-        cp /var/www/public_html/admin/config-dist.php /var/www/public_html/admin/config.php
+    if [ -f "admin/config-dist.php" ] && [ ! -s "admin/config.php" ]; then
+        cp "admin/config-dist.php" "admin/config.php"
         echo "--- Copied admin/config-dist.php to admin/config.php ---"
     fi
 
     # Run installer
-    php /var/www/public_html/install/cli_install.php install \
-        --username admin \
-        --password admin \
-        --email email@example.com \
-        --http_server http://localhost/ \
-        --db_driver mysqli \
-        --db_hostname mysql \
-        --db_username root \
-        --db_password opencart \
-        --db_database opencart \
-        --db_port 3306 \
-        --db_prefix oc_ \
-        && touch /var/www/public_html/install.lock \
+    php install/cli_install.php install \
+        --username "${OPENCART_USERNAME:-admin}" \
+        --password "${OPENCART_PASSWORD:-admin}" \
+        --email "${OPENCART_ADMIN_EMAIL:-admin@example.com}" \
+        --http_server "${OPENCART_HTTP_SERVER:-http://localhost/}" \
+        --db_driver "${DB_DRIVER:-mysqli}" \
+        --db_hostname "${DB_HOSTNAME:-mysql}" \
+        --db_username "${DB_USERNAME:-opencart}" \
+        --db_password "${DB_PASSWORD:-opencart}" \
+        --db_database "${DB_DATABASE:-opencart}" \
+        --db_port "${DB_PORT:-3306}" \
+        --db_prefix "${DB_PREFIX:-oc_}" \
+        && touch "install.lock" \
         && echo "--- OpenCart installation completed ---" \
         || echo "--- OpenCart installation failed ---"
 fi
 
+# ================================================================
+# STEP 4: SETUP WEB SERVER FILES
+# ================================================================
+
 # Copy .htaccess.txt to .htaccess if needed
-if [ -f /var/www/public_html/.htaccess.txt ] && [ ! -f /var/www/public_html/.htaccess ]; then
-    cp /var/www/public_html/.htaccess.txt /var/www/public_html/.htaccess
-    echo "--- Copied .htaccess.txt to .htaccess ---"
+if [ -f ".htaccess.txt" ] && [ ! -f ".htaccess" ]; then
+    cp ".htaccess.txt" ".htaccess"
+    echo "--- STEP 4: Copied .htaccess.txt to .htaccess ---"
 fi
 
+# ================================================================
+# STEP 5: FIX FILE PERMISSIONS
+# ================================================================
+
 # Fix ownership for all files by targeting the real directory.
-echo "--- Fixing ownership on /var/www/upload ---"
+echo "--- STEP 5: Fixing ownership on /var/www/upload ---"
 chown -R www-data:www-data /var/www/upload
 echo "--- Ownership fixed ---"
 
 # Set permissions for storage relocation
-echo "--- Setting permissions for storage relocation ---"
+echo "--- STEP 5: Setting permissions for storage relocation ---"
 chown www-data:www-data /var/www
 chmod 755 /var/www
 
+# ================================================================
+# STEP 6: START PHP-FPM
+# ================================================================
+
+echo "--- STEP 6: Starting PHP-FPM ---"
 # Call the original entrypoint with all arguments
 exec docker-php-entrypoint "$@"

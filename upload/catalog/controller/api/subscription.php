@@ -162,7 +162,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Shipping Methods
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function getShippingMethods(): array {
 		$this->setCustomer();
@@ -182,7 +182,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Payment Methods
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function getPaymentMethods(): array {
 		$this->setCustomer();
@@ -279,7 +279,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Confirm
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	protected function confirm(): array {
 		$this->setCustomer();

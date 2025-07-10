@@ -180,7 +180,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 			$end = $start > ($country_total - $limit) ? $country_total : ($start + $limit);
 
-			$json['text'] = sprintf($this->language->get('text_next'), !$start ?? 1, $end, $country_total);
+			$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $country_total);
 
 			if ($end < $country_total) {
 				$json['next'] = $this->url->link('ssr/country.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
@@ -261,7 +261,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 			$end = $start > ($country_total - $limit) ? $country_total : ($start + $limit);
 
-			$json['text'] = sprintf($this->language->get('text_next'), !$start ?? 1, $end, $country_total);
+			$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $country_total);
 
 			if ($end < $country_total) {
 				$json['next'] = $this->url->link('ssr/country.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);

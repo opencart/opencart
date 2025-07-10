@@ -113,9 +113,11 @@ class PDO {
 					return true;
 				}
 			} else {
+				$this->data = [];
 				return true;
 			}
 		} catch (\PDOException $e) {
+			$this->data = [];
 			throw new \Exception('Error: ' . $e->getMessage() . ' <br/>Error Code : ' . $e->getCode() . ' <br/>' . $sql);
 		}
 	}

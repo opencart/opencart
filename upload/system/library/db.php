@@ -63,18 +63,16 @@ class DB {
 		foreach ($required as $key) {
 			if (empty($option[$key])) {
 				throw new \Exception('Error: Database ' . $key . ' required!');
-				exit();
 			}
 		}
 
 		$class = 'Opencart\System\Library\DB\\' . $option['engine'];
 
-		if (class_exists($class)) {
-			$this->adaptor = new $class($option);
-		} else {
+		if (!class_exists($class)) {
 			throw new \Exception('Error: Could not load database adaptor ' . $option['engine'] . '!');
-			exit();
 		}
+
+		$this->adaptor = new $class($option);
 	}
 
 	/**

@@ -27,11 +27,11 @@ class Cache {
 	public function __construct(string $adaptor, int $expire = 3600) {
 		$class = 'Opencart\System\Library\Cache\\' . $adaptor;
 
-		if (class_exists($class)) {
-			$this->adaptor = new $class($expire);
-		} else {
+		if (!class_exists($class)) {
 			throw new \Exception('Error: Could not load cache adaptor ' . $adaptor . ' cache!');
 		}
+
+		$this->adaptor = new $class($expire);
 	}
 
 	/**

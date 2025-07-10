@@ -142,11 +142,11 @@ class Loader {
 		}
 
 		// Initialize the class
-		if ($object instanceof \Opencart\System\Engine\Model) {
-			$this->registry->set('fallback_' . $key, $object);
-		} else {
+		if (!$object instanceof \Opencart\System\Engine\Model) {
 			throw new \Exception('Error: Could not load model ' . $route . '!');
 		}
+
+		$this->registry->set('fallback_' . $key, $object);
 
 		$proxy = new \Opencart\System\Engine\Proxy();
 
@@ -238,11 +238,11 @@ class Loader {
 			// Initialize the class
 			$object = $this->factory->library($route, $args);
 
-			if (!$object instanceof \Exception) {
-				$this->registry->set($key, $object);
-			} else {
+			if ($object instanceof \Exception) {
 				throw new \Exception('Error: Could not load library ' . $route . '!');
 			}
+
+			$this->registry->set($key, $object);
 		} else {
 			$object = $this->registry->get($key);
 		}
@@ -294,11 +294,11 @@ class Loader {
 			$file = DIR_EXTENSION . $code . '/system/helper/' . implode('/', $parts) . '.php';
 		}
 
-		if (is_file($file)) {
-			include_once($file);
-		} else {
+		if (!is_file($file)) {
 			throw new \Exception('Error: Could not load helper ' . $route . '!');
 		}
+
+		include_once($file);
 	}
 
 	/**
@@ -330,21 +330,20 @@ class Loader {
 				$object = $this->registry->get($key);
 			}
 
-			if ($object instanceof \Opencart\System\Engine\Model) {
-				$this->registry->set($key, $object);
-			} else {
-				// If action cannot be executed, we return an error object.
+			if (!$object instanceof \Opencart\System\Engine\Model) {
 				throw new \Exception('Error: Could not load model ' . $model . '!');
 			}
 
+			$this->registry->set($key, $object);
+
 			$callable = [$object, $method];
 
-			if (is_callable($callable)) {
-				$output = $callable(...$args);
-			} else {
+			if (!is_callable($callable)) {
 				// If action cannot be executed, we throw Exception.
 				throw new \Exception('Error: Could not call model ' . $route . '!');
 			}
+
+			$output = $callable(...$args);
 
 			// Trigger the post events
 			$this->event->trigger('model/' . $trigger . '/after', [&$route, &$args, &$output]);

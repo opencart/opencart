@@ -92,7 +92,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 			if (!array_key_exists($code, $stack)) {
 				$stack[$code] = ['children' => []] + $result;
 			} else {
-				$stack[$code] = array_merge($result, $stack[$code]);
+				$stack[$code] = array_merge($result, isset($stack[$code]) ? $stack[$code] : []);
 			}
 
 			$stack[$result['parent']]['children'][$code] = &$stack[$code];

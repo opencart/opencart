@@ -134,24 +134,16 @@ class Developer extends \Opencart\System\Engine\Controller {
 				unlink($file);
 			}
 
-			$files = glob(DIR_CATALOG . 'view/stylesheet/scss/bootstrap.scss');
+			$file = substr(DIR_CATALOG . 'view/stylesheet/scss/bootstrap.scss', 0, -20) . '/bootstrap.css';
 
-			foreach ($files as $file) {
-				$file = substr($file, 0, -20) . '/bootstrap.css';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
 			}
 
-			$files = glob(DIR_CATALOG . 'view/stylesheet/stylesheet.scss');
+			$file = substr(DIR_CATALOG . 'view/stylesheet/stylesheet.scss', 0, -16) . '/stylesheet.css';
 
-			foreach ($files as $file) {
-				$file = substr($file, 0, -16) . '/stylesheet.css';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
 			}
 
 			$json['success'] = $this->language->get('text_sass_success');

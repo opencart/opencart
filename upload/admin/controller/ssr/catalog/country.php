@@ -244,7 +244,7 @@ class Country extends \Opencart\System\Engine\Controller {
 						unlink($file);
 					}
 
-					$files = glob($base . $directory . 'country-*.json');
+					$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
 
 					foreach ($files as $file) {
 						unlink($file);

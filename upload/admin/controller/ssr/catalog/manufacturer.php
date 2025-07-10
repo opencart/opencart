@@ -137,7 +137,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				unlink($file);
 			}
 
-			$files = glob(DIR_CATALOG . 'view/data/catalog/manufacturer.*.json');
+			$files = oc_directory_read(DIR_CATALOG . 'view/data/catalog/', false, '/manufacturer\..+\.json$/');
 
 			foreach ($files as $file) {
 				unlink($file);

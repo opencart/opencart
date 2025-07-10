@@ -125,47 +125,16 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (!is_dir(DIR_OPENCART . 'install/')) {
+			$directory = DIR_OPENCART . 'install/';
+
+			if (!is_dir($directory)) {
 				$json['error'] = $this->language->get('error_install');
 			}
 		}
 
 		if (!$json) {
-			$files = [];
-
-			$path = DIR_OPENCART . 'install/';
-
 			// Make path into an array
-			$directory = [$path];
-
-			// While the path array is still populated keep looping through
-			while (count($directory) != 0) {
-				$next = array_shift($directory);
-
-				if (is_dir($next)) {
-					foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-						// If directory add to path array
-						if (is_dir($file)) {
-							$directory[] = $file;
-						}
-
-						// Add the file to the files to be deleted array
-						$files[] = $file;
-					}
-				}
-			}
-
-			rsort($files);
-
-			foreach ($files as $file) {
-				if (is_file($file)) {
-					unlink($file);
-				} elseif (is_dir($file)) {
-					rmdir($file);
-				}
-			}
-
-			rmdir($path);
+			oc_directory_delete($directory);
 
 			$json['success'] = $this->language->get('text_install_success');
 		}
@@ -232,29 +201,12 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = [];
-
 			// Make path into an array
-			$directory = [$base_old];
-
-			// While the path array is still populated keep looping through
-			while (count($directory) != 0) {
-				$next = array_shift($directory);
-
-				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					// If directory add to path array
-					if (is_dir($file)) {
-						$directory[] = $file;
-					}
-
-					// Add the file to the files to be deleted array
-					$files[] = $file;
-				}
-			}
+			$files = oc_directory_read($base_old, true);
 
 			// Create the new storage folder
 			if (!is_dir($base_new)) {
-				mkdir($base_new, 0777);
+				oc_directory_create($base_new, 0777);
 			}
 
 			$total = count($files);
@@ -266,23 +218,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			for ($i = $start; $i < $end; $i++) {
 				$destination = substr($files[$i], strlen($base_old));
 
-				// Must not have a path before files and directories can be moved
-				$path_new = '';
-
-				$directories = explode('/', dirname($destination));
-
-				foreach ($directories as $directory) {
-					if (!$path_new) {
-						$path_new = $directory;
-					} else {
-						$path_new = $path_new . '/' . $directory;
-					}
-
-					// To fix storage location
-					if (!is_dir($base_new . $path_new)) {
-						mkdir($base_new . $path_new, 0777);
-					}
-				}
+				oc_directory_create($base_new . dirname($destination), 0777);
 
 				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
 					copy($base_old . $destination, $base_new . $destination);
@@ -294,18 +230,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 				$json['next'] = $this->url->link('common/security.storage', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&path=' . $path . '&page=' . ($page + 1), true);
 			} else {
-				// Remove old directories and files
-				rsort($files);
-
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);
-					}
-				}
-
-				rmdir($base_old);
+				oc_directory_delete($base_old);
 
 				// Modify the config files
 				$files = [
@@ -398,31 +323,13 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
-			$files = [];
-
-			// Make path into an array
-			$directory = [$base_old];
-
-			// While the path array is still populated keep looping through
-			while (count($directory) != 0) {
-				$next = array_shift($directory);
-
-				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					// If directory, add to path array
-					if (is_dir($file)) {
-						$directory[] = $file;
-					}
-
-					// Add the file to the files to be deleted array
-					$files[] = $file;
-				}
-			}
-
 			// 2. Create the new admin folder name
 			if (!is_dir($base_new)) {
 				mkdir($base_new, 0777);
 			}
+
+			// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
+			$files = oc_directory_read($base_old, true);
 
 			// 3. Split the file copies into chunks.
 			$total = count($files);
@@ -435,22 +342,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			foreach (array_slice($files, $start, $end) as $file) {
 				$destination = substr($file, strlen($base_old));
 
-				// Must not have a path before files and directories can be moved
-				$path_new = '';
-
-				$directories = explode('/', dirname($destination));
-
-				foreach ($directories as $directory) {
-					if (!$path_new) {
-						$path_new = $directory;
-					} else {
-						$path_new = $path_new . '/' . $directory;
-					}
-
-					if (!is_dir($base_new . $path_new)) {
-						mkdir($base_new . $path_new, 0777);
-					}
-				}
+				oc_directory_create($base_new . dirname($destination), 0777);
 
 				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
 					copy($base_old . $destination, $base_new . $destination);
@@ -554,41 +446,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Delete old admin directory
-			$directory = [$path];
-
-			// Remove paths
-			foreach ($directory as $path) {
-				$files = [];
-
-				// While the path array is still populated keep looping through
-				while (count($directory) != 0) {
-					$next = array_shift($directory);
-
-					if (is_dir($next)) {
-						foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-							// If directory add to path array
-							if (is_dir($file)) {
-								$directory[] = $file;
-							}
-
-							// Add the file to the files to be deleted array
-							$files[] = $file;
-						}
-					}
-				}
-
-				rsort($files);
-
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);
-					}
-				}
-
-				rmdir($path);
-			}
+			oc_directory_delete($path);
 
 			$json['success'] = $this->language->get('text_' . $remove . '_delete_success');
 		}

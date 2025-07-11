@@ -143,26 +143,8 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_setting->editValue('config', 'config_maintenance', '1');
 
-			// Clear all modification files
-			$files = [];
-
 			// Make path into an array
-			$path = [DIR_EXTENSION . 'ocmod/*'];
-
-			// While the path array is still populated keep looping through
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				foreach (glob($next) as $file) {
-					// If directory add to path array
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
-					}
-
-					// Add the file to the files to be deleted array
-					$files[] = $file;
-				}
-			}
+			$files = oc_directory_read(DIR_EXTENSION . 'ocmod/*');
 
 			// Reverse sort the file array
 			rsort($files);
@@ -547,10 +529,12 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = [];
-
 			// Make path into an array
 			$path = [DIR_EXTENSION . 'ocmod/*'];
+
+
+			$files = oc_directory_read(DIR_CATALOG . 'view/data/catalog/', false, '/manufacturer\..+\.json$/');
+
 
 			// While the path array is still populated keep looping through
 			while (count($path) != 0) {

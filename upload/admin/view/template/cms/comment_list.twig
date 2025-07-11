@@ -55,7 +55,7 @@
                 <button type="button" class="btn btn-sm btn-success" disabled><i class="fa-solid fa-check"></i></button>
                 <button type="button" id="button-disable-{{ comment.article_comment_id }}" value="{{ comment.disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-sm btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
               {% endif %}
-              <button type="button" id="button-spam-{{ comment.article_comment_id }}" value="{{ comment.spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-ban"></i></button>
+              <button type="button" id="button-spam-{{ comment.article_comment_id }}" value="{{ comment.spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" class="btn btn-sm btn-warning"{% if not comment.customer_id %} disabled{% endif %}><i class="fa-solid fa-ban"></i></button>
               {% if not comment.parent_id %}
 				<button type="button" id="button-reply-{{ comment.article_comment_id }}" onclick="openCommentDialog(this);" data-bs-toggle="tooltip" title="{{ button_reply }}" class="btn btn-sm btn-info" data-is-add-reply="1" data-edit-url="{{ comment.edit_url }}" data-article-comment-id="0" data-parent-id="{{ comment.article_comment_id }}" data-status="{{ comment.status }}"><i class="fa-solid fa-reply"></i></button>
               {% endif %}
@@ -326,7 +326,7 @@ $('#button-addon').click(function() {
 	$('#form-comment-edit input[name=\'customer_name\']').val('');
 });
 
-// Get customer_id by iterating through dropdown menu items 
+// Get customer_id by iterating through dropdown menu items
 $('#form-comment-edit .dropdown-menu').on('click', function() {
 	var dropdownId = $(this).attr('id');
 

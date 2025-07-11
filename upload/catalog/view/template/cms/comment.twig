@@ -284,12 +284,13 @@ $('#form-comment').on('submit', function(e) {
     });
 });
 
-// View Replies
+// View Replies and See More Replies
 $('#comment').on('click', '[data-oc-toggle=\'next\']', function(e) {
     e.preventDefault();
 
     var element = this;
     var buttonClass = $(element).attr('class');
+	var buttonId = this.id;
 
     $.ajax({
         url: $(element).val(),
@@ -308,7 +309,14 @@ $('#comment').on('click', '[data-oc-toggle=\'next\']', function(e) {
 			$(element).attr('disabled', true);
         },
         success: function(html) {
-            $(element).parent().after(html);
+			if (buttonId) {
+				// View Replies
+            	$(element).parent().after(html);
+			} else {
+				// See More Replies button does not have an id.
+            	$(element).parent().before(html);
+            	$(element).parent().remove();
+			}
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -321,11 +329,19 @@ $('#comment').on('click', '[data-oc-toggle=\'hide\']', function(e) {
     e.preventDefault();
 
     var element = this;
-	let parentId = $(element).val();
-	let elementId = '#reply-' + parentId + '-1';
+	var parentId = $(element).val();
+	let elementId = '#reply-' + parentId;
 
-	$(elementId).remove();
-	$(element).parent().remove();	
+	$('[id^=reply-' + parentId + '-]').each(function() {
+		let replyId = $(this).attr('id');
+		var lastChar = replyId.substr(replyId.length - 1);
+
+		if (lastChar != '0') {
+			$('#' + replyId).remove();
+		}
+	});
+
+	$(element).parent().remove();
 
 	$('#view-replies-' + parentId).attr('disabled', false);
 });
@@ -393,7 +409,7 @@ $('#comment-container').on('click', '[data-oc-toggle=\'rate\']', function(e) {
 
 				$(element).parent().removeClass(parentClass);
 				$(element).parent().addClass(parentClass + ' d-none');
-				
+
 				// Show the appropriate like/dislike button block
 				if (json['liked'] == '0') {
 					$('#undo-dislike-' + articleCommentId).removeClass('d-none');

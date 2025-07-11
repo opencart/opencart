@@ -253,7 +253,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		} else {
 			$filter_rating_from = '';
 		}
-		
+
 		if (isset($this->request->get['filter_rating_to'])) {
 			$filter_rating_to = (int)$this->request->get['filter_rating_to'];
 		} else {
@@ -326,7 +326,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_rating_from'])) {
 			$url .= '&filter_rating_from=' . $this->request->get['filter_rating_from'];
 		}
-		
+
 		if (isset($this->request->get['filter_rating_to'])) {
 			$url .= '&filter_rating_to=' . $this->request->get['filter_rating_to'];
 		}
@@ -419,11 +419,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 			if ((int)$result['parent_id'] > 0) {
 				// Parent Comment
 				$parent_comment = $this->model_cms_comment->getCommentInfo($result['parent_id']);
-			
-				if ($parent_comment) {
+
+				if ($parent_comment && $parent_comment['customer_id']) {
 					// Customer
 					$customer = $this->model_customer_customer->getCustomer($parent_comment['customer_id']);
-			
+
 					$parent_customer_id = $customer['customer_id'];
 					$parent_customer = $customer['firstname'] . ' ' . $customer['lastname'];
 					$parent_author = $customer['author'];
@@ -479,7 +479,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_rating_from'])) {
 			$url .= '&filter_rating_from=' . $this->request->get['filter_rating_from'];
 		}
-		
+
 		if (isset($this->request->get['filter_rating_to'])) {
 			$url .= '&filter_rating_to=' . $this->request->get['filter_rating_to'];
 		}
@@ -754,7 +754,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 				if (count($ratings)) {
 					$total_rating = ($total_rating / (count($ratings)));
-				} 
+				}
 
 				$this->model_cms_article->editRating($article['article_id'], $total_rating);
 			}
@@ -976,11 +976,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$name = strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'));
 
 				$names = [];
-				
+
 				foreach ($json as $key => $value) {
 					$names[] = $value['name'];
 				}
-			
+
 				if (!in_array($name, $names)) {
 					$json[] = [
 						'customer_id'   => $result['customer_id'],
@@ -1005,11 +1005,11 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$name = strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'));
 
 				$names = [];
-				
+
 				foreach ($json as $key => $value) {
 					$names[] = $value['name'];
 				}
-			
+
 				if (!in_array($name, $names)) {
 					$json[] = [
 						'article_comment_id'	=> $result['article_comment_id'],
@@ -1033,7 +1033,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$author = strip_tags(html_entity_decode($result['author'], ENT_QUOTES, 'UTF-8'));
 
 				$authors = [];
-				
+
 				foreach ($json as $key => $value) {
 					$authors[] = $value['name'];
 				}
@@ -1076,7 +1076,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
-		
+
 		$sort_order = [];
 
 		foreach ($json as $key => $value) {

@@ -721,7 +721,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_exists');
 		}
 
-		if ($customer_info && isset($post_info['author']) && !empty($post_info['author']) && (bool)$this->model_customer_customer->getTotalCustomersByAuthor($post_info['author'])) {
+		if ($customer_info && (isset($post_info['author']) && !empty($post_info['author'])) && ($post_info['author'] != $customer_info['author']) && $this->model_customer_customer->getTotalCustomersByAuthor($post_info['author'])) {
 			$json['error']['warning'] = $this->language->get('error_author_taken');
 		}
 

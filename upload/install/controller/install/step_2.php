@@ -7,11 +7,6 @@ namespace Opencart\Install\Controller\Install;
  */
 class Step2 extends \Opencart\System\Engine\Controller {
 	/**
-	 * @var array<string, string>
-	 */
-	private array $error = [];
-
-	/**
 	 * Index
 	 *
 	 * @return void

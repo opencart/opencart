@@ -23,7 +23,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		//if (!$this->user->hasPermission('modify', 'catalog/information')) {
-			$json['error'] = $this->language->get('error_permission');
+		$json['error'] = $this->language->get('error_permission');
 		//}
 
 		if (!$json) {

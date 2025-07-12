@@ -7382,12 +7382,12 @@ function oc_db_schema() {
 				'type' => 'text'
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'varchar(16)'
+				'name' => 'status',
+				'type' => 'varchar(16)'
 			],
 			[
-				'name'    => 'response',
-				'type'    => 'text'
+				'name' => 'response',
+				'type' => 'text'
 			],
 			[
 				'name' => 'date_added',

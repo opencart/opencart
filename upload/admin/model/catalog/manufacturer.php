@@ -94,7 +94,6 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	public function editManufacturer(int $manufacturer_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
-
 		// Description
 		$this->deleteDescriptions($manufacturer_id);
 
@@ -277,8 +276,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * Create a new manufacturer description record in the database.
 	 *
 	 * @param int                  $manufacturer_id primary key of the manufacturer record
-	 * @param int                  $language_id    primary key of the language record
-	 * @param array<string, mixed> $data           array of data
+	 * @param int                  $language_id     primary key of the language record
+	 * @param array<string, mixed> $data            array of data
 	 *
 	 * @return void
 	 *

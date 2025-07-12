@@ -19,7 +19,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		//if (!$this->user->hasPermission('modify', 'ssr/admin/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
+		$json['error'] = $this->language->get('error_permission');
 		//}
 
 		$this->response->addHeader('Content-Type: application/json');

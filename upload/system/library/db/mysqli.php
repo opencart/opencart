@@ -122,9 +122,9 @@ class MySQLi {
 	 *
 	 * @param string $sql SQL query to execute
 	 *
-	 * @return \stdClass|bool Query result object with row, rows, num_rows properties for SELECT queries, true for other queries
-	 *
 	 * @throws \Exception If query execution fails
+	 *
+	 * @return bool|\stdClass Query result object with row, rows, num_rows properties for SELECT queries, true for other queries
 	 */
 	public function query(string $sql) {
 		try {

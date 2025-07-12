@@ -128,9 +128,9 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['subscription_plans'][] = [
-				'edit' => $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url),
-				'enable'	=> $this->url->link('catalog/subscription_plan.enable', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url),
-				'disable'	=> $this->url->link('catalog/subscription_plan.disable', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url)
+				'edit'    => $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url),
+				'enable'  => $this->url->link('catalog/subscription_plan.enable', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url),
+				'disable' => $this->url->link('catalog/subscription_plan.disable', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url)
 			] + $result;
 		}
 

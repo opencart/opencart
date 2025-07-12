@@ -21,7 +21,6 @@ class Cron extends \Opencart\System\Engine\Model {
 	 *
 	 * $cron_data = [
 	 *
-	 *
 	 * ]
 	 *
 	 * $this->load->model('setting/cron');

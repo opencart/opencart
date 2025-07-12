@@ -193,9 +193,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function admin(): void {
-
-	}
+	public function admin(): void {}
 
 	public function zone(): void {
 		$this->load->language('ssr/country');
@@ -211,7 +209,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		if (!$this->user->hasPermission('modify', 'ssr/country')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
-
 
 		if (!$json) {
 			$this->load->model('localisation/language');

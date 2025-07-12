@@ -239,8 +239,8 @@ class Review extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['reviews'][] = [
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'enable'  => $this->url->link('catalog/review.enable', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url),
-				'disable' => $this->url->link('catalog/review.disable', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url),
+				'enable'     => $this->url->link('catalog/review.enable', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url),
+				'disable'    => $this->url->link('catalog/review.disable', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url),
 				'edit'       => $this->url->link('catalog/review.form', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url)
 			] + $result;
 		}

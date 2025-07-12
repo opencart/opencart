@@ -198,9 +198,9 @@ class Menu extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new menu description record in the database.
 	 *
-	 * @param int                  $menu_id primary key of the menu record
-	 * @param int                  $language_id  primary key of the language record
-	 * @param array<string, mixed> $data         array of data
+	 * @param int                  $menu_id     primary key of the menu record
+	 * @param int                  $language_id primary key of the language record
+	 * @param array<string, mixed> $data        array of data
 	 *
 	 * @return void
 	 *

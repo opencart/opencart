@@ -23,7 +23,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		//if (!$this->user->hasPermission('modify', 'ssr/article')) {
-			$json['error'] = $this->language->get('error_permission');
+		$json['error'] = $this->language->get('error_permission');
 		//}
 
 		//$directory = DIR_CATALOG . 'view/data/cms/';

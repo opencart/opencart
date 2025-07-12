@@ -102,7 +102,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		// Default
 		$data['address_format_id'] = $this->config->get('config_address_format_id');
 
-			// Total Address Formats
+		// Total Address Formats
 		$address_format_total = $this->model_localisation_address_format->getTotalAddressFormats($filter_data);
 
 		// Pagination

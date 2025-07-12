@@ -56,7 +56,6 @@ class Stores extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
 			$json['success'] = $this->language->get('text_success');
 		}
 

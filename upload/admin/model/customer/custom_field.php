@@ -562,7 +562,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
-	 * 
+	 *
 	 * $custom_field_value_description_data[1] = [
 	 *     'custom_field_value_id' => 1,
 	 *     'custom_field_id'       => 1,

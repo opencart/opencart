@@ -51,9 +51,9 @@ function oc_strlen(string $string): int {
  * @param string $needle
  * @param int    $offset
  *
- * @return int|false
+ * @return false|int
  */
-function oc_strpos(string $string, string $needle, int $offset = 0): int|false {
+function oc_strpos(string $string, string $needle, int $offset = 0): false|int {
 	return mb_strpos($string, $needle, $offset);
 }
 
@@ -62,9 +62,9 @@ function oc_strpos(string $string, string $needle, int $offset = 0): int|false {
  * @param string $needle
  * @param int    $offset
  *
- * @return int|false
+ * @return false|int
  */
-function oc_strrpos(string $string, string $needle, int $offset = 0): int|false {
+function oc_strrpos(string $string, string $needle, int $offset = 0): false|int {
 	return mb_strrpos($string, $needle, $offset);
 }
 
@@ -143,7 +143,7 @@ if (!function_exists('str_contains')) {
 // File Handling Functions
 
 // 1. Reading a file
-function oc_file_read(string $file): string|false {
+function oc_file_read(string $file): false|string {
 	if (is_file($file)) {
 		return file_get_contents($file);
 	}
@@ -197,7 +197,7 @@ function oc_directory_read(string $directory, bool $recursive = false, string $r
 						$stack[] = $file;
 					}
 
-					$file = $file . '/';
+					$file .= '/';
 				}
 
 				// Add the file to the files to be deleted array

@@ -10,7 +10,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 * Generate
 	 *
 	 * @return void
-	 *
 	 */
 	public function index(): void {
 		$this->load->language('ssr/catalog/currency');

@@ -663,9 +663,9 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the user authorize records in the database.
 	 *
-	 * @param  int  $user_id  primary key of the user record
-	 * @param  int  $start
-	 * @param  int  $limit
+	 * @param int $user_id primary key of the user record
+	 * @param int $start
+	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>> authorize records
 	 *
@@ -742,9 +742,9 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new user token record in the database.
 	 *
-	 * @param  int  $user_id  primary key of the user record
-	 * @param  string  $type
-	 * @param  string  $code
+	 * @param int    $user_id primary key of the user record
+	 * @param string $type
+	 * @param string $code
 	 *
 	 * @return void
 	 *

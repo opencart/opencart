@@ -51,7 +51,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 
 				$data['categories'][] = [
 					'code' => $extension,
-					'text' => $this->language->get($extension . '_heading_title') . ' (' . $extension_total. ')',
+					'text' => $this->language->get($extension . '_heading_title') . ' (' . $extension_total . ')',
 					'href' => $this->url->link('extension/' . $extension, 'user_token=' . $this->session->data['user_token'])
 				];
 			}

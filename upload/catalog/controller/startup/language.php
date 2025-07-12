@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
-use Opencart\System\Engine\Action;
 /**
  * Class Language
  *

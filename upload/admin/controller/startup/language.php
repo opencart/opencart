@@ -25,7 +25,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			self::$languages[$result['code']] = $result;
 		}
-		
+
 		$language_info = [];
 
 		// Set default language

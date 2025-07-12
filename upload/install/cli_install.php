@@ -300,7 +300,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		try {
 			// Database
 			$db = new \Opencart\System\Library\DB([
-				'engine' => $db_driver,
+				'engine'   => $db_driver,
 				'hostname' => $db_hostname,
 				'username' => $db_username,
 				'password' => $db_password,
@@ -312,6 +312,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			]);
 		} catch (\Exception $e) {
 			echo $e->getMessage();
+
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
 

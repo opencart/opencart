@@ -73,9 +73,9 @@ class PgSQL {
 	 *
 	 * @param string $sql SQL query to execute
 	 *
-	 * @return \stdClass Query result with row, rows, and num_rows properties
-	 *
 	 * @throws \Exception If query execution fails
+	 *
+	 * @return \stdClass Query result with row, rows, and num_rows properties
 	 */
 	public function query(string $sql): \stdClass {
 		$resource = pg_query($this->db, $sql);
@@ -129,9 +129,9 @@ class PgSQL {
 	 *
 	 * Get the last inserted sequence value
 	 *
-	 * @return int Last inserted ID
-	 *
 	 * @throws \Exception If sequence value cannot be retrieved
+	 *
+	 * @return int Last inserted ID
 	 */
 	public function getLastId(): int {
 		$query = $this->query("SELECT LASTVAL() AS `id`");

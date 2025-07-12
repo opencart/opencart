@@ -305,7 +305,7 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the zone description record in the database.
 	 *
-	 * @param int $zone_id primary key of the zone record
+	 * @param int $zone_id     primary key of the zone record
 	 * @param int $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed> description record that has zone ID and language ID

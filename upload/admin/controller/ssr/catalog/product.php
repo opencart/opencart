@@ -17,7 +17,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		//if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
-			$json['error'] = $this->language->get('error_permission');
+		$json['error'] = $this->language->get('error_permission');
 		//}
 
 		$this->response->addHeader('Content-Type: application/json');

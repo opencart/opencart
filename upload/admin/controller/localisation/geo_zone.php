@@ -281,9 +281,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->request->post['zone_to_geo_zone'])) {
 
-
 		}
-
 
 		if (!$json) {
 			// Geo Zone

@@ -81,7 +81,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$file = DIR_CATALOG . 'view/data/localisation/currency.json';
 
-			if  (is_file($file)) {
+			if (is_file($file)) {
 				unlink($file);
 			}
 

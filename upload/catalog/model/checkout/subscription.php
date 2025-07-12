@@ -296,7 +296,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> subscription records
 	 *
 	 * @example
-	 * 
+	 *
 	 * $filter_data = [
 	 *     'filter_subscription_id'        => 1,
 	 *     'filter_order_id'               => 1,

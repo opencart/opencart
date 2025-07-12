@@ -11,7 +11,7 @@ $_['text_render']          = 'Générateurs de Site Statique';
 
 // Entrée
 $_['entry_progress']       = 'Progression';
- 
+
 // Colonne
 $_['column_code']          = 'Code GSS (SSR)';
 $_['column_progress']      = 'Progression';

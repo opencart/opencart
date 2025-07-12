@@ -90,10 +90,9 @@ class Cart {
 
 					$option_data = [];
 
-					$product_options = (array) json_decode(!empty($cart['option']) ? $cart['option'] : '{}', true);
+					$product_options = (array)json_decode(!empty($cart['option']) ? $cart['option'] : '{}', true);
 
 					$variant = json_decode(!empty($product_query->row['variant']) ? $product_query->row['variant'] : '{}', true);
-
 
 					if ($variant) {
 						foreach ($variant as $key => $value) {
@@ -306,7 +305,7 @@ class Cart {
 	/**
 	 * Add
 	 *
-	 * @param int                  $product_id primary key of the product record
+	 * @param int                  $product_id           primary key of the product record
 	 * @param int                  $quantity
 	 * @param array<string, mixed> $option
 	 * @param int                  $subscription_plan_id primary key of the subscription plan record

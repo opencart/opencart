@@ -435,8 +435,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the subscription option records in the database.
 	 *
-	 * @param  int  $subscription_id  primary key of the subscription record
-	 * @param  int  $subscription_product_id  primary key of the subscription product record
+	 * @param int $subscription_id         primary key of the subscription record
+	 * @param int $subscription_product_id primary key of the subscription product record
 	 *
 	 * @return array<int, array<string, mixed>> option records that have subscription ID, subscription product ID
 	 *

@@ -532,9 +532,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			// Make path into an array
 			$path = [DIR_EXTENSION . 'ocmod/*'];
 
-
 			$files = oc_directory_read(DIR_CATALOG . 'view/data/catalog/', false, '/manufacturer\..+\.json$/');
-
 
 			// While the path array is still populated keep looping through
 			while (count($path) != 0) {

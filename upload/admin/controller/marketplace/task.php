@@ -180,7 +180,7 @@ class Task extends \Opencart\System\Engine\Controller {
 			// Task
 			$this->load->model('setting/task');
 
-			$this->model_setting_task->editStatus($task_id, true);
+			$this->model_setting_task->editStatus($task_id, '1');
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -213,7 +213,7 @@ class Task extends \Opencart\System\Engine\Controller {
 			// Task
 			$this->load->model('setting/task');
 
-			$this->model_setting_task->editStatus($task_id, false);
+			$this->model_setting_task->editStatus($task_id, '0');
 
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -377,7 +377,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * $filter_data = [
 	 *     'parent_id' => 0,
-	 *     'sort'      => 'date_modified',
+	 *     'sort'      => 'date_added',
 	 *     'order'     => 'DESC',
 	 *     'start'     => 0,
 	 *     'limit'     => 10
@@ -402,13 +402,13 @@ class Article extends \Opencart\System\Engine\Model {
 
 		$sort_data = [
 			'rating',
-			'date_modified'
+			'date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
-			$sql .= " ORDER BY `date_modified`";
+			$sql .= " ORDER BY `date_added`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -458,7 +458,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * $filter_data = [
 	 *     'parent_id' => 0,
-	 *     'sort'      => 'date_modified',
+	 *     'sort'      => 'date_added',
 	 *     'order'     => 'DESC',
 	 *     'start'     => 0,
 	 *     'limit'     => 10

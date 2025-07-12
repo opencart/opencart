@@ -10,7 +10,7 @@
 	    </span>
 	    {% endif %}
 	  </div>
-	  <p><i class="fa-solid fa-user me-2{% if reply.is_admin %} text-success{% elseif reply.edit %} text-primary{% else %} text-dark{% endif %}"></i>{{ reply.author }} - {{ reply.date_modified }}<span id="likes-{{ reply.article_comment_id }}" class="d-inline">{% if reply.total_likes < 0 %} - <i class="fa fa-thumbs-down text-danger ms-1 me-2"></i>{{ reply.total_likes }}{% elseif reply.total_likes > 0 %} - <i class="fa fa-thumbs-up text-primary ms-1 me-2"></i>{{ reply.total_likes }}{% endif %}</span></p>
+	  <p><i class="fa-solid fa-user me-2{% if reply.is_admin %} text-success{% elseif reply.edit %} text-primary{% else %} text-dark{% endif %}"></i>{{ reply.author }} - {{ reply.date_added }}<span id="likes-{{ reply.article_comment_id }}" class="d-inline">{% if reply.total_likes < 0 %} - <i class="fa fa-thumbs-down text-danger ms-1 me-2"></i>{{ reply.total_likes }}{% elseif reply.total_likes > 0 %} - <i class="fa fa-thumbs-up text-primary ms-1 me-2"></i>{{ reply.total_likes }}{% endif %}</span></p>
 	  <p class="comment">{{ reply.comment }}</p>
     </div>
 	<div class="ps-5 pt-0 pb-3 pe-2">

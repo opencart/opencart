@@ -17,7 +17,7 @@
     		  {% if i <= comment.rating %}<span class="fa fa-star checked"></span>{% else %}<span class="fa fa-star"></span>{% endif %}
   		    {% endfor %}
 		  </div>
-		  <p><i class="fa-solid fa-user me-2{% if comment.is_admin %} text-success{% elseif comment.edit %} text-primary{% else %} text-dark{% endif %}"></i>{{ comment.author }} - {{ comment.date_modified }}<span id="likes-{{ comment.article_comment_id }}" class="d-inline">{% if comment.total_likes < 0 %} - <i class="fa fa-thumbs-down text-danger ms-1 me-2"></i>{{ comment.total_likes }}{% elseif comment.total_likes > 0 %} - <i class="fa fa-thumbs-up text-primary ms-1 me-2"></i>{{ comment.total_likes }}{% endif %}</span></p>
+		  <p><i class="fa-solid fa-user me-2{% if comment.is_admin %} text-success{% elseif comment.edit %} text-primary{% else %} text-dark{% endif %}"></i>{{ comment.author }} - {{ comment.date_added }}<span id="likes-{{ comment.article_comment_id }}" class="d-inline">{% if comment.total_likes < 0 %} - <i class="fa fa-thumbs-down text-danger ms-1 me-2"></i>{{ comment.total_likes }}{% elseif comment.total_likes > 0 %} - <i class="fa fa-thumbs-up text-primary ms-1 me-2"></i>{{ comment.total_likes }}{% endif %}</span></p>
 		  <p class="comment">{{ comment.comment }}</p>
         </div>
         <div id="reply-{{ comment.article_comment_id }}">

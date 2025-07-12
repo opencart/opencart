@@ -13,7 +13,7 @@
       <tbody>
         {% if extensions %}
           {% for extension in extensions %}
-            <tr{% if not extension.installed %} class="table-disabled"{% endif %}>
+            <tr{% if not extension.status %} class="table-disabled"{% endif %}>
               <td>{{ extension.name }}</td>
               <td class="text-center">{% if extension.status %}
                   <span class="badge bg-success">{{ text_enabled }}</span>

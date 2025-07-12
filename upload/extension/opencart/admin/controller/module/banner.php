@@ -233,7 +233,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$module_id = 0;
 		}
 
-		if (!$this->user->hasPermission('modify', 'extension/module')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/banner')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

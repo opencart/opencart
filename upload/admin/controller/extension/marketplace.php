@@ -48,25 +48,23 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$data['extensions'] = [];
 
-		if ($results) {
-			foreach ($results as $result) {
-				$path = substr($result, strlen(DIR_EXTENSION));
+		foreach ($results as $result) {
+			$path = substr($result, strlen(DIR_EXTENSION));
 
-				$extension = substr($path, 0, strpos($path, '/'));
+			$extension = substr($path, 0, strpos($path, '/'));
 
-				$code = basename($result, '.php');
+			$code = basename($result, '.php');
 
-				$this->load->language('extension/' . $extension . '/marketplace/' . $code, $code);
+			$this->load->language('extension/' . $extension . '/marketplace/' . $code, $code);
 
-				$data['extensions'][] = [
-					'name'      => $this->language->get($code . '_heading_title'),
-					'status'    => $this->config->get('language_' . $code . '_status'),
-					'install'   => $this->url->link('extension/marketplace.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall' => $this->url->link('extension/marketplace.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'installed' => in_array($code, $installed),
-					'edit'      => $this->url->link('extension/' . $extension . '/marketplace/' . $code, 'user_token=' . $this->session->data['user_token'])
-				];
-			}
+			$data['extensions'][] = [
+				'name'      => $this->language->get($code . '_heading_title'),
+				'status'    => $this->config->get('language_' . $code . '_status'),
+				'install'   => $this->url->link('extension/marketplace.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+				'uninstall' => $this->url->link('extension/marketplace.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+				'installed' => in_array($code, $installed),
+				'edit'      => $this->url->link('extension/' . $extension . '/marketplace/' . $code, 'user_token=' . $this->session->data['user_token'])
+			];
 		}
 
 		$data['promotion'] = $this->load->controller('marketplace/promotion');

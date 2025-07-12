@@ -49,26 +49,24 @@ class Captcha extends \Opencart\System\Engine\Controller {
 
 		$data['extensions'] = [];
 
-		if ($results) {
-			foreach ($results as $result) {
-				$path = substr($result, strlen(DIR_EXTENSION));
+		foreach ($results as $result) {
+			$path = substr($result, strlen(DIR_EXTENSION));
 
-				$extension = substr($path, 0, strpos($path, '/'));
+			$extension = substr($path, 0, strpos($path, '/'));
 
-				$code = basename($result, '.php');
+			$code = basename($result, '.php');
 
-				$this->load->language('extension/' . $extension . '/captcha/' . $code, $code);
+			$this->load->language('extension/' . $extension . '/captcha/' . $code, $code);
 
-				$data['extensions'][] = [
-					'name'      => $this->language->get($code . '_heading_title'),
-					'code'      => $code,
-					'status'    => $this->config->get('captcha_' . $code . '_status'),
-					'install'   => $this->url->link('extension/captcha.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall' => $this->url->link('extension/captcha.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'installed' => in_array($code, $installed),
-					'edit'      => $this->url->link('extension/' . $extension . '/captcha/' . $code, 'user_token=' . $this->session->data['user_token'])
-				];
-			}
+			$data['extensions'][] = [
+				'name'      => $this->language->get($code . '_heading_title'),
+				'code'      => $code,
+				'status'    => $this->config->get('captcha_' . $code . '_status'),
+				'install'   => $this->url->link('extension/captcha.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+				'uninstall' => $this->url->link('extension/captcha.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+				'installed' => in_array($code, $installed),
+				'edit'      => $this->url->link('extension/' . $extension . '/captcha/' . $code, 'user_token=' . $this->session->data['user_token'])
+			];
 		}
 
 		// Default

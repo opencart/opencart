@@ -265,7 +265,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $this->model_cms_article->addComment($article_id, $article_data);
 	 */
 	public function addComment(int $article_id, array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `comment` = '" . $this->db->escape($data['comment']) . "', `rating` = '" . (int)$data['rating'] . "', `ip` = '" . $this->db->escape(oc_get_ip()) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$article_id . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `comment` = '" . $this->db->escape($data['comment']) . "', `rating` = '" . (int)$data['rating'] . "', `ip` = '" . $this->db->escape(oc_get_ip()) . "', `status` = '" . (bool)!empty($data['status']) . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		$this->cache->delete('comment');
 
@@ -295,7 +295,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $this->model_cms_article->editComment($article_comment_id, $$data);
 	 */
 	public function editComment(int $article_comment_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `comment` = '" . $this->db->escape($data['comment']) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)$data['status'] . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `comment` = '" . $this->db->escape($data['comment']) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)$data['status'] . "', `date_modified` = NOW() WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
 
 		$this->cache->delete('comment');
 	}
@@ -377,7 +377,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * $filter_data = [
 	 *     'parent_id' => 0,
-	 *     'sort'      => 'date_added',
+	 *     'sort'      => 'date_modified',
 	 *     'order'     => 'DESC',
 	 *     'start'     => 0,
 	 *     'limit'     => 10
@@ -402,13 +402,13 @@ class Article extends \Opencart\System\Engine\Model {
 
 		$sort_data = [
 			'rating',
-			'date_added'
+			'date_modified'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
-			$sql .= " ORDER BY `date_added`";
+			$sql .= " ORDER BY `date_modified`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -458,7 +458,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 *
 	 * $filter_data = [
 	 *     'parent_id' => 0,
-	 *     'sort'      => 'date_added',
+	 *     'sort'      => 'date_modified',
 	 *     'order'     => 'DESC',
 	 *     'start'     => 0,
 	 *     'limit'     => 10

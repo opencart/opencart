@@ -282,7 +282,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'date_added';
+			$sort = 'date_modified';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -347,15 +347,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['sorts'] = [];
 
 		$data['sorts'][] = [
-			'text'  => $this->language->get('text_date_added_asc'),
-			'value' => 'date_added-ASC',
-			'href'  => $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_added&order=ASC')
+			'text'  => $this->language->get('text_date_modified_asc'),
+			'value' => 'date_modified-ASC',
+			'href'  => $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_modified&order=ASC')
 		];
 
 		$data['sorts'][] = [
-			'text'  => $this->language->get('text_date_added_desc'),
-			'value' => 'date_added-DESC',
-			'href'  => $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_added&order=DESC')
+			'text'  => $this->language->get('text_date_modified_desc'),
+			'value' => 'date_modified-DESC',
+			'href'  => $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_modified&order=DESC')
 		];
 
 		$data['sorts'][] = [
@@ -435,7 +435,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 				'article_edit'  		=> $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . '&article_id=' . $result['article_id']),
 				'customer_edit' 		=> $result['customer_id'] ? $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']) : '',
 				'comment'       		=> nl2br($result['comment']),
-				'date_added'    		=> date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'date_modified'    		=> date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
 				'status'        		=> $result['status'],
 				'enable'        		=> $this->url->link('cms/comment.enable', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url),
 				'disable'       		=> $this->url->link('cms/comment.disable', 'user_token=' . $this->session->data['user_token'] . '&article_comment_id=' . $result['article_comment_id'] . $url),

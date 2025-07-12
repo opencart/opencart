@@ -25,7 +25,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort']) && $this->request->get['route'] == 'cms/comment') {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'date_added';
+			$sort = 'date_modified';
 		}
 
 		if (isset($this->request->get['order']) && $this->request->get['route'] == 'cms/comment') {
@@ -65,15 +65,15 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$data['sorts'] = [];
 
 		$data['sorts'][] = [
-			'text'  => $this->language->get('text_date_added_asc'),
-			'value' => 'date_added-ASC',
-			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=date_added&order=ASC')
+			'text'  => $this->language->get('text_date_modified_asc'),
+			'value' => 'date_modified-ASC',
+			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=date_modified&order=ASC')
 		];
 
 		$data['sorts'][] = [
-			'text'  => $this->language->get('text_date_added_desc'),
-			'value' => 'date_added-DESC',
-			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=date_added&order=DESC')
+			'text'  => $this->language->get('text_date_modified_desc'),
+			'value' => 'date_modified-DESC',
+			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=date_modified&order=DESC')
 		];
 
 		$data['sorts'][] = [
@@ -133,7 +133,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort']) && $this->request->get['route'] == 'cms/comment.list') {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'date_added';
+			$sort = 'date_modified';
 		}
 
 		if (isset($this->request->get['order']) && $this->request->get['route'] == 'cms/comment.list') {
@@ -191,7 +191,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 			$data['comments'][] = [
 				'comment'     			=> nl2br($result['comment']),
-				'date_added'  			=> date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'date_modified'  		=> date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'like'       			=> $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&rate=1&comment_token=' . $this->session->data['comment_token'], true),
 				'dislike'     			=> $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&rate=0&comment_token=' . $this->session->data['comment_token'], true),
 				'total_likes' 			=> $likes,
@@ -317,7 +317,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 			$data['replies'][] = [
 				'comment'    			=> nl2br($result['comment']),
-				'date_added' 			=> date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'date_modified' 		=> date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'like'       			=> $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] . '&rate=1&comment_token=' . $this->session->data['comment_token'], true),
 				'dislike'    			=> $this->url->link('cms/comment.rate', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&article_comment_id=' . $result['article_comment_id'] .'&rate=0&comment_token=' . $this->session->data['comment_token'], true),
 				'total_likes' 			=> $likes,

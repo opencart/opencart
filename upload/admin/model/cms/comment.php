@@ -35,7 +35,7 @@ class Comment extends \Opencart\System\Engine\Model {
 	 * $article_id = $this->model_cms_comment->addComment($article_data);
 	 */
 	public function addComment(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$data['article_id'] . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `comment` = '" . $this->db->escape($data['comment']) . "', `rating` = '" . (int)$data['rating'] . "', `ip` = '" . $this->db->escape($data['ip']) . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_comment` SET `article_id` = '" . (int)$data['article_id'] . "', `parent_id` = '" . (int)$data['parent_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `comment` = '" . $this->db->escape($data['comment']) . "', `rating` = '" . (int)$data['rating'] . "', `ip` = '" . $this->db->escape($data['ip']) . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		$article_comment_id = $this->db->getLastId();
 
@@ -63,7 +63,7 @@ class Comment extends \Opencart\System\Engine\Model {
 	 * $this->model_cms_comment->editComment($article_comment_id, $data);
 	 */
 	public function editComment(int $article_comment_id, array $data = []): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `status` = '" . (int)$data['status'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `rating` = '" . (int)$data['rating'] . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `status` = '" . (int)$data['status'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `rating` = '" . (int)$data['rating'] . "', `date_modified` = NOW() WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
 
 		$this->cache->delete('comment');
 	}
@@ -192,7 +192,7 @@ class Comment extends \Opencart\System\Engine\Model {
 	 * $comment_info = $this->model_cms_comment->getCommentInfo($article_comment_id);
 	 */
 	public function getCommentInfo(int $article_comment_id): array {
-		$sql = "SELECT CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, `c`.`author`, `c`.`safe`, `c`.`commenter`, `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_added`, `ad`.`name` AS `article` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ac`.`customer_id` = `c`.`customer_id`) WHERE `ac`.`article_comment_id` = '" . (int)$article_comment_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, `c`.`author`, `c`.`safe`, `c`.`commenter`, `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_modified`, `ad`.`name` AS `article` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ac`.`customer_id` = `c`.`customer_id`) WHERE `ac`.`article_comment_id` = '" . (int)$article_comment_id . "' AND `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$query = $this->db->query($sql);
 
@@ -261,11 +261,11 @@ class Comment extends \Opencart\System\Engine\Model {
 	public function getComments(array $data = []): array {
 		if (isset($data['filter_admin']) && $data['filter_admin'] == '0') {
 			// Admin Comments (customer_id = 0) cannot join on customer table
-			$sql = "SELECT `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_added`, `ad`.`name` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+			$sql = "SELECT `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_modified`, `ad`.`name` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 			$sql .= " AND `ac`.`customer_id` = '0'";
 		} else {
-			$sql = "SELECT CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, `c`.`author`, `c`.`safe`, `c`.`commenter`, `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_added`, `ad`.`name` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ac`.`customer_id` = `c`.`customer_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+			$sql = "SELECT CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, `c`.`author`, `c`.`safe`, `c`.`commenter`, `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_modified`, `ad`.`name` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ac`.`customer_id` = `c`.`customer_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 			if (isset($data['filter_admin']) && $data['filter_admin'] == '1') {
 				$sql .= " AND `ac`.`customer_id` > '0'";
@@ -309,22 +309,22 @@ class Comment extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$sql .= " AND DATE(`ac`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$sql .= " AND DATE(`ac`.`date_modified`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$sql .= " AND DATE(`ac`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$sql .= " AND DATE(`ac`.`date_modified`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		$sort_data = [
 			'rating',
-			'date_added'
+			'date_modified'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
-			$sql .= " ORDER BY `date_added`";
+			$sql .= " ORDER BY `date_modified`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -385,11 +385,11 @@ class Comment extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (isset($data['filter_admin']) && $data['filter_admin'] == '0') {
-			$sql = "SELECT COUNT(*) AS `total`, `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_added`, `ad`.`name` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`)";
+			$sql = "SELECT COUNT(*) AS `total`, `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_modified`, `ad`.`name` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`)";
 
 			$implode[] = "`ac`.`customer_id` = '0'";
 		} else {
-			$sql = "SELECT COUNT(*) AS `total`, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, `c`.`author`, `c`.`safe`, `c`.`commenter`, `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_added`, `ad`.`name` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ac`.`customer_id` = `c`.`customer_id`)";
+			$sql = "SELECT COUNT(*) AS `total`, CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, `c`.`author`, `c`.`safe`, `c`.`commenter`, `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_modified`, `ad`.`name` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ac`.`customer_id` = `c`.`customer_id`)";
 
 			if (isset($data['filter_admin']) && $data['filter_admin'] == '1') {
 				$implode[] = "`ac`.`customer_id` > '0'";
@@ -433,11 +433,11 @@ class Comment extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(`ac`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$implode[] = "DATE(`ac`.`date_modified`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`ac`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$implode[] = "DATE(`ac`.`date_modified`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		$implode[] = "`ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";

@@ -121,7 +121,7 @@ $('#form-filter').on('submit', function(e) {
 	var lcText = sel.toLowerCase();
 
 	// Oldest and Lowest = ASC. Latest and Highest = DESC
-	var sort = lcText.includes('{{ text_rating_needle }}') ? 'rating' : 'date_added';
+	var sort = lcText.includes('{{ text_rating_needle }}') ? 'rating' : 'date_modified';
 	var order = (lcText.includes('{{ text_oldest_needle }}') || lcText.includes('{{ text_lowest_needle }}')) ? 'ASC' : 'DESC';
 	var sortOrder = '&sort=' + sort + '&order=' + order;
 

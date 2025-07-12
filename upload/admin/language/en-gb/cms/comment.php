@@ -20,8 +20,8 @@ $_['text_customer_help']   		= 'Leave empty to Comment as the Site Administrator
 
 // Sort
 $_['text_sort']      			= 'Sort By';
-$_['text_date_added_asc']      	= 'Date Added (Oldest)';
-$_['text_date_added_desc']      = 'Date Added (Latest)';
+$_['text_date_modified_asc']    = 'Date Modified (Oldest)';
+$_['text_date_modified_desc']   = 'Date Modified (Latest)';
 $_['text_rating_asc']      		= 'Rating (Lowest)';
 $_['text_rating_desc']     		= 'Rating (Highest)';
 $_['text_rating_needle']     	= 'rating';

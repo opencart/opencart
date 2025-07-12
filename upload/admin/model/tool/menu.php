@@ -62,8 +62,7 @@ class Menu extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Menu By Code
 	 *
-	 * @param int $menu_id
-	 * @param string $menu_id primary key of the menu record
+	 * @param int $menu_id primary  key of the menu record
 	 *
 	 * @return void
 	 *

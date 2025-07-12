@@ -248,7 +248,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+		if (!empty($data['filter_language_id'])) {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
@@ -388,11 +388,11 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 			$implode[] = "LCASE(`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_value'])) . "'";
 		}
 
-		if (!empty($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+		if (!empty($data['filter_language_id'])) {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 

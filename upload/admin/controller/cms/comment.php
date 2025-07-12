@@ -774,6 +774,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 				$json['next'] = '';
 			}
+
+			$this->cache->delete('comment');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

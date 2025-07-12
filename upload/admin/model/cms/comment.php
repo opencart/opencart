@@ -39,6 +39,8 @@ class Comment extends \Opencart\System\Engine\Model {
 
 		$article_comment_id = $this->db->getLastId();
 
+		$this->cache->delete('comment');
+
 		return $article_comment_id;
 	}
 
@@ -62,6 +64,8 @@ class Comment extends \Opencart\System\Engine\Model {
 	 */
 	public function editComment(int $article_comment_id, array $data = []): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `status` = '" . (int)$data['status'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `rating` = '" . (int)$data['rating'] . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
+
+		$this->cache->delete('comment');
 	}
 
 	/**
@@ -82,6 +86,8 @@ class Comment extends \Opencart\System\Engine\Model {
 	 */
 	public function editCommentStatus(int $article_comment_id, bool $status): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `status` = '" . (int)$status . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
+
+		$this->cache->delete('comment');
 	}
 
 	/**
@@ -103,6 +109,8 @@ class Comment extends \Opencart\System\Engine\Model {
 	 */
 	public function editCommentRating(int $article_id, int $article_comment_id, int $rating): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "article_comment` SET `rating` = '" . (int)$rating . "' WHERE `article_comment_id` = '" . (int)$article_comment_id . "' AND `article_id` = '" . (int)$article_id . "'");
+
+		$this->cache->delete('comment');
 	}
 
 	/**
@@ -123,7 +131,7 @@ class Comment extends \Opencart\System\Engine\Model {
 	public function deleteComment(int $article_comment_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `article_comment_id` = '" . (int)$article_comment_id . "'");
 
-		$this->cache->delete('topic');
+		$this->cache->delete('comment');
 	}
 
 	/**
@@ -144,7 +152,7 @@ class Comment extends \Opencart\System\Engine\Model {
 	public function deleteCommentsByArticleId(int $article_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "article_comment` WHERE `article_id` = '" . (int)$article_id . "'");
 
-		$this->cache->delete('topic');
+		$this->cache->delete('comment');
 	}
 
 	/**
@@ -258,7 +266,7 @@ class Comment extends \Opencart\System\Engine\Model {
 			$sql .= " AND `ac`.`customer_id` = '0'";
 		} else {
 			$sql = "SELECT CONCAT(`c`.`firstname`, ' ', `c`.`lastname`) AS `customer`, `c`.`author`, `c`.`safe`, `c`.`commenter`, `ac`.`article_comment_id`, `ac`.`article_id`, `ac`.`parent_id`, `ac`.`comment`, `ac`.`customer_id`, `ac`.`rating`, `ac`.`status`, `ac`.`date_added`, `ad`.`name` FROM `" . DB_PREFIX . "article_comment` `ac` LEFT JOIN `" . DB_PREFIX . "article` `a` ON (`ac`.`article_id` = `a`.`article_id`) LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`ac`.`article_id` = `ad`.`article_id`) LEFT JOIN `" . DB_PREFIX . "customer` `c` ON (`ac`.`customer_id` = `c`.`customer_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-	
+
 			if (isset($data['filter_admin']) && $data['filter_admin'] == '1') {
 				$sql .= " AND `ac`.`customer_id` > '0'";
 			}
@@ -266,7 +274,7 @@ class Comment extends \Opencart\System\Engine\Model {
 			if (!empty($data['filter_customer'])) {
 				$sql .= " AND LCASE(CONCAT(`c`.`firstname`, ' ', `c`.`lastname`)) LIKE '" . $this->db->escape('%' . oc_strtolower($data['filter_customer']) . '%') . "'";
 			}
-	
+
 			if (!empty($data['filter_author'])) {
 				$sql .= " AND LCASE(`c`.`author`) LIKE '" . $this->db->escape('%' . oc_strtolower($data['filter_author']) . '%') . "'";
 			}
@@ -312,13 +320,13 @@ class Comment extends \Opencart\System\Engine\Model {
 			'rating',
 			'date_added'
 		];
-		
+
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
 			$sql .= " ORDER BY `date_added`";
 		}
-		
+
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";
 		} else {
@@ -419,7 +427,7 @@ class Comment extends \Opencart\System\Engine\Model {
 		if (!empty($data['filter_rating_from'])) {
 			$implode[] = "`ac`.`rating` >= '" . (int)$data['filter_rating_from'] . "'";
 		}
-		
+
 		if (!empty($data['filter_rating_to'])) {
 			$implode[] = "`ac`.`rating` <= '" . (int)$data['filter_rating_to'] . "'";
 		}

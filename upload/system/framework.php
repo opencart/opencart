@@ -104,6 +104,7 @@ $response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DEL
 $response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 $response->addHeader('Pragma: no-cache');
 $response->setCompression((int)$config->get('response_compression'));
+$response->setMinCompressSize((int)$config->get('response_min_compress_size'));
 
 // Database
 if ($config->get('db_autostart')) {

@@ -49,7 +49,7 @@ jobs:
         run: composer install
 
       - name: Check Code Style
-        if: matrix.php == '8.3'
+        if: matrix.php == '8.4'
         run: |
           php tools/php-cs-fixer.phar fix --dry-run --diff --ansi || true
           php tools/php-cs-fixer.phar fix --dry-run --format=checkstyle | cs2pr

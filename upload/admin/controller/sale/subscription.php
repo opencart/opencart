@@ -593,7 +593,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['subscription_products'][] = [
 				'option'       => $option_data,
 				'trial_price'  => $product['trial_price'] * $product['quantity'],
-				'price'        => $$product['price'] * $product['quantity'],
+				'price'        => $product['price'] * $product['quantity'],
 				'product_edit' => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
 			] + $product;
 		}

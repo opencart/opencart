@@ -173,4 +173,64 @@ class Featured extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	/**
+	 * Add
+	 *
+	 * @return void
+	 */
+	public function add(): void {
+		$this->load->language('extension/opencart/module/featured');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/featured')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Extension
+			$this->load->model('setting/module');
+
+			$this->model_setting_module->addModule('opencart.featured', ['name' => $this->language->get('heading_title')]);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('extension/opencart/module/featured');
+
+		$json = [];
+
+		if (isset($this->request->get['module_id'])) {
+			$module_id = $this->request->get['module_id'];
+		} else {
+			$module_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/featured')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Extension
+			$this->load->model('setting/module');
+
+			$this->model_setting_module->deleteModule($module_id);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

@@ -138,7 +138,7 @@ apache: ## Enter the Apache container (sh)
 
 php: ## Enter the PHP container (bash)
 	$(call check_service_running,php)
-	@$(COMPOSE) exec php bash
+	@$(COMPOSE) exec --user www-data --workdir /var/www/upload php bash
 
 mysql: ## Enter the MySQL container (bash)
 	$(call check_service_running,mysql)

@@ -59,6 +59,3 @@
 # ENV
 .env
 .env.docker
-
-# Docker-specific artifacts
-/public_html

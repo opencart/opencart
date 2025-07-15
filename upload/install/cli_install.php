@@ -312,6 +312,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			]);
 		} catch (\Exception $e) {
 			echo $e->getMessage();
+
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
 

@@ -359,5 +359,4 @@ class Review extends \Opencart\System\Engine\Model {
 	public function editStatus(int $review_id, bool $status): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `status` = '" . (bool)$status . "' WHERE `review_id` = '" . (int)$review_id . "'");
 	}
-
 }

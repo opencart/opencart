@@ -88,7 +88,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_design_seo_url->deleteSeoUrlsByKeyValue($key, $value, $store_id, $language_id);
 	 */
-	public function deleteSeoUrlsByKeyValue(string $key, string $value, int|null $store_id = null, int $language_id = 0): void {
+	public function deleteSeoUrlsByKeyValue(string $key, string $value, ?int $store_id = null, int $language_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'";
 
 		if ($store_id !== null) {
@@ -171,7 +171,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * $seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($key, $value, $store_id, $language_id);
 	 */
-	public function getSeoUrlByKeyValue(string $key, string $value, int|null $store_id = null, int $language_id = 0): array {
+	public function getSeoUrlByKeyValue(string $key, string $value, ?int $store_id = null, int $language_id = 0): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'";
 
 		if ($store_id !== null) {
@@ -297,9 +297,9 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Urls By Key Value
 	 *
-	 * @param string $key
+	 * @param string     $key
 	 * @param int|string $value
-     *
+	 *
 	 * @return array<int, array<int, string>>
 	 *
 	 * @example

@@ -169,10 +169,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'filter_name'     => $filter_name,
 			'filter_store_id' => $filter_store_id,
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'sort'            => $sort,
+			'order'           => $order,
+			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'           => $this->config->get('config_pagination_admin')
 		];
 
 		$stores = [];

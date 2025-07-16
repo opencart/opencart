@@ -118,7 +118,7 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 
 				$this->model_upgrade_upgrade->dropField('customer_affiliate', 'payment');
 			}
-			
+
 			// API
 			if ($this->model_upgrade_upgrade->hasField('api', 'name')) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `name` = `username` WHERE `username` IS NULL or `username` = ''");

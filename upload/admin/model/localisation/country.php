@@ -480,7 +480,7 @@ class Country extends \Opencart\System\Engine\Model {
 	 * Create a new country store record in the database.
 	 *
 	 * @param int $country_id primary key of the country record
-	 * @param int $store_id    primary key of the store record
+	 * @param int $store_id   primary key of the store record
 	 *
 	 * @return void
 	 *

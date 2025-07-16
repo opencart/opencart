@@ -28,10 +28,7 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			shell_exec($command);
 
-
-
 		}
-
 
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];

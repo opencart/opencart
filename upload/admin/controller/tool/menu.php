@@ -92,7 +92,7 @@ class Menu extends \Opencart\System\Engine\Controller {
 			if (!array_key_exists($code, $stack)) {
 				$stack[$code] = ['children' => []] + $result;
 			} else {
-				$stack[$code] = array_merge($result, isset($stack[$code]) ? $stack[$code] : []);
+				$stack[$code] = array_merge($result, $stack[$code] ?? []);
 			}
 
 			$stack[$result['parent']]['children'][$code] = &$stack[$code];
@@ -378,9 +378,9 @@ class Menu extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!$post_info['menu_id']) {
-			  $json['menu_id'] = $this->model_tool_menu->addMenu($post_info);
+				$json['menu_id'] = $this->model_tool_menu->addMenu($post_info);
 			} else {
-			  $this->model_tool_menu->editMenu($post_info['menu_id'], $post_info);
+				$this->model_tool_menu->editMenu($post_info['menu_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');

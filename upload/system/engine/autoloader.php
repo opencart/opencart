@@ -46,7 +46,7 @@ class Autoloader {
 		} else {
 			$this->path[$namespace] = [
 				'directories' => [$directory],
-				'psr4'      => $psr4
+				'psr4'        => $psr4
 			];
 		}
 	}
@@ -75,7 +75,7 @@ class Autoloader {
 
 				if (!$this->path[$namespace]['psr4']) {
 					foreach ($this->path[$namespace]['directories'] as $directory) {
-						$files[] = $directory . trim(str_replace('\\', '/', strtolower(preg_replace('~([a-z])([A-Z]|[0-9])~', '\\1_\\2', substr($class, strlen($namespace))))), '/') . '.php';
+						$files[] = $directory . trim(str_replace('\\', '/', strtolower(preg_replace('~([a-z])([A-Z]|[0-9])~', '\1_\2', substr($class, strlen($namespace))))), '/') . '.php';
 					}
 				} else {
 					foreach ($this->path[$namespace]['directories'] as $directory) {
@@ -87,7 +87,9 @@ class Autoloader {
 
 		if (isset($files)) {
 			foreach ($files as $file) {
-				if (isset($file) && is_file($file)) include_once($file);
+				if (isset($file) && is_file($file)) {
+					include_once($file);
+				}
 			}
 
 			return true;

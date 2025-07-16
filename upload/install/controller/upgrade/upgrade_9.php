@@ -47,7 +47,6 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 				'action' => 'ssr/admin/country'
 			];
 
-
 			$ssrs[] = [
 				'code'   => 'currency',
 				'action' => 'ssr/catalog/currency'
@@ -178,7 +177,6 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "ssr` SET `code` = '" . $this->db->escape($ssr['code']) . "', `action` = '" . $this->db->escape($ssr['action']) . "', `status` = '1', `sort_order` = '0', date_modified = NOW()");
 				}
 			}
-
 
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());

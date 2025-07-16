@@ -1511,7 +1511,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					'comment'          => nl2br($order_info['comment'])
 				] + $order_info;
 
-
 			}
 		}
 

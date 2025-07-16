@@ -16,7 +16,6 @@ class PDO {
 	private array $data = [];
 	/**
 	 * @var int
-	 *
 	 */
 	private int $affected;
 
@@ -82,9 +81,9 @@ class PDO {
 	 *
 	 * @param string $sql SQL query to execute (supports named parameters)
 	 *
-	 * @return \stdClass|bool Query result object with row, rows, num_rows properties for SELECT queries, true for other queries
-	 *
 	 * @throws \Exception If query execution fails
+	 *
+	 * @return bool|\stdClass Query result object with row, rows, num_rows properties for SELECT queries, true for other queries
 	 */
 	public function query(string $sql) {
 		$sql = preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql);

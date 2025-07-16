@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Model\Setting;
+namespace Opencart\extension\ocmod\admin\model\setting;
 /**
  * Class Modification
  *

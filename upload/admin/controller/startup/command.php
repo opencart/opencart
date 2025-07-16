@@ -58,7 +58,6 @@ class Command extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($output);
 	}
 
-
 	public function exception() {
 
 	}

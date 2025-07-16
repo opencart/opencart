@@ -14,7 +14,7 @@ $_['entry_rating']     = 'Rating';
 $_['entry_good']       = 'Good';
 $_['entry_bad']        = 'Bad';
 
-// Tabs
+// Tab
 $_['tab_review']       = 'Reviews (%s)';
 
 // Error

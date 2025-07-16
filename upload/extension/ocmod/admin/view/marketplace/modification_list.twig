@@ -1,0 +1,93 @@
+<form id="form-modification" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th>{{ column_name }}</th>
+          <th>{{ column_author }}</th>
+          <th>{{ column_version }}</th>
+          <th>{{ column_date_added }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if modifications %}
+          {% for modification in modifications %}
+            <tr{% if not modification.status %} class="table-disabled"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ modification.modification_id }}" class="form-check-input"/></td>
+              <td>{{ modification.name }}</td>
+              <td>{{ modification.author }}</td>
+              <td>{{ modification.version }}</td>
+              <td>{{ modification.date_added }}</td>
+              <td class="text-end text-nowrap">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-modification-{{ modification.modification_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+                {% if not modification.status %}
+                  <button type="button" value="{{ modification.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>
+                {% else %}
+                  <button type="button" value="{{ modification.disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
+                {% endif %}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>
+{% for modification in modifications %}
+  <div id="modal-modification-{{ modification.modification_id }}" class="modal modal-lg">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">{{ entry_name }}</label>
+            <input type="text" value="{{ modification.name }}" class="form-control" readonly/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_description }}</label>
+            <textarea rows="5" class="form-control" readonly>{{ modification.description }}</textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_code }}</label>
+            <input type="text" value="{{ modification.code }}" class="form-control" readonly/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_xml }}</label>
+            <textarea rows="25" class="form-control codemirror overflow-scroll" readonly>{{ modification.xml }}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+<link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet"/>
+<link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
+<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/mode/xml/xml.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/addon/edit/matchbrackets.js"></script>
+<script type="text/javascript"><!--
+// Initialize codemirrror
+var codemirror = CodeMirror.fromTextArea(document.querySelector('.codemirror'), {
+    mode: 'text/xml',
+    lineNumbers: true,
+    lineWrapping: true,
+    readOnly: true,
+    autofocus: false,
+    theme: 'monokai'
+});
+
+codemirror.setSize('100%', '600px');
+//--></script>

@@ -678,7 +678,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			// Modification
 			$this->load->model('catalog/category');
 
-			$this->model_setting_modification->editStatus($category_id, true);
+			$this->model_catalog_category->editStatus($category_id, true);
 
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -33,6 +33,7 @@ $_['action_pre_action'] = [
 	'startup/startup',
 	'startup/error',
 	'startup/event',
+	'startup/command',
 	'startup/sass',
 	'startup/login',
 	'startup/authorize',
@@ -45,25 +46,19 @@ $_['action_default']     = 'common/dashboard';
 // Action Events
 $_['action_event']       = [
 	'controller/*/before' => [
-		0 => 'event/modification.controller',
-		1 => 'event/language.before'
+		0 => 'event/language.before'
 	],
 	'controller/*/after' => [
 		0 => 'event/language.after'
 	],
-	'model/*/before' => [
-		0 => 'event/modification.model'
-		//1 => 'event/debug.before'
-	],
+	//'model/*/before' => [
+	//  0 => 'event/debug.before'
+	//],
 	//'model/*/after' => [
 	//	0 => 'event/debug.after'
 	//],
 	'view/*/before' => [
-		0   => 'event/modification.view',
 		999 => 'event/language'
-	],
-	'language/*/before' => [
-		0 => 'event/modification.language'
 	],
 	'language/*/after' => [
 		0 => 'startup/language.after'

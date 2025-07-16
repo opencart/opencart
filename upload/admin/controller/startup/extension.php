@@ -18,21 +18,21 @@ class Extension extends \Opencart\System\Engine\Controller {
 		$results = $this->model_setting_extension->getInstalls();
 
 		foreach ($results as $result) {
-			$extension = str_replace(['_', '/'], ['', '\\'], ucwords($result['extension'], '_/'));
+			$extension = str_replace(['_', '/'], ['', '\\'], ucwords($result['code'], '_/'));
 
 			// Register controllers, models and system extension folders
-			$this->autoloader->register('Opencart\Admin\Controller\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/controller/');
-			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/model/');
-			$this->autoloader->register('Opencart\System\Library\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/system/library/');
+			$this->autoloader->register('Opencart\Admin\Controller\Extension\\' . $extension, DIR_EXTENSION . $result['code'] . '/admin/controller/');
+			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $extension, DIR_EXTENSION . $result['code'] . '/admin/model/');
+			$this->autoloader->register('Opencart\System\Library\Extension\\' . $extension, DIR_EXTENSION . $result['code'] . '/system/library/');
 
 			// Template directory
-			$this->template->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/admin/view/template/');
+			$this->template->addPath('extension/' . $result['code'], DIR_EXTENSION . $result['code'] . '/admin/view/template/');
 
 			// Language directory
-			$this->language->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/admin/language/');
+			$this->language->addPath('extension/' . $result['code'], DIR_EXTENSION . $result['code'] . '/admin/language/');
 
 			// Config directory
-			$this->config->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/system/config/');
+			$this->config->addPath('extension/' . $result['code'], DIR_EXTENSION . $result['code'] . '/system/config/');
 		}
 	}
 }

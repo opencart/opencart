@@ -49,6 +49,10 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		$data['language'] = $this->config->get('config_language');
+
+		$data['customer_token'] = $this->session->data['customer_token'];
+
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 
 		$data['column_left'] = $this->load->controller('common/column_left');

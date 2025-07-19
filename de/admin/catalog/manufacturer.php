@@ -15,6 +15,7 @@ $_['text_filter']             = 'Filter';
 // Column
 $_['column_image']            = 'Bild';
 $_['column_name']             = 'Hersteller Name';
+$_['column_status']           = 'Status';
 $_['column_sort_order']       = 'Sortierreihenfolge';
 $_['column_action']           = 'Aktionen';
 
@@ -27,6 +28,7 @@ $_['entry_meta_description']  = 'Meta-Tag-Beschreibung';
 $_['entry_store']             = 'Online-Shop (Store)';
 $_['entry_keyword']           = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_image']             = 'Bild';
+$_['entry_status']            = 'Status';
 $_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_layout']            = 'Layout überschreiben';
 

@@ -35,6 +35,8 @@ class Startup extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['delete'] = $this->url->link('marketplace/startup.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('marketplace/startup.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('marketplace/startup.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -88,14 +90,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/startup');
 
-		$results = $this->model_setting_startup->getStartups($filter_data);
-
-		foreach ($results as $result) {
-			$data['startups'][] = [
-				'enable'  => $this->url->link('marketplace/startup.enable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id']),
-				'disable' => $this->url->link('marketplace/startup.disable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id'])
-			] + $result;
-		}
+		$data['startups'] = $this->model_setting_startup->getStartups($filter_data);
 
 		// Total Startups
 		$startup_total = $this->model_setting_startup->getTotalStartups();
@@ -123,10 +118,10 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['startup_id'])) {
-			$startup_id = (int)$this->request->get['startup_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$startup_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/startup')) {
@@ -137,7 +132,9 @@ class Startup extends \Opencart\System\Engine\Controller {
 			// Startup
 			$this->load->model('setting/startup');
 
-			$this->model_setting_startup->editStatus($startup_id, true);
+			foreach ($selected as $startup_id) {
+				$this->model_setting_startup->editStatus($startup_id, true);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -156,10 +153,10 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['startup_id'])) {
-			$startup_id = (int)$this->request->get['startup_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$startup_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/startup')) {
@@ -170,7 +167,9 @@ class Startup extends \Opencart\System\Engine\Controller {
 			// Startup
 			$this->load->model('setting/startup');
 
-			$this->model_setting_startup->editStatus($startup_id, false);
+			foreach ($selected as $startup_id) {
+				$this->model_setting_startup->editStatus($startup_id, false);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

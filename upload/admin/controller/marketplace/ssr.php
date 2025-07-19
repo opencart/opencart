@@ -35,6 +35,8 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['delete'] = $this->url->link('marketplace/ssr.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('marketplace/ssr.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('marketplace/ssr.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 

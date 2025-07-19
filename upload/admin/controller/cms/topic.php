@@ -6,8 +6,6 @@ namespace Opencart\Admin\Controller\Cms;
  * @package Opencart\Admin\Controller\Cms
  */
 class Topic extends \Opencart\System\Engine\Controller {
-	private ?object $load;
-
 	/**
 	 * Index
 	 *

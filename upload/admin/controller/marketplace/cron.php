@@ -35,6 +35,8 @@ class Cron extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['delete'] = $this->url->link('marketplace/cron.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('marketplace/cron.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('marketplace/cron.disable', 'user_token=' . $this->session->data['user_token']);
 
 		// Example cron URL
 		$data['cron'] = HTTP_CATALOG . 'index.php?route=cron/cron';
@@ -98,9 +100,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 				'cycle'         => $this->language->get('text_' . $result['cycle']),
 				'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
-				'run'           => $this->url->link('marketplace/cron.run', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id']),
-				'enable'        => $this->url->link('marketplace/cron.enable', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id']),
-				'disable'       => $this->url->link('marketplace/cron.disable', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id'])
+				'run'           => $this->url->link('marketplace/cron.run', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id'])
 			] + $result;
 		}
 
@@ -176,10 +176,10 @@ class Cron extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['cron_id'])) {
-			$cron_id = (int)$this->request->get['cron_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$cron_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/cron')) {
@@ -190,7 +190,9 @@ class Cron extends \Opencart\System\Engine\Controller {
 			// Cron
 			$this->load->model('setting/cron');
 
-			$this->model_setting_cron->editStatus($cron_id, true);
+			foreach ($selected as $cron_id) {
+				$this->model_setting_cron->editStatus($cron_id, true);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -209,10 +211,10 @@ class Cron extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['cron_id'])) {
-			$cron_id = (int)$this->request->get['cron_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$cron_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/cron')) {
@@ -223,7 +225,9 @@ class Cron extends \Opencart\System\Engine\Controller {
 			// Cron
 			$this->load->model('setting/cron');
 
-			$this->model_setting_cron->editStatus($cron_id, false);
+			foreach ($selected as $cron_id) {
+				$this->model_setting_cron->editStatus($cron_id, false);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

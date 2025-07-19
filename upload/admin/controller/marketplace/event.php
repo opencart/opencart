@@ -35,6 +35,8 @@ class Event extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['delete'] = $this->url->link('marketplace/event.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('marketplace/event.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('marketplace/event.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -88,14 +90,7 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/event');
 
-		$results = $this->model_setting_event->getEvents($filter_data);
-
-		foreach ($results as $result) {
-			$data['events'][] = [
-				'enable'  => $this->url->link('marketplace/event.enable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id']),
-				'disable' => $this->url->link('marketplace/event.disable', 'user_token=' . $this->session->data['user_token'] . '&event_id=' . $result['event_id'])
-			] + $result;
-		}
+		$data['events'] = $this->model_setting_event->getEvents($filter_data);
 
 		// Total Events
 		$event_total = $this->model_setting_event->getTotalEvents();
@@ -123,10 +118,10 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['event_id'])) {
-			$event_id = (int)$this->request->get['event_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$event_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/event')) {
@@ -137,7 +132,9 @@ class Event extends \Opencart\System\Engine\Controller {
 			// Event
 			$this->load->model('setting/event');
 
-			$this->model_setting_event->editStatus($event_id, true);
+			foreach ($selected as $event_id) {
+				$this->model_setting_event->editStatus($event_id, true);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -156,10 +153,10 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['event_id'])) {
-			$event_id = (int)$this->request->get['event_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$event_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/event')) {
@@ -170,7 +167,9 @@ class Event extends \Opencart\System\Engine\Controller {
 			// Event
 			$this->load->model('setting/event');
 
-			$this->model_setting_event->editStatus($event_id, false);
+			foreach ($selected as $event_id) {
+				$this->model_setting_event->editStatus($event_id, false);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

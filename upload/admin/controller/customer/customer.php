@@ -814,40 +814,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(): void {
-		$this->load->language('customer/customer');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Customer
-			$this->load->model('customer/customer');
-
-			foreach ($selected as $customer_id) {
-				$this->model_customer_customer->deleteCustomer($customer_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-	/**
 	 * Enable
 	 *
 	 * @return void
@@ -906,6 +872,41 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $customer_id) {
 				$this->model_customer_customer->editStatus((int)$customer_id, false);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Customer
+			$this->load->model('customer/customer');
+
+			foreach ($selected as $customer_id) {
+				$this->model_customer_customer->deleteCustomer($customer_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

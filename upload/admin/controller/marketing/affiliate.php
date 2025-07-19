@@ -815,39 +815,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(): void {
-		$this->load->language('marketing/affiliate');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketing/affiliate')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('marketing/affiliate');
-
-			foreach ($selected as $affiliate_id) {
-				$this->model_marketing_affiliate->deleteAffiliate($affiliate_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
 
 	/**
 	 * Enable
@@ -908,6 +875,40 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $affiliate_id) {
 				$this->model_marketing_affiliate->editStatus((int)$affiliate_id, false);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('marketing/affiliate');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketing/affiliate')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('marketing/affiliate');
+
+			foreach ($selected as $affiliate_id) {
+				$this->model_marketing_affiliate->deleteAffiliate($affiliate_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

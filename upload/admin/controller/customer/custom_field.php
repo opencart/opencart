@@ -517,7 +517,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$this->load->model('customer/custom_field');
 
 			foreach ($selected as $custom_field_id) {
-				$this->model_customer_custom_field->deleteCustomField($custom_field_id);
+				$this->model_customer_custom_field->deleteCustomField((int)$custom_field_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

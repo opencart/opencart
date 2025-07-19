@@ -30,8 +30,8 @@ $_['entry_keyword']           = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_parent']            = 'Übergeordnete Kategorie';
 $_['entry_filter']            = 'Filter';
 $_['entry_image']             = 'Bild';
-$_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_status']            = 'Status';
+$_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_layout']            = 'Layout überschreiben';
 
 // Help

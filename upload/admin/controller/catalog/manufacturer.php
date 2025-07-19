@@ -475,53 +475,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(): void {
-		$this->load->language('catalog/manufacturer');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		// Product
-		$this->load->model('catalog/product');
-
-		foreach ($selected as $manufacturer_id) {
-			// Total Products
-			$product_total = $this->model_catalog_product->getTotalProductsByManufacturerId($manufacturer_id);
-
-			if ($product_total) {
-				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
-			}
-		}
-
-		if (!$json) {
-			// Manufacturer
-			$this->load->model('catalog/manufacturer');
-
-			foreach ($selected as $manufacturer_id) {
-				$this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
 	 * Enable
 	 *
 	 * @return void
@@ -582,6 +535,53 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $manufacturer_id) {
 				$this->model_catalog_manufacturer->editStatus((int)$manufacturer_id, false);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('catalog/manufacturer');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Product
+		$this->load->model('catalog/product');
+
+		foreach ($selected as $manufacturer_id) {
+			// Total Products
+			$product_total = $this->model_catalog_product->getTotalProductsByManufacturerId($manufacturer_id);
+
+			if ($product_total) {
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+			}
+		}
+
+		if (!$json) {
+			// Manufacturer
+			$this->load->model('catalog/manufacturer');
+
+			foreach ($selected as $manufacturer_id) {
+				$this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

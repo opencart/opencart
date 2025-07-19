@@ -114,6 +114,26 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit information status record in the database.
+	 *
+	 * @param int  $information_id primary key of the information record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $this->model_catalog_information->editStatus($information_id, $status);
+	 */
+	public function editStatus(int $custom_field_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET `status` = '" . (bool)$status . "' WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+	}
+
+	/**
 	 * Delete Custom Field
 	 *
 	 * Delete custom field record in the database.

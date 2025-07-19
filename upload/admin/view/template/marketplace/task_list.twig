@@ -7,7 +7,7 @@
           <th>{{ column_code }}</th>
           <th>{{ column_action }}</th>
           <th class="text-center">{{ column_status }}</th>
-          <th>{{ column_date_added }}</th>
+          <th>{{ column_date_modified }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -23,23 +23,14 @@
                 {% else %}
                   <span class="badge bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
-              <td>{{ task.date_added }}</td>
+              <td>{{ task.date_modified }}</td>
               <td class="text-end text-nowrap">
-
+                <button type="button" value="{{ task.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
                 {% if task.description %}
                   <button type="button" data-bs-toggle="modal" data-bs-target="#modal-cron-{{ task.task_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% else %}
                   <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>
                 {% endif %}
-
-                <button type="button" value="{{ task.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
-
-                {% if not task.status %}
-                  <button type="button" value="{{ task.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>
-                {% else %}
-                  <button type="button" value="{{ task.disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
-                {% endif %}
-
               </td>
             </tr>
           {% endfor %}
@@ -58,7 +49,7 @@
 </form>
 {% for task in tasks %}
   {% if task.description %}
-    <div id="modal-cron-{{ task.task_id }}" class="modal">
+    <div id="modal-task-{{ task.task_id }}" class="modal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

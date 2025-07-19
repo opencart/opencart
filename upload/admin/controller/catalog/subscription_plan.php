@@ -427,6 +427,76 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('catalog/subscription_plan');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/subscription_plan')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// subscription_plan
+			$this->load->model('catalog/subscription_plan');
+
+			foreach ($selected as $subscription_plan_id) {
+				$this->model_catalog_subscription_plan->editStatus((int)$subscription_plan_id, true);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('catalog/subscription_plan');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/subscription_plan')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// subscription_plan
+			$this->load->model('catalog/subscription_plan');
+
+			foreach ($selected as $subscription_plan_id) {
+				$this->model_catalog_subscription_plan->editStatus((int)$subscription_plan_id, false);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
 	 * Delete
 	 *
 	 * @return void
@@ -464,76 +534,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $subscription_plan_id) {
 				$this->model_catalog_subscription_plan->deleteSubscriptionPlan($subscription_plan_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
-	public function enable(): void {
-		$this->load->language('catalog/subscription_plan');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/subscription_plan')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// subscription_plan
-			$this->load->model('catalog/subscription_plan');
-
-			foreach ($selected as $subscription_plan_id) {
-				$this->model_catalog_subscription_plan->editStatus($subscription_plan_id, true);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('catalog/subscription_plan');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/subscription_plan')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// subscription_plan
-			$this->load->model('catalog/subscription_plan');
-
-			foreach ($selected as $subscription_plan_id) {
-				$this->model_catalog_subscription_plan->editStatus($subscription_plan_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');

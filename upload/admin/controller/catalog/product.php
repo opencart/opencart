@@ -1314,11 +1314,11 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Delete
+	 * Copy
 	 *
 	 * @return void
 	 */
-	public function delete(): void {
+	public function copy(): void {
 		$this->load->language('catalog/product');
 
 		$json = [];
@@ -1334,11 +1334,10 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Product
 			$this->load->model('catalog/product');
 
 			foreach ($selected as $product_id) {
-				$this->model_catalog_product->deleteProduct($product_id);
+				$this->model_catalog_product->copyProduct((int)$product_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -1417,11 +1416,11 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Copy
+	 * Delete
 	 *
 	 * @return void
 	 */
-	public function copy(): void {
+	public function delete(): void {
 		$this->load->language('catalog/product');
 
 		$json = [];
@@ -1437,10 +1436,11 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Product
 			$this->load->model('catalog/product');
 
 			foreach ($selected as $product_id) {
-				$this->model_catalog_product->copyProduct((int)$product_id);
+				$this->model_catalog_product->deleteProduct($product_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

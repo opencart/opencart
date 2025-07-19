@@ -130,6 +130,28 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit information status record in the database.
+	 *
+	 * @param int  $information_id primary key of the information record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $this->model_catalog_information->editStatus($information_id, $status);
+	 */
+	public function editStatus(int $information_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `status` = '" . (bool)$status . "' WHERE `information_id` = '" . (int)$information_id . "'");
+
+		$this->cache->delete('information');
+	}
+
+	/**
 	 * Delete Information
 	 *
 	 * Delete information record in the database.
@@ -267,28 +289,6 @@ class Information extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information`");
 
 		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Edit Status
-	 *
-	 * Edit information status record in the database.
-	 *
-	 * @param int  $information_id primary key of the information record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/information');
-	 *
-	 * $this->model_catalog_information->editStatus($information_id, $status);
-	 */
-	public function editStatus(int $information_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `status` = '" . (bool)$status . "' WHERE `information_id` = '" . (int)$information_id . "'");
-
-		$this->cache->delete('information');
 	}
 
 	/**

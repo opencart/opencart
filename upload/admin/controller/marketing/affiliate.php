@@ -126,6 +126,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['complete'] = $this->url->link('marketing/affiliate.complete', 'user_token=' . $this->session->data['user_token']);
 		$data['add'] = $this->url->link('marketing/affiliate.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('marketing/affiliate.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('marketing/affiliate.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('marketing/affiliate.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 

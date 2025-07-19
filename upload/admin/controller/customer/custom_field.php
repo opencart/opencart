@@ -424,41 +424,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(): void {
-		$this->load->language('customer/custom_field');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'customer/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Custom Field
-			$this->load->model('customer/custom_field');
-
-			foreach ($selected as $custom_field_id) {
-				$this->model_customer_custom_field->deleteCustomField($custom_field_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
 	 * Enable
 	 *
 	 * @return void
@@ -517,6 +482,42 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $custom_field_id) {
 				$this->model_customer_custom_field->editStatus((int)$custom_field_id, false);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('customer/custom_field');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/custom_field')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Custom Field
+			$this->load->model('customer/custom_field');
+
+			foreach ($selected as $custom_field_id) {
+				$this->model_customer_custom_field->deleteCustomField($custom_field_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

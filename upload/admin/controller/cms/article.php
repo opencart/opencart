@@ -411,19 +411,19 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Delete
+	 * Rating
 	 *
 	 * @return void
 	 */
-	public function delete(): void {
+	public function rating(): void {
 		$this->load->language('cms/article');
 
 		$json = [];
 
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
 		} else {
-			$selected = [];
+			$page = 1;
 		}
 
 		if (!$this->user->hasPermission('modify', 'cms/article')) {
@@ -431,14 +431,54 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Article
+			$limit = 100;
+
+			// Articles
+			$filter_data = [
+				'sort'  => 'date_added',
+				'order' => 'ASC',
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
+			];
+
 			$this->load->model('cms/article');
 
-			foreach ($selected as $article_id) {
-				$this->model_cms_article->deleteArticle($article_id);
+			$results = $this->model_cms_article->getArticles($filter_data);
+
+			foreach ($results as $result) {
+				$like = 0;
+				$dislike = 0;
+
+				$ratings = $this->model_cms_article->getRatings($result['article_id']);
+
+				foreach ($ratings as $rating) {
+					if ($rating['rating'] == 1) {
+						$like = $rating['total'];
+					}
+
+					if ($rating['rating'] == 0) {
+						$dislike = $rating['total'];
+					}
+				}
+
+				$this->model_cms_article->editRating($result['article_id'], $like - $dislike);
 			}
 
-			$json['success'] = $this->language->get('text_success');
+			// Total Articles
+			$article_total = $this->model_cms_article->getTotalArticles();
+
+			$start = ($page - 1) * $limit;
+			$end = ($start > ($article_total - $limit)) ? $article_total : ($start + $limit);
+
+			if ($end < $article_total) {
+				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $article_total);
+
+				$json['next'] = $this->url->link('cms/article.rating', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+			} else {
+				$json['success'] = $this->language->get('text_success');
+
+				$json['next'] = '';
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -514,19 +554,19 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Rating
+	 * Delete
 	 *
 	 * @return void
 	 */
-	public function rating(): void {
+	public function delete(): void {
 		$this->load->language('cms/article');
 
 		$json = [];
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$page = 1;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'cms/article')) {
@@ -534,54 +574,14 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$limit = 100;
-
-			// Articles
-			$filter_data = [
-				'sort'  => 'date_added',
-				'order' => 'ASC',
-				'start' => ($page - 1) * $limit,
-				'limit' => $limit
-			];
-
+			// Article
 			$this->load->model('cms/article');
 
-			$results = $this->model_cms_article->getArticles($filter_data);
-
-			foreach ($results as $result) {
-				$like = 0;
-				$dislike = 0;
-
-				$ratings = $this->model_cms_article->getRatings($result['article_id']);
-
-				foreach ($ratings as $rating) {
-					if ($rating['rating'] == 1) {
-						$like = $rating['total'];
-					}
-
-					if ($rating['rating'] == 0) {
-						$dislike = $rating['total'];
-					}
-				}
-
-				$this->model_cms_article->editRating($result['article_id'], $like - $dislike);
+			foreach ($selected as $article_id) {
+				$this->model_cms_article->deleteArticle($article_id);
 			}
 
-			// Total Articles
-			$article_total = $this->model_cms_article->getTotalArticles();
-
-			$start = ($page - 1) * $limit;
-			$end = ($start > ($article_total - $limit)) ? $article_total : ($start + $limit);
-
-			if ($end < $article_total) {
-				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $article_total);
-
-				$json['next'] = $this->url->link('cms/article.rating', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
-			} else {
-				$json['success'] = $this->language->get('text_success');
-
-				$json['next'] = '';
-			}
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

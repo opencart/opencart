@@ -6,6 +6,8 @@ namespace Opencart\Admin\Controller\Cms;
  * @package Opencart\Admin\Controller\Cms
  */
 class Topic extends \Opencart\System\Engine\Controller {
+	private ?object $load;
+
 	/**
 	 * Index
 	 *
@@ -392,41 +394,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(): void {
-		$this->load->language('cms/topic');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'cms/topic')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Topic
-			$this->load->model('cms/topic');
-
-			foreach ($selected as $topic_id) {
-				$this->model_cms_topic->deleteTopic($topic_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
 	 * Enable
 	 *
 	 * @return void
@@ -485,6 +452,41 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $topic_id) {
 				$this->model_cms_topic->editStatus((int)$topic_id, false);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('cms/topic');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/topic')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Topic
+			$this->load->model('cms/topic');
+
+			foreach ($selected as $topic_id) {
+				$this->model_cms_topic->deleteTopic($topic_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -35,6 +35,8 @@ class Task extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['delete'] = $this->url->link('marketplace/task.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('marketplace/task.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('marketplace/task.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -166,10 +168,10 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['task_id'])) {
-			$task_id = (int)$this->request->get['task_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$task_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
@@ -177,10 +179,11 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Task
 			$this->load->model('setting/task');
 
-			$this->model_setting_task->editStatus($task_id, true);
+			foreach ($selected as $task_id) {
+				$this->model_setting_task->editStatus($task_id, true);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -199,10 +202,10 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['task_id'])) {
-			$task_id = (int)$this->request->get['task_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$task_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
@@ -210,10 +213,11 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Task
 			$this->load->model('setting/task');
 
-			$this->model_setting_task->editStatus($task_id, false);
+	    	foreach ($selected as $task_id) {
+				$this->model_setting_task->editStatus($task_id, false);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

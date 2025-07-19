@@ -44,6 +44,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('marketing/coupon.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('marketing/coupon.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('marketing/coupon.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('marketing/coupon.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 

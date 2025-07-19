@@ -30,7 +30,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $manufacturer_id = $this->model_catalog_manufacturer->addManufacturer($manufacturer_data);
 	 */
 	public function addManufacturer(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `status` = '" . (bool)$data['status'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$manufacturer_id = $this->db->getLastId();
 
@@ -92,7 +92,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_manufacturer->editManufacturer($manufacturer_id, $manufacturer_data);
 	 */
 	public function editManufacturer(int $manufacturer_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = '" . $this->db->escape((string)$data['image']) . "', `status` = '" . (bool)$data['status'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
 
 		// Description

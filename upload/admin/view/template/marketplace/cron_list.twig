@@ -6,8 +6,8 @@
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th>{{ column_code }}</th>
           <th>{{ column_cycle }}</th>
-          <th>{{ column_cron_action }}</th>
-          <th class="d-none d-lg-table-cell">{{ column_date_added }}</th>
+          <th>{{ column_action }}</th>
+          <th class="text-center">{{ column_status }}</th>
           <th class="d-none d-lg-table-cell">{{ column_date_modified }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
@@ -20,7 +20,11 @@
               <td>{{ cron.code }}</td>
               <td>{{ cron.cycle }}</td>
               <td>{{ cron.action }}</td>
-              <td class="d-none d-lg-table-cell">{{ cron.date_added }}</td>
+              <td class="text-center">{% if cron.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
               <td class="d-none d-lg-table-cell">{{ cron.date_modified }}</td>
               <td class="text-end text-nowrap">
                 {% if cron.description %}
@@ -38,7 +42,7 @@
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="7">{{ text_no_results }}</td>
+            <td class="text-center" colspan="87">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

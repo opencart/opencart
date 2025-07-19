@@ -217,6 +217,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=md.name' . $url);
 		$data['sort_store'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=store' . $url);
+		$data['sort_status'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.status' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.sort_order' . $url);
 
 		$url = '';
@@ -349,6 +350,12 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['thumb'] = $this->model_tool_image->resize($data['image'], $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
 		} else {
 			$data['thumb'] = $data['placeholder'];
+		}
+
+		if (!empty($manufacturer_info)) {
+			$data['status'] = $manufacturer_info['status'];
+		} else {
+			$data['status'] = true;
 		}
 
 		if (!empty($manufacturer_info)) {
@@ -505,6 +512,76 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $manufacturer_id) {
 				$this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('catalog/manufacturer');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// information
+			$this->load->model('catalog/manufacturer');
+
+			foreach ($selected as $manufacturer_id) {
+				$this->model_catalog_manufacturer->editStatus((int)$manufacturer_id, true);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('catalog/manufacturer');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/information')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// information
+			$this->load->model('catalog/manufacturer');
+
+			foreach ($selected as $manufacturer_id) {
+				$this->model_catalog_manufacturer->editStatus((int)$manufacturer_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');

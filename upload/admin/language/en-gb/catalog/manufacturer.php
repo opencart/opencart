@@ -15,6 +15,7 @@ $_['text_filter']             = 'Filter';
 // Column
 $_['column_image']            = 'Image';
 $_['column_name']             = 'Manufacturer Name';
+$_['column_status']           = 'Status';
 $_['column_sort_order']       = 'Sort Order';
 $_['column_action']           = 'Action';
 
@@ -27,6 +28,7 @@ $_['entry_meta_description']  = 'Meta Tag Description';
 $_['entry_store']             = 'Stores';
 $_['entry_keyword']           = 'Keyword';
 $_['entry_image']             = 'Image';
+$_['entry_status']            = 'Status';
 $_['entry_sort_order']        = 'Sort Order';
 $_['entry_layout']            = 'Layout Override';
 

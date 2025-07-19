@@ -65,4 +65,13 @@ class Extension extends \Opencart\System\Engine\Model {
 
 		return $query->row;
 	}
+
+	/*
+	 * Get Installs
+	 */
+	public function getInstalls(): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install`");
+
+		return $query->rows;
+	}
 }

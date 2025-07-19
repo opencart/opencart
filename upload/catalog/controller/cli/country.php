@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\admin\controller\task;
+namespace Opencart\Catalog\Controller\cli;
 /**
  * Class Country
  *

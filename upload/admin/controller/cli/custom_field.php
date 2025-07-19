@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Ssr\Admin;
+namespace Opencart\Admin\Controller\Cli;
 /**
  * Class Custom Field
  *
@@ -17,10 +17,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$this->load->language('ssr/admin/custom_field');
 
 		$json = [];
-
-		//if (!$this->user->hasPermission('modify', 'ssr/admin/custom_field')) {
-		$json['error'] = $this->language->get('error_permission');
-		//}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

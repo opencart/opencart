@@ -915,13 +915,13 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
 				'default' => '0'
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
 				'default' => '0'
 			]
 		],
@@ -1187,13 +1187,13 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
 				'default' => '0'
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
 				'default' => '0'
 			]
 		],
@@ -3464,14 +3464,14 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
-				'default' => '0'
-			],
-			[
 				'name'    => 'status',
 				'type'    => 'tinyint(1)',
 				'default' => '1'
+			],
+			[
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -3633,13 +3633,13 @@ function oc_db_schema() {
 				'type' => 'varchar(255)'
 			],
 			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
 				'default' => '0'
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
 				'default' => '0'
 			]
 		],
@@ -3890,6 +3890,11 @@ function oc_db_schema() {
 			[
 				'name' => 'image',
 				'type' => 'varchar(255)'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name'    => 'sort_order',
@@ -5341,13 +5346,13 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
-				'name'    => 'sort_order',
-				'type'    => 'int(11)',
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
 				'default' => '0'
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
+				'name'    => 'sort_order',
+				'type'    => 'int(11)',
 				'default' => '0'
 			],
 			[
@@ -7374,6 +7379,10 @@ function oc_db_schema() {
 				'type' => 'varchar(32)'
 			],
 			[
+				'name' => 'description',
+				'type' => 'text'
+			],
+			[
 				'name' => 'action',
 				'type' => 'varchar(255)'
 			],
@@ -7386,11 +7395,16 @@ function oc_db_schema() {
 				'type'    => 'varchar(16)'
 			],
 			[
-				'name'    => 'response',
-				'type'    => 'text'
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',
+				'type' => 'datetime'
+			],
+			[
+				'name' => 'date_modified',
 				'type' => 'datetime'
 			]
 		],
@@ -7421,7 +7435,7 @@ function oc_db_schema() {
 			[
 				'name'    => 'status',
 				'type'    => 'tinyint(1)',
-				'default' => '1'
+				'default' => '0'
 			],
 			[
 				'name' => 'date_added',

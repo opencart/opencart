@@ -4,11 +4,18 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-affiliate').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="button" id="button-calculate" data-bs-toggle="tooltip" title="{{ button_calculate }}" class="btn btn-warning"><i class="fa-solid fa-sync"></i></button>
-        <button type="submit" form="form-affiliate" formaction="{{ csv }}" id="button-csv" data-bs-toggle="tooltip" title="{{ button_csv }}" class="btn btn-info"><i class="fa-solid fa-file-csv"></i></button>
-        <button type="submit" form="form-affiliate" formaction="{{ complete }}" data-oc-toggle="ajax" id="button-complete" data-bs-toggle="tooltip" title="{{ button_complete }}" class="btn btn-success"><i class="fa-solid fa-credit-card"></i></button>
         <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-        <button type="submit" form="form-affiliate" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+        <button type="button" id="button-calculate" data-bs-toggle="tooltip" title="{{ button_calculate }}" class="btn btn-warning"><i class="fa-solid fa-sync"></i></button>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
+          <ul class="dropdown-menu">
+            <li><button type="submit" form="form-affiliate" formaction="{{ csv }}" class="dropdown-item"><i class="fa-solid fa-file-csv"></i> {{ text_csv }}</button></li>
+            <li><button type="submit" form="form-affiliate" formaction="{{ complete }}" class="dropdown-item"><i class="fa-solid fa-credit-card"></i> {{ text_complete }}</button></li>
+            <li><button type="submit" form="form-affiliate" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
+            <li><button type="submit" form="form-affiliate" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
+            <li><button type="submit" form="form-affiliate" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
+          </ul>
+        </div>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -59,7 +66,8 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-limit" class="form-label">{{ entry_limit }}</label> <select name="limit" id="input-limit" class="form-select">
+                <label for="input-limit" class="form-label">{{ entry_limit }}</label>
+                <select name="limit" id="input-limit" class="form-select">
                   {% for limits in limits %}
                     <option value="{{ limits.value }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
                   {% endfor %}

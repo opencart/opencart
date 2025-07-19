@@ -53,7 +53,7 @@ class Command extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$output = $this->load->controller('ssr/' . $command, $args);
+		$output = $this->load->controller('cli/' . $command, $args);
 
 		$this->response->setOutput($output);
 	}

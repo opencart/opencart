@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\admin\controller\task;
+namespace Opencart\Admin\Controller\Cli;
 /**
  * Class Currency
  *

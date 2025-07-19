@@ -30,8 +30,8 @@ $_['entry_keyword']           = 'Keyword';
 $_['entry_parent']            = 'Parent';
 $_['entry_filter']            = 'Filters';
 $_['entry_image']             = 'Image';
-$_['entry_sort_order']        = 'Sort Order';
 $_['entry_status']            = 'Status';
+$_['entry_sort_order']        = 'Sort Order';
 $_['entry_layout']            = 'Layout Override';
 
 // Help

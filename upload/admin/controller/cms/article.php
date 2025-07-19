@@ -44,6 +44,8 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('cms/article.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('cms/article.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('cms/article.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -434,6 +436,74 @@ class Article extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $article_id) {
 				$this->model_cms_article->deleteArticle($article_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('cms/article');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/article')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('cms/article');
+
+			foreach ($selected as $topic_id) {
+				$this->model_cms_article->editStatus((int)$topic_id, true);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('cms/article');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/article')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('cms/article');
+
+			foreach ($selected as $topic_id) {
+				$this->model_cms_article->editStatus((int)$topic_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');

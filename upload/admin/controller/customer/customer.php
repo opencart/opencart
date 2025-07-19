@@ -116,6 +116,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('customer/customer.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('customer/customer.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('customer/customer.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -837,6 +839,73 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $customer_id) {
 				$this->model_customer_customer->deleteCustomer($customer_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer');
+
+			foreach ($selected as $customer_id) {
+				$this->model_customer_customer->editStatus((int)$customer_id, true);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer');
+
+			foreach ($selected as $customer_id) {
+				$this->model_customer_customer->editStatus((int)$customer_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');

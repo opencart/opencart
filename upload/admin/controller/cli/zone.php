@@ -1,74 +1,11 @@
 <?php
-namespace Opencart\admin\controller\task;
+namespace Opencart\Admin\Controller\Cli;
 /**
  * Class Country
  *
  * @package Opencart\Admin\Controller\Ssr
  */
 class Country extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * Generates the country list JSON files by language.
-	 *
-	 * @return void
-	 */
-	public function index($args = []): string {
-		$this->load->language('ssr/admin/country');
-
-		// Get all languages so we don't need to keep querying the DB
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
-		$this->load->model('localisation/country');
-
-		$countries = $this->model_localisation_country->getCountries();
-
-		foreach ($languages as $language) {
-			$country_data = [];
-
-			foreach ($countries as $country) {
-				$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
-
-				if ($description_info) {
-					$country_data[$country['country_id']] = $description_info + $country;
-				}
-			}
-
-			$sort_order = [];
-
-			foreach ($country_data as $key => $value) {
-				$sort_order[$key] = $value['name'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $country_data);
-
-			$base = DIR_APPLICATION . 'view/data/';
-			$directory = $language['code'] . '/localisation/';
-			$filename = 'country.json';
-
-			if (!oc_directory_create($base . $directory, 0777)) {
-				$json['error'] = sprintf($this->language->get('error_directory'), $directory);
-
-				break;
-			}
-
-			if (!file_put_contents($base . $directory . $filename, json_encode($country_data))) {
-				$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
-
-				break;
-			}
-		}
-
-
-		$output = shell_exec('php C://xampp/htdocs/opencart-master/upload/admin/index.php admin/country.info');
-
-		echo $output;
-
-		return 'SUCCESS';
-	}
-
 	public function info(): void {
 		$this->load->language('ssr/admin/country');
 

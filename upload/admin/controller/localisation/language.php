@@ -249,15 +249,15 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($language_info)) {
-			$data['sort_order'] = $language_info['sort_order'];
-		} else {
-			$data['sort_order'] = 1;
-		}
-
-		if (!empty($language_info)) {
 			$data['status'] = $language_info['status'];
 		} else {
 			$data['status'] = 1;
+		}
+
+		if (!empty($language_info)) {
+			$data['sort_order'] = $language_info['sort_order'];
+		} else {
+			$data['sort_order'] = 1;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

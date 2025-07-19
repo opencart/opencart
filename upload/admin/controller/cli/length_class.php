@@ -1,11 +1,11 @@
 <?php
-namespace Opencart\Admin\Controller\Ssr\Catalog;
+namespace Opencart\Admin\Controller\Ssr\Admin;
 /**
- * Class Custom Field
+ * Class Length Class
  *
  * @package Opencart\Admin\Controller\Ssr
  */
-class CustomField extends \Opencart\System\Engine\Controller {
+class LengthClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -14,7 +14,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/catalog/custom_field');
+		$this->load->language('ssr/admin/custom_field');
 
 		$json = [];
 
@@ -27,11 +27,11 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/catalog/language');
+		$this->load->language('ssr/language');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/catalog/custom_field')) {
+		if (!$this->user->hasPermission('modify', 'ssr/admin/custom_field')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

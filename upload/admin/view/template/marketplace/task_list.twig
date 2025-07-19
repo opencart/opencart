@@ -6,7 +6,7 @@
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th>{{ column_code }}</th>
           <th>{{ column_action }}</th>
-          <th>{{ column_args }}</th>
+          <th class="text-center">{{ column_status }}</th>
           <th>{{ column_date_added }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
@@ -18,8 +18,12 @@
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ task.task_id }}" class="form-check-input"/></td>
               <td>{{ task.code }}</td>
               <td>{{ task.action }}</td>
-              <td>{{ task.args }}</td>
-              <td class="text-end">{{ task.date_added }}</td>
+              <td class="text-center">{% if task.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
+              <td>{{ task.date_added }}</td>
               <td class="text-end text-nowrap">
 
                 {% if task.description %}
@@ -28,10 +32,16 @@
                   <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>
                 {% endif %}
 
+                <button type="button" value="{{ task.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
+
+                {% if not task.status %}
+                  <button type="button" value="{{ task.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>
+                {% else %}
+                  <button type="button" value="{{ task.disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
+                {% endif %}
+
               </td>
             </tr>
-
-
           {% endfor %}
         {% else %}
           <tr>
@@ -46,3 +56,18 @@
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>
+{% for task in tasks %}
+  {% if task.description %}
+    <div id="modal-cron-{{ task.task_id }}" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body"><textarea rows="5" class="form-control" readonly>{{ task.description }}</textarea></div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}

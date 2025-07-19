@@ -239,72 +239,6 @@ class Category extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
-	public function enable(): void {
-		$this->load->language('catalog/category');
-
-		$json = [];
-
-		if (isset($this->request->get['category_id'])) {
-			$category_id = (int)$this->request->get['category_id'];
-		} else {
-			$category_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/category')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Category
-			$this->load->model('catalog/category');
-
-			$this->model_catalog_category->editStatus($category_id, true);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('catalog/category');
-
-		$json = [];
-
-		if (isset($this->request->get['category_id'])) {
-			$category_id = (int)$this->request->get['category_id'];
-		} else {
-			$category_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/category')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Category
-			$this->load->model('catalog/category');
-
-			$this->model_catalog_category->editStatus($category_id, false);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
 	 * Form
 	 *
 	 * @return void
@@ -450,15 +384,15 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($category_info)) {
-			$data['sort_order'] = $category_info['sort_order'];
-		} else {
-			$data['sort_order'] = 0;
-		}
-
-		if (!empty($category_info)) {
 			$data['status'] = $category_info['status'];
 		} else {
 			$data['status'] = true;
+		}
+
+		if (!empty($category_info)) {
+			$data['sort_order'] = $category_info['sort_order'];
+		} else {
+			$data['sort_order'] = 0;
 		}
 
 		// SEO
@@ -592,32 +526,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Repair
-	 *
-	 * @return void
-	 */
-	public function repair(): void {
-		$this->load->language('catalog/category');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'catalog/category')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Categories
-			$this->load->model('catalog/category');
-
-			$this->model_catalog_category->repairCategories();
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
 
 	/**
 	 * Delete
@@ -655,19 +563,19 @@ class Category extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Status
+	 * Enable
 	 *
 	 * @return void
 	 */
-	public function status(): void {
+	public function enable(): void {
 		$this->load->language('catalog/category');
 
 		$json = [];
 
-		if (isset($this->request->get['category_id'])) {
-			$category_id = (int)$this->request->get['category_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$category_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
@@ -675,10 +583,72 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Modification
 			$this->load->model('catalog/category');
 
-			$this->model_catalog_category->editStatus($category_id, true);
+			foreach ($selected as $category_id) {
+				$this->model_catalog_category->editStatus((int)$category_id, true);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('catalog/category');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/category')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('catalog/category');
+
+			foreach ($selected as $category_id) {
+				$this->model_catalog_category->editStatus((int)$category_id, false);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Repair
+	 *
+	 * @return void
+	 */
+	public function repair(): void {
+		$this->load->language('catalog/category');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'catalog/category')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Categories
+			$this->load->model('catalog/category');
+
+			$this->model_catalog_category->repairCategories();
 
 			$json['success'] = $this->language->get('text_success');
 		}

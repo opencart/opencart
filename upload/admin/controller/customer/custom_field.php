@@ -44,6 +44,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('customer/custom_field.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('customer/custom_field.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('customer/custom_field.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('customer/custom_field.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -447,6 +449,74 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $custom_field_id) {
 				$this->model_customer_custom_field->deleteCustomField($custom_field_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('customer/custom_field');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/custom_field')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/custom_field');
+
+			foreach ($selected as $custom_field_id) {
+				$this->model_customer_custom_field->editStatus((int)$custom_field_id, true);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('customer/custom_field');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/custom_field')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/custom_field');
+
+			foreach ($selected as $custom_field_id) {
+				$this->model_customer_custom_field->editStatus((int)$custom_field_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');

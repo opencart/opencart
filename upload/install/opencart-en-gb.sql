@@ -1133,8 +1133,7 @@ VALUES ('-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '
 INSERT INTO `oc_cron` (`code`, `description`, `cycle`, `action`, `status`, `date_added`, `date_modified`)
 VALUES ('currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, NOW(), NOW()),
        ('gdpr', 'Deletes and send emails to customers who have requested their GPDR data to be deleted.', 'day', 'cron/gdpr', 1, NOW(), NOW()),
-       ('subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, NOW(), NOW()),
-       ('task', 'Processes background task.', 'minute', 'cron/task', '1', NOW(), NOW());
+       ('subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, NOW(), NOW());
 
 -----------------------------------------------------------
 
@@ -3122,6 +3121,43 @@ VALUES (1, 1, 'Pending'),
        (5, 1, 'Cancelled'),
        (6, 1, 'Failed'),
        (7, 1, 'Denied');
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_task`
+--
+
+INSERT INTO `oc_task` (`code`, `description`, `action`, `args`, `status`, `sort_order`, `date_added`, `date_modified`)
+ VALUES ('article', 'Generates static article JSON data.', 'catalog/article', '', 0, 0, NOW(), NOW()),
+        ('banner', '', 'catalog/banner', '', 0, 0, NOW(), NOW()),
+        ('category', '', 'catalog/category', '', 0, 0, NOW(), NOW()),
+        ('country', '', 'catalog/country', '', 1, 0, NOW(), NOW()),
+        ('country', '', 'admin/country', '', 1, 0, NOW(), NOW()),
+        ('currency', '', 'catalog/currency', '', 1, 0, NOW(), NOW()),
+        ('currency', '', 'admin/currency', '', 1, 0, NOW(), NOW()),
+        ('custom_field', '', 'catalog/custom_field', '', 0, 0, NOW(), NOW()),
+        ('custom_field', '', 'admin/custom_field', '', 0, 0, NOW(), NOW()),
+        ('customer_group', '', 'catalog/customer_group', '', 1, 0, NOW(), NOW()),
+        ('customer_group', '', 'admin/customer_group', '', 1, 0, NOW(), NOW()),
+        ('information', '', 'catalog/information', '', 0, 0, NOW(), NOW()),
+        ('language', '', 'catalog/language', '', 1, 0, NOW(), NOW()),
+        ('language', '', 'admin/language', '', 1, 0, NOW(), NOW()),
+        ('length_class', '', 'catalog/length_class', '', 0, 0, NOW(), NOW()),
+        ('length_class', '', 'admin/length_class', '', 0, 0, NOW(), NOW()),
+        ('manufacturer', '', 'catalog/manufacturer', '', 0, 0, NOW(), NOW()),
+        ('option', '', 'admin/option', '', 0, 0, NOW(), NOW()),
+        ('order_status', '', 'admin/order_status', '', 0, 0, NOW(), NOW()),
+        ('product', '', 'catalog/product', '', 0, 0, NOW(), NOW()),
+        ('return_reason', '', 'catalog/return_reason', '', 0, 0, NOW(), NOW()),
+        ('return_reason', '', 'admin/return_reason', '', 0, 0, NOW(), NOW()),
+        ('store', '', 'catalog/store', '', 1, 0, NOW(), NOW()),
+        ('store', '', 'admin/store', '', 1, 0, NOW(), NOW()),
+        ('topic', '', 'catalog/topic', '', 0, 0, NOW(), NOW()),
+        ('translation', '', 'catalog/translation', '', 0, 0, NOW(), NOW()),
+        ('translation', '', 'admin/translation', '', 0, 0, NOW(), NOW()),
+        ('weight_class', '', 'catalog/weight_class', '', 0, 0, NOW(), NOW()),
+        ('weight_class', '', 'admin/weight_class', '', 0, 0, NOW(), NOW());
 
 -----------------------------------------------------------
 

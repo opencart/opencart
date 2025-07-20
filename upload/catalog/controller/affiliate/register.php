@@ -307,23 +307,39 @@ class ControllerAffiliateRegister extends Controller {
 	}
 
 	protected function validate() {
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+		if (!empty($this->request->post['firstname'])) {
+			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+				$this->error['firstname'] = $this->language->get('error_firstname');
+			}
+		} else {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+		if (!empty($this->request->post['lastname'])) {
+			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+				$this->error['lastname'] = $this->language->get('error_lastname');
+			}
+		} else {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if (!empty($this->request->post['email'])) {
+			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+				$this->error['email'] = $this->language->get('error_email');
+			}
+
+			if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+				$this->error['warning'] = $this->language->get('error_exists');
+			}
+		} else {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_exists');
-		}
-
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+		if (!empty($this->request->post['telephone'])) {
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$this->error['telephone'] = $this->language->get('error_telephone');
+			}
+		} else {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
@@ -347,11 +363,19 @@ class ControllerAffiliateRegister extends Controller {
             }
 		}
 
-		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+		if (!empty($this->request->post['password'])) {
+			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+				$this->error['password'] = $this->language->get('error_password');
+			}
+		} else {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
-		if ($this->request->post['confirm'] != $this->request->post['password']) {
+		if (!empty($this->request->post['confirm']) && !empty($this->request->post['password'])) {
+			if ($this->request->post['confirm'] != $this->request->post['password']) {
+				$this->error['confirm'] = $this->language->get('error_confirm');
+			}
+		} else {
 			$this->error['confirm'] = $this->language->get('error_confirm');
 		}
 		

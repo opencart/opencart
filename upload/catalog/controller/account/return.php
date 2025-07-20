@@ -459,31 +459,59 @@ class ControllerAccountReturn extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->request->post['order_id']) {
+		if (!empty($this->request->post['order_id'])) {
+			if (!$this->request->post['order_id']) {
+				$this->error['order_id'] = $this->language->get('error_order_id');
+			}
+		} else {
 			$this->error['order_id'] = $this->language->get('error_order_id');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+		if (!empty($this->request->post['firstname'])) {
+			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+				$this->error['firstname'] = $this->language->get('error_firstname');
+			}
+		} else {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+		if (!empty($this->request->post['lastname'])) {
+			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+				$this->error['lastname'] = $this->language->get('error_lastname');
+			}
+		} else {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if (!empty($this->request->post['email'])) {
+			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+				$this->error['email'] = $this->language->get('error_email');
+			}
+		} else {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+		if (!empty($this->request->post['telephone'])) {
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$this->error['telephone'] = $this->language->get('error_telephone');
+			}
+		} else {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
-		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
+		if (!empty($this->request->post['product'])) {
+			if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
+				$this->error['product'] = $this->language->get('error_product');
+			}
+		} else {
 			$this->error['product'] = $this->language->get('error_product');
 		}
 
-		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
+		if (!empty($this->request->post['model'])) {
+			if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
+				$this->error['model'] = $this->language->get('error_model');
+			}
+		} else {
 			$this->error['model'] = $this->language->get('error_model');
 		}
 

@@ -62,6 +62,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('localisation/country.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/country.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('localisation/country.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('localisation/country.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -207,6 +209,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$data['sort_name'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_iso_code_2'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_2' . $url);
 		$data['sort_iso_code_3'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
+		$data['sort_status'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 
 		$url = '';
 

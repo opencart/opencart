@@ -62,6 +62,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('localisation/zone.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/zone.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('localisation/zone.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('localisation/zone.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -177,10 +179,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_zone->getZones($filter_data);
 
 		foreach ($results as $result) {
-			$data['zones'][] = [
-				'name' => $result['name'],
-				'edit' => $this->url->link('localisation/zone.form', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $result['zone_id'] . $url)
-			] + $result;
+			$data['zones'][] = ['edit' => $this->url->link('localisation/zone.form', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $result['zone_id'] . $url)] + $result;
 		}
 
 		// Default
@@ -210,6 +209,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$data['sort_country'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=cd.name' . $url);
 		$data['sort_name'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=zd.name' . $url);
 		$data['sort_code'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=z.code' . $url);
+		$data['sort_status'] = $this->url->link('localisation/zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=z.status' . $url);
 
 		$url = '';
 

@@ -62,6 +62,26 @@ class Theme extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit category status record in the database.
+	 *
+	 * @param int  $category_id primary key of the category record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/category');
+	 *
+	 * $this->model_catalog_category->editStatus($category_id, $status);
+	 */
+	public function editStatus(int $theme_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "theme` SET `status` = '" . (bool)$status . "' WHERE `theme_id` = '" . (int)$theme_id . "'");
+	}
+
+	/**
 	 * Delete Theme
 	 *
 	 * Delete theme record in the database.
@@ -136,16 +156,22 @@ class Theme extends \Opencart\System\Engine\Model {
 	 *
 	 * $results = $this->model_design_theme->getThemes();
 	 */
-	public function getThemes(int $start = 0, int $limit = 10): array {
-		if ($start < 0) {
-			$start = 0;
+	public function getThemes(array $data = []): array {
+		$sql = "SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store` FROM `" . DB_PREFIX . "theme` `t` ORDER BY `t`.`date_added`";
+		
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		if ($limit < 1) {
-			$limit = 10;
-		}
-
-		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store` FROM `" . DB_PREFIX . "theme` `t` ORDER BY `t`.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query($sql);
 
 		return $query->rows;
 	}

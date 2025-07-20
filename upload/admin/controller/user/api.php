@@ -44,6 +44,8 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('user/api.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('user/api.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('user/api.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('user/api.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -141,7 +143,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['sort_username'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
 		$data['sort_status'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 		$data['sort_date_added'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
-		$data['sort_date_modified'] = $this->url->link('user/api.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_modified' . $url);
 
 		$url = '';
 
@@ -312,6 +313,74 @@ class Api extends \Opencart\System\Engine\Controller {
 				$json['api_id'] = $this->model_user_api->addApi($this->request->post);
 			} else {
 				$this->model_user_api->editApi($post_info['api_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('user/api');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'user/api')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('user/api');
+
+			foreach ($selected as $user_id) {
+				$this->model_user_api->editStatus((int)$user_id, true);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('user/api');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'user/api')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('user/api');
+
+			foreach ($selected as $user_id) {
+				$this->model_user_api->editStatus((int)$user_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');

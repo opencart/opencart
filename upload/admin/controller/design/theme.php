@@ -38,8 +38,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('design/theme.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/theme.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('catalog/theme.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('catalog/theme.disable', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('design/theme.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('design/theme.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('design/theme.getList');
 
@@ -87,13 +87,18 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$data['themes'] = [];
 
+		$filter_data = [
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
+		];
+
 		// Themes
 		$this->load->model('design/theme');
 
 		// Setting
 		$this->load->model('setting/store');
 
-		$results = $this->model_design_theme->getThemes(($page - 1) * $this->config->get('config_pagination_admin'), $this->config->get('config_pagination_admin'));
+		$results = $this->model_design_theme->getThemes($filter_data);
 
 		foreach ($results as $result) {
 			$store_info = $this->model_setting_store->getStore($result['store_id']);

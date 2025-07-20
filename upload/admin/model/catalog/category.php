@@ -275,6 +275,26 @@ class Category extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit category status record in the database.
+	 *
+	 * @param int  $category_id primary key of the category record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/category');
+	 *
+	 * $this->model_catalog_category->editStatus($category_id, $status);
+	 */
+	public function editStatus(int $category_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `status` = '" . (bool)$status . "' WHERE `category_id` = '" . (int)$category_id . "'");
+	}
+
+	/**
 	 * Delete Category
 	 *
 	 * Delete category record in the database.
@@ -514,26 +534,6 @@ class Category extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Edit Status
-	 *
-	 * Edit category status record in the database.
-	 *
-	 * @param int  $category_id primary key of the category record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/category');
-	 *
-	 * $this->model_catalog_category->editStatus($category_id, $status);
-	 */
-	public function editStatus(int $category_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `status` = '" . (bool)$status . "' WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
 	/**

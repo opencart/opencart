@@ -4,11 +4,13 @@
       <thead>
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
-          <th><a href="{{ sort_store }}"{% if sort == 'store' %} class="{{ order|lower }}"{% endif %}>{{ column_store }}</a></th>
-          <th class="text-center"><a href="{{ sort_language }}"{% if sort == 'language' %} class="{{ order|lower }}"{% endif %}>{{ column_language }}</a></th>
-          <th><a href="{{ sort_route }}"{% if sort == 'route' %} class="{{ order|lower }}"{% endif %}>{{ column_route }}</a></th>
-          <th><a href="{{ sort_key }}"{% if sort == 'key' %} class="{{ order|lower }}"{% endif %}>{{ column_key }}</a></th>
-          <th><a href="{{ sort_value }}"{% if sort == 'value' %} class="{{ order|lower }}"{% endif %}>{{ column_value }}</a></th>
+          <th>{{ column_store }}</th>
+          <th class="text-center">{{ column_language }}</th>
+          <th>{{ column_route }}</th>
+          <th>{{ column_key }}</th>
+          <th>{{ column_value }}</th>
+          <th class="text-center">{{ column_status }}</th>
+          <th>{{ column_date_added }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -22,6 +24,12 @@
               <td>{{ translation.route }}</td>
               <td>{{ translation.key }}</td>
               <td>{{ translation.value }}</td>
+              <td class="text-center">{% if translation.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
+              <td>{{ translation.date_added }}</td>
               <td class="text-end"><a href="{{ translation.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}

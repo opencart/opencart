@@ -185,20 +185,42 @@ class ControllerAccountVoucher extends Controller {
 	}
 
 	protected function validate() {
-		if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {
+		if (!empty($this->request->post['to_name'])) {
+			if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {
+				$this->error['to_name'] = $this->language->get('error_to_name');
+			}
+		} else {
 			$this->error['to_name'] = $this->language->get('error_to_name');
 		}
 
-		if ((utf8_strlen($this->request->post['to_email']) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
+		if (!empty($this->request->post['to_email'])) {
+			if ((utf8_strlen($this->request->post['to_email']) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
+				$this->error['to_email'] = $this->language->get('error_email');
+			}
+		} else {
 			$this->error['to_email'] = $this->language->get('error_email');
 		}
 
-		if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
+		if (!empty($this->request->post['from_name'])) {
+			if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
+				$this->error['from_name'] = $this->language->get('error_from_name');
+			}
+		} else {
 			$this->error['from_name'] = $this->language->get('error_from_name');
 		}
 
-		if ((utf8_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
+		if (!empty($this->request->post['from_email'])) {
+			if ((utf8_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
+				$this->error['from_email'] = $this->language->get('error_email');
+			}
+		} else {
 			$this->error['from_email'] = $this->language->get('error_email');
+		}
+
+		// currently not checked and no text for it ..
+		if ( !$this->error && empty($this->request->post['message'])) {
+			// because we have no further checks and text of/for this
+			$this->error = true;
 		}
 
 		if (!isset($this->request->post['voucher_theme_id'])) {

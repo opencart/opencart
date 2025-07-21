@@ -124,7 +124,6 @@ $_['button_order']                  = 'Bestellung anzeigen';
 $_['button_subscription']           = 'Abonnement anzeigen';
 $_['button_buy']                    = 'Kaufen';
 $_['button_restore']                = 'Wiederherstellen';
-$_['button_run']                    = 'Cron-Job ausführen';
 $_['button_backup']                 = 'Sicherung';
 $_['button_developer']              = 'Entwicklereinstellung';
 $_['button_master']                 = 'Master-Produkt';

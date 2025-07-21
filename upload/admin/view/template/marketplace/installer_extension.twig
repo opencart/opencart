@@ -26,15 +26,14 @@
                 <span class="badge bg-danger">{{ text_disabled }}</span>
               {% endif %}</td>
             <td>{{ extension.date_added }}</td>
-            <td class="text-end text-nowrap">
-              <button type="button" data-bs-toggle="modal" data-bs-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
-              {% if not extension.status %}
+            <td class="text-end text-nowrap">{% if not extension.status %}
                 <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
                 <a href="{{ extension.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
               {% else %}
                 <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fa-solid fa-minus-circle"></i></a>
                 <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" disabled><i class="fa-regular fa-trash-can"></i></button>
-              {% endif %}</td>
+              {% endif %}
+              <button type="button" data-bs-toggle="modal" data-bs-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button></td>
           </tr>
         {% endfor %}
       {% else %}

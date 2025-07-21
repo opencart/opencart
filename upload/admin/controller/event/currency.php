@@ -11,9 +11,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * Auto update currencies
 	 *
-	 * model/setting/setting/editSetting
-	 * model/localisation/currency/addCurrency
-	 * model/localisation/currency/editCurrency
+	 * model/setting/setting/editSetting/after
+	 * model/localisation/currency/addCurrency/after
+	 * model/localisation/currency/editCurrency/after
+	 * model/localisation/currency/deleteCurrency/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -22,19 +23,24 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		if ($route == 'model/setting/setting/editSetting' && $args[0] == 'config' && isset($args[1]['config_currency'])) {
-			$currency = $args[1]['config_currency'];
-		} else {
-			$currency = $this->config->get('config_currency');
-		}
+		$tasks = [];
 
-		// Extension
-		$this->load->model('setting/extension');
+		$tasks[] = [
+			'code'   => 'currency',
+			'action' => 'catalog/cli/data/currency',
+			'args'   => []
+		];
 
-		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
+		$tasks[] = [
+			'code'   => 'currency',
+			'action' => 'admin/cli/data/currency',
+			'args'   => []
+		];
 
-		if ($extension_info) {
-			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $currency);
+		$this->load->model('setting/task');
+
+		foreach ($tasks as $task) {
+			$this->model_setting_task->addTask($task);
 		}
 	}
 }

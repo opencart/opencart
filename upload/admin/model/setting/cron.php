@@ -172,28 +172,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_setting_cron->getCrons($filter_data);
 	 */
 	public function getCrons(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";
-
-		$sort_data = [
-			'code',
-			'cycle',
-			'action',
-			'status',
-			'date_added',
-			'date_modified'
-		];
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY `date_added`";
-		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
+		$sql = "SELECT * FROM `" . DB_PREFIX . "cron` ORDER BY `code` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

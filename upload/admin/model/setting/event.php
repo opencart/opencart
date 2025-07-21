@@ -175,28 +175,7 @@ class Event extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_setting_event->getEvents($filter_data);
 	 */
 	public function getEvents(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "event`";
-
-		$sort_data = [
-			'code',
-			'trigger',
-			'action',
-			'sort_order',
-			'status',
-			'date_added'
-		];
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY `sort_order`";
-		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
+		$sql = "SELECT * FROM `" . DB_PREFIX . "event` ORDER BY `code` ASC, `sort_order` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

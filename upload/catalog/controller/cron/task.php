@@ -27,9 +27,6 @@ class Task extends \Opencart\System\Engine\Controller {
 			$this->load->controller($result['route'], $result['args']);
 
 			shell_exec($command);
-
-
-
 		}
 
 

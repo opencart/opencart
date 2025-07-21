@@ -18,6 +18,98 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 		// Adds missing events
 		try {
+			// Rename mail events
+			$replace = [];
+
+			$replace[] = [
+				'code_old' => 'subscription',
+				'code_new' => 'mail_subscription'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_customer_approve',
+				'code_new' => 'mail_admin_customer_approve'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_affiliate_deny',
+				'code_new' => 'mail_admin_affiliate_deny'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_customer_approve',
+				'code_new' => 'mail_admin_customer_approve'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_customer_deny',
+				'code_new' => 'mail_admin_customer_deny'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_customer_transaction',
+				'code_new' => 'mail_admin_customer_transaction'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_forgotten',
+				'code_new' => 'mail_admin_forgotten'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_gdpr',
+				'code_new' => 'mail_admin_gdpr'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_return',
+				'code_new' => 'mail_admin_return'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_reward',
+				'code_new' => 'mail_admin_reward'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_transaction',
+				'code_new' => 'mail_admin_transaction'
+			];
+
+			$replace = [
+				'code_old' => 'admin_mail_user_authorize',
+				'code_new' => 'mail_admin_user_authorize'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_user_authorize_reset',
+				'code_new' => 'mail_admin_user_authorize_reset'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_mail_user_forgotten',
+				'code_new' => 'mail_admin_user_forgotten'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_currency_add',
+				'code_new' => 'currency_admin_add'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_currency_edit',
+				'code_new' => 'currency_admin_edit'
+			];
+
+			$replace[] = [
+				'code_old' => 'admin_currency_setting',
+				'code_new' => 'currency_admin_setting'
+			];
+
+			foreach ($replace as $event) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($event['code_new']) . "' WHERE `code` = '" . $this->db->escape($event['code_old']) . "'");
+			}
+
 			// Add missing default events
 			$events = [];
 
@@ -46,7 +138,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code'    => 'activity_transaction',
+				'code'    => 'activity_customer_transaction',
 				'trigger' => 'catalog/model/account/customer.addTransaction/after',
 				'action'  => 'event/activity.addTransaction'
 			];
@@ -100,13 +192,13 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code'    => 'mail_transaction',
+				'code'    => 'mail_customer_transaction',
 				'trigger' => 'catalog/model/account/customer.addTransaction/after',
 				'action'  => 'mail/transaction'
 			];
 
 			$events[] = [
-				'code'    => 'mail_forgotten',
+				'code'    => 'mail_customer_forgotten',
 				'trigger' => 'catalog/model/account/customer.addToken/after',
 				'action'  => 'mail/forgotten'
 			];
@@ -136,7 +228,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code'    => 'mail_order_add',
+				'code'    => 'mail_order',
 				'trigger' => 'catalog/model/checkout/order.addHistory/before',
 				'action'  => 'mail/order'
 			];
@@ -166,67 +258,67 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code'    => 'admin_mail_affiliate_approve',
+				'code'    => 'mail_admin_affiliate_approve',
 				'trigger' => 'admin/model/customer/customer_approval.approveAffiliate/after',
 				'action'  => 'mail/affiliate.approve'
 			];
 
 			$events[] = [
-				'code'    => 'admin_mail_affiliate_deny',
+				'code'    => 'mail_admin_affiliate_deny',
 				'trigger' => 'admin/model/customer/customer_approval.denyAffiliate/after',
 				'action'  => 'mail/affiliate.deny'
 			];
 
 			$events[] = [
-				'code'    => 'admin_mail_customer_approve',
+				'code'    => 'mail_admin_customer_approve',
 				'trigger' => 'admin/model/customer/customer_approval.approveCustomer/after',
 				'action'  => 'mail/customer.approve'
 			];
 
 			$events[] = [
-				'code'    => 'admin_mail_customer_deny',
+				'code'    => 'mail_admin_customer_deny',
 				'trigger' => 'admin/model/customer/customer_approval.denyCustomer/after',
 				'action'  => 'mail/customer.deny'
 			];
 
 			$events[] = [
-				'code'    => 'admin_mail_reward',
+				'code'    => 'mail_admin_reward',
 				'trigger' => 'admin/model/customer/customer.addReward/after',
 				'action'  => 'mail/reward'
 			];
 
 			$events[] = [
-				'code'    => 'admin_mail_transaction',
+				'code'    => 'mail_admin_customer_transaction',
 				'trigger' => 'admin/model/customer/customer.addTransaction/after',
 				'action'  => 'mail/transaction'
 			];
 
 			$events[] = [
-				'code'    => 'admin_mail_return',
+				'code'    => 'mail_admin_return',
 				'trigger' => 'admin/model/sale/return.addReturn/after',
 				'action'  => 'mail/returns'
 			];
 
 			$events[] = [
-				'code'    => 'admin_mail_forgotten',
+				'code'    => 'mail_admin_forgotten',
 				'trigger' => 'admin/model/user/user.addToken/after',
 				'action'  => 'mail/forgotten'
 			];
 
 			$events[] = [
-				'code'    => 'admin_currency_add',
+				'code'    => 'currency_admin_add',
 				'trigger' => 'admin/model/currency.addCurrency/after',
 				'action'  => 'event/currency'
 			];
 
 			$events[] = [
-				'code'    => 'admin_currency_edit',
+				'code'    => 'currency_admin_edit',
 				'trigger' => 'admin/model/currency.editCurrency/after',
 				'action'  => 'event/currency'
 			];
 
 			$events[] = [
-				'code'    => 'admin_setting',
+				'code'    => 'currency_admin_setting',
 				'trigger' => 'admin/model/setting/setting.editSetting/after',
 				'action'  => 'event/currency'
 			];
@@ -238,7 +330,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($event['code']) . "', `trigger` = '" . $this->db->escape($event['trigger']) . "', `action` = '" . $this->db->escape($event['action']) . "', `status` = '1', `sort_order` = '0'");
 				}
 			}
-
 
 			$this->load->model('upgrade/upgrade');
 
@@ -261,13 +352,10 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			}
 
 			// Update current keys
-			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/returns.addHistory/after' WHERE `code` = 'admin_mail_return'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/returns.addHistory/after' WHERE `code` = 'mail_admin_return'");
 
 			// Event - Remove admin promotion from OC 3.x, since it is no longer required to have in OC v4.x releases.
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `action` = 'extension/extension/promotion.getList'");
-
-			// Rename subscription to mail_subscription
-			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = 'mail_subscription' WHERE `code` = 'subscription'");
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

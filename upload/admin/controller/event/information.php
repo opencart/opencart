@@ -1,0 +1,38 @@
+<?php
+namespace Opencart\Admin\Controller\Event;
+/**
+ * Class Information
+ *
+ * @package Opencart\Admin\Controller\Event
+ */
+class Information extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * Adds task to generate new information list
+	 *
+	 * Called using admin/model/customer/information/addInformation/after
+	 * Called using admin/model/customer/information/editInformation/after
+	 * Called using admin/model/customer/information/deleteInformation/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 *
+	 * @return void
+	 */
+	public function index(string &$route, array &$args): void {
+		$tasks = [];
+
+		$tasks[] = [
+			'code'   => 'information',
+			'action' => 'catalog/cli/data/information',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		foreach ($tasks as $task) {
+			$this->model_setting_task->addTask($task);
+		}
+	}
+}

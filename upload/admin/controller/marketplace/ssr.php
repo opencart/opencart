@@ -130,10 +130,10 @@ class Ssr extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['ssr_id'])) {
-			$ssr_id = (int)$this->request->get['ssr_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$ssr_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
@@ -141,10 +141,11 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// SSR
 			$this->load->model('setting/ssr');
 
-			$this->model_setting_ssr->editStatus($ssr_id, true);
+			foreach ($selected as $ssr_id) {
+				$this->model_setting_ssr->editStatus($ssr_id, true);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -163,10 +164,10 @@ class Ssr extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['ssr_id'])) {
-			$ssr_id = (int)$this->request->get['ssr_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
 		} else {
-			$ssr_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
@@ -176,7 +177,9 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/ssr');
 
-			$this->model_setting_ssr->editStatus($ssr_id, false);
+			foreach ($selected as $ssr_id) {
+				$this->model_setting_ssr->editStatus($ssr_id, false);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

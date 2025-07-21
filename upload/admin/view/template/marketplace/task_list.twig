@@ -23,7 +23,7 @@
                 {% else %}
                   <span class="badge bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
-              <td>{{ task.date_modified }}</td>
+              <td><x-datetime value="{{ task.date_modified }}" format="{{ datetime_format }}"></x-datetime></td>
               <td class="text-end text-nowrap">
                 <button type="button" value="{{ task.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
                 {% if task.description %}

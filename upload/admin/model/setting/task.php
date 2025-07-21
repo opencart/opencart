@@ -81,7 +81,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 * $this->model_setting_task->editTask($task_id);
 	 */
 	public function editTask(int $task_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `date_modified` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `date_added` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
 	}
 
 	/**
@@ -167,26 +167,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_setting_task->getTasks($filter_data);
 	 */
 	public function getTasks(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "task`";
-
-		$sort_data = [
-			'code',
-			'action',
-			'status',
-			'date_added'
-		];
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY `date_added`";
-		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
+		$sql = "SELECT * FROM `" . DB_PREFIX . "task` ORDER BY `code` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

@@ -93,15 +93,11 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		$results = $this->model_setting_ssr->getSsrs($filter_data);
 
 		foreach ($results as $result) {
-			if ($this->user->hasPermission('access', $result['action'])) {
-				$data['ssrs'][] = [
-					'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
-					'run'           => $this->url->link($result['action'], 'user_token=' . $this->session->data['user_token']),
-					'clear'         => $this->url->link($result['action'] . '.clear', 'user_token=' . $this->session->data['user_token']),
-					'enable'        => $this->url->link('marketplace/ssr.enable', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id']),
-					'disable'       => $this->url->link('marketplace/ssr.disable', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id'])
-				] + $result;
-			}
+			$data['ssrs'][] = [
+				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
+				'run'           => $this->url->link('marketplace/ssr.run', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id']),
+				'clear'         => $this->url->link($result['action'] . '.clear', 'user_token=' . $this->session->data['user_token']),
+			] + $result;
 		}
 
 		// Total SSRs

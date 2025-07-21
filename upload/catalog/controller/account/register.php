@@ -218,23 +218,44 @@ class ControllerAccountRegister extends Controller {
 	}
 
 	private function validate() {
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+		if (!empty($this->request->post['firstname'])) {
+			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+				$this->error['firstname'] = $this->language->get('error_firstname');
+			}
+		} else {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+		if (!empty($this->request->post['lastname'])) {
+			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+				$this->error['lastname'] = $this->language->get('error_lastname');
+			}
+		} else {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if (!empty($this->request->post['email'])) {
+			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+				$this->error['email'] = $this->language->get('error_email');
+			} else {
+				if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+					$this->error['warning'] = $this->language->get('error_exists');
+				}
+			}
+		} else {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_exists');
-		}
+		// moved up
+		//if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+		//	$this->error['warning'] = $this->language->get('error_exists');
+		//}
 
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+		if (!empty($this->request->post['telephone'])) {
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$this->error['telephone'] = $this->language->get('error_telephone');
+			}
+		} else {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
@@ -245,25 +266,32 @@ class ControllerAccountRegister extends Controller {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
 
-		// Custom field validation
-		$this->load->model('account/custom_field');
+		// no need to check if error
+		if (!$this->error) {
+			// Custom field validation
+			$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'account') {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'account') {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+						$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
+						$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					}
 				}
 			}
 		}
 
-		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+		if (!empty($this->request->post['password'])) {
+			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+				$this->error['password'] = $this->language->get('error_password');
+			}
+		} else {
 			$this->error['password'] = $this->language->get('error_password');
 		}
-
+		
 		if ($this->request->post['confirm'] != $this->request->post['password']) {
 			$this->error['confirm'] = $this->language->get('error_confirm');
 		}

@@ -3158,7 +3158,7 @@ VALUES (0, 1, 'product_id', '47', 'hp-lp3065', 1),
 -- Dumping data for table `oc_ssr`
 --
 
-INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status` `date_modified`)
+INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status`, `date_modified`)
 VALUES ('article', 'Renders article data', 'catalog/data/article', 0, NOW()),
        ('banner', 'Renders banner data', 'catalog/data/banner', 0, NOW()),
        ('category', 'Renders category data', 'catalog/data/category', 0, NOW()),

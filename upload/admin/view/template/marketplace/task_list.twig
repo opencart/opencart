@@ -15,7 +15,7 @@
       <tbody>
         {% if tasks %}
           {% for task in tasks %}
-            <tr>
+            <tr{% if not task.status %} class="table-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ task.task_id }}" class="form-check-input"/></td>
               <td>{{ task.code }}</td>
               <td>{{ task.action }}</td>

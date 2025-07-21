@@ -19,34 +19,30 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		try {
 			$ssrs = [];
 
-			/*
 			$ssrs[] = [
 				'code'   => 'article',
-				'action' => 'ssr/catalog/article'
+				'action' => 'catalog/data/article'
 			];
 
 			$ssrs[] = [
 				'code'   => 'banner',
-				'action' => 'ssr/catalog/banner'
+				'action' => 'catalog/data/banner'
 			];
-
 
 			$ssrs[] = [
 				'code'   => 'category',
-				'action' => 'ssr/catalog/category'
-			];
-			*/
-
-			$ssrs[] = [
-				'code'   => 'country',
-				'action' => 'ssr/catalog/country'
+				'action' => 'catalog/data/category'
 			];
 
 			$ssrs[] = [
 				'code'   => 'country',
-				'action' => 'ssr/admin/country'
+				'action' => 'catalog/data/country'
 			];
 
+			$ssrs[] = [
+				'code'   => 'country',
+				'action' => 'admin/data/country'
+			];
 
 			$ssrs[] = [
 				'code'   => 'currency',
@@ -58,15 +54,14 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 				'action' => 'ssr/admin/currency'
 			];
 
-			/*
 			$ssrs[] = [
 				'code'   => 'custom_field',
-				'action' => 'ssr/catalog/custom_field'
+				'action' => 'catalog/data/custom_field'
 			];
 
 			$ssrs[] = [
 				'code'   => 'custom_field',
-				'action' => 'ssr/admin/custom_field'
+				'action' => 'admin/data/custom_field'
 			];
 
 			$ssrs[] = [
@@ -81,105 +76,116 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 
 			$ssrs[] = [
 				'code'   => 'information',
-				'action' => 'ssr/catalog/information'
-			];
-			*/
-
-			$ssrs[] = [
-				'code'   => 'language',
-				'action' => 'ssr/catalog/language'
+				'action' => 'catalog/data/information'
 			];
 
 			$ssrs[] = [
 				'code'   => 'language',
-				'action' => 'ssr/admin/language'
+				'action' => 'catalog/data/language'
 			];
-			/*
+
 			$ssrs[] = [
-				'code'   => 'length_class',
-				'action' => 'ssr/catalog/length_class'
+				'code'   => 'language',
+				'action' => 'admin/data/language'
+			];
+
+			$ssrs[] = [
+				'code'   => 'language',
+				'action' => 'catalog/data/language'
+			];
+
+			$ssrs[] = [
+				'code'   => 'language',
+				'action' => 'admin/data/language'
 			];
 
 			$ssrs[] = [
 				'code'   => 'length_class',
-				'action' => 'ssr/admin/length_class'
+				'action' => 'catalog/data/length_class'
+			];
+
+			$ssrs[] = [
+				'code'   => 'length_class',
+				'action' => 'admin/data/length_class'
 			];
 
 			$ssrs[] = [
 				'code'   => 'manufacturer',
-				'action' => 'ssr/catalog/manufacturer'
+				'action' => 'catalog/data/manufacturer'
 			];
 
 			$ssrs[] = [
 				'code'   => 'option',
-				'action' => 'ssr/catalog/option'
+				'action' => 'catalog/data/option'
+			];
+
+			$ssrs[] = [
+				'code'   => 'option',
+				'action' => 'admin/data/option'
 			];
 
 			$ssrs[] = [
 				'code'   => 'order_status',
-				'action' => 'ssr/admin/order_status'
+				'action' => 'admin/order_status'
 			];
 
 			$ssrs[] = [
 				'code'   => 'product',
-				'action' => 'ssr/catalog/product'
+				'action' => 'catalog/data/product'
 			];
 
 			$ssrs[] = [
 				'code'   => 'return_reason',
-				'action' => 'ssr/catalog/return_reason'
+				'action' => 'catalog/data/return_reason'
 			];
 
 			$ssrs[] = [
 				'code'   => 'return_reason',
-				'action' => 'ssr/admin/return_reason'
+				'action' => 'admin/data/return_reason'
 			];
 
 			$ssrs[] = [
 				'code'   => 'store',
-				'action' => 'ssr/catalog/store'
+				'action' => 'catalog/data/store'
 			];
 
 			$ssrs[] = [
 				'code'   => 'store',
-				'action' => 'ssr/admin/store'
+				'action' => 'admin/data/store'
+			];
+
+			$ssrs[] = [
+				'code'   => 'theme',
+				'action' => 'catalog/data/theme'
 			];
 
 			$ssrs[] = [
 				'code'   => 'topic',
-				'action' => 'ssr/catalog/topic'
+				'action' => 'catalog/data/topic'
 			];
 
 			$ssrs[] = [
 				'code'   => 'translation',
-				'action' => 'ssr/catalog/translation'
-			];
-
-			$ssrs[] = [
-				'code'   => 'translation',
-				'action' => 'ssr/admin/translation'
+				'action' => 'catalog/ata/translation'
 			];
 
 			$ssrs[] = [
 				'code'   => 'weight_class',
-				'action' => 'ssr/catalog/weight_class'
+				'action' => 'catalog/data/weight_class'
 			];
 
 			$ssrs[] = [
 				'code'   => 'weight_class',
-				'action' => 'ssr/admin/weight_class'
+				'action' => 'admin/data/weight_class'
 			];
-			*/
 
 			foreach ($ssrs as $ssr) {
 				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ssr` WHERE `code` = '" . $this->db->escape($ssr['code']) . "'");
 
 				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ssr` SET `code` = '" . $this->db->escape($ssr['code']) . "', `action` = '" . $this->db->escape($ssr['action']) . "', `status` = '1', `sort_order` = '0', date_modified = NOW()");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ssr` SET `code` = '" . $this->db->escape($ssr['code']) . "', `action` = '" . $this->db->escape($ssr['action']) . "', `status` = '1', date_modified = NOW()");
 				}
 			}
-
-
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

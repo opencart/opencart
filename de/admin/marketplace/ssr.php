@@ -7,9 +7,11 @@ $_['text_success']         = 'Success: You have modified static site rendering!'
 $_['text_list']            = 'SSR List';
 $_['text_ssr']             = 'Static Site Rendering is used to pre render templates and static data. If you have issues you can disable or enable the SSR here.';
 $_['text_render']          = 'Static Site Renderers';
+$_['text_info']            = 'Static Site Rendering Information';
 
 // Column
 $_['column_code']          = 'SSR Code';
+$_['column_status']        = 'Status';
 $_['column_date_modified'] = 'Änderungsdatum';
 $_['column_action']        = 'Aktionen';
 

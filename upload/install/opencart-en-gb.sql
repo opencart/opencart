@@ -2126,85 +2126,85 @@ VALUES (5, 0),
 -- Dumping data for table `oc_menu`
 --
 
-INSERT INTO `oc_menu` (`menu_id`, `code`, `type`, `route`, `parent`, `sort_order`) VALUES
-(1, 'category', 'link', 'catalog/category', 'catalog', 1),
-(2, 'product', 'link', 'catalog/product', 'catalog', 2),
-(3, 'subscription_plan', 'link', 'catalog/subscription_plan', 'catalog', 3),
-(4, 'filter', 'dropdown', '', 'catalog', 4),
-(5, 'filter_2', 'link', 'catalog/filter', 'filter', 1),
-(6, 'filter_group', 'link', 'catalog/filter_group', 'filter', 2),
-(7, 'attribute', 'dropdown', '', 'catalog', 5),
-(8, 'attribute_2', 'link', 'catalog/attribute', 'attribute', 1),
-(9, 'attribute_group', 'link', 'catalog/attribute_group', 'attribute', 2),
-(10, 'option', 'link', 'catalog/option', 'catalog', 6),
-(11, 'manufacturer', 'link', 'catalog/manufacturer', 'catalog', 7),
-(12, 'download', 'link', 'catalog/download', 'catalog', 8),
-(13, 'review', 'link', 'catalog/review', 'catalog', 9),
-(14, 'information', 'link', 'catalog/information', 'catalog', 10),
-(15, 'topic', 'link', 'cms/topic', 'cms', 1),
-(16, 'article', 'link', 'cms/article', 'cms', 2),
-(17, 'comment', 'link', 'cms/comment', 'cms', 3),
-(18, 'antispam', 'link', 'cms/antispam', 'cms', 4),
-(19, 'marketplace', 'link', 'marketplace/marketplace', 'extension', 1),
-(20, 'installer', 'link', 'marketplace/installer', 'extension', 2),
-(21, 'extension_2', 'link', 'marketplace/extension', 'extension', 3),
-(22, 'task', 'link', 'marketplace/task', 'extension', 5),
-(23, 'ssr', 'link', 'marketplace/ssr', 'extension', 6),
-(24, 'startup', 'link', 'marketplace/startup', 'extension', 7),
-(25, 'event', 'link', 'marketplace/event', 'extension', 8),
-(26, 'cron', 'link', 'marketplace/cron', 'extension', 9),
-(27, 'layout', 'link', 'design/layout', 'design', 1),
-(28, 'theme', 'link', 'design/theme', 'design', 2),
-(29, 'translation', 'link', 'design/translation', 'design', 3),
-(30, 'banner', 'link', 'design/banner', 'design', 4),
-(31, 'seo_url', 'link', 'design/seo_url', 'design', 5),
-(32, 'order', 'link', 'sale/order', 'sale', 1),
-(33, 'subscription', 'link', 'sale/subscription', 'sale', 2),
-(34, 'return', 'link', 'sale/returns', 'sale', 3),
-(35, 'customer_2', 'link', 'customer/customer', 'customer', 1),
-(36, 'customer_group', 'link', 'customer/customer_group', 'customer', 2),
-(37, 'customer_approval', 'link', 'customer/customer_approval', 'customer', 3),
-(38, 'gdpr', 'link', 'customer/gdpr', 'customer', 4),
-(39, 'custom_field', 'link', 'customer/custom_field', 'customer', 5),
-(40, 'affiliate', 'link', 'marketing/affiliate', 'marketing', 1),
-(41, 'marketing_2', 'link', 'marketing/marketing', 'marketing', 2),
-(42, 'coupon', 'link', 'marketing/coupon', 'marketing', 3),
-(43, 'contact', 'link', 'marketing/contact', 'marketing', 4),
-(44, 'setting', 'link', 'setting/setting', 'system', 1),
-(45, 'user', 'dropdown', '', 'system', 2),
-(46, 'user_2', 'link', 'user/user', 'user', 1),
-(47, 'user_permission', 'link', 'user/user_permission', 'user', 2),
-(48, 'api', 'link', 'user/api', 'user', 3),
-(49, 'localisation', 'dropdown', '', 'system', 3),
-(50, 'location', 'link', 'localisation/location', 'localisation', 1),
-(51, 'language', 'link', 'localisation/language', 'localisation', 2),
-(52, 'currency', 'link', 'localisation/currency', 'localisation', 3),
-(53, 'identifier', 'link', 'localisation/identifier', 'localisation', 4),
-(54, 'stock_status', 'link', 'localisation/stock_status', 'localisation', 5),
-(55, 'order_status', 'link', 'localisation/order_status', 'localisation', 6),
-(56, 'subscription_status', 'link', 'localisation/subscription_status', 'localisation', 7),
-(57, 'return_2', 'dropdown', '', 'localisation', 8),
-(58, 'return_status', 'link', 'localisation/return_status', 'return_2', 2),
-(59, 'return_action', 'link', 'localisation/return_action', 'return_2', 1),
-(60, 'return_reason', 'link', 'localisation/return_reason', 'return_2', 3),
-(61, 'country', 'link', 'localisation/country', 'localisation', 9),
-(62, 'zone', 'link', 'localisation/zone', 'localisation', 10),
-(63, 'geo_zone', 'link', 'localisation/geo_zone', 'localisation', 11),
-(64, 'tax', 'dropdown', '', 'localisation', 12),
-(65, 'tax_class', 'link', 'localisation/tax_class', 'tax', 1),
-(66, 'tax_rate', 'link', 'localisation/tax_rate', 'tax', 2),
-(67, 'length_class', 'link', 'localisation/length_class', 'localisation', 13),
-(68, 'weight_class', 'link', 'localisation/weight_class', 'localisation', 14),
-(69, 'address_format', 'link', 'localisation/address_format', 'localisation', 15),
-(70, 'maintenance', 'dropdown', '', 'system', 4),
-(71, 'menu', 'link', 'tool/menu', 'maintenance', 1),
-(72, 'upgrade', 'link', 'tool/upgrade', 'maintenance', 2),
-(73, 'backup', 'link', 'tool/backup', 'maintenance', 3),
-(74, 'upload', 'link', 'tool/upload', 'maintenance', 4),
-(75, 'log', 'link', 'tool/log', 'maintenance', 5),
-(76, 'report_2', 'link', 'report/report', 'report', 1),
-(77, 'online', 'link', 'report/online', 'report', 2),
-(78, 'statistics', 'link', 'report/statistics', 'report', 3);
+INSERT INTO `oc_menu` (`menu_id`, `code`, `type`, `route`, `parent`, `sort_order`)
+VALUES (1, 'category', 'link', 'catalog/category', 'catalog', 1),
+       (2, 'product', 'link', 'catalog/product', 'catalog', 2),
+       (3, 'subscription_plan', 'link', 'catalog/subscription_plan', 'catalog', 3),
+       (4, 'filter', 'dropdown', '', 'catalog', 4),
+       (5, 'filter_2', 'link', 'catalog/filter', 'filter', 1),
+       (6, 'filter_group', 'link', 'catalog/filter_group', 'filter', 2),
+       (7, 'attribute', 'dropdown', '', 'catalog', 5),
+       (8, 'attribute_2', 'link', 'catalog/attribute', 'attribute', 1),
+       (9, 'attribute_group', 'link', 'catalog/attribute_group', 'attribute', 2),
+       (10, 'option', 'link', 'catalog/option', 'catalog', 6),
+       (11, 'manufacturer', 'link', 'catalog/manufacturer', 'catalog', 7),
+       (12, 'download', 'link', 'catalog/download', 'catalog', 8),
+       (13, 'review', 'link', 'catalog/review', 'catalog', 9),
+       (14, 'information', 'link', 'catalog/information', 'catalog', 10),
+       (15, 'topic', 'link', 'cms/topic', 'cms', 1),
+       (16, 'article', 'link', 'cms/article', 'cms', 2),
+       (17, 'comment', 'link', 'cms/comment', 'cms', 3),
+       (18, 'antispam', 'link', 'cms/antispam', 'cms', 4),
+       (19, 'marketplace', 'link', 'marketplace/marketplace', 'extension', 1),
+       (20, 'installer', 'link', 'marketplace/installer', 'extension', 2),
+       (21, 'extension_2', 'link', 'marketplace/extension', 'extension', 3),
+       (22, 'task', 'link', 'marketplace/task', 'extension', 5),
+       (23, 'ssr', 'link', 'marketplace/ssr', 'extension', 6),
+       (24, 'startup', 'link', 'marketplace/startup', 'extension', 7),
+       (25, 'event', 'link', 'marketplace/event', 'extension', 8),
+       (26, 'cron', 'link', 'marketplace/cron', 'extension', 9),
+       (27, 'layout', 'link', 'design/layout', 'design', 1),
+       (28, 'theme', 'link', 'design/theme', 'design', 2),
+       (29, 'translation', 'link', 'design/translation', 'design', 3),
+       (30, 'banner', 'link', 'design/banner', 'design', 4),
+       (31, 'seo_url', 'link', 'design/seo_url', 'design', 5),
+       (32, 'order', 'link', 'sale/order', 'sale', 1),
+       (33, 'subscription', 'link', 'sale/subscription', 'sale', 2),
+       (34, 'return', 'link', 'sale/returns', 'sale', 3),
+       (35, 'customer_2', 'link', 'customer/customer', 'customer', 1),
+       (36, 'customer_group', 'link', 'customer/customer_group', 'customer', 2),
+       (37, 'customer_approval', 'link', 'customer/customer_approval', 'customer', 3),
+       (38, 'gdpr', 'link', 'customer/gdpr', 'customer', 4),
+       (39, 'custom_field', 'link', 'customer/custom_field', 'customer', 5),
+       (40, 'affiliate', 'link', 'marketing/affiliate', 'marketing', 1),
+       (41, 'marketing_2', 'link', 'marketing/marketing', 'marketing', 2),
+       (42, 'coupon', 'link', 'marketing/coupon', 'marketing', 3),
+       (43, 'contact', 'link', 'marketing/contact', 'marketing', 4),
+       (44, 'setting', 'link', 'setting/setting', 'system', 1),
+       (45, 'user', 'dropdown', '', 'system', 2),
+       (46, 'user_2', 'link', 'user/user', 'user', 1),
+       (47, 'user_permission', 'link', 'user/user_permission', 'user', 2),
+       (48, 'api', 'link', 'user/api', 'user', 3),
+       (49, 'localisation', 'dropdown', '', 'system', 3),
+       (50, 'location', 'link', 'localisation/location', 'localisation', 1),
+       (51, 'language', 'link', 'localisation/language', 'localisation', 2),
+       (52, 'currency', 'link', 'localisation/currency', 'localisation', 3),
+       (53, 'identifier', 'link', 'localisation/identifier', 'localisation', 4),
+       (54, 'stock_status', 'link', 'localisation/stock_status', 'localisation', 5),
+       (55, 'order_status', 'link', 'localisation/order_status', 'localisation', 6),
+       (56, 'subscription_status', 'link', 'localisation/subscription_status', 'localisation', 7),
+       (57, 'return_2', 'dropdown', '', 'localisation', 8),
+       (58, 'return_status', 'link', 'localisation/return_status', 'return_2', 2),
+       (59, 'return_action', 'link', 'localisation/return_action', 'return_2', 1),
+       (60, 'return_reason', 'link', 'localisation/return_reason', 'return_2', 3),
+       (61, 'country', 'link', 'localisation/country', 'localisation', 9),
+       (62, 'zone', 'link', 'localisation/zone', 'localisation', 10),
+       (63, 'geo_zone', 'link', 'localisation/geo_zone', 'localisation', 11),
+       (64, 'tax', 'dropdown', '', 'localisation', 12),
+       (65, 'tax_class', 'link', 'localisation/tax_class', 'tax', 1),
+       (66, 'tax_rate', 'link', 'localisation/tax_rate', 'tax', 2),
+       (67, 'length_class', 'link', 'localisation/length_class', 'localisation', 13),
+       (68, 'weight_class', 'link', 'localisation/weight_class', 'localisation', 14),
+       (69, 'address_format', 'link', 'localisation/address_format', 'localisation', 15),
+       (70, 'maintenance', 'dropdown', '', 'system', 4),
+       (71, 'menu', 'link', 'tool/menu', 'maintenance', 1),
+       (72, 'upgrade', 'link', 'tool/upgrade', 'maintenance', 2),
+       (73, 'backup', 'link', 'tool/backup', 'maintenance', 3),
+       (74, 'upload', 'link', 'tool/upload', 'maintenance', 4),
+       (75, 'log', 'link', 'tool/log', 'maintenance', 5),
+       (76, 'report_2', 'link', 'report/report', 'report', 1),
+       (77, 'online', 'link', 'report/online', 'report', 2),
+       (78, 'statistics', 'link', 'report/statistics', 'report', 3);
 
 -----------------------------------------------------------
 
@@ -2212,84 +2212,84 @@ INSERT INTO `oc_menu` (`menu_id`, `code`, `type`, `route`, `parent`, `sort_order
 -- Dumping data for table `oc_menu_description`
 --
 
-INSERT INTO `oc_menu_description` (`menu_id`, `language_id`, `name`) VALUES
-(1, 1, 'Categories'),
-(2, 1, 'Products'),
-(3, 1, 'Subscription Plan'),
-(4, 1, 'Filters'),
-(5, 1, 'Filters'),
-(6, 1, 'Filter Groups'),
-(7, 1, 'Attributes'),
-(8, 1, 'Attributes'),
-(9, 1, 'Attribute Group'),
-(10, 1, 'Options'),
-(11, 1, 'Manufacturers'),
-(12, 1, 'Downloads'),
-(13, 1, 'Reviews'),
-(14, 1, 'Informations'),
-(15, 1, 'Topics'),
-(16, 1, 'Article'),
-(17, 1, 'Comments'),
-(18, 1, 'Anti-Spam'),
-(19, 1, 'Marketplace'),
-(20, 1, 'Installer'),
-(21, 1, 'Extensions'),
-(22, 1, 'Task'),
-(23, 1, 'Static Site Rendering'),
-(24, 1, 'Startup'),
-(25, 1, 'Events'),
-(26, 1, 'CRON Jobs'),
-(27, 1, 'Layouts'),
-(28, 1, 'Theme Editor'),
-(29, 1, 'Translation'),
-(30, 1, 'Banner'),
-(31, 1, 'SEO URL'),
-(32, 1, 'Orders'),
-(33, 1, 'Subscription'),
-(34, 1, 'Returns'),
-(35, 1, 'Customers'),
-(36, 1, 'Customer Groups'),
-(37, 1, 'Customer Approvals'),
-(38, 1, 'GDPR'),
-(39, 1, 'Custom Field'),
-(40, 1, 'Affiliate'),
-(41, 1, 'Marketing'),
-(42, 1, 'Coupons'),
-(43, 1, 'Mail'),
-(44, 1, 'Settings'),
-(45, 1, 'Users'),
-(46, 1, 'Users'),
-(47, 1, 'User Groups'),
-(48, 1, 'API'),
-(49, 1, 'Localisation'),
-(50, 1, 'Store Locations'),
-(51, 1, 'Language'),
-(52, 1, 'Currencies'),
-(53, 1, 'Identifier'),
-(54, 1, 'Stock Status'),
-(55, 1, 'Order Status'),
-(56, 1, 'Subscription Status'),
-(57, 1, 'Returns'),
-(58, 1, 'Return Statuses'),
-(59, 1, 'Return Actions'),
-(60, 1, 'Return Reasons'),
-(61, 1, 'Countries'),
-(62, 1, 'Zones'),
-(63, 1, 'Geo Zones'),
-(64, 1, 'Taxes'),
-(65, 1, 'Tax Classes'),
-(66, 1, 'Tax Rates'),
-(67, 1, 'Length Classes'),
-(68, 1, 'Weight Classes'),
-(69, 1, 'Address Format'),
-(70, 1, 'Maintenance'),
-(71, 1, 'Admin Menu'),
-(72, 1, 'Upgrade'),
-(73, 1, 'Backup &amp; Restore'),
-(74, 1, 'Uploads'),
-(75, 1, 'Error Log'),
-(76, 1, 'Reports'),
-(77, 1, 'Who\'s Online'),
+INSERT INTO `oc_menu_description` (`menu_id`, `language_id`, `name`)
+VALUES (1, 1, 'Categories'),
+       (2, 1, 'Products'),
+       (3, 1, 'Subscription Plan'),
+       (4, 1, 'Filters'),
+       (5, 1, 'Filters'),
+       (6, 1, 'Filter Groups'),
+       (7, 1, 'Attributes'),
+       (8, 1, 'Attributes'),
+       (9, 1, 'Attribute Group'),
+       (10, 1, 'Options'),
+       (11, 1, 'Manufacturers'),
+       (12, 1, 'Downloads'),
+       (13, 1, 'Reviews'),
+       (14, 1, 'Informations'),
+       (15, 1, 'Topics'),
+       (16, 1, 'Article'),
+       (17, 1, 'Comments'),
+       (18, 1, 'Anti-Spam'),
+       (19, 1, 'Marketplace'),
+       (20, 1, 'Installer'),
+       (21, 1, 'Extensions'),
+       (22, 1, 'Task'),
+       (23, 1, 'Static Site Rendering'),
+       (24, 1, 'Startup'),
+       (25, 1, 'Events'),
+       (26, 1, 'CRON Jobs'),
+       (27, 1, 'Layouts'),
+       (28, 1, 'Theme Editor'),
+       (29, 1, 'Translation'),
+       (30, 1, 'Banner'),
+       (31, 1, 'SEO URL'),
+       (32, 1, 'Orders'),
+       (33, 1, 'Subscription'),
+       (34, 1, 'Returns'),
+       (35, 1, 'Customers'),
+       (36, 1, 'Customer Groups'),
+       (37, 1, 'Customer Approvals'),
+       (38, 1, 'GDPR'),
+       (39, 1, 'Custom Field'),
+       (40, 1, 'Affiliate'),
+       (41, 1, 'Marketing'),
+       (42, 1, 'Coupons'),
+       (43, 1, 'Mail'),
+       (44, 1, 'Settings'),
+       (45, 1, 'Users'),
+       (46, 1, 'Users'),
+       (47, 1, 'User Groups'),
+       (48, 1, 'API'),
+       (49, 1, 'Localisation'),
+       (50, 1, 'Store Locations'),
+       (51, 1, 'Language'),
+       (52, 1, 'Currencies'),
+       (53, 1, 'Identifier'),
+       (54, 1, 'Stock Status'),
+       (55, 1, 'Order Status'),
+       (56, 1, 'Subscription Status'),
+       (57, 1, 'Returns'),
+       (58, 1, 'Return Statuses'),
+       (59, 1, 'Return Actions'),
+       (60, 1, 'Return Reasons'),
+       (61, 1, 'Countries'),
+       (62, 1, 'Zones'),
+       (63, 1, 'Geo Zones'),
+       (64, 1, 'Taxes'),
+       (65, 1, 'Tax Classes'),
+       (66, 1, 'Tax Rates'),
+       (67, 1, 'Length Classes'),
+       (68, 1, 'Weight Classes'),
+       (69, 1, 'Address Format'),
+       (70, 1, 'Maintenance'),
+       (71, 1, 'Admin Menu'),
+       (72, 1, 'Upgrade'),
+       (73, 1, 'Backup &amp; Restore'),
+       (74, 1, 'Uploads'),
+       (75, 1, 'Error Log'),
+       (76, 1, 'Reports'),
+       (77, 1, 'Who\'s Online'),
 (78, 1, 'Statistics');
 
 -----------------------------------------------------------
@@ -2299,10 +2299,10 @@ INSERT INTO `oc_menu_description` (`menu_id`, `language_id`, `name`) VALUES
 --
 
 INSERT INTO `oc_module` (`module_id`, `name`, `code`, `setting`)
-VALUES (1, 'Category Banner', 'opencart.banner', '{"name":"Category Banner","banner_id":"6","effect":"fade","items":"1","controls":"0","indicators":"0","interval":"5000","width":"200","height":"180","status":"1"}'),
-       (2, 'Featured', 'opencart.featured', '{"name":"Featured","product_name":"","product":["43","40","42","30"],"axis":"horizontal","limit":"4","width":"200","height":"200","status":"1"}'),
-       (3, 'Homepage Slideshow', 'opencart.banner', '{"name":"Homepage Slideshow","banner_id":"7","effect":"slide","items":"1","controls":"1","indicators":"1","interval":"5000","width":"1140","height":"380","status":"1"}'),
-       (4, 'Homepage Manufacturers', 'opencart.banner', '{"name":"Homepage Manufacturers","banner_id":"8","effect":"slide","items":"5","controls":"1","indicators":"1","interval":"5000","width":"130","height":"100","status":"1"}');
+VALUES (1, 'Category Banner', 'opencart.banner', '{"name":"Category Banner", "banner_id":"6", "effect":"fade", "items":"1", "controls":"0", "indicators":"0", "interval":"5000", "width":"200", "height":"180", "status":"1"}'),
+       (2, 'Featured', 'opencart.featured', '{"name":"Featured", "product_name":"", "product":["43", "40", "42", "30"], "axis":"horizontal", "limit":"4", "width":"200", "height":"200", "status":"1"}'),
+       (3, 'Homepage Slideshow', 'opencart.banner', '{"name":"Homepage Slideshow", "banner_id":"7", "effect":"slide", "items":"1", "controls":"1", "indicators":"1", "interval":"5000", "width":"1140", "height":"380", "status":"1"}'),
+       (4, 'Homepage Manufacturers', 'opencart.banner', '{"name":"Homepage Manufacturers", "banner_id":"8", "effect":"slide", "items":"5", "controls":"1", "indicators":"1", "interval":"5000", "width":"130", "height":"100", "status":"1"}');
 
 -----------------------------------------------------------
 
@@ -2338,7 +2338,8 @@ VALUES (1, 1, 'Radio'),
        (7, 1, 'File'),
        (5, 1, 'Select'),
        (9, 1, 'Time'),
-       (10, 1, 'Date &amp; Time'),
+       (10, 1, 'Date &amp;
+Time'),
        (12, 1, 'Delivery Date'),
        (11, 1, 'Size');
 
@@ -2373,15 +2374,19 @@ VALUES (43, 1, '', 3),
 INSERT INTO `oc_option_value_description` (`option_value_id`, `language_id`, `option_id`, `name`)
 VALUES (43, 1, 1, 'Large'),
        (32, 1, 1, 'Small'),
-       (45, 1, 2, 'Checkbox 4'),
-       (44, 1, 2, 'Checkbox 3'),
+       (45, 1, 2, 'Checkbox 4
+'),
+       (44, 1, 2, 'Checkbox 3
+'),
        (31, 1, 1, 'Medium'),
        (42, 1, 5, 'Yellow'),
        (41, 1, 5, 'Green'),
        (39, 1, 5, 'Red'),
        (40, 1, 5, 'Blue'),
-       (23, 1, 2, 'Checkbox 1'),
-       (24, 1, 2, 'Checkbox 2'),
+       (23, 1, 2, 'Checkbox 1
+'),
+       (24, 1, 2, 'Checkbox 2
+'),
        (48, 1, 11, 'Large'),
        (47, 1, 11, 'Medium'),
        (46, 1, 11, 'Small');
@@ -2415,26 +2420,85 @@ VALUES (2, 1, 'Processing'),
 --
 
 INSERT INTO `oc_product` (`product_id`, `master_id`, `model`, `location`, `variant`, `override`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `rating`, `sort_order`, `status`, `date_added`, `date_modified`)
-VALUES (28, 0, 'Product 1', '', '', '', 939, 7, 'catalog/demo/htc_touch_hd_1.jpg', 5, 1, 100.0000, 200, 9, '2009-02-03', 146.40000000, 2, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (29, 0, 'Product 2', '', '', '', 999, 6, 'catalog/demo/palm_treo_pro_1.jpg', 6, 1, 279.9900, 0, 9, '2009-02-03', 133.00000000, 2, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (30, 0, 'Product 3', '', '', '', 7, 6, 'catalog/demo/canon_eos_5d_1.jpg', 9, 1, 100.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (31, 0, 'Product 4', '', '', '', 1000, 6, 'catalog/demo/nikon_d300_1.jpg', 0, 1, 80.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (32, 0, 'Product 5', '', '', '', 999, 6, 'catalog/demo/ipod_touch_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (33, 0, 'Product 6', '', '', '', 1000, 6, 'catalog/demo/samsung_syncmaster_941bw.jpg', 0, 1, 200.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (34, 0, 'Product 7', '', '', '', 1000, 6, 'catalog/demo/ipod_shuffle_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (35, 0, 'Product 8', '', '', '', 1000, 5, '', 0, 0, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (36, 0, 'Product 9', '', '', '', 994, 6, 'catalog/demo/ipod_nano_1.jpg', 8, 0, 100.0000, 100, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (40, 0, 'product 11', '', '', '', 970, 5, 'catalog/demo/iphone_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 10.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (41, 0, 'Product 14', '', '', '', 977, 5, 'catalog/demo/imac_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-03', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (42, 0, 'Product 15', '', '', '', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '2009-02-04', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 1, NOW(), NOW()),
-       (43, 0, 'Product 16', '', '', '', 929, 5, 'catalog/demo/macbook_1.jpg', 8, 0, 100.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (44, 0, 'Product 17', '', '', '', 1000, 5, 'catalog/demo/macbook_air_1.jpg', 8, 1, 1000.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (45, 0, 'Product 18', '', '', '', 998, 5, 'catalog/demo/macbook_pro_1.jpg', 8, 1, 2000.0000, 0, 100, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (46, 0, 'Product 19', '', '', '', 1000, 5, 'catalog/demo/sony_vaio_1.jpg', 10, 1, 1000.0000, 0, 9, '2009-02-03', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (47, 0, 'Product 21', '', '', '', 1000, 5, 'catalog/demo/hp_1.jpg', 7, 1, 100.0000, 400, 9, '2009-02-03', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 0, 1, 0, 0, 1, NOW(), NOW()),
-       (48, 0, 'product 20', 'test 2', '', '', 995, 5, 'catalog/demo/ipod_classic_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-08', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (49, 0, 'SAM1', '', '', '', 0, 8, 'catalog/demo/samsung_tab_1.jpg', 0, 1, 199.9900, 0, 9, '2011-04-25', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 1, 1, NOW(), NOW()),
-       (50, 42, 'Product 15', '', '{\"208\":\"\",\"217\":\"\",\"209\":\"\",\"222\":\"\",\"219\":\"\",\"221\":\"\",\"220\":\"\"}', '{\"status\":\"1\"}', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '2009-02-04', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 0, NOW(), NOW());
+VALUES (28, 0, 'Product 1
+', '', '', '', 939, 7, 'catalog/demo/htc_touch_hd_1.jpg', 5, 1, 100.0000, 200, 9, '
+2009-02-03
+', 146.40000000, 2, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (29, 0, 'Product 2
+', '', '', '', 999, 6, 'catalog/demo/palm_treo_pro_1.jpg', 6, 1, 279.9900, 0, 9, '
+2009-02-03
+', 133.00000000, 2, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (30, 0, 'Product 3
+', '', '', '', 7, 6, 'catalog/demo/canon_eos_5d_1.jpg', 9, 1, 100.0000, 0, 9, '
+2009-02-03
+', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (31, 0, 'Product 4
+', '', '', '', 1000, 6, 'catalog/demo/nikon_d300_1.jpg', 0, 1, 80.0000, 0, 9, '
+2009-02-03
+', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (32, 0, 'Product 5
+', '', '', '', 999, 6, 'catalog/demo/ipod_touch_1.jpg', 8, 1, 100.0000, 0, 9, '
+2009-02-03
+', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (33, 0, 'Product 6
+', '', '', '', 1000, 6, 'catalog/demo/samsung_syncmaster_941bw.jpg', 0, 1, 200.0000, 0, 9, '
+2009-02-03
+', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (34, 0, 'Product 7
+', '', '', '', 1000, 6, 'catalog/demo/ipod_shuffle_1.jpg', 8, 1, 100.0000, 0, 9, '
+2009-02-03
+', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (35, 0, 'Product 8
+', '', '', '', 1000, 5, '', 0, 0, 100.0000, 0, 9, '
+2009-02-03
+', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (36, 0, 'Product 9
+', '', '', '', 994, 6, 'catalog/demo/ipod_nano_1.jpg', 8, 0, 100.0000, 100, 9, '
+2009-02-03
+', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (40, 0, 'product 11
+', '', '', '', 970, 5, 'catalog/demo/iphone_1.jpg', 8, 1, 100.0000, 0, 9, '
+2009-02-03
+', 10.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (41, 0, 'Product 14
+', '', '', '', 977, 5, 'catalog/demo/imac_1.jpg', 8, 1, 100.0000, 0, 9, '
+2009-02-03
+', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (42, 0, 'Product 15
+', '', '', '', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '
+2009-02-04
+', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 1, NOW(), NOW()),
+       (43, 0, 'Product 16
+', '', '', '', 929, 5, 'catalog/demo/macbook_1.jpg', 8, 0, 100.0000, 0, 9, '
+2009-02-03
+', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (44, 0, 'Product 17
+', '', '', '', 1000, 5, 'catalog/demo/macbook_air_1.jpg', 8, 1, 1000.0000, 0, 9, '
+2009-02-03
+', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (45, 0, 'Product 18
+', '', '', '', 998, 5, 'catalog/demo/macbook_pro_1.jpg', 8, 1, 2000.0000, 0, 100, '
+2009-02-03
+', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (46, 0, 'Product 19
+', '', '', '', 1000, 5, 'catalog/demo/sony_vaio_1.jpg', 10, 1, 1000.0000, 0, 9, '
+2009-02-03
+', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (47, 0, 'Product 21
+', '', '', '', 1000, 5, 'catalog/demo/hp_1.jpg', 7, 1, 100.0000, 400, 9, '
+2009-02-03
+', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 0, 1, 0, 0, 1, NOW(), NOW()),
+       (48, 0, 'product 20
+', 'test 2
+', '', '', 995, 5, 'catalog/demo/ipod_classic_1.jpg', 8, 1, 100.0000, 0, 9, '
+2009-02-08
+', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
+       (49, 0, 'SAM1', '', '', '', 0, 8, 'catalog/demo/samsung_tab_1.jpg', 0, 1, 199.9900, 0, 9, '
+2011-04-25
+', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 1, 1, NOW(), NOW()),
+       (50, 42, 'Product 15
+', '', '{
+\"208\":\"\",\"217\":\"\",\"209\":\"\",\"222\":\"\",\"219\":\"\",\"221\":\"\",\"220\":\"\"}', '{\"status\":\"1\"}', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '2009-02-04', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 0, NOW(), NOW());
 
 -----------------------------------------------------------
 
@@ -2771,7 +2835,9 @@ VALUES (1, 1, 'Pending'),
 INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`)
 VALUES (0, 'config', 'config_shared', '0', 0),
        (0, 'config', 'config_fraud_detection', '0', 0),
-       (0, 'config', 'config_description', '{"1":{"meta_title":"Your Store","meta_description":"","meta_keyword":""}}', 1),
+       (0, 'config', 'config_description', '{"
+1
+":{"meta_title":"Your Store","meta_description":"","meta_keyword":""}}', 1),
        (0, 'config', 'config_session_expire', '86400', 0),
        (0, 'config', 'config_session_samesite', 'Strict', 0),
        (0, 'config', 'config_theme', 'basic', 0),
@@ -2805,7 +2871,9 @@ VALUES (0, 'config', 'config_shared', '0', 0),
        (0, 'config', 'config_customer_activity', '0', 0),
        (0, 'config', 'config_customer_search', '0', 0),
        (0, 'config', 'config_customer_group_id', '1', 0),
-       (0, 'config', 'config_customer_group_display', '["1"]', 1),
+       (0, 'config', 'config_customer_group_display', '["
+1
+"]', 1),
        (0, 'config', 'config_customer_price', '0', 0),
        (0, 'config', 'config_address_format_id', '1', 0),
        (0, 'config', 'config_account_id', '3', 0),
@@ -2815,8 +2883,22 @@ VALUES (0, 'config', 'config_shared', '0', 0),
        (0, 'config', 'config_checkout_guest', '1', 0),
        (0, 'config', 'config_checkout_id', '0', 0),
        (0, 'config', 'config_order_status_id', '1', 0),
-       (0, 'config', 'config_processing_status', '["5","1","2","12","3"]', 1),
-       (0, 'config', 'config_complete_status', '["5","3"]', 1),
+       (0, 'config', 'config_processing_status', '["
+5
+","
+1
+","
+2
+","
+12
+","
+3
+"]', 1),
+       (0, 'config', 'config_complete_status', '["
+5
+","
+3
+"]', 1),
        (0, 'config', 'config_void_status_id', '16', 0),
        (0, 'config', 'config_fraud_status_id', '8', 0),
        (0, 'config', 'config_subscription_status_id', '1', 0),
@@ -3076,43 +3158,36 @@ VALUES (0, 1, 'product_id', '47', 'hp-lp3065', 1),
 -- Dumping data for table `oc_ssr`
 --
 
-INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status`, `sort_order`, `date_modified`)
-VALUES ('country', '', 'ssr/catalog/country', 1, 0, NOW()),
-       ('country', '', 'ssr/admin/country', 1, 0, NOW()),
-       ('currency', '', 'ssr/catalog/currency', 1, 0, '2025-04-01 18:12:16'),
-       ('currency', '', 'ssr/admin/currency', 1, 0, '2025-04-01 18:12:16'),
-       ('language', '', 'ssr/catalog/language', 1, 0, '2025-04-01 18:12:16'),
-       ('language', '', 'ssr/admin/language', 1, 0, '2025-04-01 18:12:16');
-
--- VALUES ('article', '', 'ssr/catalog/article', 0, 0, '2025-04-01 18:12:16'),
---        ('banner', '', 'ssr/catalog/banner', 0, 0, '2025-04-01 18:12:16'),
---        ('category', '', 'ssr/catalog/category', 0, 0, '2025-04-01 18:12:16'),
---        ('country', '', 'ssr/catalog/country', 1, 0, '2025-04-01 18:12:16'),
---        ('country', '', 'ssr/admin/country', 1, 0, '2025-04-01 18:12:16'),
---        ('currency', '', 'ssr/catalog/currency', 1, 0, '2025-04-01 18:12:16'),
---        ('currency', '', 'ssr/admin/currency', 1, 0, '2025-04-01 18:12:16'),
---        ('custom_field', '', 'ssr/catalog/custom_field', 0, 0, '2025-04-01 18:12:16'),
---        ('custom_field', '', 'ssr/admin/custom_field', 0, 0, '2025-04-01 18:12:16'),
---        ('customer_group', '', 'ssr/catalog/customer_group', 1, 0, '2025-04-01 18:12:16'),
---        ('customer_group', '', 'ssr/admin/customer_group', 1, 0, '2025-04-01 18:12:16'),
---        ('information', '', 'ssr/catalog/information', 0, 0, '2025-04-01 18:12:16'),
---        ('language', '', 'ssr/catalog/language', 1, 0, '2025-04-01 18:12:16'),
---        ('language', '', 'ssr/admin/language', 1, 0, '2025-04-01 18:12:16'),
---        ('length_class', '', 'ssr/catalog/length_class', 0, 0, '2025-04-01 18:12:16'),
---        ('length_class', '', 'ssr/admin/length_class', 0, 0, '2025-04-01 18:12:16'),
---        ('manufacturer', '', 'ssr/catalog/manufacturer', 0, 0, '2025-04-01 18:12:16'),
---        ('option', '', 'ssr/admin/option', 0, 0, '2025-04-01 18:12:16'),
---        ('order_status', '', 'ssr/admin/order_status', 0, 0, '2025-04-01 18:12:16'),
---        ('product', '', 'ssr/catalog/product', 0, 0, '2025-04-01 18:12:16'),
---        ('return_reason', '', 'ssr/catalog/return_reason', 0, 0, '2025-04-01 18:12:16'),
---        ('return_reason', '', 'ssr/admin/return_reason', 0, 0, '2025-04-01 18:12:16'),
---        ('store', '', 'ssr/catalog/store', 1, 0, '2025-04-01 18:12:16'),
---        ('store', '', 'ssr/admin/store', 1, 0, '2025-04-01 18:12:16'),
---        ('topic', '', 'ssr/catalog/topic', 0, 0, '2025-04-01 18:12:16'),
---        ('translation', '', 'ssr/catalog/translation', 0, 0, '2025-04-01 18:12:16'),
---        ('translation', '', 'ssr/admin/translation', 0, 0, '2025-04-01 18:12:16'),
---        ('weight_class', '', 'ssr/catalog/weight_class', 0, 0, '2025-04-01 18:12:16'),
---        ('weight_class', '', 'ssr/admin/weight_class', 0, 0, '2025-04-01 18:12:16');
+INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status` `date_modified`)
+VALUES ('article', 'Renders article data', 'catalog/data/article', 0, NOW()),
+       ('banner', 'Renders banner data', 'catalog/data/banner', 0, NOW()),
+       ('category', 'Renders category data', 'catalog/data/category', 0, NOW()),
+       ('country', 'Renders country data', 'catalog/data/country', 1, NOW()),
+       ('country', 'Renders country data', 'admin/data/country', 1, NOW()),
+       ('currency', 'Renders currency data', 'catalog/data/currency', 1, NOW()),
+       ('currency', 'Renders currency data', 'admin/data/currency', 1, NOW()),
+       ('custom_field', 'Renders custom_field data', 'catalog/data/custom_field', 0, NOW()),
+       ('custom_field', 'Renders custom_field data', 'admin/data/custom_field', 0, NOW()),
+       ('customer_group', 'Renders customer group data', 'catalog/data/customer_group', 1, NOW()),
+       ('customer_group', 'Renders customer group data', 'admin/data/customer_group', 1, NOW()),
+       ('information', 'Renders information data', 'catalog/data/information', 1, NOW()),
+       ('language', 'Renders language data', 'catalog/data/language', 1, NOW()),
+       ('language', 'Renders language data', 'admin/data/language', 1, NOW()),
+       ('length_class', 'Renders length class data', 'catalog/data/length_class', 1, NOW()),
+       ('length_class', 'Renders length class data', 'admin/data/length_class', 1, NOW()),
+       ('manufacturer', 'Renders manufacturer data', 'catalog/data/manufacturer', 1, NOW()),
+       ('option', 'Renders option data', 'catalog/data/option', 1, NOW()),
+       ('order_status', 'Renders order status data', 'admin/data/order_status', 1, NOW()),
+       ('product', 'Renders product data', 'catalog/data/product', 1, NOW()),
+       ('return_reason', 'Renders return reason data', 'catalog/data/return_reason', 1, NOW()),
+       ('return_reason', 'Renders return reason data', 'admin/data/return_reason', 1, NOW()),
+       ('store', 'Renders store data', 'catalog/data/store', 1, NOW()),
+       ('store', 'Renders store data', 'admin/data/store', 1, NOW()),
+       ('theme', 'Renders theme data', 'catalog/data/theme', 1, NOW()),
+       ('topic', 'Renders topic data', 'catalog/data/topic', 1, NOW()),
+       ('translation', 'Renders translation data', 'catalog/data/translation', 1, NOW()),
+       ('weight_class', 'Renders weight class data', 'catalog/data/weight_class', 1, NOW()),
+       ('weight_class', 'Renders weight class', 'admin/data/weight_class', 1, NOW());
 
 -----------------------------------------------------------
 

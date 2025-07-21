@@ -75,7 +75,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'code_new' => 'mail_admin_transaction'
 			];
 
-			$replace = [
+			$replace[] = [
 				'code_old' => 'admin_mail_user_authorize',
 				'code_new' => 'mail_admin_user_authorize'
 			];
@@ -105,8 +105,8 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'code_new' => 'currency_setting'
 			];
 
-			foreach ($replace as $event) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($event['code_new']) . "' WHERE `code` = '" . $this->db->escape($event['code_old']) . "'");
+			foreach ($replace as $result) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($result['code_new']) . "' WHERE `code` = '" . $this->db->escape($result['code_old']) . "'");
 			}
 
 			// Add missing default events
@@ -692,7 +692,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'trigger' => 'admin/model/design/translation.deleteTranslation/after',
 				'action'  => 'event/translation'
 			];
-
 
 			// Zone
 			$events[] = [

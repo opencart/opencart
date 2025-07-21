@@ -137,8 +137,6 @@ class Ssr extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'sort'  => 'code',
-	 *     'order' => 'DESC',
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
@@ -148,7 +146,7 @@ class Ssr extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_setting_ssr->getSsrs($filter_data);
 	 */
 	public function getSsrs(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "ssr` ORDER BY `code` ASC, `sort_order` ASC";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "ssr` ORDER BY `code` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

@@ -53,7 +53,7 @@ $_['action_event']      = [
 	],
 	'view/*/before' => [
 		500 => 'event/theme',
-		998 => 'event/language'
+		998 => 'event/language.template'
 	],
 	'language/*/after' => [
 		0 => 'startup/language.after',

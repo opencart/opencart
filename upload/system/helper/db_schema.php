@@ -7369,21 +7369,12 @@ function oc_db_schema() {
 				'type' => 'varchar(32)'
 			],
 			[
-				'name' => 'description',
-				'type' => 'text'
-			],
-			[
 				'name' => 'action',
 				'type' => 'varchar(255)'
 			],
 			[
 				'name' => 'args',
 				'type' => 'text'
-			],
-			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
-				'default' => '0'
 			],
 			[
 				'name' => 'date_added',

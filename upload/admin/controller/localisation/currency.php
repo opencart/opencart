@@ -509,41 +509,17 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $this->config->get('config_currency'));
+			$task_data = [
+				'code'   => 'currency',
+				'action' => 'catalog/cli/data/currency',
+				'args'   => []
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
 
 			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Generate
-	 *
-	 * @return void
-	 */
-	public function generate(): void {
-		$this->load->language('localisation/currency');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$file = DIR_CATALOG . 'view/data/localisation/currency.json';
-
-			$this->load->model('localisation/currency');
-
-			$output = json_encode($this->model_localisation_currency->getCurrencies());
-
-			if (file_put_contents($file, $output)) {
-				$json['success'] = $this->language->get('text_success');
-			} else {
-				$json['error'] = $this->language->get('error_file');
-			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -121,6 +121,53 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Run
+	 *
+	 * @return void
+	 */
+	public function run(): void {
+		$this->load->language('marketplace/ssr');
+
+		$json = [];
+
+		if (isset($this->request->get['ssr_id'])) {
+			$ssr_id = (int)$this->request->get['ssr_id'];
+		} else {
+			$ssr_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Cron
+		$this->load->model('setting/ssr');
+
+		$ssr_info = $this->model_setting_ssr->getSsr($ssr_id);
+
+		if (!$ssr_info) {
+			$json['error'] = $this->language->get('error_exists');
+		}
+
+		if (!$json) {
+			$task_data = [
+				'code'   => $ssr_info['code'],
+				'action' => $ssr_info['action'],
+				'args'   => []
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
 	 * Enable
 	 *
 	 * @return void
@@ -144,7 +191,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/ssr');
 
 			foreach ($selected as $ssr_id) {
-				$this->model_setting_ssr->editStatus($ssr_id, true);
+				$this->model_setting_ssr->editStatus((int)$ssr_id, true);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -178,7 +225,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/ssr');
 
 			foreach ($selected as $ssr_id) {
-				$this->model_setting_ssr->editStatus($ssr_id, false);
+				$this->model_setting_ssr->editStatus((int)$ssr_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -212,7 +259,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/ssr');
 
 			foreach ($selected as $ssr_id) {
-				$this->model_setting_ssr->deleteSsr($ssr_id);
+				$this->model_setting_ssr->deleteSsr((int)$ssr_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

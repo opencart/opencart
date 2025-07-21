@@ -5,7 +5,7 @@
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th>{{ column_code }}</th>
-          <th>{{ column_ssr_action }}</th>
+          <th>{{ column_action }}</th>
           <th class="text-end d-none d-lg-table-cell">{{ column_sort_order }}</th>
           <th class="d-none d-lg-table-cell">{{ column_date_modified }}</th>
           <th class="text-end" style="width: 1px;">{{ column_action }}</th>
@@ -20,7 +20,7 @@
               <td>{{ ssr.action }}</td>
               <td class="text-end d-none d-lg-table-cell">{{ ssr.sort_order }}</td>
               <td class="d-none d-lg-table-cell">{{ ssr.date_modified }}</td>
-              <td class="text-end text-nowrap"><button type="button" value="{{ ssr.run }}" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-warning"><i class="fa-solid fa-sync"></i></button>
+              <td class="text-end text-nowrap"><button type="button" value="{{ ssr.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
                 <button type="button" value="{{ ssr.clear }}" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa-solid fa-eraser"></i></button>
                 {% if ssr.description %}
                   <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ssr-{{ ssr.ssr_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>

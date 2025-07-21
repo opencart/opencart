@@ -11,10 +11,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * Auto update currencies
 	 *
-	 * model/setting/setting/editSetting/after
-	 * model/localisation/currency/addCurrency/after
-	 * model/localisation/currency/editCurrency/after
-	 * model/localisation/currency/deleteCurrency/after
+	 * Called using model/localisation/currency/addCurrency/after
+	 * Called using model/localisation/currency/editCurrency/after
+	 * Called using model/localisation/currency/deleteCurrency/after
+	 * Called using model/setting/setting/editSetting/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

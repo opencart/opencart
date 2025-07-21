@@ -16,9 +16,8 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Adds missing events
 		try {
-			// Rename mail events
+			// Rename events
 			$replace = [];
 
 			$replace[] = [
@@ -93,17 +92,17 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 			$replace[] = [
 				'code_old' => 'admin_currency_add',
-				'code_new' => 'currency_admin_add'
+				'code_new' => 'currency_add'
 			];
 
 			$replace[] = [
 				'code_old' => 'admin_currency_edit',
-				'code_new' => 'currency_admin_edit'
+				'code_new' => 'currency_edit'
 			];
 
 			$replace[] = [
 				'code_old' => 'admin_currency_setting',
-				'code_new' => 'currency_admin_setting'
+				'code_new' => 'currency_setting'
 			];
 
 			foreach ($replace as $event) {
@@ -113,6 +112,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			// Add missing default events
 			$events = [];
 
+			// Activity
 			$events[] = [
 				'code'    => 'activity_customer_add',
 				'trigger' => 'catalog/model/account/customer.addCustomer/after',
@@ -191,6 +191,222 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'action'  => 'event/activity.addReturn'
 			];
 
+			// Article
+			$events[] = [
+				'code'    => 'article_add',
+				'trigger' => 'admin/model/cms/article.addArticle/after',
+				'action'  => 'event/article'
+			];
+
+			$events[] = [
+				'code'    => 'article_edit',
+				'trigger' => 'admin/model/cms/article.editArticle/after',
+				'action'  => 'event/article'
+			];
+
+			$events[] = [
+				'code'    => 'article_delete',
+				'trigger' => 'admin/model/cms/article.deleteArticle/after',
+				'action'  => 'event/article'
+			];
+
+			// Banner
+			$events[] = [
+				'code'    => 'banner_add',
+				'trigger' => 'admin/model/design/banner.addBanner/after',
+				'action'  => 'event/banner'
+			];
+
+			$events[] = [
+				'code'    => 'banner_edit',
+				'trigger' => 'admin/model/design/banner.editArticle/after',
+				'action'  => 'event/banner'
+			];
+
+			$events[] = [
+				'code'    => 'banner_delete',
+				'trigger' => 'admin/model/design/banner.deleteArticle/after',
+				'action'  => 'event/banner'
+			];
+
+			// Category
+			$events[] = [
+				'code'    => 'category_add',
+				'trigger' => 'admin/model/catalog/category.addCategory/after',
+				'action'  => 'event/category'
+			];
+
+			$events[] = [
+				'code'    => 'category_edit',
+				'trigger' => 'admin/model/catalog/category.editCategory/after',
+				'action'  => 'event/category'
+			];
+
+			$events[] = [
+				'code'    => 'category_delete',
+				'trigger' => 'admin/model/catalog/category.deleteCategory/after',
+				'action'  => 'event/category'
+			];
+
+			// Country
+			$events[] = [
+				'code'    => 'country_add',
+				'trigger' => 'admin/model/localisation/country.addCountry/after',
+				'action'  => 'event/country'
+			];
+
+			$events[] = [
+				'code'    => 'country_edit',
+				'trigger' => 'admin/model/localisation/country.editCountry/after',
+				'action'  => 'event/country'
+			];
+
+			$events[] = [
+				'code'    => 'country_delete',
+				'trigger' => 'admin/model/localisation/country.deleteCountry/after',
+				'action'  => 'event/country'
+			];
+
+			// Currency
+			$events[] = [
+				'code'    => 'currency_add',
+				'trigger' => 'admin/model/localisation/currency.addCurrency/after',
+				'action'  => 'event/currency'
+			];
+
+			$events[] = [
+				'code'    => 'currency_edit',
+				'trigger' => 'admin/model/localisation/currency.editCurrency/after',
+				'action'  => 'event/currency'
+			];
+
+			$events[] = [
+				'code'    => 'currency_delete',
+				'trigger' => 'admin/model/localisation/currency.deleteCurrency/after',
+				'action'  => 'event/currency'
+			];
+
+			$events[] = [
+				'code'    => 'currency_setting',
+				'trigger' => 'admin/model/setting/setting.editSetting/after',
+				'action'  => 'event/currency'
+			];
+
+			// Custom Field
+			$events[] = [
+				'code'    => 'custom_field_add',
+				'trigger' => 'admin/model/customer/custom_field.addCustomField/after',
+				'action'  => 'event/custom_field'
+			];
+
+			$events[] = [
+				'code'    => 'custom_field_edit',
+				'trigger' => 'admin/model/customer/custom_field.editCustomField/after',
+				'action'  => 'event/custom_field'
+			];
+
+			$events[] = [
+				'code'    => 'custom_field_delete',
+				'trigger' => 'admin/model/localusation/custom_field.deleteCustomField/after',
+				'action'  => 'event/custom_field'
+			];
+
+			// Customer Group
+			$events[] = [
+				'code'    => 'customer_group_add',
+				'trigger' => 'admin/model/customer/customer_group.addCustomerGroup/after',
+				'action'  => 'event/customer_group'
+			];
+
+			$events[] = [
+				'code'    => 'customer_group_edit',
+				'trigger' => 'admin/model/customer/customer_group.editCustomerGroup/after',
+				'action'  => 'event/customer_group'
+			];
+
+			$events[] = [
+				'code'    => 'customer_group_delete',
+				'trigger' => 'admin/model/customer/customer_group.deleteCustomerGroup/after',
+				'action'  => 'event/customer_group'
+			];
+
+			// Information
+			$events[] = [
+				'code'    => 'information_add',
+				'trigger' => 'admin/model/catalog/information.addInformation/after',
+				'action'  => 'event/information'
+			];
+
+			$events[] = [
+				'code'    => 'information_edit',
+				'trigger' => 'admin/model/catalog/information.editInformation/after',
+				'action'  => 'event/information'
+			];
+
+			$events[] = [
+				'code'    => 'information_delete',
+				'trigger' => 'admin/model/catalog/information.deleteInformation/after',
+				'action'  => 'event/information'
+			];
+
+			// Language
+			$events[] = [
+				'code'    => 'language_add',
+				'trigger' => 'admin/model/localisation/language.addLanguage/after',
+				'action'  => 'event/information'
+			];
+
+			$events[] = [
+				'code'    => 'language_edit',
+				'trigger' => 'admin/model/localisation/language.editLanguage/after',
+				'action'  => 'event/information'
+			];
+
+			$events[] = [
+				'code'    => 'language_delete',
+				'trigger' => 'admin/model/localisation/language.deleteLanguage/after',
+				'action'  => 'event/information'
+			];
+
+			// Language
+			$events[] = [
+				'code'    => 'length_class_add',
+				'trigger' => 'admin/model/localisation/length_class.addLengthClass/after',
+				'action'  => 'event/length_class'
+			];
+
+			$events[] = [
+				'code'    => 'length_class_edit',
+				'trigger' => 'admin/model/localisation/length_class.editLengthClass/after',
+				'action'  => 'event/length_class'
+			];
+
+			$events[] = [
+				'code'    => 'length_class_delete',
+				'trigger' => 'admin/model/localisation/length_class.deleteLengthClass/after',
+				'action'  => 'event/length_class'
+			];
+
+			// Manufacturer
+			$events[] = [
+				'code'    => 'manufacturer_add',
+				'trigger' => 'admin/model/catalog/manufacturer.addManufacturer/after',
+				'action'  => 'event/manufacturer'
+			];
+
+			$events[] = [
+				'code'    => 'manufacturer_edit',
+				'trigger' => 'admin/model/catalog/manufacturer.editManufacturer/after',
+				'action'  => 'event/manufacturer'
+			];
+
+			$events[] = [
+				'code'    => 'manufacturer_delete',
+				'trigger' => 'admin/model/catalog/manufacturer.deleteManufacturer/after',
+				'action'  => 'event/manufacturer'
+			];
+
+			// Mail
 			$events[] = [
 				'code'    => 'mail_customer_transaction',
 				'trigger' => 'catalog/model/account/customer.addTransaction/after',
@@ -237,24 +453,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'code'    => 'mail_order_alert',
 				'trigger' => 'catalog/model/checkout/order.addHistory/before',
 				'action'  => 'mail/order.alert'
-			];
-
-			$events[] = [
-				'code'    => 'statistics_review_add',
-				'trigger' => 'catalog/model/catalog/review.addReview/after',
-				'action'  => 'event/statistics.addReview'
-			];
-
-			$events[] = [
-				'code'    => 'statistics_return_add',
-				'trigger' => 'catalog/model/account/returns.addReturn/after',
-				'action'  => 'event/statistics.addReturn'
-			];
-
-			$events[] = [
-				'code'    => 'statistics_order_history',
-				'trigger' => 'catalog/model/checkout/order.addHistory/after',
-				'action'  => 'event/statistics.addHistory'
 			];
 
 			$events[] = [
@@ -305,22 +503,214 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'action'  => 'mail/forgotten'
 			];
 
+			// Product
 			$events[] = [
-				'code'    => 'currency_admin_add',
-				'trigger' => 'admin/model/currency.addCurrency/after',
-				'action'  => 'event/currency'
+				'code'    => 'product_add',
+				'trigger' => 'admin/model/catalog/product.addProduct/after',
+				'action'  => 'event/product'
 			];
 
 			$events[] = [
-				'code'    => 'currency_admin_edit',
-				'trigger' => 'admin/model/currency.editCurrency/after',
-				'action'  => 'event/currency'
+				'code'    => 'product_edit',
+				'trigger' => 'admin/model/catalog/product.editProduct/after',
+				'action'  => 'event/product'
 			];
 
 			$events[] = [
-				'code'    => 'currency_admin_setting',
-				'trigger' => 'admin/model/setting/setting.editSetting/after',
-				'action'  => 'event/currency'
+				'code'    => 'product_delete',
+				'trigger' => 'admin/model/catalog/product.deleteProduct/after',
+				'action'  => 'event/product'
+			];
+
+			// Product
+			$events[] = [
+				'code'    => 'product_add',
+				'trigger' => 'admin/model/catalog/product.addProduct/after',
+				'action'  => 'event/product'
+			];
+
+			$events[] = [
+				'code'    => 'product_edit',
+				'trigger' => 'admin/model/catalog/product.editProduct/after',
+				'action'  => 'event/product'
+			];
+
+			$events[] = [
+				'code'    => 'product_delete',
+				'trigger' => 'admin/model/catalog/product.deleteProduct/after',
+				'action'  => 'event/product'
+			];
+
+			// Return Reason
+			$events[] = [
+				'code'    => 'return_reason_add',
+				'trigger' => 'admin/model/localisation/return_reason.addReturnReason/after',
+				'action'  => 'event/return_reason'
+			];
+
+			$events[] = [
+				'code'    => 'return_reason_edit',
+				'trigger' => 'admin/model/localisation/return_reason.editReturnReason/after',
+				'action'  => 'event/return_reason'
+			];
+
+			$events[] = [
+				'code'    => 'return_reason_delete',
+				'trigger' => 'admin/model/localisation/return_reason.deleteReturnReason/after',
+				'action'  => 'event/return_reason'
+			];
+
+			// Statistics
+			$events[] = [
+				'code'    => 'statistics_review_add',
+				'trigger' => 'catalog/model/catalog/review.addReview/after',
+				'action'  => 'event/statistics.addReview'
+			];
+
+			$events[] = [
+				'code'    => 'statistics_return_add',
+				'trigger' => 'catalog/model/account/returns.addReturn/after',
+				'action'  => 'event/statistics.addReturn'
+			];
+
+			$events[] = [
+				'code'    => 'statistics_order_history',
+				'trigger' => 'catalog/model/checkout/order.addHistory/after',
+				'action'  => 'event/statistics.addHistory'
+			];
+
+			// Store
+			$events[] = [
+				'code'    => 'store_add',
+				'trigger' => 'admin/model/setting/store.addStore/after',
+				'action'  => 'event/store'
+			];
+
+			$events[] = [
+				'code'    => 'store_edit',
+				'trigger' => 'admin/model/setting/store.editStore/after',
+				'action'  => 'event/store'
+			];
+
+			$events[] = [
+				'code'    => 'store_delete',
+				'trigger' => 'admin/model/setting/store.deleteStore/after',
+				'action'  => 'event/store'
+			];
+
+			// Theme
+			$events[] = [
+				'code'    => 'theme_add',
+				'trigger' => 'admin/model/design/theme.addTheme/after',
+				'action'  => 'event/theme'
+			];
+
+			$events[] = [
+				'code'    => 'theme_edit',
+				'trigger' => 'admin/model/design/theme.editTheme/after',
+				'action'  => 'event/theme'
+			];
+
+			$events[] = [
+				'code'    => 'theme_delete',
+				'trigger' => 'admin/theme/design/theme.deleteTheme/after',
+				'action'  => 'event/theme'
+			];
+
+			// Topic
+			$events[] = [
+				'code'    => 'topic_add',
+				'trigger' => 'admin/model/cms/topic.addTopic/after',
+				'action'  => 'event/topic'
+			];
+
+			$events[] = [
+				'code'    => 'topic_edit',
+				'trigger' => 'admin/model/cms/topic.editTopic/after',
+				'action'  => 'event/topic'
+			];
+
+			$events[] = [
+				'code'    => 'topic_delete',
+				'trigger' => 'admin/theme/cms/topic.deleteTopic/after',
+				'action'  => 'event/topic'
+			];
+
+			// Translation
+			$events[] = [
+				'code'    => 'translation_add',
+				'trigger' => 'admin/model/cms/translation.addTranslation/after',
+				'action'  => 'event/translation'
+			];
+
+			$events[] = [
+				'code'    => 'translation_edit',
+				'trigger' => 'admin/model/cms/translation.editTranslation/after',
+				'action'  => 'event/translation'
+			];
+
+			$events[] = [
+				'code'    => 'translation_delete',
+				'trigger' => 'admin/model/cms/translation.deleteTranslation/after',
+				'action'  => 'event/translation'
+			];
+
+			// Weight Class
+			$events[] = [
+				'code'    => 'weight_class_add',
+				'trigger' => 'admin/model/localisation/translation.addTranslation/after',
+				'action'  => 'event/translation'
+			];
+
+			$events[] = [
+				'code'    => 'weight_class_edit',
+				'trigger' => 'admin/model/localisation/translation.editTranslation/after',
+				'action'  => 'event/translation'
+			];
+
+			$events[] = [
+				'code'    => 'weight_class_delete',
+				'trigger' => 'admin/model/localisation/translation.deleteTranslation/after',
+				'action'  => 'event/translation'
+			];
+
+			// Translation
+			$events[] = [
+				'code'    => 'translation_add',
+				'trigger' => 'admin/model/design/translation.addTranslation/after',
+				'action'  => 'event/translation'
+			];
+
+			$events[] = [
+				'code'    => 'translation_edit',
+				'trigger' => 'admin/model/design/translation.editTranslation/after',
+				'action'  => 'event/translation'
+			];
+
+			$events[] = [
+				'code'    => 'translation_delete',
+				'trigger' => 'admin/model/design/translation.deleteTranslation/after',
+				'action'  => 'event/translation'
+			];
+
+
+			// Zone
+			$events[] = [
+				'code'    => 'zone_add',
+				'trigger' => 'admin/model/design/translation.addZone/after',
+				'action'  => 'event/zone'
+			];
+
+			$events[] = [
+				'code'    => 'zone_edit',
+				'trigger' => 'admin/model/design/translation.editZone/after',
+				'action'  => 'event/zone'
+			];
+
+			$events[] = [
+				'code'    => 'zone_delete',
+				'trigger' => 'admin/model/design/translation.deleteZone/after',
+				'action'  => 'event/zone'
 			];
 
 			foreach ($events as $event) {
@@ -350,9 +740,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			if ($this->model_upgrade_upgrade->hasField('event', 'date_added')) {
 				$this->model_upgrade_upgrade->dropField('event', 'date_added');
 			}
-
-			// Update current keys
-			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/returns.addHistory/after' WHERE `code` = 'mail_admin_return'");
 
 			// Event - Remove admin promotion from OC 3.x, since it is no longer required to have in OC v4.x releases.
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `action` = 'extension/extension/promotion.getList'");

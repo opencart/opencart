@@ -126,24 +126,19 @@ class Task extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Task
+		$this->load->model('setting/task');
+
+		$task_info = $this->model_setting_task->getTask($task_id);
+
+		if (!$task_info) {
+			$json['error'] = $this->language->get('error_exists');
+		}
+
 		if (!$json) {
-			// Task
-			$this->load->model('setting/task');
 
-			$task_info = $this->model_setting_task->getTask($task_id);
 
-			if ($task_info) {
-				// Create a store instance using loader class to call controllers, models, views, libraries
-				$this->load->model('setting/store');
-
-				$store = $this->model_setting_store->createStoreInstance(0, $this->config->get('config_language'));
-
-				$store->load->controller($task_info['action'], $task_id, $task_info['code'], $task_info['cycle'], $task_info['date_added'], $task_info['date_modified']);
-
-				$store->session->destroy();
-
-				$this->model_setting_task->editTask($task_info['task_id']);
-			}
+			$this->model_setting_task->editTask($task_info['task_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -176,7 +171,7 @@ class Task extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/task');
 
 			foreach ($selected as $task_id) {
-				$this->model_setting_task->editStatus($task_id, true);
+				$this->model_setting_task->editStatus((int)$task_id, true);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -210,7 +205,7 @@ class Task extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/task');
 
 	    	foreach ($selected as $task_id) {
-				$this->model_setting_task->editStatus($task_id, false);
+				$this->model_setting_task->editStatus((int)$task_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -245,7 +240,7 @@ class Task extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/task');
 
 			foreach ($selected as $task_id) {
-				$this->model_setting_task->deleteTask($task_id);
+				$this->model_setting_task->deleteTask((int)$task_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

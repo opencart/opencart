@@ -7,6 +7,7 @@
           <th>{{ column_code }}</th>
           <th>{{ column_action }}</th>
           <th class="text-center">{{ column_status }}</th>
+          <th>{{ column_date_added }}</th>
           <th>{{ column_date_modified }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
@@ -23,7 +24,8 @@
                 {% else %}
                   <span class="badge bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
-              <td><x-datetime value="{{ task.date_modified }}" format="{{ datetime_format }}"></x-datetime></td>
+              <td>{{ task.date_added }}</td>
+              <td>{{ task.date_modified }}</td>
               <td class="text-end text-nowrap">
                 <button type="button" value="{{ task.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
                 {% if task.description %}
@@ -36,7 +38,7 @@
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

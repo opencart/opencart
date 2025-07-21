@@ -80,9 +80,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Startups
-		$data['startups'] = [];
-
 		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
@@ -133,7 +130,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/startup');
 
 			foreach ($selected as $startup_id) {
-				$this->model_setting_startup->editStatus($startup_id, true);
+				$this->model_setting_startup->editStatus((int)$startup_id, true);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -168,7 +165,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/startup');
 
 			foreach ($selected as $startup_id) {
-				$this->model_setting_startup->editStatus($startup_id, false);
+				$this->model_setting_startup->editStatus((int)$startup_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -203,7 +200,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/startup');
 
 			foreach ($selected as $startup_id) {
-				$this->model_setting_startup->deleteStartup($startup_id);
+				$this->model_setting_startup->deleteStartup((int)$startup_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

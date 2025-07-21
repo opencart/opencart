@@ -9,11 +9,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->language('ssr/admin/currency');
 
 
-		if ($route == 'model/setting/setting/editSetting' && $args[0] == 'config' && isset($args[1]['config_currency'])) {
-			$currency = $args[1]['config_currency'];
-		} else {
-			$currency = $this->config->get('config_currency');
-		}
+
+		//config_currency_auto
+
 
 		// Extension
 		$this->load->model('setting/extension');
@@ -21,7 +19,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
 
 		if ($extension_info) {
-			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $currency);
+		//	$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $currency);
 		}
 
 

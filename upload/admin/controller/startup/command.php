@@ -61,4 +61,8 @@ class Command extends \Opencart\System\Engine\Controller {
 	public function exception() {
 
 	}
+
+	public function usage() {
+
+	}
 }

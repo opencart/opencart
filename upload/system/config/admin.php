@@ -58,7 +58,7 @@ $_['action_event']       = [
 	//	0 => 'event/debug.after'
 	//],
 	'view/*/before' => [
-		999 => 'event/language'
+		999 => 'event/language.template'
 	],
 	'language/*/after' => [
 		0 => 'startup/language.after'

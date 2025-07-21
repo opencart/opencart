@@ -25,5 +25,9 @@ $_['column_action']        = 'Action';
 // Entry
 $_['entry_cron']           = 'CRON URL';
 
+// Button
+$_['button_run']           = 'Run Cron Job';
+
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify CRON jobs!';
+$_['error_exists']         = 'CRON Job does not exist!';

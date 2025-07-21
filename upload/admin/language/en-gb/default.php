@@ -124,7 +124,6 @@ $_['button_order']                  = 'View Order';
 $_['button_subscription']           = 'View Subscription';
 $_['button_buy']                    = 'Buy';
 $_['button_restore']                = 'Restore';
-$_['button_run']                    = 'Run Cron Job';
 $_['button_backup']                 = 'Backup';
 $_['button_developer']              = 'Developer Setting';
 $_['button_master']                 = 'Master Product';

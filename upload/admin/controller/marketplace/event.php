@@ -80,9 +80,6 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Events
-		$data['events'] = [];
-
 		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')

@@ -9,6 +9,42 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Adds task to generate new language list
+	 *
+	 * Called using admin/model/localisation/language/addLanguage/after
+	 * Called using admin/model/localisation/language/editLanguage/after
+	 * Called using admin/model/localisation/language/deleteLanguage/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 *
+	 * @return void
+	 */
+	public function index(string &$route, array &$args): void {
+		$tasks = [];
+
+		$tasks[] = [
+			'code'   => 'language',
+			'action' => 'catalog/cli/data/language',
+			'args'   => []
+		];
+
+		$tasks[] = [
+			'code'   => 'language',
+			'action' => 'admin/cli/data/language',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		foreach ($tasks as $task) {
+			$this->model_setting_task->addTask($task);
+		}
+	}
+
+	/**
+	 * template
+	 *
 	 * Dump all the language vars into the template.
 	 *
 	 * view/ * /before
@@ -18,7 +54,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args): void {
+	public function template(string &$route, array &$args): void {
 		foreach ($this->language->all() as $key => $value) {
 			if (!isset($args[$key])) {
 				$args[$key] = $value;

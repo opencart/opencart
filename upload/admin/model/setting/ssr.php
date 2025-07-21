@@ -24,7 +24,7 @@ class Ssr extends \Opencart\System\Engine\Model {
 	 * $ssr_id = $this->model_setting_ssr->addSsr($code, $description, $cycle, $action, $status);
 	 */
 	public function addSsr(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "ssr` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `action` = '" . $this->db->escape((string)$data['action']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `date_modified` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "ssr` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `action` = '" . $this->db->escape((string)$data['action']) . "', `date_modified` = NOW()");
 
 		return $this->db->getLastId();
 	}

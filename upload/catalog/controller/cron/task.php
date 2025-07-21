@@ -27,8 +27,9 @@ class Task extends \Opencart\System\Engine\Controller {
 			$this->load->controller($result['route'], $result['args']);
 
 			shell_exec($command);
-		}
 
+			$this->model_setting_task->editTask();
+		}
 
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Catalog\Controller\Cron;
+namespace Opencart\Catalog\Controller\Cli\Catalog;
 /**
  * Class Currency
  *
@@ -17,19 +17,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
-		$task_data = [
-			'code'   => 'currency',
-			'action' => 'catalog/cli/data/currency',
-			'args'   => []
-		];
+	public function index(array $args = []): void {
+		//$this->config->get('config_auto_update')
 
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-
-		/*
 		$this->load->model('setting/extension');
 
 		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
@@ -37,6 +27,5 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if ($extension_info) {
 			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $this->config->get('config_currency'));
 		}
-		*/
 	}
 }

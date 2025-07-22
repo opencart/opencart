@@ -24,14 +24,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$tasks = [];
 
 		$tasks[] = [
-			'code'   => 'manufacturer',
-			'action' => 'catalog/cli/data/manufacturer',
-			'args'   => []
-		];
-
-		$tasks[] = [
 			'code'   => 'product',
-			'action' => 'catalog/cli/data/manufacturer',
+			'action' => 'catalog/data/product',
 			'args'   => []
 		];
 

@@ -96,7 +96,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$data['ssrs'][] = [
 				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
 				'run'           => $this->url->link('marketplace/ssr.run', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id']),
-				'clear'         => $this->url->link($result['action'] . '.clear', 'user_token=' . $this->session->data['user_token']),
+				'clear'         => $this->url->link($result['action'] . '.clear', 'user_token=' . $this->session->data['user_token'])
 			] + $result;
 		}
 

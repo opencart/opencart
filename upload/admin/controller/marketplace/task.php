@@ -132,7 +132,6 @@ class Task extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Task
 		$this->load->model('setting/task');
 
 		$task_info = $this->model_setting_task->getTask($task_id);
@@ -142,7 +141,19 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$output = shell_exec('php ' . DIR_APPLICATION . 'index.php data/country --page 1');
+			$pos = strpos($task_info['action'], '/');
+
+			$path = substr($task_info['action'], 0, $pos + 1);
+
+			$task = substr($task_info['action'], $pos + 1);
+
+			if ($path == 'admin/') {
+				$output = shell_exec('php ' . DIR_APPLICATION . 'index.php ' . $task . ' --page 1');
+			}
+
+			if ($path == 'catalog/') {
+				$output = shell_exec('php ' . DIR_OPENCART . 'index.php ' . $task . ' --page 1');
+			}
 
 			echo '$output ' . $output;
 

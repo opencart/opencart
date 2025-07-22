@@ -26,13 +26,13 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'length_class',
-			'action' => 'catalog/cli/data/length_class',
+			'action' => 'catalog/data/length_class',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'length_class',
-			'action' => 'admin/cli/data/length_class',
+			'action' => 'admin/data/length_class',
 			'args'   => []
 		];
 

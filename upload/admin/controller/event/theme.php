@@ -26,7 +26,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'theme',
-			'action' => 'admin/cli/data/theme',
+			'action' => 'admin/data/theme',
 			'args'   => []
 		];
 

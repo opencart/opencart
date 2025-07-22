@@ -27,13 +27,13 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'currency',
-			'action' => 'catalog/cli/data/currency',
+			'action' => 'catalog/data/currency',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'currency',
-			'action' => 'admin/cli/data/currency',
+			'action' => 'admin/data/currency',
 			'args'   => []
 		];
 

@@ -25,7 +25,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'information',
-			'action' => 'catalog/cli/data/information',
+			'action' => 'catalog/data/information',
 			'args'   => []
 		];
 

@@ -21,6 +21,10 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/*
+	 *
+	 *
+	 * */
 	public function run() {
 		if (isset($this->request->server['argv'])) {
 			$argv = (array)$this->request->server['argv'];
@@ -53,11 +57,7 @@ class Task extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		echo $task;
-
-		//$output = $this->load->controller('task/' . $task, $args);
-
-		//$this->response->setOutput($output);
+		$this->response->setOutput($this->load->controller('task/' . $task, $args));
 	}
 
 	public function exception() {

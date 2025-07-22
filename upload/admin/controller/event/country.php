@@ -25,25 +25,13 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'country',
-			'action' => 'catalog/cli/data/country',
+			'action' => 'catalog/data/country',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'country',
-			'action' => 'admin/cli/data/country',
-			'args'   => []
-		];
-
-		$tasks[] = [
-			'code'   => 'zone',
-			'action' => 'catalog/cli/data/zone',
-			'args'   => []
-		];
-
-		$tasks[] = [
-			'code'   => 'zone',
-			'action' => 'admin/cli/data/zone',
+			'action' => 'admin/data/country',
 			'args'   => []
 		];
 

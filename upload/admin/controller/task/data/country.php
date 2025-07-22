@@ -1,8 +1,9 @@
 <?php
+namespace Opencart\Admin\Controller\Task\Data;
 /**
  * Class Country
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Data
  */
 class Country extends \Opencart\System\Engine\Controller {
 	/**
@@ -59,6 +60,18 @@ class Country extends \Opencart\System\Engine\Controller {
 				break;
 			}
 		}
+
+		$task_data = [
+			'code'   => 'code',
+			'action' => 'data/country.info',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+
 
 		//$output = shell_exec('php ' . DIR_APPLICATION . 'index.php admin/zone --page 1');
 

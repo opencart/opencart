@@ -26,7 +26,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'store',
-			'action' => 'admin/cli/data/store',
+			'action' => 'admin/data/store',
 			'args'   => []
 		];
 

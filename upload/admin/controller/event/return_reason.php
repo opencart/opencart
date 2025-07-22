@@ -26,13 +26,13 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'return_reason',
-			'action' => 'catalog/cli/data/return_reason',
+			'action' => 'catalog/data/return_reason',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'return_reason',
-			'action' => 'admin/cli/data/return_reason',
+			'action' => 'admin/data/return_reason',
 			'args'   => []
 		];
 

@@ -26,13 +26,13 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'order_status',
-			'action' => 'catalog/cli/data/order_status',
+			'action' => 'catalog/data/order_status',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'order_status',
-			'action' => 'admin/cli/data/order_status',
+			'action' => 'admin/data/order_status',
 			'args'   => []
 		];
 

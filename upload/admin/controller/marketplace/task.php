@@ -81,6 +81,8 @@ class Task extends \Opencart\System\Engine\Controller {
 		$data['action'] = $this->url->link('marketplace/task.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Tasks
+		$data['tasks'] = [];
+
 		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
@@ -88,7 +90,11 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$data['tasks'] = $this->model_setting_task->getTasks($filter_data);
+		$results = $this->model_setting_task->getTasks($filter_data);
+
+		foreach ($results as $result) {
+			$data['tasks'][] = ['run' => $this->url->link('marketplace/task.run', 'user_token=' . $this->session->data['user_token'] . '&task_id=' . $result['task_id'])] + $result;
+		}
 
 		// Total Tasks
 		$task_total = $this->model_setting_task->getTotalTasks();
@@ -136,7 +142,7 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
+			//$output = shell_exec('php ' . DIR_APPLICATION . 'index.php admin/zone --page 1');
 
 			$this->model_setting_task->editTask($task_info['task_id']);
 

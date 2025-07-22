@@ -12,6 +12,27 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 */
 	public function index(): void {
+		$this->load->model('setting/extension');
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
+
+		if ($extension_info) {
+			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $this->config->get('config_currency'));
+		}
+
+		$task_data = [
+			'code'   => 'currency',
+			'action' => 'catalog/cli/data/currency',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+	}
+
+	public function generate(): void {
 		$this->load->language('ssr/catalog/currency');
 
 		$json = [];

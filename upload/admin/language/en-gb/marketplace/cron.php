@@ -18,8 +18,7 @@ $_['text_month']           = 'Month';
 $_['column_code']          = 'CRON Code';
 $_['column_cycle']         = 'Cycle';
 $_['column_status']        = 'Status';
-$_['column_date_added']    = 'Date Added';
-$_['column_date_modified'] = 'Date Modified';
+$_['column_date_modified'] = 'Last Run';
 $_['column_action']        = 'Action';
 
 // Entry

@@ -40,7 +40,7 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-$('#list').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
+$('#list').on('click', '.btn-warning, .btn-danger', function(e) {
     var element = this;
 
     $.ajax({

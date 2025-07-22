@@ -30,6 +30,25 @@ class Ssr extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit SSR
+	 *
+	 * Edit ssr record in the database.
+	 *
+	 * @param int $ssr_id primary key of the ssr record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/ssr');
+	 *
+	 * $this->model_setting_ssr->editCSsr($ssr_id);
+	 */
+	public function editSsr(int $ssr_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "ssr` SET `date_modified` = NOW() WHERE `ssr_id` = '" . (int)$ssr_id . "'");
+	}
+
+	/**
 	 * Delete SSR
 	 *
 	 * Delete ssr record in the database.

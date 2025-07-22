@@ -24,8 +24,8 @@ class Article extends \Opencart\System\Engine\Controller {
 		$tasks = [];
 
 		$tasks[] = [
-			'code'   => 'country',
-			'action' => 'catalog/cli/data/country',
+			'code'   => 'article',
+			'action' => 'catalog/cli/data/article',
 			'args'   => []
 		];
 

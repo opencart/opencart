@@ -13,7 +13,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index($args = []): string {
-		$this->load->language('ssr/admin/country');
+		$this->load->language('task/data/country');
 
 		// Get all languages so we don't need to keep querying the DB
 		$this->load->model('localisation/language');
@@ -60,9 +60,9 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$output = shell_exec('php ' . DIR_APPLICATION . 'index.php admin/zone --page 1');
+		//$output = shell_exec('php ' . DIR_APPLICATION . 'index.php admin/zone --page 1');
 
-		echo $output;
+		//echo $output;
 
 		return 'SUCCESS';
 	}
@@ -72,9 +72,9 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/admin/language')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		//if (!$this->user->hasPermission('modify', 'ssr/admin/language')) {
+		//	$json['error'] = $this->language->get('error_permission');
+		//}
 
 		if (!$json) {
 			$this->load->model('localisation/language');

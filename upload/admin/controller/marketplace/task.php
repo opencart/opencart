@@ -142,7 +142,9 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			//$output = shell_exec('php ' . DIR_APPLICATION . 'index.php admin/zone --page 1');
+			$output = shell_exec('php ' . DIR_APPLICATION . 'index.php data/country --page 1');
+
+			echo '$output ' . $output;
 
 			$this->model_setting_task->editTask($task_info['task_id']);
 

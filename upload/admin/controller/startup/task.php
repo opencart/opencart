@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
 /**
- * Class Command
+ * Class Task
  *
  * @package Opencart\Admin\Controller\Startup
  */
-class Command extends \Opencart\System\Engine\Controller {
+class Task extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -15,7 +15,7 @@ class Command extends \Opencart\System\Engine\Controller {
 		if (php_sapi_name() == 'cli') {
 			//set_exception_handler([$this, 'exception']);
 
-			return new \Opencart\System\Engine\Action('startup/command.run');
+			return new \Opencart\System\Engine\Action('startup/task.run');
 		} else {
 			return null;
 		}
@@ -32,7 +32,7 @@ class Command extends \Opencart\System\Engine\Controller {
 		$script = array_shift($argv);
 
 		// Get the arguments passed with the command
-		$command = array_shift($argv);
+		$task = array_shift($argv);
 
 		$args = [];
 
@@ -53,9 +53,11 @@ class Command extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$output = $this->load->controller('cli/' . $command, $args);
+		echo $task;
 
-		$this->response->setOutput($output);
+		//$output = $this->load->controller('task/' . $task, $args);
+
+		//$this->response->setOutput($output);
 	}
 
 	public function exception() {

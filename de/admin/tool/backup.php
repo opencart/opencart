@@ -4,9 +4,6 @@ $_['heading_title']      = 'Backup &amp; Wiederherstellen';
 
 // Text
 $_['text_success']       = 'Erfolg: Sie haben Ihre Datenbank erfolgreich geändert!';
-$_['text_progress']      = 'Sicherungsfortschritt';
-$_['text_backup']        = 'Sichern der Tabellen %s Datensätze %s bis %s Datensätze';
-$_['text_restore']       = 'Wiederherstellen von %s von %s';
 $_['text_option']        = 'Backup-Optionen';
 $_['text_history']       = 'Sicherungsverlauf';
 $_['text_import']        = 'Bei großen Sicherungsdateien ist es besser, die SQL-Datei per FTP in das Verzeichnis <strong>~/storage/backup/</strong> hochzuladen.';
@@ -18,7 +15,6 @@ $_['column_date_added']  = 'Datum hinzugefügt';
 $_['column_action']      = 'Aktionen';
 
 // Entry
-$_['entry_progress']     = 'Fortschritt';
 $_['entry_export']       = 'Export';
 
 // Error

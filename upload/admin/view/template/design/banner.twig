@@ -9,6 +9,7 @@
           <ul class="dropdown-menu">
             <li><button type="submit" form="form-banner" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
             <li><button type="submit" form="form-banner" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
+            <li><hr class="dropdown-divider"></li>
             <li><button type="submit" form="form-banner" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>

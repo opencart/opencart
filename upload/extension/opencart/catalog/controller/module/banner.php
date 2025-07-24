@@ -30,7 +30,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
 				$data['banners'][] = [
 					'title' => $result['title'],
-					'link'  => $result['link'],
+					'link'	=> $this->url->link($result['link']),
 					'image' => $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $setting['width'], $setting['height'])
 				];
 			}

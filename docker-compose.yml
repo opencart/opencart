@@ -13,6 +13,18 @@ services:
     depends_on:
       php:
         condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - opencart
 
@@ -48,6 +60,18 @@ services:
       timeout: 3s
       retries: 10
       start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+        reservations:
+          memory: 128M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - opencart
 
@@ -69,6 +93,18 @@ services:
       timeout: 2s
       retries: 10
       start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - opencart
 
@@ -84,6 +120,18 @@ services:
       - POSTGRES_DB=${DB_DATABASE:-opencart}
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - opencart
 
@@ -95,6 +143,18 @@ services:
       - "${CACHE_EXPOSE_PORT:-6379}:${CACHE_PORT:-6379}"
     volumes:
       - redis-data:/data
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - opencart
 
@@ -104,6 +164,18 @@ services:
     profiles: [memcached]
     ports:
       - "${CACHE_EXPOSE_PORT:-11211}:${CACHE_PORT:-11211}"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - opencart
 
@@ -118,6 +190,18 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - opencart
 

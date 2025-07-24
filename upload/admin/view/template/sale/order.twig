@@ -126,7 +126,7 @@ $('#input-customer').autocomplete({
     }
 });
 
-$('input[name^=\'selected\']').on('change', function() {
+$('#content').on('change', 'input[name^=\'selected\']', function() {
     $('#button-shipping, #button-invoice').prop('disabled', true);
 
     var selected = $('input[name^=\'selected\']:checked');

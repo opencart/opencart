@@ -13,15 +13,15 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 			foreach ($products as $product) {
 				$output .= '<url>' . PHP_EOL;
 				$output .= '  <loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</loc>' . PHP_EOL;
-				$output .= '  <changefreq>weekly</changefreq>';
+				$output .= '  <changefreq>weekly</changefreq>' . PHP_EOL;
 				$output .= '  <lastmod>' . date('Y-m-d\TH:i:sP', strtotime($product['date_modified'])) . '</lastmod>' . PHP_EOL;
 				$output .= '  <priority>1.0</priority>' . PHP_EOL;
 
 				if ($product['image']) {
 					$output .= '<image:image>' . PHP_EOL;
 					$output .= '  <image:loc>' . $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')) . '</image:loc>' . PHP_EOL;
-					$output .= '  <image:caption><![CDATA[' . $product['name'] . ']]</image:caption>' . PHP_EOL;
-					$output .= '  <image:title><![CDATA[' . $product['name'] . ']]</image:title>' . PHP_EOL;
+					$output .= '  <image:caption><![CDATA[' . $product['name'] . ']]></image:caption>' . PHP_EOL;
+					$output .= '  <image:title><![CDATA[' . $product['name'] . ']]></image:title>' . PHP_EOL;
 					$output .= '</image:image>' . PHP_EOL;
 				}
 

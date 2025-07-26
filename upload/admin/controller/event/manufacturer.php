@@ -25,7 +25,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'product',
-			'action' => 'catalog/data/product',
+			'action' => 'catalog/product',
 			'args'   => []
 		];
 

@@ -25,13 +25,13 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'customer_group',
-			'action' => 'catalog/data/customer_group',
+			'action' => 'catalog/customer_group',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'customer_group',
-			'action' => 'admin/data/customer_group',
+			'action' => 'admin/customer_group',
 			'args'   => []
 		];
 

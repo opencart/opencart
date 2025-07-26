@@ -25,13 +25,13 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'country',
-			'action' => 'catalog/data/country',
+			'action' => 'catalog/country',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'country',
-			'action' => 'admin/data/country',
+			'action' => 'admin/country',
 			'args'   => []
 		];
 

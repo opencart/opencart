@@ -25,13 +25,13 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'translation',
-			'action' => 'catalog/data/translation',
+			'action' => 'catalog/translation',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'translation',
-			'action' => 'admin/data/translation',
+			'action' => 'admin/translation',
 			'args'   => []
 		];
 

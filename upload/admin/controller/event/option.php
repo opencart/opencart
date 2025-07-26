@@ -26,13 +26,13 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'option',
-			'action' => 'catalog/data/option',
+			'action' => 'catalog/option',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'option',
-			'action' => 'admin/data/option',
+			'action' => 'admin/option',
 			'args'   => []
 		];
 

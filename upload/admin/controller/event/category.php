@@ -25,13 +25,13 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'category',
-			'action' => 'catalog/data/category',
+			'action' => 'catalog/category',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'product',
-			'action' => 'catalog/data/product',
+			'action' => 'catalog/product',
 			'args'   => []
 		];
 

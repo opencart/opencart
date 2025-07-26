@@ -25,13 +25,13 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'language',
-			'action' => 'catalog/data/language',
+			'action' => 'catalog/language',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'language',
-			'action' => 'admin/data/language',
+			'action' => 'admin/language',
 			'args'   => []
 		];
 

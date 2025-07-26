@@ -26,13 +26,13 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'weight_class',
-			'action' => 'catalog/data/weight_class',
+			'action' => 'catalog/weight_class',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'weight_class',
-			'action' => 'admin/data/weight_class',
+			'action' => 'admin/weight_class',
 			'args'   => []
 		];
 

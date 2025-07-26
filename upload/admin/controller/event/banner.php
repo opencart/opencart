@@ -25,7 +25,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'banner',
-			'action' => 'catalog/data/banner',
+			'action' => 'catalog/banner',
 			'args'   => []
 		];
 

@@ -26,13 +26,13 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'custom_field',
-			'action' => 'catalog/data/custom_field',
+			'action' => 'catalog/custom_field',
 			'args'   => []
 		];
 
 		$tasks[] = [
 			'code'   => 'custom_field',
-			'action' => 'admin/data/custom_field',
+			'action' => 'admin/custom_field',
 			'args'   => []
 		];
 

@@ -25,7 +25,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$tasks[] = [
 			'code'   => 'article',
-			'action' => 'catalog/data/article',
+			'action' => 'catalog/article',
 			'args'   => []
 		];
 

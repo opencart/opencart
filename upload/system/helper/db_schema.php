@@ -7369,12 +7369,20 @@ function oc_db_schema() {
 				'type' => 'varchar(32)'
 			],
 			[
+				'name' => 'description',
+				'type' => 'text'
+			],
+			[
 				'name' => 'action',
 				'type' => 'varchar(255)'
 			],
 			[
 				'name' => 'args',
 				'type' => 'text'
+			],
+			[
+				'name' => 'status',
+				'type' => 'enum(\'pending\',\'processing\',\'paused\',\'complete\',\'failed\')'
 			],
 			[
 				'name' => 'date_added',

@@ -19,10 +19,16 @@
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ task.task_id }}" class="form-check-input"/></td>
               <td>{{ task.code }}</td>
               <td>{{ task.action }}</td>
-              <td class="text-center">{% if task.status %}
-                  <span class="badge bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge bg-danger">{{ text_disabled }}</span>
+              <td class="text-center">{% if task.status == 'pending' %}
+                  <span class="badge bg-secondary">{{ text_pending }}</span>
+                {% elseif task.status == 'processing' %}
+                  <span class="badge bg-primary">{{ text_processing }}</span>
+                {% elseif task.status == 'paused' %}
+                  <span class="badge bg-warning">{{ text_paused }}</span>
+                {% elseif task.status == 'complete' %}
+                  <span class="badge bg-success">{{ text_complete }}</span>\
+                {% elseif task.status == 'failed' %}
+                  <span class="badge bg-danger">{{ text_failed }}</span>
                 {% endif %}</td>
               <td>{{ task.date_added }}</td>
               <td>{{ task.date_modified }}</td>

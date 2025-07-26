@@ -112,6 +112,33 @@ class Task extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/task_list', $data);
 	}
 
+	public function start() {
+		$this->load->language('marketplace/task');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$filter_data = [
+			'filter_Status' => 'pending',
+			'start'         => 0,
+			'limit'         => 1
+		];
+
+		$this->load->model('setting/task');
+
+		$results = $this->model_setting_task->getTasks($filter_data);
+
+		while ($results) {
+			array_shift($results);
+
+
+
+		}
+	}
+
 	/**
 	 * Run
 	 *

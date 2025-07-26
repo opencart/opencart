@@ -511,7 +511,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'currency',
-				'action' => 'catalog/cli/data/currency',
+				'action' => 'catalog/data/currency',
 				'args'   => []
 			];
 

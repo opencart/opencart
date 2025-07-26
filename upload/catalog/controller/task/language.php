@@ -1,43 +1,22 @@
 <?php
+namespace Opencart\Catalog\Controller\task;
 /**
- * Class Currency
+ * Class Language
  *
  * @package Opencart\Admin\Controller\Ssr
  */
-class Currency extends \Opencart\System\Engine\Controller {
+class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Generate
 	 *
 	 * @return void
-	 *
 	 */
 	public function index(): void {
-		$this->load->model('setting/extension');
-
-		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
-
-		if ($extension_info) {
-			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $this->config->get('config_currency'));
-		}
-
-		$task_data = [
-			'code'   => 'currency',
-			'action' => 'catalog/data/currency',
-			'args'   => []
-		];
-
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-	}
-
-	public function generate(): void {
-		$this->load->language('ssr/catalog/currency');
+		$this->load->language('ssr/catalog/language');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/catalog/currency')) {
+		if (!$this->user->hasPermission('modify', 'ssr/catalog/language')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -57,17 +36,13 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 			$languages = $this->model_localisation_language->getLanguages();
 
-			$this->load->model('localisation/currency');
-
-			$currencies = $this->model_localisation_currency->getCurrencies();
-
 			foreach ($stores as $store) {
 				$store_url = parse_url($store['url'], PHP_URL_HOST);
 
 				foreach ($languages as $language) {
 					$base = DIR_CATALOG . 'view/data/';
 					$directory = $store_url . '/' . $language['code'] . '/localisation/';
-					$filename = 'currency.json';
+					$filename = 'language.json';
 
 					if (!oc_directory_create($base . $directory, 0777)) {
 						$json['error'] = sprintf($this->language->get('error_directory'), $directory);
@@ -75,18 +50,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 						break;
 					}
 
-					$currency_data = [];
+					$file = $base . $directory . $filename;
 
-					$this->language->load('default', '', $language['code']);
-
-					foreach ($currencies as $currency) {
-						$currency_data[$currency['code']] = $currency + [
-							'decimal_point'  => $this->language->get('decimal_point'),
-							'thousand_point' => $this->language->get('thousand_point')
-						];
-					}
-
-					if (!file_put_contents($base . $directory . $filename, json_encode($currency_data))) {
+					if (!file_put_contents($file, json_encode($languages))) {
 						$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
 
 						break;
@@ -102,11 +68,11 @@ class Currency extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/catalog/currency');
+		$this->load->language('ssr/catalog/language');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/catalog/currency')) {
+		if (!$this->user->hasPermission('modify', 'ssr/catalog/language')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

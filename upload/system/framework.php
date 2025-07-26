@@ -93,18 +93,21 @@ if (isset($request->get['route'])) {
 $response = new \Opencart\System\Library\Response();
 $registry->set('response', $response);
 
-foreach ($config->get('response_header') as $header) {
-	$response->addHeader($header);
-}
+// For none command line
+if (php_sapi_name() != 'cli') {
+	foreach ($config->get('response_header') as $header) {
+		$response->addHeader($header);
+	}
 
-$response->addHeader('Access-Control-Allow-Origin: *');
-$response->addHeader('Access-Control-Allow-Credentials: true');
-$response->addHeader('Access-Control-Max-Age: 1000');
-$response->addHeader('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding');
-$response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE');
-$response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-$response->addHeader('Pragma: no-cache');
-$response->setCompression((int)$config->get('response_compression'));
+	$response->addHeader('Access-Control-Allow-Origin: *');
+	$response->addHeader('Access-Control-Allow-Credentials: true');
+	$response->addHeader('Access-Control-Max-Age: 1000');
+	$response->addHeader('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding');
+	$response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE');
+	$response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+	$response->addHeader('Pragma: no-cache');
+	$response->setCompression((int)$config->get('response_compression'));
+}
 
 // Database
 if ($config->get('db_autostart')) {

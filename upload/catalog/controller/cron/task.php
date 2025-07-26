@@ -52,6 +52,7 @@ class Task extends \Opencart\System\Engine\Controller {
 				$output = $this->usage();
 				break;
 		}
+
 		foreach ($results as $result) {
 			shell_exec($command);
 		}

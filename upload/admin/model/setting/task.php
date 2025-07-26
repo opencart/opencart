@@ -13,7 +13,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new task record in the database.
 	 *
-	 * @param array{code: string, description: string, action: string, args?: mixed, status: string} $data
+	 * @param array $data
 	 *
 	 * @return int
 	 *
@@ -24,7 +24,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 * $task_id = $this->model_setting_task->addTask($data);
 	 */
 	public function addTask(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "task` SET `code` = '" . $this->db->escape($data['code']) . "', `action` = '" . $this->db->escape($data['action']) . "', `args` = '" . $this->db->escape(!empty($data['args']) ? json_encode($data['args']) : '') . "', `status` = '1', `date_added` = NOW(), `date_modified` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "task` SET `code` = '" . $this->db->escape($data['code']) . "', `action` = '" . $this->db->escape($data['action']) . "', `args` = '" . $this->db->escape(!empty($data['args']) ? json_encode($data['args']) : '') . "', `status` = 'pending', `date_added` = NOW(), `date_modified` = NOW()");
 
 		return $this->db->getLastId();
 	}
@@ -66,25 +66,6 @@ class Task extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Task
-	 *
-	 * Edit task record in the database.
-	 *
-	 * @param int $task_id primary key of the task record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('setting/task');
-	 *
-	 * $this->model_setting_task->editTask($task_id);
-	 */
-	public function editTask(int $task_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `date_modified` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
-	}
-
-	/**
 	 * Edit Status
 	 *
 	 * Edit task status record in the database.
@@ -101,7 +82,19 @@ class Task extends \Opencart\System\Engine\Model {
 	 * $this->model_setting_task->editStatus($task_id, $status);
 	 */
 	public function editStatus(int $task_id, string $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `status` = '" . $this->db->escape($status) . "' WHERE `task_id` = '" . (int)$task_id . "'");
+		$allowed = [
+			'pending',
+			'processing',
+			'paused',
+			'complete',
+			'failed'
+		];
+
+		if (!in_array($allowed, $status)) {
+			$status = 'failed';
+		}
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
 	}
 
 	/**
@@ -126,25 +119,6 @@ class Task extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Task By Code
-	 *
-	 * @param string $code
-	 *
-	 * @return array<string, mixed>
-	 *
-	 * @example
-	 *
-	 * $this->load->model('setting/task');
-	 *
-	 * $task_info = $this->model_setting_task->getTaskByCode($code);
-	 */
-	public function getTaskByCode(string $code): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "task` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
-
-		return $query->row;
-	}
-
-	/**
 	 * Get Task(s)
 	 *
 	 * Get the record of the task records in the database.
@@ -156,8 +130,6 @@ class Task extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $filter_data = [
-	 *     'sort'  => 'code',
-	 *     'order' => 'DESC',
 	 *     'start' => 0,
 	 *     'limit' => 10
 	 * ];
@@ -167,7 +139,15 @@ class Task extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_setting_task->getTasks($filter_data);
 	 */
 	public function getTasks(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "task` ORDER BY `code` ASC";
+		$task_data = [];
+
+		$sql = "SELECT * FROM `" . DB_PREFIX . "task`";
+
+		if (!empty($data['filter_status'])) {
+			$sql .= " WHERE `status` = '" . $this->db->escape($data['filter_status']) . "'";
+		}
+
+		$sql .= " ORDER BY `date_added` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -183,7 +163,11 @@ class Task extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->rows;
+		foreach ($query->rows as $result) {
+			$task_data[] = $result;
+		}
+
+		return $task_data;
 	}
 
 	/**
@@ -195,12 +179,25 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->load->model('setting/task');
+	 * $filter_data = [
+	 *     'sort'  => 'code',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
 	 *
-	 * $task_total = $this->model_setting_task->getTotalTasks();
+     * $this->load->model('setting/task');
+	 *
+	 * $task_total = $this->model_setting_task->getTotalTasks($filter_data);
 	 */
 	public function getTotalTasks(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task`");
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task`";
+
+		if (!empty($data['filter_status'])) {
+			$sql .= " WHERE `status` = '" . $this->db->escape($data['filter_status']) . "'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

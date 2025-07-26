@@ -11,9 +11,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new weight_class list
 	 *
-	 * model/localisation/weight_class/addWeightClass
-	 * model/localisation/weight_class/editWeightClass
-	 * model/localisation/weight_class/deleteWeightClass
+	 * model/localisation/weight_class/addWeightClass/after
+	 * model/localisation/weight_class/editWeightClass/after
+	 * model/localisation/weight_class/deleteWeightClass/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

@@ -53,9 +53,7 @@ class Task extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$output = $this->load->controller('task/' . $task, $args);
-
-		$this->response->setOutput($output);
+		$this->response->setOutput($this->load->controller('task/' . $task, $args));
 	}
 
 	public function exception() {
@@ -63,6 +61,35 @@ class Task extends \Opencart\System\Engine\Controller {
 	}
 
 	public function usage() {
+		$option = implode(' ', [
+			'--username',
+			'admin',
+			'--email',
+			'email@example.com',
+			'--password',
+			'password',
+			'--http_server',
+			'http://localhost/opencart/',
+			'--db_driver',
+			'mysqli',
+			'--db_hostname',
+			'localhost',
+			'--db_username',
+			'root',
+			'--db_password',
+			'pass',
+			'--db_database',
+			'opencart',
+			'--db_port',
+			'3306',
+			'--db_prefix',
+			'oc_'
+		]);
 
+		$output  = 'Usage:' . "\n";
+		$output .= '======' . "\n\n";
+		$output .= 'php cli_install.php install ' . $option . "\n\n";
+
+		return $output;
 	}
 }

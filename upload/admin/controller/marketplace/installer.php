@@ -272,24 +272,29 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$zip = new \ZipArchive();
 
 			if ($zip->open($file, \ZipArchive::RDONLY)) {
-				$install_info = json_decode($zip->getFromName('install.json'), true);
+				$install_content = $zip->getFromName('install.json');
+				if (strlen($install_content) > 0) {
+					$install_info = json_decode($install_content, true);
 
-				if ($install_info) {
-					$keys = [
-						'extension_id',
-						'extension_download_id',
-						'name',
-						'description',
-						'code',
-						'version',
-						'author',
-						'link'
-					];
+					if ($install_info) {
+						$keys = [
+							'extension_id',
+							'extension_download_id',
+							'name',
+							'description',
+							'code',
+							'version',
+							'author',
+							'link'
+						];
 
-					foreach ($keys as $key) {
-						if (!isset($install_info[$key])) {
-							$install_info[$key] = '';
+						foreach ($keys as $key) {
+							if (!isset($install_info[$key])) {
+								$install_info[$key] = '';
+							}
 						}
+					} else {
+						$json['error'] = $this->language->get('error_install_invalid');
 					}
 				} else {
 					$json['error'] = $this->language->get('error_install');

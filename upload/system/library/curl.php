@@ -11,9 +11,15 @@ class Curl {
 	 */
 	private string $url = '';
 	/**
-	 * @var array<string, mixed>
+	 * @var array<int, mixed>
 	 */
-	private array $option = [];
+	private array $option = [
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_HEADER         => false,
+		CURLOPT_CONNECTTIMEOUT => 30,
+		CURLOPT_TIMEOUT        => 30,
+		CURLOPT_POST           => true,
+	];
 
 	/**
 	 * Constructor
@@ -27,13 +33,15 @@ class Curl {
 	/**
 	 * Set Option
 	 *
-	 * @param string               $key
-	 * @param array<string, mixed> $data array of data
+	 * @see https://www.php.net/manual/en/curl.constants.php
+	 *
+	 * @param int   $key
+	 * @param mixed $value
 	 *
 	 * @return void
 	 */
-	public function setOption(string $key, array $data = []): void {
-		$this->option[$key] = $data;
+	public function setOption(int $key, mixed $value): void {
+		$this->option[$key] = $value;
 	}
 
 	/**
@@ -46,16 +54,14 @@ class Curl {
 	 */
 	public function send(string $route, array $data = []): array {
 		// Make remote call
-		$url  = 'http://' . $this->domain . $this->path . 'index.php?route=' . $route;
+		$url  = $this->url . 'index.php?route=' . $route;
 
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
-		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		curl_setopt($curl, CURLOPT_POST, true);
+		foreach ($this->option as $key => $value) {
+			curl_setopt($curl, $key, $value);
+		}
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
 		$response = curl_exec($curl);

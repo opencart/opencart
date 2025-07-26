@@ -8,6 +8,7 @@ $_['text_list']            = 'Task List';
 $_['text_info']            = 'Task Information';
 $_['text_pending']         = 'Ausstehend';
 $_['text_processing']      = 'Verarbeitung';
+$_['text_paused']          = 'Paused';
 $_['text_complete']        = 'Completed';
 $_['text_failed']          = 'Failed';
 

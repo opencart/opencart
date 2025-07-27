@@ -20,25 +20,23 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args): void {
-		$tasks = [];
-
-		$tasks[] = [
+	public function index(string &$route, array &$args, &$output): void {
+		$task_data = [
 			'code'   => 'translation',
 			'action' => 'catalog/translation',
 			'args'   => []
 		];
 
-		$tasks[] = [
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$task_data = [
 			'code'   => 'translation',
 			'action' => 'admin/translation',
 			'args'   => []
 		];
 
-		$this->load->model('setting/task');
-
-		foreach ($tasks as $task) {
-			$this->model_setting_task->addTask($task);
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 }

@@ -20,10 +20,8 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args): void {
-		$tasks = [];
-
-		$tasks[] = [
+	public function index(string &$route, array &$args, &$output): void {
+		$task_data = [
 			'code'   => 'information',
 			'action' => 'catalog/information',
 			'args'   => []
@@ -31,8 +29,6 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		foreach ($tasks as $task) {
-			$this->model_setting_task->addTask($task);
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 }

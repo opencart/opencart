@@ -13,16 +13,14 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/admin/custom_field');
+		$this->load->language('task/order_status');
 
-		$json = [];
 
-		//if (!$this->user->hasPermission('modify', 'ssr/admin/custom_field')) {
-		$json['error'] = $this->language->get('error_permission');
-		//}
+		$this->load->model('localisation/language');
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$languages = $this->model_localisation_language->getLanguages();
+
+
 	}
 
 	public function clear(): void {

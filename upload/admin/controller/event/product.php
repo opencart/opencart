@@ -20,25 +20,23 @@ class Product extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args): void {
-		$tasks = [];
-
-		$tasks[] = [
+	public function index(string &$route, array &$args, &$output): void {
+		$task_data = [
 			'code'   => 'category',
 			'action' => 'catalog/category',
 			'args'   => []
 		];
 
-		$tasks[] = [
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$task_data = [
 			'code'   => 'product',
 			'action' => 'catalog/product',
 			'args'   => []
 		];
 
-		$this->load->model('setting/task');
-
-		foreach ($tasks as $task) {
-			$this->model_setting_task->addTask($task);
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 }

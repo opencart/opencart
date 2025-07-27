@@ -13,7 +13,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/admin/custom_field');
+		$this->load->language('admin/custom_field');
 
 		$json = [];
 

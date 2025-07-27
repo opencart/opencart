@@ -20,19 +20,15 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args): void {
-		$tasks = [];
-
-		$tasks[] = [
-			'code'   => 'product',
-			'action' => 'catalog/product',
+	public function index(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'manufacturer',
+			'action' => 'catalog/manufacturer',
 			'args'   => []
 		];
 
 		$this->load->model('setting/task');
 
-		foreach ($tasks as $task) {
-			$this->model_setting_task->addTask($task);
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 }

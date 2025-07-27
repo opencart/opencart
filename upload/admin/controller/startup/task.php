@@ -11,103 +11,41 @@ class Task extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function index(): ?\Opencart\System\Engine\Action {
+	public function index() {
 		if (php_sapi_name() == 'cli') {
 			set_exception_handler([$this, 'exception']);
 
-			if (isset($this->request->server['argv'])) {
-				$argv = (array)$this->request->server['argv'];
-			} else {
-				$argv = [];
-			}
+			return new \Opencart\System\Engine\Action('startup/task.cli');
+		}
+	}
 
-			// Just displays the path to the file
-			$script = array_shift($argv);
-
-			// Get the arguments passed with the command
-			$action = array_shift($argv);
-
-			$args = [];
-
-			// Turn args into an array
-			for ($i = 0; $i < count($argv); $i++) {
-				if (substr($argv[$i], 0, 2) == '--') {
-					$key = substr($argv[$i], 2);
-
-					// If the next line also starts with -- we need to fill in a null value for the current one
-					if (isset($argv[$i + 1]) && substr($argv[$i + 1], 0, 2) != '--') {
-						$args[$key] = $argv[$i + 1];
-
-						// Skip the counter by 2
-						$i++;
-					} else {
-						$args[$key] = '';
-					}
-				}
-			}
-
-			return new \Opencart\System\Engine\Action('startup/task.run', $args);
+	public function cli(string $command, array $argv = []) {
+		if (isset($this->request->server['argv'])) {
+			$argv = (array)$this->request->server['argv'];
 		} else {
-			return null;
+			$argv = [];
 		}
-	}
 
-	public function start() {
-		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
+		// Just displays the path to the file
+		$script = array_shift($argv);
 
-		if (!$task_total) {
-			$task_data =  [];
+		// Get the arguments passed with the command
+		$command = array_shift($argv);
 
-			$this->load->model('setting/task');
-
-			$results = $this->model_setting_task->getTasks(['filter_status' => 'pending']);
-
-			foreach ($results as $result) {
-				$this->model_setting_task->editStatus($result['task_id'], 'processing');
-
-				$pos = strpos($result['action'], '/');
-
-				$path = substr($result['action'], 0, $pos + 1);
-
-				if ($path == 'admin/') {
-					$application = DIR_APPLICATION;
-				} else {
-					$application = DIR_OPENCART;
-				}
-
-				$argv = '';
-
-				$args = json_decode($result['args'], true);
-
-				foreach ($args as $key => $value) {
-					$argv .= ' --' . $key . ' ' . escapeshellarg($value);
-				}
-
-				$output = shell_exec('php ' . $application . 'index.php ' . substr($result['action'], $pos + 1) . $argv);
-
-				fwrite(STDIN, $output);
-
-				sleep(1);
-
-				if ($output) {
-					$this->model_setting_task->editStatus($result['task_id'], 'failed');
-
-					break;
-				}
-			}
+		switch ($command) {
+			case 'start':
+				$this->start();
+				break;
+			case 'usage':
+			default:
+				$this->usage();
+				break;
 		}
-	}
-
-	/*
-	 *
-	 *
-	 * */
-	public function run(string $command, array $argv = []) {
-
-		$this->response->setOutput($this->load->controller('task/' . $command, $args));
-
 
 		/*
+		 *
+		$this->response->setOutput($this->load->controller('task/' . $command, $args));
+
 		$pos = strpos($task_info['action'], '/');
 
 		$path = substr($task_info['action'], 0, $pos + 1);
@@ -120,7 +58,43 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		if ($path == 'catalog/') {
 			$output = shell_exec('php ' . DIR_OPENCART . 'index.php ' . $task . ' --page 1');
-		}*/
+		}
+		*/
+	}
+
+
+	public function start() {
+		$this->load->model('setting/task');
+
+		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
+
+		if (!$task_total) {
+			$results = $this->model_setting_task->getTasks(['filter_status' => 'pending']);
+
+			foreach ($results as $result) {
+				$this->model_setting_task->editStatus($result['task_id'], 'processing');
+
+				$pos = strpos($result['action'], '/');
+
+				if (substr($result['action'], 0, $pos + 1) == 'admin/') {
+					$application = DIR_APPLICATION;
+				} else {
+					$application = DIR_OPENCART;
+				}
+
+				$output = $this->load->controller('task/' . substr($result['action'], $pos + 1), $result['args']);
+
+				fwrite(STDIN, $output);
+
+				if ($output instanceof \Exception) {
+					$this->model_setting_task->editStatus($result['task_id'], 'failed');
+
+					break;
+				}
+
+				sleep(1);
+			}
+		}
 	}
 
 	public function exception(object $e): void {

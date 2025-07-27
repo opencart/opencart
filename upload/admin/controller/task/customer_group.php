@@ -11,59 +11,44 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
-		$this->load->language('ssr/admin/customer_group');
+	public function index(): mixed {
+		$this->load->language('task/customer_group');
 
-		$json = [];
+		$this->load->model('localisation/language');
 
-		if (!$this->user->hasPermission('modify', 'ssr/admin/customer_group')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$languages = $this->model_localisation_language->getLanguages();
 
-		if (!$json) {
-			$this->load->model('localisation/language');
+		$this->load->model('customer/customer_group');
 
-			$languages = $this->model_localisation_language->getLanguages();
+		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
-			$this->load->model('customer/customer_group');
+		foreach ($languages as $language) {
+			$customer_group_data = [];
 
-			$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
+			foreach ($customer_groups as $customer_group) {
+				$description_info = $this->model_customer_customer_group->getDescription($customer_group['customer_group_id'], $language['language_id']);
 
-			foreach ($languages as $language) {
-				$customer_group_data = [];
-
-				foreach ($customer_groups as $customer_group) {
-					$description_info = $this->model_customer_customer_group->getDescription($customer_group['customer_group_id'], $language['language_id']);
-
-					if ($description_info) {
-						$customer_group_data[$customer_group['customer_group_id']] = $description_info + $customer_group;
-					}
-				}
-
-				$base = DIR_APPLICATION . 'view/data/';
-				$directory = $language['code'] . '/customer/';
-				$filename = 'customer_group.json';
-
-				if (!oc_directory_create($base . $directory, 0777)) {
-					$json['error'] = sprintf($this->language->get('error_directory'), $directory);
-
-					break;
-				}
-
-				$file = $base . $directory . $filename;
-
-				if (!file_put_contents($file, json_encode($customer_group_data))) {
-					$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
-
-					break;
+				if ($description_info) {
+					$customer_group_data[$customer_group['customer_group_id']] = $description_info + $customer_group;
 				}
 			}
 
-			$json['success'] = $this->language->get('text_success');
+			$base = DIR_APPLICATION . 'view/data/';
+			$directory = $language['code'] . '/customer/';
+			$filename = 'customer_group.json';
+
+			if (!oc_directory_create($base . $directory, 0777)) {
+				return sprintf($this->language->get('error_directory'), $directory);
+			}
+
+			$file = $base . $directory . $filename;
+
+			if (!file_put_contents($file, json_encode($customer_group_data))) {
+				return sprintf($this->language->get('error_file'), $directory . $filename);
+			}
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $this->language->get('text_success');
 	}
 
 	public function clear(): void {

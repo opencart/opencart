@@ -300,7 +300,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		try {
 			// Database
 			$db = new \Opencart\System\Library\DB([
-				'engine' => $db_driver,
+				'engine'   => $db_driver,
 				'hostname' => $db_hostname,
 				'username' => $db_username,
 				'password' => $db_password,

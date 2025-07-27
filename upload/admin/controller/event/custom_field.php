@@ -22,24 +22,22 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		$tasks = [];
-
-		$tasks[] = [
+		$task_data = [
 			'code'   => 'custom_field',
 			'action' => 'catalog/custom_field',
 			'args'   => []
 		];
 
-		$tasks[] = [
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$task_data = [
 			'code'   => 'custom_field',
 			'action' => 'admin/custom_field',
 			'args'   => []
 		];
 
-		$this->load->model('setting/task');
-
-		foreach ($tasks as $task) {
-			$this->model_setting_task->addTask($task);
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 }

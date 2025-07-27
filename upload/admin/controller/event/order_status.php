@@ -11,9 +11,9 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new order_status list
 	 *
-	 * model/localisation/order_status/addOrderStatus
-	 * model/localisation/order_status/editOrderStatus
-	 * model/localisation/order_status/deleteOrderStatus
+	 * model/localisation/order_status/addOrderStatus/after
+	 * model/localisation/order_status/editOrderStatus/after
+	 * model/localisation/order_status/deleteOrderStatus/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -22,24 +22,22 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		$tasks = [];
-
-		$tasks[] = [
+		$task_data = [
 			'code'   => 'order_status',
 			'action' => 'catalog/order_status',
 			'args'   => []
 		];
 
-		$tasks[] = [
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$task_data = [
 			'code'   => 'order_status',
 			'action' => 'admin/order_status',
 			'args'   => []
 		];
 
-		$this->load->model('setting/task');
-
-		foreach ($tasks as $task) {
-			$this->model_setting_task->addTask($task);
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 }

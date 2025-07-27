@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task;
 /**
  * Class Currency
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	public function index(): string {

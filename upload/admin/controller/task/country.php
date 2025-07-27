@@ -3,12 +3,12 @@ namespace Opencart\Admin\Controller\Task;
 /**
  * Class Country
  *
- * @package Opencart\Admin\Controller\Task\Data
+ * @package Opencart\Admin\Controller\Task
  */
 class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
-	 *`12
+	 *
 	 * Generates the country list JSON files by language.
 	 *
 	 * @return void
@@ -105,7 +105,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/admin/language');
+		$this->load->language('task/language');
 
 		$json = [];
 

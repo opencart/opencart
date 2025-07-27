@@ -11,9 +11,9 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new length_class list
 	 *
-	 * model/localisation/length_class/addLengthClass
-	 * model/localisation/length_class/editLengthClass
-	 * model/localisation/length_class/deleteLengthClass
+	 * model/localisation/length_class/addLengthClass/after
+	 * model/localisation/length_class/editLengthClass/after
+	 * model/localisation/length_class/deleteLengthClass/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -22,24 +22,22 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		$tasks = [];
-
-		$tasks[] = [
+		$task_data = [
 			'code'   => 'length_class',
 			'action' => 'catalog/length_class',
 			'args'   => []
 		];
 
-		$tasks[] = [
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$task_data = [
 			'code'   => 'length_class',
 			'action' => 'admin/length_class',
 			'args'   => []
 		];
 
-		$this->load->model('setting/task');
-
-		foreach ($tasks as $task) {
-			$this->model_setting_task->addTask($task);
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 }

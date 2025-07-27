@@ -34,6 +34,7 @@ class Task extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/task', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		$data['start'] = $this->url->link('marketplace/task.start', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('marketplace/task.delete', 'user_token=' . $this->session->data['user_token']);
 		$data['enable']	= $this->url->link('marketplace/task.enable', 'user_token=' . $this->session->data['user_token']);
 		$data['disable'] = $this->url->link('marketplace/task.disable', 'user_token=' . $this->session->data['user_token']);
@@ -121,22 +122,20 @@ class Task extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$filter_data = [
-			'filter_Status' => 'pending',
-			'start'         => 0,
-			'limit'         => 1
-		];
+		if (!$json) {
+			$this->load->model('setting/task');
 
-		$this->load->model('setting/task');
+			$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
-		$results = $this->model_setting_task->getTasks($filter_data);
+			if (!$task_total) {
+				shell_exec('php ' . DIR_APPLICATION . 'index.php start');
+			}
 
-		while ($results) {
-			array_shift($results);
-
-
-
+			$json['success'] = $this->language->get('text_success');
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

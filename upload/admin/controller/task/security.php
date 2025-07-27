@@ -133,6 +133,9 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+
+
+
 			// Make path into an array
 			oc_directory_delete($directory);
 

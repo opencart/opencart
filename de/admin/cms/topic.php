@@ -25,8 +25,8 @@ $_['entry_meta_title']        = 'Meta-Tag-Titel';
 $_['entry_meta_keyword']      = 'Meta-Tag-Schlüsselwörter';
 $_['entry_meta_description']  = 'Meta-Tag-Beschreibung';
 $_['entry_store']             = 'Online-Shop (Store)';
-$_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_status']            = 'Status';
+$_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_keyword']           = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_layout']            = 'Layout überschreiben';
 

@@ -22,7 +22,7 @@ $_['column_date_modified'] = 'Last Run';
 $_['column_action']        = 'Aktionen';
 
 // Entry
-$_['entry_cron']           = 'CRON-URL';
+$_['entry_cron']           = 'CRON Path';
 
 // Button
 $_['button_run']           = 'Run Cron Job';

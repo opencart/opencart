@@ -35,7 +35,9 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">{{ entry_country }}</label>
-                <input type="text" name="filter_country" value="{{ filter_country }}" placeholder="{{ entry_country }}" id="input-country" class="form-control"/>
+                <x-country name="filter_country_id" value="" id="x-country" input-id="input-country" input-class="form-select" required>
+                  <option value="0">{{ text_select }}</option>
+                </x-country>
               </div>
               <div class="mb-3">
                 <label class="form-label">{{ entry_code }}</label>

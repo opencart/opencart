@@ -149,24 +149,24 @@ class Zone extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_zone->getZones($filter_data);
 	 */
 	public function getZones(array $data = []): array {
-		$sql = "SELECT *, `cd`.`name` AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id` AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
+		$sql = "SELECT *, `cd`.`name` AS `country` FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`z`.`country_id` = `cd`.`country_id`)";
 
-		$implode = [];
-
-		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(`zd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+		if (!empty($data['filter_language_id'])) {
+			$sql .= " WHERE `zd`.`language_id` = '" . (int)$data['filter_language_id'] . "' AND `cd`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		} else {
+			$sql .= " WHERE `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}
 
-		if (!empty($data['filter_country'])) {
-			$implode[] = "`cd`.`name` LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`zd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+		}
+
+		if (!empty($data['filter_country_id'])) {
+			$sql .= " AND `cd`.`name` LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
-			$implode[] = "LCASE(`z`.`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code']) . '%') . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
+			$sql .= " AND LCASE(`z`.`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code']) . '%') . "'";
 		}
 
 		$sort_data = [
@@ -178,7 +178,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY `zd`.`name`";
+			$sql .= " ORDER BY `cd`.`name`, `zd`.`name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -219,8 +219,12 @@ class Zone extends \Opencart\System\Engine\Model {
 	 *
 	 * $zones = $this->model_localisation_zone->getZonesByCountryId($country_id);
 	 */
-	public function getZonesByCountryId(int $country_id): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`country_id` = '" . (int)$country_id . "' AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `z`.`status` = '1' ORDER BY `zd`.`name`";
+	public function getZonesByCountryId(int $country_id, int $language_id = 0): array {
+		if (!$language_id) {
+			$language_id = (int)$this->config->get('config_language_id');
+		}
+
+		$sql = "SELECT * FROM `" . DB_PREFIX . "zone` `z` LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) WHERE `z`.`country_id` = '" . (int)$country_id . "' AND `zd`.`language_id` = '" . (int)$language_id . "' ORDER BY `zd`.`name`";
 
 		$key = md5($sql);
 

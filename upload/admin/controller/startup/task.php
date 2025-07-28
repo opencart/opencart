@@ -15,7 +15,29 @@ class Task extends \Opencart\System\Engine\Controller {
 		if (php_sapi_name() == 'cli') {
 			set_exception_handler([$this, 'exception']);
 
-			return new \Opencart\System\Engine\Action('startup/task.cli');
+			if (isset($this->request->server['argv'])) {
+				$argv = (array)$this->request->server['argv'];
+			} else {
+				$argv = [];
+			}
+
+			// Just displays the path to the file
+			$script = array_shift($argv);
+
+			// Get the arguments passed with the command
+			$command = array_shift($argv);
+
+			switch ($command) {
+				case 'start':
+					return new \Opencart\System\Engine\Action('startup/task.start');
+
+					break;
+				case 'usage':
+				default:
+					return new \Opencart\System\Engine\Action('startup/task.usage');
+
+					break;
+			}
 		}
 	}
 

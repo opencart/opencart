@@ -20,10 +20,10 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$filter_name = '';
 		}
 
-		if (isset($this->request->get['filter_country'])) {
-			$filter_country = (string)$this->request->get['filter_country'];
+		if (isset($this->request->get['filter_country_id'])) {
+			$filter_country_id = (int)$this->request->get['filter_country_id'];
 		} else {
-			$filter_country = '';
+			$filter_country_id = '';
 		}
 
 		if (isset($this->request->get['filter_code'])) {
@@ -35,6 +35,18 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_country_id'])) {
+			$url .= '&filter_country_id=' . (int)$this->request->get['filter_country_id'];
+		}
+
+		if (isset($this->request->get['filter_code'])) {
+			$url .= '&filter_code=' . urlencode(html_entity_decode($this->request->get['filter_code'], ENT_QUOTES, 'UTF-8'));
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -68,7 +80,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$data['list'] = $this->getList();
 
 		$data['filter_name'] = $filter_name;
-		$data['filter_country'] = $filter_country;
+		$data['filter_country_id'] = $filter_country_id;
 		$data['filter_code'] = $filter_code;
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -103,10 +115,10 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$filter_name = '';
 		}
 
-		if (isset($this->request->get['filter_country'])) {
-			$filter_country = (string)$this->request->get['filter_country'];
+		if (isset($this->request->get['filter_country_id'])) {
+			$filter_country_id = (int)$this->request->get['filter_country_id'];
 		} else {
-			$filter_country = '';
+			$filter_country_id = '';
 		}
 
 		if (isset($this->request->get['filter_code'])) {
@@ -118,7 +130,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'c.name';
+			$sort = 'cd.name';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -139,8 +151,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_country'])) {
-			$url .= '&filter_country=' . urlencode(html_entity_decode($this->request->get['filter_country'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_country_id'])) {
+			$url .= '&filter_country_id=' . (int)$this->request->get['filter_country_id'];
 		}
 
 		if (isset($this->request->get['filter_code'])) {
@@ -165,13 +177,13 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$data['zones'] = [];
 
 		$filter_data = [
-			'filter_name'    => $filter_name,
-			'filter_country' => $filter_country,
-			'filter_code'    => $filter_code,
-			'sort'           => $sort,
-			'order'          => $order,
-			'start'          => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'          => $this->config->get('config_pagination_admin')
+			'filter_name'       => $filter_name,
+			'filter_country_id' => $filter_country_id,
+			'filter_code'       => $filter_code,
+			'sort'              => $sort,
+			'order'             => $order,
+			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'             => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('localisation/zone');
@@ -191,8 +203,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_country'])) {
-			$url .= '&filter_country=' . urlencode(html_entity_decode($this->request->get['filter_country'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_country_id'])) {
+			$url .= '&filter_country_id=' . (int)$this->request->get['filter_country_id'];
 		}
 
 		if (isset($this->request->get['filter_code'])) {
@@ -217,8 +229,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_country'])) {
-			$url .= '&filter_country=' . urlencode(html_entity_decode($this->request->get['filter_country'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_country_id'])) {
+			$url .= '&filter_country_id=' . (int)$this->request->get['filter_country_id'];
 		}
 
 		if (isset($this->request->get['filter_code'])) {
@@ -270,8 +282,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_country'])) {
-			$url .= '&filter_country=' . urlencode(html_entity_decode($this->request->get['filter_country'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_country_id'])) {
+			$url .= '&filter_country_id=' . (int)$this->request->get['filter_country_id'];
 		}
 
 		if (isset($this->request->get['filter_code'])) {

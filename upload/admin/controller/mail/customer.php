@@ -89,24 +89,21 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 
-			if ($this->config->get('config_mail_engine')) {
-				$mail_option = [
-					'parameter'     => $this->config->get('config_mail_parameter'),
-					'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
-					'smtp_username' => $this->config->get('config_mail_smtp_username'),
-					'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
-					'smtp_port'     => $this->config->get('config_mail_smtp_port'),
-					'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
-				];
+			$task_data = [
+				'code'   => 'mail_customer',
+				'action' => 'admin/mail',
+				'args'   => [
+					'to'      => $customer_info['email'],
+					'from'    => $this->config->get('config_email'),
+					'sender'  => $store_name,
+					'subject' => $subject,
+					'content' => $this->load->view('mail/customer_approve', $data)
+				]
+			];
 
-				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-				$mail->setTo($customer_info['email']);
-				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($store_name);
-				$mail->setSubject($subject);
-				$mail->setHtml($this->load->view('mail/customer_approve', $data));
-				$mail->send();
-			}
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
 		}
 	}
 
@@ -193,25 +190,22 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
+			
+			$task_data = [
+				'code'   => 'mail_customer',
+				'action' => 'admin/mail',
+				'args'   => [
+					'to'      => $customer_info['email'],
+					'from'    => $this->config->get('config_email'),
+					'sender'  => $store_name,
+					'subject' => $subject,
+					'content' => $this->load->view('mail/customer_deny', $data)
+				]
+			];
 
-			if ($this->config->get('config_mail_engine')) {
-				$mail_option = [
-					'parameter'     => $this->config->get('config_mail_parameter'),
-					'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
-					'smtp_username' => $this->config->get('config_mail_smtp_username'),
-					'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
-					'smtp_port'     => $this->config->get('config_mail_smtp_port'),
-					'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
-				];
+			$this->load->model('setting/task');
 
-				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-				$mail->setTo($customer_info['email']);
-				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($store_name);
-				$mail->setSubject($subject);
-				$mail->setHtml($this->load->view('mail/customer_deny', $data));
-				$mail->send();
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 	}
 }

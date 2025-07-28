@@ -11,7 +11,7 @@ class Task extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function index() {
+	public function index(): ?\Opencart\System\Engine\Action {
 		if (php_sapi_name() == 'cli') {
 			set_exception_handler([$this, 'exception']);
 
@@ -27,9 +27,6 @@ class Task extends \Opencart\System\Engine\Controller {
 			// Get the arguments passed with the command
 			$command = array_shift($argv);
 
-			fwrite(STDIN, $command);
-
-
 			switch ($command) {
 				case 'start':
 					return new \Opencart\System\Engine\Action('startup/task.start', $argv);
@@ -42,6 +39,8 @@ class Task extends \Opencart\System\Engine\Controller {
 					break;
 			}
 		}
+
+		return null;
 	}
 
 	public function start() {
@@ -49,33 +48,39 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
-		if (!$task_total) {
-			$results = $this->model_setting_task->getTasks(['filter_status' => 'pending']);
+		//if ($task_total) {
+		//	return;
+		//}
+		//['filter_status' => 'pending']
 
-			foreach ($results as $result) {
-				$this->model_setting_task->editStatus($result['task_id'], 'processing');
+		fwrite(STDOUT, 'start' . "\n");
 
-				$pos = strpos($result['action'], '/');
+		sleep(1);
 
-				if (substr($result['action'], 0, $pos + 1) == 'admin/') {
-					$application = DIR_APPLICATION;
-				} else {
-					$application = DIR_OPENCART;
-				}
+		$results = $this->model_setting_task->getTasks();
 
-				$output = $this->load->controller('task/' . substr($result['action'], $pos + 1), $result['args']);
+		foreach ($results as $result) {
+			$this->model_setting_task->editStatus($result['task_id'], 'processing');
 
-				fwrite(STDIN, '$output');
-				fwrite(STDIN, $output);
+			$pos = strpos($result['action'], '/');
 
-				if ($output instanceof \Exception) {
-					$this->model_setting_task->editStatus($result['task_id'], 'failed');
-
-					break;
-				}
-
-				sleep(1);
+			if (substr($result['action'], 0, $pos + 1) == 'admin/') {
+				$application = DIR_APPLICATION;
+			} else {
+				$application = DIR_OPENCART;
 			}
+
+			$output = $this->load->controller('task/' . substr($result['action'], $pos + 1), $result['args']);
+
+			fwrite(STDOUT, $output);
+
+			if ($output instanceof \Exception) {
+				$this->model_setting_task->editStatus($result['task_id'], 'failed');
+
+				break;
+			}
+
+			sleep(1);
 		}
 	}
 

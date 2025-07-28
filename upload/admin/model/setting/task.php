@@ -90,7 +90,7 @@ class Task extends \Opencart\System\Engine\Model {
 			'failed'
 		];
 
-		if (!in_array($allowed, $status)) {
+		if (!in_array($status, $allowed)) {
 			$status = 'failed';
 		}
 

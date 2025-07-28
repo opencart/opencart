@@ -162,7 +162,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_country_id'])) {
-			$sql .= " AND `cd`.`name` LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
+			$sql .= " AND `c`.`country_id = '" . $this->db->escape(oc_strtolower($data['filter_country_id']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
@@ -239,6 +239,86 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		return $zone_data;
+	}
+
+	/**
+	 * Get Total Zones
+	 *
+	 * Get the total number of total zone records in the database.
+	 *
+	 * @param array<string, mixed> $data array of filters
+	 *
+	 * @return int total number of zone records
+	 *
+	 * @example
+	 *
+	 * $filter_data = [
+	 *     'filter_name'    => 'Zone Name',
+	 *     'filter_country' => 'Country Name',
+	 *     'filter_code'    => 'Zone Code',
+	 *     'sort'           => 'c.name',
+	 *     'order'          => 'DESC',
+	 *     'start'          => 0,
+	 *     'limit'          => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/zone');
+	 *
+	 * $zone_total = $this->model_localisation_zone->getTotalZones();
+	 */
+	public function getTotalZones(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z`";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		}
+
+		if (!empty($data['filter_country'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
+		}
+
+		$implode = [];
+
+		if (!empty($data['filter_name'])) {
+			$implode[] = "LCASE(`zd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+		}
+
+		if (!empty($data['filter_country'])) {
+			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
+		}
+
+		if (!empty($data['filter_code'])) {
+			$implode[] = "LCASE(`z`.`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code']) . '%') . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Zones By Country ID
+	 *
+	 * Get the total number of total zones by country records in the database.
+	 *
+	 * @param int $country_id primary key of the country record
+	 *
+	 * @return int total number of zone records that have country ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/zone');
+	 *
+	 * $zone_total = $this->model_localisation_zone->getTotalZonesByCountryId($country_id);
+	 */
+	public function getTotalZonesByCountryId(int $country_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "'");
+
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -372,85 +452,5 @@ class Zone extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Zones
-	 *
-	 * Get the total number of total zone records in the database.
-	 *
-	 * @param array<string, mixed> $data array of filters
-	 *
-	 * @return int total number of zone records
-	 *
-	 * @example
-	 *
-	 * $filter_data = [
-	 *     'filter_name'    => 'Zone Name',
-	 *     'filter_country' => 'Country Name',
-	 *     'filter_code'    => 'Zone Code',
-	 *     'sort'           => 'c.name',
-	 *     'order'          => 'DESC',
-	 *     'start'          => 0,
-	 *     'limit'          => 10
-	 * ];
-	 *
-	 * $this->load->model('localisation/zone');
-	 *
-	 * $zone_total = $this->model_localisation_zone->getTotalZones();
-	 */
-	public function getTotalZones(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` `z`";
-
-		if (!empty($data['filter_name'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "zone_description` `zd` ON (`z`.`zone_id` = `zd`.`zone_id`) AND `zd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		}
-
-		if (!empty($data['filter_country'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`z`.`country_id` = `cd`.`country_id` AND `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";
-		}
-
-		$implode = [];
-
-		if (!empty($data['filter_name'])) {
-			$implode[] = "LCASE(`zd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_country'])) {
-			$implode[] = "LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_country']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_code'])) {
-			$implode[] = "LCASE(`z`.`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code']) . '%') . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Get Total Zones By Country ID
-	 *
-	 * Get the total number of total zones by country records in the database.
-	 *
-	 * @param int $country_id primary key of the country record
-	 *
-	 * @return int total number of zone records that have country ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/zone');
-	 *
-	 * $zone_total = $this->model_localisation_zone->getTotalZonesByCountryId($country_id);
-	 */
-	public function getTotalZonesByCountryId(int $country_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "'");
-
-		return (int)$query->row['total'];
 	}
 }

@@ -1388,5 +1388,5 @@ $_['paypal_carrier'] = [
 		'Vietnam Post' => 'VNM_VIETNAM_POST', 
 		'ViettelPost' => 'VNM_VIETTELPOST'
 	]
-]
+];
 ?>

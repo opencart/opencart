@@ -68,6 +68,13 @@
 								</div>
 								<div class="col col-md-6">
 									<div class="form-group">
+										<label class="control-label" for="input_invoice_id_tokenization_status"><span data-toggle="tooltip" title="{{ help_invoice_id_tokenization_status }}">{{ entry_invoice_id_tokenization_status }}</span></label>
+										<div id="input_vault_status">
+											<input type="hidden" name="payment_paypal_setting[general][invoice_id_tokenization_status]" value="0" />
+											<input type="checkbox" name="payment_paypal_setting[general][invoice_id_tokenization_status]" value="1" class="switch" {% if setting['general']['invoice_id_tokenization_status'] %} checked="checked" {% endif %} />
+										</div>
+									</div>
+									<div class="form-group">
 										<label class="control-label" for="input_general_debug">{{ entry_debug }}</label>
 										<div id="input_general_debug">
 											<input type="hidden" name="payment_paypal_setting[general][debug]" value="0" />

@@ -51,11 +51,15 @@ var PayPalAPI = (function () {
 		var params = [];
 		var script_file = document.getElementsByTagName('script');
 		
-		for (var i = 0; i < script_file.length; i++) {
-			if (script_file[i].hasAttribute('src') && (script_file[i].getAttribute('src').indexOf('paypal.js') !== -1)) {
-				params = getQueryParams(script_file[i].getAttribute('src'));
-			
-				break;
+		for (var i = 0; i < script_file.length; i++) {			
+			if (script_file[i].hasAttribute('src') && script_file[i].getAttribute('src').includes('paypal.js')) {
+				var src = script_file[i].getAttribute('src');
+				
+				if (src.includes('?')) {
+					params = getQueryParams(src);
+					
+					break;
+				}
 			}
 		}
 		

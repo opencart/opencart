@@ -1,7 +1,9 @@
 <?php
 // Text
-$_['text_task']        = 'You have rendered the country list';
-$_['text_next']        = 'You have rendered %s to %s of %s countries';
+$_['text_list']        = 'Rendering country list';
+$_['text_next']        = 'Rendering %s country information';
+
+
 $_['text_success']     = 'Erfolg: Sie haben Länder geändert!';
 
 // Error

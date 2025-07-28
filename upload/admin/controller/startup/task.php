@@ -48,41 +48,39 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
-		//if ($task_total) {
-		//	return;
-		//}
-		//['filter_status' => 'pending']
+		fwrite(STDOUT, '$task_total ' . $task_total . "\n");
 
-		fwrite(STDOUT, 'start' . "\n");
+		if ($task_total) {
+			return;
+		}
 
-		sleep(1);
-
-		$results = $this->model_setting_task->getTasks();
+		$results = $this->model_setting_task->getTasks(['filter_status' => 'pending']);
 
 		foreach ($results as $result) {
 			$this->model_setting_task->editStatus($result['task_id'], 'processing');
 
-			$pos = strpos($result['action'], '/');
+			try {
+				$output = $this->load->controller('task/' . $result['action'], $result['args']);
 
-			if (substr($result['action'], 0, $pos + 1) == 'admin/') {
-				$application = DIR_APPLICATION;
-			} else {
-				$application = DIR_OPENCART;
-			}
+				// If task does not exist
+				if ($output instanceof \Exception) {
+					$this->model_setting_task->editStatus($result['task_id'], 'failed');
 
-			$output = $this->load->controller('task/' . substr($result['action'], $pos + 1), $result['args']);
+					break;
+				}
 
-			fwrite(STDOUT, $output . "\n");
+				fwrite(STDOUT, $output . "\n");
 
-			if ($output instanceof \Exception) {
+				$this->model_setting_task->editStatus($result['task_id'], 'complete');
+
+				sleep(1);
+			} catch (\Exception $e) {
 				$this->model_setting_task->editStatus($result['task_id'], 'failed');
+
+				fwrite(STDOUT, $e . "\n");
 
 				break;
 			}
-
-			$this->model_setting_task->editStatus($result['task_id'], 'complete');
-
-			sleep(1);
 		}
 	}
 

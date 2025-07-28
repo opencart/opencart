@@ -7,9 +7,9 @@
           <th>{{ column_code }}</th>
           <th>{{ column_action }}</th>
           <th class="text-center">{{ column_status }}</th>
+          <th class="text-center">{{ column_response }}</th>
           <th>{{ column_date_added }}</th>
           <th>{{ column_date_modified }}</th>
-          <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
@@ -26,20 +26,13 @@
                 {% elseif task.status == 'paused' %}
                   <span class="badge bg-warning">{{ text_paused }}</span>
                 {% elseif task.status == 'complete' %}
-                  <span class="badge bg-success">{{ text_complete }}</span>\
+                  <span class="badge bg-success">{{ text_complete }}</span>
                 {% elseif task.status == 'failed' %}
                   <span class="badge bg-danger">{{ text_failed }}</span>
                 {% endif %}</td>
+              <td>{{ task.response }}</td>
               <td>{{ task.date_added }}</td>
               <td>{{ task.date_modified }}</td>
-              <td class="text-end text-nowrap">
-                <button type="button" value="{{ task.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
-                {% if task.description %}
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#modal-cron-{{ task.task_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
-                {% else %}
-                  <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>
-                {% endif %}
-              </td>
             </tr>
           {% endfor %}
         {% else %}

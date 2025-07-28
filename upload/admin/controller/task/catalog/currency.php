@@ -1,0 +1,189 @@
+<?php
+namespace task;
+/**
+ * Class Currency
+ *
+ * @package Opencart\Catalog\Controller\Cron
+ */
+class Currency extends \Opencart\System\Engine\Controller {
+	/**
+	 * Index
+	 *
+	 * @param int    $cron_id
+	 * @param string $code
+	 * @param string $cycle
+	 * @param string $date_added
+	 * @param string $date_modified
+	 *
+	 * @return void
+	 */
+	public function index(array $args = []): void {
+		//$this->config->get('config_auto_update')
+
+		$task_data = [
+			'code'   => 'currency',
+			'action' => 'catalog/currency.update',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$this->load->model('setting/extension');
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
+
+		if ($extension_info) {
+			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $this->config->get('config_currency'));
+		}
+	}
+}
+
+namespace task\system;
+/**
+ * Class Currency
+ *
+ * @package Opencart\Admin\Controller\Ssr
+ */
+class Currency extends \Opencart\System\Engine\Controller {
+	/**
+	 * Generate
+	 *
+	 * @return void
+	 *
+	 */
+	public function index(): void {
+		$this->load->model('setting/extension');
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
+
+		if ($extension_info) {
+			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $this->config->get('config_currency'));
+		}
+
+		$task_data = [
+			'code'   => 'currency',
+			'action' => 'catalog/data/currency',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+	}
+
+	public function generate(): void {
+		$this->load->language('ssr/catalog/currency');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'ssr/catalog/currency')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$stores = [];
+
+			$stores[] = [
+				'store_id' => 0,
+				'url'      => HTTP_CATALOG
+			];
+
+			$this->load->model('setting/store');
+
+			$stores = array_merge($stores, $this->model_setting_store->getStores());
+
+			$this->load->model('localisation/language');
+
+			$languages = $this->model_localisation_language->getLanguages();
+
+			$this->load->model('localisation/currency');
+
+			$currencies = $this->model_localisation_currency->getCurrencies();
+
+			foreach ($stores as $store) {
+				$store_url = parse_url($store['url'], PHP_URL_HOST);
+
+				foreach ($languages as $language) {
+					$base = DIR_CATALOG . 'view/data/';
+					$directory = $store_url . '/' . $language['code'] . '/localisation/';
+					$filename = 'currency.json';
+
+					if (!oc_directory_create($base . $directory, 0777)) {
+						$json['error'] = sprintf($this->language->get('error_directory'), $directory);
+
+						break;
+					}
+
+					$currency_data = [];
+
+					$this->language->load('default', '', $language['code']);
+
+					foreach ($currencies as $currency) {
+						$currency_data[$currency['code']] = $currency + [
+								'decimal_point'  => $this->language->get('decimal_point'),
+								'thousand_point' => $this->language->get('thousand_point')
+							];
+					}
+
+					if (!file_put_contents($base . $directory . $filename, json_encode($currency_data))) {
+						$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
+
+						break;
+					}
+				}
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function clear(): void {
+		$this->load->language('ssr/catalog/currency');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'ssr/catalog/currency')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$stores = [];
+
+			$stores[] = [
+				'store_id' => 0,
+				'url'      => HTTP_CATALOG
+			];
+
+			$this->load->model('setting/store');
+
+			$stores = array_merge($stores, $this->model_setting_store->getStores());
+
+			$this->load->model('localisation/language');
+
+			$languages = $this->model_localisation_language->getLanguages();
+
+			foreach ($stores as $store) {
+				$store_url = parse_url($store['url'], PHP_URL_HOST);
+
+				foreach ($languages as $language) {
+					$file = DIR_CATALOG . 'view/data/' . $store_url . '/' . $language['code'] . '/localisation/currency.json';
+
+					if (is_file($file)) {
+						unlink($file);
+					}
+				}
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+}

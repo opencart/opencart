@@ -190,7 +190,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * $task_total = $this->model_setting_task->getTotalTasks($filter_data);
 	 */
-	public function getTotalTasks(): int {
+	public function getTotalTasks(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task`";
 
 		if (!empty($data['filter_status'])) {

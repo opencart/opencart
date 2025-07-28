@@ -18,6 +18,14 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_code'])) {
+			$url .= '&filter_code=' . urlencode(html_entity_decode($this->request->get['filter_code'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . urlencode(html_entity_decode($this->request->get['filter_status'], ENT_QUOTES, 'UTF-8'));
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -36,20 +44,28 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$data['start'] = $this->url->link('marketplace/task.start', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('marketplace/task.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['pending'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=pending');
+		$data['processing'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=processing');
+		$data['paused'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=paused');
+		$data['complete'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=complete');
+		$data['failed'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=failed');
 
+		$data['statues'] = [];
 
+		$statuses = [
+			'pending',
+			'processing',
+			'paused',
+			'complete',
+			'failed'
+		];
 
-
-		$_['text_pending']         = 'Pending';
-		$_['text_processing']      = 'Processing';
-		$_['text_paused']          = 'Paused';
-		$_['text_complete']        = 'Completed';
-		$_['text_failed']          = 'Failed';
-
-
-
-		$data['enable']	= $this->url->link('marketplace/task.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('marketplace/task.disable', 'user_token=' . $this->session->data['user_token']);
+		foreach ($statuses as $status) {
+			$data['statuses'][] = [
+				'text'  => $this->language->get('text_' . $status),
+				'value' => $status
+			];
+		}
 
 		$data['list'] = $this->getList();
 
@@ -79,6 +95,18 @@ class Task extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		if (isset($this->request->get['filter_code'])) {
+			$filter_code = (string)$this->request->get['filter_code'];
+		} else {
+			$filter_code = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = (string)$this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -87,30 +115,33 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_code'])) {
+			$url .= '&filter_code=' . urlencode(html_entity_decode($this->request->get['filter_code'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . urlencode(html_entity_decode($this->request->get['filter_status'], ENT_QUOTES, 'UTF-8'));
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['action'] = $this->url->link('marketplace/task.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Tasks
-		$data['tasks'] = [];
-
 		$filter_data = [
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'filter_code'   => $filter_code,
+			'filter_status' => $filter_status,
+			'start'         => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'         => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('setting/task');
 
-		$results = $this->model_setting_task->getTasks($filter_data);
-
-		foreach ($results as $result) {
-			$data['tasks'][] = ['run' => $this->url->link('marketplace/task.run', 'user_token=' . $this->session->data['user_token'] . '&task_id=' . $result['task_id'])] + $result;
-		}
+		$data['tasks'] = $this->model_setting_task->getTasks($filter_data);
 
 		// Total Tasks
-		$task_total = $this->model_setting_task->getTotalTasks();
+		$task_total = $this->model_setting_task->getTotalTasks($filter_data);
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
@@ -151,51 +182,27 @@ class Task extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Run
+	 * Pause
 	 *
 	 * @return void
 	 */
-	public function run(): void {
+	public function pause() {
 		$this->load->language('marketplace/task');
 
 		$json = [];
-
-		if (isset($this->request->get['task_id'])) {
-			$task_id = (int)$this->request->get['task_id'];
-		} else {
-			$task_id = 0;
-		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('setting/task');
-
-		$task_info = $this->model_setting_task->getTask($task_id);
-
-		if (!$task_info) {
-			$json['error'] = $this->language->get('error_exists');
-		}
-
 		if (!$json) {
-			$pos = strpos($task_info['action'], '/');
+			$this->load->model('setting/task');
 
-			$path = substr($task_info['action'], 0, $pos + 1);
+			$results = $this->model_setting_task->getTasks(['filter_status' => 'pending']);
 
-			$task = substr($task_info['action'], $pos + 1);
-
-			if ($path == 'admin/') {
-				$output = shell_exec('php ' . DIR_APPLICATION . 'index.php ' . $task . ' --page 1');
+			foreach ($results as $result) {
+				$this->model_setting_task->editStatus($result['task_id'], 'paused');
 			}
-
-			if ($path == 'catalog/') {
-				$output = shell_exec('php ' . DIR_OPENCART . 'index.php ' . $task . ' --page 1');
-			}
-
-			echo '$output ' . $output;
-
-			$this->model_setting_task->editTask($task_info['task_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -209,10 +216,16 @@ class Task extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function enable(): void {
+	public function status(): void {
 		$this->load->language('marketplace/task');
 
 		$json = [];
+
+		if (isset($this->request->get['status'])) {
+			$status = (string)$this->request->get['status'];
+		} else {
+			$status = '';
+		}
 
 		if (isset($this->request->post['selected'])) {
 			$selected = (array)$this->request->post['selected'];
@@ -222,47 +235,25 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
 			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$allowed = [
+			'pending',
+			'processing',
+			'paused',
+			'complete',
+			'failed'
+		];
+
+		if (!in_array($status, $allowed)) {
+			$json['error'] = $this->language->get('error_status');
 		}
 
 		if (!$json) {
 			$this->load->model('setting/task');
 
 			foreach ($selected as $task_id) {
-				$this->model_setting_task->editStatus((int)$task_id, true);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('marketplace/task');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/task');
-
-	    	foreach ($selected as $task_id) {
-				$this->model_setting_task->editStatus((int)$task_id, false);
+				$this->model_setting_task->editStatus((int)$task_id, $status);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -293,7 +284,6 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/task');
 
 			foreach ($selected as $task_id) {

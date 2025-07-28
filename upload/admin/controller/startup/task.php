@@ -27,63 +27,22 @@ class Task extends \Opencart\System\Engine\Controller {
 			// Get the arguments passed with the command
 			$command = array_shift($argv);
 
+			fwrite(STDIN, $command);
+
+
 			switch ($command) {
 				case 'start':
-					return new \Opencart\System\Engine\Action('startup/task.start');
+					return new \Opencart\System\Engine\Action('startup/task.start', $argv);
 
 					break;
 				case 'usage':
 				default:
-					return new \Opencart\System\Engine\Action('startup/task.usage');
+					return new \Opencart\System\Engine\Action('startup/task.usage', $argv);
 
 					break;
 			}
 		}
 	}
-
-	public function cli(string $command, array $argv = []) {
-		if (isset($this->request->server['argv'])) {
-			$argv = (array)$this->request->server['argv'];
-		} else {
-			$argv = [];
-		}
-
-		// Just displays the path to the file
-		$script = array_shift($argv);
-
-		// Get the arguments passed with the command
-		$command = array_shift($argv);
-
-		switch ($command) {
-			case 'start':
-				$this->start();
-				break;
-			case 'usage':
-			default:
-				$this->usage();
-				break;
-		}
-
-		/*
-		 *
-		$this->response->setOutput($this->load->controller('task/' . $command, $args));
-
-		$pos = strpos($task_info['action'], '/');
-
-		$path = substr($task_info['action'], 0, $pos + 1);
-
-		$task = substr($task_info['action'], $pos + 1);
-
-		if ($path == 'admin/') {
-			$output = shell_exec('php ' . DIR_APPLICATION . 'index.php ' . $task . ' --page 1');
-		}
-
-		if ($path == 'catalog/') {
-			$output = shell_exec('php ' . DIR_OPENCART . 'index.php ' . $task . ' --page 1');
-		}
-		*/
-	}
-
 
 	public function start() {
 		$this->load->model('setting/task');
@@ -106,6 +65,7 @@ class Task extends \Opencart\System\Engine\Controller {
 
 				$output = $this->load->controller('task/' . substr($result['action'], $pos + 1), $result['args']);
 
+				fwrite(STDIN, '$output');
 				fwrite(STDIN, $output);
 
 				if ($output instanceof \Exception) {
@@ -119,6 +79,11 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	public function usage() {
+		$results = oc_directory_read(DIR_CATALOG);
+
+	}
+
 	public function exception(object $e): void {
 		$message = $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
 
@@ -127,11 +92,5 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		echo $message;
-	}
-
-	public function usage() {
-		$results = oc_directory_read(DIR_CATALOG);
-
-
 	}
 }

@@ -72,13 +72,15 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			$output = $this->load->controller('task/' . substr($result['action'], $pos + 1), $result['args']);
 
-			fwrite(STDOUT, $output);
+			fwrite(STDOUT, $output . "\n");
 
 			if ($output instanceof \Exception) {
 				$this->model_setting_task->editStatus($result['task_id'], 'failed');
 
 				break;
 			}
+
+			$this->model_setting_task->editStatus($result['task_id'], 'complete');
 
 			sleep(1);
 		}
@@ -96,6 +98,6 @@ class Task extends \Opencart\System\Engine\Controller {
 			$this->log->write($message);
 		}
 
-		echo $message;
+		fwrite(STDOUT, $message . "\n");
 	}
 }

@@ -6,6 +6,7 @@ $_['heading_title']        = 'Tasks';
 $_['text_success']         = 'Success: You have modified tasks!';
 $_['text_list']            = 'Task List';
 $_['text_info']            = 'Task Information';
+$_['text_filter']          = 'Filter';
 $_['text_pending']         = 'Pending';
 $_['text_processing']      = 'Processing';
 $_['text_paused']          = 'Paused';

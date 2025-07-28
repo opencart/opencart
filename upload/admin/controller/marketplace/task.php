@@ -36,6 +36,18 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$data['start'] = $this->url->link('marketplace/task.start', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('marketplace/task.delete', 'user_token=' . $this->session->data['user_token']);
+
+
+
+
+		$_['text_pending']         = 'Pending';
+		$_['text_processing']      = 'Processing';
+		$_['text_paused']          = 'Paused';
+		$_['text_complete']        = 'Completed';
+		$_['text_failed']          = 'Failed';
+
+
+
 		$data['enable']	= $this->url->link('marketplace/task.enable', 'user_token=' . $this->session->data['user_token']);
 		$data['disable'] = $this->url->link('marketplace/task.disable', 'user_token=' . $this->session->data['user_token']);
 

@@ -9,7 +9,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the country list JSON files by language.
+	 * Generates the country list.
 	 *
 	 * @return void
 	 */
@@ -17,6 +17,8 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/country');
 
 		$this->load->model('setting/task');
+
+		$this->load->model('localisation/country');
 
 		// Get all languages so we don't need to keep querying the DB
 		$this->load->model('localisation/language');
@@ -63,15 +65,19 @@ class Country extends \Opencart\System\Engine\Controller {
 		return $this->language->get('text_success');
 	}
 
-	public function info($args = []): string {
+	public function info(array $args = []): string {
 		$this->load->language('task/country');
+
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
 
 		$this->load->model('localisation/zone');
 
-		$zones = $this->model_localisation_zone->getZonesByCountryId($args['country_id'], $args['language_id']);
+		$zones = $this->model_localisation_zone->getZonesByCountryId($args['country_id'], $language_info['language_id']);
 
 		$base = DIR_APPLICATION . 'view/data/';
-		$directory = $args['code'] . '/localisation/';
+		$directory = $language_info['code'] . '/localisation/';
 		$filename = 'country-' . $args['country_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {

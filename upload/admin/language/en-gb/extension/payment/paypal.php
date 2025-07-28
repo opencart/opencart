@@ -235,6 +235,7 @@ $_['entry_client_id']				 		= 'Client ID';
 $_['entry_client_secret']				 	= 'Secret';
 $_['entry_status']		 					= 'Status';
 $_['entry_vault_status']		 			= 'Vault Status';
+$_['entry_invoice_id_tokenization_status']	= 'Invoice ID Tokenization Status';
 $_['entry_debug']				 			= 'Debug Logging';
 $_['entry_sale_analytics_range'] 			= 'Sales Analytics Range';
 $_['entry_checkout_mode']	 				= 'Checkout Mode';
@@ -300,6 +301,7 @@ $_['entry_contact_send'] 					= 'Submit Form';
 // Help
 $_['help_status']		 					= 'Enable/Disable extension.';
 $_['help_vault_status']		 				= 'Vault allows merchant to securely save buyer’s payment method for future transactions. Vault substitutes the sensitive payment data with non-sensitive payment token and allows merchant to use the payment Token for future purchases.';
+$_['help_invoice_id_tokenization_status']	= 'Invoice ID Tokenization allows you to create a unique invoice ID for orders in your PayPal account. It is especially necessary when your PayPal account receives orders from several opencart stores.';
 $_['help_button_status']					= 'When activated PayPal will display personalized Smart Buttons available to your customers based on their location.';
 $_['help_googlepay_button_status']			= 'PayPal verifies if you are eligible for Google Pay payment and will display this option if available.';
 $_['help_applepay_button_status']			= 'PayPal verifies if you are eligible for Apple Pay payment and will display this option if available.';

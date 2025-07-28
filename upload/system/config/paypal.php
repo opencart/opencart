@@ -1,6 +1,6 @@
 <?php 
 $_['paypal_setting'] = array(
-	'version' => '3.2.2',
+	'version' => '3.2.4',
 	'partner' => array(
 		'production' => array(
 			'partner_id' => 'TY2Q25KP2PX9L',
@@ -16,6 +16,7 @@ $_['paypal_setting'] = array(
 	'general' => array(
 		'debug' => false,
 		'vault_status' => false,
+		'invoice_id_tokenization_status' => true,
 		'checkout_mode' => 'multi_button',
 		'checkout_route' => 'checkout/checkout',
 		'transaction_method' => 'capture',

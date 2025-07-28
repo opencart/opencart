@@ -1,4 +1,5 @@
 <?php
+namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Language
  *
@@ -10,7 +11,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
+	public function index($args = []): array {
 		$this->load->language('ssr/admin/language');
 
 		$json = [];
@@ -44,11 +45,8 @@ class Language extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$json['success'] = $this->language->get('text_success');
+			return ['success' => $this->language->get('text_success')];
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function clear(): void {

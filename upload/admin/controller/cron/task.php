@@ -1,5 +1,5 @@
 <?php
-namespace controller\cron;
+namespace Opencart\Admin\Controller\Cron;
 /**
  * Class Task
  *

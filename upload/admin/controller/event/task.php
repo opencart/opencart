@@ -20,14 +20,14 @@ class Task extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-
-
-
-
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->isRunning();
+		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
-		$this->model_setting_task->isRunning();
+		if ($task_total) {
+			return;
+		}
+
+		shell_exec('php ' . DIR_APPLICATION . 'index.php start');
 	}
 }

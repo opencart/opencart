@@ -1,4 +1,5 @@
 <?php
+namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Currency
  *
@@ -6,7 +7,7 @@
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	public function index(): string {
-		$this->load->language('task/currency');
+		$this->load->language('task/admin/currency');
 
 		//config_currency_auto
 
@@ -58,7 +59,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/admin/currency');
+		$this->load->language('task/admin/currency');
 
 		$json = [];
 

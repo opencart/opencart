@@ -39,7 +39,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$data['disable'] = $this->url->link('marketplace/cron.disable', 'user_token=' . $this->session->data['user_token']);
 
 		// Example cron URL
-		$data['cron'] = HTTP_CATALOG . 'index.php?route=cron/cron';
+		$data['cron'] = DIR_APPLICATION . 'index.php';
 
 		$data['list'] = $this->getList();
 
@@ -96,8 +96,8 @@ class Cron extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['crons'][] = [
-				'cycle'         => $this->language->get('text_' . $result['cycle']),
-				'run'           => $this->url->link('marketplace/cron.run', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id'])
+				'cycle' => $this->language->get('text_' . $result['cycle']),
+				'run'   => $this->url->link('marketplace/cron.run', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id'])
 			] + $result;
 		}
 

@@ -1,4 +1,5 @@
 <?php
+namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Backup
  *
@@ -12,8 +13,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		$this->load->language('tool/backup');
-
-		$json = [];
 
 		if (isset($this->request->get['filename'])) {
 			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
@@ -115,10 +114,9 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 			fclose($handle);
 
-
 			$task_data = [
 				'code'   => 'backup',
-				'action' => 'catalog/system/backup',
+				'action' => 'catalog/backup',
 				'args'   => [
 					'filename' => date('Y-m-d H.i.s') . '.sql',
 					'backup'   => $backup

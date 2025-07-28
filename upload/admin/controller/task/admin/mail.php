@@ -1,5 +1,5 @@
 <?php
-namespace task;
+namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Currency
  *
@@ -31,8 +31,6 @@ class Mail extends \Opencart\System\Engine\Controller {
 			$mail->setHtml($argv['content']);
 			$mail->send();
 
-
-
 			// Send to additional alert emails if new affiliate email is enabled
 			$emails = explode(',', (string)$this->config->get('config_mail_alert_email'));
 
@@ -42,8 +40,6 @@ class Mail extends \Opencart\System\Engine\Controller {
 					$mail->send();
 				}
 			}
-
-
 		}
 
 	}

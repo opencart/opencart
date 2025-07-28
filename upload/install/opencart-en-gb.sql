@@ -1131,10 +1131,11 @@ VALUES ('-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '
 --
 
 INSERT INTO `oc_cron` (`code`, `description`, `cycle`, `action`, `status`, `date_added`, `date_modified`)
-VALUES ('currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, NOW(), NOW()),
+VALUES ('task', 'Processes tasks such as theme and static files generation, sending mails, etc..', 'minute', 'cron/task', 0, NOW(), NOW()),
+       ('currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, NOW(), NOW()),
        ('gdpr', 'Deletes and send emails to customers who have requested their GPDR data to be deleted.', 'day', 'cron/gdpr', 1, NOW(), NOW()),
        ('subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, NOW(), NOW()),
-       ('task', 'Processes tasks such as theme and static files generation, sending mails, etc..', 'minute', 'cron/task', 0, NOW(), NOW());
+       ('backup', 'Starts the backup process.', 'day', 'cron/backup', 0, NOW(), NOW());
 
 -----------------------------------------------------------
 

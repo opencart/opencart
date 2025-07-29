@@ -23,7 +23,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['code'])) {
 			$code = (string)$this->session->data['code'];
 		} else {
-			$code = '';
+			return;
 		}
 
 		// User
@@ -31,7 +31,11 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$user_info = $this->model_user_user->getUser($this->user->getId());
 
-		if ($code && $user_info) {
+		if (!$user_info) {
+			return;
+		}
+
+		if ($code) {
 			$this->load->language('mail/authorize');
 
 			$data['username'] = $this->user->getUsername();
@@ -94,7 +98,11 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$user_info = $this->model_user_user->getUser($user_id);
 
-		if ($type == 'authorize' && $user_info) {
+		if (!$user_info) {
+			return;
+		}
+
+		if ($type == 'authorize') {
 			$this->load->language('mail/authorize_reset');
 
 			$data['username'] = $this->user->getUsername();

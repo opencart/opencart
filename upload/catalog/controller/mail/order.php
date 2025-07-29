@@ -339,7 +339,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		$task_data = [
-			'code'   => 'mail_order_add',
+			'code'   => 'mail_order',
 			'action' => 'admin/mail',
 			'args'   => [
 				'to'      => $order_info['email'],

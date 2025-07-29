@@ -251,7 +251,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$customer_id = $this->model_account_customer->addCustomer($post_info);
+			$customer_id = $this->model_account_customer->addCustomer(['customer_group_id' => $customer_group_id] + $post_info);
 
 			// Login if requires approval
 			if (!$customer_group_info['approval']) {

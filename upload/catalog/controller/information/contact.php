@@ -140,26 +140,20 @@ class Contact extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($this->config->get('config_mail_engine')) {
-				$mail_option = [
-					'parameter'     => $this->config->get('config_mail_parameter'),
-					'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
-					'smtp_username' => $this->config->get('config_mail_smtp_username'),
-					'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
-					'smtp_port'     => $this->config->get('config_mail_smtp_port'),
-					'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
-				];
+			$task_data = [
+				'code'   => 'mail_alert',
+				'action' => 'admin/mail',
+				'args'   => [
+					'to'       => $this->config->get('config_email'),
+					'from'     => $this->config->get('config_email'),
+					'reply_to' => $post_info['email'],
+					'sender'   => html_entity_decode($post_info['name'], ENT_QUOTES, 'UTF-8'),
+					'subject'  => html_entity_decode(sprintf($this->language->get('email_subject'), $post_info['name']), ENT_QUOTES, 'UTF-8'),
+					'content'  => $post_info['enquiry']
+				]
+			];
 
-				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-				$mail->setTo($this->config->get('config_email'));
-				// Less spam and fix bug when using SMTP like sendgrid.
-				$mail->setFrom($this->config->get('config_email'));
-				$mail->setReplyTo($post_info['email']);
-				$mail->setSender(html_entity_decode($post_info['name'], ENT_QUOTES, 'UTF-8'));
-				$mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $post_info['name']), ENT_QUOTES, 'UTF-8'));
-				$mail->setText($post_info['enquiry']);
-				$mail->send();
-			}
+			$this->model_setting_task->addTask($task_data);
 
 			$json['redirect'] = $this->url->link('information/contact.success', 'language=' . $this->config->get('config_language'), true);
 		}

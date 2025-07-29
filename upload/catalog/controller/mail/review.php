@@ -20,43 +20,57 @@ class Review extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		if (in_array('review', (array)$this->config->get('config_mail_alert'))) {
-			$this->load->language('mail/review');
+		if (!in_array('review', (array)$this->config->get('config_mail_alert'))) {
+			return;
+		}
 
-			// Product
-			$this->load->model('catalog/product');
+		$this->load->language('mail/review');
 
-			$product_info = $this->model_catalog_product->getProduct((int)$args[0]);
+		// Product
+		$this->load->model('catalog/product');
 
-			if ($product_info) {
-				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+		$product_info = $this->model_catalog_product->getProduct((int)$args[0]);
 
-				$subject = sprintf($this->language->get('text_subject'), $store_name);
+		if (!$product_info) {
+			return;
+		}
 
-				$data['product'] = html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8');
-				$data['reviewer'] = html_entity_decode($args[1]['author'], ENT_QUOTES, 'UTF-8');
-				$data['rating'] = (int)$args[1]['rating'];
-				$data['text'] = nl2br($args[1]['text']);
+		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-				$data['store'] = $store_name;
-				$data['store_url'] = $this->config->get('config_url');
+		$data['product'] = html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8');
+		$data['reviewer'] = html_entity_decode($args[1]['author'], ENT_QUOTES, 'UTF-8');
+		$data['rating'] = (int)$args[1]['rating'];
+		$data['text'] = nl2br($args[1]['text']);
 
-				$task_data = [
-					'code'   => 'mail_review',
-					'action' => 'admin/mail',
-					'args'   => [
-						'to'      => $this->config->get('config_email') . ', ' . (string)$this->config->get('config_mail_alert_email'),
-						'from'    => $this->config->get('config_email'),
-						'sender'  => $store_name,
-						'subject' => $subject,
-						'content' => $this->load->view('mail/review', $data)
-					]
-				];
+		$data['store'] = $store_name;
+		$data['store_url'] = $this->config->get('config_url');
 
-				$this->load->model('setting/task');
+		$emails = [];
 
-				$this->model_setting_task->addTask($task_data);
-			}
+		$emails[] = $this->config->get('config_email');
+
+		$tos = explode(',', (string)$this->config->get('config_mail_alert_email'));
+
+		foreach ($tos as $to) {
+			$emails[] = trim($to);
+		}
+
+		$this->load->model('setting/task');
+
+		foreach ($emails as $email) {
+			$task_data = [
+				'code'   => 'mail_review',
+				'action' => 'admin/mail',
+				'args'   => [
+					'to'      => $email,
+					'from'    => $this->config->get('config_email'),
+					'sender'  => $store_name,
+					'subject' => sprintf($this->language->get('text_subject'), $store_name),
+					'content' => $this->load->view('mail/review', $data)
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
 		}
 	}
 }

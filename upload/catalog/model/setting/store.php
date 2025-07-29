@@ -24,6 +24,15 @@ class Store extends \Opencart\System\Engine\Model {
 	 * $store_info = $this->model_setting_store->getStore($store_id);
 	 */
 	public function getStore(int $store_id): array {
+		if ($store_id == 0) {
+			return [
+				'store_id'  => 0,
+				'logo'      => html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'),
+				'name'      => html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'),
+				'store_url' => $this->config->get('config_url')
+			];
+		}
+
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "store` WHERE `store_id` = '" . (int)$store_id . "'");
 
 		return $query->row;

@@ -18,37 +18,22 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		$this->load->language('mail/affiliate');
-
-		if ($this->customer->isLogged()) {
-			$to = $this->customer->getEmail();
-		} else {
-			$to = $args[1]['email'];
-		}
-
-		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-
-		$subject = sprintf($this->language->get('text_subject'), $store_name);
-
-		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $store_name);
-
 		// Customer Group
 		$this->load->model('account/customer_group');
 
-		if ($this->customer->isLogged()) {
-			$customer_group_id = $this->customer->getGroupId();
-		} else {
-			$customer_group_id = $args[1]['customer_group_id'];
+		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->customer->getGroupId());
+
+		if (!$customer_group_info) {
+			return;
 		}
 
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+		$this->load->language('mail/affiliate');
 
-		if ($customer_group_info) {
-			$data['approval'] = ($this->config->get('config_affiliate_approval') || $customer_group_info['approval']);
-		} else {
-			$data['approval'] = '';
-		}
+		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
+		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $store_name);
+
+		$data['approval'] = ($this->config->get('config_affiliate_approval') || $customer_group_info['approval']);
 		$data['login'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'), true);
 
 		$data['store'] = $store_name;
@@ -56,12 +41,12 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_affiliate',
-			'action' => 'admin/currency',
+			'action' => 'admin/mail',
 			'args'   => [
-				'to'      => $to,
+				'to'      => $this->customer->getEmail(),
 				'from'    => $this->config->get('config_email'),
 				'sender'  => $store_name,
-				'subject' => $subject,
+				'subject' => sprintf($this->language->get('text_subject'), $store_name),
 				'content' => $this->load->view('mail/affiliate', $data)
 			]
 		];
@@ -84,59 +69,60 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	 */
 	public function alert(string &$route, array &$args, &$output): void {
 		// Send to main admin email if new affiliate email is enabled
-		if (in_array('affiliate', (array)$this->config->get('config_mail_alert'))) {
-			$this->load->language('mail/affiliate');
+		if (!in_array('affiliate', (array)$this->config->get('config_mail_alert'))) {
+			return;
+		}
 
-			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+		if (!$this->customer->isLogged()) {
+			return;
+		}
 
-			$subject = $this->language->get('text_new_affiliate');
+		$this->load->model('account/customer_group');
 
-			if ($this->customer->isLogged()) {
-				$customer_group_id = $this->customer->getGroupId();
+		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->customer->getGroupId());
 
-				$data['firstname'] = $this->customer->getFirstName();
-				$data['lastname'] = $this->customer->getLastName();
-				$data['email'] = $this->customer->getEmail();
-				$data['telephone'] = $this->customer->getTelephone();
-			} else {
-				$customer_group_id = $args[1]['customer_group_id'];
+		if (!$customer_group_info) {
+			return;
+		}
 
-				$data['firstname'] = $args[1]['firstname'];
-				$data['lastname'] = $args[1]['lastname'];
-				$data['email'] = $args[1]['email'];
-				$data['telephone'] = $args[1]['telephone'];
-			}
+		$this->load->language('mail/affiliate');
 
-			$data['website'] = html_entity_decode($args[1]['website'], ENT_QUOTES, 'UTF-8');
-			$data['company'] = $args[1]['company'];
+		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-			// Customer Group
-			$this->load->model('account/customer_group');
+		$data['firstname'] = $this->customer->getFirstName();
+		$data['lastname'] = $this->customer->getLastName();
+		$data['email'] = $this->customer->getEmail();
+		$data['telephone'] = $this->customer->getTelephone();
+		$data['company'] = $args[1]['company'];
+		$data['website'] = html_entity_decode($args[1]['website'], ENT_QUOTES, 'UTF-8');
 
-			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+		$data['store'] = $store_name;
+		$data['store_url'] = $this->config->get('config_url');
 
-			if ($customer_group_info) {
-				$data['customer_group'] = $customer_group_info['name'];
-			} else {
-				$data['customer_group'] = '';
-			}
+		$emails = [];
 
-			$data['store'] = $store_name;
-			$data['store_url'] = $this->config->get('config_url');
+		$emails[] = $this->config->get('config_email');
 
+		$tos = explode(',', (string)$this->config->get('config_mail_alert_email'));
+
+		foreach ($tos as $to) {
+			$emails[] = trim($to);
+		}
+
+		$this->load->model('setting/task');
+
+		foreach ($emails as $email) {
 			$task_data = [
 				'code'   => 'mail_alert',
 				'action' => 'admin/mail',
 				'args'   => [
-					'to'      => $this->config->get('config_email') . ', ' . $this->config->get('config_mail_alert_email'),
+					'to'      => $email,
 					'from'    => $this->config->get('config_email'),
 					'sender'  => $store_name,
-					'subject' => $subject,
+					'subject' => $this->language->get('text_new_affiliate'),
 					'content' => $this->load->view('mail/affiliate_alert', $data)
 				]
 			];
-
-			$this->load->model('setting/task');
 
 			$this->model_setting_task->addTask($task_data);
 		}

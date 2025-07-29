@@ -12,7 +12,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/article');
+		$this->load->language('task/catalog/article');
 
 		$json = [];
 
@@ -22,7 +22,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		//if (!$this->user->hasPermission('modify', 'ssr/article')) {
+		//if (!$this->user->hasPermission('modify', 'article')) {
 		$json['error'] = $this->language->get('error_permission');
 		//}
 
@@ -76,7 +76,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$json['text'] = sprintf($this->language->get('text_article'), $start ?: 1, $end, $article_total);
 
 			if ($end < $article_total) {
-				$json['next'] = $this->url->link('ssr/article', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('task/catalog/article', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}
@@ -87,11 +87,11 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/category');
+		$this->load->language('task/catalog/category');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/article')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/article')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

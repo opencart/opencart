@@ -112,10 +112,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
 
-		if ($language_info) {
-			$language_code = $language_info['code'];
-		} else {
-			$language_code = $this->config->get('config_language');
+		if (!$language_info) {
+			return;
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
@@ -128,8 +126,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		foreach ($results as $key => $value) {
 			$data[$key] = $value;
 		}
-
-		$subject = sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']);
 
 		// Image
 		$this->load->model('tool/image');
@@ -345,7 +341,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'to'      => $order_info['email'],
 				'from'    => $from,
 				'sender'  => $store_name,
-				'subject' => $subject,
+				'subject' => sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']),
 				'content' => $this->load->view('mail/order_add', $data)
 			]
 		];
@@ -502,8 +498,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		if ($order_info && !$order_info['order_status_id'] && $order_status_id && in_array('order', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/order_alert');
 
-			$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8');
-
 			$data['order_id'] = $order_info['order_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
@@ -589,21 +583,33 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['store'] = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');
 			$data['store_url'] = $order_info['store_url'];
 
-			$task_data = [
-				'code'   => 'mail_history',
-				'action' => 'admin/mail',
-				'args'   => [
-					'to'      => $this->config->get('config_email') . ', ' . (string)$this->config->get('config_mail_alert_email'),
-					'from'    => $this->config->get('config_email'),
-					'sender'  => html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'),
-					'subject' => $subject,
-					'content' => $this->load->view('mail/order_alert', $data)
-				]
-			];
+			$emails = [];
+
+			$emails[] = $this->config->get('config_email');
+
+			$tos = explode(',', (string)$this->config->get('config_mail_alert_email'));
+
+			foreach ($tos as $to) {
+				$emails[] = trim($to);
+			}
 
 			$this->load->model('setting/task');
 
-			$this->model_setting_task->addTask($task_data);
+			foreach ($emails as $email) {
+				$task_data = [
+					'code'   => 'mail_history',
+					'action' => 'admin/mail',
+					'args'   => [
+						'to'      => $email,
+						'from'    => $this->config->get('config_email'),
+						'sender'  => html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'),
+						'subject' => html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8'),
+						'content' => $this->load->view('mail/order_alert', $data)
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 }

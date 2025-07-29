@@ -14,11 +14,11 @@ class Country extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/country');
+		$this->load->language('task/catalog/country');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/country')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/country')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -80,7 +80,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_list');
 
-			$json['next'] = $this->url->link('ssr/country.info', 'user_token=' . $this->session->data['user_token'], true);
+			$json['next'] = $this->url->link('task/catalog/country.info', 'user_token=' . $this->session->data['user_token'], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -88,7 +88,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	}
 
 	public function info(): void {
-		$this->load->language('ssr/country');
+		$this->load->language('task/catalog/country');
 
 		$json = [];
 
@@ -98,7 +98,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (!$this->user->hasPermission('modify', 'ssr/country')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/country')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -183,7 +183,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$json['text'] = sprintf($this->language->get('text_next'), !$start ?? 1, $end, $country_total);
 
 			if ($end < $country_total) {
-				$json['next'] = $this->url->link('ssr/country.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('task/catalog/country.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}
@@ -198,7 +198,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	}
 
 	public function zone(): void {
-		$this->load->language('ssr/country');
+		$this->load->language('task/catalog/country');
 
 		$json = [];
 
@@ -208,7 +208,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (!$this->user->hasPermission('modify', 'ssr/country')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/country')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -264,7 +264,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$json['text'] = sprintf($this->language->get('text_next'), !$start ?? 1, $end, $country_total);
 
 			if ($end < $country_total) {
-				$json['next'] = $this->url->link('ssr/country.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('task/catalog/country.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}
@@ -275,11 +275,11 @@ class Country extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/language');
+		$this->load->language('task/catalog/language');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/language')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/language')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

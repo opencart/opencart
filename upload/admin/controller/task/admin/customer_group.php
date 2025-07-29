@@ -12,7 +12,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): mixed {
-		$this->load->language('task/customer_group');
+		$this->load->language('task/admin/customer_group');
 
 		$this->load->model('localisation/language');
 
@@ -53,12 +53,16 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		return $this->language->get('text_success');
 	}
 
+	public function list(array $language = []): array {
+
+	}
+
 	public function clear(): void {
-		$this->load->language('ssr/admin/customer_group');
+		$this->load->language('task/admin/customer_group');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/admin/customer_group')) {
+		if (!$this->user->hasPermission('modify', 'task/admin/customer_group')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

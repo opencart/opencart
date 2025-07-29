@@ -12,11 +12,11 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/currency');
+		$this->load->language('task/catalog/currency');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/currency')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/currency')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -70,11 +70,11 @@ class Currency extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/currency');
+		$this->load->language('task/catalog/currency');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/currency')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/currency')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

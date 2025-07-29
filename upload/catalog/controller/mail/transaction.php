@@ -45,13 +45,11 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 		$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
 
-		if ($store_info) {
-			$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
-			$store_url = $store_info['store_url'];
-		} else {
-			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-			$store_url = $this->config->get('config_url');
+		if (!$store_info) {
+			return;
 		}
+
+		$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
 		$this->load->language('default', 'mail', $language_info['code']);
@@ -74,7 +72,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 		$data['total'] = $this->currency->format($this->model_account_transaction->getTransactionTotal($args[0]), $this->config->get('config_currency'));
 
 		$data['store'] = $store_name;
-		$data['store_url'] = $store_url;
+		$data['store_url'] = $store_info['store_url'];
 
 		$task_data = [
 			'code'   => 'mail_transaction',

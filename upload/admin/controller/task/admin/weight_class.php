@@ -14,11 +14,11 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/admin/custom_field');
+		$this->load->language('task/admin/custom_field');
 
 		$json = [];
 
-		//if (!$this->user->hasPermission('modify', 'ssr/admin/custom_field')) {
+		//if (!$this->user->hasPermission('modify', 'admin/custom_field')) {
 		$json['error'] = $this->language->get('error_permission');
 		//}
 
@@ -27,11 +27,11 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/language');
+		$this->load->language('task/admin/language');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/admin/custom_field')) {
+		if (!$this->user->hasPermission('modify', 'admin/custom_field')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

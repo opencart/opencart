@@ -28,7 +28,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$task_data = [
 				'code'   => 'country_list',
 				'action' => 'admin/country.list',
-				'args'   => $language
+				'args'   => ['language_id' => $language['language_id']]
 			];
 
 			$this->model_setting_task->addTask($task_data);
@@ -37,12 +37,20 @@ class Country extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
-	public function list(array $language = []): array {
+	public function list(array $args = []): array {
 		$this->load->language('task/admin/country');
+
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
+		}
 
 		$this->load->model('localisation/country');
 
-		$countries = $this->model_localisation_country->getCountries(['filter_language_id' => $language['language_id']]);
+		$countries = $this->model_localisation_country->getCountries(['filter_language_id' => $language_info['language_id']]);
 
 		$sort_order = [];
 
@@ -53,7 +61,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $countries);
 
 		$base = DIR_APPLICATION . 'view/data/';
-		$directory = $language['code'] . '/localisation/';
+		$directory = $language_info['code'] . '/localisation/';
 		$filename = 'country.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
@@ -69,17 +77,19 @@ class Country extends \Opencart\System\Engine\Controller {
 			$task_data = [
 				'code'   => 'country_info',
 				'action' => 'admin/country.info',
-				'args'   => $country + ['language_code' => $language['code']]
+				'args'   => $country + ['language_code' => $language_info['code']]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
 	public function info(array $country): array {
 		$this->load->language('task/admin/country');
+
+
 
 		$this->load->model('localisation/zone');
 
@@ -101,7 +111,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('task/language');
+		$this->load->language('task/admin/country');
 
 		if (!$json) {
 			$this->load->model('localisation/language');

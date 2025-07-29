@@ -12,7 +12,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/manufacturer');
+		$this->load->language('task/catalog/manufacturer');
 
 		$json = [];
 
@@ -49,7 +49,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_manufacturer');
 
-			$json['next'] = $this->url->link('ssr/manufacturer', 'user_token=' . $this->session->data['user_token'], true);
+			$json['next'] = $this->url->link('task/catalog/manufacturer', 'user_token=' . $this->session->data['user_token'], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -57,7 +57,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	}
 
 	public function info(): void {
-		$this->load->language('ssr/manufacturer');
+		$this->load->language('task/catalog/manufacturer');
 
 		$json = [];
 
@@ -67,7 +67,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (!$this->user->hasPermission('modify', 'ssr/manufacturer')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/manufacturer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -111,7 +111,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $manufacturer_total);
 
 			if ($end < $manufacturer_total) {
-				$json['next'] = $this->url->link('ssr/manufacturer.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('task/catalog/manufacturer.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}
@@ -126,7 +126,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/manufacturer')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/manufacturer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

@@ -12,11 +12,11 @@ class Stores extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/admin/store');
+		$this->load->language('task/admin/store');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/admin/store')) {
+		if (!$this->user->hasPermission('modify', 'admin/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -64,11 +64,11 @@ class Stores extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/catalog/store');
+		$this->load->language('task/admin/store');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/catalog/store')) {
+		if (!$this->user->hasPermission('modify', 'catalog/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

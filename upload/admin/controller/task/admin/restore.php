@@ -12,7 +12,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('tool/backup');
+		$this->load->language('task/admin/backup');
 
 		$json = [];
 

@@ -12,11 +12,11 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index($args = []): array {
-		$this->load->language('ssr/admin/language');
+		$this->load->language('task/admin/language');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/admin/language')) {
+		if (!$this->user->hasPermission('modify', 'task/admin/language')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -50,11 +50,11 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/admin/language');
+		$this->load->language('task/admin/language');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/admin/language')) {
+		if (!$this->user->hasPermission('modify', 'admin/language')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

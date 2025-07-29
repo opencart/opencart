@@ -12,7 +12,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/topic');
+		$this->load->language('task/catalog/topic');
 
 		$json = [];
 
@@ -22,7 +22,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (!$this->user->hasPermission('modify', 'ssr/topic')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/topic')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -78,7 +78,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$json['text'] = sprintf($this->language->get('text_topic'), $start, $end, $topic_total);
 
 			if ($end < $topic_total) {
-				$json['next'] = $this->url->link('ssr/topic', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('task/catalog/topic', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}

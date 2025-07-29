@@ -12,7 +12,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/category');
+		$this->load->language('task/catalog/category');
 
 		$json = [];
 
@@ -22,7 +22,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		//if (!$this->user->hasPermission('modify', 'ssr/article')) {
+		//if (!$this->user->hasPermission('modify', 'task/catalog/article')) {
 		$json['error'] = $this->language->get('error_permission');
 		//}
 
@@ -37,11 +37,11 @@ class Article extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/category');
+		$this->load->language('task/catalog/category');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/language')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/language')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

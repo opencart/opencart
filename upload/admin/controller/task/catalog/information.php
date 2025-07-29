@@ -12,7 +12,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/information');
+		$this->load->language('task/catalog/information');
 
 		$json = [];
 
@@ -69,7 +69,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$json['text'] = sprintf($this->language->get('text_information'), $start, $end, $information_total);
 
 			if ($end < $information_total) {
-				$json['next'] = $this->url->link('ssr/information', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('task/catalog/information', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}

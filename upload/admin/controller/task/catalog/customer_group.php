@@ -12,11 +12,11 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/catalog/custom_group');
+		$this->load->language('task/catalog/custom_group');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/catalog/customer_group')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/customer_group')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -87,11 +87,11 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/catalog/customer_group');
+		$this->load->language('task/catalog/customer_group');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/catalog/customer_group')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/customer_group')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

@@ -14,7 +14,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/catalog/custom_field');
+		$this->load->language('task/catalog/custom_field');
 
 		$json = [];
 
@@ -23,7 +23,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('ssr/catalog/language');
+		$this->load->language('task/catalog/language');
 
 		$json = [];
 

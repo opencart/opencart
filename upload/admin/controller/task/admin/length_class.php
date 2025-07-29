@@ -14,7 +14,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): mixed {
-		$this->load->language('task/length_class');
+		$this->load->language('task/admin/length_class');
 
 		$this->load->model('localisation/language');
 
@@ -54,7 +54,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
-		$this->load->language('task/language');
+		$this->load->language('task/admin/language');
 
 		$json = [];
 

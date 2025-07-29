@@ -12,7 +12,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('ssr/manufacturer');
+		$this->load->language('task/catalog/manufacturer');
 
 		$json = [];
 
@@ -29,7 +29,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'ssr/manufacturer')) {
+		if (!$this->user->hasPermission('modify', 'task/catalog/manufacturer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

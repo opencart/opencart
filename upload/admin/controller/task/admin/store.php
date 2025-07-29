@@ -5,7 +5,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
  *
  * @package Opencart\Admin\Controller\Ssr
  */
-class Stores extends \Opencart\System\Engine\Controller {
+class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Generate
 	 *
@@ -16,7 +16,7 @@ class Stores extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'admin/store')) {
+		if (!$this->user->hasPermission('modify', 'task/admin/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
@@ -68,7 +68,7 @@ class Stores extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'catalog/store')) {
+		if (!$this->user->hasPermission('modify', 'task/admin/store')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

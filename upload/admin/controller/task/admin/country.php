@@ -26,7 +26,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			// Add a task for generating the country list
 			$task_data = [
-				'code'   => 'country_list',
+				'code'   => 'country',
 				'action' => 'admin/country.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
@@ -75,9 +75,9 @@ class Country extends \Opencart\System\Engine\Controller {
 		foreach ($countries as $country) {
 			// Add a task for generating the country info data
 			$task_data = [
-				'code'   => 'country_info',
+				'code'   => 'country',
 				'action' => 'admin/country.info',
-				'args'   => $country + ['language_code' => $language_info['code']]
+				'args'   => $country
 			];
 
 			$this->model_setting_task->addTask($task_data);
@@ -86,28 +86,34 @@ class Country extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function info(array $country): array {
+	public function info(array $args = []): array {
 		$this->load->language('task/admin/country');
 
+		$this->load->model('localisation/language');
 
+		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
+		}
 
 		$this->load->model('localisation/zone');
 
-		$zones = $this->model_localisation_zone->getZonesByCountryId($country['country_id'], $country['language_id']);
+		$zones = $this->model_localisation_zone->getZonesByCountryId($args['country_id'], $language_info['language_id']);
 
 		$base = DIR_APPLICATION . 'view/data/';
-		$directory = $country['language_code'] . '/localisation/';
-		$filename = 'country-' . $country['country_id'] . '.json';
+		$directory = $language_info['language_code'] . '/localisation/';
+		$filename = 'country-' . $args['country_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country + ['zone' => $zones]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($args + ['zone' => $zones]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_success'), $country['name'], $country['name'])];
+		return ['success' => sprintf($this->language->get('text_success'), $language_info['name'], $args['name'])];
 	}
 
 	public function clear(): void {

@@ -161,7 +161,15 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_return_action->getReturnActions($filter_data);
 	 */
 	public function getReturnActions(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "return_action`";
+
+		if (!empty($data['filter_language_id'])) {
+			$sql .= " WHERE `language_id` = '" . (int)$data['filter_language_id'] . "'";
+		} else {
+			$sql .= " WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		}
+
+		$sql .= " ORDER BY `name`";
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";
@@ -194,6 +202,25 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		}
 
 		return $return_action_data;
+	}
+
+	/**
+	 * Get Total Return Actions
+	 *
+	 * Get the total number of return action records in the database.
+	 *
+	 * @return int total number of return action records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/return_action');
+	 *
+	 * $return_action_total = $this->model_localisation_return_action->getTotalReturnActions();
+	 */
+	public function getTotalReturnActions(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -269,24 +296,5 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Return Actions
-	 *
-	 * Get the total number of return action records in the database.
-	 *
-	 * @return int total number of return action records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/return_action');
-	 *
-	 * $return_action_total = $this->model_localisation_return_action->getTotalReturnActions();
-	 */
-	public function getTotalReturnActions(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return (int)$query->row['total'];
 	}
 }

@@ -161,7 +161,15 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 * $return_statuses = $this->model_localisation_return_status->getReturnStatuses($filter_data);
 	 */
 	public function getReturnStatuses(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "return_status`";
+
+		if (!empty($data['filter_language_id'])) {
+			$sql .= " WHERE `language_id` = '" . (int)$data['filter_language_id'] . "'";
+		} else {
+			$sql .= " WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		}
+
+		$sql .= " ORDER BY `name`";
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";

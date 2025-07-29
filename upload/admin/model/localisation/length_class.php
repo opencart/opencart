@@ -120,6 +120,27 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Length Class
+	 *
+	 * Get the record of the length class record in the database.
+	 *
+	 * @param int $length_class_id primary key of the length class record
+	 *
+	 * @return array<string, mixed> length class record that has length class ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/length_class');
+	 *
+	 * $length_class_info = $this->model_localisation_length_class->getLengthClass($length_class_id);
+	 */
+	public function getLengthClass(int $length_class_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lc`.`length_class_id` = '" . (int)$length_class_id . "' AND `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Length Classes
 	 *
 	 * Get the record of the length class records in the database.
@@ -142,7 +163,15 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * $length_classes = $this->model_localisation_length_class->getLengthClasses($filter_data);
 	 */
 	public function getLengthClasses(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`)";
+
+		if (!empty($data['filter_language_id'])) {
+			$sql .= " WHERE `lcd`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		} else {
+			$sql .= " WHERE `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		}
+
+		$sql .= " ORDER BY `name`";
 
 		$sort_data = [
 			'title',
@@ -187,27 +216,6 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		}
 
 		return $length_class_data;
-	}
-
-	/**
-	 * Get Length Class
-	 *
-	 * Get the record of the length class record in the database.
-	 *
-	 * @param int $length_class_id primary key of the length class record
-	 *
-	 * @return array<string, mixed> length class record that has length class ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/length_class');
-	 *
-	 * $length_class_info = $this->model_localisation_length_class->getLengthClass($length_class_id);
-	 */
-	public function getLengthClass(int $length_class_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lc`.`length_class_id` = '" . (int)$length_class_id . "' AND `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return $query->row;
 	}
 
 	/**

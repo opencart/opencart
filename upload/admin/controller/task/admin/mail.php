@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Admin;
 /**
- * Class Currency
+ * Class Mail
  *
  * @package Opencart\Admin\Controller\Task\System
  */
@@ -12,12 +12,12 @@ class Mail extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 *
 	 */
-	public function index(array $arg = []): array {
+	public function index(array $args = []): array {
 		if (!$this->config->get('config_mail_engine')) {
 			return;
 		}
 
-		$email = trim($arg['email']);
+		$email = trim($args['email']);
 
 		if (!oc_validate_email($email)) {
 			return;
@@ -34,10 +34,15 @@ class Mail extends \Opencart\System\Engine\Controller {
 
 		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
 		$mail->setTo($email);
-		$mail->setFrom($arg['from']);
-		$mail->setSender($arg['sender']);
-		$mail->setSubject($arg['subject']);
-		$mail->setHtml($arg['content']);
+		$mail->setFrom($args['from']);
+		$mail->setSender($args['sender']);
+		
+		if (isset($args['reply_to'])) {
+			$mail->setReplyTo($args['reply_to']);
+		}
+		
+		$mail->setSubject($args['subject']);
+		$mail->setHtml($args['content']);
 		$mail->send();
 	}
 }

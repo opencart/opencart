@@ -161,7 +161,15 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_order_status->getOrderStatuses($filter_data);
 	 */
 	public function getOrderStatuses(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "order_status`";
+
+		if (!empty($data['filter_language_id'])) {
+			$sql .= " WHERE `language_id` = '" . (int)$data['filter_language_id'] . "'";
+		} else {
+			$sql .= " WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		}
+
+		$sql .= " ORDER BY `name`";
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";
@@ -194,6 +202,25 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 		}
 
 		return $order_status_data;
+	}
+
+	/**
+	 * Get Total Order Statuses
+	 *
+	 * Get the total number of order status records in the database.
+	 *
+	 * @return int total number of order status records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/order_status');
+	 *
+	 * $order_status_total = $this->model_localisation_order_status->getTotalOrderStatuses();
+	 */
+	public function getTotalOrderStatuses(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return (int)$query->row['total'];
 	}
 
 	/**
@@ -267,24 +294,5 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Order Statuses
-	 *
-	 * Get the total number of order status records in the database.
-	 *
-	 * @return int total number of order status records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/order_status');
-	 *
-	 * $order_status_total = $this->model_localisation_order_status->getTotalOrderStatuses();
-	 */
-	public function getTotalOrderStatuses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return (int)$query->row['total'];
 	}
 }

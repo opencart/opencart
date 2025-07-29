@@ -499,19 +499,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Extension
-		$this->load->model('setting/extension');
-
-		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
-
-		if (!$extension_info) {
-			$json['error'] = $this->language->get('error_extension');
-		}
-
 		if (!$json) {
 			$task_data = [
 				'code'   => 'currency',
-				'action' => 'catalog/data/currency',
+				'action' => 'admin/currency.refresh',
 				'args'   => []
 			];
 

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Cron;
+namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Subscription
  *

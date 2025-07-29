@@ -16,10 +16,9 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('task/admin/custom_field');
 
-		$json = [];
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+
+
 	}
 
 	public function clear(): void {

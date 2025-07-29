@@ -121,7 +121,15 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_weight_class->getWeightClasses($filter_data);
 	 */
 	public function getWeightClasses(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`)";
+
+		if (!empty($data['filter_language_id'])) {
+			$sql .= " WHERE `wcd`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		} else {
+			$sql .= " WHERE `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		}
+
+		$sql .= " ORDER BY `name`";
 
 		$sort_data = [
 			'title',

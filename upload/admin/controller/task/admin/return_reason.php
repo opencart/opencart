@@ -3,13 +3,13 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Return Reason
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the country list JSON files by language.
+	 * Generates the return reason list JSON files.
 	 *
 	 * @return void
 	 */
@@ -21,7 +21,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
+			// Add a task for generating the return reason list
 			$task_data = [
 				'code'   => 'return_reason',
 				'action' => 'admin/return_reason.list',
@@ -45,19 +45,19 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$this->load->model('localisation/currency');
+		$this->load->model('localisation/return_reason');
 
-		$currencies = $this->model_localisation_currency->getCurrencies();
+		$return_reasons = $this->model_localisation_return_reason->getReturnReasons(['filter_language_id' => $language_info['language_id']]);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
-		$filename = 'currency.json';
+		$filename = 'return_reason.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($currencies))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($return_reasons))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

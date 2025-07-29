@@ -14,39 +14,27 @@ class Language extends \Opencart\System\Engine\Controller {
 	public function index($args = []): array {
 		$this->load->language('task/admin/language');
 
-		$json = [];
+		$this->load->model('localisation/language');
 
-		if (!$this->user->hasPermission('modify', 'task/admin/language')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$languages = $this->model_localisation_language->getLanguages();
 
-		if (!$json) {
-			$this->load->model('localisation/language');
+		foreach ($languages as $language) {
+			$base = DIR_APPLICATION . 'view/data/';
+			$directory = $language['code'] . '/localisation/';
+			$filename = 'language.json';
 
-			$languages = $this->model_localisation_language->getLanguages();
-
-			foreach ($languages as $language) {
-				$base = DIR_APPLICATION . 'view/data/';
-				$directory = $language['code'] . '/localisation/';
-				$filename = 'language.json';
-
-				if (!oc_directory_create($base . $directory, 0777)) {
-					$json['error'] = sprintf($this->language->get('error_directory'), $directory);
-
-					break;
-				}
-
-				$file = $base . $directory . $filename;
-
-				if (!file_put_contents($file, json_encode($languages))) {
-					$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
-
-					break;
-				}
+			if (!oc_directory_create($base . $directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 			}
 
-			return ['success' => $this->language->get('text_success')];
+			$file = $base . $directory . $filename;
+
+			if (!file_put_contents($file, json_encode($languages))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
 		}
+
+		return ['success' => $this->language->get('text_success')];
 	}
 
 	public function clear(): void {

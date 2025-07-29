@@ -10,7 +10,7 @@ class ControllerExtensionRecurringPayPal extends Controller {
 		
 			$this->load->model('account/recurring');
 			
-			$data['order_recurring_id'] = $this->request->get['order_recurring_id'];
+			$data['order_recurring_id'] = (int)$this->request->get['order_recurring_id'];
 
 			$order_recurring_info = $this->model_account_recurring->getOrderRecurring($data['order_recurring_id']);
 			

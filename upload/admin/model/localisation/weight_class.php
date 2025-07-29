@@ -129,8 +129,6 @@ class WeightClass extends \Opencart\System\Engine\Model {
 			$sql .= " WHERE `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}
 
-		$sql .= " ORDER BY `name`";
-
 		$sort_data = [
 			'title',
 			'unit',

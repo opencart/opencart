@@ -24,19 +24,11 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'weight_class',
-			'action' => 'catalog/weight_class',
+			'action' => 'admin/weight_class',
 			'args'   => []
 		];
 
 		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'weight_class',
-			'action' => 'admin/weight_class',
-			'args'   => []
-		];
 
 		$this->model_setting_task->addTask($task_data);
 	}

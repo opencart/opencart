@@ -5,7 +5,7 @@ namespace Opencart\Admin\Controller\Event;
  *
  * @package Opencart\Admin\Controller\Event
  */
-class ReturnReason extends \Opencart\System\Engine\Controller {
+class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *

@@ -77,19 +77,16 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			try {
 				$output = $this->load->controller('task/' . $task['action'], $task['args']);
+
+				// If task does not exist
+				if ($output instanceof \Exception) {
+					$output = ['error' => $output->getMessage()];
+				}
 			} catch (\Exception $e) {
 				$output = ['error' => $e->getMessage()];
 			}
 
 			// If task does not exist
-			if ($output instanceof \Exception) {
-				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output);
-
-				fwrite(STDOUT, $output['error'] . "\n");
-
-				break;
-			}
-
 			if (isset($output['error'])) {
 				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output);
 
@@ -103,7 +100,7 @@ class Task extends \Opencart\System\Engine\Controller {
 
 				fwrite(STDOUT, $output['success'] . "\n");
 
-				$this->model_setting_task->deleteTask($task['task_id']);
+				//$this->model_setting_task->deleteTask($task['task_id']);
 
 				$next = $this->model_setting_task->getTasks($filter_data);
 

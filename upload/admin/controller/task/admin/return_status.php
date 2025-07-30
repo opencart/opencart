@@ -47,7 +47,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/return_status');
 
-		$return_statuses = $this->model_localisation_return_status->getReturnReasons(['filter_language_id' => $language_info['language_id']]);
+		$return_statuses = $this->model_localisation_return_status->getReturnStatuses(['filter_language_id' => $language_info['language_id']]);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';

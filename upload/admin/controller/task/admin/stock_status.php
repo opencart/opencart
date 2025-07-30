@@ -1,20 +1,20 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Admin;
 /**
- * Class Order Status
+ * Class Stock Status
  *
  * @package Opencart\Admin\Controller\Task\Admin
  */
-class OrderStatus extends \Opencart\System\Engine\Controller {
+class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the country list JSON files by language.
+	 * Generates the stock status list JSON files by language.
 	 *
 	 * @return void
 	 */
 	public function index(): array {
-		$this->load->language('task/admin/order_status');
+		$this->load->language('task/admin/stock_status');
 
 		$this->load->model('localisation/language');
 
@@ -23,8 +23,8 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			// Add a task for generating the country list
 			$task_data = [
-				'code'   => 'order_status',
-				'action' => 'admin/order_status.list',
+				'code'   => 'stock_status',
+				'action' => 'admin/stock_status.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 
@@ -35,7 +35,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(array $args = []): array {
-		$this->load->language('task/admin/order_status');
+		$this->load->language('task/admin/stock_status');
 
 		$this->load->model('localisation/language');
 
@@ -45,19 +45,19 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$this->load->model('localisation/order_status');
+		$this->load->model('localisation/stock_status');
 
-		$currencies = $this->model_localisation_order_status->getOrderStatuses();
+		$stock_statuses = $this->model_localisation_stock_status->getStockStatuses();
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
-		$filename = 'order_status.json';
+		$filename = 'stock_status.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($currencies))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($stock_statuses))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

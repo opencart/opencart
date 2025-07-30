@@ -1,6 +1,7 @@
 <?php
 // Text
-$_['text_success']     = 'Erfolg: Sie haben Währungen geändert!';
+$_['text_success']    = 'Starting generating currency files!';
+$_['text_list']       = 'Generating %s currency list files!';
 
 // Error
 $_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Währungen zu ändern!';

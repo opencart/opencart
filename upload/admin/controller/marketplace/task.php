@@ -42,7 +42,6 @@ class Task extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/task', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['start'] = $this->url->link('marketplace/task.start', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('marketplace/task.delete', 'user_token=' . $this->session->data['user_token']);
 		$data['pending'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=pending');
 		$data['processing'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=processing');
@@ -129,6 +128,8 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/task.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		$data['tasks'] = [];
+
 		$filter_data = [
 			'filter_code'   => $filter_code,
 			'filter_status' => $filter_status,
@@ -138,7 +139,14 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$data['tasks'] = $this->model_setting_task->getTasks($filter_data);
+		$results = $this->model_setting_task->getTasks($filter_data);
+
+		foreach ($results as $result) {
+			$data['tasks'][] = [
+				'args'     => json_encode($result['args']),
+				'response' => json_encode($result['response'])
+			] + $result;
+		}
 
 		// Total Tasks
 		$task_total = $this->model_setting_task->getTotalTasks($filter_data);
@@ -156,6 +164,11 @@ class Task extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/task_list', $data);
 	}
 
+	/**
+	 * Start
+	 *
+	 * @return void
+	 */
 	public function start() {
 		$this->load->language('marketplace/task');
 
@@ -212,7 +225,71 @@ class Task extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Enable
+	 * Clear
+	 *
+	 * @return void
+	 */
+	public function clear() {
+		$this->load->language('marketplace/task');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/task');
+
+			$results = $this->model_setting_task->getTasks();
+
+			foreach ($results as $result) {
+				$this->model_setting_task->deleteTask($result['task_id']);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('marketplace/task');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/event')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/task');
+
+			foreach ($selected as $task_id) {
+				$this->model_setting_task->deleteTask((int)$task_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Status
 	 *
 	 * @return void
 	 */
@@ -254,40 +331,6 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			foreach ($selected as $task_id) {
 				$this->model_setting_task->editStatus((int)$task_id, $status);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(): void {
-		$this->load->language('marketplace/task');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/event')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/task');
-
-			foreach ($selected as $task_id) {
-				$this->model_setting_task->deleteTask((int)$task_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

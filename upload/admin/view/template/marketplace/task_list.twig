@@ -7,9 +7,9 @@
           <th>{{ column_code }}</th>
           <th>{{ column_action }}</th>
           <th class="text-center">{{ column_status }}</th>
-          <th class="text-center">{{ column_response }}</th>
           <th>{{ column_date_added }}</th>
           <th>{{ column_date_modified }}</th>
+          <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
@@ -30,9 +30,9 @@
                 {% elseif task.status == 'failed' %}
                   <span class="badge bg-danger">{{ text_failed }}</span>
                 {% endif %}</td>
-              <td>{{ task.response }}</td>
               <td>{{ task.date_added }}</td>
               <td>{{ task.date_modified }}</td>
+              <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-task-{{ task.task_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button></td>
             </tr>
           {% endfor %}
         {% else %}
@@ -49,17 +49,28 @@
   </div>
 </form>
 {% for task in tasks %}
-  {% if task.description %}
-    <div id="modal-task-{{ task.task_id }}" class="modal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <div id="modal-task-{{ task.task_id }}" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">{{ entry_action }}</label>
+            <input type="text" value="{{ task.action }}" class="form-control" readonly/>
           </div>
-          <div class="modal-body"><textarea rows="5" class="form-control" readonly>{{ task.description }}</textarea></div>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_args }}</label>
+            <textarea rows="5" class="form-control" readonly>{{ task.args }}</textarea>
+          </div>
+          <div>
+            <label class="form-label">{{ entry_response }}</label>
+            <textarea rows="5" class="form-control" readonly>{{ task.response }}</textarea>
+          </div>
         </div>
       </div>
     </div>
-  {% endif %}
+  </div>
 {% endfor %}

@@ -53,11 +53,11 @@
           </div>
           <div class="mb-3">
             <label class="form-label">{{ entry_trigger }}</label>
-            <textarea class="form-control" readonly>{{ event.trigger }}</textarea>
+            <input type="text" value="{{ event.trigger }}" class="form-control" readonly/>
           </div>
           <div>
             <label class="form-label">{{ entry_action }}</label>
-            <textarea class="form-control" readonly>{{ event.action }}</textarea>
+            <input type="text" value="{{ event.action }}" class="form-control" readonly/>
           </div>
         </div>
       </div>

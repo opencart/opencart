@@ -4,18 +4,20 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#task').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="button" value="{{ start }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-success"><i class="fa-solid fa-play"></i></button>
-        <button type="button" value="{{ pause }}" data-bs-toggle="tooltip" title="{{ button_pause }}" class="btn btn-warning"><i class="fa-solid fa-pause"></i></button>
-        <button type="button" value="{{ pause }}" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-info"><i class="fa-solid fa-sync"></i></button>
+        <button type="button" id="button-start"  data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-success"><i class="fa-solid fa-play"></i></button>
+        <button type="button" id="button-pause"  data-bs-toggle="tooltip" title="{{ button_pause }}" class="btn btn-warning"><i class="fa-solid fa-pause"></i></button>
+        <button type="button" id="button-clear" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa-solid fa-eraser"></i></button>
         <div class="btn-group">
           <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
           <ul class="dropdown-menu">
+            <li><button type="submit" form="form-task" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">{{ text_status }}</h6></li>
             <li><button type="submit" form="form-task" formaction="{{ pending }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-secondary"></i> {{ text_pending }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ processing }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-primary"></i> {{ text_processing }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ paused }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-warning"></i> {{ text_paused }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ complete }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-success"></i> {{ text_complete }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ failed }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-danger"></i> {{ text_failed }}</button></li>
-            <li><button type="submit" form="form-task" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>
       </div>
@@ -79,6 +81,97 @@ $('#form-filter').on('submit', function(e) {
     window.history.pushState({}, null, 'index.php?route=marketplace/task&user_token={{ user_token }}&' + url);
 
     $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + url);
+});
+
+$('#button-start').on('click', function(e) {
+    $.ajax({
+        url: 'index.php?route=marketplace/task.start&user_token={{ user_token }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-start').button('loading');
+        },
+        complete: function() {
+            $('#button-start').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + $('#form-filter').serialize());
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#button-pause').on('click', function(e) {
+    $.ajax({
+        url: 'index.php?route=marketplace/task.pause&user_token={{ user_token }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-pause').button('loading');
+        },
+        complete: function() {
+            $('#button-pause').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + $('#form-filter').serialize());
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#button-clear').on('click', function(e) {
+    $.ajax({
+        url: 'index.php?route=marketplace/task.clear&user_token={{ user_token }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-clear').button('loading');
+        },
+        complete: function() {
+            $('#button-clear').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + $('#form-filter').serialize());
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#button-refresh').on('click', function(e) {
+    $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + $('#form-filter').serialize());
 });
 //--></script>
 {{ footer }}

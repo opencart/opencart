@@ -3,11 +3,11 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Language
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Language extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generate
+	 * Index
 	 *
 	 * @return void
 	 */

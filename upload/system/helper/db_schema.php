@@ -7369,10 +7369,6 @@ function oc_db_schema() {
 				'type' => 'varchar(32)'
 			],
 			[
-				'name' => 'description',
-				'type' => 'text'
-			],
-			[
 				'name' => 'action',
 				'type' => 'varchar(255)'
 			],
@@ -7383,6 +7379,10 @@ function oc_db_schema() {
 			[
 				'name' => 'status',
 				'type' => 'enum(\'pending\',\'processing\',\'paused\',\'complete\',\'failed\')'
+			],
+			[
+				'name' => 'response',
+				'type' => 'text'
 			],
 			[
 				'name' => 'date_added',

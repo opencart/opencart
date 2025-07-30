@@ -13,7 +13,7 @@ class Task extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): ?\Opencart\System\Engine\Action {
 		if (php_sapi_name() == 'cli') {
-			set_exception_handler([$this, 'exception']);
+			//set_exception_handler([$this, 'exception']);
 
 			if (isset($this->request->server['argv'])) {
 				$argv = (array)$this->request->server['argv'];
@@ -54,6 +54,8 @@ class Task extends \Opencart\System\Engine\Controller {
 			return;
 		}
 
+
+
 		$results = $this->model_setting_task->getTasks(['filter_status' => 'pending']);
 
 		foreach ($results as $result) {
@@ -69,7 +71,7 @@ class Task extends \Opencart\System\Engine\Controller {
 					break;
 				}
 
-				if (!isset($output['error'])) {
+				if (isset($output['error'])) {
 					$this->model_setting_task->editStatus($result['task_id'], 'failed');
 
 					fwrite(STDOUT, $output . "\n");

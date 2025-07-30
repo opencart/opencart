@@ -164,7 +164,10 @@ class Task extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		foreach ($query->rows as $result) {
-			$task_data[] = ['args' => $result['args'] ? json_decode($result['args'], true) : []] + $result;
+			$task_data[] = [
+				'args'     => $result['args'] ? json_decode($result['args'], true) : [],
+				'response' => $result['response'] ? json_decode($result['response'], true) : [],
+			] + $result;
 		}
 
 		return $task_data;

@@ -9,7 +9,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the return reason list JSON files.
+	 * Generates the return reason task list.
 	 *
 	 * @return void
 	 */

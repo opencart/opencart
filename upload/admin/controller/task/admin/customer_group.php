@@ -3,14 +3,14 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Customer Group
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generate
+	 * Index
 	 *
 	 * @return void
-	 */
+     */
 	public function index(): mixed {
 		$this->load->language('task/admin/customer_group');
 

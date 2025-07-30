@@ -1,19 +1,19 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
- * Class Length Class
+ * Class Return Action
  *
  * @package Opencart\Admin\Controller\Event
  */
-class LengthClass extends \Opencart\System\Engine\Controller {
+class ReturnAction extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Adds task to generate new length_class list
+	 * Adds task to generate new return action list
 	 *
-	 * model/localisation/length_class/addLengthClass/after
-	 * model/localisation/length_class/editLengthClass/after
-	 * model/localisation/length_class/deleteLengthClass/after
+	 * model/localisation/return_action/addReturnAction/after
+	 * model/localisation/return_action/editReturnAction/after
+	 * model/localisation/return_action/deleteReturnAction/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -23,8 +23,8 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'length_class',
-			'action' => 'admin/length_class',
+			'code'   => 'return_action',
+			'action' => 'admin/return_action',
 			'args'   => []
 		];
 

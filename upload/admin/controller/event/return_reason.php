@@ -9,7 +9,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Adds task to generate new return_reason list
+	 * Adds task to generate new return reason list
 	 *
 	 * model/localisation/return_reason/addReturnReason/after
 	 * model/localisation/return_reason/editReturnReason/after

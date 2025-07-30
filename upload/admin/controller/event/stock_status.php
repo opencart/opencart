@@ -1,19 +1,19 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
- * Class Length Class
+ * Class Stock Status
  *
  * @package Opencart\Admin\Controller\Event
  */
-class LengthClass extends \Opencart\System\Engine\Controller {
+class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Adds task to generate new length_class list
+	 * Adds task to generate new stock status list
 	 *
-	 * model/localisation/length_class/addLengthClass/after
-	 * model/localisation/length_class/editLengthClass/after
-	 * model/localisation/length_class/deleteLengthClass/after
+	 * model/localisation/stock_status/addStockStatus/after
+	 * model/localisation/stock_status/editStockStatus/after
+	 * model/localisation/stock_status/deleteStockStatus/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -23,8 +23,8 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'length_class',
-			'action' => 'admin/length_class',
+			'code'   => 'stock_status',
+			'action' => 'admin/stock_status',
 			'args'   => []
 		];
 

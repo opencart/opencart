@@ -5,10 +5,7 @@ namespace Opencart\Admin\Controller\Startup;
  *
  * @package Opencart\Admin\Controller\Startup
  *
- * Command line tool for installing opencart
- * Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
- * Updated and maintained by OpenCart
- * (Currently tested on linux only)
+ * Command line tool for managing tasks in opencart
  *
  * Usage:
  *
@@ -16,7 +13,7 @@ namespace Opencart\Admin\Controller\Startup;
  *
  * @example:
  *
- * php c://xampp/htdocs/opencart-master/upload/install/cli_install.php install --username admin --password --email email@example.com --http_server http://localhost/opencart-master/upload/ --language en-gb --db_driver mysqli --db_hostname localhost --db_username root --db_database opencart-master --db_port 3306 --db_prefix oc_
+ * php c://xampp/htdocs/opencart-master/upload/install/cli_install.php start
  */
 class Task extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,6 +1,7 @@
 <?php
 // Text
-$_['text_success']     = 'Success: You have modified currencies!';
+$_['text_success']    = 'Starting generating currency files!';
+$_['text_list']       = 'Generating %s currency list files!';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify currencies!';

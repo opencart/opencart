@@ -270,7 +270,7 @@ class Task extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
-		if (!$this->user->hasPermission('modify', 'marketplace/event')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

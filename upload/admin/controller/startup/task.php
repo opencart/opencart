@@ -4,6 +4,19 @@ namespace Opencart\Admin\Controller\Startup;
  * Class Task
  *
  * @package Opencart\Admin\Controller\Startup
+ *
+ * Command line tool for installing opencart
+ * Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
+ * Updated and maintained by OpenCart
+ * (Currently tested on linux only)
+ *
+ * Usage:
+ *
+ * php cli_install.php start
+ *
+ * @example:
+ *
+ * php c://xampp/htdocs/opencart-master/upload/install/cli_install.php install --username admin --password --email email@example.com --http_server http://localhost/opencart-master/upload/ --language en-gb --db_driver mysqli --db_hostname localhost --db_username root --db_database opencart-master --db_port 3306 --db_prefix oc_
  */
 class Task extends \Opencart\System\Engine\Controller {
 	/**
@@ -48,47 +61,61 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
-		fwrite(STDOUT, '$task_total ' . $task_total . "\n");
-
 		if ($task_total) {
 			return;
 		}
 
+		$filter_data = [
+			'filter_status' => 'pending',
+			'start'         => 0,
+			'limit'         => 1
+		];
 
+		$results = $this->model_setting_task->getTasks($filter_data);
 
-		$results = $this->model_setting_task->getTasks(['filter_status' => 'pending']);
+		while ($results) {
+			$task = array_shift($results);
 
-		foreach ($results as $result) {
-			$this->model_setting_task->editStatus($result['task_id'], 'processing');
+			$this->model_setting_task->editStatus($task['task_id'], 'processing');
 
 			try {
-				$output = $this->load->controller('task/' . $result['action'], $result['args']);
-
-				// If task does not exist
-				if ($output instanceof \Exception) {
-					$this->model_setting_task->editStatus($result['task_id'], 'failed');
-
-					break;
-				}
-
-				if (isset($output['error'])) {
-					$this->model_setting_task->editStatus($result['task_id'], 'failed');
-
-					fwrite(STDOUT, $output . "\n");
-
-					break;
-				}
-
-				$this->model_setting_task->editStatus($result['task_id'], 'complete');
-
-				sleep(1);
+				$output = $this->load->controller('task/' . $task['action'], $task['args']);
 			} catch (\Exception $e) {
-				$this->model_setting_task->editStatus($result['task_id'], 'failed');
+				$output = ['error' => $e->getMessage()];
+			}
 
-				fwrite(STDOUT, $e . "\n");
+			// If task does not exist
+			if ($output instanceof \Exception) {
+				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output);
+
+				fwrite(STDOUT, $output['error'] . "\n");
 
 				break;
 			}
+
+			if (isset($output['error'])) {
+				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output);
+
+				fwrite(STDOUT, $output['error'] . "\n");
+
+				break;
+			}
+
+			if (isset($output['success'])) {
+				$this->model_setting_task->editStatus($task['task_id'], 'complete', $output);
+
+				fwrite(STDOUT, $output['success'] . "\n");
+
+				$this->model_setting_task->deleteTask($task['task_id']);
+
+				$next = $this->model_setting_task->getTasks($filter_data);
+
+				if ($next) {
+					array_push($results, $next[0]);
+				}
+			}
+
+			sleep(1);
 		}
 	}
 

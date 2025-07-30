@@ -81,7 +81,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_setting_task->editStatus($task_id, $status);
 	 */
-	public function editStatus(int $task_id, string $status): void {
+	public function editStatus(int $task_id, string $status, array $response = []): void {
 		$allowed = [
 			'pending',
 			'processing',
@@ -94,7 +94,7 @@ class Task extends \Opencart\System\Engine\Model {
 			$status = 'failed';
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `response` = '" . $this->db->escape(json_encode($response)) . "', `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
 	}
 
 	/**

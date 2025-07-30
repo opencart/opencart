@@ -48,16 +48,16 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">{{ entry_description }}</label>
-            <textarea rows="5" class="form-control" readonly>{{ event.description }}</textarea>
+            <label for="input-description-{{ event.event_id }}" class="form-label">{{ entry_description }}</label>
+            <textarea rows="5" id="input-description-{{ event.event_id }}" class="form-control" readonly>{{ event.description }}</textarea>
           </div>
           <div class="mb-3">
-            <label class="form-label">{{ entry_trigger }}</label>
-            <input type="text" value="{{ event.trigger }}" class="form-control" readonly/>
+            <label for="input-trigger-{{ event.event_id }}" class="form-label">{{ entry_trigger }}</label>
+            <input type="text" value="{{ event.trigger }}" id="input-trigger-{{ event.event_id }}" class="form-control" readonly/>
           </div>
           <div>
-            <label class="form-label">{{ entry_action }}</label>
-            <input type="text" value="{{ event.action }}" class="form-control" readonly/>
+            <label for="input-action-{{ event.event_id }}" class="form-label">{{ entry_action }}</label>
+            <input type="text" value="{{ event.action }}" id="input-action-{{ event.event_id }}" class="form-control" readonly/>
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/admin/stock_status');
 
 		$this->load->model('localisation/language');

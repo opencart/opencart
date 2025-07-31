@@ -6729,6 +6729,11 @@ function oc_db_schema() {
 				'type' => 'text'
 			],
 			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime'
 			]

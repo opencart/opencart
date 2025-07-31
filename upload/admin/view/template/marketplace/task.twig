@@ -10,14 +10,14 @@
         <div class="btn-group">
           <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
           <ul class="dropdown-menu">
-            <li><button type="submit" form="form-task" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
-            <li><hr class="dropdown-divider"></li>
             <li><h6 class="dropdown-header">{{ text_status }}</h6></li>
             <li><button type="submit" form="form-task" formaction="{{ pending }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-secondary"></i> {{ text_pending }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ processing }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-primary"></i> {{ text_processing }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ paused }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-warning"></i> {{ text_paused }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ complete }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-success"></i> {{ text_complete }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ failed }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-danger"></i> {{ text_failed }}</button></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button type="submit" form="form-task" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>
       </div>

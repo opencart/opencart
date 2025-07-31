@@ -8,8 +8,10 @@
           <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
           <ul class="dropdown-menu">
             <li><button type="submit" form="form-subscription-plan" formaction="{{ copy }}" class="dropdown-item"><i class="fa-regular fa-copy"></i> {{ button_copy }}</button></li>
+            <li><hr class="dropdown-divider"></li>
             <li><button type="submit" form="form-subscription-plan" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
             <li><button type="submit" form="form-subscription-plan" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
+            <li><hr class="dropdown-divider"></li>
             <li><button type="submit" form="form-subscription-plan" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>

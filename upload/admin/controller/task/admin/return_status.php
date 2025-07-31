@@ -16,6 +16,8 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	public function index(): array {
 		$this->load->language('task/admin/return_status');
 
+		$this->load->model('setting/task');
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();

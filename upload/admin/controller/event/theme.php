@@ -11,9 +11,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new theme list
 	 *
-	 * model/localisation/theme/addTheme/after
-	 * model/localisation/theme/editTheme/after
-	 * model/localisation/theme/deleteTheme/after
+	 * model/design/theme/addTheme/after
+	 * model/design/theme/editTheme/after
+	 * model/design/theme/deleteTheme/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

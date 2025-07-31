@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
- * Class Statistics
+ * Class Return Reason
  *
  * @package Opencart\Admin\Controller\Event
  */

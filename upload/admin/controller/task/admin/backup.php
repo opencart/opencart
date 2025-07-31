@@ -22,6 +22,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
+		$limit = 200;
+
 		$this->load->model('tool/backup');
 
 		$allowed = $this->model_tool_backup->getTables();
@@ -36,16 +38,28 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$record_total = $this->model_tool_backup->getTotalRecords($args['table']);
 
 			$start = ($page - 1) * $limit;
-			$end = ($start > ($comment_total - $limit)) ? $comment_total : ($start + $limit);
 
-			for ($i = 0; $i <= $record_total; $i++) {
+			$end = ($start > ($record_total - $limit)) ? $record_total : ($start + $limit);
+
+			if ($record_total <= $limit) {
+				$limit = $record_total;
+			}
+
+			//$end = ($start > ($comment_total - $limit)) ? $comment_total : ($start + $limit);
+
+			($page * 200) >= $record_total
+			for ($i = 0; $i <= ($record_total / 200); $i++) {
+
+
+
+
 				$task_data = [
 					'code'   => 'backup',
 					'action' => 'admin/backup.write',
 					'args'   => [
 						'filename' => $args['filename'],
 						'table'    => $table,
-						'page'     => 1
+						'page'     => ($page - 1) * $limit
 					]
 				];
 
@@ -58,6 +72,10 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 	public function write(array $args = []): array {
 		$this->load->language('task/admin/backup');
+
+		if (!isset($args['filename'])) {
+			return ['error' => $this->language->get('error_filename')];
+		}
 
 		if (!isset($args['table'])) {
 			return ['error' => $this->language->get('error_table')];
@@ -110,7 +128,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
+			$output .= 'INSERT INTO `' . $args['table'] . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
 		}
 
 		$position = array_search($table, $backup);
@@ -134,24 +152,11 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$json['progress'] = 0;
 		}
 
-		$handle = fopen(DIR_STORAGE . 'backup/' . $filename, 'a');
+		$handle = fopen(DIR_STORAGE . 'backup/' . $args['filename'], 'a');
 
 		fwrite($handle, $output);
 
 		fclose($handle);
-
-		if (!$table) {
-			$json['success'] = $this->language->get('text_success');
-		} elseif (($page * 200) >= $record_total) {
-			$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $record_total);
-
-			$json['next'] = $this->url->link('tool/backup.backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=1', true);
-		} else {
-			$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $page * 200);
-
-			$json['next'] = $this->url->link('tool/backup.backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=' . ($page + 1), true);
-		}
-
 
 		return ['success' => $this->language->get('text_success')];
 	}

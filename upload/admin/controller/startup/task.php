@@ -91,8 +91,6 @@ class Task extends \Opencart\System\Engine\Controller {
 				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output);
 
 				fwrite(STDOUT, $output['error'] . "\n");
-
-				break;
 			}
 
 			if (isset($output['success'])) {

@@ -86,6 +86,10 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function rating() {
+
+	}
+
 	public function clear(): void {
 		$this->load->language('task/catalog/category');
 

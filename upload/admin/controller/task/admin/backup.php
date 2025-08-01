@@ -22,44 +22,35 @@ class Backup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
-		$limit = 200;
-
 		$this->load->model('tool/backup');
 
 		$allowed = $this->model_tool_backup->getTables();
 
+		$limit = 200;
+
+		$backup = (array)$args['backup'];
+
+		sort($backup);
+
 		$this->load->model('setting/task');
 
-		foreach ((array)$args['backup'] as $table) {
+		foreach ($backup as $table) {
 			if (!in_array($table, $allowed)) {
 				return ['error' => sprintf($this->language->get('error_table'), $table)];
 			}
 
-			$record_total = $this->model_tool_backup->getTotalRecords($args['table']);
+			$record_total = $this->model_tool_backup->getTotalRecords($table);
 
-			$start = ($page - 1) * $limit;
+			$pages = ceil($record_total / $limit);
 
-			$end = ($start > ($record_total - $limit)) ? $record_total : ($start + $limit);
-
-			if ($record_total <= $limit) {
-				$limit = $record_total;
-			}
-
-			//$end = ($start > ($comment_total - $limit)) ? $comment_total : ($start + $limit);
-
-			($page * 200) >= $record_total
-			for ($i = 0; $i <= ($record_total / 200); $i++) {
-
-
-
-
+			for ($i = 1; $i <= $pages; $i++) {
 				$task_data = [
 					'code'   => 'backup',
 					'action' => 'admin/backup.write',
 					'args'   => [
 						'filename' => $args['filename'],
 						'table'    => $table,
-						'page'     => ($page - 1) * $limit
+						'page'     => $i
 					]
 				];
 
@@ -95,13 +86,15 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = 200;
+
 		$output = '';
 
 		if ($page == 1) {
 			$output .= 'TRUNCATE TABLE `' . $this->db->escape($args['table']) . '`;' . "\n\n";
 		}
 
-		$results = $this->model_tool_backup->getRecords($args['table'], ($page - 1) * 200, 200);
+		$results = $this->model_tool_backup->getRecords($args['table'], ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$fields = '';
@@ -131,33 +124,22 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$output .= 'INSERT INTO `' . $args['table'] . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
 		}
 
-		$position = array_search($table, $backup);
-
-		// Total Records
-		$record_total = $this->model_tool_backup->getTotalRecords($table);
-
-		if (($page * 200) >= $record_total) {
-			$output .= "\n";
-
-			if (isset($backup[$position + 1])) {
-				$table = $backup[$position + 1];
-			} else {
-				$table = '';
-			}
-		}
-
-		if ($position !== false) {
-			$json['progress'] = round(($position / count($backup)) * 100);
-		} else {
-			$json['progress'] = 0;
-		}
-
 		$handle = fopen(DIR_STORAGE . 'backup/' . $args['filename'], 'a');
 
 		fwrite($handle, $output);
 
 		fclose($handle);
 
-		return ['success' => $this->language->get('text_success')];
+		$start = ($page - 1) * $limit;
+
+		$record_total = $this->model_tool_backup->getTotalRecords($args['table']);
+
+		if ($start > ($record_total - $limit)) {
+			$end = $record_total;
+		} else {
+			$end = ($start + $limit);
+		}
+
+		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], $start, $end)];
 	}
 }

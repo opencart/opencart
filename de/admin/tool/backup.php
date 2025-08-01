@@ -19,10 +19,10 @@ $_['entry_export']       = 'Export';
 
 // Error
 $_['error_permission']   = 'Warnung: Sie sind nicht berechtigt, Backup &amp; Restore zu ändern!';
-$_['error_export']       = 'Achtung: Sie müssen mindestens eine Tabelle zum Exportieren auswählen!';
+$_['error_backup']       = 'Warning: You must select at least one table to export!';
 $_['error_table']        = 'Tabelle %s ist nicht in der Erlaubtliste!';
-$_['error_file']         = 'Datei konnte nicht gefunden werden!';
-$_['error_directory']    = 'Verzeichnis konnte nicht gefunden werden!';
-$_['error_not_found']    = 'Fehler: Datei %s konnte nicht gefunden werden!';
+$_['error_filename']     = 'Der Dateiname muss zwischen 3 und 128 Zeichen lang sein!';
+$_['error_file']         = 'Backup File could not be found!';
+$_['error_file_type']    = 'Ungültiger Dateityp!';
 $_['error_headers_sent'] = 'Fehler: Header bereits versendet!';
 $_['error_upload_size']  = 'Die hochgeladene Datei darf nicht größer als %ssein!';

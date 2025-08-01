@@ -27,7 +27,7 @@ $registry->set('config', $config);
 $config->set('application', APPLICATION);
 
 // Set the default time zone
-date_default_timezone_set($config->get('date_timezone'));
+date_default_timezone_set($config->get('config_timezone'));
 
 // Logging
 $log = new \Opencart\System\Library\Log($config->get('error_filename'));

@@ -75,13 +75,12 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			try {
 				$output = $this->load->controller('task/' . $task['action'], $task['args']);
-
-				// If task does not exist
-				if ($output instanceof \Exception) {
-					$output = ['error' => $output->getMessage() . ' in ' . $output->getFile() . ' on line ' . $output->getLine()];
-				}
 			} catch (\Exception $e) {
-				$output = ['error' => $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine()];
+				$output = $e;
+			}
+
+			if ($output instanceof \Exception) {
+				$output = ['error' => $output->getMessage() . ' in ' . $output->getFile() . ' on line ' . $output->getLine()];
 			}
 
 			// If task does not exist

@@ -11,83 +11,104 @@ class Restore extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
-		$this->load->language('task/admin/backup');
+	public function index(array $args = []): array {
+		$this->load->language('task/admin/restore');
 
-		$json = [];
-
-		if (isset($this->request->get['filename'])) {
-			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
-		} else {
-			$filename = '';
+		if (!isset($args['filename'])) {
+			return ['error' => $this->language->get('error_filename')];
 		}
 
-		if (isset($this->request->get['position'])) {
-			$position = $this->request->get['position'];
+		$file = DIR_STORAGE . 'backup/' . $args['filename'];
+
+		if (!is_file($file)) {
+			return ['error' => $this->language->get('error_file')];
+		}
+
+		// 5MB Reads at a time;
+		$limit = 5 * (1024 * 1024);
+
+		$size = filesize($file);
+
+		for ($i = 0; $i <= ceil($size / $limit); $i++) {
+			$task_data = [
+				'code'   => 'backup',
+				'action' => 'admin/restore.fetch',
+				'args'   => [
+					'filename' => $args['filename'],
+					'position' => $i
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => $this->language->get('text_success')];
+	}
+
+	public function read(array $args = []): array {
+		$this->load->language('task/admin/restore');
+
+		if (isset($args['position'])) {
+			$position = $args['position'];
 		} else {
 			$position = 0;
 		}
 
-		if (!$this->user->hasPermission('modify', 'tool/backup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$file = DIR_STORAGE . 'backup/' . $filename;
+		$file = DIR_STORAGE . 'backup/' . $args['filename'];
 
 		if (!is_file($file)) {
-			$json['error'] = $this->language->get('error_file');
+			return ['error' => $this->language->get('error_file')];
 		}
 
-		if (!$json) {
-			// We set $i so we can batch execute the queries rather than do them all at once.
-			$i = 0;
 
-			$handle = fopen($file, 'r');
 
-			fseek($handle, $position, SEEK_SET);
+		// We set $i so we can batch execute the queries rather than do them all at once.
+		$i = 0;
 
-			while (!feof($handle) && ($i < 100)) {
-				$position = ftell($handle);
+		$handle = fopen($file, 'r');
 
-				$line = fgets($handle, 1000000);
+		fseek($handle, $position, SEEK_SET);
 
-				if ($i > 0 && (substr($line, 0, strlen('TRUNCATE TABLE `' . DB_PREFIX . 'user`')) == 'TRUNCATE TABLE `' . DB_PREFIX . 'user`' || substr($line, 0, strlen('TRUNCATE TABLE `' . DB_PREFIX . 'user_group`')) == 'TRUNCATE TABLE `' . DB_PREFIX . 'user_group`')) {
-					fseek($handle, $position, SEEK_SET);
-
-					break;
-				}
-
-				if ((substr($line, 0, 14) == 'TRUNCATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') && substr($line, -2) == ";\n") {
-					$this->db->query(substr($line, 0, strlen($line) - 2));
-				}
-
-				$i++;
-			}
-
+		while (!feof($handle) && ($i < 100)) {
 			$position = ftell($handle);
 
-			$size = filesize($file);
+			$line = fgets($handle, 4096);
 
-			if ($position) {
-				$json['progress'] = round(($position / $size) * 100);
-			} else {
-				$json['progress'] = 0;
+			if ($i > 0 && (str_starts_with($line, 'TRUNCATE TABLE `' . DB_PREFIX . 'user`') || str_starts_with($line, 'TRUNCATE TABLE `' . DB_PREFIX . 'user_group`'))) {
+				fseek($handle, $position, SEEK_SET);
+
+				break;
 			}
 
-			if ($position && !feof($handle)) {
-				$json['text'] = sprintf($this->language->get('text_restore'), $position, $size);
-
-				$json['next'] = $this->url->link('tool/backup.restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position, true);
-			} else {
-				$json['success'] = $this->language->get('text_success');
-
-				$this->cache->delete('*');
+			if ((substr($line, 0, 14) == 'TRUNCATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') && substr($line, -2) == ";\n") {
+				$this->db->query(substr($line, 0, strlen($line) - 2));
 			}
 
-			fclose($handle);
+			$i++;
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$position = ftell($handle);
+
+		$size = filesize($file);
+
+		if ($position) {
+			$json['progress'] = round(($position / $size) * 100);
+		} else {
+			$json['progress'] = 0;
+		}
+
+		if ($position && !feof($handle)) {
+			$json['text'] = sprintf($this->language->get('text_restore'), $position, $size);
+
+			$json['next'] = $this->url->link('tool/backup.restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position, true);
+
+
+		} else {
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		fclose($handle);
+
+		return ['success' => sprintf($this->language->get('text_restore'), $args['table'], $start ?: 1, $end, $record_total)];
 	}
 }

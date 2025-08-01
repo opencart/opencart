@@ -35,14 +35,14 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 
-		$this->load->model('tool/backup');
-
 		$ignore = [
 			DB_PREFIX . 'user',
 			DB_PREFIX . 'user_group'
 		];
 
 		$data['tables'] = [];
+
+		$this->load->model('tool/backup');
 
 		$results = $this->model_tool_backup->getTables();
 
@@ -134,22 +134,31 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (isset($this->request->post['backup'])) {
-			$backup = $this->request->post['backup'];
+		$required = ['backup' => []];
+
+		$post_info = $this->request->post + $required;
+
+		if (isset($post_info['backup'])) {
+			$backup = (array)$post_info['backup'];
 		} else {
 			$backup = [];
 		}
 
-		$this->load->model('tool/backup');
+		if ($backup) {
+			$disallowed = [
+				DB_PREFIX . 'user',
+				DB_PREFIX . 'user_group'
+			];
 
-		$allowed = $this->model_tool_backup->getTables();
+			foreach ($backup as $table) {
+				if (!str_starts_with($table, DB_PREFIX) || in_array($table, $disallowed)) {
+					$json['error'] = sprintf($this->language->get('error_table'), $table);
 
-		foreach ($backup as $table) {
-			if (!in_array($table, $allowed)) {
-				$json['error'] = sprintf($this->language->get('error_table'), $table);
-
-				break;
+					break;
+				}
 			}
+		} else {
+			$json['error'] = $this->language->get('error_backup');
 		}
 
 		if (!$json) {
@@ -203,7 +212,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$task_data = [
 				'code'   => 'restore',
 				'action' => 'admin/restore',
-				'args'   => ['filename' => date('Y-m-d H.i.s') . '.sql']
+				'args'   => ['filename' => $filename]
 			];
 
 			$this->load->model('setting/task');
@@ -245,7 +254,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			}
 
 			// Allowed file extension types
-			if (strtolower(substr(strrchr($filename, '.'), 1)) != 'sql') {
+			if (str_ends_with(strtolower($filename), '.sql')) {
 				$json['error'] = $this->language->get('error_file_type');
 			}
 		}
@@ -267,8 +276,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 	 */
 	public function download(): void {
 		$this->load->language('tool/backup');
-
-		$json = [];
 
 		if (isset($this->request->get['filename'])) {
 			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));

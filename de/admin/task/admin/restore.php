@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_success']   = 'Success: Starting building the database backup!';
-$_['text_backup']    = 'Restoring previous database backup (Progress %s)';
+$_['text_restore']   = 'Restoring previous database backup (Progress %s)';
 
 // Error
 $_['error_required'] = 'Argument %s required!';

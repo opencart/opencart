@@ -11,7 +11,6 @@ $_['text_info']            = 'Static Site Rendering Information';
 
 // Column
 $_['column_code']          = 'SSR Code';
-$_['column_status']        = 'Status';
 $_['column_date_modified'] = 'Last Run';
 $_['column_action']        = 'Aktionen';
 

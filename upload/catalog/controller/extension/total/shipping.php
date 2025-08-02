@@ -61,7 +61,7 @@ class ControllerExtensionTotalShipping extends Controller {
 
 		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
 
-		if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
+		if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
 			$json['error']['postcode'] = $this->language->get('error_postcode');
 		}
 

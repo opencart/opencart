@@ -294,6 +294,44 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_symbol_left_space }}">{{ entry_symbol_left_space }}</span></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline"> {% if config_symbol_left_space %}
+                    <input type="radio" name="config_symbol_left_space" value="1" checked="checked" />
+                    {{ text_yes }}
+                    {% else %}
+                    <input type="radio" name="config_symbol_left_space" value="1" />
+                    {{ text_yes }}
+                    {% endif %} </label>
+                  <label class="radio-inline"> {% if not config_symbol_left_space %}
+                    <input type="radio" name="config_symbol_left_space" value="0" checked="checked" />
+                    {{ text_no }}
+                    {% else %}
+                    <input type="radio" name="config_symbol_left_space" value="0" />
+                    {{ text_no }}
+                    {% endif %} </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_symbol_right_space }}">{{ entry_symbol_right_space }}</span></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline"> {% if config_symbol_right_space %}
+                    <input type="radio" name="config_symbol_right_space" value="1" checked="checked" />
+                    {{ text_yes }}
+                    {% else %}
+                    <input type="radio" name="config_symbol_right_space" value="1" />
+                    {{ text_yes }}
+                    {% endif %} </label>
+                  <label class="radio-inline"> {% if not config_symbol_right_space %}
+                    <input type="radio" name="config_symbol_right_space" value="0" checked="checked" />
+                    {{ text_no }}
+                    {% else %}
+                    <input type="radio" name="config_symbol_right_space" value="0" />
+                    {{ text_no }}
+                    {% endif %} </label>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-length-class">{{ entry_length_class }}</label>
                 <div class="col-sm-10">
                   <select name="config_length_class_id" id="input-length-class" class="form-control">                    

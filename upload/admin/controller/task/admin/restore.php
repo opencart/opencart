@@ -28,7 +28,13 @@ class Restore extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$file = DIR_STORAGE . 'backup/' . $args['filename'];
+		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
+
+		if (!oc_validate_length($filename, 5, 128)) {
+			return ['error' => $this->language->get('error_filename')];
+		}
+
+		$file = DIR_STORAGE . 'backup/' . $filename;
 
 		if (!is_file($file)) {
 			return ['error' => $this->language->get('error_file')];
@@ -37,15 +43,28 @@ class Restore extends \Opencart\System\Engine\Controller {
 		// 5MB Reads at a time;
 		$limit = 5 * (1024 * 1024);
 
-		$size = filesize($file);
+		$handle = fopen($file, 'r');
+
+		while (!feof($handle) && ($i < 100)) {
+
+
 
 		for ($i = 0; $i <= ceil($size / $limit); $i++) {
+			$start = ($i - 1) * $limit;
+
+			if ($start > ($size - $limit)) {
+				$end = $size;
+			} else {
+				$end = ($start + $limit);
+			}
+
 			$task_data = [
 				'code'   => 'backup',
 				'action' => 'admin/restore.read',
 				'args'   => [
 					'filename' => $args['filename'],
-					'position' => $i
+					'position' => $i,
+					'size' => $size,
 				]
 			];
 
@@ -64,12 +83,6 @@ class Restore extends \Opencart\System\Engine\Controller {
 			$position = 0;
 		}
 
-		$file = DIR_STORAGE . 'backup/' . $args['filename'];
-
-		if (!is_file($file)) {
-			return ['error' => $this->language->get('error_file')];
-		}
-
 		$required = [
 			'filename',
 			'table',
@@ -84,8 +97,11 @@ class Restore extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$file = DIR_STORAGE . 'backup/' . $args['filename'];
 
-
+		if (!is_file($file)) {
+			return ['error' => $this->language->get('error_file')];
+		}
 
 		// We set $i so we can batch execute the queries rather than do them all at once.
 		$i = 0;

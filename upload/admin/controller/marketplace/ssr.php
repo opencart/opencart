@@ -35,8 +35,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['delete'] = $this->url->link('marketplace/ssr.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('marketplace/ssr.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('marketplace/ssr.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -80,7 +78,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/ssr.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Cron
 		$data['ssrs'] = [];
 
 		$filter_data = [
@@ -155,74 +152,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/task');
 
 			$this->model_setting_task->addTask($task_data);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
-	public function enable(): void {
-		$this->load->language('marketplace/ssr');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/ssr');
-
-			foreach ($selected as $ssr_id) {
-				$this->model_setting_ssr->editStatus((int)$ssr_id, true);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('marketplace/ssr');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/ssr');
-
-			foreach ($selected as $ssr_id) {
-				$this->model_setting_ssr->editStatus((int)$ssr_id, false);
-			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

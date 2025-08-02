@@ -575,7 +575,7 @@ class Download extends \Opencart\System\Engine\Controller {
 				header('Content-Length: ' . filesize($file));
 
 				readfile($file);
-				exit;
+				exit();
 			} else {
 				exit($this->language->get('error_headers_sent'));
 			}

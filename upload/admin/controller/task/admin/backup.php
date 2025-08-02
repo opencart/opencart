@@ -27,7 +27,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
 
-		if (!oc_validate_length($filename, 5, 128)) {
+		if (!oc_validate_filename($filename, 5, 128)) {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
@@ -94,7 +94,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
 
-		if (!oc_validate_length($filename, 5, 128)) {
+		if (!oc_validate_length($filename, 5, 128) || !oc_validate_filename($filename)) {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
@@ -142,7 +142,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$output .= 'INSERT INTO `' . $args['table'] . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
+			$output .= "INSERT INTO `" . $args['table'] . "` ('" . preg_replace('/, $/', '', $fields) . "') VALUES ('" . preg_replace('/, $/', '', $values) . "');" . "\n";
 		}
 
 		if ($args['limit'] == $args['total']) {

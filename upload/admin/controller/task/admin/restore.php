@@ -14,8 +14,18 @@ class Restore extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/restore');
 
-		if (!isset($args['filename'])) {
-			return ['error' => $this->language->get('error_filename')];
+		$required = [
+			'filename',
+			'table',
+			'start',
+			'limit',
+			'total'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
 		}
 
 		$file = DIR_STORAGE . 'backup/' . $args['filename'];
@@ -32,7 +42,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 		for ($i = 0; $i <= ceil($size / $limit); $i++) {
 			$task_data = [
 				'code'   => 'backup',
-				'action' => 'admin/restore.fetch',
+				'action' => 'admin/restore.read',
 				'args'   => [
 					'filename' => $args['filename'],
 					'position' => $i
@@ -59,6 +69,21 @@ class Restore extends \Opencart\System\Engine\Controller {
 		if (!is_file($file)) {
 			return ['error' => $this->language->get('error_file')];
 		}
+
+		$required = [
+			'filename',
+			'table',
+			'start',
+			'limit',
+			'total'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
+
 
 
 

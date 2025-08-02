@@ -235,7 +235,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$zip->close();
 
 			// 2. Validate the filename.
-			if (!oc_validate_length($filename, 1, 128)) {
+			if (!oc_validate_length($filename, 5, 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 

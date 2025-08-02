@@ -368,7 +368,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
 
 			// Validate the filename length
-			if (!oc_validate_length($filename, 3, 128)) {
+			if (!oc_validate_length($filename, 5, 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 

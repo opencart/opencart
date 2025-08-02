@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
  */
 class Backup extends \Opencart\System\Engine\Controller {
 	/**
-	 * Backup
+	 * Index
 	 *
 	 * @return array
 	 */
@@ -20,14 +20,14 @@ class Backup extends \Opencart\System\Engine\Controller {
 		];
 
 		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
+			if (empty($args[$value])) {
 				return ['error' => $this->language->get('error_' . $value)];
 			}
 		}
 
 		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
 
-		if (!oc_validate_length($filename, 3, 128)) {
+		if (!oc_validate_length($filename, 5, 128)) {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
@@ -70,6 +70,11 @@ class Backup extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * Write
+	 *
+	 * @return array
+	 */
 	public function write(array $args = []): array {
 		$this->load->language('task/admin/backup');
 
@@ -87,24 +92,30 @@ class Backup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
+
+		if (!oc_validate_length($filename, 5, 128)) {
+			return ['error' => $this->language->get('error_filename')];
+		}
+
 		$disallowed = [
 			DB_PREFIX . 'user',
 			DB_PREFIX . 'user_group'
 		];
 
-		if (!str_starts_with($args['table'], DB_PREFIX) || in_array($args['table'], $disallowed)) {
+		if (!str_starts_with((string)$args['table'], DB_PREFIX) || in_array((string)$args['table'], $disallowed)) {
 			return ['error' => sprintf($this->language->get('error_table'), $args['table'])];
 		}
 
 		$output = '';
 
 		if (!$args['start']) {
-			$output .= 'TRUNCATE TABLE `' . $this->db->escape($args['table']) . '`;' . "\n\n";
+			$output .= 'TRUNCATE TABLE `' . $this->db->escape((string)$args['table']) . '`;' . "\n\n";
 		}
 
 		$this->load->model('tool/backup');
 
-		$results = $this->model_tool_backup->getRecords($args['table'], $args['start'], $args['limit']);
+		$results = $this->model_tool_backup->getRecords((string)$args['table'], (int)$args['start'], (int)$args['limit']);
 
 		foreach ($results as $result) {
 			$fields = '';
@@ -138,12 +149,12 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$output .= "\n";
 		}
 
-		$handle = fopen(DIR_STORAGE . 'backup/' . $args['filename'], 'a');
+		$handle = fopen(DIR_STORAGE . 'backup/' . $filename, 'a');
 
 		fwrite($handle, $output);
 
 		fclose($handle);
 
-		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], $args['start'] ?: 1, $args['limit'], $args['total'])];
+		return ['success' => sprintf($this->language->get('text_backup'), (string)$args['table'], (int)$args['start'] ?: 1, (int)$args['limit'], (int)$args['total'])];
 	}
 }

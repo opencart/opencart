@@ -43,23 +43,19 @@ class Restore extends \Opencart\System\Engine\Controller {
 		// 500 reads at a time;
 		$limit = 500;
 
-		$lines = 0;
+		$count = 0;
 
 		$handle = fopen($file, 'r');
 
-		while (!feof($handle)) {
-			$buffer = fread($handle, 4096);
-
-			$lines++;
-		}
+		while (fgets($handle)) $count++;
 
 		fclose($handle);
 
-		for ($i = 0; $i <= ceil($lines / $limit); $i++) {
+		for ($i = 0; $i <= ceil($count / $limit); $i++) {
 			$start = ($i - 1) * $limit;
 
-			if ($start > ($lines - $limit)) {
-				$end = $lines;
+			if ($start > ($count - $limit)) {
+				$end = $count;
 			} else {
 				$end = ($start + $limit);
 			}
@@ -71,7 +67,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 					'filename' => $args['filename'],
 					'start'    => $start,
 					'limit'    => $end,
-					'total'    => $lines
+					'total'    => $count
 				]
 			];
 

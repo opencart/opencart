@@ -93,7 +93,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$data['ssrs'][] = [
 				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
 				'run'           => $this->url->link('marketplace/ssr.run', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id']),
-				'clear'         => $this->url->link($result['action'] . '.clear', 'user_token=' . $this->session->data['user_token'])
+				'clear'         => $this->url->link('marketplace/ssr.clear', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id'])
 			] + $result;
 		}
 
@@ -146,6 +146,53 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$task_data = [
 				'code'   => $ssr_info['code'],
 				'action' => $ssr_info['action'],
+				'args'   => []
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Clear
+	 *
+	 * @return void
+	 */
+	public function clear(): void {
+		$this->load->language('marketplace/ssr');
+
+		$json = [];
+
+		if (isset($this->request->get['ssr_id'])) {
+			$ssr_id = (int)$this->request->get['ssr_id'];
+		} else {
+			$ssr_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Cron
+		$this->load->model('setting/ssr');
+
+		$ssr_info = $this->model_setting_ssr->getSsr($ssr_id);
+
+		if (!$ssr_info) {
+			$json['error'] = $this->language->get('error_exists');
+		}
+
+		if (!$json) {
+			$task_data = [
+				'code'   => $ssr_info['code'],
+				'action' => $ssr_info['action'] . '.clear',
 				'args'   => []
 			];
 

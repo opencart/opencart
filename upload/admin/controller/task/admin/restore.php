@@ -40,20 +40,26 @@ class Restore extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_file')];
 		}
 
-		// 5MB Reads at a time;
-		$limit = 5 * (1024 * 1024);
+		// 500 reads at a time;
+		$limit = 500;
+
+		$lines = 0;
 
 		$handle = fopen($file, 'r');
 
-		while (!feof($handle) && ($i < 100)) {
+		while (!feof($handle)) {
+			$buffer = fread($handle, 4096);
 
+			$lines++;
+		}
 
+		fclose($handle);
 
-		for ($i = 0; $i <= ceil($size / $limit); $i++) {
+		for ($i = 0; $i <= ceil($lines / $limit); $i++) {
 			$start = ($i - 1) * $limit;
 
-			if ($start > ($size - $limit)) {
-				$end = $size;
+			if ($start > ($lines - $limit)) {
+				$end = $lines;
 			} else {
 				$end = ($start + $limit);
 			}
@@ -63,8 +69,9 @@ class Restore extends \Opencart\System\Engine\Controller {
 				'action' => 'admin/restore.read',
 				'args'   => [
 					'filename' => $args['filename'],
-					'position' => $i,
-					'size' => $size,
+					'start'    => $start,
+					'limit'    => $end,
+					'total'    => $lines
 				]
 			];
 

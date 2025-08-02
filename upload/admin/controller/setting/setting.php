@@ -394,6 +394,18 @@ class ControllerSettingSetting extends Controller {
 			}
 		}
 
+		if (isset($this->request->post['config_symbol_left_space'])) {
+			$data['config_symbol_left_space'] = $this->request->post['config_symbol_left_space'];
+		} else {
+			$data['config_symbol_left_space'] = $this->config->get('config_symbol_left_space');
+		}
+
+		if (isset($this->request->post['config_symbol_right_space'])) {
+			$data['config_symbol_right_space'] = $this->request->post['config_symbol_right_space'];
+		} else {
+			$data['config_symbol_right_space'] = $this->config->get('config_symbol_right_space');
+		}
+
 		if (isset($this->request->post['config_length_class_id'])) {
 			$data['config_length_class_id'] = $this->request->post['config_length_class_id'];
 		} else {

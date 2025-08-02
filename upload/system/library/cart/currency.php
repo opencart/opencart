@@ -4,10 +4,14 @@ class Currency {
 	private $db;
 	private $language;
 	private $currencies = array();
+	private $symbol_left_space = false;
+	private $symbol_right_space = false;
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
 		$this->language = $registry->get('language');
+		$this->symbol_left_space = (bool)$registry->get('config')->get('config_symbol_left_space');
+		$this->symbol_right_space = (bool)$registry->get('config')->get('config_symbol_right_space');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency");
 
@@ -44,11 +48,17 @@ class Currency {
 
 		if ($symbol_left) {
 			$string .= $symbol_left;
+			if ($this->symbol_left_space) {
+				$string .= ' ';
+			}
 		}
 
 		$string .= number_format($amount, (int)$decimal_place, $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 
 		if ($symbol_right) {
+			if ($this->symbol_right_space) {
+				$string .= ' ';
+			}
 			$string .= $symbol_right;
 		}
 

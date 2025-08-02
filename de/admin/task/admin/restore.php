@@ -1,11 +1,10 @@
 <?php
-$_['text_restore']     = 'Wiederherstellen von %s von %s';
-
 // Text
-$_['text_success']     = 'Success: Starting building the database backup!';
-$_['text_backup']      = 'Backing up table %s records %s to %s of %s records';
+$_['text_success']   = 'Success: Starting building the database backup!';
+$_['text_backup']    = 'Restoring previous database backup (Progress %s)';
 
 // Error
-$_['error_table']     = 'Tabelle %s ist nicht in der Erlaubtliste!';
-$_['error_filename']  = 'Filename required!';
-$_['error_file']      = 'Datei konnte nicht gefunden werden!';
+$_['error_required'] = 'Argument %s required!';
+$_['error_table']    = 'Table %s is not allowed to be backed up!';
+$_['error_filename'] = 'Filename required!';
+$_['error_file']     = 'Datei konnte nicht gefunden werden!';

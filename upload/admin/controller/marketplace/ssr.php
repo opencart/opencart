@@ -133,7 +133,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Cron
 		$this->load->model('setting/ssr');
 
 		$ssr_info = $this->model_setting_ssr->getSsr($ssr_id);
@@ -180,7 +179,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Cron
 		$this->load->model('setting/ssr');
 
 		$ssr_info = $this->model_setting_ssr->getSsr($ssr_id);

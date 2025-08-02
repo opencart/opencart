@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Country
  *
- * @package Opencart\Admin\Controller\Ssr\Catalog
+ * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Country extends \Opencart\System\Engine\Controller {
 	/**

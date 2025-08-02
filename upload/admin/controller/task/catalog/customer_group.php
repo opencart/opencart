@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Customer Group
  *
- * @package Opencart\Admin\Controller\Ssr\Catalog
+ * @package Opencart\Admin\Controller\Task\Catalog
  */
 class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**

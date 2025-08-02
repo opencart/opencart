@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Restore
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Restore extends \Opencart\System\Engine\Controller {
 	/**
@@ -14,18 +14,8 @@ class Restore extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/restore');
 
-		$required = [
-			'filename',
-			'table',
-			'start',
-			'limit',
-			'total'
-		];
-
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
-			}
+		if (!array_key_exists($args, 'filename')) {
+			return ['error' => $this->language->get('error_filename')];
 		}
 
 		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
@@ -66,7 +56,8 @@ class Restore extends \Opencart\System\Engine\Controller {
 				'args'   => [
 					'filename' => $args['filename'],
 					'start'    => $start,
-					'limit'    => $end,
+					'end'      => $end,
+					'limit'    => $limit,
 					'total'    => $count
 				]
 			];
@@ -77,6 +68,11 @@ class Restore extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/*
+	 * Read
+	 *
+	 * @return array
+	 */
 	public function read(array $args = []): array {
 		$this->load->language('task/admin/restore');
 
@@ -88,8 +84,8 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'filename',
-			'table',
 			'start',
+			'end',
 			'limit',
 			'total'
 		];

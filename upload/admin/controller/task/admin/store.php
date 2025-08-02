@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Currency
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Store extends \Opencart\System\Engine\Controller {
 	/**

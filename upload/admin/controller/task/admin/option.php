@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Option
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Option extends \Opencart\System\Engine\Controller {
 	/**

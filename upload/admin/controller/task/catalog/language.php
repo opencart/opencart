@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Language
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Language extends \Opencart\System\Engine\Controller {
 	/**

@@ -33,25 +33,17 @@ class Request {
 	/**
      * 
 	 * @param	mixed	$data
-	 * @param	bool	$trim
 	 *
      * @return	array
      */
-	public function clean($data,$trim=true) {
+	public function clean($data) {
 		if (is_array($data)) {
 			foreach ($data as $key => $value) {
 				unset($data[$key]);
-				if (($key=='symbol_left' || $key=='symbol_right') && is_string($value)) {
-					$data[$this->clean($key,false)] = $this->clean($value,false);
-				} else {
-					$data[$this->clean($key,$trim)] = $this->clean($value,$trim);
-				}
+				$data[$this->clean($key)] = $this->clean($value);
 			}
 		} else {
-			$data = htmlspecialchars($data, ENT_COMPAT, 'UTF-8');
-			if ($trim) {
-				$data = trim($data);
-			}
+			$data = trim(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
 		}
 
 		return $data;

@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Admin\Controller\Task\Admin;
+namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Sass
  *
- * @package Opencart\Admin\Controller\Task\Admin
+ * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Sass extends \Opencart\System\Engine\Controller {
 	/**

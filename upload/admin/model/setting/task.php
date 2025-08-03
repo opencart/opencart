@@ -30,6 +30,38 @@ class Task extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit task status record in the database.
+	 *
+	 * @param int    $task_id primary key of the task record
+	 * @param string $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/task');
+	 *
+	 * $this->model_setting_task->editStatus($task_id, $status);
+	 */
+	public function editStatus(int $task_id, string $status, array $response = []): void {
+		$allowed = [
+			'pending',
+			'processing',
+			'paused',
+			'complete',
+			'failed'
+		];
+
+		if (!in_array($status, $allowed)) {
+			$status = 'failed';
+		}
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `response` = '" . $this->db->escape(json_encode($response)) . "', `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
+	}
+
+	/**
 	 * Delete Task
 	 *
 	 * Delete task record in the database.
@@ -66,35 +98,12 @@ class Task extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Status
-	 *
-	 * Edit task status record in the database.
-	 *
-	 * @param int    $task_id primary key of the task record
-	 * @param string $status
+	 * Clear Task
 	 *
 	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('setting/task');
-	 *
-	 * $this->model_setting_task->editStatus($task_id, $status);
 	 */
-	public function editStatus(int $task_id, string $status, array $response = []): void {
-		$allowed = [
-			'pending',
-			'processing',
-			'paused',
-			'complete',
-			'failed'
-		];
-
-		if (!in_array($status, $allowed)) {
-			$status = 'failed';
-		}
-
-		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `response` = '" . $this->db->escape(json_encode($response)) . "', `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
+	public function clear() {
+		$this->db->query("TRUNCATE TABLE `" . DB_PREFIX . "task`");
 	}
 
 	/**

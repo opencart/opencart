@@ -16,13 +16,11 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('task/catalog/country');
 
-		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'task/catalog/country')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
 
-		if (!$json) {
+
+
+
 			$this->load->model('localisation/country');
 
 			$stores = [];
@@ -74,7 +72,7 @@ class Country extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-		}
+
 
 		// Must not have a path before files and directories can be moved
 		if (!$json) {

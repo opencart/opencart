@@ -241,11 +241,7 @@ class Task extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/task');
 
-			$results = $this->model_setting_task->getTasks();
-
-			foreach ($results as $result) {
-				$this->model_setting_task->deleteTask($result['task_id']);
-			}
+			$this->model_setting_task->clear();
 
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
  */
 class Restore extends \Opencart\System\Engine\Controller {
 	/**
-	 * Restore
+	 * Index
 	 *
 	 * @return void
 	 */

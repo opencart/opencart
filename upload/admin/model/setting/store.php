@@ -187,7 +187,7 @@ class Store extends \Opencart\System\Engine\Model {
 			return [
 				'store_id'  => 0,
 				'name'      => html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'),
-				'store_url' => $this->config->get('config_url')
+				'url'       => HTTP_CATALOG
 			];
 		}
 
@@ -339,8 +339,6 @@ class Store extends \Opencart\System\Engine\Model {
 
 		// Document
 		$registry->set('document', new \Opencart\System\Library\Document());
-
-		// Language
 
 		// Currency
 		$session->data['currency'] = $currency;

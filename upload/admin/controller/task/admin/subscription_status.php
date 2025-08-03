@@ -9,19 +9,20 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the country list JSON files by language.
+	 * Generates subscription status task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
-	public function index(): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/admin/subscription_status');
+
+		$this->load->model('setting/task');
 
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'subscription_status',
 				'action' => 'admin/subscription_status.list',
@@ -34,6 +35,13 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the subscription status list file.
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/subscription_status');
 
@@ -45,9 +53,19 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$subscription_status_data = [];
+
 		$this->load->model('localisation/subscription_status');
 
 		$subscription_statuses = $this->model_localisation_subscription_status->getSubscriptionStatuses();
+
+		foreach ($subscription_statuses as $subscription_status) {
+			$description_info = $this->model_localisation_subscription_status->getDescription($subscription_status['subscription_status_id'], $language_info['language_id']);
+
+			if ($description_info) {
+				$subscription_status_data[$subscription_status['subscription_status_id']] = $description_info + $subscription_status;
+			}
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -57,27 +75,16 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($subscription_statuses))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($subscription_status_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(): void {
+	public function clear(array $args = []): array {
 		$this->load->language('task/admin/language');
 
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'admin/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

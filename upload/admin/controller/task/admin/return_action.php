@@ -23,7 +23,6 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'return_action',
 				'action' => 'admin/return_action.list',

@@ -40,9 +40,7 @@ class Store extends \Opencart\System\Engine\Controller {
 					break;
 				}
 
-				$file = $base . $directory . $filename;
-
-				if (!file_put_contents($file, json_encode($stores))) {
+				if (!file_put_contents($base . $directory . $filename, json_encode($stores))) {
 					$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
 
 					break;

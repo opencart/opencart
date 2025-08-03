@@ -21,7 +21,6 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'order_status',
 				'action' => 'admin/order_status.list',
@@ -45,9 +44,19 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$order_status_data = [];
+
 		$this->load->model('localisation/order_status');
 
-		$currencies = $this->model_localisation_order_status->getOrderStatuses();
+		$order_statuses = $this->model_localisation_order_status->getOrderStatuses();
+
+		foreach ($order_statuses as $order_status) {
+			$description_info = $this->model_localisation_subscription_status->getDescription($order_status['order_status_id'], $language_info['language_id']);
+
+			if ($description_info) {
+				$weight_class_data[$order_status['order_status_id']] = $description_info + $order_status;
+			}
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -57,7 +66,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($currencies))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($order_status_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

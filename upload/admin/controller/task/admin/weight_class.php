@@ -9,9 +9,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the country list JSON files by language.
+	 * Generates weight class task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/weight_class');
@@ -23,7 +23,6 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'weight_class',
 				'action' => 'admin/weight_class.list',
@@ -36,6 +35,13 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the weight class list file.
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/weight_class');
 
@@ -47,9 +53,19 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$weight_class_data = [];
+
 		$this->load->model('localisation/weight_class');
 
-		$length_classes = $this->model_localisation_weight_class->getWeightClasses(['filter_language_id' => $language_info['language_id']]);
+		$weight_classes = $this->model_localisation_weight_class->getWeightClasses();
+
+		foreach ($weight_classes as $weight_class) {
+			$description_info = $this->model_localisation_weight_class->getDescription($weight_class['weight_class_id'], $language_info['language_id']);
+
+			if ($description_info) {
+				$weight_class_data[$weight_class['weight_class_id']] = $description_info + $weight_class;
+			}
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -59,29 +75,16 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		$file = $base . $directory . $filename;
-
-		if (!file_put_contents($file, json_encode($length_classes))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($weight_class_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(): void {
-		$this->load->language('task/admin/language');
+	public function clear(array $args = []): array {
+		$this->load->language('task/admin/weight_class');
 
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'admin/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

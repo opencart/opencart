@@ -11,7 +11,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates customer group task list.
 	 *
-	 * @return void
+	 * @return array
      */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
@@ -75,9 +75,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		$file = $base . $directory . $filename;
-
-		if (!file_put_contents($file, json_encode($customer_group_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -87,29 +85,20 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function clear(): void {
 		$this->load->language('task/admin/customer_group');
 
-		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'task/admin/customer_group')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$this->load->model('localisation/language');
 
-		if (!$json) {
-			$this->load->model('localisation/language');
+		$languages = $this->model_localisation_language->getLanguages();
 
-			$languages = $this->model_localisation_language->getLanguages();
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/customer/customer_group.json';
 
-			foreach ($languages as $language) {
-				$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/customer/customer_group.json';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+
+
 	}
 }

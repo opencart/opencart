@@ -54,9 +54,17 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/custom_field');
 
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+		if (!$store_info) {
+			return ['error' => $this->language->get('error_store')];
+		}
+
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
@@ -77,7 +85,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		$base = DIR_APPLICATION . 'view/data/';
-		$directory = $language_info['code'] . '/customer/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/customer/';
 		$filename = 'custom_field.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {

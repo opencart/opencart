@@ -13,7 +13,7 @@ class Option extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/admin/option');
 
 		$this->load->model('setting/task');
@@ -23,7 +23,6 @@ class Option extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'option',
 				'action' => 'admin/option.list',

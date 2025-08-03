@@ -75,9 +75,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		$file = $base . $directory . $filename;
-
-		if (!file_put_contents($file, json_encode($custom_field_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($custom_field_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

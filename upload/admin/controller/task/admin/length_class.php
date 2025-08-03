@@ -11,9 +11,9 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates length class task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
-	public function index(array $args = []): mixed {
+	public function index(array $args = []): array {
 		$this->load->language('task/admin/length_class');
 
 		$this->load->model('setting/task');
@@ -60,10 +60,10 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$length_classes = $this->model_localisation_length_class->getLengthClasses();
 
 		foreach ($length_classes as $length_class) {
-			$description_info = $this->model_customer_customer_group->getDescription($length_class['country_id'], $language_info['language_id']);
+			$description_info = $this->model_localisation_length_class->getDescription($length_class['length_class_id'], $language_info['language_id']);
 
 			if ($description_info) {
-				$length_class_data[$length_class['country_id']] = $description_info + $length_class;
+				$length_class_data[$length_class['length_class_id']] = $description_info + $length_class;
 			}
 		}
 
@@ -75,29 +75,16 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		$file = $base . $directory . $filename;
-
-		if (!file_put_contents($file, json_encode($length_class_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($length_class_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(): void {
-		$this->load->language('task/admin/language');
+	public function clear(array $args = []): array {
+		$this->load->language('task/admin/length_class');
 
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'task/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

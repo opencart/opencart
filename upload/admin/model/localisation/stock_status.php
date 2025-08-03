@@ -161,15 +161,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	 * $stock_statuses = $this->model_localisation_stock_status->getStockStatuses($filter_data);
 	 */
 	public function getStockStatuses(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "stock_status`";
-
-		if (!empty($data['filter_language_id'])) {
-			$sql .= " WHERE `language_id` = '" . (int)$data['filter_language_id'] . "'";
-		} else {
-			$sql .= " WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		}
-
-		$sql .= " ORDER BY `name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";

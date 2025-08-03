@@ -102,7 +102,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * @return void
 	 */
-	public function clear() {
+	public function clear(): void {
 		$this->db->query("TRUNCATE TABLE `" . DB_PREFIX . "task`");
 	}
 

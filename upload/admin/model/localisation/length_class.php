@@ -163,13 +163,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * $length_classes = $this->model_localisation_length_class->getLengthClasses($filter_data);
 	 */
 	public function getLengthClasses(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`)";
-
-		if (!empty($data['filter_language_id'])) {
-			$sql .= " WHERE `lcd`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
-		} else {
-			$sql .= " WHERE `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		}
+		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$sort_data = [
 			'title',

@@ -161,15 +161,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_return_reason->getReturnReasons($filter_data);
 	 */
 	public function getReturnReasons(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "return_reason`";
-
-		if (!empty($data['filter_language_id'])) {
-			$sql .= " WHERE `language_id` = '" . (int)$data['filter_language_id'] . "'";
-		} else {
-			$sql .= " WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		}
-
-		$sql .= " ORDER BY `name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "return_reason`WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";

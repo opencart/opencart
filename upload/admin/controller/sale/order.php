@@ -160,16 +160,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['list'] = $this->getList();
 
 		// Stores
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
-		];
-
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		// Order Statuses
 		$this->load->model('localisation/order_status');
@@ -721,16 +714,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
-		];
-
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		if (!empty($order_info)) {
 			$data['store_id'] = $order_info['store_id'];

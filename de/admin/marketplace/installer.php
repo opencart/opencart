@@ -29,6 +29,7 @@ $_['entry_code']             = 'Code';
 // Error
 $_['error_permission']       = 'Achtung: Sie sind nicht berechtigt, Erweiterungen zu ändern!';
 $_['error_install']          = 'Warnung: install.json konnte nicht gefunden werden!';
+$_['error_install_invalid']  = 'Warning: Invalid install.json!';
 $_['error_default']          = 'Die Standarderweiterung konnte nicht deinstalliert oder gelöscht werden!';
 $_['error_extension']        = 'Installierte Erweiterung konnte nicht gefunden werden!';
 $_['error_installed']        = 'Erweiterung bereits installiert!';

@@ -37,32 +37,21 @@ class Language extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
-	public function clear(): void {
+	public function clear(): array {
 		$this->load->language('task/admin/language');
 
-		$json = [];
+		$this->load->model('localisation/language');
 
-		if (!$this->user->hasPermission('modify', 'admin/language')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$languages = $this->model_localisation_language->getLanguages();
 
-		if (!$json) {
-			$this->load->model('localisation/language');
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/language.json';
 
-			$languages = $this->model_localisation_language->getLanguages();
-
-			foreach ($languages as $language) {
-				$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/language.json';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

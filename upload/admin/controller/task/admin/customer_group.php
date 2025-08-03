@@ -9,6 +9,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Generates customer group task list.
+	 *
 	 * @return void
      */
 	public function index(): mixed {
@@ -33,6 +35,13 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		return $this->language->get('text_success');
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the customer group list file.
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
@@ -44,9 +53,19 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$customer_group_data = [];
+
 		$this->load->model('customer/customer_group');
 
-		$customer_groups = $this->model_customer_customer_group->getCustomerGroups(['filter_language_id' => $language_info['language_id']]);
+		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
+
+		foreach ($customer_groups as $customer_group) {
+			$description_info = $this->model_localisation_country->getDescription($customer_group['country_id'], $language_info['language_id']);
+
+			if ($description_info) {
+				$customer_group_data[$customer_group['country_id']] = $description_info + $customer_group;
+			}
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/customer/';
@@ -58,7 +77,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$file = $base . $directory . $filename;
 
-		if (!file_put_contents($file, json_encode($customer_groups))) {
+		if (!file_put_contents($file, json_encode($customer_group_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

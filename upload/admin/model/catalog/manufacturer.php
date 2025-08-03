@@ -139,6 +139,28 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit manufacturer status record in the database.
+	 *
+	 * @param int  $manufacturer_id primary key of the manufacturer record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/manufacturer');
+	 *
+	 * $this->model_catalog_manufacturer->editStatus($manufacturer_id, $status);
+	 */
+	public function editStatus(int $manufacturer_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `status` = '" . (bool)$status . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+
+		$this->cache->delete('manufacturer');
+	}
+
+	/**
 	 * Delete Manufacturer
 	 *
 	 * Delete manufacturer record in the database.

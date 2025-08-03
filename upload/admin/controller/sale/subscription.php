@@ -509,16 +509,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
-		];
-
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		if (!empty($subscription_info)) {
 			$data['store_id'] = $subscription_info['store_id'];

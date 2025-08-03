@@ -29,6 +29,7 @@ $_['entry_code']             = 'Code';
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify extensions!';
 $_['error_install']          = 'Warning: Could not find install.json!';
+$_['error_install_invalid']  = 'Warning: Invalid install.json!';
 $_['error_default']          = 'Default extension could not be uninstalled or deleted!';
 $_['error_extension']        = 'Installed extension could not be found!';
 $_['error_installed']        = 'Extension already installed!';
@@ -37,7 +38,7 @@ $_['error_name']             = 'Name must be between 3 and 128 characters!';
 $_['error_version']          = 'Version must be between 3 and 128 characters!';
 $_['error_author']           = 'Author must be between 3 and 128 characters!';
 $_['error_link']             = 'Link must be between 3 and 128 characters!';
-$_['error_filename']         = 'Filename must be between 3 and 128 characters!';
+$_['error_filename']         = 'Filename must be between 5 and 128 characters!';
 $_['error_file']             = 'Install file %s could not be found!';
 $_['error_file_exists']      = 'File already exist!';
 $_['error_file_type']        = 'Invalid file type!';

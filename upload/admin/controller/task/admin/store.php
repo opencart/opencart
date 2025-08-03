@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Currency
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Store extends \Opencart\System\Engine\Controller {
 	/**
@@ -21,16 +21,9 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$stores = [];
-
-			$stores[] = [
-				'store_id' => 0,
-				'url'      => HTTP_CATALOG
-			];
-
 			$this->load->model('setting/store');
 
-			$stores = array_merge($stores, $this->model_setting_store->getStores());
+			$stores = $this->model_setting_store->getStores();
 
 			$this->load->model('localisation/language');
 
@@ -73,16 +66,9 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$stores = [];
-
-			$stores[] = [
-				'store_id' => 0,
-				'url'      => HTTP_CATALOG
-			];
-
 			$this->load->model('setting/store');
 
-			$stores = array_merge($stores, $this->model_setting_store->getStores());
+			$stores = $this->model_setting_store->getStores();
 
 			$this->load->model('localisation/language');
 

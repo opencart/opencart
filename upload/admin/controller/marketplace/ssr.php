@@ -35,8 +35,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['delete'] = $this->url->link('marketplace/ssr.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('marketplace/ssr.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('marketplace/ssr.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -80,7 +78,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('marketplace/ssr.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Cron
 		$data['ssrs'] = [];
 
 		$filter_data = [
@@ -96,7 +93,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$data['ssrs'][] = [
 				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
 				'run'           => $this->url->link('marketplace/ssr.run', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id']),
-				'clear'         => $this->url->link($result['action'] . '.clear', 'user_token=' . $this->session->data['user_token'])
+				'clear'         => $this->url->link('marketplace/ssr.clear', 'user_token=' . $this->session->data['user_token'] . '&ssr_id=' . $result['ssr_id'])
 			] + $result;
 		}
 
@@ -136,7 +133,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Cron
 		$this->load->model('setting/ssr');
 
 		$ssr_info = $this->model_setting_ssr->getSsr($ssr_id);
@@ -164,65 +160,43 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Enable
+	 * Clear
 	 *
 	 * @return void
 	 */
-	public function enable(): void {
+	public function clear(): void {
 		$this->load->language('marketplace/ssr');
 
 		$json = [];
 
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
+		if (isset($this->request->get['ssr_id'])) {
+			$ssr_id = (int)$this->request->get['ssr_id'];
 		} else {
-			$selected = [];
+			$ssr_id = 0;
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!$json) {
-			$this->load->model('setting/ssr');
+		$this->load->model('setting/ssr');
 
-			foreach ($selected as $ssr_id) {
-				$this->model_setting_ssr->editStatus((int)$ssr_id, true);
-			}
+		$ssr_info = $this->model_setting_ssr->getSsr($ssr_id);
 
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('marketplace/ssr');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/ssr')) {
-			$json['error'] = $this->language->get('error_permission');
+		if (!$ssr_info) {
+			$json['error'] = $this->language->get('error_exists');
 		}
 
 		if (!$json) {
-			$this->load->model('setting/ssr');
+			$task_data = [
+				'code'   => $ssr_info['code'],
+				'action' => $ssr_info['action'] . '.clear',
+				'args'   => []
+			];
 
-			foreach ($selected as $ssr_id) {
-				$this->model_setting_ssr->editStatus((int)$ssr_id, false);
-			}
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
 
 			$json['success'] = $this->language->get('text_success');
 		}

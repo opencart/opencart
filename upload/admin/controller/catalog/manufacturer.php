@@ -66,19 +66,14 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('catalog/manufacturer.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/manufacturer.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('catalog/manufacturer.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('catalog/manufacturer.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('catalog/manufacturer.getList');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_store_id'] = $filter_store_id;
@@ -175,16 +170,9 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		// Image
 		$this->load->model('tool/image');
@@ -318,16 +306,9 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		if (!empty($manufacturer_info)) {
 			$data['manufacturer_store'] = $this->model_catalog_manufacturer->getStores($manufacturer_info['manufacturer_id']);

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Option
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Option extends \Opencart\System\Engine\Controller {
 	/**
@@ -13,17 +13,27 @@ class Option extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
-		$this->load->language('task/admin/custom_field');
+	public function index(): array {
+		$this->load->language('task/admin/option');
 
-		$json = [];
+		$this->load->model('setting/task');
 
-		//if (!$this->user->hasPermission('modify', 'admin/custom_field')) {
-		$json['error'] = $this->language->get('error_permission');
-		//}
+		$this->load->model('localisation/language');
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($languages as $language) {
+			// Add a task for generating the country list
+			$task_data = [
+				'code'   => 'option',
+				'action' => 'admin/option.list',
+				'args'   => ['language_id' => $language['language_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => $this->language->get('text_success')];
 	}
 
 	public function clear(): void {

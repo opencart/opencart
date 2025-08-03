@@ -92,16 +92,9 @@ class Header extends \Opencart\System\Engine\Controller {
 			}
 
 			// Stores
-			$stores = [];
-
-			$stores[] = [
-				'name' => $this->config->get('config_name'),
-				'href' => HTTP_CATALOG
-			];
-
 			$this->load->model('setting/store');
 
-			$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+			$data['stores'] =$this->model_setting_store->getStores();
 
 			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token']);
 		}

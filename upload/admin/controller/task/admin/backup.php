@@ -3,49 +3,64 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Backup
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Backup extends \Opencart\System\Engine\Controller {
 	/**
-	 * Backup
+	 * Index
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/backup');
 
-		if (!isset($args['backup'])) {
-			return ['error' => $this->language->get('error_backup')];
+		$required = [
+			'filename',
+			'backup'
+		];
+
+		foreach ($required as $value) {
+			if (empty($args[$value])) {
+				return ['error' => $this->language->get('error_' . $value)];
+			}
 		}
 
-		if (!isset($args['filename'])) {
+		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
+
+		if (!oc_validate_filename($filename, 5, 128)) {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
-		$this->load->model('tool/backup');
+		$limit = 200;
 
-		$allowed = $this->model_tool_backup->getTables();
+		$backup = (array)$args['backup'];
+
+		sort($backup);
 
 		$this->load->model('setting/task');
 
-		foreach ((array)$args['backup'] as $table) {
-			if (!in_array($table, $allowed)) {
-				return ['error' => sprintf($this->language->get('error_table'), $table)];
-			}
+		foreach ($backup as $table) {
+			$record_total = $this->model_tool_backup->getTotalRecords($table);
 
-			$record_total = $this->model_tool_backup->getTotalRecords($args['table']);
+			for ($i = 0; $i <= ceil($record_total / $limit); $i++) {
+				$start = ($i - 1) * $limit;
 
-			$start = ($page - 1) * $limit;
-			$end = ($start > ($comment_total - $limit)) ? $comment_total : ($start + $limit);
+				if ($start > ($record_total - $limit)) {
+					$end = $record_total;
+				} else {
+					$end = ($start + $limit);
+				}
 
-			for ($i = 0; $i <= $record_total; $i++) {
 				$task_data = [
 					'code'   => 'backup',
 					'action' => 'admin/backup.write',
 					'args'   => [
-						'filename' => $args['filename'],
+						'filename' => $filename,
 						'table'    => $table,
-						'page'     => 1
+						'start'    => $start,
+						'end'      => $end,
+						'limit'    => $limit,
+						'total'    => $record_total
 					]
 				];
 
@@ -56,34 +71,52 @@ class Backup extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * Write
+	 *
+	 * @return array
+	 */
 	public function write(array $args = []): array {
 		$this->load->language('task/admin/backup');
 
-		if (!isset($args['table'])) {
-			return ['error' => $this->language->get('error_table')];
+		$required = [
+			'filename',
+			'table',
+			'start',
+			'limit',
+			'total'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
 		}
 
-		$this->load->model('tool/backup');
+		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
 
-		$allowed = $this->model_tool_backup->getTables();
+		if (!oc_validate_length($filename, 5, 128) || !oc_validate_filename($filename)) {
+			return ['error' => $this->language->get('error_filename')];
+		}
 
-		if (!in_array($args['table'], $allowed)) {
+		$disallowed = [
+			DB_PREFIX . 'user',
+			DB_PREFIX . 'user_group'
+		];
+
+		if (!str_starts_with((string)$args['table'], DB_PREFIX) || in_array((string)$args['table'], $disallowed)) {
 			return ['error' => sprintf($this->language->get('error_table'), $args['table'])];
-		}
-
-		if (isset($args['page'])) {
-			$page = (int)$args['page'];
-		} else {
-			$page = 1;
 		}
 
 		$output = '';
 
-		if ($page == 1) {
-			$output .= 'TRUNCATE TABLE `' . $this->db->escape($args['table']) . '`;' . "\n\n";
+		if (!$args['start']) {
+			$output .= 'TRUNCATE TABLE `' . $this->db->escape((string)$args['table']) . '`;' . "\n\n";
 		}
 
-		$results = $this->model_tool_backup->getRecords($args['table'], ($page - 1) * 200, 200);
+		$this->load->model('tool/backup');
+
+		$results = $this->model_tool_backup->getRecords((string)$args['table'], (int)$args['start'], (int)$args['limit']);
 
 		foreach ($results as $result) {
 			$fields = '';
@@ -110,28 +143,11 @@ class Backup extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
+			$output .= "INSERT INTO `" . $args['table'] . "` ('" . preg_replace('/, $/', '', $fields) . "') VALUES ('" . preg_replace('/, $/', '', $values) . "');" . "\n";
 		}
 
-		$position = array_search($table, $backup);
-
-		// Total Records
-		$record_total = $this->model_tool_backup->getTotalRecords($table);
-
-		if (($page * 200) >= $record_total) {
+		if ($args['limit'] == $args['total']) {
 			$output .= "\n";
-
-			if (isset($backup[$position + 1])) {
-				$table = $backup[$position + 1];
-			} else {
-				$table = '';
-			}
-		}
-
-		if ($position !== false) {
-			$json['progress'] = round(($position / count($backup)) * 100);
-		} else {
-			$json['progress'] = 0;
 		}
 
 		$handle = fopen(DIR_STORAGE . 'backup/' . $filename, 'a');
@@ -140,19 +156,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
-		if (!$table) {
-			$json['success'] = $this->language->get('text_success');
-		} elseif (($page * 200) >= $record_total) {
-			$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $record_total);
-
-			$json['next'] = $this->url->link('tool/backup.backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=1', true);
-		} else {
-			$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $page * 200);
-
-			$json['next'] = $this->url->link('tool/backup.backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=' . ($page + 1), true);
-		}
-
-
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => sprintf($this->language->get('text_backup'), (string)$args['table'], (int)$args['start'] ?: 1, (int)$args['end'], (int)$args['total'])];
 	}
 }

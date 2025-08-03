@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Article
  *
- * @package Opencart\Admin\Controller\Ssr
+ * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Article extends \Opencart\System\Engine\Controller {
 	/**
@@ -84,6 +84,10 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function rating() {
+
 	}
 
 	public function clear(): void {

@@ -23,8 +23,6 @@ class Task extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): ?\Opencart\System\Engine\Action {
 		if (php_sapi_name() == 'cli') {
-			//set_exception_handler([$this, 'exception']);
-
 			if (isset($this->request->server['argv'])) {
 				$argv = (array)$this->request->server['argv'];
 			} else {
@@ -77,13 +75,12 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			try {
 				$output = $this->load->controller('task/' . $task['action'], $task['args']);
-
-				// If task does not exist
-				if ($output instanceof \Exception) {
-					$output = ['error' => $output->getMessage()];
-				}
 			} catch (\Exception $e) {
-				$output = ['error' => $e->getMessage()];
+				$output = $e;
+			}
+
+			if ($output instanceof \Exception) {
+				$output = ['error' => $output->getMessage() . ' in ' . $output->getFile() . ' on line ' . $output->getLine()];
 			}
 
 			// If task does not exist
@@ -91,8 +88,6 @@ class Task extends \Opencart\System\Engine\Controller {
 				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output);
 
 				fwrite(STDOUT, $output['error'] . "\n");
-
-				break;
 			}
 
 			if (isset($output['success'])) {
@@ -100,7 +95,7 @@ class Task extends \Opencart\System\Engine\Controller {
 
 				fwrite(STDOUT, $output['success'] . "\n");
 
-				//$this->model_setting_task->deleteTask($task['task_id']);
+				$this->model_setting_task->deleteTask($task['task_id']);
 
 				$next = $this->model_setting_task->getTasks($filter_data);
 
@@ -116,15 +111,5 @@ class Task extends \Opencart\System\Engine\Controller {
 	public function usage() {
 		$results = oc_directory_read(DIR_CATALOG);
 
-	}
-
-	public function exception(object $e): void {
-		$message = $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
-
-		if ($this->config->get('error_log')) {
-			$this->log->write($message);
-		}
-
-		fwrite(STDOUT, $message . "\n");
 	}
 }

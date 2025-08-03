@@ -1,8 +1,8 @@
 <?php
 // Text
 $_['text_success']    = 'Starting generating country files!';
-$_['text_list']       = 'Generating %s country list files!';
-$_['text_info']       = 'Generating %s %s country information file!';
+$_['text_list']       = 'Generating %s %s country list files!';
+$_['text_info']       = 'Generating %s %s %s country information file!';
 
 // Error
 $_['error_store']     = 'Warning: Store could not be found!';

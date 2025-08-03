@@ -16,12 +16,13 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/stock_status');
 
+		$this->load->model('setting/task');
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'stock_status',
 				'action' => 'admin/stock_status.list',
@@ -34,6 +35,13 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the stock status list file.
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/stock_status');
 
@@ -45,9 +53,19 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$stock_status_data = [];
+
 		$this->load->model('localisation/stock_status');
 
 		$stock_statuses = $this->model_localisation_stock_status->getStockStatuses();
+
+		foreach ($stock_statuses as $stock_status) {
+			$description_info = $this->model_localisation_stock_status->getDescription($stock_status['stock_status_id'], $language_info['language_id']);
+
+			if ($description_info) {
+				$stock_status_data[$stock_status['stock_status_id']] = $description_info + $stock_status;
+			}
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -57,7 +75,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($stock_statuses))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($stock_status_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

@@ -13,7 +13,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
      */
-	public function index(): mixed {
+	public function index(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
 		$this->load->model('setting/task');
@@ -32,7 +32,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return $this->language->get('text_success');
+		return ['success' => $this->language->get('text_success')];
 	}
 
 	/**
@@ -60,7 +60,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
 		foreach ($customer_groups as $customer_group) {
-			$description_info = $this->model_localisation_country->getDescription($customer_group['country_id'], $language_info['language_id']);
+			$description_info = $this->model_customer_customer_group->getDescription($customer_group['country_id'], $language_info['language_id']);
 
 			if ($description_info) {
 				$customer_group_data[$customer_group['country_id']] = $description_info + $customer_group;

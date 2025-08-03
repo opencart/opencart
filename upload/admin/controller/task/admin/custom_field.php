@@ -9,7 +9,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the custom field list JSON files by custom field.
+	 * Generates customer field task list.
 	 *
 	 * @return void
 	 */
@@ -23,7 +23,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'custom_field',
 				'action' => 'admin/custom_field.list',
@@ -36,6 +35,13 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the custom field list file.
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/custom_field');
 
@@ -47,9 +53,19 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$custom_field_data = [];
+
 		$this->load->model('customer/custom_field');
 
-		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_language_id' => $language_info['language_id']]);
+		$custom_fields = $this->model_customer_custom_field->getCustomFields();
+
+		foreach ($custom_fields as $custom_field) {
+			$description_info = $this->model_customer_custom_field->getDescription($custom_field['custom_field_id'], $language_info['language_id']);
+
+			if ($description_info) {
+				$custom_field_data[$custom_field['custom_field_id']] = $description_info + $custom_field;
+			}
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/customer/';
@@ -61,7 +77,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$file = $base . $directory . $filename;
 
-		if (!file_put_contents($file, json_encode($custom_fields))) {
+		if (!file_put_contents($file, json_encode($custom_field_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

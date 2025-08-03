@@ -3,16 +3,20 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Currency
  *
- * @package Opencart\Admin\Controller\Task
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Generates currency task list.
+	 *
 	 * @return void
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/currency');
+
+		$this->load->model('setting/task');
 
 		$this->load->model('localisation/language');
 
@@ -67,6 +71,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function refresh(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
+		$this->load->model('setting/task');
+
 		$this->load->model('setting/extension');
 
 		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
@@ -80,8 +86,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 				'action' => 'admin/currency',
 				'args'   => []
 			];
-
-			$this->load->model('setting/task');
 
 			$this->model_setting_task->addTask($task_data);
 		}

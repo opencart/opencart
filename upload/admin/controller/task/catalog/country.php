@@ -16,6 +16,8 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
+		$this->load->model('setting/task');
+
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
@@ -23,8 +25,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
-
-		$this->load->model('setting/task');
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
@@ -54,6 +54,8 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
+		$this->load->model('setting/task');
+
 		// Validate Store
 		$this->load->model('setting/store');
 
@@ -73,8 +75,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		$country_data = [];
-
-		$this->load->model('setting/task');
 
 		$this->load->model('localisation/country');
 

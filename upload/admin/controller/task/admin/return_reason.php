@@ -9,19 +9,20 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the return reason task list.
+	 * Generates return reason task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
-	public function index(): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/admin/return_reason');
+
+		$this->load->model('setting/task');
 
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the return reason list
 			$task_data = [
 				'code'   => 'return_reason',
 				'action' => 'admin/return_reason.list',
@@ -34,6 +35,13 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the return reason list file.
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/return_reason');
 
@@ -45,9 +53,19 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$return_reason_data = [];
+
 		$this->load->model('localisation/return_reason');
 
-		$return_reasons = $this->model_localisation_return_reason->getReturnReasons(['filter_language_id' => $language_info['language_id']]);
+		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
+
+		foreach ($return_reasons as $return_reason) {
+			$description_info = $this->model_localisation_return_action->getDescription($return_reason['return_reason_id'], $language_info['language_id']);
+
+			if ($description_info) {
+				$return_reason_data[$return_reason['return_reason_id']] = $description_info + $return_reason;
+			}
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -57,7 +75,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($return_reasons))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($return_reason_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

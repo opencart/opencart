@@ -9,12 +9,14 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the return reason list JSON files.
+	 * Generates return action task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
-	public function index(): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/admin/return_action');
+
+		$this->load->model('setting/task');
 
 		$this->load->model('localisation/language');
 
@@ -34,6 +36,13 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the return reason list file.
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/return_action');
 
@@ -45,9 +54,19 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$return_action_data = [];
+
 		$this->load->model('localisation/return_action');
 
-		$return_reasons = $this->model_localisation_return_action->getReturnActions(['filter_language_id' => $language_info['language_id']]);
+		$return_actions = $this->model_localisation_return_action->getReturnActions();
+
+		foreach ($return_actions as $return_action) {
+			$description_info = $this->model_localisation_return_action->getDescription($return_action['return_action_id'], $language_info['language_id']);
+
+			if ($description_info) {
+				$return_action_data[$return_action['return_action_id']] = $description_info + $return_action;
+			}
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -57,7 +76,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($return_reasons))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($return_action_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

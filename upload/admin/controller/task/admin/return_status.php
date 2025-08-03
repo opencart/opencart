@@ -9,11 +9,11 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the return reason list JSON files.
+	 * Generates return reason list JSON files.
 	 *
 	 * @return void
 	 */
-	public function index(): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/admin/return_status');
 
 		$this->load->model('setting/task');
@@ -23,7 +23,6 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'return_status',
 				'action' => 'admin/return_status.list',
@@ -36,6 +35,13 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the return status list file.
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/return_status');
 
@@ -47,9 +53,19 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$return_status_data = [];
+
 		$this->load->model('localisation/return_status');
 
-		$return_statuses = $this->model_localisation_return_status->getReturnStatuses(['filter_language_id' => $language_info['language_id']]);
+		$return_statuses = $this->model_localisation_return_status->getReturnStatuses();
+
+		foreach ($return_statuses as $return_status) {
+			$description_info = $this->model_localisation_return_status->getDescription($return_status['return_status_id'], $language_info['language_id']);
+
+			if ($description_info) {
+				$return_status_data[$return_status['return_status_id']] = $description_info + $return_status;
+			}
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -59,7 +75,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($return_statuses))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($return_status_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

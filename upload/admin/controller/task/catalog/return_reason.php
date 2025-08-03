@@ -9,12 +9,14 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the return reason task list.
+	 * Generates return reason task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
-	public function index(): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
+
+		$this->load->model('setting/task');
 
 		$this->load->model('setting/store');
 
@@ -23,8 +25,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
-
-		$this->load->model('setting/task');
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
@@ -72,63 +72,33 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$this->load->model('localisation/return_reason');
+		$return_reason_data = [];
 
 		$this->load->model('localisation/return_reason');
 
 		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
 
+		foreach ($return_reasons as $return_reason) {
+			$description_info = $this->model_localisation_return_reason->getDescription($return_reason['return_reason_id'], $language_info['language_id']);
 
-
-
-			// Get all languages so we don't need to keep querying te DB
-			$this->load->model('localisation/language');
-
-			$languages = $this->model_localisation_language->getLanguages();
-
-			foreach ($stores as $store) {
-				$countries = $this->model_localisation_country->getCountriesByStoreId($store['store_id']);
-
-				foreach ($languages as $language) {
-					$country_data = [];
-
-					foreach ($countries as $country) {
-						if ($country['status']) {
-							$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language['language_id']);
-
-							if ($description_info) {
-								$country_data[$country['country_id']] = $description_info + $country;
-							}
-						}
-					}
-
-					$base = DIR_CATALOG . 'view/data/';
-					$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-					$filename = 'country.json';
-
-					if (!oc_directory_create($base . $directory, 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $directory);
-
-						break;
-					}
-
-					if (!file_put_contents($base . $directory . $filename, json_encode($country_data))) {
-						$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
-
-						break;
-					}
-				}
+			if ($description_info) {
+				$return_reason_data[$return_reason['return_reason_id']] = $description_info + $return_reason;
 			}
-
-
-		// Must not have a path before files and directories can be moved
-		if (!$json) {
-			$json['text'] = $this->language->get('text_list');
-
-			$json['next'] = $this->url->link('task/catalog/country.info', 'user_token=' . $this->session->data['user_token'], true);
 		}
 
+		$base = DIR_APPLICATION . 'view/data/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
+		$filename = 'return_reason.json';
 
+		if (!oc_directory_create($base . $directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		if (!file_put_contents($base . $directory . $filename, json_encode($return_reason_data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
 

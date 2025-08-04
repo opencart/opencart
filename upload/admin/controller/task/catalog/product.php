@@ -1,43 +1,33 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
- * Class Manufacturer
+ * Class Product
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class Manufacturer extends \Opencart\System\Engine\Controller {
+class Product extends \Opencart\System\Engine\Controller {
 	/**
 	 * Generate
 	 *
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
-		$json = [];
 
-		//if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
-			$json['error'] = $this->language->get('error_permission');
-		//}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear(): void {
-		$this->load->language('catalog/manufacturer');
+	public function list(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
 
-		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'task/catalog/manufacturer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+	}
 
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
+	public function clear(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+
+
+
 	}
 }

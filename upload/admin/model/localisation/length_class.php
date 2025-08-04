@@ -277,6 +277,28 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Description
+	 *
+	 * Get the record of the country description in the database.
+	 *
+	 * @param int $country_id  primary key of the country record
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return array<string, mixed> country description record
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $description = $this->model_localisation_country->getDescription($country_id, $language_id);
+	 */
+	public function getDescription(int $length_class_id, int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "' AND `language_id` = '" . (int)$language_id . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Descriptions
 	 *
 	 * Get the record of the length class description records in the database.

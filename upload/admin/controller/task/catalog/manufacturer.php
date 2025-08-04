@@ -49,7 +49,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
-		
+
 	}
 
 

@@ -243,6 +243,47 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * Delete country descriptions by language records in the database.
+	 *
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $this->model_localisation_country->deleteDescriptionsByLanguageId($language_id);
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
+	/**
+	 * Get Description
+	 *
+	 * Get the record of the country description in the database.
+	 *
+	 * @param int $country_id  primary key of the country record
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return array<string, mixed> country description record
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $description = $this->model_localisation_country->getDescription($country_id, $language_id);
+	 */
+	public function getDescription(int $return_action_id, int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "' AND `language_id` = '" . (int)$language_id . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Descriptions
 	 *
 	 * Get the record of the country description records in the database.

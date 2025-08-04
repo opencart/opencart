@@ -197,6 +197,25 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Return Statuses
+	 *
+	 * Get the total number of return status records in the database.
+	 *
+	 * @return int total number of return status records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/return_status');
+	 *
+	 * $return_status_total = $this->model_localisation_return_status->getTotalReturnStatuses();
+	 */
+	public function getTotalReturnStatuses(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Add Description
 	 *
 	 * Create a new return status description record in the database.
@@ -221,6 +240,47 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	 */
 	public function addDescription(int $return_status_id, int $language_id, array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_status` SET `return_status_id` = '" . (int)$return_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "'");
+	}
+
+	/**
+	 * Delete Descriptions By Language ID
+	 *
+	 * Delete country descriptions by language records in the database.
+	 *
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $this->model_localisation_country->deleteDescriptionsByLanguageId($language_id);
+	 */
+	public function deleteDescriptionsByLanguageId(int $language_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$language_id . "'");
+	}
+
+	/**
+	 * Get Description
+	 *
+	 * Get the record of the country description in the database.
+	 *
+	 * @param int $country_id  primary key of the country record
+	 * @param int $language_id primary key of the language record
+	 *
+	 * @return array<string, mixed> country description record
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/country');
+	 *
+	 * $description = $this->model_localisation_country->getDescription($country_id, $language_id);
+	 */
+	public function getDescription(int $return_status_id, int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "' AND `language_id` = '" . (int)$language_id . "'");
+
+		return $query->row;
 	}
 
 	/**
@@ -269,24 +329,5 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Return Statuses
-	 *
-	 * Get the total number of return status records in the database.
-	 *
-	 * @return int total number of return status records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/return_status');
-	 *
-	 * $return_status_total = $this->model_localisation_return_status->getTotalReturnStatuses();
-	 */
-	public function getTotalReturnStatuses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return (int)$query->row['total'];
 	}
 }

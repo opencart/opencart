@@ -51,7 +51,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		$order_statuses = $this->model_localisation_order_status->getOrderStatuses();
 
 		foreach ($order_statuses as $order_status) {
-			$description_info = $this->model_localisation_subscription_status->getDescription($order_status['order_status_id'], $language_info['language_id']);
+			$description_info = $this->model_localisation_order_status->getDescription($order_status['order_status_id'], $language_info['language_id']);
 
 			if ($description_info) {
 				$order_status_data[$order_status['order_status_id']] = $description_info + $order_status;

@@ -60,7 +60,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
 
 		foreach ($return_reasons as $return_reason) {
-			$description_info = $this->model_localisation_return_action->getDescription($return_reason['return_reason_id'], $language_info['language_id']);
+			$description_info = $this->model_localisation_return_reason->getDescription($return_reason['return_reason_id'], $language_info['language_id']);
 
 			if ($description_info) {
 				$return_reason_data[$return_reason['return_reason_id']] = $description_info + $return_reason;

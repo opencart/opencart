@@ -30,7 +30,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'return_reason',
-					'action' => 'localisation/return_reason.list',
+					'action' => 'catalog/return_reason.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']
@@ -54,7 +54,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 
-		// Store
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
@@ -63,7 +62,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_store')];
 		}
 
-		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);

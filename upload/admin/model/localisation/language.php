@@ -240,15 +240,6 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_localisation_stock_status->addDescription((int)$stock_status['stock_status_id'], $language_id, $stock_status);
 		}
 
-		// Weight Class
-		$this->load->model('localisation/weight_class');
-
-		$results = $this->model_localisation_weight_class->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $weight_class) {
-			$this->model_localisation_weight_class->addDescription((int)$weight_class['weight_class_id'], $language_id, $weight_class);
-		}
-
 		// Subscription Plan
 		$this->load->model('catalog/subscription_plan');
 
@@ -295,13 +286,22 @@ class Language extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Topic Status
+		// Topic
 		$this->load->model('cms/topic');
 
 		$results = $this->model_cms_topic->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $topic) {
 			$this->model_cms_topic->addDescription((int)$topic['topic_id'], $language_id, $topic);
+		}
+
+		// Weight Class
+		$this->load->model('localisation/weight_class');
+
+		$results = $this->model_localisation_weight_class->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+
+		foreach ($results as $weight_class) {
+			$this->model_localisation_weight_class->addDescription((int)$weight_class['weight_class_id'], $language_id, $weight_class);
 		}
 
 		// Zone

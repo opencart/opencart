@@ -16,30 +16,12 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('task/catalog/catalog/custom_field');
 
-		$json = [];
 
-		//if (!$this->user->hasPermission('modify', 'ssr/admin/custom_field')) {
-		$json['error'] = $this->language->get('error_permission');
-		//}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function clear(): void {
 		$this->load->language('task/catalog/catalog/language');
 
-		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'task/catalog/catalog/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

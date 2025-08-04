@@ -9,8 +9,7 @@ class Mail extends \Opencart\System\Engine\Controller {
 	/**
 	 * Generate
 	 *
-	 * @return void
-	 *
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		if (!$this->config->get('config_mail_engine')) {

@@ -7,18 +7,16 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  */
 class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generate
+	 * Index
 	 *
-	 * @return void
+	 * Generates customer group task list.
+	 *
+	 * @return array
 	 */
-	public function index(): void {
-		$this->load->language('task/catalog/manufacturer');
+	public function index(array $args = []): array {
 
-		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+
 
 		$directory = DIR_CATALOG . 'view/data/catalog/';
 
@@ -46,17 +44,16 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$json) {
-			$json['text'] = $this->language->get('text_manufacturer');
-
-			$json['next'] = $this->url->link('task/catalog/manufacturer', 'user_token=' . $this->session->data['user_token'], true);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
-	public function info(): void {
+	public function list(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
+
+		
+	}
+
+
+	public function info(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
 		$json = [];
@@ -121,7 +118,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear(): void {
+	public function clear(array $args = []): array {
 		$this->load->language('catalog/manufacturer');
 
 		$json = [];

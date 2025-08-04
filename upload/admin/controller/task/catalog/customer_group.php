@@ -30,7 +30,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'customer_group',
-					'action' => 'admin/customer_group.list',
+					'action' => 'catalog/customer_group.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']
@@ -47,7 +47,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the customer group list file.
+	 * Generates customer group list file.
 	 *
 	 * @return array
 	 */
@@ -94,15 +94,20 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		$file = $base . $directory . $filename;
-
-		if (!file_put_contents($file, json_encode($customer_group_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears generated country files.
+	 *
+	 * @return array
+	 */
 	public function clear(): void {
 		$this->load->language('task/catalog/customer_group');
 

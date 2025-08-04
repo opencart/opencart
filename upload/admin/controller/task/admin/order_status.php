@@ -9,9 +9,9 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the country list JSON files by language.
+	 * Generates order status task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(): array {
 		$this->load->language('task/admin/order_status');
@@ -54,7 +54,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			$description_info = $this->model_localisation_subscription_status->getDescription($order_status['order_status_id'], $language_info['language_id']);
 
 			if ($description_info) {
-				$weight_class_data[$order_status['order_status_id']] = $description_info + $order_status;
+				$order_status_data[$order_status['order_status_id']] = $description_info + $order_status;
 			}
 		}
 

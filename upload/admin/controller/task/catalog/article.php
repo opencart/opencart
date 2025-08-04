@@ -7,70 +7,61 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  */
 class Article extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generate
+	 * Index
 	 *
-	 * @return void
+	 * Generates information task list.
+	 *
+	 * @return array
 	 */
-	public function index(): void {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
-		$json = [];
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
 
-		//if (!$this->user->hasPermission('modify', 'article')) {
-		$json['error'] = $this->language->get('error_permission');
-		//}
 
-		//$directory = DIR_CATALOG . 'view/data/cms/';
 
-		//if (!is_dir($directory) && !mkdir($directory, 0777)) {
-		//	$json['error'] = $this->language->get('error_directory');
-		//}
 
-		if (!$json) {
-			$this->load->model('localisation/language');
+	}
 
-			$languages = $this->model_localisation_language->getLanguages();
+	public function info(): array {
 
-			$limit = 5;
 
-			$this->load->model('cms/article');
+		$this->load->model('localisation/language');
 
-			$article_total = $this->model_cms_article->getTotalArticles();
+		$languages = $this->model_localisation_language->getLanguages();
 
-			$start = ($page - 1) * $limit;
-			$end = $start > ($article_total - $limit) ? $article_total : ($start + $limit);
+		$limit = 5;
 
-			$filter_data = [
-				'start' => $start,
-				'limit' => $limit
-			];
+		$this->load->model('cms/article');
 
-			$articles = $this->model_cms_article->getArticles($filter_data);
+		$article_total = $this->model_cms_article->getTotalArticles();
 
-			foreach ($articles as $article) {
-				if ($article['status']) {
-					$descriptions = $this->model_cms_article->getDescriptions($article['article_id']);
+		$start = ($page - 1) * $limit;
+		$end = $start > ($article_total - $limit) ? $article_total : ($start + $limit);
 
-					$stores = $this->model_cms_article->getStores($article['article_id']);
+		$filter_data = [
+			'start' => $start,
+			'limit' => $limit
+		];
 
-					foreach ($descriptions as $description) {
-						if (isset($languages[$description['language_id']])) {
-							$file = $directory . 'article.' . (int)$article['article_id'] . '.' . $languages[$description['language_id']] . '.json';
+		$articles = $this->model_cms_article->getArticles($filter_data);
 
-							if (!file_put_contents($file, json_encode($description + $article))) {
-								$json['error'] = $this->language->get('error_file');
-							}
+		foreach ($articles as $article) {
+			if ($article['status']) {
+				$descriptions = $this->model_cms_article->getDescriptions($article['article_id']);
+
+				$stores = $this->model_cms_article->getStores($article['article_id']);
+
+				foreach ($descriptions as $description) {
+					if (isset($languages[$description['language_id']])) {
+						if (!file_put_contents($directory . 'article.' . (int)$article['article_id'] . '.' . $languages[$description['language_id']] . '.json', json_encode($description + $article))) {
+							$json['error'] = $this->language->get('error_file');
 						}
 					}
 				}
 			}
 		}
+
 
 		if (!$json) {
 			$json['text'] = sprintf($this->language->get('text_article'), $start ?: 1, $end, $article_total);
@@ -81,29 +72,15 @@ class Article extends \Opencart\System\Engine\Controller {
 				$json['success'] = $this->language->get('text_success');
 			}
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
-	public function rating() {
 
+	public function rating(): array {
+		$this->load->language('task/catalog/category');
 	}
 
-	public function clear(): void {
+	public function clear(): array  {
 		$this->load->language('task/catalog/category');
 
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'task/catalog/article')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -1,20 +1,20 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
- * Class Language
+ * Class Currency
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class Language extends \Opencart\System\Engine\Controller {
+class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates language task list.
+	 * Generates currency task list.
 	 *
-	 * @return array
+	 * @return void
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/catalog/language');
+		$this->load->language('task/catalog/currency');
 
 		$this->load->model('setting/task');
 
@@ -29,15 +29,14 @@ class Language extends \Opencart\System\Engine\Controller {
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
 				$task_data = [
-					'code'   => 'language',
-					'action' => 'catalog/language.list',
+					'code'   => 'currency',
+					'action' => 'admin/currency.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']
 					]
 				];
 
-				$this->model_setting_task->addTask($task_data);
 				$this->model_setting_task->addTask($task_data);
 			}
 		}
@@ -46,9 +45,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(array $args = []): array {
-		$this->load->language('task/catalog/language');
+		$this->load->language('task/catalog/currency');
 
-		// Store
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
@@ -57,56 +55,59 @@ class Language extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_store')];
 		}
 
-		// Language
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
 
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$languages = $this->model_localisation_language->getLanguages();
+		$this->load->model('localisation/currency');
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'language.json';
+		$currencies = $this->model_localisation_currency->getCurrencies();
+
+		$base = DIR_APPLICATION . 'view/data/';
+		$directory = $language_info['code'] . '/localisation/';
+		$filename = 'currency.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($languages))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($currencies))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(array $args = []): array {
-		$this->load->language('task/catalog/language');
+	public function clear(): void {
+		$this->load->language('task/admin/currency');
 
+		$json = [];
 
-		$this->load->model('setting/store');
+		if (!$this->user->hasPermission('modify', 'task/currency')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 
-		$stores = $this->model_setting_store->getStores();
+		if (!$json) {
+			$this->load->model('localisation/language');
 
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			$store_url = parse_url($store['url'], PHP_URL_HOST);
+			$languages = $this->model_localisation_language->getLanguages();
 
 			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . $store_url . '/' . $language['code'] . '/localisation/currency.json';
+				$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/currency.json';
 
 				if (is_file($file)) {
 					unlink($file);
 				}
 			}
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

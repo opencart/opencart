@@ -114,6 +114,7 @@ $_['entry_login_attempts']                = 'Max Login Attempts';
 $_['entry_password']                      = 'Password Requirements';
 $_['entry_password_length']               = 'Password Minimum Length';
 $_['entry_account']                       = 'Account Terms';
+$_['entry_shared']                        = 'Shared Cart Sessions';
 $_['entry_cart_weight']                   = 'Display Weight on Cart Page';
 $_['entry_checkout_guest']                = 'Guest Checkout';
 $_['entry_checkout_payment_address']      = 'Billing Address required';
@@ -175,21 +176,15 @@ $_['entry_mail_smtp_port']                = 'Port';
 $_['entry_mail_smtp_timeout']             = 'Timeout';
 $_['entry_mail_alert']                    = 'Alert Mail';
 $_['entry_mail_alert_email']              = 'Additional Alert Mail';
-$_['entry_shared']                        = 'Use Shared Sessions';
 $_['entry_robots']                        = 'Robots';
 $_['entry_seo_url']                       = 'Use SEO URLs';
 $_['entry_file_max_size']                 = 'Max File Size';
 $_['entry_file_ext_allowed']              = 'Allowed File Extensions';
 $_['entry_file_mime_allowed']             = 'Allowed File Mime Types';
 $_['entry_maintenance']                   = 'Maintenance Mode';
-$_['entry_session_expire']                = 'Session Lifetime';
-$_['entry_session_samesite']              = 'Session Samesite Cookie';
-$_['entry_compression']                   = 'Output Compression Level';
 $_['entry_user_2fa']                      = 'Two-factor Security';
 $_['entry_error_display']                 = 'Display Errors';
 $_['entry_error_log']                     = 'Log Errors';
-$_['entry_error_filename']                = 'Error Log Filename';
-$_['entry_status']                        = 'Status';
 
 // Help
 $_['help_geocode']                        = 'Please enter your store location geocode manually.';
@@ -229,6 +224,7 @@ $_['help_2fa_expire']                     = 'Number of days until the token expi
 $_['help_login_attempts']                 = 'Maximum login attempts allowed before the account is locked for 1 hour. Customer accounts can be unlocked on the customer admin pages.';
 $_['help_account']                        = 'Forces people to agree to terms before an account can be created.';
 $_['help_invoice_prefix']                 = 'Set the invoice prefix (e.g. INV-2011-00). Invoice IDs will start at 1 for each unique prefix.';
+$_['help_shared']                         = 'Share the cart different stores on different domains.';
 $_['help_cart_weight']                    = 'Show the cart weight on the cart page.';
 $_['help_checkout_guest']                 = 'Allow customers to checkout without creating an account. This will not be available when a downloadable product is in the shopping cart.';
 $_['help_checkout_payment_address']       = 'Choose if customers require a billing address for checkout.';
@@ -261,17 +257,14 @@ $_['help_mail_smtp_hostname']             = 'Add \'tls://\' or \'ssl://\' prefix
 $_['help_mail_smtp_password']             = 'For Gmail you might need to setup an application specific password here: <a href="https://security.google.com/settings/security/apppasswords" target="_blank">https://security.google.com/settings/security/apppasswords</a>.';
 $_['help_mail_alert']                     = 'Select which features you would like to receive an alert email on when a customer uses them.';
 $_['help_mail_alert_email']               = 'Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated).';
-$_['help_session_expire']                 = 'Set the PHP Session lifetime in seconds (e.g. 3600 = 1 hour)';
-$_['help_session_samesite']               = 'Set the PHP Session samesite cookie';
 $_['help_user_2fa']                       = 'Two-factor security for admin users.';
-$_['help_shared']                         = 'Try to share the session cookie between stores so the cart can be passed between different domains.';
 $_['help_robots']                         = 'A list of web crawler user agents that shared sessions will not be used with. Use separate lines for each user agent.';
 $_['help_seo_url']                        = 'To use SEO URLs, apache module mod-rewrite must be installed and you need to rename the htaccess.txt to .htaccess.';
 $_['help_file_max_size']                  = 'The maximum file size you can allow customers to upload. Enter as megabyte.';
 $_['help_file_ext_allowed']               = 'Add which file extensions are allowed to be uploaded. Use a new line for each value.';
 $_['help_file_mime_allowed']              = 'Add which file mime types are allowed to be uploaded. Use a new line for each value.';
 $_['help_maintenance']                    = 'Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.';
-$_['help_compression']                    = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9.';
+$_['help_error_display']                  = 'Only turn on for development and turn off for production.';
 
 // Error
 $_['error_warning']                       = 'Warning: Please check the form carefully for errors!';

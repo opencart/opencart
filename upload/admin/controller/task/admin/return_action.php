@@ -25,7 +25,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'return_action',
-				'action' => 'admin/return_action.list',
+				'action' => 'task/admin/return_action.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

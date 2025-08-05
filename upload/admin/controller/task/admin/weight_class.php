@@ -25,7 +25,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'weight_class',
-				'action' => 'admin/weight_class.list',
+				'action' => 'task/admin/weight_class.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

@@ -30,7 +30,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'currency',
-					'action' => 'admin/currency.list',
+					'action' => 'task/admin/currency.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']

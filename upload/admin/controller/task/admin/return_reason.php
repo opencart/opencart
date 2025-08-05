@@ -25,7 +25,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'return_reason',
-				'action' => 'admin/return_reason.list',
+				'action' => 'task/admin/return_reason.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

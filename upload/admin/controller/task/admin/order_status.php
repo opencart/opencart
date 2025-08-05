@@ -23,7 +23,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'order_status',
-				'action' => 'admin/order_status.list',
+				'action' => 'task/admin/order_status.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

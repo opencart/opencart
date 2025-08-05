@@ -94,7 +94,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_customer',
-			'action' => 'admin/mail',
+			'action' => 'task/admin/mail',
 			'args'   => [
 				'to'      => $customer_info['email'],
 				'from'    => $this->config->get('config_email'),
@@ -195,7 +195,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_customer',
-			'action' => 'admin/mail',
+			'action' => 'task/admin/mail',
 			'args'   => [
 				'to'      => $customer_info['email'],
 				'from'    => $this->config->get('config_email'),

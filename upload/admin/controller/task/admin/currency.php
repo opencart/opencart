@@ -26,7 +26,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'currency',
-				'action' => 'admin/currency.list',
+				'action' => 'task/admin/currency.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 
@@ -81,7 +81,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			// Add a task for generating the country info data
 			$task_data = [
 				'code'   => 'currency',
-				'action' => 'admin/currency',
+				'action' => 'task/admin/currency',
 				'args'   => []
 			];
 

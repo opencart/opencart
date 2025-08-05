@@ -25,7 +25,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'country',
-				'action' => 'admin/country.list',
+				'action' => 'task/admin/country.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 
@@ -70,7 +70,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				// Add a task for generating the country info data
 				$task_data = [
 					'code'   => 'country',
-					'action' => 'admin/country.info',
+					'action' => 'task/admin/country.info',
 					'args'   => [
 						'language_id' => $language_info['language_id'],
 						'country_id'  => $country['country_id']

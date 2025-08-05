@@ -25,7 +25,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'option',
-				'action' => 'admin/option.list',
+				'action' => 'task/admin/option.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

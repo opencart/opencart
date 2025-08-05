@@ -76,7 +76,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_transaction',
-			'action' => 'admin/mail',
+			'action' => 'task/admin/mail',
 			'args'   => [
 				'to'      => $customer_info['email'],
 				'from'    => $this->config->get('config_email'),

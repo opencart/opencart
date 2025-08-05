@@ -25,7 +25,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'custom_field',
-				'action' => 'admin/custom_field.list',
+				'action' => 'task/admin/custom_field.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

@@ -30,7 +30,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'article',
-					'action' => 'cms/article.list',
+					'action' => 'task/catalog/article.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']

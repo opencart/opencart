@@ -23,7 +23,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'category',
-			'action' => 'catalog/category',
+			'action' => 'task/catalog/category',
 			'args'   => []
 		];
 
@@ -33,7 +33,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'product',
-			'action' => 'catalog/product',
+			'action' => 'task/catalog/product',
 			'args'   => []
 		];
 

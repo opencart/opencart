@@ -30,7 +30,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'manufacturer',
-					'action' => 'catalog/manufacturer.list',
+					'action' => 'task/catalog/manufacturer.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']

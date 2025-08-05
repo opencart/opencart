@@ -24,7 +24,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'return_action',
-			'action' => 'admin/return_action',
+			'action' => 'task/admin/return_action',
 			'args'   => []
 		];
 

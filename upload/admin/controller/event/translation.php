@@ -23,7 +23,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'translation',
-			'action' => 'catalog/translation',
+			'action' => 'task/catalog/translation',
 			'args'   => []
 		];
 
@@ -33,7 +33,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'translation',
-			'action' => 'admin/translation',
+			'action' => 'task/admin/translation',
 			'args'   => []
 		];
 

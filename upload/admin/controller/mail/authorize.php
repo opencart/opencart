@@ -45,7 +45,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$task_data = [
 				'code'   => 'mail_authorize',
-				'action' => 'admin/mail',
+				'action' => 'task/admin/mail',
 				'args'   => [
 					'to'      => $this->user->getEmail(),
 					'from'    => $this->config->get('config_email'),
@@ -112,7 +112,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$task_data = [
 				'code'   => 'mail_authorize',
-				'action' => 'admin/mail',
+				'action' => 'task/admin/mail',
 				'args'   => [
 					'to'      => $user_info['email'],
 					'from'    => $this->config->get('config_email'),

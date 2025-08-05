@@ -54,7 +54,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 			$task_data = [
 				'code'   => 'backup',
-				'action' => 'admin/restore.read',
+				'action' => 'task/admin/restore.read',
 				'args'   => [
 					'filename' => $args['filename'],
 					'start'    => $start,

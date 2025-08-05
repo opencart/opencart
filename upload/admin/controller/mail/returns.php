@@ -90,7 +90,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 				$task_data = [
 					'code'   => 'mail_return',
-					'action' => 'admin/mail',
+					'action' => 'task/admin/mail',
 					'args'   => [
 						'to'      => $return_info['email'],
 						'from'    => $this->config->get('config_email'),

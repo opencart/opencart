@@ -60,7 +60,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		foreach ($emails as $email) {
 			$task_data = [
 				'code'   => 'mail_review',
-				'action' => 'admin/mail',
+				'action' => 'task/admin/mail',
 				'args'   => [
 					'to'      => $email,
 					'from'    => $this->config->get('config_email'),

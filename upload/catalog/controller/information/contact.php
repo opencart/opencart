@@ -142,7 +142,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'mail_alert',
-				'action' => 'admin/mail',
+				'action' => 'task/admin/mail',
 				'args'   => [
 					'to'       => $this->config->get('config_email'),
 					'from'     => $this->config->get('config_email'),

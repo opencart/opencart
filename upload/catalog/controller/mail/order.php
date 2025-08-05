@@ -336,7 +336,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_order',
-			'action' => 'admin/mail',
+			'action' => 'task/admin/mail',
 			'args'   => [
 				'to'      => $order_info['email'],
 				'from'    => $from,
@@ -441,7 +441,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_history',
-			'action' => 'admin/mail',
+			'action' => 'task/admin/mail',
 			'args'   => [
 				'to'      => $order_info['email'],
 				'from'    => $from,
@@ -598,7 +598,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			foreach ($emails as $email) {
 				$task_data = [
 					'code'   => 'mail_history',
-					'action' => 'admin/mail',
+					'action' => 'task/admin/mail',
 					'args'   => [
 						'to'      => $email,
 						'from'    => $this->config->get('config_email'),

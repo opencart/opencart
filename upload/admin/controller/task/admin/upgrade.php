@@ -47,7 +47,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		if ($response_info && !version_compare(VERSION, $response_info['version'], '>=')) {
 			$task_data = [
 				'code'   => 'upgrade',
-				'action' => 'admin/upgrade.download',
+				'action' => 'task/admin/upgrade.download',
 				'args'   => ['version' => $response_info['version']]
 			];
 
@@ -100,7 +100,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'upgrade',
-			'action' => 'admin/upgrade.install',
+			'action' => 'task/admin/upgrade.install',
 			'args'   => ['version' => $args['version']]
 		];
 

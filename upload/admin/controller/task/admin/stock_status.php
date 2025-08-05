@@ -25,7 +25,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'stock_status',
-				'action' => 'admin/stock_status.list',
+				'action' => 'task/admin/stock_status.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

@@ -25,7 +25,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'length_class',
-				'action' => 'admin/length_class.list',
+				'action' => 'task/admin/length_class.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

@@ -24,7 +24,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'order_status',
-			'action' => 'admin/order_status',
+			'action' => 'task/admin/order_status',
 			'args'   => []
 		];
 

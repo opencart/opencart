@@ -25,7 +25,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'return_status',
-				'action' => 'admin/return_status.list',
+				'action' => 'task/admin/return_status.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

@@ -502,7 +502,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'currency',
-				'action' => 'admin/currency.refresh',
+				'action' => 'task/admin/currency.refresh',
 				'args'   => []
 			];
 

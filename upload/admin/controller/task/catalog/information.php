@@ -30,7 +30,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'information',
-					'action' => 'catalog/information.list',
+					'action' => 'task/catalog/information.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']

@@ -30,7 +30,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'customer_group',
-					'action' => 'catalog/customer_group.list',
+					'action' => 'task/catalog/customer_group.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']

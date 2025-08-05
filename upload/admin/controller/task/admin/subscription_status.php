@@ -25,7 +25,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'subscription_status',
-				'action' => 'admin/subscription_status.list',
+				'action' => 'task/admin/subscription_status.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 

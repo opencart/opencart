@@ -24,7 +24,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'stock_status',
-			'action' => 'admin/stock_status',
+			'action' => 'task/admin/stock_status',
 			'args'   => []
 		];
 

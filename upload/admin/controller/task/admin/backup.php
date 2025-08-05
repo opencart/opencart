@@ -53,7 +53,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 				$task_data = [
 					'code'   => 'backup',
-					'action' => 'admin/backup.write',
+					'action' => 'task/admin/backup.write',
 					'args'   => [
 						'filename' => $filename,
 						'table'    => $table,

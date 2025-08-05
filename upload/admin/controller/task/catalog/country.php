@@ -30,7 +30,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'country',
-					'action' => 'catalog/country.list',
+					'action' => 'task/catalog/country.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']
@@ -89,7 +89,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 					$task_data = [
 						'code'   => 'country',
-						'action' => 'catalog/country.info',
+						'action' => 'task/catalog/country.info',
 						'args'   => [
 							'store_id'    => $store_info['store_id'],
 							'language_id' => $language_info['language_id'],

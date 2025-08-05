@@ -24,7 +24,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'return_reason',
-			'action' => 'catalog/return_reason',
+			'action' => 'task/catalog/return_reason',
 			'args'   => []
 		];
 
@@ -34,7 +34,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'return_reason',
-			'action' => 'admin/return_reason',
+			'action' => 'task/admin/return_reason',
 			'args'   => []
 		];
 

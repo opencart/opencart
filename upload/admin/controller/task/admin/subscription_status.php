@@ -83,7 +83,19 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(array $args = []): array {
-		$this->load->language('task/admin/language');
+		$this->load->language('task/admin/subscription_status');
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/subscription_status.json';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
 
 		return ['success' => $this->language->get('text_clear')];
 	}

@@ -85,9 +85,18 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/return_action');
 
+		$this->load->model('localisation/language');
 
+		$languages = $this->model_localisation_language->getLanguages();
 
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/return_action.json';
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

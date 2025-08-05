@@ -11,7 +11,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates currency task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/currency');
@@ -23,7 +23,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Add a task for generating the country list
 			$task_data = [
 				'code'   => 'currency',
 				'action' => 'task/admin/currency.list',
@@ -91,32 +90,21 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
-	public function clear(): void {
+	public function clear(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
-		$json = [];
+		$this->load->model('localisation/language');
 
-		if (!$this->user->hasPermission('modify', 'task/currency')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$languages = $this->model_localisation_language->getLanguages();
 
-		if (!$json) {
-			$this->load->model('localisation/language');
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/currency.json';
 
-			$languages = $this->model_localisation_language->getLanguages();
-
-			foreach ($languages as $language) {
-				$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/currency.json';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

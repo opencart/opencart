@@ -9,7 +9,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates return reason list JSON files.
+	 * Generates return status task list.
 	 *
 	 * @return void
 	 */
@@ -82,20 +82,21 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(): void {
-		$this->load->language('task/admin/language');
+	public function clear(array $args = []): array {
+		$this->load->language('task/admin/return_status');
 
-		$json = [];
+		$this->load->model('localisation/language');
 
-		if (!$this->user->hasPermission('modify', 'admin/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/return_status.json';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
 		}
 
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

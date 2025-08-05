@@ -83,19 +83,20 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(array $args = []): array {
-		$this->load->language('task/admin/language');
+		$this->load->language('task/admin/stock_status');
 
-		$json = [];
+		$this->load->model('localisation/language');
 
-		if (!$this->user->hasPermission('modify', 'admin/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/stock_status.json';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
 		}
 
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

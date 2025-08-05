@@ -85,7 +85,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
-
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
@@ -98,7 +97,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
-
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

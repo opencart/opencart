@@ -11,7 +11,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates customer field task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/custom_field');
@@ -82,20 +82,16 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(): void {
+	public function clear(array $args = []): array {
 		$this->load->language('task/admin/language');
 
-		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'admin/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
 
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+
+
+
+
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

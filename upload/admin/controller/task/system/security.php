@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Task\Admin;
+namespace Opencart\Admin\Controller\Task\System;
 /**
  * Class Security
  *

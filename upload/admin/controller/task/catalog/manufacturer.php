@@ -129,6 +129,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			unlink($file);
 		}
 
-		$json['success'] = $this->language->get('text_success');
+
 	}
 }

@@ -82,6 +82,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/*
+	 *
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/weight_class');
 

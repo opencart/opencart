@@ -1,87 +1,59 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
- * Class Currency
+ * Class Store
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class Currency extends \Opencart\System\Engine\Controller {
+class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Generate
 	 *
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('task/catalog/currency');
+		$this->load->language('task/catalog/store');
 
-		$json = [];
+		$this->load->model('setting/store');
 
-		if (!$this->user->hasPermission('modify', 'task/catalog/currency')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$stores = $this->model_setting_store->getStores();
 
-		if (!$json) {
-			$this->load->model('setting/store');
+		$this->load->model('localisation/language');
 
-			$stores = $this->model_setting_store->getStores();
+		$languages = $this->model_localisation_language->getLanguages();
 
-			$this->load->model('localisation/language');
+		foreach ($stores as $store) {
+			foreach ($languages as $language) {
 
-			$languages = $this->model_localisation_language->getLanguages();
 
-			$this->load->model('localisation/currency');
 
-			$currencies = $this->model_localisation_currency->getCurrencies();
+				$base = DIR_CATALOG . 'view/data/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+				$filename = 'currency.json';
 
-			foreach ($stores as $store) {
-				foreach ($languages as $language) {
-					$base = DIR_CATALOG . 'view/data/';
-					$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-					$filename = 'currency.json';
+				if (!oc_directory_create($base . $directory, 0777)) {
+					$json['error'] = sprintf($this->language->get('error_directory'), $directory);
 
-					if (!oc_directory_create($base . $directory, 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $directory);
+					break;
+				}
 
-						break;
-					}
+				$file = $base . $directory . $filename;
 
-					$file = $base . $directory . $filename;
+				if (!file_put_contents($file, json_encode($currencies))) {
+					$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
 
-					if (!file_put_contents($file, json_encode($currencies))) {
-						$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
-
-						break;
-					}
+					break;
 				}
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+
+
+
 	}
 
-	public function clear(): void {
+	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'task/catalog/currency')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$file = DIR_CATALOG . 'view/data/localisation/currency.json';
-
-			if  (is_file($file)) {
-				unlink($file);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

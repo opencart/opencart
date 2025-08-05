@@ -9,7 +9,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates language task list.
+	 * Generates language list.
 	 *
 	 * @return array
 	 */
@@ -37,6 +37,13 @@ class Language extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * Index
+	 *
+	 * Clears language list.
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/language');
 

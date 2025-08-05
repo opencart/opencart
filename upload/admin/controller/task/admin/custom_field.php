@@ -18,18 +18,26 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
+		$this->load->model('customer/customer_group');
+
+		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$task_data = [
-				'code'   => 'custom_field',
-				'action' => 'task/admin/custom_field.list',
-				'args'   => ['language_id' => $language['language_id']]
-			];
+			foreach ($customer_groups as $customer_group) {
+				$task_data = [
+					'code'   => 'custom_field',
+					'action' => 'task/admin/custom_field.list',
+					'args'   => [
+						'language_id' => $language['language_id']
+					]
+				];
 
-			$this->model_setting_task->addTask($task_data);
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 
 		return ['success' => $this->language->get('text_success')];
@@ -60,11 +68,21 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields();
 
 		foreach ($custom_fields as $custom_field) {
+
+
 			$description_info = $this->model_customer_custom_field->getDescription($custom_field['custom_field_id'], $language_info['language_id']);
 
 			if ($description_info) {
+
+
+
 				$custom_field_data[$custom_field['custom_field_id']] = $description_info + $custom_field;
+
+
 			}
+
+
+
 		}
 
 		$base = DIR_APPLICATION . 'view/data/';
@@ -83,14 +101,19 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(array $args = []): array {
-		$this->load->language('task/admin/language');
+		$this->load->language('task/admin/custom_field');
 
+		$this->load->model('localisation/language');
 
+		$languages = $this->model_localisation_language->getLanguages();
 
+		foreach ($languages as $language) {
+			$files = oc_directory_read(DIR_APPLICATION . 'view/data/' . $language['code'] . '/customer/', false, '/custom_field\-.+\.json$/');
 
-
-
-
+			foreach ($files as $file) {
+				unlink($file);
+			}
+		}
 
 		return ['success' => $this->language->get('text_clear')];
 	}

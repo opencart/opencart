@@ -99,49 +99,37 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	public function clear(array $args = []): array {
+		$this->load->language('task/catalog/return_reason');
 
-	public function clear(): void {
-		$this->load->language('task/catalog/language');
+		$this->load->model('setting/store');
 
-		$json = [];
+		$stores = $this->model_setting_store->getStores();
 
-		if (!$this->user->hasPermission('modify', 'task/catalog/language')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$this->load->model('localisation/language');
 
-		if (!$json) {
-			$this->load->model('localisation/language');
+		$languages = $this->model_localisation_language->getLanguages();
 
-			$languages = $this->model_localisation_language->getLanguages();
+		foreach ($stores as $store) {
+			foreach ($languages as $language) {
+				$base = DIR_CATALOG . 'view/data/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+				$filename = 'return_reason.json';
 
-			$this->load->model('setting/store');
+				$file = $base . $directory . $filename;
 
-			$stores = $this->model_setting_store->getStores();
+				if (is_file($file)) {
+					unlink($file);
+				}
 
-			foreach ($stores as $store) {
-				foreach ($languages as $language) {
-					$base = DIR_CATALOG . 'view/data/';
-					$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-					$filename = 'country.json';
+				$files = oc_directory_read($base . $directory, false, '/.+\return_reason-.+.json$/');
 
-					$file = $base . $directory . $filename;
-
-					if (is_file($file)) {
-						unlink($file);
-					}
-
-					$files = oc_directory_read($base . $directory, false, '/.+\country-.+.json$/');
-
-					foreach ($files as $file) {
-						unlink($file);
-					}
+				foreach ($files as $file) {
+					unlink($file);
 				}
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

@@ -82,32 +82,30 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(): void {
-		$this->load->language('task/admin/currency');
+	public function clear(array $args = []): array {
+		$this->load->language('task/catalog/currency');
 
-		$json = [];
+		$this->load->model('setting/store');
 
-		if (!$this->user->hasPermission('modify', 'task/currency')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$stores = $this->model_setting_store->getStores();
 
-		if (!$json) {
-			$this->load->model('localisation/language');
+		$this->load->model('localisation/language');
 
-			$languages = $this->model_localisation_language->getLanguages();
+		$languages = $this->model_localisation_language->getLanguages();
 
+		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/currency.json';
+				$base = DIR_CATALOG . 'view/data/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+
+				$file = $base . $directory . 'currency.json';
 
 				if (is_file($file)) {
 					unlink($file);
 				}
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

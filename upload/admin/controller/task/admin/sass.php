@@ -13,33 +13,36 @@ class Sass extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
-		$files = glob(DIR_APPLICATION . 'view/stylesheet/*.scss');
+	public function index(array $args = []): array {
+		$this->load->language('task/admin/sass');
 
-		if ($files) {
-			foreach ($files as $file) {
-				// Get the filename
-				$filename = basename($file, '.scss');
+		$file = DIR_APPLICATION . 'view/stylesheet/stylesheet.scss';
 
-				$stylesheet = DIR_APPLICATION . 'view/stylesheet/' . $filename . '.css';
-
-				$scss = new \ScssPhp\ScssPhp\Compiler();
-				$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/');
-
-				$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
-
-				$handle = fopen($stylesheet, 'w');
-
-				flock($handle, LOCK_EX);
-
-				fwrite($handle, $output);
-
-				fflush($handle);
-
-				flock($handle, LOCK_UN);
-
-				fclose($handle);
-			}
+		if (!is_file($file)) {
+			return ['error' => $this->language->get('error_file')];
 		}
+
+		$filename = basename($file, '.scss');
+
+		$stylesheet = dirname($file) . '/' . $filename . '.css';
+
+		$scss = new \ScssPhp\ScssPhp\Compiler();
+		$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/');
+
+		$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
+
+		$handle = fopen($stylesheet, 'w');
+
+		flock($handle, LOCK_EX);
+
+		fwrite($handle, $output);
+
+		fflush($handle);
+
+		flock($handle, LOCK_UN);
+
+		fclose($handle);
+
+		return ['success' => $this->language->get('text_success')];
 	}
 }

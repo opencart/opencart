@@ -86,7 +86,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$base = DIR_APPLICATION . 'view/data/';
+		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/customer/';
 		$filename = 'customer_group.json';
 
@@ -111,20 +111,17 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
 
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
 
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
-		$this->load->model('setting/store');
-
-		$stores = $this->model_setting_store->getStores();
-
 		foreach ($stores as $store) {
-			$store_url = parse_url($store['url'], PHP_URL_HOST);
-
 			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . $store_url . '/' . $language['code'] . '/customer/customer_group.json';
+				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/customer/customer_group.json';
 
 				if (is_file($file)) {
 					unlink($file);
@@ -132,6 +129,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

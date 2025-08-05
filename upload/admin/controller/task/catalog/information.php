@@ -98,4 +98,10 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
+
+	public function clear(array $args = []): array {
+		$this->load->language('task/catalog/article');
+
+		return ['success' => $this->language->get('text_success')];
+	}
 }

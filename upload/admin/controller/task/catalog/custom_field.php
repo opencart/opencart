@@ -99,20 +99,30 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(): void {
-		$this->load->language('task/catalog/language');
+	public function clear(array $args = []): array {
+		$this->load->language('task/catalog/custom_field');
 
-		$json = [];
+		$this->load->model('setting/store');
 
-		if (!$this->user->hasPermission('modify', 'catalog/custom_field')) {
-			$json['error'] = $this->language->get('error_permission');
+		$stores = $this->model_setting_store->getStores();
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($stores as $store) {
+			foreach ($languages as $language) {
+				$base = DIR_CATALOG . 'view/data/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+
+				$files = oc_directory_read($base . $directory, false, '/custom_field\-.+\.json$/');
+
+				foreach ($files as $file) {
+					unlink($file);
+				}
+			}
 		}
 
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

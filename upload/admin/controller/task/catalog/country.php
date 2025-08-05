@@ -200,20 +200,18 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/language');
 
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
 
-		foreach ($stores as $store) {
-			$store_url = parse_url($store['url'], PHP_URL_HOST);
+		$this->load->model('localisation/language');
 
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($stores as $store) {
 			foreach ($languages as $language) {
 				$base = DIR_CATALOG . 'view/data/';
-				$directory = $store_url . '/' . $language['code'] . '/localisation/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
 
 				$file = $base . $directory . 'country.json';
 
@@ -229,10 +227,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
-
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

@@ -167,9 +167,30 @@ class Article extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
-	public function clear(): array  {
+	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
-		return ['success' => $this->language->get('text_success')];
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($stores as $store) {
+			foreach ($languages as $language) {
+				$base = DIR_CATALOG . 'view/data/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+
+				$file = $base . $directory . 'article.json';
+
+				if (is_file($file)) {
+					unlink($file);
+				}
+			}
+		}
+
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

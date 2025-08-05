@@ -37,18 +37,9 @@ class Category extends \Opencart\System\Engine\Controller {
 
 	}
 
-	public function clear(): void {
+	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/category');
 
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'task/catalog/language')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-		}
 
 	}
 }

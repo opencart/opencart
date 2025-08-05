@@ -1,96 +1,65 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Admin;
 /**
- * Class Currency
+ * Class Store
  *
  * @package Opencart\Admin\Controller\Task\Admin
  */
 class Store extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generate
+	 * Index
 	 *
-	 * @return void
+	 * Generates store list.
+	 *
+	 * @return array
 	 */
-	public function index(): void {
+	public function index(array $args = []): array {
 		$this->load->language('task/admin/store');
 
-		$json = [];
+		$this->load->model('setting/store');
 
-		if (!$this->user->hasPermission('modify', 'task/admin/store')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$stores = $this->model_setting_store->getStores();
 
-		if (!$json) {
-			$this->load->model('setting/store');
+		$this->load->model('localisation/language');
 
-			$stores = $this->model_setting_store->getStores();
+		$languages = $this->model_localisation_language->getLanguages();
 
-			$this->load->model('localisation/language');
+		foreach ($languages as $language) {
+			$base = DIR_CATALOG . 'view/data/';
+			$directory = $language['code'] . '/setting/';
+			$filename = 'store.json';
 
-			$languages = $this->model_localisation_language->getLanguages();
-
-			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = $language['code'] . '/setting/';
-				$filename = 'store.json';
-
-				if (!oc_directory_create($base . $directory, 0777)) {
-					$json['error'] = sprintf($this->language->get('error_directory'), $directory);
-
-					break;
-				}
-
-				if (!file_put_contents($base . $directory . $filename, json_encode($stores))) {
-					$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
-
-					break;
-				}
+			if (!oc_directory_create($base . $directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 			}
 
-			$json['success'] = $this->language->get('text_success');
+			if (!file_put_contents($base . $directory . $filename, json_encode($stores))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_success')];
 	}
 
-
-
-
-	public function clear(): void {
+	public function clear(array $args = []): array {
 		$this->load->language('task/admin/store');
 
-		$json = [];
+		$this->load->model('setting/store');
 
-		if (!$this->user->hasPermission('modify', 'task/admin/store')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$stores = $this->model_setting_store->getStores();
 
-		if (!$json) {
-			$this->load->model('setting/store');
+		$this->load->model('localisation/language');
 
-			$stores = $this->model_setting_store->getStores();
+		$languages = $this->model_localisation_language->getLanguages();
 
-			$this->load->model('localisation/language');
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/setting/setting.json';
 
-			$languages = $this->model_localisation_language->getLanguages();
-
-			foreach ($stores as $store) {
-				$store_url = parse_url($store['url'], PHP_URL_HOST);
-
-				foreach ($languages as $language) {
-					$file = DIR_CATALOG . 'view/data/' . $store_url . '/' . $language['code'] . '/setting/store.json';
-
-					if (is_file($file)) {
-						unlink($file);
-					}
-				}
+			if (is_file($file)) {
+				unlink($file);
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

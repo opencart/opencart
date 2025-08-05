@@ -1,4 +1,5 @@
 <?php
+namespace Opencart\Admin\Controller\Task\System;
 /*
 Upgrade Process
 
@@ -10,7 +11,6 @@ Upgrade Process
 
 4. Redirect to upgrade page
 */
-namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Upgrade
  *

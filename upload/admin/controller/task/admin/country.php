@@ -166,7 +166,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(): array {
+	public function clear(array $args = []): array {
 		$this->load->language('task/admin/country');
 
 		$this->load->model('localisation/language');

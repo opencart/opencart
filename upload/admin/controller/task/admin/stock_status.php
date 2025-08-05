@@ -9,9 +9,9 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the stock status list JSON files by language.
+	 * Generates stock status task list.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/stock_status');
@@ -38,7 +38,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the stock status list file.
+	 * Generates the stock status list.
 	 *
 	 * @return array
 	 */
@@ -82,6 +82,13 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears generated country files.
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/stock_status');
 

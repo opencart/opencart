@@ -59,7 +59,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_gdpr',
-			'action' => 'task/admin/mail',
+			'action' => 'task/system/mail',
 			'args'   => [
 				'to'      => $args[1],
 				'from'    => $this->config->get('config_email'),
@@ -166,7 +166,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_gdpr',
-			'action' => 'task/admin/mail',
+			'action' => 'task/system/mail',
 			'args'   => [
 				'to'      => $gdpr_info['email'],
 				'from'    => $this->config->get('config_email'),

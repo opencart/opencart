@@ -38,7 +38,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the weight class list file.
+	 * Generates the weight class list.
 	 *
 	 * @return array
 	 */
@@ -82,8 +82,12 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	/*
+	/**
+	 * Clear
 	 *
+	 * Clears generated country files.
+	 *
+	 * @return array
 	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/weight_class');

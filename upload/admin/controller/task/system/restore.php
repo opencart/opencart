@@ -14,7 +14,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/admin/restore');
+		$this->load->language('task/system/restore');
 
 		if (!array_key_exists($args, 'filename')) {
 			return ['error' => $this->language->get('error_filename')];
@@ -54,7 +54,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 			$task_data = [
 				'code'   => 'backup',
-				'action' => 'task/admin/restore.read',
+				'action' => 'task/system/restore.read',
 				'args'   => [
 					'filename' => $args['filename'],
 					'start'    => $start,
@@ -76,7 +76,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function read(array $args = []): array {
-		$this->load->language('task/admin/restore');
+		$this->load->language('task/system/restore');
 
 		if (isset($args['position'])) {
 			$position = $args['position'];

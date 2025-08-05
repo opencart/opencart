@@ -164,7 +164,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'backup',
-				'action' => 'task/admin/backup',
+				'action' => 'task/system/backup',
 				'args'   => [
 					'filename' => date('Y-m-d H.i.s') . '.sql',
 					'backup'   => $backup
@@ -211,7 +211,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'restore',
-				'action' => 'task/admin/restore',
+				'action' => 'task/system/restore',
 				'args'   => ['filename' => $filename]
 			];
 

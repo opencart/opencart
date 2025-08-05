@@ -77,7 +77,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_affiliate',
-			'action' => 'task/admin/mail',
+			'action' => 'task/system/mail',
 			'args'   => [
 				'to'      => $customer_info['email'],
 				'from'    => $this->config->get('config_email'),
@@ -165,7 +165,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_affiliate',
-			'action' => 'task/admin/mail',
+			'action' => 'task/system/mail',
 			'args'   => [
 				'to'      => $customer_info['email'],
 				'from'    => $this->config->get('config_email'),

@@ -14,7 +14,7 @@ class Security extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
-		$this->load->language('task/admin/security');
+		$this->load->language('task/system/security');
 
 		$data['list'] = $this->load->controller('common/security.getList');
 
@@ -29,7 +29,7 @@ class Security extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function list(): void {
-		$this->load->language('task/admin/security');
+		$this->load->language('task/system/security');
 
 		$this->response->setOutput($this->load->controller('common/security.getList'));
 	}
@@ -116,7 +116,7 @@ class Security extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function install(): void {
-		$this->load->language('task/admin/security');
+		$this->load->language('task/system/security');
 
 		$json = [];
 
@@ -152,7 +152,7 @@ class Security extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function storage(): void {
-		$this->load->language('task/admin/security');
+		$this->load->language('task/system/security');
 
 		$json = [];
 
@@ -275,7 +275,7 @@ class Security extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function admin(): void {
-		$this->load->language('task/admin/security');
+		$this->load->language('task/system/security');
 
 		$json = [];
 
@@ -407,7 +407,7 @@ class Security extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function delete(): void {
-		$this->load->language('task/admin/security');
+		$this->load->language('task/system/security');
 
 		$json = [];
 

@@ -41,7 +41,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'mail_affiliate',
-			'action' => 'task/admin/mail',
+			'action' => 'task/system/mail',
 			'args'   => [
 				'to'      => $this->customer->getEmail(),
 				'from'    => $this->config->get('config_email'),
@@ -114,7 +114,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		foreach ($emails as $email) {
 			$task_data = [
 				'code'   => 'mail_alert',
-				'action' => 'task/admin/mail',
+				'action' => 'task/system/mail',
 				'args'   => [
 					'to'      => $email,
 					'from'    => $this->config->get('config_email'),

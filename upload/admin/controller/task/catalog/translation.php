@@ -19,6 +19,13 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears generated country files.
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/catalog/language');
 

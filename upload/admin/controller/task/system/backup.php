@@ -12,7 +12,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/admin/backup');
+		$this->load->language('task/system/backup');
 
 		$required = [
 			'filename',
@@ -53,7 +53,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 				$task_data = [
 					'code'   => 'backup',
-					'action' => 'task/admin/backup.write',
+					'action' => 'task/system/backup.write',
 					'args'   => [
 						'filename' => $filename,
 						'table'    => $table,
@@ -77,7 +77,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function write(array $args = []): array {
-		$this->load->language('task/admin/backup');
+		$this->load->language('task/system/backup');
 
 		$required = [
 			'filename',

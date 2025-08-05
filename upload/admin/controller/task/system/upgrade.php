@@ -23,7 +23,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/admin/upgrade');
+		$this->load->language('task/system/upgrade');
 
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade');
 
@@ -47,7 +47,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		if ($response_info && !version_compare(VERSION, $response_info['version'], '>=')) {
 			$task_data = [
 				'code'   => 'upgrade',
-				'action' => 'task/admin/upgrade.download',
+				'action' => 'task/system/upgrade.download',
 				'args'   => ['version' => $response_info['version']]
 			];
 
@@ -65,7 +65,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function download(array $args = []): array {
-		$this->load->language('task/admin/upgrade');
+		$this->load->language('task/system/upgrade');
 
 		if (!isset($args['version']) || version_compare($args['version'], VERSION, '<') || !preg_match('/^(\d+\.\d+\.\d+\.\d+)$/', $args['version'])) {
 			return ['error' => $this->language->get('error_version')];
@@ -100,7 +100,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'upgrade',
-			'action' => 'task/admin/upgrade.install',
+			'action' => 'task/system/upgrade.install',
 			'args'   => ['version' => $args['version']]
 		];
 
@@ -117,7 +117,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function install(array $args = []): array {
-		$this->load->language('task/admin/upgrade');
+		$this->load->language('task/system/upgrade');
 
 
 		if (!isset($args['version']) || version_compare($args['version'], VERSION, '<') || !preg_match('/^(\d+\.\d+\.\d+\.\d+)$/', $args['version'])) {

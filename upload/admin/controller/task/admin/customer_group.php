@@ -56,6 +56,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_group_data = [];
 
 		$this->load->model('customer/customer_group');
+		$this->load->model('customer/custom_field');
 
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
@@ -63,7 +64,19 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$description_info = $this->model_customer_customer_group->getDescription($customer_group['customer_group_id'], $language_info['language_id']);
 
 			if ($description_info) {
-				$customer_group_data[$customer_group['customer_group_id']] = $description_info + $customer_group;
+				$custom_field_data = [];
+
+				$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group['customer_group_id']]);
+
+				foreach ($custom_fields as $custom_field) {
+					$description_info = $this->model_customer_custom_field->getDescription($custom_field['custom_field_id'], $language_info['language_id']);
+
+					if ($description_info) {
+						$custom_field_data[$custom_field['custom_field_id']] = $description_info + $custom_field;
+					}
+				}
+
+				$customer_group_data[$customer_group['customer_group_id']] = ['custom_field' => $custom_field_data] + $description_info + $customer_group;
 			}
 		}
 

@@ -510,7 +510,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$task_data = [
 				'code'   => 'mail_alert',
-				'action' => 'task/admin/mail',
+				'action' => 'task/system/mail',
 				'args'   => [
 					'to'      => $this->config->get('config_email') .', ' . (string)$this->config->get('config_mail_alert_email'),
 					'from'    => $this->config->get('config_email'),

@@ -38,7 +38,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the subscription status list file.
+	 * Generates the subscription status list.
 	 *
 	 * @return array
 	 */
@@ -82,6 +82,13 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears generated country files.
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/subscription_status');
 

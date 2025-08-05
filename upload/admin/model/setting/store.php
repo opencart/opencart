@@ -236,7 +236,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $store_data + $query->rows;
+		return array_merge($store_data, $query->rows);
 	}
 
 	/**

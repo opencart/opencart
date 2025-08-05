@@ -230,6 +230,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_account_id'] = $this->config->get('config_account_id');
 
 		// Checkout
+		$data['config_shared'] = $this->config->get('config_shared');
 		$data['config_cart_weight'] = $this->config->get('config_cart_weight');
 		$data['config_checkout_guest'] = $this->config->get('config_checkout_guest');
 		$data['config_checkout_payment_address'] = $this->config->get('config_checkout_payment_address');
@@ -456,8 +457,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_user_password_number'] = $this->config->get('config_user_password_number');
 		$data['config_user_password_symbol'] = $this->config->get('config_user_password_symbol');
 		$data['config_user_password_length'] = $this->config->get('config_user_password_length');
-
-		$data['config_shared'] = $this->config->get('config_shared');
 
 		// Uploads
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');

@@ -114,6 +114,7 @@ $_['entry_login_attempts']                = 'Maximale Anmeldeversuche';
 $_['entry_password']                      = 'Kennwortanforderungen';
 $_['entry_password_length']               = 'Mindestlänge des Passworts';
 $_['entry_account']                       = 'Kontobedingungen';
+$_['entry_shared']                        = 'Shared Cart Sessions';
 $_['entry_cart_weight']                   = 'Gewicht auf der Warenkorbseite anzeigen';
 $_['entry_checkout_guest']                = 'Gast-Checkout';
 $_['entry_checkout_payment_address']      = 'Rechnungsadresse erforderlich';
@@ -175,21 +176,15 @@ $_['entry_mail_smtp_port']                = 'Hafen';
 $_['entry_mail_smtp_timeout']             = 'Time-out';
 $_['entry_mail_alert']                    = 'Benachrichtigungsmail';
 $_['entry_mail_alert_email']              = 'Zusätzliche Warnmail';
-$_['entry_shared']                        = 'Gemeinsam genutzte Sitzungen verwenden';
 $_['entry_robots']                        = 'Roboter';
 $_['entry_seo_url']                       = 'Verwenden Sie SEO-URLs';
 $_['entry_file_max_size']                 = 'Maximale Dateigröße';
 $_['entry_file_ext_allowed']              = 'Erlaubte Dateierweiterungen';
 $_['entry_file_mime_allowed']             = 'Erlaubte Datei-MIME-Typen';
 $_['entry_maintenance']                   = 'Wartungsmodus';
-$_['entry_session_expire']                = 'Lebensdauer der Sitzung';
-$_['entry_session_samesite']              = 'Sitzungscookie auf derselben Site';
-$_['entry_compression']                   = 'Ausgabekomprimierungsstufe';
 $_['entry_user_2fa']                      = 'Zwei-Faktor-Sicherheit';
 $_['entry_error_display']                 = 'Anzeigefehler';
 $_['entry_error_log']                     = 'Protokollfehler';
-$_['entry_error_filename']                = 'Fehlerprotokolldateiname';
-$_['entry_status']                        = 'Status';
 
 // Help
 $_['help_geocode']                        = 'Bitte geben Sie den Geocode Ihres Filialstandorts manuell ein.';
@@ -229,6 +224,7 @@ $_['help_2fa_expire']                     = 'Anzahl der Tage bis zum Ablauf des 
 $_['help_login_attempts']                 = 'Maximal zulässige Anmeldeversuche, bevor das Konto für 1 Stunde gesperrt wird. Kundenkonten können auf den Kundenadministrationsseiten entsperrt werden.';
 $_['help_account']                        = 'Zwingt die Benutzer, Bedingungen zuzustimmen, bevor ein Konto erstellt werden kann.';
 $_['help_invoice_prefix']                 = 'Legen Sie das Rechnungspräfix fest (z. B. INV-2011-00). Die Rechnungs-IDs beginnen für jedes eindeutige Präfix bei 1.';
+$_['help_shared']                         = 'Share the cart different stores on different domains.';
 $_['help_cart_weight']                    = 'Zeigen Sie das Warenkorbgewicht auf der Warenkorbseite an.';
 $_['help_checkout_guest']                 = 'Ermöglichen Sie Kunden, zur Kasse zu gehen, ohne ein Konto zu erstellen. Dies ist nicht möglich, wenn sich ein herunterladbares Produkt im Warenkorb befindet.';
 $_['help_checkout_payment_address']       = 'Wählen Sie aus, ob Kunden zum Bezahlen eine Rechnungsadresse benötigen.';
@@ -261,17 +257,14 @@ $_['help_mail_smtp_hostname']             = 'Fügen Sie das Präfix „tls://“
 $_['help_mail_smtp_password']             = 'Für Gmail müssen Sie hier möglicherweise ein anwendungsspezifisches Passwort einrichten: <a href="https://security.google.com/settings/security/apppasswords" target="_blank">https://security.google.com/settings/security/apppasswords</a>.';
 $_['help_mail_alert']                     = 'Wählen Sie aus, zu welchen Funktionen Sie eine Benachrichtigungs-E-Mail erhalten möchten, wenn ein Kunde sie verwendet.';
 $_['help_mail_alert_email']               = 'Alle zusätzlichen E-Mails, an die Sie zusätzlich zur Haupt-E-Mail des Shops eine Benachrichtigung erhalten möchten (durch Komma getrennt).';
-$_['help_session_expire']                 = 'Legen Sie die Lebensdauer der PHP-Sitzung in Sekunden fest (z. B. 3600 = 1 Stunde).';
-$_['help_session_samesite']               = 'Setzen Sie das PHP-Session-Samesite-Cookie';
 $_['help_user_2fa']                       = 'Zwei-Faktor-Sicherheit für Administratorbenutzer.';
-$_['help_shared']                         = 'Versuchen Sie, das Sitzungscookie zwischen Geschäften zu teilen, damit der Einkaufswagen zwischen verschiedenen Domänen weitergegeben werden kann.';
 $_['help_robots']                         = 'Eine Liste von Webcrawler-Benutzeragenten, mit denen keine gemeinsamen Sitzungen verwendet werden. Verwenden Sie für jeden Benutzeragenten separate Zeilen.';
 $_['help_seo_url']                        = 'Um SEO-URLs zu verwenden, muss das Apache-Modul „mod-rewrite“ installiert sein und Sie müssen die Datei htaccess.txt in .htaccess umbenennen.';
 $_['help_file_max_size']                  = 'Die maximale Dateigröße, die Sie Kunden zum Hochladen erlauben können. Geben Sie sie in Megabyte ein.';
 $_['help_file_ext_allowed']               = 'Fügen Sie hinzu, welche Dateierweiterungen hochgeladen werden dürfen. Verwenden Sie für jeden Wert eine neue Zeile.';
 $_['help_file_mime_allowed']              = 'Fügen Sie hinzu, welche Datei-MIME-Typen hochgeladen werden dürfen. Verwenden Sie für jeden Wert eine neue Zeile.';
 $_['help_maintenance']                    = 'Verhindert, dass Kunden in Ihrem Shop stöbern. Stattdessen wird ihnen eine Wartungsmeldung angezeigt. Wenn Sie als Administrator angemeldet sind, wird Ihnen der Shop wie gewohnt angezeigt.';
-$_['help_compression']                    = 'GZIP für effizientere Übertragung an anfordernde Clients. Der Komprimierungsgrad muss zwischen 0 und 9 liegen.';
+$_['help_error_display']                  = 'Only turn on for development and turn off for production.';
 
 // Error
 $_['error_warning']                       = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';

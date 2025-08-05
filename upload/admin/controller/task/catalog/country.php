@@ -135,6 +135,14 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
+		$this->load->model('localisation/country');
+
+		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
+
+		if (!$country_info) {
+			return ['error' => $this->language->get('error_country')];
+		}
+
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
@@ -149,14 +157,6 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
-		}
-
-		$this->load->model('localisation/country');
-
-		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
-
-		if (!$country_info) {
-			return ['error' => $this->language->get('error_country')];
 		}
 
 		$zone_data = [];

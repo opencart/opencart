@@ -103,6 +103,14 @@ class Article extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
+		$this->load->model('cms/article');
+
+		$article_info = $this->model_cms_article->getArticles((int)$args['article_id']);
+
+		if (!$article_info) {
+			return ['error' => $this->language->get('error_article')];
+		}
+
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
@@ -118,16 +126,6 @@ class Article extends \Opencart\System\Engine\Controller {
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
 		}
-
-		$this->load->model('cms/article');
-
-		$article_info = $this->model_cms_article->getArticles((int)$args['article_id']);
-
-		if (!$article_info) {
-			return ['error' => $this->language->get('error_article')];
-		}
-
-
 
 
 		if ($information['status']) {

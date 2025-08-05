@@ -60,10 +60,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
 		foreach ($customer_groups as $customer_group) {
-			$description_info = $this->model_customer_customer_group->getDescription($customer_group['country_id'], $language_info['language_id']);
+			$description_info = $this->model_customer_customer_group->getDescription($customer_group['customer_group_id'], $language_info['language_id']);
 
 			if ($description_info) {
-				$customer_group_data[$customer_group['country_id']] = $description_info + $customer_group;
+				$customer_group_data[$customer_group['customer_group_id']] = $description_info + $customer_group;
 			}
 		}
 
@@ -82,7 +82,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(): void {
+	public function clear(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
 

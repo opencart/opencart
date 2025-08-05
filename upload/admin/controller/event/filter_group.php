@@ -23,7 +23,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'filter_group',
-			'action' => 'catalog/filter_group',
+			'action' => 'task/catalog/filter_group',
 			'args'   => []
 		];
 

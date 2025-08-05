@@ -23,7 +23,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'attribute_group',
-			'action' => 'catalog/attribute_group',
+			'action' => 'task/catalog/attribute_group',
 			'args'   => []
 		];
 

@@ -23,7 +23,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'language',
-			'action' => 'catalog/language',
+			'action' => 'task/catalog/language',
 			'args'   => []
 		];
 
@@ -33,7 +33,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'language',
-			'action' => 'admin/language',
+			'action' => 'task/admin/language',
 			'args'   => []
 		];
 

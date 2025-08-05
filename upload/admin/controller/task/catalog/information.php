@@ -91,7 +91,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$file = DIR_CATALOG . 'view/data/catalog/information.' . (int)$information['information_id'] . '.' . $code . '.json';
 
 		if (!file_put_contents($file, json_encode($information_data))) {
-			$json['error'] = $this->language->get('error_file');
+			return ['error' => $this->language->get('error_file')];
 		}
 
 

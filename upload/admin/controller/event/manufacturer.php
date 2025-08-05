@@ -23,7 +23,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'manufacturer',
-			'action' => 'catalog/manufacturer',
+			'action' => 'task/catalog/manufacturer',
 			'args'   => []
 		];
 

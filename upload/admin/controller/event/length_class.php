@@ -24,7 +24,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'length_class',
-			'action' => 'admin/length_class',
+			'action' => 'task/admin/length_class',
 			'args'   => []
 		];
 

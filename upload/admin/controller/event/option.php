@@ -24,7 +24,7 @@ class Option extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'option',
-			'action' => 'catalog/option',
+			'action' => 'task/catalog/option',
 			'args'   => []
 		];
 
@@ -34,7 +34,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'option',
-			'action' => 'admin/option',
+			'action' => 'task/admin/option',
 			'args'   => []
 		];
 

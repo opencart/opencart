@@ -24,7 +24,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'custom_field',
-			'action' => 'catalog/custom_field',
+			'action' => 'task/catalog/custom_field',
 			'args'   => []
 		];
 
@@ -34,7 +34,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'custom_field',
-			'action' => 'admin/custom_field',
+			'action' => 'task/admin/custom_field',
 			'args'   => []
 		];
 

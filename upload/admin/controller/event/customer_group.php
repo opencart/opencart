@@ -23,7 +23,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args): void {
 		$task_data = [
 			'code'   => 'customer_group',
-			'action' => 'catalog/customer_group',
+			'action' => 'task/catalog/customer_group',
 			'args'   => []
 		];
 
@@ -33,7 +33,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'customer_group',
-			'action' => 'admin/customer_group',
+			'action' => 'task/admin/customer_group',
 			'args'   => []
 		];
 

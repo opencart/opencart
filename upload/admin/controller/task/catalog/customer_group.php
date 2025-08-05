@@ -108,40 +108,30 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(): void {
+	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
 
-		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'task/catalog/customer_group')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$this->load->model('localisation/language');
 
-		if (!$json) {
-			$this->load->model('localisation/language');
+		$languages = $this->model_localisation_language->getLanguages();
 
-			$languages = $this->model_localisation_language->getLanguages();
+		$this->load->model('setting/store');
 
-			$this->load->model('setting/store');
+		$stores = $this->model_setting_store->getStores();
 
-			$stores = $this->model_setting_store->getStores();
+		foreach ($stores as $store) {
+			$store_url = parse_url($store['url'], PHP_URL_HOST);
 
-			foreach ($stores as $store) {
-				$store_url = parse_url($store['url'], PHP_URL_HOST);
+			foreach ($languages as $language) {
+				$file = DIR_CATALOG . 'view/data/' . $store_url . '/' . $language['code'] . '/customer/customer_group.json';
 
-				foreach ($languages as $language) {
-					$file = DIR_CATALOG . 'view/data/' . $store_url . '/' . $language['code'] . '/customer/customer_group.json';
-
-					if (is_file($file)) {
-						unlink($file);
-					}
+				if (is_file($file)) {
+					unlink($file);
 				}
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 }

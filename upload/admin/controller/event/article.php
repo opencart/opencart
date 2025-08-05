@@ -23,7 +23,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'article',
-			'action' => 'catalog/article',
+			'action' => 'task/catalog/article',
 			'args'   => []
 		];
 

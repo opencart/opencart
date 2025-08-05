@@ -23,7 +23,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'banner',
-			'action' => 'catalog/banner',
+			'action' => 'task/catalog/banner',
 			'args'   => []
 		];
 

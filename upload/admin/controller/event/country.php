@@ -23,7 +23,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'country',
-			'action' => 'catalog/country',
+			'action' => 'task/catalog/country',
 			'args'   => []
 		];
 
@@ -33,7 +33,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'country',
-			'action' => 'admin/country',
+			'action' => 'task/admin/country',
 			'args'   => []
 		];
 

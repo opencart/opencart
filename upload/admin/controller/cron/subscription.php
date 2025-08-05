@@ -34,7 +34,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			if (($result['trial_status'] && $result['trial_remaining']) || (!$result['duration'] && $result['remaining'])) {
 				$task_data = [
 					'code'   => 'subscription',
-					'action' => 'admin/subscription',
+					'action' => 'task/admin/subscription',
 					'args'   => []
 				];
 

@@ -9,14 +9,45 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates customer group task list.
+	 * Generates manufacturer task list.
 	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
+
+		$this->load->model('setting/task');
+
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($stores as $store) {
+			foreach ($languages as $language) {
+				$task_data = [
+					'code'   => 'manufacturer',
+					'action' => 'catalog/manufacturer.list',
+					'args'   => [
+						'store_id'    => $store['store_id'],
+						'language_id' => $language['language_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+		}
+
+		return ['success' => $this->language->get('text_success')];
+	}
 
 
 
+	public function list(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
 
 		$directory = DIR_CATALOG . 'view/data/catalog/';
 
@@ -24,49 +55,16 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$json['error'] = sprintf($this->language->get('error_directory'), $directory);
 		}
 
-		if (!$json) {
-			$manufacturers = [];
 
-			$this->load->model('catalog/manufacturer');
-
-			$results = $this->model_catalog_manufacturer->getManufacturers();
-
-			foreach ($results as $result) {
-				if ($result['status']) {
-					$manufacturers[] = $result;
-				}
-			}
-
-			$file = $directory . 'manufacturer.json';
-
-			if (!file_put_contents($file, json_encode($manufacturers))) {
-				$json['error'] = sprintf($this->language->get('error_file'), $file);
-			}
-		}
-
-	}
-
-	public function list(array $args = []): array {
-		$this->load->language('task/catalog/manufacturer');
-
-
+		return ['success' => $this->language->get('text_success')];
 	}
 
 
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
-		$json = [];
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
 
-		if (!$this->user->hasPermission('modify', 'task/catalog/manufacturer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
 
 		$directory = DIR_CATALOG . 'view/data/catalog/';
 
@@ -104,7 +102,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$json) {
+
 			$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $manufacturer_total);
 
 			if ($end < $manufacturer_total) {
@@ -112,38 +110,25 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}
-		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+
 	}
 
 	public function clear(array $args = []): array {
-		$this->load->language('catalog/manufacturer');
+		$this->load->language('task/catalog/manufacturer');
 
-		$json = [];
+		$file = DIR_CATALOG . 'view/data/catalog/manufacturer.json';
 
-		if (!$this->user->hasPermission('modify', 'task/catalog/manufacturer')) {
-			$json['error'] = $this->language->get('error_permission');
+		if (is_file($file)) {
+			unlink($file);
 		}
 
-		if (!$json) {
-			$file = DIR_CATALOG . 'view/data/catalog/manufacturer.json';
+		$files = oc_directory_read(DIR_CATALOG . 'view/data/catalog/', false, '/manufacturer\..+\.json$/');
 
-			if  (is_file($file)) {
-				unlink($file);
-			}
-
-			$files = oc_directory_read(DIR_CATALOG . 'view/data/catalog/', false, '/manufacturer\..+\.json$/');
-
-			foreach ($files as $file) {
-				unlink($file);
-			}
-
-			$json['success'] = $this->language->get('text_success');
+		foreach ($files as $file) {
+			unlink($file);
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$json['success'] = $this->language->get('text_success');
 	}
 }

@@ -197,7 +197,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'security',
-				'action' => 'admin/security.storage',
+				'action' => 'task/admin/security.storage',
 				'args'   => [
 					'base_old' => $base_old,
 					'base_new' => $base_new
@@ -268,7 +268,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'security',
-				'action' => 'admin/security.admin',
+				'action' => 'task/admin/security.admin',
 				'args'   => [
 					'base_old' => $base_old,
 					'base_new' => $base_new

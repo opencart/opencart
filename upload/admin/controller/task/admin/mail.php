@@ -13,13 +13,13 @@ class Mail extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(array $args = []): array {
 		if (!$this->config->get('config_mail_engine')) {
-			return;
+			return [];
 		}
 
 		$email = trim($args['email']);
 
 		if (!oc_validate_email($email)) {
-			return;
+			return [];
 		}
 
 		$mail_option = [

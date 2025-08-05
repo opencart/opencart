@@ -9,7 +9,9 @@ class Restore extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return void
+	 * Generates restore task list.
+	 *
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/restore');

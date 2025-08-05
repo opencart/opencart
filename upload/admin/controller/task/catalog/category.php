@@ -7,9 +7,11 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  */
 class Category extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generate
+	 * Index
 	 *
-	 * @return void
+	 * Generates information task list.
+	 *
+	 * @return array
 	 */
 	public function index(): void {
 		$this->load->language('task/catalog/category');

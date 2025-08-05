@@ -54,6 +54,9 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+
+
+
 	public function clear(): void {
 		$this->load->language('task/admin/store');
 

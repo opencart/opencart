@@ -197,6 +197,25 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Stock Statuses
+	 *
+	 * Get the total number of stock status records in the database.
+	 *
+	 * @return int total number of stock status records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/stock_status');
+	 *
+	 * $stock_status_total = $this->model_localisation_stock_status->getTotalStockStatuses();
+	 */
+	public function getTotalStockStatuses(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Add Description
 	 *
 	 * Create a new stock status description record in the database.
@@ -310,24 +329,5 @@ class StockStatus extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Stock Statuses
-	 *
-	 * Get the total number of stock status records in the database.
-	 *
-	 * @return int total number of stock status records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/stock_status');
-	 *
-	 * $stock_status_total = $this->model_localisation_stock_status->getTotalStockStatuses();
-	 */
-	public function getTotalStockStatuses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return (int)$query->row['total'];
 	}
 }

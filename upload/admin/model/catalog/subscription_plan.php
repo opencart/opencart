@@ -234,6 +234,25 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Subscription Plans
+	 *
+	 * Get the total number of subscription plan records in the database.
+	 *
+	 * @return int total number of subscription plan records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/subscription_plan');
+	 *
+	 * $subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
+	 */
+	public function getTotalSubscriptionPlans(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_plan`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Add Description
 	 *
 	 * Create a new subscription plan description record in the database.
@@ -342,24 +361,5 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Subscription Plans
-	 *
-	 * Get the total number of subscription plan records in the database.
-	 *
-	 * @return int total number of subscription plan records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/subscription_plan');
-	 *
-	 * $subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
-	 */
-	public function getTotalSubscriptionPlans(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_plan`");
-
-		return (int)$query->row['total'];
 	}
 }

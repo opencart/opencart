@@ -83,6 +83,26 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit review status record in the database.
+	 *
+	 * @param int  $review_id primary key of the product record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/review');
+	 *
+	 * $this->model_catalog_review->editStatus($review_id, $status);
+	 */
+	public function editStatus(int $review_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `status` = '" . (bool)$status . "' WHERE `review_id` = '" . (int)$review_id . "'");
+	}
+
+	/**
 	 * Delete Review
 	 *
 	 * Delete review record in the database.
@@ -339,25 +359,4 @@ class Review extends \Opencart\System\Engine\Model {
 
 		return (int)$query->row['total'];
 	}
-
-	/**
-	 * Edit Status
-	 *
-	 * Edit review status record in the database.
-	 *
-	 * @param int  $review_id primary key of the product record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/review');
-	 *
-	 * $this->model_catalog_review->editStatus($review_id, $status);
-	 */
-	public function editStatus(int $review_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `status` = '" . (bool)$status . "' WHERE `review_id` = '" . (int)$review_id . "'");
-	}
-
 }

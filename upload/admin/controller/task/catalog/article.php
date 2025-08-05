@@ -96,7 +96,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generates country article file.
+	 * Generates article information.
 	 *
 	 * @return array
 	 */

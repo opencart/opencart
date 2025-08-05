@@ -128,7 +128,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generates country information file.
+	 * Generates country information.
 	 *
 	 * @return array
 	 */

@@ -185,6 +185,25 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Downloads
+	 *
+	 * Get the total number of download records in the database.
+	 *
+	 * @return int total number of download records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/download');
+	 *
+	 * $download_total = $this->model_catalog_download->getTotalDownloads();
+	 */
+	public function getTotalDownloads(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Add Description
 	 *
 	 * Create a new download description record in the database.
@@ -293,25 +312,6 @@ class Download extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "download_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Downloads
-	 *
-	 * Get the total number of download records in the database.
-	 *
-	 * @return int total number of download records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/download');
-	 *
-	 * $download_total = $this->model_catalog_download->getTotalDownloads();
-	 */
-	public function getTotalDownloads(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download`");
-
-		return (int)$query->row['total'];
 	}
 
 	/**

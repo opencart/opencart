@@ -197,6 +197,25 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Subscription Statuses
+	 *
+	 * Get the total number of subscription status records in the database.
+	 *
+	 * @return int total number of subscription status records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/subscription_status');
+	 *
+	 * $subscription_status_total = $this->model_localisation_subscription_status->getTotalSubscriptionStatuses();
+	 */
+	public function getTotalSubscriptionStatuses(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Add Description
 	 *
 	 * Create a new subscription status description record in the database.
@@ -310,24 +329,5 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Subscription Statuses
-	 *
-	 * Get the total number of subscription status records in the database.
-	 *
-	 * @return int total number of subscription status records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/subscription_status');
-	 *
-	 * $subscription_status_total = $this->model_localisation_subscription_status->getTotalSubscriptionStatuses();
-	 */
-	public function getTotalSubscriptionStatuses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return (int)$query->row['total'];
 	}
 }

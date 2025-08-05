@@ -211,6 +211,25 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Length Classes
+	 *
+	 * Get the total number of length class records in the database.
+	 *
+	 * @return int total number of length class records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/length_class');
+	 *
+	 * $length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
+	 */
+	public function getTotalLengthClasses(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "length_class`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Add Description
 	 *
 	 * Create a new length class description record in the database.
@@ -363,24 +382,5 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `unit` = '" . $this->db->escape($unit) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
-	}
-
-	/**
-	 * Get Total Length Classes
-	 *
-	 * Get the total number of length class records in the database.
-	 *
-	 * @return int total number of length class records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/length_class');
-	 *
-	 * $length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
-	 */
-	public function getTotalLengthClasses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "length_class`");
-
-		return (int)$query->row['total'];
 	}
 }

@@ -922,6 +922,26 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit category status record in the database.
+	 *
+	 * @param int  $product_id primary key of the product record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->editStatus($product_id, $status);
+	 */
+	public function editStatus(int $product_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `status` = '" . (bool)$status . "' WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
+	/**
 	 * Edit Rating
 	 *
 	 * Edit product rating record in the database.
@@ -1304,26 +1324,6 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 
 		return (int)$query->row['total'];
-	}
-
-	/**
-	 * Edit Status
-	 *
-	 * Edit category status record in the database.
-	 *
-	 * @param int  $product_id primary key of the product record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $this->model_catalog_product->editStatus($product_id, $status);
-	 */
-	public function editStatus(int $product_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `status` = '" . (bool)$status . "' WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	/**

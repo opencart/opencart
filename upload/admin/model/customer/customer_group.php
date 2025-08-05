@@ -186,6 +186,25 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Customer Groups
+	 *
+	 * Get the total number of customer group records in the database.
+	 *
+	 * @return int total number of customer group records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer_group');
+	 *
+	 * $customer_group_total = $this->model_customer_customer_group->getTotalCustomerGroups();
+	 */
+	public function getTotalCustomerGroups(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_group`");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Add Description
 	 *
 	 * Create a new customer group description record in the database.
@@ -317,24 +336,5 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Customer Groups
-	 *
-	 * Get the total number of customer group records in the database.
-	 *
-	 * @return int total number of customer group records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('customer/customer_group');
-	 *
-	 * $customer_group_total = $this->model_customer_customer_group->getTotalCustomerGroups();
-	 */
-	public function getTotalCustomerGroups(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_group`");
-
-		return (int)$query->row['total'];
 	}
 }

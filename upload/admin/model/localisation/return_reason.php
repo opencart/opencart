@@ -197,6 +197,25 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Total Return Reasons
+	 *
+	 * Get the total number of return reason records in the database.
+	 *
+	 * @return int total number of return reason records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/return_reason');
+	 *
+	 * $return_reason_total = $this->model_localisation_return_reason->getTotalReturnReasons();
+	 */
+	public function getTotalReturnReasons(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return (int)$query->row['total'];
+	}
+	
+	/**
 	 * Add Description
 	 *
 	 * Create a new return reason description record in the database.
@@ -310,24 +329,5 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Return Reasons
-	 *
-	 * Get the total number of return reason records in the database.
-	 *
-	 * @return int total number of return reason records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/return_reason');
-	 *
-	 * $return_reason_total = $this->model_localisation_return_reason->getTotalReturnReasons();
-	 */
-	public function getTotalReturnReasons(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return (int)$query->row['total'];
 	}
 }

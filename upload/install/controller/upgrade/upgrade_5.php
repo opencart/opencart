@@ -245,13 +245,6 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 			];
 
 			$missing[] = [
-				'key'        => 'config_session_expire',
-				'value'      => 3600000000,
-				'code'       => 'config',
-				'serialized' => 0
-			];
-
-			$missing[] = [
 				'key'        => 'config_cookie_id',
 				'value'      => 0,
 				'code'       => 'config',

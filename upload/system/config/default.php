@@ -48,7 +48,7 @@ $_['session_path']         = !empty($_SERVER['PHP_SELF']) ? rtrim(dirname($_SERV
 $_['session_expire']       = 86400;
 $_['session_probability']  = 1;
 $_['session_divisor']      = 5;
-$_['session_samesite']     = 'Strict';
+$_['session_samesite']     = 'Strict'; // None, Lax, Strict
 
 // Template
 $_['template_engine']      = 'twig';

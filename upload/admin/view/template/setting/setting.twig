@@ -1314,35 +1314,10 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="input-session-expire" class="col-sm-2 col-form-label">{{ entry_session_expire }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="config_session_expire" value="{{ config_session_expire }}" placeholder="{{ entry_session_expire }}" id="input-session-expire" class="form-control"/>
-                    <div class="form-text">{{ help_session_expire }}</div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-session-samesite" class="col-sm-2 col-form-label">{{ entry_session_samesite }}</label>
-                  <div class="col-sm-10">
-                    <select name="config_session_samesite" id="input-session-samesite" class="form-select">
-                      <option value="None"{% if config_session_samesite == 'None' %} selected{% endif %}>{{ text_none }}</option>
-                      <option value="Lax"{% if config_session_samesite == 'Lax' %} selected{% endif %}>{{ text_lax }}</option>
-                      <option value="Strict"{% if config_session_samesite == 'Strict' %} selected{% endif %}>{{ text_strict }}</option>
-                    </select>
-                    <div class="form-text">{{ help_session_samesite }}</div>
-                  </div>
-                </div>
-                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_seo_url }}</label>
                   <div class="col-sm-10">
                     <x-switch name="config_seo_url" value="1" checked="{{ config_seo_url }}" input-id="input-seo-url" input-class="form-switch form-switch-lg"></x-switch>
                     <div class="form-text">{{ help_seo_url }}</div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-compression" class="col-sm-2 col-form-label">{{ entry_compression }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="config_compression" value="{{ config_compression }}" placeholder="{{ entry_compression }}" id="input-compression" class="form-control"/>
-                    <div class="form-text">{{ help_compression }}</div>
                   </div>
                 </div>
               </fieldset>

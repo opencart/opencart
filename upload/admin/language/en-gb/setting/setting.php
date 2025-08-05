@@ -182,9 +182,6 @@ $_['entry_file_max_size']                 = 'Max File Size';
 $_['entry_file_ext_allowed']              = 'Allowed File Extensions';
 $_['entry_file_mime_allowed']             = 'Allowed File Mime Types';
 $_['entry_maintenance']                   = 'Maintenance Mode';
-$_['entry_session_expire']                = 'Session Lifetime';
-$_['entry_session_samesite']              = 'Session Samesite Cookie';
-$_['entry_compression']                   = 'Output Compression Level';
 $_['entry_user_2fa']                      = 'Two-factor Security';
 $_['entry_error_display']                 = 'Display Errors';
 $_['entry_error_log']                     = 'Log Errors';
@@ -259,8 +256,6 @@ $_['help_mail_smtp_hostname']             = 'Add \'tls://\' or \'ssl://\' prefix
 $_['help_mail_smtp_password']             = 'For Gmail you might need to setup an application specific password here: <a href="https://security.google.com/settings/security/apppasswords" target="_blank">https://security.google.com/settings/security/apppasswords</a>.';
 $_['help_mail_alert']                     = 'Select which features you would like to receive an alert email on when a customer uses them.';
 $_['help_mail_alert_email']               = 'Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated).';
-$_['help_session_expire']                 = 'Set the PHP Session lifetime in seconds (e.g. 3600 = 1 hour)';
-$_['help_session_samesite']               = 'Set the PHP Session samesite cookie';
 $_['help_user_2fa']                       = 'Two-factor security for admin users.';
 $_['help_shared']                         = 'Try to share the session cookie between stores so the cart can be passed between different domains.';
 $_['help_robots']                         = 'A list of web crawler user agents that shared sessions will not be used with. Use separate lines for each user agent.';
@@ -269,7 +264,6 @@ $_['help_file_max_size']                  = 'The maximum file size you can allow
 $_['help_file_ext_allowed']               = 'Add which file extensions are allowed to be uploaded. Use a new line for each value.';
 $_['help_file_mime_allowed']              = 'Add which file mime types are allowed to be uploaded. Use a new line for each value.';
 $_['help_maintenance']                    = 'Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.';
-$_['help_compression']                    = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9.';
 $_['help_error_display']                  = 'Only turn on for development and turn off for production.';
 
 // Error

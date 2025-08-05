@@ -446,10 +446,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		// Server
 		$data['config_maintenance'] = $this->config->get('config_maintenance');
-		$data['config_session_expire'] = $this->config->get('config_session_expire');
-		$data['config_session_samesite'] = $this->config->get('config_session_samesite');
 		$data['config_seo_url'] = $this->config->get('config_seo_url');
-		$data['config_compression'] = $this->config->get('config_compression');
 
 		// Security
 		$data['config_user_2fa'] = $this->config->get('config_user_2fa');

@@ -188,8 +188,6 @@ $_['entry_compression']                   = 'Output Compression Level';
 $_['entry_user_2fa']                      = 'Two-factor Security';
 $_['entry_error_display']                 = 'Display Errors';
 $_['entry_error_log']                     = 'Log Errors';
-$_['entry_error_filename']                = 'Error Log Filename';
-$_['entry_status']                        = 'Status';
 
 // Help
 $_['help_geocode']                        = 'Please enter your store location geocode manually.';
@@ -272,6 +270,7 @@ $_['help_file_ext_allowed']               = 'Add which file extensions are allow
 $_['help_file_mime_allowed']              = 'Add which file mime types are allowed to be uploaded. Use a new line for each value.';
 $_['help_maintenance']                    = 'Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.';
 $_['help_compression']                    = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9.';
+$_['help_error_display']                  = 'Only turn on for development and turn off for production.';
 
 // Error
 $_['error_warning']                       = 'Warning: Please check the form carefully for errors!';

@@ -13,20 +13,21 @@ class Sass extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(array $args = []): array {
+		$this->load->language('task/catalog/sass');
+
 		$file = DIR_CATALOG . 'view/stylesheet/stylesheet.scss';
 
 		if (!is_file($file)) {
 			return ['error' => $this->language->get('error_file')];
 		}
 
-		// Get the filename
 		$filename = basename($file, '.scss');
 
-		$stylesheet = DIR_APPLICATION . 'view/stylesheet/' . $filename . '.css';
+		$stylesheet = dirname($file) . '/' . $filename . '.css';
 
 		$scss = new \ScssPhp\ScssPhp\Compiler();
-		$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/');
+		$scss->setImportPaths(DIR_CATALOG . 'view/stylesheet/');
 
 		$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
 
@@ -42,7 +43,6 @@ class Sass extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
+		return ['success' => $this->language->get('text_success')];
 	}
-
-
 }

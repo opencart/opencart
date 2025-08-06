@@ -9,7 +9,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(): void {
 		$this->load->language('design/translation');

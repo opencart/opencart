@@ -1484,9 +1484,9 @@ VALUES ('activity_customer_add', 'Adds new customer entry in the activity log.',
        ('weight_class_add', 'Updates weight class data when a new weight class is added.', 'admin/model/localisation/weight_class.addWeightClass/after', 'event/weight_class', 1),
        ('weight_class_edit', 'Updates weight class data when a weight class is edited.', 'admin/model/localisation/weight_class.editWeightClass/after', 'event/weight_class', 1),
        ('weight_class_delete', 'Updates weight class data when a weight class is deleted.', 'admin/model/localisation/weight_class.deleteWeightClass/after', 'event/weight_class', 1),
-       ('zone_add', 'Updates zone data when a new zone is added.', 'admin/model/localisation/zone.addZone/after', 'event/zone', 1),
-       ('zone_edit', 'Updates zone data when a zone is edited.', 'admin/model/localisation/zone.editZone/after', 'event/zone', 1),
-       ('zone_delete', 'Updates zone data when a zone is deleted.', 'admin/model/localisation/zone.deleteZone/after', 'event/zone', 1);
+       ('zone_add', 'Updates zone data when a new zone is added.', 'admin/model/localisation/zone.addZone/after', 'event/country', 1),
+       ('zone_edit', 'Updates zone data when a zone is edited.', 'admin/model/localisation/zone.editZone/after', 'event/country', 1),
+       ('zone_delete', 'Updates zone data when a zone is deleted.', 'admin/model/localisation/zone.deleteZone/after', 'event/country', 1);
 
 
 -----------------------------------------------------------

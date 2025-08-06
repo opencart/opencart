@@ -56,7 +56,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_group_data = [];
 
 		$this->load->model('customer/customer_group');
-		$this->load->model('customer/custom_field');
 
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
@@ -153,9 +152,16 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $country_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $description_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears generated customer group files.
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 

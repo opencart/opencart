@@ -132,8 +132,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$description_info = $this->model_localisation_country->getDescription($country_info['country_id'], $language_info['language_id']);
 
-		if ($description_info) {
-			return ['error' => $this->language->get('error_description')];
+		if (!$description_info) {
+			return ['error' => $this->language->get('error_country')];
 		}
 
 		$zone_data = [];

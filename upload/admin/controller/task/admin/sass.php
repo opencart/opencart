@@ -45,6 +45,4 @@ class Sass extends \Opencart\System\Engine\Controller {
 
 		return ['success' => $this->language->get('text_success')];
 	}
-
-
 }

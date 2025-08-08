@@ -18,13 +18,13 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$this->load->model('localisation/country');
-
-		$countries = $this->model_localisation_country->getCountries(['sort_order' => 'ASC']);
-
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
+
+		$this->load->model('localisation/country');
+
+		$countries = $this->model_localisation_country->getCountries(['sort_order' => 'ASC']);
 
 		foreach ($languages as $language) {
 			// Country List

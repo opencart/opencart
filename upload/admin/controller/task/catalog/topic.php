@@ -120,7 +120,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 	public function info(): array {
 		$this->load->language('task/catalog/article');
 
-
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();

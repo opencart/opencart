@@ -99,7 +99,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		$language = new \Opencart\System\Library\Language((string)$language_info['code']);
-		$language->addPath(DIR_APPLICATION . 'language/');
+		$language->addPath(DIR_CATALOG . 'language/');
 
 		$part = explode('/', $args['route']);
 
@@ -110,13 +110,26 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$language->load('default');
 		$language->load($args['route']);
 
+
+
+
+
+
+		$this->load->model('design/translation');
+
+		$language_info = $this->model_design_translation->getTranslation((int)$args['language_id']);
+
+
+
+
+
 		$data = $language->all();
 
 		sort($data);
 
 		$pos = strrpos($args['route'], '/');
 
-		$base = DIR_APPLICATION . 'view/data/';
+		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/language/'  .  substr($args['route'], 0, $pos) . '/';
 		$filename = substr($args['route'], $pos + 1) . '.json';
 

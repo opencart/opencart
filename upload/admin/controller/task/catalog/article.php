@@ -52,7 +52,29 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
-		$article_total = $this->model_cms_article->getTotalArticles();
+		$this->load->language('task/catalog/article');
+
+		$this->load->model('setting/task');
+
+		// Store
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+		if (!$store_info) {
+			return ['error' => $this->language->get('error_store')];
+		}
+
+		// Language
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
+		}
+
+		$article_data = [];
 
 		$start = ($page - 1) * $limit;
 		$end = $start > ($article_total - $limit) ? $article_total : ($start + $limit);
@@ -61,6 +83,8 @@ class Article extends \Opencart\System\Engine\Controller {
 			'start' => $start,
 			'limit' => $limit
 		];
+
+		$article_total = $this->model_cms_article->getTotalArticles();
 
 		$articles = $this->model_cms_article->getArticles($filter_data);
 
@@ -92,6 +116,10 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	public function pagination(array $args = []): array {
+
+
+	}
 
 	/**
 	 * Info

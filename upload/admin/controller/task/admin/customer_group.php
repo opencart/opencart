@@ -18,13 +18,13 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$this->load->model('customer/customer_group');
-
-		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
-
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
+
+		$this->load->model('customer/customer_group');
+
+		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
 		foreach ($languages as $language) {
 			$task_data = [

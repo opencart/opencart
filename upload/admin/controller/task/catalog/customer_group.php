@@ -26,6 +26,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$languages = $this->model_localisation_language->getLanguages();
 
+		$this->load->model('customer/customer_group');
+
+		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
+
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
 				$task_data = [
@@ -38,6 +42,21 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 				];
 
 				$this->model_setting_task->addTask($task_data);
+
+				foreach ($customer_groups as $customer_group) {
+					// Add a task for generating the country info data
+					$task_data = [
+						'code'   => 'customer_group',
+						'action' => 'task/catalog/customer_group.info',
+						'args'   => [
+							'customer_group_id' => $customer_group['customer_group_id'],
+							'store_id'          => $store['store_id'],
+							'language_id'       => $language['language_id']
+						]
+					];
+
+					$this->model_setting_task->addTask($task_data);
+				}
 			}
 		}
 
@@ -83,19 +102,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 			if ($description_info) {
 				$customer_group_data[$customer_group['customer_group_id']] = $description_info + $customer_group;
-
-				// Add a task for generating the country info data
-				$task_data = [
-					'code'   => 'customer_group',
-					'action' => 'task/admin/customer_group.info',
-					'args'   => [
-						'customer_group_id' => $customer_group['customer_group_id'],
-						'store_id'          => $store_info['store_id'],
-						'language_id'       => $language_info['language_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
 			}
 		}
 
@@ -113,7 +119,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
-	
+
 	/**
 	 * Info
 	 *
@@ -122,7 +128,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function info(array $args = []): array {
-		$this->load->language('task/admin/customer_group');
+		$this->load->language('task/catalog/customer_group');
 
 		$this->load->model('customer/customer_group');
 
@@ -174,9 +180,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $description_info['name'])];
 	}
-
-
-
 
 	/**
 	 * Clear

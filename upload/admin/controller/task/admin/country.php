@@ -18,11 +18,16 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
+		$this->load->model('localisation/country');
+
+		$countries = $this->model_localisation_country->getCountries(['sort_order' => 'ASC']);
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
+			// Country List
 			$task_data = [
 				'code'   => 'country',
 				'action' => 'task/admin/country.list',
@@ -30,6 +35,20 @@ class Country extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_setting_task->addTask($task_data);
+
+			foreach ($countries as $country) {
+				// Country Info
+				$task_data = [
+					'code'   => 'country',
+					'action' => 'task/admin/country.list',
+					'args'   => [
+						'country_id'  => $country['country_id'],
+						'language_id' => $language['language_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 
 		return ['success' => $this->language->get('text_success')];
@@ -45,8 +64,6 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/country');
 
-		$this->load->model('setting/task');
-
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
@@ -54,8 +71,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
 		}
-
-		$country_data = [];
 
 		$this->load->model('localisation/country');
 
@@ -66,18 +81,6 @@ class Country extends \Opencart\System\Engine\Controller {
 
 			if ($description_info) {
 				$country_data[$country['country_id']] = $description_info + $country;
-
-				// Add a task for generating the country info data
-				$task_data = [
-					'code'   => 'country',
-					'action' => 'task/admin/country.info',
-					'args'   => [
-						'country_id'  => $country['country_id'],
-						'language_id' => $language_info['language_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
 			}
 		}
 

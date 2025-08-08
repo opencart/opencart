@@ -18,6 +18,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
+		$this->load->model('customer/customer_group');
+
+		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
@@ -30,6 +34,20 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_setting_task->addTask($task_data);
+
+			foreach ($customer_groups as $customer_group) {
+				// Add a task for generating the country info data
+				$task_data = [
+					'code'   => 'customer_group',
+					'action' => 'task/admin/customer_group.info',
+					'args'   => [
+						'customer_group_id' => $customer_group['customer_group_id'],
+						'language_id'       => $language['language_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 
 		return ['success' => $this->language->get('text_success')];
@@ -64,18 +82,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 			if ($description_info) {
 				$customer_group_data[$customer_group['customer_group_id']] = $description_info + $customer_group;
-
-				// Add a task for generating the country info data
-				$task_data = [
-					'code'   => 'customer_group',
-					'action' => 'task/admin/customer_group.info',
-					'args'   => [
-						'customer_group_id' => $customer_group['customer_group_id'],
-						'language_id'       => $language_info['language_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
 			}
 		}
 

@@ -62,7 +62,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	/**
 	 * Download
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function download(array $args = []): array {
 		$this->load->language('task/system/upgrade');
@@ -114,7 +114,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	/**
 	 * Install
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function install(array $args = []): array {
 		$this->load->language('task/system/upgrade');

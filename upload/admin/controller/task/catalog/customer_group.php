@@ -83,6 +83,19 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 			if ($description_info) {
 				$customer_group_data[$customer_group['customer_group_id']] = $description_info + $customer_group;
+
+				// Add a task for generating the country info data
+				$task_data = [
+					'code'   => 'customer_group',
+					'action' => 'task/admin/customer_group.info',
+					'args'   => [
+						'customer_group_id' => $customer_group['customer_group_id'],
+						'store_id'          => $store_info['store_id'],
+						'language_id'       => $language_info['language_id']
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
 			}
 		}
 
@@ -100,6 +113,70 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
+	
+	/**
+	 * Info
+	 *
+	 * Generates customer group information.
+	 *
+	 * @return array
+	 */
+	public function info(array $args = []): array {
+		$this->load->language('task/admin/customer_group');
+
+		$this->load->model('customer/customer_group');
+
+		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
+
+		if (!$customer_group_info) {
+			return ['error' => $this->language->get('error_customer_group')];
+		}
+
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
+		}
+
+		$description_info = $this->model_localisation_country->getDescription($customer_group_info['country_id'], $language_info['language_id']);
+
+		if (!$description_info) {
+			return ['error' => $this->language->get('error_description')];
+		}
+
+		$custom_field_data = [];
+
+		$this->load->model('customer/custom_field');
+
+		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => (int)$customer_group_info['customer_group_id']]);
+
+		foreach ($custom_fields as $custom_field) {
+			$description_info = $this->model_customer_custom_field->getDescription((int)$custom_field['custom_field_id'], (int)$language_info['language_id']);
+
+			if ($description_info) {
+				$custom_field_data[] = $description_info + $custom_field;
+			}
+		}
+
+		$base = DIR_APPLICATION . 'view/data/';
+		$directory = $language_info['code'] . '/customer/';
+		$filename = 'customer_group-' . $customer_group_info['country_id'] . '.json';
+
+		if (!oc_directory_create($base . $directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		if (!file_put_contents($base . $directory . $filename, json_encode(['custom_field' => $custom_field_data] + $description_info + $customer_group_info))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $description_info['name'])];
+	}
+
+
+
 
 	/**
 	 * Clear

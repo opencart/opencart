@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Admin;
+
 /**
  * Class Translation
  *
@@ -16,45 +17,59 @@ class Translation extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/translation');
 
-		$paths = [];
-
-		$directory = DIR_APPLICATION . 'language/' . $this->config->get('config_language') . '/';
-
-		$files = oc_directory_read($directory, true, '/.+\.php$/');
-
-		foreach ($files as $file) {
-			$paths[] = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
-		}
-
-		$directories = oc_directory_read(DIR_EXTENSION, false);
-
-		foreach ($directories as $directory) {
-			$extension = basename($directory);
-
-			$path = DIR_EXTENSION . $extension . '/catalog/language/' . $this->config->get('config_language') . '/';
-
-			$files = oc_directory_read($path, true, '/.+\.php/');
-
-			foreach ($files as $file) {
-				$language = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
-
-				if ($language) {
-					$paths[] = 'extension/' . $extension . '/' . $language;
-				}
-			}
-		}
+		$ignore = [
+			'api',
+			'mail',
+			'task'
+		];
 
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
-		foreach ($paths as $path) {
-			foreach ($languages as $language) {
+		foreach ($languages as $language) {
+			$routes = [];
+
+			$directory = DIR_APPLICATION . 'language/' . $language['code'] . '/';
+
+			$files = oc_directory_read($directory, true, '/.+\.php$/');
+
+			foreach ($files as $file) {
+				$route = substr(substr($file, strlen($directory)), 0, -4);
+
+				$pos = strpos($route, '/');
+
+				if ($pos == false || in_array(substr($route, 0, $pos), $ignore)) {
+					continue;
+				}
+
+				$routes[] = $route;
+			}
+
+			$directories = oc_directory_read(DIR_EXTENSION, false);
+
+			foreach ($directories as $directory) {
+				$extension = basename($directory);
+
+				$path = DIR_EXTENSION . $extension . '/catalog/language/' . $language['code'] . '/';
+
+				$files = oc_directory_read($path, true, '/.+\.php/');
+
+				foreach ($files as $file) {
+					$routes[] = 'extension/' . $extension . '/' . substr(substr($file, strlen($path)), 0, -4);
+				}
+			}
+
+			array_filter($routes);
+
+			$this->load->model('setting/task');
+
+			foreach ($routes as $route) {
 				$task_data = [
 					'code'   => 'translation',
-					'action' => 'task/catalog/translation.list',
+					'action' => 'task/admin/translation.write',
 					'args'   => [
-						'route'       => $path,
+						'route'       => $route,
 						'language_id' => $language['language_id']
 					]
 				];
@@ -66,8 +81,13 @@ class Translation extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * Write
+	 *
+	 * @return array
+	 */
 	public function write(array $args = []): array {
-		$this->load->language('task/catalog/translation');
+		$this->load->language('task/admin/translation');
 
 		$this->load->model('localisation/language');
 
@@ -77,66 +97,38 @@ class Translation extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$route = $args['route'];
+		$language = new \Opencart\System\Library\Language((string)$language_info['code']);
+		$language->addPath(DIR_APPLICATION . 'language/');
 
-		$pos = strpos($route, '/');
+		$part = explode('/', $args['route']);
 
-		if (substr($route, 0, $pos) == 'extension/') {
-			$path = DIR_EXTENSION . $extension . '/catalog/language/' . $this->config->get('config_language') . '/';
+		if ($part[0] == 'extension' && count($part) > 2) {
+			$language->addPath('extension/' . $part[1], DIR_EXTENSION . $part[1] . '/admin/language/');
 		}
 
+		$language->load('default');
+		$language->load($args['route']);
 
-		$language = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
+		$data = $language->all();
 
+		sort($data);
 
-		$path = DIR_EXTENSION . $extension . '/catalog/language/' . $language_info['code'] . '/';
+		$pos = strrpos($args['route'], '/');
 
-		 =
+		$base = DIR_APPLICATION . 'view/data/';
+		$directory = $language_info['code'] . '/language/'  .  substr($args['route'], 0, $pos) . '/';
+		$filename = substr($args['route'], $pos + 1) . '.json';
 
-		if (is_file()) {
-
+		if (!oc_directory_create($base . $directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-
-
-
-		$directories = [];
-
-		$directory = DIR_CATALOG . 'language/' . $this->config->get('language_code') . '/';
-
-		$files = oc_directory_read($directory, true, '/.+\.php$/');
-
-		foreach ($files as $file) {
-			$template = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
-
+		if (!file_put_contents($base . $directory . $filename, json_encode($data))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
-
-		$directories = oc_directory_read(DIR_EXTENSION, false);
-
-		foreach ($directories as $directory) {
-			$extension = basename($directory);
-
-			$path = DIR_EXTENSION . $extension . '/catalog/language/' . $language_info['code'] . '/';
-
-			$files = oc_directory_read($path, true, '/.+\.php/');
-
-			foreach ($files as $file) {
-				$language = substr(substr($file, 0, strrpos($file, '.')), strlen($path));
-
-				if ($language) {
-					$json[] = 'extension/' . $extension . '/' . $language;
-				}
-			}
-		}
-
-
-
 
 		return ['success' => $this->language->get('text_success')];
 	}
-
-
-
 
 	/**
 	 * Clear

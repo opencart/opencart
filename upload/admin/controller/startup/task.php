@@ -73,17 +73,8 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->editStatus($task['task_id'], 'processing');
 
-			$action = 'task/' . $task['action'];
-
-			if (str_starts_with($task['action'], 'extension/')) {
-
-				$pos = strpos($task['action'], '/', 1);
-
-				//substr($task['action'], 0, $pos) == 'extension'
-			}
-
 			try {
-				$output = $this->load->controller($action, $task['args']);
+				$output = $this->load->controller($task['action'], $task['args']);
 			} catch (\Exception $e) {
 				$output = $e;
 			}

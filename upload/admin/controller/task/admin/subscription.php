@@ -22,17 +22,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
 		$this->load->language('task/admin/subscription');
 
-		// Check if there is an order, the order status is complete and subscription status is active
-		$filter_data = [
-			'filter_date_next'              => date('Y-m-d H:i:s'),
-			'filter_subscription_status_id' => $this->config->get('config_subscription_active_status_id'),
-			'start'                         => 0,
-			'limit'                         => 10
-		];
-
-		// Subscriptions
-		$this->load->model('checkout/subscription');
-
 		// Setting
 		$this->load->model('setting/store');
 
@@ -50,6 +39,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		// Address
 		$this->load->model('account/address');
+
+		// Check if there is an order, the order status is complete and subscription status is active
+		$filter_data = [
+			'filter_date_next'              => date('Y-m-d H:i:s'),
+			'filter_subscription_status_id' => $this->config->get('config_subscription_active_status_id'),
+			'start'                         => 0,
+			'limit'                         => 10
+		];
+
+		// Subscriptions
+		$this->load->model('checkout/subscription');
 
 		$results = $this->model_checkout_subscription->getSubscriptions($filter_data);
 

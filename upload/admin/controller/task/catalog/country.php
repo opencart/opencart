@@ -159,6 +159,12 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$description_info = $this->model_localisation_country->getDescription($country_info['country_id'], $language_info['language_id']);
+
+		if (!$description_info) {
+			return ['error' => $this->language->get('error_country')];
+		}
+
 		$zone_data = [];
 
 		$this->load->model('localisation/zone');
@@ -183,7 +189,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + ['zone' => $zone_data]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zone_data]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

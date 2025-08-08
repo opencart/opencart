@@ -45,4 +45,30 @@ class Sass extends \Opencart\System\Engine\Controller {
 
 		return ['success' => $this->language->get('text_success')];
 	}
+
+
+	/**
+	 * Clear
+	 *
+	 * Clears generated country files.
+	 *
+	 * @return array
+	 */
+	public function clear(array $args = []): array {
+		$this->load->language('task/admin/weight_class');
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/sass.css';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+
+		return ['success' => $this->language->get('text_clear')];
+	}
 }

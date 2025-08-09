@@ -184,7 +184,27 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_design_translation->getTranslations($filter_data);
 	 */
 	public function getTranslations(array $data = []): array {
-		$sql = "SELECT *, (SELECT `s`.`name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store`, (SELECT `l`.`name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `t`.`language_id`) AS `language` FROM `" . DB_PREFIX . "translation` `t` ORDER BY store ASC";
+		$sql = "SELECT *, (SELECT `s`.`name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store`, (SELECT `l`.`name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `t`.`language_id`) AS `language` FROM `" . DB_PREFIX . "translation` `t`";
+
+		$implode = [];
+
+		if (!empty($data['filter_store_id'])) {
+			$implode[] = "`s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (!empty($data['filter_language_id'])) {
+			$implode[] = "`s`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		}
+
+		if (!empty($data['filter_route'])) {
+			$implode[] = "`s`.`route` = '" .  $this->db->escape($data['filter_route'])  . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$sql .= " ORDER BY store ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -217,7 +237,27 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * $translation_total = $this->model_design_translation->getTotalTranslations();
 	 */
 	public function getTotalTranslations(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "translation`");
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "translation`";
+
+		$implode = [];
+
+		if (!empty($data['filter_store_id'])) {
+			$implode[] = "`s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (!empty($data['filter_language_id'])) {
+			$implode[] = "`s`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		}
+
+		if (!empty($data['filter_route'])) {
+			$implode[] = "`s`.`route` = '" .  $this->db->escape($data['filter_route'])  . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

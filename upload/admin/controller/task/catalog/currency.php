@@ -82,6 +82,13 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears generated country files.
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
@@ -95,10 +102,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-
-				$file = $base . $directory . 'currency.json';
+				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/currency.json';
 
 				if (is_file($file)) {
 					unlink($file);

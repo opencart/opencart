@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
+use function Aws\filter;
 /**
  * Class Translation
  *
@@ -15,6 +16,12 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/translation');
+
+		$ignore = [
+			'api',
+			'mail',
+			'task'
+		];
 
 		$this->load->model('setting/store');
 
@@ -39,7 +46,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 					$pos = strpos($route, '/');
 
-					if ($pos == false) {
+					if ($pos == false || in_array(substr($route, 0, $pos), $ignore)) {
 						continue;
 					}
 
@@ -51,7 +58,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 				foreach ($directories as $directory) {
 					$extension = basename($directory);
 
-					$path = DIR_EXTENSION . $extension . '/catalog/language/' . $this->config->get('config_language') . '/';
+					$path = DIR_EXTENSION . $extension . '/catalog/language/' . $language['code'] . '/';
 
 					$files = oc_directory_read($path, true, '/.+\.php/');
 
@@ -110,18 +117,19 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$language->load('default');
 		$language->load($args['route']);
 
-
-
-
-
+		$filter_data = [
+			'filter_store_id'    => $store_info['store_id'],
+			'filter_language_id' => $language_info['language_id'],
+			'filter_route'       => $args['route']
+		];
 
 		$this->load->model('design/translation');
 
-		$language_info = $this->model_design_translation->getTranslation((int)$args['language_id']);
+		$results = $this->model_design_translation->getTranslations($filter_data);
 
-
-
-
+		foreach ($results as $result) {
+			$language->set($result['key'], $result['value']);
+		}
 
 		$data = $language->all();
 
@@ -154,15 +162,25 @@ class Translation extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/translation');
 
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
-		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/customer/translation.json';
+		foreach ($stores as $store) {
+			foreach ($languages as $language) {
+				$base = DIR_CATALOG . 'view/data/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/';
 
-			if (is_file($file)) {
-				unlink($file);
+
+				$directory = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/';
+
+
+				$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
+
 			}
 		}
 

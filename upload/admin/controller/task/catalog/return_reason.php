@@ -112,19 +112,9 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-				$filename = 'return_reason.json';
-
-				$file = $base . $directory . $filename;
+				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/return_reason.json';
 
 				if (is_file($file)) {
-					unlink($file);
-				}
-
-				$files = oc_directory_read($base . $directory, false, '/.+\return_reason-.+.json$/');
-
-				foreach ($files as $file) {
 					unlink($file);
 				}
 			}

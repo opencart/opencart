@@ -245,32 +245,32 @@ function oc_directory_create(string $path, int $permission = 0777): bool {
 
 // 3. Removing a directory
 function oc_directory_delete(string $directory): bool {
-	if (is_dir($directory)) {
-		$files = oc_directory_read($directory, true);
-
-		// Reverse sort the file array
-		rsort($files);
-
-		foreach ($files as $file) {
-			// If file just delete
-			if (is_file($file)) {
-				unlink($file);
-			}
-
-			// If directory use the remove directory function
-			if (is_dir($file)) {
-				rmdir($file);
-			}
-		}
-
-		if (is_dir($directory)) {
-			rmdir($directory);
-		}
-
-		return true;
+	if (!is_dir($directory)) {
+		return false;
 	}
 
-	return false;
+	$files = oc_directory_read($directory, true);
+
+	// Reverse sort the file array
+	rsort($files);
+
+	foreach ($files as $file) {
+		// If file just delete
+		if (is_file($file)) {
+			unlink($file);
+		}
+
+		// If directory use the remove directory function
+		if (is_dir($file)) {
+			rmdir($file);
+		}
+	}
+
+	if (is_dir($directory)) {
+		rmdir($directory);
+	}
+
+	return true;
 }
 
 /**

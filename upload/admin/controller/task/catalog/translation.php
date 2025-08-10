@@ -86,6 +86,11 @@ class Translation extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/*
+	 * Write
+	 *
+	 * @return array
+	 */
 	public function write(array $args = []): array {
 		$this->load->language('task/catalog/translation');
 
@@ -123,6 +128,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'filter_route'       => $args['route']
 		];
 
+		// Overrides
 		$this->load->model('design/translation');
 
 		$results = $this->model_design_translation->getTranslations($filter_data);
@@ -172,15 +178,11 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/';
+				$directories = oc_directory_read(DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
 
-
-				$directory = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/';
-
-
-				$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
-
+				foreach ($directories as $directory) {
+					oc_directory_delete($directory);
+				}
 			}
 		}
 

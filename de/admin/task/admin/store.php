@@ -2,8 +2,7 @@
 // Text
 $_['text_success']    = 'Generating store tasks!';
 $_['text_list']       = 'Generating %s store list files!';
-$_['text_clear']      = 'Store %s %s store information cleared!';
-
+$_['text_clear']      = 'Store information cleared!';
 
 // Error
 $_['error_language']  = 'Achtung: Sprache konnte nicht gefunden werden!';

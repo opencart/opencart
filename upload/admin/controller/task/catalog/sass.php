@@ -11,7 +11,7 @@ class Sass extends \Opencart\System\Engine\Controller {
 	 *
 	 * @throws \Exception\ScssPhp\ScssPhp\Exception\SassException
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/sass');
@@ -44,5 +44,30 @@ class Sass extends \Opencart\System\Engine\Controller {
 		fclose($handle);
 
 		return ['success' => $this->language->get('text_success')];
+	}
+
+	/**
+	 * Clear
+	 *
+	 * Clears generated sass files.
+	 *
+	 * @return array
+	 */
+	public function clear(array $args = []): array {
+		$this->load->language('task/catalog/sass');
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/sass.css';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

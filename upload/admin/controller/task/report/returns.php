@@ -11,7 +11,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function returns(array $args = []): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/report/returns');
 
 		$this->load->model('sale/returns');

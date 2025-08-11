@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Task\Report;
  */
 class Stock extends \Opencart\System\Engine\Controller {
 	/**
-	 * Product
+	 * Index
 	 *
 	 * @return array
 	 */

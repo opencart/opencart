@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']    = 'Generating length class tasks!';
+$_['text_task']       = 'Generating length class tasks!';
 $_['text_list']       = 'Generating %s length class list!';
 $_['text_clear']      = 'Length Class information cleared!';
 

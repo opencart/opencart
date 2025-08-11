@@ -1,10 +1,7 @@
 <?php
 // Text
-$_['text_success']    = 'Starting generating country files!';
-$_['text_list']       = 'Generating %s country list files!';
-$_['text_info']       = 'Generating %s %s country information file!';
-
-// Error
-$_['error_language']  = 'Warning: Language could not be found!';
-$_['error_directory'] = 'Warning: Directory %s does not exist or is not writable!';
-$_['error_file']      = 'Warning: File %s could not be written!';
+$_['text_task']       = 'Generating order statistic tasks!';
+$_['text_sale']       = 'Success: You have modified order sale statistics!';
+$_['text_processing'] = 'Success: You have modified order processing statistics!';
+$_['text_complete']   = 'Success: You have modified order complete statistics!';
+$_['text_other']      = 'Success: You have modified order other statistics!';

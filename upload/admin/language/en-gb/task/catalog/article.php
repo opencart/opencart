@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']    = 'Generating article tasks!';
+$_['text_task']       = 'Generating article tasks!';
 $_['text_list']       = 'Generating %s article list!';
 $_['text_info']       = 'Generating %s %s %s article!';
 $_['text_clear']      = 'Article information cleared!';

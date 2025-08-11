@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']    = 'Generating customer group tasks!';
+$_['text_task']       = 'Generating customer group tasks!';
 $_['text_list']       = 'Generating %s customer group list!';
 $_['text_clear']      = 'Customer Group information cleared!';
 

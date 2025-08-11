@@ -1,5 +1,12 @@
 <?php
 // Text
-$_['text_article'] = 'You have rendered %s to %s of %s articles';
-$_['text_next']    = 'You have rendered %s to %s of %s countries';
-$_['text_success'] = 'Erfolg: Sie haben Artikel geändert!';
+$_['text_success']    = 'Generating article tasks!';
+$_['text_list']       = 'Generating %s article list!';
+$_['text_info']       = 'Generating %s %s %s article!';
+$_['text_clear']      = 'Article information cleared!';
+
+// Error
+$_['error_store']     = 'Warning: Store could not be found!';
+$_['error_language']  = 'Achtung: Sprache konnte nicht gefunden werden!';
+$_['error_directory'] = 'Warning: Directory %s does not exist or is not writable!';
+$_['error_file']      = 'Warning: File %s could not be written!';

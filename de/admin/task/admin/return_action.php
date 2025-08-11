@@ -2,6 +2,7 @@
 // Text
 $_['text_success']    = 'Generating return action tasks!';
 $_['text_list']       = 'Generating %s return action list!';
+$_['text_clear']      = 'Return Action information cleared!';
 
 // Error
 $_['error_language']  = 'Achtung: Sprache konnte nicht gefunden werden!';

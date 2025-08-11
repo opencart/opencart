@@ -26,11 +26,49 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$languages = $this->model_localisation_language->getLanguages();
 
+		$sorts = [];
+
+		$sorts[] = [
+			'sort'  => 'date_added',
+			'order' => 'ASC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'date_added',
+			'order' => 'DESC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'rating',
+			'order' => 'ASC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'rating',
+			'order' => 'DESC'
+		];
+
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
+				foreach ($sorts as $sort) {
+					$task_data = [
+						'code'   => 'article',
+						'action' => 'task/catalog/article.list',
+						'args'   => [
+							'store_id'    => $store['store_id'],
+							'language_id' => $language['language_id'],
+							'sort'        => $sort['sort'],
+							'order'       => $sort['order'],
+							'limit'       => $this->config->get('config_pagination_catalog')
+						]
+					];
+
+					$this->model_setting_task->addTask($task_data);
+				}
+
 				$task_data = [
 					'code'   => 'article',
-					'action' => 'task/catalog/article.list',
+					'action' => 'task/catalog/article.info',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']
@@ -74,16 +112,17 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$article_data = [];
-
 		$start = ($page - 1) * $limit;
 		$end = $start > ($article_total - $limit) ? $article_total : ($start + $limit);
 
 		$filter_data = [
+			'sort'  => $sort,
+			'order' => $order,
 			'start' => $start,
 			'limit' => $limit
 		];
-
+		// Total Attributes
+		$article_total = $this->model_catalog_attribute->getTotalArticles();
 		$article_total = $this->model_cms_article->getTotalArticles();
 
 		$articles = $this->model_cms_article->getArticles($filter_data);
@@ -114,11 +153,8 @@ class Article extends \Opencart\System\Engine\Controller {
 				$json['success'] = $this->language->get('text_success');
 			}
 		}
-	}
 
-	public function pagination(array $args = []): array {
-
-
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $country_info['name'])];
 	}
 
 	/**
@@ -166,7 +202,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 
 
-		zone_description_info = $this->model_cms_article->getDescription((int)$zone['zone_id'], (int)$language_info['language_id']);
+		$zone_description_info = $this->model_cms_article->getDescription((int)$zone['zone_id'], (int)$language_info['language_id']);
 
 
 
@@ -189,6 +225,81 @@ class Article extends \Opencart\System\Engine\Controller {
 
 	public function rating(): array {
 		$this->load->language('task/catalog/article');
+
+
+		$this->load->language('cms/article');
+
+		$json = [];
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/article')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$limit = 100;
+
+			// Articles
+			$filter_data = [
+				'sort'  => 'date_added',
+				'order' => 'ASC',
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
+			];
+
+			$this->load->model('cms/article');
+
+			$results = $this->model_cms_article->getArticles($filter_data);
+
+			foreach ($results as $result) {
+				$like = 0;
+				$dislike = 0;
+
+				$ratings = $this->model_cms_article->getRatings($result['article_id']);
+
+				foreach ($ratings as $rating) {
+					if ($rating['rating'] == 1) {
+						$like = $rating['total'];
+					}
+
+					if ($rating['rating'] == 0) {
+						$dislike = $rating['total'];
+					}
+				}
+
+				$this->model_cms_article->editRating($result['article_id'], $like - $dislike);
+			}
+
+			// Total Articles
+			$article_total = $this->model_cms_article->getTotalArticles();
+
+			$start = ($page - 1) * $limit;
+			$end = ($start > ($article_total - $limit)) ? $article_total : ($start + $limit);
+
+			if ($end < $article_total) {
+				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $article_total);
+
+				$json['next'] = $this->url->link('cms/article.rating', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+			} else {
+				$json['success'] = $this->language->get('text_success');
+
+				$json['next'] = '';
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+
+
+
+
+
+
 
 		return ['success' => $this->language->get('text_success')];
 	}

@@ -13,26 +13,18 @@ class Category extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function index(): void {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/category');
 
-		$json = [];
+		$this->load->model('setting/task');
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
+		$this->load->model('setting/store');
 
-		//if (!$this->user->hasPermission('modify', 'task/catalog/article')) {
-		$json['error'] = $this->language->get('error_permission');
-		//}
+		$stores = $this->model_setting_store->getStores();
 
-		$directory = DIR_CATALOG . 'view/data/cms/';
+		$this->load->model('localisation/language');
 
-		//if (!is_dir($directory) && !mkdir($directory, 0777)) {
-		//	$json['error'] = $this->language->get('error_directory');
-		//}
+		$languages = $this->model_localisation_language->getLanguages();
 
 
 	}

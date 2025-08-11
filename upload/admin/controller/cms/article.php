@@ -413,65 +413,20 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
 		if (!$this->user->hasPermission('modify', 'cms/article')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$limit = 100;
-
-			// Articles
-			$filter_data = [
-				'sort'  => 'date_added',
-				'order' => 'ASC',
-				'start' => ($page - 1) * $limit,
-				'limit' => $limit
+			$task_data = [
+				'code'   => 'article',
+				'action' => 'task/catalog/article.rating',
+				'args'   => []
 			];
 
-			$this->load->model('cms/article');
+			$this->model_setting_task->addTask($task_data);
 
-			$results = $this->model_cms_article->getArticles($filter_data);
-
-			foreach ($results as $result) {
-				$like = 0;
-				$dislike = 0;
-
-				$ratings = $this->model_cms_article->getRatings($result['article_id']);
-
-				foreach ($ratings as $rating) {
-					if ($rating['rating'] == 1) {
-						$like = $rating['total'];
-					}
-
-					if ($rating['rating'] == 0) {
-						$dislike = $rating['total'];
-					}
-				}
-
-				$this->model_cms_article->editRating($result['article_id'], $like - $dislike);
-			}
-
-			// Total Articles
-			$article_total = $this->model_cms_article->getTotalArticles();
-
-			$start = ($page - 1) * $limit;
-			$end = ($start > ($article_total - $limit)) ? $article_total : ($start + $limit);
-
-			if ($end < $article_total) {
-				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $article_total);
-
-				$json['next'] = $this->url->link('cms/article.rating', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
-			} else {
-				$json['success'] = $this->language->get('text_success');
-
-				$json['next'] = '';
-			}
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

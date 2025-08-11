@@ -126,7 +126,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => sprintf($this->language->get('text_write'), $language_info['code'])];
 	}
 
 	/**

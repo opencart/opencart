@@ -1,8 +1,7 @@
 <?php
 // Text
-$_['text_success']    = 'Starting generating country files!';
-$_['text_list']       = 'Generating %s country list files!';
-$_['text_info']       = 'Generating %s %s country information file!';
+$_['text_success']    = 'Generating weight class tasks!';
+$_['text_list']       = 'Generating %s weight class list!';
 
 // Error
 $_['error_language']  = 'Warning: Language could not be found!';

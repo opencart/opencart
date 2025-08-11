@@ -111,50 +111,32 @@ $('#input-product').autocomplete({
 $('#button-rating').on('click', function() {
     var element = this;
 
-    $(element).button('loading');
+    $.ajax({
+        url: 'index.php?route=catalog/review.rating&user_token={{ user_token }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
 
-    var next = 'index.php?route=catalog/review.sync&user_token={{ user_token }}';
+            $('.alert-dismissible').remove();
 
-    var rating = function() {
-        return $.ajax({
-            url: next,
-            dataType: 'json',
-            success: function(json) {
-                console.log(json);
-
-                $('.alert-dismissible').remove();
-
-                if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $(element).button('reset');
-                }
-
-                if (json['text']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $(element).button('reset');
-                }
-
-                if (json['next']) {
-                    next = json['next'];
-
-                    chain.attach(rating);
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
-                $(element).button('reset');
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
-        });
-    };
 
-    chain.attach(rating);
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 //--></script>
 {{ footer }}

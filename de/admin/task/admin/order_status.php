@@ -1,8 +1,7 @@
 <?php
 // Text
-$_['text_success']    = 'Starting generating country files!';
-$_['text_list']       = 'Generating %s country list files!';
-$_['text_info']       = 'Generating %s %s country information file!';
+$_['text_success']    = 'Generating order status tasks!';
+$_['text_list']       = 'Generating %s order status list!';
 
 // Error
 $_['error_language']  = 'Achtung: Sprache konnte nicht gefunden werden!';

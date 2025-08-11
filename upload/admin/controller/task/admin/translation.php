@@ -19,7 +19,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$ignore = [
 			'api',
-			'mail'
+			'mail',
+			'ssr'
 		];
 
 		$this->load->model('localisation/language');

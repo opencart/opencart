@@ -1,8 +1,8 @@
 <?php
 // Text
-$_['text_list']        = 'You have rendered the language list';
-$_['text_next']        = 'You have rendered %s to %s of %s languages';
-$_['text_success']     = 'Erfolg: Sie haben Sprachen geändert!';
+$_['text_success']     = 'Generating language tasks!';
+$_['text_list']        = 'Generating %s %s language list!';
+$_['text_clear']       = 'Language information cleared!';
 
 // Error
 $_['error_permission'] = 'Achtung: Sie sind nicht berechtigt, Sprachen zu ändern!';

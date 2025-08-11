@@ -2,6 +2,7 @@
 // Text
 $_['text_success']    = 'Generating customer group tasks!';
 $_['text_list']       = 'Generating %s customer group list!';
+$_['text_clear']      = 'Customer Group information cleared!';
 
 // Error
 $_['error_language']  = 'Achtung: Sprache konnte nicht gefunden werden!';

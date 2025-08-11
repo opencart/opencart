@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']    = 'Generating country tasks!';
+$_['text_task']       = 'Generating country tasks!';
 $_['text_list']       = 'Generating %s country list!';
 $_['text_info']       = 'Generating %s %s country information!';
 $_['text_clear']      = 'Country information cleared!';

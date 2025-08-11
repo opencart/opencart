@@ -2,6 +2,7 @@
 // Text
 $_['text_success']    = 'Generating weight class tasks!';
 $_['text_list']       = 'Generating %s weight class list!';
+$_['text_clear']      = 'Weight Class information cleared!';
 
 // Error
 $_['error_language']  = 'Warning: Language could not be found!';

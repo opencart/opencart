@@ -59,7 +59,7 @@ class Article extends \Opencart\System\Engine\Controller {
 							'language_id' => $language['language_id'],
 							'sort'        => $sort['sort'],
 							'order'       => $sort['order'],
-							'limit'       => $this->config->get('config_pagination_catalog')
+							'limit'       => $this->config->get('config_pagination')
 						]
 					];
 

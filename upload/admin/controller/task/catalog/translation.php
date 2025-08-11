@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
-use function Aws\filter;
 /**
  * Class Translation
  *
@@ -139,7 +138,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data = $language->all();
 
-		sort($data);
+		ksort($data, SORT_REGULAR);
 
 		$pos = strrpos($args['route'], '/');
 

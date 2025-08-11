@@ -111,7 +111,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data = $language->all();
 
-		sort($data);
+		ksort($data, SORT_REGULAR);
 
 		$pos = strrpos($args['route'], '/');
 

@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']    = 'Generating currency tasks!';
+$_['text_task']       = 'Generating currency tasks!';
 $_['text_list']       = 'Generating %s currency list!';
 $_['text_clear']      = 'Currency information cleared!';
 

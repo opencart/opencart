@@ -46,6 +46,26 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit banner status record in the database.
+	 *
+	 * @param int  $banner_id primary key of the banner record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/category');
+	 *
+	 * $this->model_catalog_category->editStatus($category_id, $status);
+	 */
+	public function editStatus(int $banner_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "banner` SET `status` = '" . (bool)$status . "' WHERE `banner_id` = '" . (int)$banner_id . "'");
+	}
+
+	/**
 	 * Edit Banner
 	 *
 	 * Edit banner record in the database.
@@ -292,6 +312,12 @@ class Banner extends \Opencart\System\Engine\Model {
 		}
 
 		return $banner_image_data;
+	}
+
+	public function getImage(int $banner_id, int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "' AND `language_id` = '" . (int)$language_id . "' ORDER BY `sort_order` ASC");
+
+		return $query->rows;
 	}
 
 	/**

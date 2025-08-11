@@ -1,8 +1,8 @@
 <?php
 // Text
-$_['text_task']       = 'Generating country tasks!';
-$_['text_list']       = 'Generating %s country list!';
-$_['text_info']       = 'Generating %s %s country information!';
+$_['text_task']       = 'Generating subscription tasks!';
+$_['text_list']       = 'Generating %s subscription list!';
+$_['text_info']       = 'Generating %s %s subscription information!';
 
 // Error
 $_['error_language']  = 'Warning: Language could not be found!';

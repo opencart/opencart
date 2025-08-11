@@ -44,8 +44,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('design/banner.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/banner.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('catalog/banner.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('catalog/banner.disable', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('design/banner.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('design/banner.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 

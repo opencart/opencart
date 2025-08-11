@@ -2,6 +2,7 @@
 // Text
 $_['text_success']    = 'Generating translation tasks!';
 $_['text_list']       = 'Generating %s translation list!';
+$_['text_clear']      = 'Translation information cleared!';
 
 // Error
 $_['error_language']  = 'Warning: Language could not be found!';

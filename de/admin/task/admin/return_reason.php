@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']    = 'Generating return reason tasks!';
+$_['text_task']       = 'Generating return reason tasks!';
 $_['text_list']       = 'Generating %s return reason list!';
 $_['text_clear']      = 'Return Reason information cleared!';
 

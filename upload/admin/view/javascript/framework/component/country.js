@@ -50,29 +50,17 @@ class XCountry extends WebComponent {
 
             let response = this.storage.fetch('localisation/country');
 
-
-
             response.then(this.event.onloaded);
             response.then(this.event.option);
             response.then(this.event.postcode);
-
-            console.log(response);
-
         },
         onloaded: (countries) => {
-
-            console.log(countries);
-
             this.countries = countries;
 
             this.element.addEventListener('change', this.event.onchange);
             this.element.addEventListener('change', this.event.postcode);
         },
         option: () => {
-
-            console.log(this.countries);
-
-
             let html = this.default;
 
             for (let i in this.countries) {

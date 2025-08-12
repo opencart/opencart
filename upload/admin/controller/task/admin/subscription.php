@@ -36,6 +36,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				];
 
 				$this->model_setting_task->addTask($task_data);
+
+				$task_data = [
+					'code'   => 'subscription',
+					'action' => 'task/catalog/subscription.confirm',
+					'args'   => ['subscription_id' => $result['subscription_id']]
+				];
+
+				$this->model_setting_task->addTask($task_data);
 			}
 		}
 
@@ -191,8 +199,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 
 
-
-
 		// Validate Products
 		$store->load->model('checkout/subscription');
 		$store->load->model('catalog/product');
@@ -237,20 +243,37 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 
 
-			// Validate if payment extension installed
-			$store->load->model('setting/extension');
+		// Validate if payment extension installed
+		$store->load->model('setting/extension');
 
-			$extension_info = $store->model_setting_extension->getExtensionByCode('payment', strstr($subscription_info['payment_method']['code'], '.', true));
+		$extension_info = $store->model_setting_extension->getExtensionByCode('payment', strstr($subscription_info['payment_method']['code'], '.', true));
 
-			if (!$extension_info) {
-				return ['error' => $this->language->get('error_extension')];
-			}
+		if (!$extension_info) {
+			return ['error' => $this->language->get('error_extension')];
+		}
+
+		// Validate if payment extension installed
+
+		$store->load->controller('extension/' . $extension_info['extension'] . '/cron/' . $extension_info['code']);
+
+		// Add subscription history failed if payment method for cron didn't exist
+		$store->model_checkout_subscription->addHistory($subscription_info['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('text_log'));
+
+		// Log errors
+		$store->model_checkout_subscription->addLog($subscription_info['subscription_id'], $key, $value);
 
 
+		// 7. Clean up data by clearing cart.
+		$store->cart->clear();
+
+		// 8. Deleting the current session so we are not creating infinite sessions.
+		$store->session->destroy();
 
 
+		return ['success' => $this->language->get('text_success')];
+	}
 
-
+	public function confirm() {
 			// Subscription
 			$order_data = [];
 
@@ -352,9 +375,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			foreach ($products as $product) {
 				$order_data['products'][] = [
-					'subscription' => [],
-					'tax'          => $store->tax->getTax($price, $product['tax_class_id'])
-				] + $product;
+						'subscription' => [],
+						'tax'          => $store->tax->getTax($price, $product['tax_class_id'])
+					] + $product;
 			}
 
 			// Order Totals
@@ -408,24 +431,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$store->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 
-			// Validate if payment extension installed
-
-			$store->load->controller('extension/' . $extension_info['extension'] . '/cron/' . $extension_info['code']);
-
-			// Add subscription history failed if payment method for cron didn't exist
-			$store->model_checkout_subscription->addHistory($subscription_info['subscription_id'], $this->config->get('config_subscription_failed_status_id'), $this->language->get('text_log'));
-
-			// Log errors
-			$store->model_checkout_subscription->addLog($subscription_info['subscription_id'], $key, $value);
 
 
-			// 7. Clean up data by clearing cart.
-			$store->cart->clear();
 
-			// 8. Deleting the current session so we are not creating infinite sessions.
-			$store->session->destroy();
-
-
-		return ['success' => $this->language->get('text_success')];
+		}
+			return ['success' => $this->language->get('text_success')];
 	}
 }

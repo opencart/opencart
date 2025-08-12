@@ -29,8 +29,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
 				$task_data = [
-					'code'   => 'country',
-					'action' => 'task/catalog/country.list',
+					'code'   => 'topic',
+					'action' => 'task/catalog/topic.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']
@@ -41,19 +41,17 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
 		return ['success' => $this->language->get('text_success')];
 
 		$directory = DIR_CATALOG . 'view/data/cms/';
+	}
+
+	public function list(array $args = []): array {
 
 
 
-		/*
-		if (!is_dir($directory) && !mkdir($directory, 0777)) {
-			$json['error'] = $this->language->get('error_directory');
-		}
 
-		if (!$json) {
+
 			// Languages
 			$this->load->model('localisation/language');
 
@@ -95,20 +93,24 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_topic'), $start, $end, $topic_total);
 
-			if ($end < $topic_total) {
-				$json['next'] = $this->url->link('task/catalog/topic', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
-			} else {
-				$json['success'] = $this->language->get('text_success');
-			}
+		$json['text'] = sprintf($this->language->get('text_topic'), $start, $end, $topic_total);
+
+		if ($end < $topic_total) {
+			$json['next'] = $this->url->link('task/catalog/topic', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+		} else {
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-		*/
+		if (!is_dir($directory) && !mkdir($directory, 0777)) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
 	}
+
+
+
+
 
 	/**
 	 * Info

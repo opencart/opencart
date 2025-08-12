@@ -302,7 +302,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	 *
 	 * $banner_images = $this->model_design_banner->getImages($banner_id);
 	 */
-	public function getImages(int $banner_id): array {
+	public function getImages(int $banner_id, ): array {
 		$banner_image_data = [];
 
 		$banner_image_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "' ORDER BY `sort_order` ASC");
@@ -314,7 +314,7 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $banner_image_data;
 	}
 
-	public function getImage(int $banner_id, int $language_id): array {
+	public function getImagesBy(int $banner_id, int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "' AND `language_id` = '" . (int)$language_id . "' ORDER BY `sort_order` ASC");
 
 		return $query->rows;

@@ -44,23 +44,35 @@ class XCountry extends WebComponent {
 
             this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '"' + (this.hasAttribute('required') ? ' required' : '') + '>' + this.default + '</select>';
 
-            this.addEventListener('[value]', this.event.changeValue);
-
             this.element = this.querySelector('select');
 
-            this.element.addEventListener('change', this.event.onchange);
-            this.element.addEventListener('change', this.event.postcode);
+            this.addEventListener('[value]', this.event.changeValue);
 
             let response = this.storage.fetch('localisation/country');
+
+
 
             response.then(this.event.onloaded);
             response.then(this.event.option);
             response.then(this.event.postcode);
+
+            console.log(response);
+
         },
         onloaded: (countries) => {
+
+            console.log(countries);
+
             this.countries = countries;
+
+            this.element.addEventListener('change', this.event.onchange);
+            this.element.addEventListener('change', this.event.postcode);
         },
         option: () => {
+
+            console.log(this.countries);
+
+
             let html = this.default;
 
             for (let i in this.countries) {

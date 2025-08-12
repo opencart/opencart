@@ -48,8 +48,7 @@ class XCountry extends WebComponent {
 
             this.element = this.querySelector('select');
 
-            this.element.addEventListener('change', this.event.onchange);
-            this.element.addEventListener('change', this.event.postcode);
+            this.addEventListener('[value]', this.event.changeValue);
 
             let response = this.storage.fetch('localisation/country');
 

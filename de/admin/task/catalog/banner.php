@@ -2,6 +2,7 @@
 // Text
 $_['text_task']       = 'Generating banner tasks!';
 $_['text_list']       = 'Generating %s %s banner list!';
+$_['text_clear']      = 'Banner information cleared!';
 
 // Error
 $_['error_language']  = 'Achtung: Sprache konnte nicht gefunden werden!';

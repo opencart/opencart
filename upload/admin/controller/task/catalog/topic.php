@@ -27,6 +27,10 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($stores as $store) {
+
+
+
+
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'topic',
@@ -42,13 +46,11 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		return ['success' => $this->language->get('text_success')];
-
-		$directory = DIR_CATALOG . 'view/data/cms/';
 	}
 
 	public function list(array $args = []): array {
 
-
+		$directory = DIR_CATALOG . 'view/data/cms/';
 
 
 
@@ -91,7 +93,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-		}
+
 
 
 		$json['text'] = sprintf($this->language->get('text_topic'), $start, $end, $topic_total);

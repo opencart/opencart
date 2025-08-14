@@ -1,14 +1,11 @@
 <?php
 // Text
-$_['text_success']  = 'Success: E-Mmail sent!';
+$_['text_success']  = 'Success: email sent!';
 
 // Error
-$_['error_to']      = 'E-Mail Address does not appear to be valid!';
-$_['error_from']    = 'E-Mail Address does not appear to be valid!';
-$_['error_sender']  = 'E-Mail Subject required!';
-
-
-$_['error_subject'] = 'E-Mail Subject required!';
-
-$_['error_message'] = 'E-Mail Message required!';
-$_['error_email']   = 'No E-Mail recipients!';
+$_['error_to']      = 'To email Address does not appear to be valid!';
+$_['error_from']    = 'From email Address does not appear to be valid!';
+$_['error_sender']  = 'Sender required!';
+$_['error_subject'] = 'Subject required!';
+$_['error_message'] = 'Message required!';
+$_['error_email']   = 'No email recipients!';

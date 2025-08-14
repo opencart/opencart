@@ -12,11 +12,37 @@ class Mail extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
+		$this->load->language('task/system/mail');
+
 		if (!$this->config->get('config_mail_engine')) {
-			return [];
+			return ['error' => $this->language->get('error_engine')];
 		}
 
-		$email = trim($args['email']);
+		if (empty($args['to']) || !oc_validate_email($args['to'])) {
+			return ['error' => $this->language->get('error_to')];
+		}
+
+		if (empty($args['from']) || !oc_validate_email($args['from'])) {
+			return ['error' => $this->language->get('error_from')];
+		}
+
+		if (empty($args['sender'])) {
+			return ['error' => $this->language->get('error_sender')];
+		}
+
+		if (isset($args['reply_to']) && !oc_validate_email($args['reply_to'])) {
+			return ['error' => $this->language->get('error_reply_to')];
+		}
+
+		if (empty($args['subject'])) {
+			return ['error' => $this->language->get('error_subject')];
+		}
+
+		if (empty($args['content'])) {
+			return ['error' => $this->language->get('error_content')];
+		}
+
+		$email = trim($args['to']);
 
 		if (!oc_validate_email($email)) {
 			return [];
@@ -43,5 +69,7 @@ class Mail extends \Opencart\System\Engine\Controller {
 		$mail->setSubject($args['subject']);
 		$mail->setHtml($args['content']);
 		$mail->send();
+
+		return ['success' => $this->language->get('text_success')];
 	}
 }

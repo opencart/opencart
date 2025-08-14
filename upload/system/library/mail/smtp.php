@@ -158,7 +158,7 @@ class Smtp {
 			}
 		}
 
-		fwrite($handle, 'EHLO ' . parse_url(HTTP_SERVER, PHP_URL_HOST) . "\r\n");
+		fwrite($handle, 'EHLO ' . $servername . "\r\n");
 
 		$reply = '';
 

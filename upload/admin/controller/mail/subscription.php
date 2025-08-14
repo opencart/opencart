@@ -136,24 +136,21 @@ class Subscription extends \Opencart\System\Engine\Controller {
 									$data['text_footer'] = $this->language->get('mail_text_footer');
 									$data['text_subscription_status'] = $this->language->get('mail_text_subscription_status');
 
-									if ($this->config->get('config_mail_engine')) {
-										$mail_option = [
-											'parameter'     => $this->config->get('config_mail_parameter'),
-											'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
-											'smtp_username' => $this->config->get('config_mail_smtp_username'),
-											'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
-											'smtp_port'     => $this->config->get('config_mail_smtp_port'),
-											'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
-										];
-										$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
+									$task_data = [
+										'code'   => 'mail_subscription',
+										'action' => 'task/system/mail',
+										'args'   => [
+											'to'      => $customer_info['email'],
+											'from'    => $from,
+											'sender'  => html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'),
+											'subject' => html_entity_decode(sprintf($this->language->get('mail_text_subject'), $store_name), ENT_QUOTES, 'UTF-8'),
+											'content' => $this->load->view('mail/subscription_history', $data)
+										]
+									];
 
-										$mail->setTo($customer_info['email']);
-										$mail->setFrom($from);
-										$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-										$mail->setSubject(html_entity_decode(sprintf($this->language->get('mail_text_subject'), $store_name), ENT_QUOTES, 'UTF-8'));
-										$mail->setText($this->load->view('mail/subscription_history', $data));
-										$mail->send();
-									}
+									$this->load->model('setting/task');
+
+									$this->model_setting_task->addTask($task_data);
 								}
 							}
 						}
@@ -269,24 +266,22 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 								$data['date_added'] = date($this->language->get('date_format_short'), $subscription['date_added']);
 
-								if ($this->config->get('config_mail_engine')) {
-									$mail_option = [
-										'parameter'     => $this->config->get('config_mail_parameter'),
-										'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
-										'smtp_username' => $this->config->get('config_mail_smtp_username'),
-										'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
-										'smtp_port'     => $this->config->get('config_mail_smtp_port'),
-										'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
-									];
-									$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
 
-									$mail->setTo($from);
-									$mail->setFrom($from);
-									$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-									$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $store_name), ENT_QUOTES, 'UTF-8'));
-									$mail->setText($this->load->view('mail/subscription_canceled', $data));
-									$mail->send();
-								}
+								$task_data = [
+									'code'   => 'mail_subscription_transaction',
+									'action' => 'task/system/mail',
+									'args'   => [
+										'to'      => $from,
+										'from'    => $from,
+										'sender'  => html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'),
+										'subject' => html_entity_decode(sprintf($this->language->get('text_subject'), $store_name), ENT_QUOTES, 'UTF-8'),
+										'content' => $this->load->view('mail/subscription_canceled', $data)
+									]
+								];
+
+								$this->load->model('setting/task');
+
+								$this->model_setting_task->addTask($task_data);
 							}
 						}
 					}

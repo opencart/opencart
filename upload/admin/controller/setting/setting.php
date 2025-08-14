@@ -466,7 +466,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Errors
 		$data['config_error_display'] = $this->config->get('config_error_display');
 		$data['config_error_log'] = $this->config->get('config_error_log');
-		$data['config_error_filename'] = $this->config->get('config_error_filename');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -662,14 +661,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 				break;
 			}
-		}
-
-		if (!$this->request->post['config_error_filename']) {
-			$json['error']['error_filename'] = $this->language->get('error_log_required');
-		} elseif (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
-			$json['error']['error_filename'] = $this->language->get('error_log_invalid');
-		} elseif (substr($this->request->post['config_error_filename'], strrpos($this->request->post['config_error_filename'], '.')) != '.log') {
-			$json['error']['error_filename'] = $this->language->get('error_log_extension');
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {

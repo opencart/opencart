@@ -54,45 +54,45 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 
 
-			// Languages
-			$this->load->model('localisation/language');
+		// Languages
+		$this->load->model('localisation/language');
 
-			$languages = $this->model_localisation_language->getLanguages();
+		$languages = $this->model_localisation_language->getLanguages();
 
-			$limit = 5;
+		$limit = 5;
 
-			// Total Topics
-			$topic_total = $this->model_cms_topic->getTotalTopics();
+		// Total Topics
+		$topic_total = $this->model_cms_topic->getTotalTopics();
 
-			$start = ($page - 1) * $limit;
-			$end = $start > ($topic_total - $limit) ? $topic_total : ($start + $limit);
+		$start = ($page - 1) * $limit;
+		$end = $start > ($topic_total - $limit) ? $topic_total : ($start + $limit);
 
-			$filter_data = [
-				'start' => $start,
-				'limit' => $limit
-			];
+		$filter_data = [
+			'start' => $start,
+			'limit' => $limit
+		];
 
-			$this->load->model('cms/topic');
+		$this->load->model('cms/topic');
 
-			$topics = $this->model_cms_topic->getTopics($filter_data);
+		$topics = $this->model_cms_topic->getTopics($filter_data);
 
-			foreach ($topics as $topic) {
-				if ($topic['status']) {
-					$descriptions = $this->model_cms_topic->getDescriptions($topic['topic_id']);
+		foreach ($topics as $topic) {
+			if ($topic['status']) {
+				$descriptions = $this->model_cms_topic->getDescriptions($topic['topic_id']);
 
-					foreach ($descriptions as $description) {
-						if (isset($languages[$description['language_id']])) {
-							$code = preg_replace('/[^A-Z0-9_-]/i', '', $languages[$description['language_id']]['code']);
+				foreach ($descriptions as $description) {
+					if (isset($languages[$description['language_id']])) {
+						$code = preg_replace('/[^A-Z0-9_-]/i', '', $languages[$description['language_id']]['code']);
 
-							$file = DIR_CATALOG . 'view/data/cms/topic.' . (int)$topic['topic_id'] . '.' . $code . '.json';
+						$file = DIR_CATALOG . 'view/data/cms/topic.' . (int)$topic['topic_id'] . '.' . $code . '.json';
 
-							if (!file_put_contents($file, json_encode($description + $topic))) {
-								$json['error'] = $this->language->get('error_file');
-							}
+						if (!file_put_contents($file, json_encode($description + $topic))) {
+							$json['error'] = $this->language->get('error_file');
 						}
 					}
 				}
 			}
+		}
 
 
 

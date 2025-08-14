@@ -249,29 +249,26 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$message .= '  <body>' . html_entity_decode($post_info['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
 				$message .= '</html>' . "\n";
 
-				if ($this->config->get('config_mail_engine')) {
-					$mail_option = [
-						'parameter'     => $this->config->get('config_mail_parameter'),
-						'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
-						'smtp_username' => $this->config->get('config_mail_smtp_username'),
-						'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
-						'smtp_port'     => $this->config->get('config_mail_smtp_port'),
-						'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
-					];
+				$this->load->model('setting/task');
 
-					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
+				foreach ($emails as $email) {
+					if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+						$task_data = [
+							'code'   => 'mail_affiliate',
+							'action' => 'task/system/mail',
+							'args'   => [
+								'to'      => trim($email),
+								'from'    => $store_email,
+								'sender'  => html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'),
+								'subject' => html_entity_decode($post_info['subject'], ENT_QUOTES, 'UTF-8'),
+								'content' => $message
+							]
+						];
 
-					foreach ($emails as $email) {
-						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-							$mail->setTo(trim($email));
-							$mail->setFrom($store_email);
-							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject(html_entity_decode($post_info['subject'], ENT_QUOTES, 'UTF-8'));
-							$mail->setHtml($message);
-							$mail->send();
-						}
+						$this->model_setting_task->addTask($task_data);
 					}
 				}
+
 			} else {
 				$json['error']['warning'] = $this->language->get('error_email');
 			}

@@ -142,121 +142,122 @@ class Smtp {
 
 		$handle = fsockopen($hostname, $this->option['smtp_port'], $errno, $errstr, $this->option['smtp_timeout']);
 
-		if ($handle) {
-			if (substr(PHP_OS, 0, 3) != 'WIN') {
-				stream_set_timeout($handle, $this->option['smtp_timeout'], 0);
-			}
+		if (!$handle) {
+			throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
+		}
 
-			while ($line = fgets($handle, 515)) {
-				if (substr($line, 3, 1) == ' ') {
-					break;
-				}
+		if (substr(PHP_OS, 0, 3) != 'WIN') {
+			stream_set_timeout($handle, $this->option['smtp_timeout'], 0);
+		}
+
+		while ($line = fgets($handle, 515)) {
+			if (substr($line, 3, 1) == ' ') {
+				break;
+			}
+		}
+
+		fwrite($handle, 'EHLO ' . parse_url(HTTP_SERVER, PHP_URL_HOST) . "\r\n");
+
+		$reply = '';
+
+		while ($line = fgets($handle, 515)) {
+			$reply .= $line;
+
+			//some SMTP servers respond with 220 code before responding with 250. hence, we need to ignore 220 response string
+			if (substr($reply, 0, 3) == 220 && substr($line, 3, 1) == ' ') {
+				$reply = '';
+
+				continue;
+			} elseif (substr($line, 3, 1) == ' ') {
+				break;
+			}
+		}
+
+		if (substr($reply, 0, 3) != 250) {
+			throw new \Exception('Error: ' . $reply);
+		}
+
+		if (substr($this->option['smtp_hostname'], 0, 3) == 'tls') {
+			fwrite($handle, 'STARTTLS' . "\r\n");
+
+			$this->handleReply($handle, 220, 'Error: STARTTLS not accepted from server!');
+
+			if (stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT) !== true) {
+				throw new \Exception('Error: TLS could not be established!');
 			}
 
 			fwrite($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
 
-			$reply = '';
+			$this->handleReply($handle, 250, 'Error: EHLO not accepted from server!');
+		}
 
-			while ($line = fgets($handle, 515)) {
-				$reply .= $line;
+		fwrite($handle, 'AUTH LOGIN' . "\r\n");
 
-				//some SMTP servers respond with 220 code before responding with 250. hence, we need to ignore 220 response string
-				if (substr($reply, 0, 3) == 220 && substr($line, 3, 1) == ' ') {
-					$reply = '';
+		$this->handleReply($handle, 334, 'Error: AUTH LOGIN not accepted from server!');
 
-					continue;
-				} elseif (substr($line, 3, 1) == ' ') {
-					break;
-				}
+		fwrite($handle, base64_encode($this->option['smtp_username']) . "\r\n");
+
+		$this->handleReply($handle, 334, 'Error: Username not accepted from server!');
+
+		fwrite($handle, base64_encode($this->option['smtp_password']) . "\r\n");
+
+		$this->handleReply($handle, 235, 'Error: Password not accepted from server!');
+
+		if ($this->option['verp']) {
+			fwrite($handle, 'MAIL FROM: <' . $this->option['from'] . '>XVERP' . "\r\n");
+		} else {
+			fwrite($handle, 'MAIL FROM: <' . $this->option['from'] . '>' . "\r\n");
+		}
+
+		$this->handleReply($handle, 250, 'Error: MAIL FROM not accepted from server!');
+
+		if (!is_array($this->option['to'])) {
+			fwrite($handle, 'RCPT TO: <' . $this->option['to'] . '>' . "\r\n");
+
+			$reply = $this->handleReply($handle, false, 'RCPT TO [!array]');
+
+			if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
+				throw new \Exception('Error: RCPT TO not accepted from server!');
 			}
+		} else {
+			foreach ($this->option['to'] as $recipient) {
+				fwrite($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
 
-			if (substr($reply, 0, 3) != 250) {
-				throw new \Exception('Error: EHLO not accepted from server!');
-			}
-
-			if (substr($this->option['smtp_hostname'], 0, 3) == 'tls') {
-				fwrite($handle, 'STARTTLS' . "\r\n");
-
-				$this->handleReply($handle, 220, 'Error: STARTTLS not accepted from server!');
-
-				if (stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT) !== true) {
-					throw new \Exception('Error: TLS could not be established!');
-				}
-
-				fwrite($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
-
-				$this->handleReply($handle, 250, 'Error: EHLO not accepted from server!');
-			}
-
-			fwrite($handle, 'AUTH LOGIN' . "\r\n");
-
-			$this->handleReply($handle, 334, 'Error: AUTH LOGIN not accepted from server!');
-
-			fwrite($handle, base64_encode($this->option['smtp_username']) . "\r\n");
-
-			$this->handleReply($handle, 334, 'Error: Username not accepted from server!');
-
-			fwrite($handle, base64_encode($this->option['smtp_password']) . "\r\n");
-
-			$this->handleReply($handle, 235, 'Error: Password not accepted from server!');
-
-			if ($this->option['verp']) {
-				fwrite($handle, 'MAIL FROM: <' . $this->option['from'] . '>XVERP' . "\r\n");
-			} else {
-				fwrite($handle, 'MAIL FROM: <' . $this->option['from'] . '>' . "\r\n");
-			}
-
-			$this->handleReply($handle, 250, 'Error: MAIL FROM not accepted from server!');
-
-			if (!is_array($this->option['to'])) {
-				fwrite($handle, 'RCPT TO: <' . $this->option['to'] . '>' . "\r\n");
-
-				$reply = $this->handleReply($handle, false, 'RCPT TO [!array]');
+				$reply = $this->handleReply($handle, false, 'RCPT TO [array]');
 
 				if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
 					throw new \Exception('Error: RCPT TO not accepted from server!');
 				}
-			} else {
-				foreach ($this->option['to'] as $recipient) {
-					fwrite($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
-
-					$reply = $this->handleReply($handle, false, 'RCPT TO [array]');
-
-					if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
-						throw new \Exception('Error: RCPT TO not accepted from server!');
-					}
-				}
 			}
-
-			fwrite($handle, 'DATA' . "\r\n");
-
-			$this->handleReply($handle, 354, 'Error: DATA not accepted from server!');
-
-			// According to rfc 821 we should not send more than 1000 including the CRLF
-			$message = str_replace("\r\n", "\n", $header . $message);
-			$message = str_replace("\r", "\n", $message);
-
-			$lines = explode("\n", $message);
-
-			foreach ($lines as $line) {
-				// see https://php.watch/versions/8.2/str_split-empty-string-empty-array
-				$results = ($line === '') ? [''] : str_split($line, 998);
-
-				foreach ($results as $result) {
-					fwrite($handle, $result . "\r\n");
-				}
-			}
-
-			fwrite($handle, '.' . "\r\n");
-
-			$this->handleReply($handle, 250, 'Error: DATA not accepted from server!');
-
-			fclose($handle);
-
-			return true;
-		} else {
-			throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
 		}
+
+		fwrite($handle, 'DATA' . "\r\n");
+
+		$this->handleReply($handle, 354, 'Error: DATA not accepted from server!');
+
+		// According to rfc 821 we should not send more than 1000 including the CRLF
+		$message = str_replace("\r\n", "\n", $header . $message);
+		$message = str_replace("\r", "\n", $message);
+
+		$lines = explode("\n", $message);
+
+		foreach ($lines as $line) {
+			// see https://php.watch/versions/8.2/str_split-empty-string-empty-array
+			$results = ($line === '') ? [''] : str_split($line, 998);
+
+			foreach ($results as $result) {
+				fwrite($handle, $result . "\r\n");
+			}
+		}
+
+		fwrite($handle, '.' . "\r\n");
+
+		$this->handleReply($handle, 250, 'Error: DATA not accepted from server!');
+
+		fclose($handle);
+
+		return true;
+
 	}
 
 	/**

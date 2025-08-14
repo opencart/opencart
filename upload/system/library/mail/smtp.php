@@ -68,6 +68,8 @@ class Smtp {
 			$to = $this->option['to'];
 		}
 
+		$servername = parse_url(HTTP_SERVER, PHP_URL_HOST);
+
 		$boundary = '----=_NextPart_' . md5((string)time());
 
 		$header = 'MIME-Version: 1.0' . PHP_EOL;
@@ -186,7 +188,7 @@ class Smtp {
 				throw new \Exception('Error: TLS could not be established!');
 			}
 
-			fwrite($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
+			fwrite($handle, 'EHLO ' . $servername . "\r\n");
 
 			$this->handleReply($handle, 250, 'Error: EHLO not accepted from server!');
 		}

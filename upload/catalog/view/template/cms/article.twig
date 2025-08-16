@@ -1,5 +1,5 @@
 {{ header }}
-<div id="cms-blog" class="container">
+<div id="cms-article" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -23,7 +23,7 @@
         </p>
       {% endif %}
       {% if comment %}
-        <div id="comment-container">{{ comment }}</div>
+        <div id="comment">{{ comment }}</div>
       {% endif %}
       {{ content_bottom }}
     </div>

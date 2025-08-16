@@ -11,7 +11,11 @@ class Special extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(): ?\Opencart\System\Engine\Action {
+		if (isset($this->request->get['product_id'])) {
+			return $this->load->controller('product/product');
+		}
+
 		$this->load->language('product/special');
 
 		if (isset($this->request->get['sort'])) {
@@ -129,7 +133,7 @@ class Special extends \Opencart\System\Engine\Controller {
 				'special'     => $special,
 				'tax'         => $tax,
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-				'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'] . $url)
+				'href'        => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'] . $url)
 			] + $result;
 
 			$data['products'][] = $this->load->controller('product/thumb', $product_data);

@@ -112,6 +112,50 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		// Currency
+		$this->load->model('localisation/currency');
+
+		$currency_info = $this->model_localisation_currency->getCurrency((int)$args['currency_id']);
+
+		if (!$currency_info) {
+			return ['error' => $this->language->get('error_currency')];
+		}
+
+		// 1. Create a store instance using loader class to call controllers, models, views, libraries.
+		$this->load->model('setting/store');
+
+		$store = $this->model_setting_store->createStoreInstance($store_info['store_id'], $language_info['code'], $currency_info['code']);
+
+		// 2. Remove the unneeded keys.
+		$request_data = $this->request->get;
+
+		unset($request_data['user_token']);
+
+		// 3. Add the request GET vars.
+		$store->request->get = $request_data;
+
+		$store->request->get['route'] = 'api/order';
+
+		// 4. Add the request POST var
+		$store->request->post = $this->request->post;
+
+		// 5. Call the required API controller.
+		$store->load->controller($store->request->get['route']);
+
+		// 6. Call the required API controller and get the output.
+		$output = $store->response->getOutput();
+
+		// 7. Clean up data by clearing cart.
+		$store->cart->clear();
+
+		// 8. Deleting the current session, so we are not creating infinite sessions.
+		$store->session->destroy();
+
+
+
+
+		
+
 		$start = ($page - 1) * $limit;
 		$end = $start > ($article_total - $limit) ? $article_total : ($start + $limit);
 

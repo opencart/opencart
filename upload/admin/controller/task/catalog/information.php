@@ -27,6 +27,8 @@ class Information extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($stores as $store) {
+
+
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'information',

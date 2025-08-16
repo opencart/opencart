@@ -1,5 +1,5 @@
 {{ header }}
-<div id="product-category" class="container">
+<div id="cms-topic" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -71,7 +71,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-search').bind('click', function() {
-    url = 'index.php?route=cms/blog&language={{ language }}';
+    url = 'index.php?route=cms/topic&language={{ language }}';
 
     var search = $('#input-search').val();
 

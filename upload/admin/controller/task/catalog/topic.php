@@ -26,22 +26,45 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$languages = $this->model_localisation_language->getLanguages();
 
+		$sorts = [];
+
+		$sorts[] = [
+			'sort'  => 'date_added',
+			'order' => 'ASC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'date_added',
+			'order' => 'DESC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'rating',
+			'order' => 'ASC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'rating',
+			'order' => 'DESC'
+		];
+
 		foreach ($stores as $store) {
-
-
-
-
 			foreach ($languages as $language) {
-				$task_data = [
-					'code'   => 'topic',
-					'action' => 'task/catalog/topic.list',
-					'args'   => [
-						'store_id'    => $store['store_id'],
-						'language_id' => $language['language_id']
-					]
-				];
+				foreach ($sorts as $sort) {
+					$task_data = [
+						'code'   => 'topic',
+						'action' => 'task/catalog/topic.list',
+						'args'   => [
+							'store_id'    => $store['store_id'],
+							'language_id' => $language['language_id'],
+							'sort'        => $sort['sort'],
+							'order'       => $sort['order'],
+							'limit'       => $this->config->get('config_pagination')
+						]
+					];
 
-				$this->model_setting_task->addTask($task_data);
+					$this->model_setting_task->addTask($task_data);
+				}
 			}
 		}
 
@@ -49,15 +72,25 @@ class Topic extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(array $args = []): array {
+		// Store
+		$this->load->model('setting/store');
 
-		$directory = DIR_CATALOG . 'view/data/cms/';
+		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
+		if (!$store_info) {
+			return ['error' => $this->language->get('error_store')];
+		}
 
-
-		// Languages
+		// Language
 		$this->load->model('localisation/language');
 
-		$languages = $this->model_localisation_language->getLanguages();
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
+		}
+
+		$directory = DIR_CATALOG . 'view/data/cms/';
 
 		$limit = 5;
 

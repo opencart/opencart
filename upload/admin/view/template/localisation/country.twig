@@ -42,6 +42,21 @@
                 <label class="form-label">{{ entry_iso_code_3 }}</label>
                 <input type="text" name="filter_iso_code_3" value="{{ filter_iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
               </div>
+              <div class="mb-3">
+                <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
+                  <option value=""></option>
+                  {% for store in stores %}
+                    <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                  <option value=""></option>
+                  <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                  <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
+                </select>
+              </div>
               <div class="text-end">
                 <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>

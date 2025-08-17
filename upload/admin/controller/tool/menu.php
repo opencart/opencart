@@ -353,7 +353,11 @@ class Menu extends \Opencart\System\Engine\Controller {
 
 			$protect = [];
 
-			$children = $menu[$menu_info['code']]['children'];
+			if (isset($menu[$menu_info['code']])) {
+				$children = $menu[$menu_info['code']];
+			} else {
+				$children = [];
+			}
 
 			while ($children) {
 				$next = array_shift($children);

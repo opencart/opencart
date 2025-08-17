@@ -1047,6 +1047,10 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
 		}
 
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p`.`product_id` = `p2s`.`product_id`)";
+		}
+
 		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
@@ -1083,6 +1087,10 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_quantity_to']) && $data['filter_quantity_to'] !== '') {
 			$sql .= " AND `p`.`quantity` <= '" . (int)$data['filter_quantity_to'] . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `p2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
@@ -1174,6 +1182,10 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
 		}
 
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p`.`product_id` = `p2s`.`product_id`)";
+		}
+
 		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
@@ -1210,6 +1222,10 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_quantity_to']) && $data['filter_quantity_to'] !== '') {
 			$sql .= " AND `p`.`quantity` <= '" . (int)$data['filter_quantity_to'] . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `p2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {

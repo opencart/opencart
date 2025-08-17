@@ -54,7 +54,7 @@
                 </select>
               </div>
               <div class="text-end">
-                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
                 <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
@@ -77,24 +77,14 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
-    url = '';
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
 
-    var filter_name = $('#input-name').val();
+    let url = $(this).serialize();
 
-    if (filter_name) {
-        url += '&filter_name=' + encodeURIComponent(filter_name);
-    }
+    window.history.pushState({}, null, 'index.php?route=catalog/manufacturer&user_token={{ user_token }}&' + url);
 
-    var filter_store_id = $('#input-store-id').val();
-
-    if (filter_store_id !== '') {
-        url += '&filter_store_id=' + filter_store_id;
-    }
-
-    window.history.pushState({}, null, 'index.php?route=catalog/manufacturer&user_token={{ user_token }}' + url);
-
-    $('#list').load('index.php?route=catalog/manufacturer.list&user_token={{ user_token }}' + url);
+    $('#list').load('index.php?route=catalog/manufacturer.list&user_token={{ user_token }}&' + url);
 });
 
 $('#input-name').autocomplete({

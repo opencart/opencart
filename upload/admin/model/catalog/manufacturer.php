@@ -234,10 +234,24 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 	 */
 	public function getManufacturers(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer` `m` LEFT JOIN `" . DB_PREFIX . "manufacturer_description` `md` ON (`m`.`manufacturer_id` = `md`.`manufacturer_id`) WHERE `md`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer` `m` LEFT JOIN `" . DB_PREFIX . "manufacturer_description` `md` ON (`m`.`manufacturer_id` = `md`.`manufacturer_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "manufacturer_to_store` `m2s` ON (`m`.`manufacturer_id` = `m2s`.`manufacturer_id`)";
+		}
+
+		$sql .= " WHERE `md`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`md`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `m2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `m`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		$sort_data = [
@@ -287,8 +301,28 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 *
 	 * $manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
 	 */
-	public function getTotalManufacturers(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer`");
+	public function getTotalManufacturers(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer` `m` LEFT JOIN `" . DB_PREFIX . "manufacturer_description` `md` ON (`m`.`manufacturer_id` = `md`.`manufacturer_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "manufacturer_to_store` `m2s` ON (`m`.`manufacturer_id` = `m2s`.`manufacturer_id`)";
+		}
+
+		$sql .= " WHERE `md`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`md`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `m2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `m`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

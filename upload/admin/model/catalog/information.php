@@ -225,7 +225,21 @@ class Information extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_information->getInformations($filter_data);
 	 */
 	public function getInformations(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`) WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "information_to_store` `i2s` ON (`i`.`information_id` = `i2s`.`information_id`)";
+		}
+
+		$sql .= " WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `i2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `i`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
 
 		$sort_data = [
 			'id.title',
@@ -285,8 +299,24 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * $information_total = $this->model_catalog_information->getTotalInformations();
 	 */
-	public function getTotalInformations(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information`");
+	public function getTotalInformations(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "information_to_store` `i2s` ON (`i`.`information_id` = `i2s`.`information_id`) WHERE `i2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		$sql .= " WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `i2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `i`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

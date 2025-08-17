@@ -425,7 +425,13 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_category->getCategories();
 	 */
 	public function getCategories(array $data = []): array {
-		$sql = "SELECT `cp`.`category_id` AS `category_id`, `c1`.`image`, GROUP_CONCAT(`cd1`.`name` ORDER BY `cp`.`level` SEPARATOR ' &gt ') AS `name`, `c1`.`parent_id`, `c1`.`sort_order`, `c1`.`status` FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category` `c1` ON (`cp`.`category_id` = `c1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category` `c2` ON (`cp`.`path_id` = `c2`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = `cd1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`cp`.`category_id` = `cd2`.`category_id`) WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT `cp`.`category_id` AS `category_id`, `c1`.`image`, GROUP_CONCAT(`cd1`.`name` ORDER BY `cp`.`level` SEPARATOR ' &gt ') AS `name`, `c1`.`parent_id`, `c1`.`sort_order`, `c1`.`status` FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category` `c1` ON (`cp`.`category_id` = `c1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category` `c2` ON (`cp`.`path_id` = `c2`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = `cd1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`cp`.`category_id` = `cd2`.`category_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "category_to_store` `c2s` ON (`c1`.`category_id` = `c2s`.`category_id`)";
+		}
+
+		$sql .= " WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cd2`.`name`) LIKE '" . $this->db->escape(oc_strtolower((string)$data['filter_name'])) . "'";
@@ -433,6 +439,10 @@ class Category extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_parent_id'])) {
 			$sql .= " AND `c1`.`parent_id` = '" . (int)$data['filter_parent_id'] . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `c2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
@@ -517,7 +527,13 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $category_total = $this->model_catalog_category->getTotalCategories($filter_data);
 	 */
 	public function getTotalCategories(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "category_to_store` `c2s` ON (`c`.`category_id` = `c2s`.`category_id`)";
+		}
+
+		$sql .= " WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
@@ -525,6 +541,10 @@ class Category extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_parent_id'])) {
 			$sql .= " AND `c`.`parent_id` = '" . (int)$data['filter_parent_id'] . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `c2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {

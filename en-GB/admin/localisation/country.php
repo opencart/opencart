@@ -23,6 +23,7 @@ $_['entry_iso_code_3']        = 'ISO Code (3)';
 $_['entry_address_format']    = 'Address Format';
 $_['entry_postcode_required'] = 'Postcode Required';
 $_['entry_store']             = 'Stores';
+$_['entry_language']          = 'Language';
 $_['entry_status']            = 'Status';
 
 // Error

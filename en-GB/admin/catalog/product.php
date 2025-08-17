@@ -68,6 +68,7 @@ $_['entry_meta_title']           = 'Meta Tag Title';
 $_['entry_meta_keyword']         = 'Meta Tag Keywords';
 $_['entry_meta_description']     = 'Meta Tag Description';
 $_['entry_store']                = 'Stores';
+$_['entry_language']             = 'Language';
 $_['entry_keyword']              = 'Keyword';
 $_['entry_model']                = 'Model';
 $_['entry_product_code']         = 'Product Codes';

@@ -23,6 +23,7 @@ $_['entry_iso_code_3']        = 'ISO-Code (3)';
 $_['entry_address_format']    = 'Adressformat';
 $_['entry_postcode_required'] = 'Postleitzahl erforderlich';
 $_['entry_store']             = 'Online-Shop (Store)';
+$_['entry_language']          = 'Sprache';
 $_['entry_status']            = 'Status';
 
 // Error

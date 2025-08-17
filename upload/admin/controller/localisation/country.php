@@ -34,6 +34,12 @@ class Country extends \Opencart\System\Engine\Controller {
 			$filter_iso_code_3 = '';
 		}
 
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
+		}
+
 		if (isset($this->request->get['filter_store_id'])) {
 			$filter_store_id = (int)$this->request->get['filter_store_id'];
 		} else {
@@ -108,6 +114,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$data['filter_iso_code_2'] = $filter_iso_code_2;
 		$data['filter_iso_code_3'] = $filter_iso_code_3;
 		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_language_id'] = $filter_language_id;
 		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];

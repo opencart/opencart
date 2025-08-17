@@ -97,6 +97,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_language_id'] = $filter_language_id;
 		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];

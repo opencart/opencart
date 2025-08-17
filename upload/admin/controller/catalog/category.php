@@ -264,6 +264,10 @@ class Category extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
+		
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
+		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -320,7 +324,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
-		
+
 		if (isset($this->request->get['filter_language_id'])) {
 			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 		}

@@ -86,6 +86,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_language_id'] = $filter_language_id;
 		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];

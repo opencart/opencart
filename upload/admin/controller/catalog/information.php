@@ -42,6 +42,10 @@ class Information extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
 
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -88,6 +92,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_language_id'] = $filter_language_id;
 		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -158,6 +163,10 @@ class Information extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
 
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -180,12 +189,13 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['informations'] = [];
 
 		$filter_data = [
-			'filter_store_id' => $filter_store_id,
-			'filter_status'   => $filter_status,
-			'sort'            => $sort,
-			'order'           => $order,
-			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'           => $this->config->get('config_pagination_admin')
+			'filter_store_id'    => $filter_store_id,
+			'filter_language_id' => $filter_language_id,
+			'filter_status'      => $filter_status,
+			'sort'               => $sort,
+			'order'              => $order,
+			'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'              => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('catalog/information');
@@ -257,6 +267,10 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {

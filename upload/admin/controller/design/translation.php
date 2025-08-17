@@ -73,6 +73,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$data['stores'] = $this->model_setting_store->getStores();
 
 		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_language_id'] = $filter_language_id;
 		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];

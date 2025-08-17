@@ -24,8 +24,14 @@ class Category extends \Opencart\System\Engine\Controller {
 			$filter_name = '';
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
 		if (isset($this->request->get['filter_status'])) {
-			$filter_status = $this->request->get['filter_status'];
+			$filter_status = (int)$this->request->get['filter_status'];
 		} else {
 			$filter_status = '';
 		}
@@ -34,6 +40,10 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -72,6 +82,11 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->load->controller('catalog/category.getList');
 
+		// Stores
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+
 		$data['filter_name'] = $filter_name;
 		$data['filter_status'] = $filter_status;
 
@@ -107,6 +122,12 @@ class Category extends \Opencart\System\Engine\Controller {
 			$filter_name = '';
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
 		} else {
@@ -135,6 +156,10 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -207,6 +232,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -257,6 +286,10 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {

@@ -36,6 +36,26 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_2'])) {
+			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_3'])) {
+			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -66,6 +86,11 @@ class Country extends \Opencart\System\Engine\Controller {
 		$data['disable'] = $this->url->link('localisation/country.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
+
+		// Stores
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_iso_code_2'] = $filter_iso_code_2;
@@ -147,6 +172,14 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -199,6 +232,14 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
 		} else {
@@ -223,6 +264,14 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_iso_code_3'])) {
 			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -276,6 +325,14 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_iso_code_3'])) {
 			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
 		if (isset($this->request->get['sort'])) {

@@ -20,6 +20,14 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -50,6 +58,11 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['disable'] = $this->url->link('catalog/information.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('catalog/information.getList');
+
+		// Stores
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -96,6 +109,14 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		$url = '';
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -187,6 +208,14 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['information_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];

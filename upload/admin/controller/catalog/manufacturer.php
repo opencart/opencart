@@ -25,9 +25,15 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = (string)$this->request->get['filter_store_id'];
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
 		} else {
 			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
 		}
 
 		$url = '';
@@ -37,7 +43,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_store_id'])) {
-			$url .= '&filter_store_id=' . urlencode(html_entity_decode($this->request->get['filter_store_id'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -116,6 +126,12 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$filter_store_id = '';
 		}
 
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
@@ -141,7 +157,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_store_id'])) {
-			$url .= '&filter_store_id=' . urlencode(html_entity_decode($this->request->get['filter_store_id'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -164,15 +184,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'filter_name'     => $filter_name,
 			'filter_store_id' => $filter_store_id,
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'sort'            => $sort,
+			'order'           => $order,
+			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'           => $this->config->get('config_pagination_admin')
 		];
-
-		$this->load->model('setting/store');
-
-		$data['stores'] = $this->model_setting_store->getStores();
 
 		// Image
 		$this->load->model('tool/image');
@@ -253,6 +269,14 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['manufacturer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];

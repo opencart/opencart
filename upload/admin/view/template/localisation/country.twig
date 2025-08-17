@@ -43,7 +43,8 @@
                 <input type="text" name="filter_iso_code_3" value="{{ filter_iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
+                <label for="input-store" class="form-label">{{ entry_store }}</label>
+                <select name="filter_store_id" id="input-store" class="form-select">
                   <option value=""></option>
                   {% for store in stores %}
                     <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>

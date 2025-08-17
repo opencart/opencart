@@ -18,6 +18,14 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -40,6 +48,11 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$data['disable'] = $this->url->link('design/translation.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
+
+		// Stores
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -74,6 +87,14 @@ class Translation extends \Opencart\System\Engine\Controller {
 		}
 
 		$url = '';
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -144,6 +165,14 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['translation_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];

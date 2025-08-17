@@ -118,6 +118,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_quantity_to=' . $this->request->get['filter_quantity_to'];
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -153,6 +157,11 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['disable'] = $this->url->link('catalog/product.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('catalog/product.getList');
+
+		// Stores
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
@@ -316,6 +325,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_quantity_to=' . $this->request->get['filter_quantity_to'];
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -422,6 +435,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_quantity_to=' . $this->request->get['filter_quantity_to'];
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -472,6 +489,10 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_quantity_to'])) {
 			$url .= '&filter_quantity_to=' . $this->request->get['filter_quantity_to'];
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -575,6 +596,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_quantity_to=' . $this->request->get['filter_quantity_to'];
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -635,6 +660,10 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_quantity_to'])) {
 			$url .= '&filter_quantity_to=' . $this->request->get['filter_quantity_to'];
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {

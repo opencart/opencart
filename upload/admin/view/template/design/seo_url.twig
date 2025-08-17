@@ -34,7 +34,6 @@
               <div class="mb-3">
                 <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
                   <option value=""></option>
-                  <option value="0"{% if filter_store_id == '0' %} selected{% endif %}>{{ text_default }}</option>
                   {% for store in stores %}
                     <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>
                   {% endfor %}

@@ -38,7 +38,8 @@
                 <ul id="autocomplete-name" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-store-id" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store-id" class="form-select">
+                <label for="input-store-id" class="form-label">{{ entry_store }}</label>
+                <select name="filter_store_id" id="input-store-id" class="form-select">
                   <option value=""></option>
                   {% for store in stores %}
                     <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>

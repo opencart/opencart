@@ -88,6 +88,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['stores'] = $this->model_setting_store->getStores();
 
 		$data['filter_name'] = $filter_name;
+		$data['filter_store_id'] = $filter_store_id;
 		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -184,12 +185,13 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['categories'] = [];
 
 		$filter_data = [
-			'filter_name'   => $filter_name,
-			'filter_status' => $filter_status,
-			'sort'          => $sort,
-			'order'         => $order,
-			'start'         => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'         => $this->config->get('config_pagination_admin')
+			'filter_name'     => $filter_name,
+			'filter_store_id' => $filter_store_id,
+			'filter_status'   => $filter_status,
+			'sort'            => $sort,
+			'order'           => $order,
+			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'           => $this->config->get('config_pagination_admin')
 		];
 
 		// Image

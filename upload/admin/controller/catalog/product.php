@@ -76,6 +76,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			$filter_quantity_to = '';
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
 		} else {
@@ -165,15 +171,16 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
+		$data['filter_category'] = '';
 		$data['filter_category_id'] = $filter_category_id;
+		$data['filter_manufacturer'] = '';
 		$data['filter_manufacturer_id'] = $filter_manufacturer_id;
 		$data['filter_price_from'] = $filter_price_from;
 		$data['filter_price_to'] = $filter_price_to;
 		$data['filter_quantity_from'] = $filter_quantity_from;
 		$data['filter_quantity_to'] = $filter_quantity_to;
+		$data['filter_store_id'] = $filter_store_id;
 		$data['filter_status'] = $filter_status;
-		$data['filter_category'] = '';
-		$data['filter_manufacturer'] = '';
 
 		// Category
 		if (!empty($filter_category_id)) {
@@ -265,6 +272,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			$filter_quantity_to = $this->request->get['filter_quantity_to'];
 		} else {
 			$filter_quantity_to = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -359,6 +372,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'filter_price_to'        => $filter_price_to,
 			'filter_quantity_from'   => $filter_quantity_from,
 			'filter_quantity_to'     => $filter_quantity_to,
+			'filter_store_id'        => $filter_store_id,
 			'filter_status'          => $filter_status,
 			'sort'                   => $sort,
 			'order'                  => $order,

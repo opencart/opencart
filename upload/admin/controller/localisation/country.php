@@ -34,6 +34,18 @@ class Country extends \Opencart\System\Engine\Controller {
 			$filter_iso_code_3 = '';
 		}
 
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -95,6 +107,8 @@ class Country extends \Opencart\System\Engine\Controller {
 		$data['filter_name'] = $filter_name;
 		$data['filter_iso_code_2'] = $filter_iso_code_2;
 		$data['filter_iso_code_3'] = $filter_iso_code_3;
+		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -138,6 +152,18 @@ class Country extends \Opencart\System\Engine\Controller {
 			$filter_iso_code_3 = (string)$this->request->get['filter_iso_code_3'];
 		} else {
 			$filter_iso_code_3 = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
 		}
 
 		if (isset($this->request->get['sort'])) {

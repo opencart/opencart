@@ -87,6 +87,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -184,6 +185,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'filter_name'     => $filter_name,
 			'filter_store_id' => $filter_store_id,
+			'filter_status'   => $filter_status,
 			'sort'            => $sort,
 			'order'           => $order,
 			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),

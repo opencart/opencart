@@ -163,10 +163,12 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['informations'] = [];
 
 		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'filter_store_id' => $filter_store_id,
+			'filter_status'   => $filter_status,
+			'sort'            => $sort,
+			'order'           => $order,
+			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'           => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('catalog/information');

@@ -136,8 +136,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$data['translations'] = [];
 
 		$filter_data = [
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'filter_store_id' => $filter_store_id,
+			'filter_status'   => $filter_status,
+			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'           => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('design/translation');

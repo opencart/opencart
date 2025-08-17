@@ -227,6 +227,8 @@ class Country extends \Opencart\System\Engine\Controller {
 			'filter_name'       => $filter_name,
 			'filter_iso_code_2' => $filter_iso_code_2,
 			'filter_iso_code_3' => $filter_iso_code_3,
+			'filter_store_id'   => $filter_store_id,
+			'filter_status'     => $filter_status,
 			'sort'              => $sort,
 			'order'             => $order,
 			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),

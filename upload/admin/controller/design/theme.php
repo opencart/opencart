@@ -134,8 +134,10 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$data['themes'] = [];
 
 		$filter_data = [
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'filter_store_id' => $filter_store_id,
+			'filter_status'   => $filter_status,
+			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'           => $this->config->get('config_pagination_admin')
 		];
 
 		// Themes

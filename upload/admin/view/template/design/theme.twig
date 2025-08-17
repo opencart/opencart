@@ -72,39 +72,14 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
-$('#list').on('click', 'button', function(e) {
+$('#form-filter').on('submit', function(e) {
     e.preventDefault();
 
-    var element = this;
+    let url = $(this).serialize();
 
-    $.ajax({
-        url: $(element).val(),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            console.log(json);
+    window.history.pushState({}, null, 'index.php?route=design/theme&user_token={{ user_token }}&' + url);
 
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#list').load($('#form-theme').attr('data-oc-load'));
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
+    $('#list').load('index.php?route=design/theme.list&user_token={{ user_token }}&' + url);
 });
 //--></script>
 {{ footer }}

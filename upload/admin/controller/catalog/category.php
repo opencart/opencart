@@ -31,7 +31,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_status'])) {
-			$filter_status = (int)$this->request->get['filter_status'];
+			$filter_status = $this->request->get['filter_status'];
 		} else {
 			$filter_status = '';
 		}

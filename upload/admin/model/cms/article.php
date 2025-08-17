@@ -247,6 +247,10 @@ class Article extends \Opencart\System\Engine\Model {
 			$sql .= " AND `a2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `a`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
 		$sort_data = [
 			'ad.name',
 			'a.author',
@@ -316,37 +320,25 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $article_total = $this->model_cms_article->getTotalArticles($filter_data);
 	 */
 	public function getTotalArticles(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article`";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`)";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`)";
 		}
 
-
-
-
-
-		$implode = [];
+		$sql .= " WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = " AND LCASE(`md`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+			$sql .= " AND LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$implode[] = " AND `m2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+			$sql .= " AND `a2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `a`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
-
-
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-		}
-
-
-
 
 		$query = $this->db->query($sql);
 

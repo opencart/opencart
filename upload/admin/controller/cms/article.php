@@ -16,6 +16,12 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = (string)$this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
 		if (isset($this->request->get['filter_store_id'])) {
 			$filter_store_id = (int)$this->request->get['filter_store_id'];
 		} else {
@@ -29,6 +35,10 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
 
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
@@ -74,6 +84,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
+		$data['filter_name'] = $filter_name;
 		$data['filter_store_id'] = $filter_store_id;
 		$data['filter_status'] = $filter_status;
 
@@ -103,6 +114,12 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = (string)$this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
 		if (isset($this->request->get['filter_store_id'])) {
 			$filter_store_id = (int)$this->request->get['filter_store_id'];
 		} else {
@@ -135,6 +152,10 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
@@ -161,6 +182,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$data['articles'] = [];
 
 		$filter_data = [
+			'filter_name'     => $filter_name,
 			'filter_store_id' => $filter_store_id,
 			'filter_status'   => $filter_status,
 			'sort'            => $sort,
@@ -241,6 +263,10 @@ class Article extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['article_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
 
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];

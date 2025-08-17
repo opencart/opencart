@@ -98,6 +98,28 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Status
+	 *
+	 * Edit information status record in the database.
+	 *
+	 * @param int  $information_id primary key of the information record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/information');
+	 *
+	 * $this->model_catalog_information->editStatus($information_id, $status);
+	 */
+	public function editStatus(int $country_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `status` = '" . (bool)$status . "' WHERE `country_id` = '" . (int)$country_id . "'");
+
+		$this->cache->delete('country');
+	}
+
+	/**
 	 * Delete Country
 	 *
 	 * Delete country record in the database.
@@ -210,7 +232,13 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $countries = $this->model_localisation_country->getCountries($filter_data);
 	 */
 	public function getCountries(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_to_store` `c2s` ON (`c`.`country_id` = `c2s`.`country_id`)";
+		}
+
+		$sql .= " WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
@@ -222,6 +250,14 @@ class Country extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_iso_code_3'])) {
 			$sql .= " LCASE(`c`.`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `c2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `c`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		$sort_data = [
@@ -285,7 +321,13 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $country_total = $this->model_localisation_country->getTotalCountries($filter_data);
 	 */
 	public function getTotalCountries(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_to_store` `c2s` ON (`c`.`country_id` = `c2s`.`country_id`)";
+		}
+
+		$sql .= " WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
@@ -297,6 +339,14 @@ class Country extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_iso_code_3'])) {
 			$sql .= " AND LCASE(`c`.`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `c2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `c`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		$query = $this->db->query($sql);

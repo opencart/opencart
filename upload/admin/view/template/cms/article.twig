@@ -34,6 +34,10 @@
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
+                <label class="form-label">{{ entry_name }}</label>
+                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
+              </div>
+              <div class="mb-3">
                 <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
                   <option value=""></option>
                   {% for store in stores %}
@@ -72,57 +76,45 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     $('#list').load(this.href);
 });
 
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
+
+    let url = $(this).serialize();
+
+    window.history.pushState({}, null, 'index.php?route=cms/article&user_token={{ user_token }}&' + url);
+
+    $('#list').load('index.php?route=cms/article.list&user_token={{ user_token }}&' + url);
+});
+
 $('#button-rating').on('click', function() {
     var element = this;
 
-    $(element).button('loading');
+    $.ajax({
+        url: 'index.php?route=cms/article.rating&user_token={{ user_token }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
 
-    var next = 'index.php?route=cms/article.rating&user_token={{ user_token }}';
+            $('.alert-dismissible').remove();
 
-    var rate = function() {
-        return $.ajax({
-            url: next,
-            dataType: 'json',
-            success: function(json) {
-                console.log(json);
-
-                $('.alert-dismissible').remove();
-
-                $('.invalid-feedback').removeClass('d-block');
-
-                if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $(element).button('reset');
-                }
-
-                if (json['text']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $(element).button('reset');
-
-                    $('#article').load($('#form-article').attr('data-oc-load'));
-                }
-
-                if (json['next']) {
-                    next = json['next'];
-
-                    chain.attach(rate);
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
-                $(element).button('reset');
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
-        });
-    };
 
-    chain.attach(rate);
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 //--></script>
 {{ footer }}

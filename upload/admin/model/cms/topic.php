@@ -220,7 +220,25 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * $topics = $this->model_cms_topic->getTopics($filter_data);
 	 */
 	public function getTopics(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`) WHERE `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "topic_to_store` `t2s` ON (`t`.`topic_id` = `t2s`.`topic_id`)";
+		}
+
+		$sql .= " WHERE `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`td`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `t2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `t`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
 
 		$sort_data = [
 			'td.name',
@@ -287,8 +305,28 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * $topic_total = $this->model_cms_topic->getTotalTopics($filter_data);
 	 */
-	public function getTotalTopics(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic`");
+	public function getTotalTopics(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`)";
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "topic_to_store` `t2s` ON (`t`.`topic_id` = `t2s`.`topic_id`)";
+		}
+
+		$sql .= " WHERE `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`td`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$sql .= " AND `t2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND `t`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

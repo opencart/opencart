@@ -155,7 +155,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = (int)$this->request->get['filter_store_id'];
+			$filter_store_id = $this->request->get['filter_store_id'];
 		} else {
 			$filter_store_id = '';
 		}

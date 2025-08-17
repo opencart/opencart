@@ -110,6 +110,11 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
+		// Languages
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
 		$data['filter_name'] = $filter_name;
 		$data['filter_iso_code_2'] = $filter_iso_code_2;
 		$data['filter_iso_code_3'] = $filter_iso_code_3;

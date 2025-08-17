@@ -32,6 +32,7 @@ $_['entry_meta_description']  = 'Meta Tag Description';
 $_['entry_topic']             = 'Topic';
 $_['entry_author']            = 'Author';
 $_['entry_store']             = 'Stores';
+$_['entry_language']          = 'Language';
 $_['entry_status']            = 'Status';
 $_['entry_sort_order']        = 'Sort Order';
 $_['entry_keyword']           = 'Keyword';

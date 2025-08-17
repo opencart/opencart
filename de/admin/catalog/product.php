@@ -68,6 +68,7 @@ $_['entry_meta_title']           = 'Meta-Tag-Titel';
 $_['entry_meta_keyword']         = 'Meta-Tag-Schlüsselwörter';
 $_['entry_meta_description']     = 'Meta-Tag-Beschreibung';
 $_['entry_store']                = 'Online-Shop (Store)';
+$_['entry_language']             = 'Sprache';
 $_['entry_keyword']              = 'SEO-URL Kennung (Schlüsselwort)';
 $_['entry_model']                = 'Modell';
 $_['entry_product_code']         = 'Produktcodes';

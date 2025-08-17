@@ -199,10 +199,6 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['path'])) {
-			$url .= '&path=' . $this->request->get['path'];
-		}
-
 		if (isset($this->request->get['filter'])) {
 			$url .= '&filter=' . $this->request->get['filter'];
 		}
@@ -276,7 +272,7 @@ class Category extends \Opencart\System\Engine\Controller {
 				'special'     => $special,
 				'tax'         => $tax,
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-				'href'        => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'] . $url)
+				'href'        => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
 			] + $result;
 
 			$data['products'][] = $this->load->controller('product/thumb', $product_data);

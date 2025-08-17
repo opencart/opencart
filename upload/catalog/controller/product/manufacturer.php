@@ -11,10 +11,12 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): void {
-		$this->load->language('product/manufacturer');
+	public function index(): ?\Opencart\System\Engine\Action {
+		if (isset($this->request->get['manufacturer_id'])) {
+			return $this->load->controller('product/manufacturer.info');
+		}
 
-		$this->load->model('catalog/manufacturer');
+		$this->load->language('product/manufacturer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -32,6 +34,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['categories'] = [];
 
+		$this->load->model('catalog/manufacturer');
+
 		$results = $this->model_catalog_manufacturer->getManufacturers();
 
 		foreach ($results as $result) {
@@ -46,7 +50,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				$data['categories'][$key]['href'] = $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'));
 			}
 
-			$data['categories'][$key]['manufacturer'][] = ['href' => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'])] + $result;
+			$data['categories'][$key]['manufacturer'][] = ['href' => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'])] + $result;
 		}
 
 		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
@@ -146,7 +150,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $manufacturer_info['name'],
-			'href' => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
+			'href' => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
 		];
 
 		$data['heading_title'] = $manufacturer_info['name'];
@@ -212,7 +216,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				'special'     => $special,
 				'tax'         => $tax,
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-				'href'        => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url)
+				'href'        => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url)
 			] + $result;
 
 			$data['products'][] = $this->load->controller('product/thumb', $product_data);
@@ -229,57 +233,57 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_default'),
 			'value' => 'p.sort_order-ASC',
-			'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.sort_order&order=ASC' . $url)
+			'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.sort_order&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_name_asc'),
 			'value' => 'pd.name-ASC',
-			'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=ASC' . $url)
+			'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_name_desc'),
 			'value' => 'pd.name-DESC',
-			'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=DESC' . $url)
+			'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=pd.name&order=DESC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_price_asc'),
 			'value' => 'p.price-ASC',
-			'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=ASC' . $url)
+			'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_price_desc'),
 			'value' => 'p.price-DESC',
-			'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=DESC' . $url)
+			'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=DESC' . $url)
 		];
 
 		if ($this->config->get('config_review_status')) {
 			$data['sorts'][] = [
 				'text'  => $this->language->get('text_rating_desc'),
 				'value' => 'rating-DESC',
-				'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=DESC' . $url)
+				'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=DESC' . $url)
 			];
 
 			$data['sorts'][] = [
 				'text'  => $this->language->get('text_rating_asc'),
 				'value' => 'rating-ASC',
-				'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=ASC' . $url)
+				'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=ASC' . $url)
 			];
 		}
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_model_asc'),
 			'value' => 'p.model-ASC',
-			'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.model&order=ASC' . $url)
+			'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.model&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_model_desc'),
 			'value' => 'p.model-DESC',
-			'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.model&order=DESC' . $url)
+			'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.model&order=DESC' . $url)
 		];
 
 		$url = '';
@@ -302,7 +306,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['limits'][] = [
 				'text'  => $value,
 				'value' => $value,
-				'href'  => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=' . $value)
+				'href'  => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&limit=' . $value)
 			];
 		}
 
@@ -328,24 +332,24 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'total' => $product_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page={page}')
+			'url'   => $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 
 		// https://developers.google.com/search/blog/2011/09/pagination-with-relnext-and-relprev
 		if ($page == 1) {
-			$this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
+			$this->document->addLink($this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
 		} else {
-			$this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&page=' . $page), 'canonical');
+			$this->document->addLink($this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&page=' . $page), 'canonical');
 		}
 
 		if ($page > 1) {
-			$this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . (($page - 2) ? '&page=' . ($page - 1) : '')), 'prev');
+			$this->document->addLink($this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . (($page - 2) ? '&page=' . ($page - 1) : '')), 'prev');
 		}
 
 		if ($limit && ceil($product_total / $limit) > $page) {
-			$this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&page=' . ($page + 1)), 'next');
+			$this->document->addLink($this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&page=' . ($page + 1)), 'next');
 		}
 
 		$data['sort'] = $sort;

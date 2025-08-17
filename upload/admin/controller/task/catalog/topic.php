@@ -71,6 +71,9 @@ class Topic extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/*
+	 *
+	 */
 	public function list(array $args = []): array {
 		// Store
 		$this->load->model('setting/store');
@@ -89,6 +92,64 @@ class Topic extends \Opencart\System\Engine\Controller {
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
 		}
+
+		// 1. Create a store instance using loader class to call controllers, models, views, libraries.
+		$this->load->model('setting/store');
+
+		$store = $this->model_setting_store->createStoreInstance($store_info['store_id'], $language_info['code']);
+
+		$store->request->get['route'] = 'cms/topic';
+		$store->request->get['sort'] = $args['sort'];
+		$store->request->get['order'] = $args['order'];
+		$store->request->get['page'] = $args['page'];
+
+		// 5. Call the required API controller.
+		$store->load->controller('cms/topic');
+
+		// 6. Call the required API controller and get the output.
+		$output = $store->response->getOutput();
+
+		// 7. Clean up data by clearing cart.
+		$store->cart->clear();
+
+		// 8. Deleting the current session, so we are not creating infinite sessions.
+		$store->session->destroy();
+
+
+
+
+		// Total Topics
+		$topic_total = $this->model_cms_topic->getTotalTopics();
+
+		$start = ($page - 1) * $limit;
+		$end = $start > ($topic_total - $limit) ? $topic_total : ($start + $limit);
+
+		$filter_data = [
+			'start' => $start,
+			'limit' => $limit
+		];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		$directory = DIR_CATALOG . 'view/data/cms/';
 

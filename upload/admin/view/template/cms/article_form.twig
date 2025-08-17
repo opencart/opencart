@@ -90,6 +90,13 @@
                           <textarea name="article_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ article_description[language.language_id] ? article_description[language.language_id].meta_keyword }}</textarea>
                         </div>
                       </div>
+                      <div class="row mb-3">
+                        <label for="input-tag-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_tag }}</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="article_description[{{ language.language_id }}][tag]" value="{{ article_description[language.language_id] ? article_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-tag-{{ language.language_id }}" class="form-control"/>
+                          <div class="form-text">{{ help_tag }}</div>
+                        </div>
+                      </div>
                     </fieldset>
                   </div>
                 {% endfor %}

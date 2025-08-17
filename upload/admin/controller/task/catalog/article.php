@@ -124,7 +124,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		// 1. Create a store instance using loader class to call controllers, models, views, libraries.
 		$this->load->model('setting/store');
 
-		$store = $this->model_setting_store->createStoreInstance($store_info['store_id'], $language_info['code'], $currency_info['code']);
+		$store = $this->model_setting_store->createStoreInstance($store_info['store_id'], $language_info['code']);
 
 		// 2. Remove the unneeded keys.
 		$request_data = $this->request->get;

@@ -429,7 +429,6 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * @param int    $store_id primary key of the store record
 	 * @param string $language
-	 * @param string $currency
 	 *
 	 * @throws \Exception
 	 *
@@ -439,9 +438,9 @@ class Store extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('setting/store');
 	 *
-	 * $this->model_setting_store->createStoreInstance($store_id, $language, $currency);
+	 * $this->model_setting_store->createStoreInstance($store_id, $language);
 	 */
-	public function createStoreInstance(int $store_id = 0, string $language = '', string $currency = ''): \Opencart\System\Engine\Registry {
+	public function createStoreInstance(int $store_id = 0, string $language = ''): \Opencart\System\Engine\Registry {
 		// Autoloader
 		$this->autoloader->register('Opencart\Catalog', DIR_CATALOG);
 
@@ -532,9 +531,6 @@ class Store extends \Opencart\System\Engine\Model {
 
 		// Document
 		$registry->set('document', new \Opencart\System\Library\Document());
-
-		// Currency
-		$session->data['currency'] = $currency;
 
 		// Run pre actions to load key settings and classes.
 		$pre_actions = [

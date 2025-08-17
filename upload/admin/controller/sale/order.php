@@ -1180,12 +1180,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$language = (string)$this->config->get('config_language');
 		}
 
-		if (isset($this->request->get['currency'])) {
-			$currency = (string)$this->request->get['currency'];
-		} else {
-			$currency = (string)$this->config->get('config_currency');
-		}
-
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -1203,7 +1197,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// 1. Create a store instance using loader class to call controllers, models, views, libraries.
 			$this->load->model('setting/store');
 
-			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $currency);
+			$store = $this->model_setting_store->createStoreInstance($store_id, $language);
 
 			// 2. Remove the unneeded keys.
 			$request_data = $this->request->get;

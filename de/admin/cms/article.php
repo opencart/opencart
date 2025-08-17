@@ -32,6 +32,7 @@ $_['entry_meta_description']  = 'Meta-Tag-Beschreibung';
 $_['entry_topic']             = 'Thema';
 $_['entry_author']            = 'Autor';
 $_['entry_store']             = 'Online-Shop (Store)';
+$_['entry_language']          = 'Sprache';
 $_['entry_status']            = 'Status';
 $_['entry_sort_order']        = 'Sortierreihenfolge';
 $_['entry_keyword']           = 'SEO-URL Kennung (Schlüsselwort)';

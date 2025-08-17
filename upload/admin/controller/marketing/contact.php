@@ -67,13 +67,13 @@ class Contact extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'to'                => '',
-			'subject'           => '',
-			'message'           => '',
 			'store_id'          => 0,
 			'customer'          => [],
 			'customer_group_id' => 0,
-			'affiliate'         => []
+			'affiliate'         => [],
+			'to'                => '',
+			'subject'           => '',
+			'message'           => '',
 		];
 
 		$post_info = $this->request->post + $required;

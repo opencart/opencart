@@ -46,6 +46,15 @@
                 </select>
               </div>
               <div class="mb-3">
+                <label for="input-language" class="form-label">{{ entry_language }}</label>
+                <select name="filter_language_id" id="input-store" class="form-select">
+                  <option value=""></option>
+                  {% for language in languages %}
+                    <option value="{{ language.language_id }}"{% if language.language_id == filter_language_id %} selected{% endif %}>{{ language.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
                 <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
                   <option value=""></option>
                   <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>

@@ -40,6 +40,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
 
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -71,6 +75,11 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
+
+		// Languages
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$data['filter_store_id'] = $filter_store_id;
 		$data['filter_language_id'] = $filter_language_id;
@@ -130,6 +139,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -210,6 +223,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {

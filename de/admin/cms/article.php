@@ -39,6 +39,9 @@ $_['entry_layout']            = 'Layout überschreiben';
 // Button
 $_['button_rating']           = 'Bewertungen berechnen';
 
+// Help
+$_['help_tag']                = 'Durch Komma getrennt';
+
 // Error
 $_['error_warning']           = 'Warnung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
 $_['error_permission']        = 'Achtung: Sie haben keine Berechtigung, Artikel zu ändern!';

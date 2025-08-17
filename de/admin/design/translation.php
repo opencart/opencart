@@ -7,6 +7,7 @@ $_['text_success']      = 'Erfolg: Sie haben den Spracheditor geändert!';
 $_['text_list']         = 'Übersetzungsliste';
 $_['text_add']          = 'Übersetzung hinzufügen';
 $_['text_edit']         = 'Übersetzung bearbeiten';
+$_['text_filter']       = 'Filter';
 $_['text_store']        = 'Online-Shop (Store)';
 $_['text_language']     = 'Sprache';
 

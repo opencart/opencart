@@ -25,9 +25,15 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = (int)$this->request->get['filter_store_id'];
+			$filter_store_id = $this->request->get['filter_store_id'];
 		} else {
 			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -44,6 +50,10 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -87,8 +97,14 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
+		// Languages
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
 		$data['filter_name'] = $filter_name;
 		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_language_id'] = $filter_language_id;
 		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -124,9 +140,15 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = (int)$this->request->get['filter_store_id'];
+			$filter_store_id = $this->request->get['filter_store_id'];
 		} else {
 			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -163,6 +185,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
 		}
 
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
@@ -185,13 +211,14 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['categories'] = [];
 
 		$filter_data = [
-			'filter_name'     => $filter_name,
-			'filter_store_id' => $filter_store_id,
-			'filter_status'   => $filter_status,
-			'sort'            => $sort,
-			'order'           => $order,
-			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'           => $this->config->get('config_pagination_admin')
+			'filter_name'        => $filter_name,
+			'filter_store_id'    => $filter_store_id,
+			'filter_language_id' => $filter_language_id,
+			'filter_status'      => $filter_status,
+			'sort'               => $sort,
+			'order'              => $order,
+			'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'              => $this->config->get('config_pagination_admin')
 		];
 
 		// Image
@@ -292,6 +319,10 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_store_id'])) {
 			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+		
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {

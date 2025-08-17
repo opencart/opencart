@@ -82,6 +82,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			$filter_store_id = '';
 		}
 
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
+		}
+
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
 		} else {
@@ -168,6 +174,11 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
+
+		// Languages
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;

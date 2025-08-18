@@ -38,6 +38,7 @@ services:
     ports:
       - "${PHP_FPM_EXPOSE_PORT:-9000}:${PHP_FPM_PORT:-9000}"
     environment:
+      - TZ=${TZ:-UTC}
       - OPENCART_USERNAME=${OPENCART_USERNAME:-admin}
       - OPENCART_PASSWORD=${OPENCART_PASSWORD:-admin}
       - OPENCART_ADMIN_EMAIL=${OPENCART_ADMIN_EMAIL:-admin@example.com}

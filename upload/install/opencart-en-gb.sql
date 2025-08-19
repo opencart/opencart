@@ -2079,8 +2079,8 @@ VALUES (1, 6, 0, 'account/%'),
        (12, 5, 0, 'product/manufacturer'),
        (13, 12, 0, 'product/compare'),
        (14, 13, 0, 'product/search'),
-       (15, 14, 0, 'cms/blog'),
-       (16, 14, 0, 'cms/blog.info');
+       (15, 14, 0, 'cms/topic'),
+       (16, 14, 0, 'cms/article');
 
 -----------------------------------------------------------
 

@@ -536,11 +536,11 @@ class Store extends \Opencart\System\Engine\Model {
 		$pre_actions = [
 			'startup/setting',
 			'startup/language',
-			'startup/extension',
 			'startup/customer',
 			'startup/tax',
 			'startup/currency',
 			'startup/application',
+			'startup/extension',
 			'startup/startup',
 			'startup/event'
 		];
@@ -551,5 +551,9 @@ class Store extends \Opencart\System\Engine\Model {
 		}
 
 		return $registry;
+	}
+
+	public function __destruct() {
+
 	}
 }

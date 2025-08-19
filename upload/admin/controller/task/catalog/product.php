@@ -14,6 +14,10 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/product');
 
+
+		$limit = [10, 25, 50, 75, 100];
+
+
 		return [];
 	}
 

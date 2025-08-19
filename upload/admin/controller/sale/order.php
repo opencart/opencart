@@ -1490,8 +1490,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					'total'            => $this->model_sale_order->getTotals($order_id),
 					'comment'          => nl2br($order_info['comment'])
 				] + $order_info;
-
-
 			}
 		}
 

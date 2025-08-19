@@ -119,7 +119,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$page = 1;
 			}
 
-			$limit = 10;
+			$limit = 200;
 
 			$email_total = 0;
 

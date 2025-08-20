@@ -208,8 +208,14 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	 *
 	 * $weight_class_total = $this->model_localisation_weight_class->getTotalWeightClasses();
 	 */
-	public function getTotalWeightClasses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "weight_class`");
+	public function getTotalWeightClasses(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wcd`.`language_id` = '" . (int)$language_id . "'");
 
 		return (int)$query->row['total'];
 	}

@@ -215,8 +215,14 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * $subscription_status_total = $this->model_localisation_subscription_status->getTotalSubscriptionStatuses();
 	 */
-	public function getTotalSubscriptionStatuses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+	public function getTotalSubscriptionStatuses(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return (int)$query->row['total'];
 	}

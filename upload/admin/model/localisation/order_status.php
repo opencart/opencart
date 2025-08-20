@@ -215,8 +215,14 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * $order_status_total = $this->model_localisation_order_status->getTotalOrderStatuses();
 	 */
-	public function getTotalOrderStatuses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+	public function getTotalOrderStatuses(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return (int)$query->row['total'];
 	}

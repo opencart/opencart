@@ -215,8 +215,14 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	 *
 	 * $stock_status_total = $this->model_localisation_stock_status->getTotalStockStatuses();
 	 */
-	public function getTotalStockStatuses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+	public function getTotalStockStatuses(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return (int)$query->row['total'];
 	}

@@ -215,8 +215,14 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	 *
 	 * $return_reason_total = $this->model_localisation_return_reason->getTotalReturnReasons();
 	 */
-	public function getTotalReturnReasons(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+	public function getTotalReturnReasons(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return (int)$query->row['total'];
 	}

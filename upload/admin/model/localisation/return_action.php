@@ -215,8 +215,14 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 *
 	 * $return_action_total = $this->model_localisation_return_action->getTotalReturnActions();
 	 */
-	public function getTotalReturnActions(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+	public function getTotalReturnActions(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return (int)$query->row['total'];
 	}

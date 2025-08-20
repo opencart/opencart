@@ -229,7 +229,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 *
 	 * $length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
 	 */
-	public function getTotalLengthClasses(): int {
+	public function getTotalLengthClasses(array $data = []): int {
 		if (!empty($data['filter_language_id'])) {
 			$language_id = $data['filter_language_id'];
 		} else {

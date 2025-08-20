@@ -51,10 +51,6 @@ class Store extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/store');
 
-		$this->load->model('setting/store');
-
-		$stores = $this->model_setting_store->getStores();
-
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();

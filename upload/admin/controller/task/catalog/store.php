@@ -24,9 +24,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-
-
-
 				$base = DIR_CATALOG . 'view/data/';
 				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
 				$filename = 'currency.json';
@@ -46,9 +43,9 @@ class Store extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
+	}
 
-
-
+	public function task() {
 
 	}
 

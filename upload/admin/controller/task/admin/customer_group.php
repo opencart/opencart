@@ -22,10 +22,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$languages = $this->model_localisation_language->getLanguages();
 
-		$this->load->model('customer/customer_group');
-
-		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
-
 		foreach ($languages as $language) {
 			$task_data = [
 				'code'   => 'customer_group',
@@ -34,20 +30,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->model_setting_task->addTask($task_data);
-
-			foreach ($customer_groups as $customer_group) {
-				// Add a task for generating the country info data
-				$task_data = [
-					'code'   => 'customer_group',
-					'action' => 'task/admin/customer_group.info',
-					'args'   => [
-						'customer_group_id' => $customer_group['customer_group_id'],
-						'language_id'       => $language['language_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
 		}
 
 		return ['success' => $this->language->get('text_success')];
@@ -71,9 +53,25 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$this->load->model('setting/task');
+
 		$this->load->model('customer/customer_group');
 
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups(['filter_language_id' => $language_info['language_id']]);
+
+		foreach ($customer_groups as $customer_group) {
+			// Add a task for generating the country info data
+			$task_data = [
+				'code'   => 'customer_group',
+				'action' => 'task/admin/customer_group.info',
+				'args'   => [
+					'customer_group_id' => $customer_group['customer_group_id'],
+					'language_id'       => $language_info['language_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/customer/';
@@ -100,14 +98,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
-		$this->load->model('customer/customer_group');
-
-		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
-
-		if (!$customer_group_info) {
-			return ['error' => $this->language->get('error_customer_group')];
-		}
-
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
@@ -116,28 +106,22 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$description_info = $this->model_localisation_country->getDescription($customer_group_info['country_id'], $language_info['language_id']);
+		$this->load->model('customer/customer_group');
 
-		if (!$description_info) {
-			return ['error' => $this->language->get('error_description')];
+		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id'], $language_info['language_id']);
+
+		if (!$customer_group_info) {
+			return ['error' => $this->language->get('error_customer_group')];
 		}
 
 		$filter_data = [
-			'filter_customer_group_id' => (int)$customer_group_info['customer_group_id'],
-			'filter_language_id' => $language_info['language_id']
+			'filter_customer_group_id' => $customer_group_info['customer_group_id'],
+			'filter_language_id'       => $language_info['language_id']
 		];
 
 		$this->load->model('customer/custom_field');
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
-
-		foreach ($custom_fields as $custom_field) {
-			$description_info = $this->model_customer_custom_field->getDescription((int)$custom_field['custom_field_id'], (int)$language_info['language_id']);
-
-			if ($description_info) {
-				$custom_field_data[] = $description_info + $custom_field;
-			}
-		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/customer/';
@@ -147,11 +131,11 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode(['custom_field' => $custom_field_data] + $description_info + $customer_group_info))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode(['custom_field' => $custom_fields] + $customer_group_info))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $description_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $customer_group_info['name'])];
 	}
 
 	/**

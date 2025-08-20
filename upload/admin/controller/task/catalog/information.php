@@ -80,7 +80,10 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$informations = $this->model_catalog_information->getInformations($filter_data);
 
-		$code = preg_replace('/[^A-Z0-9\._-]/i', '', $languages[$description['language_id']]['code']);
+
+
+
+		$code = preg_replace('/[^A-Z0-9\._-]/i', '', $language_info['code']);
 
 		$file = DIR_CATALOG . 'view/data/catalog/information.' . (int)$information['information_id'] . '.' . $code . '.json';
 
@@ -91,9 +94,31 @@ class Information extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	public function clear(array $args = []): array {
-		$this->load->language('task/catalog/article');
 
-		return ['success' => $this->language->get('text_success')];
+
+
+
+	public function clear(array $args = []): array {
+		$this->load->language('task/catalog/information');
+
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($stores as $store) {
+			foreach ($languages as $language) {
+				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/catalog/information.json';
+
+				if (is_file($file)) {
+					unlink($file);
+				}
+			}
+		}
+
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

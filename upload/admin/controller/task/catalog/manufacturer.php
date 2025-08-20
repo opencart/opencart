@@ -18,10 +18,12 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
+		// Store
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();

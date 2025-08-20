@@ -26,30 +26,72 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$languages = $this->model_localisation_language->getLanguages();
 
-		$this->load->model('design/banner');
-
-		$banners = $this->model_design_banner->getBanners();
-
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				foreach ($banners as $banner) {
-					$task_data = [
-						'code'   => 'banner',
-						'action' => 'task/catalog/banner',
-						'args'   => [
-							'store_id'    => $store['store_id'],
-							'language_id' => $language['language_id'],
-							'banner_id'   => $banner['banner_id']
-						]
-					];
+				$task_data = [
+					'code'   => 'banner',
+					'action' => 'task/catalog/banner',
+					'args'   => [
+						'store_id'    => $store['store_id'],
+						'language_id' => $language['language_id']
+					]
+				];
 
-					$this->model_setting_task->addTask($task_data);
-				}
+				$this->model_setting_task->addTask($task_data);
 			}
 		}
 
 		return ['success' => $this->language->get('text_success')];
 	}
+
+	/**
+	 * List
+	 *
+	 * Generates customer group list file.
+	 *
+	 * @return array
+	 */
+	public function list(array $args = []): array {
+		$this->load->language('task/catalog/customer_group');
+
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+		if (!$store_info) {
+			return ['error' => $this->language->get('error_store')];
+		}
+
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
+		}
+
+		$this->load->model('design/banner');
+
+		$banners = $this->model_design_banner->getBanners();
+
+		foreach ($banners as $banner) {
+			// Add a task for generating the country info data
+			$task_data = [
+				'code'   => 'customer_group',
+				'action' => 'task/catalog/customer_group.info',
+				'args'   => [
+					'customer_group_id' => $banner['customer_group_id'],
+					'store_id'          => $store_info['store_id'],
+					'language_id'       => $language_info['language_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => $this->language->get('text_success')];
+	}
+
 
 	/**
 	 * Info

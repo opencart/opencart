@@ -38,7 +38,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the length class list file.
+	 * Generates the order status list.
 	 *
 	 * @return array
 	 */

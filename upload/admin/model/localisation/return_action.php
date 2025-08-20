@@ -161,7 +161,13 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_return_action->getReturnActions($filter_data);
 	 */
 	public function getReturnActions(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$sql = "SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$language_id . "' ORDER BY `name`";
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";

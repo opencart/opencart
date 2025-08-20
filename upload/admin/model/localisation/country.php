@@ -232,17 +232,19 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $countries = $this->model_localisation_country->getCountries($filter_data);
 	 */
 	public function getCountries(array $data = []): array {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
 		$sql = "SELECT * FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`)";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_to_store` `c2s` ON (`c`.`country_id` = `c2s`.`country_id`)";
 		}
 
-		if (!empty($data['filter_language_id'])) {
-			$sql .= " WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		} else {
-			$sql .= " WHERE `cd`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
-		}
+		$sql .= " WHERE `cd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
@@ -325,17 +327,19 @@ class Country extends \Opencart\System\Engine\Model {
 	 * $country_total = $this->model_localisation_country->getTotalCountries($filter_data);
 	 */
 	public function getTotalCountries(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "country_description` `cd` ON (`c`.`country_id` = `cd`.`country_id`)";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_to_store` `c2s` ON (`c`.`country_id` = `c2s`.`country_id`)";
 		}
 
-		if (!empty($data['filter_language_id'])) {
-			$sql .= " WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		} else {
-			$sql .= " WHERE `cd`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
-		}
+		$sql .= " WHERE `cd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";

@@ -161,7 +161,13 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	 * $subscription_statuses = $this->model_localisation_subscription_status->getSubscriptionStatuses($filter_data);
 	 */
 	public function getSubscriptionStatuses(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$language_id . "' ORDER BY `name`";
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";

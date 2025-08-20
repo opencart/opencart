@@ -163,7 +163,13 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * $length_classes = $this->model_localisation_length_class->getLengthClasses($filter_data);
 	 */
 	public function getLengthClasses(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$language_id . "'";
 
 		$sort_data = [
 			'title',
@@ -224,7 +230,13 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * $length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
 	 */
 	public function getTotalLengthClasses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "length_class`");
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$language_id . "'");
 
 		return (int)$query->row['total'];
 	}

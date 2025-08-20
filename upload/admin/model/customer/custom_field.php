@@ -207,12 +207,12 @@ class CustomField extends \Opencart\System\Engine\Model {
 		}
 
 		if (empty($data['filter_customer_group_id'])) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` `cf` LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`)";
+			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` `cf`";
 		} else {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` `cfcg` LEFT JOIN `" . DB_PREFIX . "custom_field` `cf` ON (`cfcg`.`custom_field_id` = `cf`.`custom_field_id`) LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`)";
+			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` `cfcg` LEFT JOIN `" . DB_PREFIX . "custom_field` `cf` ON (`cfcg`.`custom_field_id` = `cf`.`custom_field_id`)";
 		}
 
-		$sql .= " WHERE `cfd`.`language_id` = '" . (int)$language_id . "'";
+		$sql .= " LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cfd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cfd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
@@ -294,12 +294,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 			$language_id = $this->config->get('config_language_id');
 		}
 
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`";
+		if (empty($data['filter_customer_group_id'])) {
+			$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field` `cf`";
+		} else {
+			$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field_customer_group` `cfcg` LEFT JOIN `" . DB_PREFIX . "custom_field` `cf` ON (`cfcg`.`custom_field_id` = `cf`.`custom_field_id`)";
+		}
 
-		$sql .= " WHERE `cfd`.`language_id` = '" . (int)$language_id . "'";
-
-
-		$query = $this->db->query($sql);
+		$query = $this->db->query($sql . " LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cfd`.`language_id` = '" . (int)$language_id . "'");
 
 		return (int)$query->row['total'];
 	}

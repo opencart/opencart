@@ -238,7 +238,11 @@ class Country extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_to_store` `c2s` ON (`c`.`country_id` = `c2s`.`country_id`)";
 		}
 
-		$sql .= " WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		if (!empty($data['filter_language_id'])) {
+			$sql .= " WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		} else {
+			$sql .= " WHERE `cd`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		}
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
@@ -327,7 +331,11 @@ class Country extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "country_to_store` `c2s` ON (`c`.`country_id` = `c2s`.`country_id`)";
 		}
 
-		$sql .= " WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		if (!empty($data['filter_language_id'])) {
+			$sql .= " WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		} else {
+			$sql .= " WHERE `cd`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		}
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";

@@ -200,11 +200,19 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * $custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 	 */
 	public function getCustomFields(array $data = []): array {
-		if (empty($data['filter_customer_group_id'])) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` `cf` LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cfd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
 		} else {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` `cfcg` LEFT JOIN `" . DB_PREFIX . "custom_field` `cf` ON (`cfcg`.`custom_field_id` = `cf`.`custom_field_id`) LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cfd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+			$language_id = $this->config->get('config_language_id');
 		}
+
+		if (empty($data['filter_customer_group_id'])) {
+			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` `cf` LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`)";
+		} else {
+			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` `cfcg` LEFT JOIN `" . DB_PREFIX . "custom_field` `cf` ON (`cfcg`.`custom_field_id` = `cf`.`custom_field_id`) LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`)";
+		}
+
+		$sql .= " WHERE `cfd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cfd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
@@ -279,8 +287,19 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * $custom_field_total = $this->model_customer_custom_field->getTotalCustomFields($filter_data);
 	 */
-	public function getTotalCustomFields(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`");
+	public function getTotalCustomFields(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`";
+
+		$sql .= " WHERE `cfd`.`language_id` = '" . (int)$language_id . "'";
+
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

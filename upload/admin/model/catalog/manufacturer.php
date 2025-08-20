@@ -234,13 +234,19 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 	 */
 	public function getManufacturers(array $data = []): array {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer` `m` LEFT JOIN `" . DB_PREFIX . "manufacturer_description` `md` ON (`m`.`manufacturer_id` = `md`.`manufacturer_id`)";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "manufacturer_to_store` `m2s` ON (`m`.`manufacturer_id` = `m2s`.`manufacturer_id`)";
 		}
 
-		$sql .= " WHERE `md`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql .= " WHERE `md`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`md`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
@@ -302,13 +308,19 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
 	 */
 	public function getTotalManufacturers(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer` `m` LEFT JOIN `" . DB_PREFIX . "manufacturer_description` `md` ON (`m`.`manufacturer_id` = `md`.`manufacturer_id`)";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "manufacturer_to_store` `m2s` ON (`m`.`manufacturer_id` = `m2s`.`manufacturer_id`)";
 		}
 
-		$sql .= " WHERE `md`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql .= " WHERE `md`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`md`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";

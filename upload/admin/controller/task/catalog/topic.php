@@ -183,36 +183,12 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$store->session->destroy();
 
 		// Create the directory and file names.
-		$keywords = [];
-
 		$this->load->model('design/seo_url');
-
-		foreach ($keys as $key) {
-			$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($key, $args[$key], $args['store_id'], $args['language_id']);
-
-			if ($seo_url_info) {
-				$keywords[] = $seo_url_info;
-			}
-		}
-
-		$sort_order = [];
-
-		foreach ($keywords as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $keywords);
-
-		$path = '';
-
-		foreach ($keywords as $result) {
-			$path .= '/' . $result['keyword'];
-		}
 
 		//$base = DIR_STORE;
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . $path . '/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . $this->model_design_seo_url->convert($args['store_id'], $args['language_id'], $args) . '/';
 		$filename = 'index.html';
 
 		if (!oc_directory_create($base . $directory, 0777)) {

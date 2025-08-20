@@ -585,4 +585,34 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	/**
+	 * Generate
+	 *
+	 * @return void
+	 */
+	public function generate(): void {
+		$this->load->language('design/seo_url');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'design/seo_url')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$task_data = [
+				'code'   => 'seo_url',
+				'action' => 'task/admin/seo_url',
+				'args'   => []
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

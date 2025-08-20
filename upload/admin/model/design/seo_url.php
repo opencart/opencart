@@ -320,6 +320,29 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		return $seo_url_data;
 	}
 
+	public function convert(int $store_id, int $language_id, array $data = []): string {
+		// Create the directory and file names.
+		$keywords = [];
+
+		foreach ($data as $key => $value) {
+			$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($key, $value, $store_id, $language_id);
+
+			if ($seo_url_info) {
+				$keywords[] = $seo_url_info;
+			}
+		}
+
+		$sort_order = [];
+
+		foreach ($keywords as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $keywords);
+
+		return implode('/', $keywords) . '/';
+	}
+
 	/**
 	 * Get Seo Urls By Store Id
 	 *

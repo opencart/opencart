@@ -220,13 +220,19 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * $topics = $this->model_cms_topic->getTopics($filter_data);
 	 */
 	public function getTopics(array $data = []): array {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
 		$sql = "SELECT * FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`)";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "topic_to_store` `t2s` ON (`t`.`topic_id` = `t2s`.`topic_id`)";
 		}
 
-		$sql .= " WHERE `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql .= " WHERE `td`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`td`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
@@ -306,13 +312,19 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * $topic_total = $this->model_cms_topic->getTotalTopics($filter_data);
 	 */
 	public function getTotalTopics(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`)";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "topic_to_store` `t2s` ON (`t`.`topic_id` = `t2s`.`topic_id`)";
 		}
 
-		$sql .= " WHERE `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql .= " WHERE `td`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`td`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";

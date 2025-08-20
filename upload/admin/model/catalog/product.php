@@ -1041,6 +1041,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_product->getProducts($filter_data);
 	 */
 	public function getProducts(array $data = []): array {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
 		$sql = "SELECT *, `p`.`product_id` AS `product_id` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
 
 		if (!empty($data['filter_model'])) {
@@ -1051,7 +1057,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p`.`product_id` = `p2s`.`product_id`)";
 		}
 
-		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql .= " WHERE `pd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_master_id'])) {
 			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
@@ -1176,6 +1182,12 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $product_total = $this->model_catalog_product->getTotalProducts();
 	 */
 	public function getTotalProducts(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
 		$sql = "SELECT COUNT(DISTINCT `p`.`product_id`) AS `total` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
 
 		if (!empty($data['filter_model'])) {
@@ -1186,7 +1198,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p`.`product_id` = `p2s`.`product_id`)";
 		}
 
-		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql .= " WHERE `pd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_master_id'])) {
 			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";

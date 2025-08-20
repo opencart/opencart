@@ -136,7 +136,13 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 * $attribute_groups = $this->model_catalog_attribute_group->getAttributeGroups($filter_data);
 	 */
 	public function getAttributeGroups(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "attribute_group` `ag` LEFT JOIN `" . DB_PREFIX . "attribute_group_description` `agd` ON (`ag`.`attribute_group_id` = `agd`.`attribute_group_id`) WHERE `agd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$sql = "SELECT * FROM `" . DB_PREFIX . "attribute_group` `ag` LEFT JOIN `" . DB_PREFIX . "attribute_group_description` `agd` ON (`ag`.`attribute_group_id` = `agd`.`attribute_group_id`) WHERE `agd`.`language_id` = '" . (int)$language_id . "'";
 
 		$sort_data = [
 			'agd.name',
@@ -185,8 +191,14 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 	 *
 	 * $attribute_group_total = $this->model_catalog_attribute_group->getTotalAttributeGroups();
 	 */
-	public function getTotalAttributeGroups(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute_group`");
+	public function getTotalAttributeGroups(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute_group` `ag` LEFT JOIN `" . DB_PREFIX . "attribute_group_description` `agd` ON (`ag`.`attribute_group_id` = `agd`.`attribute_group_id`) WHERE `agd`.`language_id` = '" . (int)$language_id . "'");
 
 		return (int)$query->row['total'];
 	}

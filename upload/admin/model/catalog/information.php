@@ -231,7 +231,11 @@ class Information extends \Opencart\System\Engine\Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "information_to_store` `i2s` ON (`i`.`information_id` = `i2s`.`information_id`)";
 		}
 
-		$sql .= " WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		if (!empty($data['filter_language_id'])) {
+			$sql .= " WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		} else {
+			$sql .= " WHERE `id`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		}
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " AND `i2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";

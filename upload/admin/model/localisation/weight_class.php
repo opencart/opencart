@@ -99,6 +99,27 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Get Weight Class
+	 *
+	 * Get the record of the weight class record in the database.
+	 *
+	 * @param int $weight_class_id primary key of the weight class record
+	 *
+	 * @return array<string, mixed> weight class record that has weight class ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/weight_class');
+	 *
+	 * $weight_class_info = $this->model_localisation_weight_class->getWeightClass($weight_class_id);
+	 */
+	public function getWeightClass(int $weight_class_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wc`.`weight_class_id` = '" . (int)$weight_class_id . "' AND `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->row;
+	}
+
+	/**
 	 * Get Weight Classes
 	 *
 	 * Get the record of the weight class records in the database.
@@ -126,7 +147,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 		} else {
 			$language_id = $this->config->get('config_language_id');
 		}
-		
+
 		$sql = "SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wcd`.`language_id` = '" . (int)$language_id . "'";
 
 		$sort_data = [
@@ -172,27 +193,6 @@ class WeightClass extends \Opencart\System\Engine\Model {
 		}
 
 		return $weight_class_data;
-	}
-
-	/**
-	 * Get Weight Class
-	 *
-	 * Get the record of the weight class record in the database.
-	 *
-	 * @param int $weight_class_id primary key of the weight class record
-	 *
-	 * @return array<string, mixed> weight class record that has weight class ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/weight_class');
-	 *
-	 * $weight_class_info = $this->model_localisation_weight_class->getWeightClass($weight_class_id);
-	 */
-	public function getWeightClass(int $weight_class_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class` `wc` LEFT JOIN `" . DB_PREFIX . "weight_class_description` `wcd` ON (`wc`.`weight_class_id` = `wcd`.`weight_class_id`) WHERE `wc`.`weight_class_id` = '" . (int)$weight_class_id . "' AND `wcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return $query->row;
 	}
 
 	/**

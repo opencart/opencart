@@ -1,4 +1,4 @@
-`   <?php
+<?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Country
@@ -59,7 +59,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		// Store
 		$this->load->model('setting/store');
 
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+		$store_info = $this->model_setting_store->getStore($args['store_id']);
 
 		if (!$store_info) {
 			return ['error' => $this->language->get('error_store')];
@@ -68,47 +68,43 @@ class Country extends \Opencart\System\Engine\Controller {
 		// Language
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
 
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$country_data = [];
+		$filter_data = [
+			'filter_store_id'    => $store_info['store_id'],
+			'filter_language_id' => $language_info['language_id'],
+			'status'             => 1
+		];
 
 		$this->load->model('localisation/country');
 
-		$countries = $this->model_localisation_country->getCountriesByStoreId($store_info['store_id']);
+		$countries = $this->model_localisation_country->getCountries($filter_data);
 
 		foreach ($countries as $country) {
-			if ($country['status']) {
-				$description_info = $this->model_localisation_country->getDescription($country['country_id'], $language_info['language_id']);
+			$task_data = [
+				'code'   => 'country',
+				'action' => 'task/catalog/country.info',
+				'args'   => [
+					'store_id'    => $store_info['store_id'],
+					'language_id' => $language_info['language_id'],
+					'country_id'  => $country['country_id']
+				]
+			];
 
-				if ($description_info) {
-					$country_data[$country['country_id']] = $description_info + $country;
-
-					$task_data = [
-						'code'   => 'country',
-						'action' => 'task/catalog/country.info',
-						'args'   => [
-							'store_id'    => $store_info['store_id'],
-							'language_id' => $language_info['language_id'],
-							'country_id'  => $country['country_id']
-						]
-					];
-
-					$this->model_setting_task->addTask($task_data);
-				}
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		$sort_order = [];
 
-		foreach ($country_data as $key => $value) {
+		foreach ($countries as $key => $value) {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $country_data);
+		array_multisort($sort_order, SORT_ASC, $countries);
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
@@ -118,7 +114,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($countries))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -165,21 +161,15 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_country')];
 		}
 
-		$zone_data = [];
+		$filter_data = [
+			'filter_country_id'  => $country_info['country_id'],
+			'filter_language_id' => $language_info['language_id'],
+			'filter_status'      => 1
+		];
 
 		$this->load->model('localisation/zone');
 
-		$zones = $this->model_localisation_zone->getZonesByCountryId((int)$country_info['country_id']);
-
-		foreach ($zones as $zone) {
-			if ($zone['status']) {
-				$zone_description_info = $this->model_localisation_zone->getDescription((int)$zone['zone_id'], (int)$language_info['language_id']);
-
-				if ($zone_description_info) {
-					$zone_data[] = $zone_description_info + $zone;
-				}
-			}
-		}
+		$zones = $this->model_localisation_zone->getZones($filter_data);
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
@@ -189,7 +179,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zone_data]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zones]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

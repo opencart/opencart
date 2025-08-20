@@ -70,19 +70,15 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$return_reason_data = [];
+		$filter_data = [
+			'filter_store_id'    => $store_info['store_id'],
+			'filter_language_id' => $language_info['language_id'],
+			'status'             => 1
+		];
 
 		$this->load->model('localisation/return_reason');
 
-		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
-
-		foreach ($return_reasons as $return_reason) {
-			$description_info = $this->model_localisation_return_reason->getDescription($return_reason['return_reason_id'], $language_info['language_id']);
-
-			if ($description_info) {
-				$return_reason_data[$return_reason['return_reason_id']] = $description_info + $return_reason;
-			}
-		}
+		$return_reasons = $this->model_localisation_return_reason->getReturnReasons($filter_data);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
@@ -92,7 +88,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($return_reason_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($return_reasons))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

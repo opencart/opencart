@@ -53,19 +53,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$weight_class_data = [];
-
 		$this->load->model('localisation/weight_class');
 
-		$weight_classes = $this->model_localisation_weight_class->getWeightClasses();
-
-		foreach ($weight_classes as $weight_class) {
-			$description_info = $this->model_localisation_weight_class->getDescription($weight_class['weight_class_id'], $language_info['language_id']);
-
-			if ($description_info) {
-				$weight_class_data[$weight_class['weight_class_id']] = $description_info + $weight_class;
-			}
-		}
+		$weight_classes = $this->model_localisation_weight_class->getWeightClasses(['filter_language_id' => $language_info['language_id']]);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -75,7 +65,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($weight_class_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($weight_classes))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

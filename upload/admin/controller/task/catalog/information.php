@@ -27,8 +27,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($stores as $store) {
-
-
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'information',
@@ -72,31 +70,23 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$information_data = [];
+		$filter_data = [
+			'filter_store_id'    => $store_info['store_id'],
+			'filter_language_id' => $language_info['language_id'],
+			'status'             => 1
+		];
 
 		$this->load->model('catalog/information');
 
-		$informations = $this->model_catalog_information->getInformations();
-
-		foreach ($informations as $information) {
-			if ($information['status']) {
-				$description_info = $this->model_catalog_information->getDescription($information['information_id'], $language_info['language_id']);
-
-				if ($description_info) {
-					$information_data[$information['information_id']] = $description_info + $information;
-				}
-			}
-		}
+		$informations = $this->model_catalog_information->getInformations($filter_data);
 
 		$code = preg_replace('/[^A-Z0-9\._-]/i', '', $languages[$description['language_id']]['code']);
 
 		$file = DIR_CATALOG . 'view/data/catalog/information.' . (int)$information['information_id'] . '.' . $code . '.json';
 
-		if (!file_put_contents($file, json_encode($information_data))) {
+		if (!file_put_contents($file, json_encode($informations))) {
 			return ['error' => $this->language->get('error_file')];
 		}
-
-
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}

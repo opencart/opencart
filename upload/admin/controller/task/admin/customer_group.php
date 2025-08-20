@@ -71,19 +71,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$customer_group_data = [];
-
 		$this->load->model('customer/customer_group');
 
-		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
-
-		foreach ($customer_groups as $customer_group) {
-			$description_info = $this->model_customer_customer_group->getDescription($customer_group['customer_group_id'], $language_info['language_id']);
-
-			if ($description_info) {
-				$customer_group_data[$customer_group['customer_group_id']] = $description_info + $customer_group;
-			}
-		}
+		$customer_groups = $this->model_customer_customer_group->getCustomerGroups(['filter_language_id' => $language_info['language_id']]);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/customer/';
@@ -93,7 +83,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($customer_groups))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -132,11 +122,14 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_description')];
 		}
 
-		$custom_field_data = [];
+		$filter_data = [
+			'filter_customer_group_id' => (int)$customer_group_info['customer_group_id'],
+			'filter_language_id' => $language_info['language_id']
+		];
 
 		$this->load->model('customer/custom_field');
 
-		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => (int)$customer_group_info['customer_group_id']]);
+		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
 			$description_info = $this->model_customer_custom_field->getDescription((int)$custom_field['custom_field_id'], (int)$language_info['language_id']);

@@ -53,19 +53,9 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$return_action_data = [];
-
 		$this->load->model('localisation/return_action');
 
-		$return_actions = $this->model_localisation_return_action->getReturnActions();
-
-		foreach ($return_actions as $return_action) {
-			$description_info = $this->model_localisation_return_action->getDescription($return_action['return_action_id'], $language_info['language_id']);
-
-			if ($description_info) {
-				$return_action_data[$return_action['return_action_id']] = $description_info + $return_action;
-			}
-		}
+		$return_actions = $this->model_localisation_return_action->getReturnActions(['filter_language_id' => $language_info['language_id']]);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -75,7 +65,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($return_action_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($return_actions))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

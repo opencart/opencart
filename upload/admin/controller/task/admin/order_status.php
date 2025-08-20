@@ -35,6 +35,13 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the length class list file.
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/order_status');
 
@@ -46,19 +53,9 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$order_status_data = [];
-
 		$this->load->model('localisation/order_status');
 
-		$order_statuses = $this->model_localisation_order_status->getOrderStatuses();
-
-		foreach ($order_statuses as $order_status) {
-			$description_info = $this->model_localisation_order_status->getDescription($order_status['order_status_id'], $language_info['language_id']);
-
-			if ($description_info) {
-				$order_status_data[$order_status['order_status_id']] = $description_info + $order_status;
-			}
-		}
+		$order_statuses = $this->model_localisation_order_status->getOrderStatuses(['filter_language_id' => $language_info['language_id']]);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -68,7 +65,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($order_status_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($order_statuses))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

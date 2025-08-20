@@ -53,19 +53,9 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$length_class_data = [];
-
 		$this->load->model('localisation/length_class');
 
-		$length_classes = $this->model_localisation_length_class->getLengthClasses();
-
-		foreach ($length_classes as $length_class) {
-			$description_info = $this->model_localisation_length_class->getDescription($length_class['length_class_id'], $language_info['language_id']);
-
-			if ($description_info) {
-				$length_class_data[$length_class['length_class_id']] = $description_info + $length_class;
-			}
-		}
+		$length_classes = $this->model_localisation_length_class->getLengthClasses(['filter_language_id' => $language_info['language_id']]);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -75,7 +65,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($length_class_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($length_classes))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

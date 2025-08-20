@@ -53,19 +53,9 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$stock_status_data = [];
-
 		$this->load->model('localisation/stock_status');
 
-		$stock_statuses = $this->model_localisation_stock_status->getStockStatuses();
-
-		foreach ($stock_statuses as $stock_status) {
-			$description_info = $this->model_localisation_stock_status->getDescription($stock_status['stock_status_id'], $language_info['language_id']);
-
-			if ($description_info) {
-				$stock_status_data[$stock_status['stock_status_id']] = $description_info + $stock_status;
-			}
-		}
+		$stock_statuses = $this->model_localisation_stock_status->getStockStatuses(['filter_language_id' => $language_info['language_id']]);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
@@ -75,7 +65,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($stock_status_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($stock_statuses))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

@@ -20,7 +20,9 @@ $_['column_action']          = 'Action';
 $_['entry_name']             = 'Zone Name';
 $_['entry_code']             = 'Zone Code';
 $_['entry_country']          = 'Country';
+$_['entry_language']         = 'Language';
 $_['entry_status']           = 'Status';
+
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify zones!';

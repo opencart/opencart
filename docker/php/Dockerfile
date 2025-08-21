@@ -18,6 +18,10 @@ RUN install-php-extensions \
     redis \
     memcached
 
+# Configure www-data user home directory
+RUN usermod -d /home/www-data -m www-data
+RUN mkdir -p /home/www-data && chown www-data:www-data /home/www-data
+
 # Copy OpenCart's original php.ini
 COPY upload/php.ini /usr/local/etc/php/conf.d/opencart.ini
 

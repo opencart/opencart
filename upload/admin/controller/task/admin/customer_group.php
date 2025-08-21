@@ -114,9 +114,16 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_customer_group')];
 		}
 
+		$description_info = $this->model_customer_customer_group->getDescription($customer_group_info['customer_group_id'], $language_info['language_id']);
+
+		if (!$description_info) {
+			return ['error' => $this->language->get('error_description')];
+		}
+
 		$filter_data = [
 			'filter_customer_group_id' => $customer_group_info['customer_group_id'],
-			'filter_language_id'       => $language_info['language_id']
+			'filter_language_id'       => $language_info['language_id'],
+			'filter_Status'            => true
 		];
 
 		$this->load->model('customer/custom_field');
@@ -125,7 +132,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/customer/';
-		$filename = 'customer_group-' . $customer_group_info['country_id'] . '.json';
+		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

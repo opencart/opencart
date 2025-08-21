@@ -89,9 +89,9 @@ class Country extends \Opencart\System\Engine\Controller {
 				'code'   => 'country',
 				'action' => 'task/catalog/country.info',
 				'args'   => [
+					'country_id'  => $country['country_id'],
 					'store_id'    => $store_info['store_id'],
-					'language_id' => $language_info['language_id'],
-					'country_id'  => $country['country_id']
+					'language_id' => $language_info['language_id']
 				]
 			];
 

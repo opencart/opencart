@@ -91,9 +91,9 @@ class Topic extends \Opencart\System\Engine\Controller {
 								'code'   => 'topic',
 								'action' => 'task/catalog/topic.list',
 								'args'   => [
+									'topic_id'    => $topic_id,
 									'store_id'    => $store['store_id'],
 									'language_id' => $language['language_id'],
-									'topic_id'    => $topic_id,
 									'sort'        => $sort['sort'],
 									'order'       => $sort['order'],
 									'page'        => $i

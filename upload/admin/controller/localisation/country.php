@@ -171,7 +171,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		} else {
 			$filter_store_id = '';
 		}
-		
+
 		if (isset($this->request->get['filter_language_id'])) {
 			$filter_language_id = $this->request->get['filter_language_id'];
 		} else {

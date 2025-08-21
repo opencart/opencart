@@ -87,9 +87,9 @@ class Information extends \Opencart\System\Engine\Controller {
 				'code'   => 'information',
 				'action' => 'task/catalog/information.info',
 				'args'   => [
+					'information_id'  => $information['information_id'],
 					'store_id'        => $store_info['store_id'],
-					'language_id'     => $language_info['language_id'],
-					'information_id'  => $information['information_id']
+					'language_id'     => $language_info['language_id']
 				]
 			];
 

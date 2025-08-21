@@ -34,16 +34,16 @@ class Country extends \Opencart\System\Engine\Controller {
 			$filter_iso_code_3 = '';
 		}
 
-		if (isset($this->request->get['filter_language_id'])) {
-			$filter_language_id = $this->request->get['filter_language_id'];
-		} else {
-			$filter_language_id = '';
-		}
-
 		if (isset($this->request->get['filter_store_id'])) {
 			$filter_store_id = (int)$this->request->get['filter_store_id'];
 		} else {
 			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -171,6 +171,12 @@ class Country extends \Opencart\System\Engine\Controller {
 		} else {
 			$filter_store_id = '';
 		}
+		
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
+		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
@@ -236,15 +242,16 @@ class Country extends \Opencart\System\Engine\Controller {
 		$data['countries'] = [];
 
 		$filter_data = [
-			'filter_name'       => $filter_name,
-			'filter_iso_code_2' => $filter_iso_code_2,
-			'filter_iso_code_3' => $filter_iso_code_3,
-			'filter_store_id'   => $filter_store_id,
-			'filter_status'     => $filter_status,
-			'sort'              => $sort,
-			'order'             => $order,
-			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'             => $this->config->get('config_pagination_admin')
+			'filter_name'        => $filter_name,
+			'filter_iso_code_2'  => $filter_iso_code_2,
+			'filter_iso_code_3'  => $filter_iso_code_3,
+			'filter_store_id'    => $filter_store_id,
+			'filter_language_id' => $filter_language_id,
+			'filter_status'      => $filter_status,
+			'sort'               => $sort,
+			'order'              => $order,
+			'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'              => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('localisation/country');

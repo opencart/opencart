@@ -52,7 +52,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
-		$this->load->language('task/catalog/customer_group');
+		$this->load->language('task/catalog/banner');
 
 		$this->load->model('setting/store');
 
@@ -77,12 +77,12 @@ class Banner extends \Opencart\System\Engine\Controller {
 		foreach ($banners as $banner) {
 			// Add a task for generating the country info data
 			$task_data = [
-				'code'   => 'customer_group',
-				'action' => 'task/catalog/customer_group.info',
+				'code'   => 'banner',
+				'action' => 'task/catalog/banner.info',
 				'args'   => [
-					'customer_group_id' => $banner['customer_group_id'],
-					'store_id'          => $store_info['store_id'],
-					'language_id'       => $language_info['language_id']
+					'banner_id'   => $banner['banner_id'],
+					'store_id'    => $store_info['store_id'],
+					'language_id' => $language_info['language_id']
 				]
 			];
 

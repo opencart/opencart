@@ -209,7 +209,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function info(): array {
+	public function article(): array {
 		$this->load->language('task/catalog/article');
 
 		$this->load->model('localisation/language');

@@ -32,6 +32,18 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$filter_code = '';
 		}
 
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';
@@ -79,9 +91,21 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		// Stores
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+
+		// Languages
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
 		$data['filter_name'] = $filter_name;
 		$data['filter_country_id'] = $filter_country_id;
 		$data['filter_code'] = $filter_code;
+		$data['filter_language_id'] = $filter_language_id;
+		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -125,6 +149,18 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$filter_code = (string)$this->request->get['filter_code'];
 		} else {
 			$filter_code = '';
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -180,6 +216,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 			'filter_name'       => $filter_name,
 			'filter_country_id' => $filter_country_id,
 			'filter_code'       => $filter_code,
+			'filter_language_id' => $filter_language_id,
+			'filter_status'     => $filter_status,
 			'sort'              => $sort,
 			'order'             => $order,
 			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),

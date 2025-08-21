@@ -119,10 +119,16 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id'], $language_info['language_id']);
+		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
 
 		if (!$country_info) {
 			return ['error' => $this->language->get('error_country')];
+		}
+
+		$description_info = $this->model_localisation_country->getDescription((int)$args['country_id'], $language_info['language_id']);
+
+		if (!$description_info) {
+			return ['error' => $this->language->get('error_description')];
 		}
 
 		$filter_data = [

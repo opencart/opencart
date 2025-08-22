@@ -3,6 +3,7 @@
 $_['heading_title']                       = 'Einstellungen';
 
 // Text
+$_['text_store']                          = 'Online-Shop (Store)';
 $_['text_stores']                         = 'Online-Shop (Store)';
 $_['text_success']                        = 'Erfolg: Sie haben die Einstellungen geändert!';
 $_['text_edit']                           = 'Einstellung bearbeiten';
@@ -21,8 +22,7 @@ $_['text_mail_affiliate']                 = 'Partnerprogramm';
 $_['text_mail_order']                     = 'Bestellungen';
 $_['text_mail_review']                    = 'Bewertungen';
 $_['text_general']                        = 'Allgemein';
-$_['text_site']                           = 'Site-Details';
-$_['text_meta']                           = 'Meta-Tags';
+$_['text_theme']                          = 'Thema';
 $_['text_security']                       = 'Sicherheit';
 $_['text_error']                          = 'Fehlerbehandlung';
 $_['text_product']                        = 'Produkte';

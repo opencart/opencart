@@ -41,6 +41,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 		$data['store'] = $this->config->get('config_name');
 		$data['address'] = nl2br($this->config->get('config_address'));
+		$data['map'] = 'https://maps.google.com/maps?q=' . urlencode(str_replace("\n", "\s", $this->config->get('config_address'))) . '&hl=' . $this->config->get('config_language') . '&t=m&z=15';
 		$data['language'] = $this->config->get('config_language');
 		$data['telephone'] = $this->config->get('config_telephone');
 		$data['open'] = nl2br($this->config->get('config_open'));
@@ -62,8 +63,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['locations'][] = [
-					'address' => nl2br($location_info['address']),
 					'image'   => $image,
+					'address' => nl2br($location_info['address']),
+					'map'     => 'https://maps.google.com/maps?q=' . urlencode(str_replace("\n", "\s", $location_info['address'])) . '&hl=' . $this->config->get('config_language') . '&t=m&z=15',
 					'open'    => nl2br($location_info['open'])
 				] + $location_info;
 			}

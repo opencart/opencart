@@ -20,7 +20,7 @@
               <address>
                 {{ address }}
               </address>
-              <a href="https://maps.google.com/maps?q={{ geocode|url_encode }}&hl={{ language }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
+              <a href="{{ map }}" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
             </div>
             {% if telephone %}
               <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
@@ -67,9 +67,7 @@
                       <address>
                         {{ location.address }}
                       </address>
-                      {% if location.geocode %}
-                        <a href="https://maps.google.com/maps?q={{ location.geocode|url_encode }}&hl={{ language }}&t=m&z=15" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
-                      {% endif %}
+                      <a href="{{ location.map }}" target="_blank" class="btn btn-outline-secondary"><i class="fa-solid fa-location-dot"></i> {{ button_map }}</a>
                     </div>
                     <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
                       <br/>

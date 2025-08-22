@@ -186,7 +186,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+				$image = $result['image'];
 			} else {
 				$image = 'placeholder.png';
 			}

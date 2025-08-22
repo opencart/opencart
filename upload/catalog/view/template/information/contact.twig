@@ -13,7 +13,7 @@
         <div class="card-body">
           <div class="row">
             {% if image %}
-              <div class="col-sm-3"><img src="{{ image }}" alt="{{ store }}" title="{{ store }}" class="img-thumbnail"/></div>
+              <div class="col-sm-3"><img src="{{ image }}" alt="{{ store }}" title="{{ store }}" class="img-thumbnail" style="width: 268px"/></div>
             {% endif %}
             <div class="col-sm-3"><strong>{{ store }}</strong>
               <br/>
@@ -59,7 +59,7 @@
                 <div class="accordion-body">
                   <div class="row">
                     {% if location.image %}
-                      <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail"/></div>
+                      <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" style="width: 268px"/></div>
                     {% endif %}
                     <div class="col-sm-3"><strong>{{ location.name }}</strong>
                       <br/>

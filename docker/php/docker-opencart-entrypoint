@@ -4,18 +4,11 @@ set -e
 echo "--- OpenCart initialization ---"
 
 # ================================================================
-# STEP 1: CREATE A SYMBOLIC LINK
+# STEP 1: SYNC ENVIRONMENT VARIABLES TO EXISTING CONFIGS
 # ================================================================
-# Create a symbolic link to make the upload directory the document root.
-# The -n flag is crucial to replace the symlink correctly if it exists.
-ln -sfn /var/www/upload /var/www/public_html
 
-# Change to the correct working directory after the symlink is created
-cd /var/www/public_html
-
-# ================================================================
-# STEP 2: SYNC ENVIRONMENT VARIABLES TO EXISTING CONFIGS
-# ================================================================
+# Change to OpenCart directory
+cd /var/www/upload
 
 CONFIG_FILE="config.php"
 ADMIN_CONFIG_FILE="admin/config.php"
@@ -65,7 +58,7 @@ if [ -f "$ADMIN_CONFIG_FILE" ]; then
 fi
 
 # ================================================================
-# STEP 3: OPENCART INSTALLATION (IF NEEDED)
+# STEP 2: OPENCART INSTALLATION (IF NEEDED)
 # ================================================================
 
 if [ ! -f "install.lock" ] && [ -f "install/cli_install.php" ]; then
@@ -101,33 +94,33 @@ if [ ! -f "install.lock" ] && [ -f "install/cli_install.php" ]; then
 fi
 
 # ================================================================
-# STEP 4: SETUP WEB SERVER FILES
+# STEP 3: SETUP WEB SERVER FILES
 # ================================================================
 
 # Copy .htaccess.txt to .htaccess if needed
 if [ -f ".htaccess.txt" ] && [ ! -f ".htaccess" ]; then
     cp ".htaccess.txt" ".htaccess"
-    echo "--- STEP 4: Copied .htaccess.txt to .htaccess ---"
+    echo "--- STEP 3: Copied .htaccess.txt to .htaccess ---"
 fi
 
 # ================================================================
-# STEP 5: FIX FILE PERMISSIONS
+# STEP 4: FIX FILE PERMISSIONS
 # ================================================================
 
 # Fix ownership for all files by targeting the real directory.
-echo "--- STEP 5: Fixing ownership on /var/www/upload ---"
+echo "--- STEP 4: Fixing ownership on /var/www/upload ---"
 chown -R www-data:www-data /var/www/upload
 echo "--- Ownership fixed ---"
 
 # Set permissions for storage relocation
 echo "--- STEP 5: Setting permissions for storage relocation ---"
 chown www-data:www-data /var/www
-chmod 755 /var/www
+chmod 775 /var/www
 
 # ================================================================
-# STEP 6: START PHP-FPM
+# STEP 5: START PHP-FPM
 # ================================================================
 
-echo "--- STEP 6: Starting PHP-FPM ---"
+echo "--- STEP 5: Starting PHP-FPM ---"
 # Call the original entrypoint with all arguments
 exec docker-php-entrypoint "$@"

@@ -146,7 +146,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		if (!empty($topic_info['image']) && is_file(DIR_IMAGE . html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['image'] = $this->model_tool_image->resize($topic_info['image'], $this->config->get('config_image_topic_width'), $this->config->get('config_image_topic_height'));
+			$data['image'] = $this->config->get('config_url') . 'image/' . html_entity_decode($topic_info['image'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$data['image'] = '';
 		}
@@ -179,7 +179,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_article_width'), $this->config->get('config_image_article_height'));
+				$image = $this->config->get('config_url') . 'image/' . $result['image'];
 			} else {
 				$image = '';
 			}

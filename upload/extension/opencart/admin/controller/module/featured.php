@@ -89,18 +89,6 @@ class Featured extends \Opencart\System\Engine\Controller {
 			$data['axis'] = '';
 		}
 
-		if (isset($module_info['width'])) {
-			$data['width'] = $module_info['width'];
-		} else {
-			$data['width'] = 200;
-		}
-
-		if (isset($module_info['height'])) {
-			$data['height'] = $module_info['height'];
-		} else {
-			$data['height'] = 200;
-		}
-
 		if (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
@@ -138,23 +126,13 @@ class Featured extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'module_id' => 0,
-			'name'      => '',
-			'width'     => 0,
-			'height'    => 0
+			'name'      => ''
 		];
 
 		$post_info = $this->request->post + $required;
 
 		if (!oc_validate_length($post_info['name'], 3, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
-		}
-
-		if (!$post_info['width']) {
-			$json['error']['width'] = $this->language->get('error_width');
-		}
-
-		if (!$post_info['height']) {
-			$json['error']['height'] = $this->language->get('error_height');
 		}
 
 		if (!$json) {

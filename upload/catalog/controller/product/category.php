@@ -151,7 +151,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		if (!empty($category_info['image']) && is_file(DIR_IMAGE . html_entity_decode($category_info['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['image'] = $this->model_tool_image->resize($category_info['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+			$data['image'] = $this->model_tool_image->resize($category_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
 		} else {
 			$data['image'] = '';
 		}
@@ -267,7 +267,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			$product_data = [
 				'description' => $description,
-				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')),
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,

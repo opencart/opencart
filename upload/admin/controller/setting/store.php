@@ -236,12 +236,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_address'] = '';
 		}
 
-		if (isset($setting_info['config_geocode'])) {
-			$data['config_geocode'] = $setting_info['config_geocode'];
-		} else {
-			$data['config_geocode'] = '';
-		}
-
 		if (isset($setting_info['config_email'])) {
 			$data['config_email'] = $setting_info['config_email'];
 		} else {

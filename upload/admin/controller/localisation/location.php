@@ -233,12 +233,6 @@ class Location extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($location_info)) {
-			$data['geocode'] = $location_info['geocode'];
-		} else {
-			$data['geocode'] = '';
-		}
-
-		if (!empty($location_info)) {
 			$data['telephone'] = $location_info['telephone'];
 		} else {
 			$data['telephone'] = '';
@@ -300,7 +294,6 @@ class Location extends \Opencart\System\Engine\Controller {
 			'location_id' => 0,
 			'name'        => '',
 			'address'     => '',
-			'geocode'     => '',
 			'telephone'   => '',
 			'image'       => '',
 			'open'        => '',

@@ -11,7 +11,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(): ?\Opencart\System\Engine\Action {
+	public function index() {
 		if (isset($this->request->get['manufacturer_id'])) {
 			return $this->load->controller('product/manufacturer.info');
 		}
@@ -186,7 +186,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $result['image'];
+				$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
 			} else {
 				$image = 'placeholder.png';
 			}
@@ -210,7 +210,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 
 			$product_data = [
-				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')),
 				'description' => $description,
 				'price'       => $price,
 				'special'     => $special,

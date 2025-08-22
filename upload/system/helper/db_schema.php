@@ -3847,10 +3847,6 @@ function oc_db_schema() {
 				'type' => 'varchar(32)'
 			],
 			[
-				'name' => 'geocode',
-				'type' => 'varchar(32)'
-			],
-			[
 				'name' => 'image',
 				'type' => 'varchar(255)'
 			],

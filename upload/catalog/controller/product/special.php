@@ -127,7 +127,7 @@ class Special extends \Opencart\System\Engine\Controller {
 			}
 
 			$product_data = [
-				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
+				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')),
 				'description' => $description,
 				'price'       => $price,
 				'special'     => $special,

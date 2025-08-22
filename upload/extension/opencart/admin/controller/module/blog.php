@@ -67,18 +67,6 @@ class Blog extends \Opencart\System\Engine\Controller {
 			$data['limit'] = 5;
 		}
 
-		if (isset($module_info['width'])) {
-			$data['width'] = $module_info['width'];
-		} else {
-			$data['width'] = 200;
-		}
-
-		if (isset($module_info['height'])) {
-			$data['height'] = $module_info['height'];
-		} else {
-			$data['height'] = 200;
-		}
-
 		if (isset($module_info['order'])) {
 			$data['order'] = $module_info['order'];
 		} else {

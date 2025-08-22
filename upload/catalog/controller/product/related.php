@@ -58,7 +58,7 @@ class Related extends \Opencart\System\Engine\Controller {
 			}
 
 			$product_data = [
-				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height')),
+				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')),
 				'description' => $description,
 				'price'       => $price,
 				'special'     => $special,

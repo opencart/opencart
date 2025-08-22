@@ -60,7 +60,6 @@ $_['entry_theme']                         = 'Theme';
 $_['entry_name']                          = 'Store Name';
 $_['entry_owner']                         = 'Store Owner';
 $_['entry_address']                       = 'Address';
-$_['entry_geocode']                       = 'Geocode';
 $_['entry_email']                         = 'E-Mail';
 $_['entry_telephone']                     = 'Telephone';
 $_['entry_image']                         = 'Image';
@@ -172,7 +171,6 @@ $_['entry_error_display']                 = 'Display Errors';
 $_['entry_error_log']                     = 'Log Errors';
 
 // Help
-$_['help_geocode']                        = 'Please enter your store location geocode manually.';
 $_['help_icon']                           = 'The icon should be a PNG that is 16px x 16px.';
 $_['help_open']                           = 'Fill in your store\'s opening times.';
 $_['help_comment']                        = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';

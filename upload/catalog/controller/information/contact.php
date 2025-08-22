@@ -41,8 +41,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 		$data['store'] = $this->config->get('config_name');
 		$data['address'] = nl2br($this->config->get('config_address'));
-		$data['geocode'] = $this->config->get('config_geocode');
-		$data['geocode_hl'] = $this->config->get('config_language');
+		$data['language'] = $this->config->get('config_language');
 		$data['telephone'] = $this->config->get('config_telephone');
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = nl2br($this->config->get('config_comment'));

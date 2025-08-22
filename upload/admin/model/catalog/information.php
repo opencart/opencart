@@ -229,16 +229,16 @@ class Information extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_information->getInformations($filter_data);
 	 */
 	public function getInformations(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`)";
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
+		$sql = "SELECT * FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`) WHERE `id`.`language_id` = '" . (int)$language_id . "'";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "information_to_store` `i2s` ON (`i`.`information_id` = `i2s`.`information_id`)";
-		}
-
-		if (!empty($data['filter_language_id'])) {
-			$sql .= " WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		} else {
-			$sql .= " WHERE `id`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
@@ -308,13 +308,19 @@ class Information extends \Opencart\System\Engine\Model {
 	 * $information_total = $this->model_catalog_information->getTotalInformations();
 	 */
 	public function getTotalInformations(array $data = []): int {
+		if (!empty($data['filter_language_id'])) {
+			$language_id = $data['filter_language_id'];
+		} else {
+			$language_id = $this->config->get('config_language_id');
+		}
+
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`)";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "information_to_store` `i2s` ON (`i`.`information_id` = `i2s`.`information_id`) WHERE `i2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		$sql .= " WHERE `id`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql .= " WHERE `id`.`language_id` = '" . (int)$language_id . "'";
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " AND `i2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";

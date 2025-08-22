@@ -149,7 +149,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id'], $language_info['language_id']);
+		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
 
 		if (!$country_info) {
 			return ['error' => $this->language->get('error_country')];
@@ -159,13 +159,13 @@ class Country extends \Opencart\System\Engine\Controller {
 			return [];
 		}
 
-		$description_info = $this->model_localisation_country->getDescription((int)$args['country_id'], $language_info['language_id']);
+		$description_info = $this->model_localisation_country->getDescription((int)$country_info['country_id'], $language_info['language_id']);
 
 		if (!$description_info) {
 			return ['error' => $this->language->get('error_description')];
 		}
 
-		$stores = $this->model_localisation_country->getStores((int)$args['country_id']);
+		$stores = $this->model_localisation_country->getStores((int)$country_info['country_id']);
 
 		if (!in_array($language_info['language_id'], $stores)) {
 			return [];
@@ -189,7 +189,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + ['zone' => $zones]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zones]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

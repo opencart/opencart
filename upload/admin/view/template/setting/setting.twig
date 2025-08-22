@@ -24,7 +24,6 @@
             <li class="nav-item"><a href="#tab-store" data-bs-toggle="tab" class="nav-link">{{ tab_store }}</a></li>
             <li class="nav-item"><a href="#tab-local" data-bs-toggle="tab" class="nav-link">{{ tab_local }}</a></li>
             <li class="nav-item"><a href="#tab-option" data-bs-toggle="tab" class="nav-link">{{ tab_option }}</a></li>
-            <li class="nav-item"><a href="#tab-image" data-bs-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
             <li class="nav-item"><a href="#tab-mail" data-bs-toggle="tab" class="nav-link">{{ tab_mail }}</a></li>
             <li class="nav-item"><a href="#tab-server" data-bs-toggle="tab" class="nav-link">{{ tab_server }}</a></li>
           </ul>
@@ -308,6 +307,8 @@
               </fieldset>
             </div>
             <div id="tab-option" class="tab-pane">
+
+
               <div class="accordion" id="accordion-option">
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-product">{{ text_product }}</button></h2>
@@ -427,6 +428,55 @@
                   </div>
                 </div>
                 <div class="accordion-item">
+                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-image">{{ text_image }}</button></h2>
+                  <div id="collapse-image" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                    <div class="accordion-body">
+                      <div class="row mb-3">
+                        <label for="input-image-default-width" class="col-sm-2 col-form-label">{{ entry_image_default }}</label>
+                        <div class="col-sm-10">
+                          <div id="input-image-default" class="row">
+                            <div class="col-sm-6">
+                              <input type="text" name="config_image_default_width" value="{{ config_image_default_width }}" placeholder="{{ entry_width }}" id="input-image-default-width" class="form-control" required/>
+                            </div>
+                            <div class="col-sm-6">
+                              <input type="text" name="config_image_default_height" value="{{ config_image_default_height }}" placeholder="{{ entry_height }}" id="input-image-default-height" class="form-control" required/>
+                            </div>
+                          </div>
+                          <div id="error-image-default" class="invalid-feedback"></div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="input-image-thumb-width" class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
+                        <div class="col-sm-10">
+                          <div id="input-image-thumb" class="row">
+                            <div class="col-sm-6">
+                              <input type="text" name="config_image_thumb_width" value="{{ config_image_thumb_width }}" placeholder="{{ entry_width }}" id="input-image-thumb-width" class="form-control" required/>
+                            </div>
+                            <div class="col-sm-6">
+                              <input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" id="input-image-thumb-height" class="form-control" required/>
+                            </div>
+                          </div>
+                          <div id="error-image-thumb" class="invalid-feedback"></div>
+                        </div>
+                      </div>
+                      <div class="row mt-2 mb-3">
+                        <label for="input-image-popup-width" class="col-sm-2 col-form-label">{{ entry_image_popup }}</label>
+                        <div class="col-sm-10">
+                          <div id="input-image-popup" class="row">
+                            <div class="col-sm-6">
+                              <input type="text" name="config_image_popup_width" value="{{ config_image_popup_width }}" placeholder="{{ entry_width }}" id="input-image-popup-width" class="form-control" required/>
+                            </div>
+                            <div class="col-sm-6">
+                              <input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" id="input-image-popup-height" class="form-control" required/>
+                            </div>
+                          </div>
+                          <div id="error-image-popup" class="invalid-feedback"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-legal">{{ text_legal }}</button></h2>
                   <div id="collapse-legal" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
                     <div class="accordion-body">
@@ -514,8 +564,7 @@
                         <label for="input-customer-online-expire" class="col-sm-2 col-form-label">{{ entry_customer_online_expire }}</label>
                         <div class="col-sm-10">
                           <div class="input-group">
-                            <input type="text" name="config_customer_online_expire" value="{{ config_customer_online_expire }}" placeholder="{{ entry_customer_online_expire }}" id="input-customer-online-expire" class="form-control"/>
-                            <span class="input-group-text" id="basic-addon2">{{ text_hour }}</span>
+                            <input type="text" name="config_customer_online_expire" value="{{ config_customer_online_expire }}" placeholder="{{ entry_customer_online_expire }}" id="input-customer-online-expire" class="form-control"/> <span class="input-group-text" id="basic-addon2">{{ text_hour }}</span>
                           </div>
                           <div class="form-text">{{ help_customer_online_expire }}</div>
                           <div id="error-customer-online-expire" class="invalid-feedback"></div>
@@ -612,20 +661,16 @@
                           <div class="col-sm-10">
                             <div class="form-control" style="overflow: auto;">
                               <div class="form-check">
-                                <input type="checkbox" name="config_password_uppercase" value="1" id="input-password-uppercase" class="form-check-input"{% if config_password_uppercase %} checked{% endif %}/>
-                                <label for="input-password-uppercase" class="form-check-label">{{ text_password_uppercase }}</label>
+                                <input type="checkbox" name="config_password_uppercase" value="1" id="input-password-uppercase" class="form-check-input"{% if config_password_uppercase %} checked{% endif %}/> <label for="input-password-uppercase" class="form-check-label">{{ text_password_uppercase }}</label>
                               </div>
                               <div class="form-check">
-                                <input type="checkbox" name="config_password_lowercase" value="1" id="input-password-lowercase" class="form-check-input"{% if config_password_lowercase %} checked{% endif %}/>
-                                <label for="input-password-lowercase" class="form-check-label">{{ text_password_lowercase }}</label>
+                                <input type="checkbox" name="config_password_lowercase" value="1" id="input-password-lowercase" class="form-check-input"{% if config_password_lowercase %} checked{% endif %}/> <label for="input-password-lowercase" class="form-check-label">{{ text_password_lowercase }}</label>
                               </div>
                               <div class="form-check">
-                                <input type="checkbox" name="config_password_number" value="1" id="input-password-number" class="form-check-input"{% if config_password_number %} checked{% endif %}/>
-                                <label for="input-password-number" class="form-check-label">{{ text_password_number }}</label>
+                                <input type="checkbox" name="config_password_number" value="1" id="input-password-number" class="form-check-input"{% if config_password_number %} checked{% endif %}/> <label for="input-password-number" class="form-check-label">{{ text_password_number }}</label>
                               </div>
                               <div class="form-check">
-                                <input type="checkbox" name="config_password_symbol" value="1" id="input-password-symbol" class="form-check-input"{% if config_password_symbol %} checked{% endif %}/>
-                                <label for="input-password-symbol" class="form-check-label">{{ text_password_symbol }}</label>
+                                <input type="checkbox" name="config_password_symbol" value="1" id="input-password-symbol" class="form-check-input"{% if config_password_symbol %} checked{% endif %}/> <label for="input-password-symbol" class="form-check-label">{{ text_password_symbol }}</label>
                               </div>
                             </div>
                           </div>
@@ -1040,193 +1085,6 @@
                 </div>
               </div>
             </div>
-            <div id="tab-image" class="tab-pane">
-              <fieldset>
-                <legend>{{ text_image_size }}</legend>
-                <div class="row mb-3">
-                  <label for="input-image-default-width" class="col-sm-2 col-form-label">{{ entry_image_default }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-default" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_default_width" value="{{ config_image_default_width }}" placeholder="{{ entry_width }}" id="input-image-default-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_default_height" value="{{ config_image_default_height }}" placeholder="{{ entry_height }}" id="input-image-default-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-default" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-category-width" class="col-sm-2 col-form-label">{{ entry_image_category }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-category" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_category_width" value="{{ config_image_category_width }}" placeholder="{{ entry_width }}" id="input-image-category-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" id="input-image-category-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-category" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-thumb-width" class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-thumb" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_thumb_width" value="{{ config_image_thumb_width }}" placeholder="{{ entry_width }}" id="input-image-thumb-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" id="input-image-thumb-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-thumb" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-popup-width" class="col-sm-2 col-form-label">{{ entry_image_popup }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-popup" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_popup_width" value="{{ config_image_popup_width }}" placeholder="{{ entry_width }}" id="input-image-popup-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" id="input-image-popup-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-popup" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-product-width" class="col-sm-2 col-form-label">{{ entry_image_product }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-product" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_product_width" value="{{ config_image_product_width }}" placeholder="{{ entry_width }}" id="input-image-product-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" id="input-image-product-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-product" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-additional-width" class="col-sm-2 col-form-label">{{ entry_image_additional }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-additional" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_additional_width" value="{{ config_image_additional_width }}" placeholder="{{ entry_width }}" id="input-image-additional-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" id="input-image-additional-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-additional" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-related-width" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-related" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" id="input-image-related-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-related" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-article-width" class="col-sm-2 col-form-label">{{ entry_image_article }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-article" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_article_width" value="{{ config_image_article_width }}" placeholder="{{ entry_width }}" id="input-image-article-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_article_height" value="{{ config_image_article_height }}" placeholder="{{ entry_height }}" id="input-image-article-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-article" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-topic-width" class="col-sm-2 col-form-label">{{ entry_image_topic }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-topic" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_topic_width" value="{{ config_image_topic_width }}" placeholder="{{ entry_width }}" id="input-image-topic-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_topic_height" value="{{ config_image_topic_height }}" placeholder="{{ entry_height }}" id="input-image-topic-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-topic" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-compare-width" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-compare" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" id="input-image-compare-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-compare" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-wishlist-width" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-wishlist" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" id="input-image-wishlist-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-wishlist" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-cart-width" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-cart" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" id="input-image-cart-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-cart" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-image-location-width" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
-                  <div class="col-sm-10">
-                    <div id="input-image-location" class="row">
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location-width" class="form-control" required/>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" id="input-image-location-height" class="form-control" required/>
-                      </div>
-                    </div>
-                    <div id="error-image-location" class="invalid-feedback"></div>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
             <div id="tab-mail" class="tab-pane">
               <fieldset>
                 <legend>{{ text_general }}</legend>
@@ -1349,20 +1207,16 @@
                   <div class="col-sm-10">
                     <div class="form-control" style="overflow: auto;">
                       <div class="form-check">
-                        <input type="checkbox" name="config_user_password_uppercase" value="1" id="input-user-password-uppercase" class="form-check-input"{% if config_user_password_uppercase %} checked{% endif %}/>
-                        <label for="input-user-password-uppercase" class="form-check-label">{{ text_password_uppercase }}</label>
+                        <input type="checkbox" name="config_user_password_uppercase" value="1" id="input-user-password-uppercase" class="form-check-input"{% if config_user_password_uppercase %} checked{% endif %}/> <label for="input-user-password-uppercase" class="form-check-label">{{ text_password_uppercase }}</label>
                       </div>
                       <div class="form-check">
-                        <input type="checkbox" name="config_user_password_lowercase" value="1" id="input-user-password-lowercase" class="form-check-input"{% if config_user_password_lowercase %} checked{% endif %}/>
-                        <label for="input-user-password-lowercase" class="form-check-label">{{ text_password_lowercase }}</label>
+                        <input type="checkbox" name="config_user_password_lowercase" value="1" id="input-user-password-lowercase" class="form-check-input"{% if config_user_password_lowercase %} checked{% endif %}/> <label for="input-user-password-lowercase" class="form-check-label">{{ text_password_lowercase }}</label>
                       </div>
                       <div class="form-check">
-                        <input type="checkbox" name="config_user_password_number" value="1" id="input-user-password-number" class="form-check-input"{% if config_user_password_number %} checked{% endif %}/>
-                        <label for="input-user-password-number" class="form-check-label">{{ text_password_number }}</label>
+                        <input type="checkbox" name="config_user_password_number" value="1" id="input-user-password-number" class="form-check-input"{% if config_user_password_number %} checked{% endif %}/> <label for="input-user-password-number" class="form-check-label">{{ text_password_number }}</label>
                       </div>
                       <div class="form-check">
-                        <input type="checkbox" name="config_user_password_symbol" value="1" id="input-user-password-symbol" class="form-check-input"{% if config_user_password_symbol %} checked{% endif %}/>
-                        <label for="input-user-password-symbol" class="form-check-label">{{ text_password_symbol }}</label>
+                        <input type="checkbox" name="config_user_password_symbol" value="1" id="input-user-password-symbol" class="form-check-input"{% if config_user_password_symbol %} checked{% endif %}/> <label for="input-user-password-symbol" class="form-check-label">{{ text_password_symbol }}</label>
                       </div>
                     </div>
                   </div>
@@ -1371,33 +1225,6 @@
                   <label for="input-user-password-length" class="col-sm-2 col-form-label">{{ entry_password_length }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_user_password_length" value="{{ config_user_password_length }}" placeholder="{{ entry_password_length }}" id="input-user-password-length" class="form-control"/>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend>{{ text_upload }}</legend>
-                <div class="row mb-3">
-                  <label for="input-file-max-size" class="col-sm-2 col-form-label">{{ entry_file_max_size }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="config_file_max_size" value="{{ config_file_max_size }}" placeholder="{{ entry_file_max_size }}" id="input-file-max-size" class="form-control" required/>
-                    <div class="form-text">{{ help_file_max_size }}</div>
-                    <div id="error-file-max-size" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-file-ext-allowed" class="col-sm-2 col-form-label">{{ entry_file_ext_allowed }}</label>
-                  <div class="col-sm-10">
-                    <textarea name="config_file_ext_allowed" rows="5" placeholder="{{ entry_file_ext_allowed }}" id="input-file-ext-allowed" class="form-control">{{ config_file_ext_allowed }}</textarea>
-                    <div class="form-text">{{ help_file_ext_allowed }}</div>
-                    <div id="error-file-ext-allowed" class="invalid-feedback"></div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-file-mime-allowed" class="col-sm-2 col-form-label">{{ entry_file_mime_allowed }}</label>
-                  <div class="col-sm-10">
-                    <textarea name="config_file_mime_allowed" rows="5" placeholder="{{ entry_file_mime_allowed }}" id="input-file-mime-allowed" class="form-control">{{ config_file_mime_allowed }}</textarea>
-                    <div class="form-text">{{ help_file_mime_allowed }}</div>
-                    <div id="error-file-mime-allowed" class="invalid-feedback"></div>
                   </div>
                 </div>
               </fieldset>

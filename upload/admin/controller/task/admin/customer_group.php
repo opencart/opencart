@@ -108,7 +108,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer_group');
 
-		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id'], $language_info['language_id']);
+		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
 
 		if (!$customer_group_info) {
 			return ['error' => $this->language->get('error_customer_group')];
@@ -138,7 +138,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode(['custom_field' => $custom_fields] + $customer_group_info))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_info + $description_info + ['custom_field' => $custom_fields]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

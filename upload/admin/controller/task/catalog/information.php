@@ -158,7 +158,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		// Make sure the SEO URL's work
 		$store->load->controller('startup/rewrite');
 
-		$args['route'] = 'cms/topic';
+		$args['route'] = 'information/information';
 
 		$keys = [
 			'route',
@@ -208,6 +208,9 @@ class Information extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['name'])];
 	}
 
+	/*
+	 * Clear
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/information');
 

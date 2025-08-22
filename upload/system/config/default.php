@@ -54,6 +54,46 @@ $_['session_samesite']     = 'Strict'; // None, Lax, Strict
 $_['template_engine']      = 'twig';
 $_['template_extension']   = '.twig';
 
+// Upload
+$_['upload_max_size']      = 20; // MB
+$_['upload_type_allowed']  = [
+	'txt',
+	'zip',
+	'png',
+	'webp',
+	'jpe',
+	'jpeg',
+	'jpg',
+	'gif',
+	'bmp',
+	'svg',
+	'svgz',
+	'zip',
+	'rar',
+	'mp3',
+	'mp4',
+	'mov',
+	'pdf'
+];
+$_['upload_mime_allowed']  = [
+	'text/plain',
+	'image/png',
+	'image/webp',
+	'image/jpeg',
+	'image/gif',
+	'image/bmp',
+	'image/svg+xml',
+	'application/zip',
+	'application/x-zip',
+	'application/x-zip-compressed',
+	'application/rar',
+	'application/x-rar',
+	'application/x-rar-compressed',
+	'audio/mpeg',
+	'video/mp4',
+	'application/pdf'
+];
+
 // Error
 $_['error_display']        = true; // You need to change this to false on a live site.
 $_['error_log']            = true;

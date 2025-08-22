@@ -386,30 +386,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Image
 		$data['config_image_default_width'] = $this->config->get('config_image_default_width');
 		$data['config_image_default_height'] = $this->config->get('config_image_default_height');
-		$data['config_image_category_width'] = $this->config->get('config_image_category_width');
-		$data['config_image_category_height'] = $this->config->get('config_image_category_height');
 		$data['config_image_thumb_width'] = $this->config->get('config_image_thumb_width');
 		$data['config_image_thumb_height'] = $this->config->get('config_image_thumb_height');
 		$data['config_image_popup_width'] = $this->config->get('config_image_popup_width');
 		$data['config_image_popup_height'] = $this->config->get('config_image_popup_height');
-		$data['config_image_product_width'] = $this->config->get('config_image_product_width');
-		$data['config_image_product_height'] = $this->config->get('config_image_product_height');
-		$data['config_image_additional_width'] = $this->config->get('config_image_additional_width');
-		$data['config_image_additional_height'] = $this->config->get('config_image_additional_height');
-		$data['config_image_related_width'] = $this->config->get('config_image_related_width');
-		$data['config_image_related_height'] = $this->config->get('config_image_related_height');
-		$data['config_image_compare_width'] = $this->config->get('config_image_compare_width');
-		$data['config_image_compare_height'] = $this->config->get('config_image_compare_height');
-		$data['config_image_article_width'] = $this->config->get('config_image_article_width');
-		$data['config_image_article_height'] = $this->config->get('config_image_article_height');
-		$data['config_image_topic_width'] = $this->config->get('config_image_topic_width');
-		$data['config_image_topic_height'] = $this->config->get('config_image_topic_height');
-		$data['config_image_wishlist_width'] = $this->config->get('config_image_wishlist_width');
-		$data['config_image_wishlist_height'] = $this->config->get('config_image_wishlist_height');
-		$data['config_image_cart_width'] = $this->config->get('config_image_cart_width');
-		$data['config_image_cart_height'] = $this->config->get('config_image_cart_height');
-		$data['config_image_location_width'] = $this->config->get('config_image_location_width');
-		$data['config_image_location_height'] = $this->config->get('config_image_location_height');
 
 		// Mail
 		$data['config_mail_engine'] = $this->config->get('config_mail_engine');
@@ -457,11 +437,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_user_password_number'] = $this->config->get('config_user_password_number');
 		$data['config_user_password_symbol'] = $this->config->get('config_user_password_symbol');
 		$data['config_user_password_length'] = $this->config->get('config_user_password_length');
-
-		// Uploads
-		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
-		$data['config_file_ext_allowed'] = $this->config->get('config_file_ext_allowed');
-		$data['config_file_mime_allowed'] = $this->config->get('config_file_mime_allowed');
 
 		// Errors
 		$data['config_error_display'] = $this->config->get('config_error_display');
@@ -575,10 +550,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['image_default'] = $this->language->get('error_image_category');
 		}
 
-		if (!$this->request->post['config_image_category_width'] || !$this->request->post['config_image_category_height']) {
-			$json['error']['image_category'] = $this->language->get('error_image_category');
-		}
-
 		if (!$this->request->post['config_image_thumb_width'] || !$this->request->post['config_image_thumb_height']) {
 			$json['error']['image_thumb'] = $this->language->get('error_image_thumb');
 		}
@@ -587,80 +558,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['image_popup'] = $this->language->get('error_image_popup');
 		}
 
-		if (!$this->request->post['config_image_product_width'] || !$this->request->post['config_image_product_height']) {
-			$json['error']['image_product'] = $this->language->get('error_image_product');
-		}
-
-		if (!$this->request->post['config_image_additional_width'] || !$this->request->post['config_image_additional_height']) {
-			$json['error']['image_additional'] = $this->language->get('error_image_additional');
-		}
-
-		if (!$this->request->post['config_image_related_width'] || !$this->request->post['config_image_related_height']) {
-			$json['error']['image_related'] = $this->language->get('error_image_related');
-		}
-
-		if (!$this->request->post['config_image_article_width'] || !$this->request->post['config_image_article_height']) {
-			$json['error']['image_article'] = $this->language->get('error_image_cart');
-		}
-
-		if (!$this->request->post['config_image_topic_width'] || !$this->request->post['config_image_topic_height']) {
-			$json['error']['image_topic'] = $this->language->get('error_image_cart');
-		}
-
-		if (!$this->request->post['config_image_compare_width'] || !$this->request->post['config_image_compare_height']) {
-			$json['error']['image_compare'] = $this->language->get('error_image_compare');
-		}
-
-		if (!$this->request->post['config_image_wishlist_width'] || !$this->request->post['config_image_wishlist_height']) {
-			$json['error']['image_wishlist'] = $this->language->get('error_image_wishlist');
-		}
-
-		if (!$this->request->post['config_image_cart_width'] || !$this->request->post['config_image_cart_height']) {
-			$json['error']['image_cart'] = $this->language->get('error_image_cart');
-		}
-
-		if (!$this->request->post['config_image_location_width'] || !$this->request->post['config_image_location_height']) {
-			$json['error']['image_location'] = $this->language->get('error_image_location');
-		}
-
 		if ($this->request->post['config_user_2fa'] && !$this->request->post['config_mail_engine']) {
 			$json['error']['warning'] = $this->language->get('error_user_2fa');
-		}
-
-		if (!$this->request->post['config_file_max_size']) {
-			$json['error']['file_max_size'] = $this->language->get('error_file_max_size');
-		}
-
-		$disallowed = [
-			'php',
-			'php4',
-			'php3'
-		];
-
-		$extensions = explode("\n", $this->request->post['config_file_ext_allowed']);
-
-		foreach ($extensions as $extension) {
-			if (in_array(trim($extension), $disallowed)) {
-				$json['error']['file_ext_allowed'] = $this->language->get('error_extension');
-
-				break;
-			}
-		}
-
-		$disallowed = [
-			'php',
-			'php4',
-			'php3'
-		];
-
-		$mimes = explode("\n", $this->request->post['config_file_mime_allowed']);
-
-		foreach ($mimes as $mime) {
-			if (in_array(trim($mime), $disallowed)) {
-				$json['error']['file_mime_allowed'] = $this->language->get('error_mime');
-
-				break;
-			}
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {

@@ -60,7 +60,6 @@ $_['entry_theme']                         = 'Thema';
 $_['entry_name']                          = 'Name des Geschäfts';
 $_['entry_owner']                         = 'Ladenbesitzer';
 $_['entry_address']                       = 'Adresse';
-$_['entry_geocode']                       = 'Geokodieren';
 $_['entry_email']                         = 'E-Mail';
 $_['entry_telephone']                     = 'Telefon';
 $_['entry_image']                         = 'Bild';
@@ -172,7 +171,6 @@ $_['entry_error_display']                 = 'Anzeigefehler';
 $_['entry_error_log']                     = 'Protokollfehler';
 
 // Help
-$_['help_geocode']                        = 'Bitte geben Sie den Geocode Ihres Filialstandorts manuell ein.';
 $_['help_icon']                           = 'Das Symbol sollte ein PNG mit der Größe 16 x 16 Pixel sein.';
 $_['help_open']                           = 'Geben Sie die Öffnungszeiten Ihres Geschäfts ein.';
 $_['help_comment']                        = 'In dieses Feld können Sie besondere Hinweise geben, die Sie dem Kunden mitteilen möchten, z. B.: Das Geschäft akzeptiert keine Schecks.';

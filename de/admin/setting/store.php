@@ -40,7 +40,6 @@ $_['entry_theme']                      = 'Thema';
 $_['entry_name']                       = 'Name des Geschäfts';
 $_['entry_owner']                      = 'Ladenbesitzer';
 $_['entry_address']                    = 'Adresse';
-$_['entry_geocode']                    = 'Geokodieren';
 $_['entry_email']                      = 'E-Mail';
 $_['entry_telephone']                  = 'Telefon';
 $_['entry_image']                      = 'Bild';
@@ -79,7 +78,6 @@ $_['entry_height']                     = 'Höhe';
 // Help
 $_['help_url']                         = 'Geben Sie die vollständige URL zu Ihrem Shop an. Achten Sie darauf, am Ende \'/\' hinzuzufügen. Beispiel: http://www.IhreDomain.com/Pfad/<br/><br/>Verwenden Sie keine Verzeichnisse, um einen neuen Shop zu erstellen. Sie sollten immer eine andere Domain oder Subdomain auf Ihr Hosting verweisen.';
 $_['help_icon']                        = 'Das Symbol sollte ein PNG mit der Größe 16 x 16 Pixel sein.';
-$_['help_geocode']                     = 'Bitte geben Sie den Geocode Ihres Filialstandorts manuell ein.';
 $_['help_open']                        = 'Geben Sie die Öffnungszeiten Ihres Geschäfts ein.';
 $_['help_comment']                     = 'In dieses Feld können Sie besondere Hinweise geben, die Sie dem Kunden mitteilen möchten, z. B.: Das Geschäft akzeptiert keine Schecks.';
 $_['help_location']                    = 'Die verschiedenen Filialstandorte, die Sie haben und die Sie im Kontaktformular anzeigen möchten.';

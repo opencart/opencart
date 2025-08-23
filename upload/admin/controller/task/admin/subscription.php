@@ -50,7 +50,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
-	public function order(array $args = []): array {
+	public function confirm(array $args = []): array {
 		$this->load->language('task/admin/subscription');
 
 		// Subscription
@@ -80,6 +80,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+
+		// Currency
+		$this->load->model('localisation/currency');
+
+		$currency_info = $this->model_localisation_currency->getCurrencyByCode($subscription_info['currency_code']);
+
+
 		// Customer
 		$this->load->model('account/customer');
 
@@ -97,18 +104,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			if (!$payment_address_info) {
 				return ['error' => $this->language->get('error_payment_address')];
-			}
-		}
-
-		// Payment Method
-		$keys = [
-			'name',
-			'code'
-		];
-
-		foreach ($keys as $key) {
-			if (!isset($subscription_info['payment_method'][$key])) {
-				return ['error' => $this->language->get('error_payment_method')];
 			}
 		}
 
@@ -137,6 +132,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Payment Method
+		$keys = [
+			'name',
+			'code'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($subscription_info['payment_method'][$key])) {
+				return ['error' => $this->language->get('error_payment_method')];
+			}
+		}
+
 		// Subscription Plan
 		$this->load->model('catalog/subscription_plan');
 
@@ -146,24 +153,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_subscription_plan')];
 		}
 
-		// Currency
-		$this->load->model('localisation/currency');
-
-		$currency_info = $this->model_localisation_currency->getCurrencyByCode($subscription_info['currency_code']);
 
 		if (!$currency_info) {
 			return ['error' => $this->language->get('error_currency')];
 		}
 
-
-
-
-
 		// Create new instance of a store
 		$store = $this->model_setting_store->createStoreInstance($subscription_info['store_id'], $subscription_info['language'], $subscription_info['currency_code']);
-
-		// Customer
-		$store->session->data['customer'] = $customer_info;
 
 		// Language
 		$store->request->get['language'] = $language_info['code'];
@@ -173,6 +169,60 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		// Currency
 		$store->session->data['currency'] = $currency_info['code'];
+
+		// Customer
+		$store->session->data['customer'] = $customer_info;
+
+		// Products
+		$product_data = [];
+
+		$store->load->model('checkout/subscription');
+
+		$products = $store->model_checkout_subscription->getProducts($subscription_info['subscription_id']);
+
+		foreach ($products as $product) {
+			$product_info = $store->model_catalog_product->getProduct($product['product_id']);
+
+			if (!$product_info) {
+				return ['error' => sprintf($this->language->get('error_product'), $product['name'])];
+			}
+
+			$option_data = [];
+
+			$options = $store->model_checkout_subscription->getOptions($subscription_info['subscription_id'], $product['subscription_product_id']);
+
+			foreach ($options as $option) {
+				$option_info = $store->model_catalog_product->getOption($product_info['product_id'], $option['product_option_id']);
+
+				if (!$option_info) {
+					return ['error' => sprintf($this->language->get('error_option'), $product['name'], $option['name'], $option['product_option_name'])];
+				}
+
+				if ($option['required'] && !isset($option_data[$option['product_option_id']])) {
+					return ['error' => sprintf($this->language->get('error_option'), $option['name'])];
+				}
+
+				if ($option['type'] == 'select' || $option['type'] == 'radio') {
+					$option_data[$option['product_option_id']] = $option_info['product_option_value_id'];
+				} elseif ($option['type'] == 'checkbox') {
+					$option_data[$option['product_option_id']][] = $option_info['product_option_value_id'];
+				} elseif ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
+					$option_data[$option['product_option_id']] = $option_info['value'];
+				}
+			}
+
+			$price = $product['price'];
+
+			if ($result['trial_status']) {
+				$price = $result['trial_price'];
+			}
+
+			$store->cart->add($product['product_id'], $product['quantity'], $option_data, $result['subscription_plan_id'], ['price' => $price]);
+
+		}
+
+
+
 
 		// Payment Address
 		$store->session->data['payment_address'] = $payment_address_info;
@@ -188,62 +238,37 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$store->session->data['shipping_method'] = $subscription_info['shipping_method'];
 		}
 
+		$store->load->model('checkout/cart');
+
+		$products = $store->model_checkout_cart->getProducts();
+
+		foreach ($products as $product) {
+			$order_data['products'][] = [
+				'subscription' => [],
+				'tax'          => $store->tax->getTax($price, $product['tax_class_id'])
+			] + $product;
+		}
+
+		$store->load->model('catalog/product');
 
 
 
 		$this->load->model('checkout/order');
+		// Order Totals
+		$totals = [];
+		$taxes = $store->cart->getTaxes();
+		$total = 0;
+
+		($store->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+		$total_data = [
+			'totals' => $totals,
+			'taxes'  => $taxes,
+			'total'  => $total
+		];
 
 
-
-
-
-
-
-		// Validate Products
-		$store->load->model('checkout/subscription');
-		$store->load->model('catalog/product');
-
-		$products = $store->model_checkout_subscription->getProducts($subscription_info['subscription_id']);
-
-		foreach ($products as $product) {
-			$product_info = $store->model_catalog_product->getProduct($product['product_id']);
-
-			if ($product_info) {
-				$option_data = [];
-
-				$options = $store->model_catalog_product->getOptions($product['product_id'], $product['order_product_id']);
-
-				foreach ($options as $option) {
-					$option_info = $this->model_checkout_subscription->getOption($subscription_info['subscription_id'], $product['subscription_product_id'], $option['product_option_id']);
-
-					if ($option_info) {
-						if ($option['type'] == 'select' || $option['type'] == 'radio') {
-							$option_data[$option['product_option_id']] = $option_info['product_option_value_id'];
-						} elseif ($option['type'] == 'checkbox') {
-							$option_data[$option['product_option_id']][] = $option_info['product_option_value_id'];
-						} elseif ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
-							$option_data[$option['product_option_id']] = $option_info['value'];
-						}
-					}
-
-					if ($option['required'] && !isset($option_data[$option['product_option_id']])) {
-						return ['error' => sprintf($this->language->get('error_option'), $option['name'])];
-					}
-				}
-
-				$price = $product['price'];
-
-				if ($result['trial_status']) {
-					$price = $result['trial_price'];
-				}
-
-				$store->cart->add($product['product_id'], $product['quantity'], $option_data, $result['subscription_plan_id'], ['price' => $price]);
-			} else {
-				return ['error' => sprintf($this->language->get('error_product'), $product['name'])];
-			}
-
-
-		// Validate if payment extension installed
+			// Validate if payment extension installed
 		$store->load->model('setting/extension');
 
 		$extension_info = $store->model_setting_extension->getExtensionByCode('payment', strstr($subscription_info['payment_method']['code'], '.', true));
@@ -270,171 +295,163 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$store->session->destroy();
 
 
-		return ['success' => $this->language->get('text_success')];
-	}
+		// Subscription
+		$order_data = [];
 
-	public function confirm() {
-			// Subscription
-			$order_data = [];
+		$order_data['subscription_id'] = $subscription_info['subscription_id'];
+		$order_data['invoice_prefix'] = $store->config->get('config_invoice_prefix');
 
-			$order_data['subscription_id'] = $subscription_info['subscription_id'];
-			$order_data['invoice_prefix'] = $store->config->get('config_invoice_prefix');
+		// Store Details
+		$order_data['store_id'] = $store_info['store_id'];
+		$order_data['store_name'] = $store_info['name'];
+		$order_data['store_url'] = $store_info['url'];
 
-			// Store Details
-			$order_data['store_id'] = $store_info['store_id'];
-			$order_data['store_name'] = $store_info['name'];
-			$order_data['store_url'] = $store_info['url'];
+		// Customer Details
+		$order_data['customer_id'] = $customer_info['customer_id'];
+		$order_data['customer_group_id'] = $customer_info['customer_group_id'];
+		$order_data['firstname'] = $customer_info['firstname'];
+		$order_data['lastname'] = $customer_info['lastname'];
+		$order_data['email'] = $customer_info['email'];
+		$order_data['telephone'] = $customer_info['telephone'];
+		$order_data['custom_field'] = $customer_info['custom_field'];
 
-			// Customer Details
-			$order_data['customer_id'] = $customer_info['customer_id'];
-			$order_data['customer_group_id'] = $customer_info['customer_group_id'];
-			$order_data['firstname'] = $customer_info['firstname'];
-			$order_data['lastname'] = $customer_info['lastname'];
-			$order_data['email'] = $customer_info['email'];
-			$order_data['telephone'] = $customer_info['telephone'];
-			$order_data['custom_field'] = $customer_info['custom_field'];
-
-			// Payment Details
-			if ($payment_address_info) {
-				$order_data['payment_address_id'] = $payment_address_info['address_id'];
-				$order_data['payment_firstname'] = $payment_address_info['firstname'];
-				$order_data['payment_lastname'] = $payment_address_info['lastname'];
-				$order_data['payment_company'] = $payment_address_info['company'];
-				$order_data['payment_address_1'] = $payment_address_info['address_1'];
-				$order_data['payment_address_2'] = $payment_address_info['address_2'];
-				$order_data['payment_city'] = $payment_address_info['city'];
-				$order_data['payment_postcode'] = $payment_address_info['postcode'];
-				$order_data['payment_zone'] = $payment_address_info['zone'];
-				$order_data['payment_zone_id'] = $payment_address_info['zone_id'];
-				$order_data['payment_country'] = $payment_address_info['country'];
-				$order_data['payment_country_id'] = $payment_address_info['country_id'];
-				$order_data['payment_address_format'] = $payment_address_info['address_format'];
-				$order_data['payment_custom_field'] = $payment_address_info['custom_field'];
-			} else {
-				$order_data['payment_address_id'] = 0;
-				$order_data['payment_firstname'] = '';
-				$order_data['payment_lastname'] = '';
-				$order_data['payment_company'] = '';
-				$order_data['payment_address_1'] = '';
-				$order_data['payment_address_2'] = '';
-				$order_data['payment_city'] = '';
-				$order_data['payment_postcode'] = '';
-				$order_data['payment_zone'] = '';
-				$order_data['payment_zone_id'] = 0;
-				$order_data['payment_country'] = '';
-				$order_data['payment_country_id'] = 0;
-				$order_data['payment_address_format'] = '';
-				$order_data['payment_custom_field'] = [];
-			}
-
-			$order_data['payment_method'] = $subscription_info['payment_method'];
-
-			// Shipping Details
-			if ($shipping_address_info) {
-				$order_data['shipping_address_id'] = $shipping_address_info['address_id'];
-				$order_data['shipping_firstname'] = $shipping_address_info['firstname'];
-				$order_data['shipping_lastname'] = $shipping_address_info['lastname'];
-				$order_data['shipping_company'] = $shipping_address_info['company'];
-				$order_data['shipping_address_1'] = $shipping_address_info['address_1'];
-				$order_data['shipping_address_2'] = $shipping_address_info['address_2'];
-				$order_data['shipping_city'] = $shipping_address_info['city'];
-				$order_data['shipping_postcode'] = $shipping_address_info['postcode'];
-				$order_data['shipping_zone'] = $shipping_address_info['zone'];
-				$order_data['shipping_zone_id'] = $shipping_address_info['zone_id'];
-				$order_data['shipping_country'] = $shipping_address_info['country'];
-				$order_data['shipping_country_id'] = $shipping_address_info['country_id'];
-				$order_data['shipping_address_format'] = $shipping_address_info['address_format'];
-				$order_data['shipping_custom_field'] = $shipping_address_info['custom_field'];
-
-				$order_data['shipping_method'] = $subscription_info['shipping_method'];
-			} else {
-				$order_data['shipping_address_id'] = 0;
-				$order_data['shipping_firstname'] = '';
-				$order_data['shipping_lastname'] = '';
-				$order_data['shipping_company'] = '';
-				$order_data['shipping_address_1'] = '';
-				$order_data['shipping_address_2'] = '';
-				$order_data['shipping_city'] = '';
-				$order_data['shipping_postcode'] = '';
-				$order_data['shipping_zone'] = '';
-				$order_data['shipping_zone_id'] = 0;
-				$order_data['shipping_country'] = '';
-				$order_data['shipping_country_id'] = 0;
-				$order_data['shipping_address_format'] = '';
-				$order_data['shipping_custom_field'] = [];
-
-				$order_data['shipping_method'] = [];
-			}
-
-			// Products
-			$order_data['products'] = [];
-
-			$store->load->model('checkout/cart');
-
-			$products = $store->model_checkout_cart->getProducts();
-
-			foreach ($products as $product) {
-				$order_data['products'][] = [
-						'subscription' => [],
-						'tax'          => $store->tax->getTax($price, $product['tax_class_id'])
-					] + $product;
-			}
-
-			// Order Totals
-			$totals = [];
-			$taxes = $store->cart->getTaxes();
-			$total = 0;
-
-			($store->model_checkout_cart->getTotals)($totals, $taxes, $total);
-
-			$total_data = [
-				'totals' => $totals,
-				'taxes'  => $taxes,
-				'total'  => $total
-			];
-
-			$order_data += $total_data;
-
-			// Comment
-			$order_data['comment'] = $subscription_info['comment'];
-
-			$order_data['affiliate_id'] = 0;
-			$order_data['commission'] = 0;
-			$order_data['marketing_id'] = 0;
-			$order_data['tracking'] = '';
-
-			// Language
-			$order_data['language_id'] = $language_info['language_id'];
-			$order_data['language_code'] = $language_info['code'];
-
-			// Currency
-			$order_data['currency_id'] = $currency_info['currency_id'];
-			$order_data['currency_code'] = $currency_info['code'];
-			$order_data['currency_value'] = $subscription_info['currency_value'];
-
-			// Order
-			$this->load->model('checkout/order');
-
-			$order_info = $this->model_checkout_order->getOrder($subscription_info['order_id']);
-
-			if ($order_info) {
-				$order_data['ip'] = $order_info['ip'];
-				$order_data['forwarded_ip'] = $order_info['forwarded_ip'];
-				$order_data['user_agent'] = $order_info['user_agent'];
-				$order_data['accept_language'] = $order_info['accept_language'];
-			} else {
-				$order_data['ip'] = '';
-				$order_data['forwarded_ip'] = '';
-				$order_data['user_agent'] = '';
-				$order_data['accept_language'] = '';
-			}
-
-			$store->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
-
-
-
-
+		// Payment Details
+		if ($payment_address_info) {
+			$order_data['payment_address_id'] = $payment_address_info['address_id'];
+			$order_data['payment_firstname'] = $payment_address_info['firstname'];
+			$order_data['payment_lastname'] = $payment_address_info['lastname'];
+			$order_data['payment_company'] = $payment_address_info['company'];
+			$order_data['payment_address_1'] = $payment_address_info['address_1'];
+			$order_data['payment_address_2'] = $payment_address_info['address_2'];
+			$order_data['payment_city'] = $payment_address_info['city'];
+			$order_data['payment_postcode'] = $payment_address_info['postcode'];
+			$order_data['payment_zone'] = $payment_address_info['zone'];
+			$order_data['payment_zone_id'] = $payment_address_info['zone_id'];
+			$order_data['payment_country'] = $payment_address_info['country'];
+			$order_data['payment_country_id'] = $payment_address_info['country_id'];
+			$order_data['payment_address_format'] = $payment_address_info['address_format'];
+			$order_data['payment_custom_field'] = $payment_address_info['custom_field'];
+		} else {
+			$order_data['payment_address_id'] = 0;
+			$order_data['payment_firstname'] = '';
+			$order_data['payment_lastname'] = '';
+			$order_data['payment_company'] = '';
+			$order_data['payment_address_1'] = '';
+			$order_data['payment_address_2'] = '';
+			$order_data['payment_city'] = '';
+			$order_data['payment_postcode'] = '';
+			$order_data['payment_zone'] = '';
+			$order_data['payment_zone_id'] = 0;
+			$order_data['payment_country'] = '';
+			$order_data['payment_country_id'] = 0;
+			$order_data['payment_address_format'] = '';
+			$order_data['payment_custom_field'] = [];
 		}
-			return ['success' => $this->language->get('text_success')];
+
+		$order_data['payment_method'] = $subscription_info['payment_method'];
+
+		// Shipping Details
+		if ($shipping_address_info) {
+			$order_data['shipping_address_id'] = $shipping_address_info['address_id'];
+			$order_data['shipping_firstname'] = $shipping_address_info['firstname'];
+			$order_data['shipping_lastname'] = $shipping_address_info['lastname'];
+			$order_data['shipping_company'] = $shipping_address_info['company'];
+			$order_data['shipping_address_1'] = $shipping_address_info['address_1'];
+			$order_data['shipping_address_2'] = $shipping_address_info['address_2'];
+			$order_data['shipping_city'] = $shipping_address_info['city'];
+			$order_data['shipping_postcode'] = $shipping_address_info['postcode'];
+			$order_data['shipping_zone'] = $shipping_address_info['zone'];
+			$order_data['shipping_zone_id'] = $shipping_address_info['zone_id'];
+			$order_data['shipping_country'] = $shipping_address_info['country'];
+			$order_data['shipping_country_id'] = $shipping_address_info['country_id'];
+			$order_data['shipping_address_format'] = $shipping_address_info['address_format'];
+			$order_data['shipping_custom_field'] = $shipping_address_info['custom_field'];
+
+			$order_data['shipping_method'] = $subscription_info['shipping_method'];
+		} else {
+			$order_data['shipping_address_id'] = 0;
+			$order_data['shipping_firstname'] = '';
+			$order_data['shipping_lastname'] = '';
+			$order_data['shipping_company'] = '';
+			$order_data['shipping_address_1'] = '';
+			$order_data['shipping_address_2'] = '';
+			$order_data['shipping_city'] = '';
+			$order_data['shipping_postcode'] = '';
+			$order_data['shipping_zone'] = '';
+			$order_data['shipping_zone_id'] = 0;
+			$order_data['shipping_country'] = '';
+			$order_data['shipping_country_id'] = 0;
+			$order_data['shipping_address_format'] = '';
+			$order_data['shipping_custom_field'] = [];
+
+			$order_data['shipping_method'] = [];
+		}
+
+		// Products
+		$order_data['products'] = [];
+
+		$store->load->model('checkout/cart');
+
+		$products = $store->model_checkout_cart->getProducts();
+
+		foreach ($products as $product) {
+			$order_data['products'][] = [
+				'subscription' => [],
+				'tax'          => $store->tax->getTax($price, $product['tax_class_id'])
+			] + $product;
+		}
+
+		// Order Totals
+		$totals = [];
+		$taxes = $store->cart->getTaxes();
+		$total = 0;
+
+		($store->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+		$total_data = [
+			'totals' => $totals,
+			'taxes'  => $taxes,
+			'total'  => $total
+		];
+
+		$order_data += $total_data;
+
+		// Comment
+		$order_data['comment'] = $subscription_info['comment'];
+
+		$order_data['affiliate_id'] = 0;
+		$order_data['commission'] = 0;
+		$order_data['marketing_id'] = 0;
+		$order_data['tracking'] = '';
+
+		// Language
+		$order_data['language_id'] = $language_info['language_id'];
+		$order_data['language_code'] = $language_info['code'];
+
+		// Currency
+		$order_data['currency_id'] = $currency_info['currency_id'];
+		$order_data['currency_code'] = $currency_info['code'];
+		$order_data['currency_value'] = $subscription_info['currency_value'];
+
+		// Order
+		$this->load->model('checkout/order');
+
+		$order_info = $this->model_checkout_order->getOrder($subscription_info['order_id']);
+
+		if ($order_info) {
+			$order_data['ip'] = $order_info['ip'];
+			$order_data['forwarded_ip'] = $order_info['forwarded_ip'];
+			$order_data['user_agent'] = $order_info['user_agent'];
+			$order_data['accept_language'] = $order_info['accept_language'];
+		} else {
+			$order_data['ip'] = '';
+			$order_data['forwarded_ip'] = '';
+			$order_data['user_agent'] = '';
+			$order_data['accept_language'] = '';
+		}
+
+		$store->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+
+		return ['success' => $this->language->get('text_success')];
 	}
 }

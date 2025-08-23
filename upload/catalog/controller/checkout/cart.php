@@ -244,11 +244,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			// If variant get master product
-			if ($product_info['master_id']) {
-				$product_id = $product_info['master_id'];
-			}
-
 			// Only use values in the override
 			if (isset($product_info['override']['variant'])) {
 				$override = $product_info['override']['variant'];
@@ -263,7 +258,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Validate options
+			// If variant get master product
+			if ($product_info['master_id']) {
+				$product_id = $product_info['master_id'];
+			}
+
 			$product_options = $this->model_catalog_product->getOptions($product_id);
 
 			foreach ($product_options as $product_option) {
@@ -275,7 +274,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			// Validate subscription products
-			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
+			$subscriptions = $this->model_catalog_product->getSubscriptions($product_info['product_id']);
 
 			if ($subscriptions && (!$subscription_plan_id || !in_array($subscription_plan_id, array_column($subscriptions, 'subscription_plan_id')))) {
 				$json['error']['subscription'] = $this->language->get('error_subscription');
@@ -285,9 +284,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->cart->add($product_id, $quantity, $option, $subscription_plan_id);
+			$this->cart->add($product_info['product_id'], $quantity, $option, $subscription_plan_id);
 
-			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
 			// Unset all shipping and payment methods
 			unset($this->session->data['order_id']);

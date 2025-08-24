@@ -15,15 +15,16 @@ RUN apt-get update && apt-get install -y supervisor cron tzdata
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions \
     @composer \
+    apcu \
     gd \
+    intl \
+    memcached \
     mysqli \
+    opcache \
     pdo_mysql \
     pdo_pgsql \
-    zip \
-    opcache \
-    apcu \
     redis \
-    memcached
+    zip
 
 # Configure www-data user home directory
 RUN usermod -d /home/www-data -m www-data

@@ -1782,7 +1782,7 @@ $('#button-subscription').on('click', function() {
 
 {% if master_id %}
 // Variable products
-$('input[data-oc-toggle=\'switch\']').on('change', function(e) {
+$('x-switch').on('change', function(e) {
     var element = this;
 
     var target = $(this).attr('data-oc-target');
@@ -1845,7 +1845,7 @@ $('input[data-oc-toggle=\'switch\']').on('change', function(e) {
     });
 });
 
-$('input[data-oc-toggle=\'switch\']').trigger('change');
+$('x-switch').trigger('change');
 {% endif %}
 
 $('#report').on('click', '.pagination a', function(e) {

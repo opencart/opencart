@@ -144,6 +144,9 @@ if ($config->get('session_autostart')) {
 // Cache
 $registry->set('cache', new \Opencart\System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
+// Compressor
+$registry->set('compressor', new \Opencart\System\Library\Compressor($config->get('compressor_algorithm'), $config->get('compressor_level')));
+
 // Template
 $template = new \Opencart\System\Library\Template($config->get('template_engine'));
 $template->addPath(DIR_TEMPLATE);

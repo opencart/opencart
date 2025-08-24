@@ -39,6 +39,10 @@ $_['mail_parameter']       = '';
 $_['cache_engine']         = 'file'; // apc, file, mem, memcached or redis
 $_['cache_expire']         = 3600;
 
+// Compress
+$_['compressor_algorithm'] = 'brotli'; // gzip (1-9), brotli (0-11), zstd (1-22)
+$_['compressor_level']     = 11;
+
 // Session
 $_['session_autostart']    = false;
 $_['session_engine']       = 'file'; // db or file

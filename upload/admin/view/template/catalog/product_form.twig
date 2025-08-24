@@ -1790,7 +1790,7 @@ $('x-switch[data-oc-target]').on('change', function(e) {
 
     // First we need to grab the default values
     // Now we need to enable or disable any fields in the targets
-    $.merge($(target), $(target).find('.form-control, .form-select, .form-check-input, .btn')).not('x-switch').each(function(i, elem) {
+    $.merge($(target), $(target).find('.form-control, .form-select, .form-check-input, .btn')).not(element).each(function(i, elem) {
         // Text Textarea
         if ($(this).is('.form-control')) {
             $(this).prop('readonly', !$(element).prop('checked'));

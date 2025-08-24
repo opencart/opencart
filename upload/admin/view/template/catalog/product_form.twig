@@ -1791,22 +1791,14 @@ $('x-switch[data-oc-target]').on('change', function(e) {
     // First we need to grab the default values
     // Now we need to enable or disable any fields in the targets
     $.merge($(target), $(target).find('.form-control, .form-select, .form-check-input, .btn')).not(element).each(function(i, elem) {
-        // Text Textarea
-        if ($(this).is('.form-control')) {
+        // x-switch
+        if ($(this).is('x-switch')) {
             $(this).prop('readonly', !$(element).prop('checked'));
         }
 
-        // CKEditor readonly
-        if ($(this).is('[data-oc-toggle=\'ckeditor\']')) {
-            var editor = CKEDITOR.instances[$(this).attr('id')];
-
-            if (editor.editable() == undefined) {
-                editor.on('instanceReady', function() {
-                    this.setReadOnly(!$(element).prop('checked'));
-                });
-            } else {
-                editor.setReadOnly(!$(element).prop('checked'));
-            }
+        // text, textarea
+        if ($(this).is('.form-control')) {
+            $(this).prop('readonly', !$(element).prop('checked'));
         }
 
         // Radio Checkbox
@@ -1837,16 +1829,27 @@ $('x-switch[data-oc-target]').on('change', function(e) {
 
         // Button
         if ($(this).is('.btn')) {
-            if (!$(element).prop('checked')) {
-                $(this).prop('disabled', true);
+            $(this).prop('disabled', !$(element).prop('checked'));
+        }
+
+        // CKEditor readonly
+        if ($(this).is('[data-oc-toggle=\'ckeditor\']')) {
+            var editor = CKEDITOR.instances[$(this).attr('id')];
+
+            if (editor.editable() == undefined) {
+                editor.on('instanceReady', function() {
+                    this.setReadOnly(!$(element).prop('checked'));
+                });
             } else {
-                $(this).prop('disabled', false);
+                editor.setReadOnly(!$(element).prop('checked'));
             }
         }
     });
 });
 
-$('x-switch').trigger('change');
+$(document).ready(function() {
+    $('x-switch').trigger('change');
+});
 {% endif %}
 
 $('#report').on('click', '.pagination a', function(e) {

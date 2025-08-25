@@ -9,137 +9,14 @@ namespace Opencart\Admin\Controller\Task\System;
  */
 class Admin extends \Opencart\System\Engine\Controller {
 	/**
-	 * Storage
+	 * Index
 	 *
 	 * @return void
 	 */
-	public function storage(): void {
-		$this->load->language('task/system/security');
+	public function index(array $args = []): array {
+		$this->load->language('task/system/admin');
 
-		$json = [];
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		if (isset($this->request->get['name'])) {
-			$name = preg_replace('/[^a-zA-Z0-9_\.]/', '', basename(html_entity_decode(trim($this->request->get['name']), ENT_QUOTES, 'UTF-8')));
-		} else {
-			$name = '';
-		}
-
-		if (isset($this->request->get['path'])) {
-			$path = preg_replace('/[^a-zA-Z0-9_\:\/\.]/', '', html_entity_decode(trim($this->request->get['path']), ENT_QUOTES, 'UTF-8'));
-		} else {
-			$path = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'common/security')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$base_old = DIR_STORAGE;
-			$base_new = $path . $name . '/';
-
-			// Check current storage path exists
-			if (!is_dir($base_old)) {
-				$json['error'] = $this->language->get('error_storage');
-			}
-
-			// Check the chosen directory is not in the public webspace
-			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
-
-			if ((substr($base_new, 0, strlen($root)) != $root) || ($root == $base_new)) {
-				$json['error'] = $this->language->get('error_storage_root');
-			}
-
-			if (!str_starts_with($name, 'storage')) {
-				$json['error'] = $this->language->get('error_storage_name');
-			}
-
-			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
-				$json['error'] = $this->language->get('error_writable');
-			}
-		}
-
-		if (!$json) {
-			// Make path into an array
-			$files = oc_directory_read($base_old, true);
-
-			// Create the new storage folder
-			if (!is_dir($base_new)) {
-				oc_directory_create($base_new, 0777);
-			}
-
-			$total = count($files);
-			$limit = 200;
-
-			$start = ($page - 1) * $limit;
-			$end = ($start > ($total - $limit)) ? $total : ($start + $limit);
-
-			for ($i = $start; $i < $end; $i++) {
-				$destination = substr($files[$i], strlen($base_old));
-
-				oc_directory_create($base_new . dirname($destination), 0777);
-
-				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
-					copy($base_old . $destination, $base_new . $destination);
-				}
-			}
-
-			if ($end < $total) {
-				$json['text'] = sprintf($this->language->get('text_storage_move'), $start, $end, $total);
-
-				$json['next'] = $this->url->link('common/security.storage', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&path=' . $path . '&page=' . ($page + 1), true);
-			} else {
-				oc_directory_delete($base_old);
-
-				// Modify the config files
-				$files = [
-					DIR_APPLICATION . 'config.php',
-					DIR_OPENCART . 'config.php'
-				];
-
-				foreach ($files as $file) {
-					$output = '';
-
-					$lines = file($file);
-
-					foreach ($lines as $line_id => $line) {
-						if (str_contains($line, 'define(\'DIR_STORAGE')) {
-							$output .= 'define(\'DIR_STORAGE\', \'' . $base_new . '\');' . "\n";
-						} else {
-							$output .= $line;
-						}
-					}
-
-					$file = fopen($file, 'w');
-
-					fwrite($file, $output);
-
-					fclose($file);
-				}
-
-				$json['success'] = $this->language->get('text_storage_success');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Admin
-	 *
-	 * @return void
-	 */
-	public function admin(): void {
-		$this->load->language('task/system/security');
-
-		$json = [];
 
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -263,12 +140,23 @@ class Admin extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function move(array $args = []): array {
+
+
+
+
+
+
+
+
+	}
+
 	/**
 	 * Delete
 	 *
 	 * @return void
 	 */
-	public function delete(): void {
+	public function delete(array $args = []): array {
 		$this->load->language('task/system/security');
 
 		$json = [];

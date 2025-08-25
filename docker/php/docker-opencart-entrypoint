@@ -38,7 +38,7 @@ update_config_if_changed() {
 }
 
 if [ -f "$CONFIG_FILE" ]; then
-    echo "--- STEP 2: Syncing environment variables to config.php ---"
+    echo "--- STEP 1: Syncing environment variables to config.php ---"
     update_config_if_changed "$CONFIG_FILE" "DB_DRIVER" "${DB_DRIVER:-mysqli}"
     update_config_if_changed "$CONFIG_FILE" "DB_HOSTNAME" "${DB_HOSTNAME:-mysql}"
     update_config_if_changed "$CONFIG_FILE" "DB_USERNAME" "${DB_USERNAME:-opencart}"
@@ -48,7 +48,7 @@ if [ -f "$CONFIG_FILE" ]; then
 fi
 
 if [ -f "$ADMIN_CONFIG_FILE" ]; then
-    echo "--- STEP 2: Syncing environment variables to admin/config.php ---"
+    echo "--- STEP 1: Syncing environment variables to admin/config.php ---"
     update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_DRIVER" "${DB_DRIVER:-mysqli}"
     update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_HOSTNAME" "${DB_HOSTNAME:-mysql}"
     update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_USERNAME" "${DB_USERNAME:-opencart}"
@@ -113,14 +113,34 @@ chown -R www-data:www-data /var/www/upload
 echo "--- Ownership fixed ---"
 
 # Set permissions for storage relocation
-echo "--- STEP 5: Setting permissions for storage relocation ---"
+echo "--- STEP 4: Setting permissions for storage relocation ---"
 chown www-data:www-data /var/www
 chmod 775 /var/www
 
 # ================================================================
-# STEP 5: START PHP-FPM
+# STEP 5: SETUP CRON
+# ================================================================
+echo "--- STEP 5: Setting up cron ---"
+
+cp /var/www/docker/php/cron/crontab /etc/cron.d/opencart
+
+# Give execution rights on the cron job
+chmod 0644 /etc/cron.d/opencart
+
+# Create cron log file with proper permissions
+touch /var/log/cron.log
+chown www-data:www-data /var/log/cron.log
+chmod 644 /var/log/cron.log
+
+echo "--- Cron setup finished ---"
+
+# ================================================================
+# STEP 6: START SUPERVISOR
 # ================================================================
 
-echo "--- STEP 5: Starting PHP-FPM ---"
-# Call the original entrypoint with all arguments
-exec docker-php-entrypoint "$@"
+echo "--- STEP 6: Starting Supervisor ---"
+# Create supervisor run and log directories
+mkdir -p /var/run/supervisor /var/log/supervisor
+
+# Execute the CMD from the Dockerfile (or the command passed to docker run)
+exec "$@"

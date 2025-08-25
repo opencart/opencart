@@ -16,98 +16,13 @@ class Security extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('task/system/security');
 
-		$data['list'] = $this->load->controller('common/security.getList');
+
+
+
 
 		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('common/security', $data);
-	}
-
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
-	public function list(): void {
-		$this->load->language('task/system/security');
-
-		$this->response->setOutput($this->load->controller('common/security.getList'));
-	}
-
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
-	public function getList(): string {
-		// Install directory exists
-		$path = DIR_OPENCART . 'install/';
-
-		if (is_dir($path)) {
-			$data['install'] = $path;
-		} else {
-			$data['install'] = '';
-		}
-
-		// Storage directory exists
-		$path = DIR_SYSTEM . 'storage/';
-
-		if (DIR_STORAGE == $path) {
-			$data['storage'] = $path;
-
-			$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../')) . '/';
-
-			$path = '';
-
-			$data['paths'] = [];
-
-			$parts = explode('/', rtrim($data['document_root'], '/'));
-
-			foreach ($parts as $part) {
-				$path .= $part . '/';
-
-				$data['paths'][] = $path;
-			}
-
-			rsort($data['paths']);
-		} else {
-			$data['storage'] = '';
-		}
-
-		// Storage delete
-		$path = DIR_SYSTEM . 'storage/';
-
-		if (is_dir($path) && DIR_STORAGE != $path) {
-			$data['storage_delete'] = $path;
-		} else {
-			$data['storage_delete'] = '';
-		}
-
-		// Check admin directory is renamed
-		$path = DIR_OPENCART . 'admin/';
-
-		if (DIR_APPLICATION == $path) {
-			$data['admin'] = 'admin';
-		} else {
-			$data['admin'] = '';
-		}
-
-		// Admin delete
-		$path = DIR_OPENCART . 'admin/';
-
-		if (is_dir($path) && DIR_APPLICATION != $path) {
-			$data['admin_delete'] = $path;
-		} else {
-			$data['admin_delete'] = '';
-		}
-
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if ($data['install'] || $data['storage'] || $data['storage_delete'] || $data['admin'] || $data['admin_delete']) {
-			return $this->load->view('common/security_list', $data);
-		} else {
-			return '';
-		}
 	}
 
 	/**
@@ -133,8 +48,6 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
-
 
 			// Make path into an array
 			oc_directory_delete($directory);

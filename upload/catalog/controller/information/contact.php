@@ -154,6 +154,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 				]
 			];
 
+			$this->load->model('setting/task');
+
 			$this->model_setting_task->addTask($task_data);
 
 			$json['redirect'] = $this->url->link('information/contact.success', 'language=' . $this->config->get('config_language'), true);

@@ -52,7 +52,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
-		$this->load->language('task/catalog/return_reason');
+		$this->load->language('task/catalog/review');
 
 		$this->load->model('setting/store');
 
@@ -72,7 +72,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$return_reason_data = [];
 
-		$this->load->model('localisation/return_reason');
+		$this->load->model('catalog /review');
 
 		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
 
@@ -108,7 +108,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/return_reason.json';
+				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/review.json';
 
 				if (is_file($file)) {
 					unlink($file);
@@ -116,47 +116,6 @@ class Review extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_clear')];
-	}
-
-	public function rating(array $args = []): array {
-		$this->load->language('catalog/review');
-
-
-/*
-		// Product
-		$this->load->model('catalog/product');
-
-		// Review
-		$this->load->model('catalog/review');
-
-		$limit = 10;
-
-		$product_data = [
-			'start' => ($page - 1) * $limit,
-			'limit' => $limit
-		];
-
-		$results = $this->model_catalog_product->getProducts($product_data);
-
-		foreach ($results as $result) {
-			$this->model_catalog_product->editRating($result['product_id'], $this->model_catalog_review->getRating($result['product_id']));
-		}
-
-		// Total Products
-		$product_total = $this->model_catalog_product->getTotalProducts();
-
-		$start = ($page - 1) * $limit;
-		$end = $start > ($product_total - $limit) ? $product_total : ($start + $limit);
-
-		if ($end < $product_total) {
-			$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $product_total);
-
-			$json['next'] = $this->url->link('catalog/review.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
-		} else {
-			$json['success'] = $this->language->get('text_success');
-
-*/
 		return ['success' => $this->language->get('text_clear')];
 	}
 }

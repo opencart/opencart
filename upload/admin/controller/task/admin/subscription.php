@@ -31,14 +31,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			if (($result['trial_status'] && $result['trial_remaining']) || (!$result['duration'] && $result['remaining'])) {
 				$task_data = [
 					'code'   => 'subscription',
-					'action' => 'task/catalog/subscription.order',
-					'args'   => ['subscription_id' => $result['subscription_id']]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-
-				$task_data = [
-					'code'   => 'subscription',
 					'action' => 'task/catalog/subscription.confirm',
 					'args'   => ['subscription_id' => $result['subscription_id']]
 				];
@@ -86,6 +78,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$currency_info = $this->model_localisation_currency->getCurrencyByCode($subscription_info['currency_code']);
 
+		if (!$currency_info) {
+			return ['error' => $this->language->get('error_currency')];
+		}
 
 		// Customer
 		$this->load->model('account/customer');
@@ -154,9 +149,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 
-		if (!$currency_info) {
-			return ['error' => $this->language->get('error_currency')];
-		}
+
 
 		// Create new instance of a store
 		$store = $this->model_setting_store->createStoreInstance($subscription_info['store_id'], $subscription_info['language'], $subscription_info['currency_code']);
@@ -225,7 +218,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 
 		// Payment Address
-		$store->session->data['payment_address'] = $payment_address_info;
+		if () {
+			$store->session->data['payment_address'] = $payment_address_info;
+		}
 
 		// Payment Method
 		$store->session->data['payment_method'] = $subscription_info['payment_method'];

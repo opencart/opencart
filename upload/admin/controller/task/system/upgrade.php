@@ -1,18 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Task\System;
-/*
-Upgrade Process
-
-1. Check for latest version
-
-2. Download a copy of the latest version
-
-3. Add and replace the files with the ones from latest version
-
-4. Redirect to upgrade page
-*/
 /**
  * Class Upgrade
+ *
+ * 1. Check for latest version
+ * 2. Download a copy of the latest version
+ * 3. Add and replace the files with the ones from latest version
+ * 4. Redirect to upgrade page
  *
  * @package Opencart\Admin\Controller\Task\Admin
  */

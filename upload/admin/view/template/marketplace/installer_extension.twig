@@ -12,7 +12,7 @@
     <tbody>
       {% if extensions %}
         {% for extension in extensions %}
-          <tr{% if not extension.status %} class="text-decoration-uninstalled"{% else %} class="text-decoration-enabled"{% endif %}>
+          <tr{% if not extension.status %} class="table-disabled"{% endif %}>
             <td>
               {% if extension.link %}
                 <a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a>
@@ -38,7 +38,7 @@
         {% endfor %}
       {% else %}
         <tr>
-          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+          <td class="text-center" colspan="5">{{ text_no_results }}</td>
         </tr>
       {% endif %}
     </tbody>

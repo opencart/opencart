@@ -301,12 +301,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			$store_data = [];
 
-			$store_data[] = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name'),
-				'href'     => $this->url->link('customer/customer.login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=0')
-			];
-
 			foreach ($stores as $store) {
 				$store_data[] = [
 					'store_id' => $store['store_id'],

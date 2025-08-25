@@ -9,137 +9,67 @@ class Sale extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Generates rating task list.
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/report/sale');
-
-		// Sale
-		$task_data = [
-			'code'   => 'report',
-			'action' => 'task/report/sale.sale',
-			'args'   => []
-		];
+		$this->load->language('task/catalog/sale');
 
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+		$limit = 10;
 
-		// Processing
-		$task_data = [
-			'code'   => 'report',
-			'action' => 'task/report/sale.processing',
-			'args'   => []
-		];
+		$this->load->model('catalog/product');
 
-		$this->model_setting_task->addTask($task_data);
+		$product_total = $this->model_catalog_product->getTotalProducts();
 
-		// Complete
-		$task_data = [
-			'code'   => 'report',
-			'action' => 'task/report/sale.complete',
-			'args'   => []
-		];
+		$page_total = ceil($product_total / $limit);
 
-		$this->model_setting_task->addTask($task_data);
+		for ($i = 1; $i <= $page_total; $i++) {
+			$start = ($i - 1) * $limit;
 
-		// Other
-		$task_data = [
-			'code'   => 'report',
-			'action' => 'task/report/sale.other',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
-		return ['success' => $this->language->get('text_task')];
-	}
-
-	/**
-	 * Order Sale
-	 *
-	 * @return array
-	 */
-	public function sale(array $args = []): array {
-		$this->load->language('task/report/sale');
-
-		$this->load->model('sale/order');
-
-		$sale_total = $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge((array)$this->config->get('config_complete_status'), (array)$this->config->get('config_processing_status')))]);
-
-		$this->load->model('report/statistics');
-
-		$this->model_report_statistics->editValue('order_sale', $sale_total);
-
-		return ['success' => $this->language->get('text_sale')];
-	}
-
-	/**
-	 * Order Processing
-	 *
-	 * @return array
-	 */
-	public function processing(array $args = []): array {
-		$this->load->language('task/report/sale');
-
-		$this->load->model('sale/order');
-
-		$processing_total = $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', $this->config->get('config_processing_status'))]);
-
-		$this->load->model('report/statistics');
-
-		$this->model_report_statistics->editValue('order_processing', $processing_total);
-
-		return ['success' => $this->language->get('text_processing')];
-	}
-
-	/**
-	 * Order Complete
-	 *
-	 * @return array
-	 */
-	public function complete(array $args = []): array {
-		$this->load->language('task/report/sale');
-
-		$this->load->model('sale/order');
-
-		$complete_total = $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', (array)$this->config->get('config_complete_status'))]);
-
-		$this->load->model('report/statistics');
-
-		$this->model_report_statistics->editValue('order_complete', $complete_total);
-
-		return ['success' => $this->language->get('text_complete')];
-	}
-
-	/**
-	 * Order Other
-	 *
-	 * @return array
-	 */
-	public function other(array $args = []): array {
-		$this->load->language('task/report/sale');
-
-		$order_status_data = [];
-
-		$this->load->model('localisation/order_status');
-
-		$results = $this->model_localisation_order_status->getOrderStatuses();
-
-		foreach ($results as $result) {
-			if (!in_array($result['order_status_id'], array_merge((array)$this->config->get('config_complete_status'), (array)$this->config->get('config_processing_status')))) {
-				$order_status_data[] = $result['order_status_id'];
+			if ($start > ($product_total - $limit)) {
+				$end = $product_total;
+			} else {
+				$end = ($start + $limit);
 			}
+
+			$task_data = [
+				'code'   => 'sale',
+				'action' => 'task/report/sale.list',
+				'args'   => [
+					'start' => $start,
+					'end'   => $end
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
 		}
 
+		return ['success' => $this->language->get('text_success')];
+	}
+
+	/**
+	 * List
+	 *
+	 * Calculates product sales.
+	 *
+	 * @return array
+	 */
+	public function list(array $args = []): array {
+		$this->load->language('task/report/sale');
+
 		$this->load->model('sale/order');
 
-		$other_total = $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', $order_status_data)]);
+		$this->load->model('catalog/product');
 
-		$this->load->model('report/statistics');
+		$results = $this->model_catalog_product->getProducts($args);
 
-		$this->model_report_statistics->editValue('order_other', $other_total);
+		foreach ($results as $result) {
+			$this->model_catalog_product->editSale($result['product_id'], $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', (array)$this->config->get('config_complete_status'))]));
+		}
 
-		return ['success' => $this->language->get('text_other')];
+		return ['success' => sprintf($this->language->get('text_list'), $args['start'], $args['end'])];
 	}
 }

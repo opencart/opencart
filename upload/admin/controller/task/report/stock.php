@@ -16,11 +16,9 @@ class Stock extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		$stock_total = $this->model_catalog_product->getTotalProducts(['filter_quantity_to' => 0]);
-
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->editValue('product', $stock_total);
+		$this->model_report_statistics->editValue('product', $this->model_catalog_product->getTotalProducts(['filter_quantity_to' => 0]));
 
 		return ['success' => $this->language->get('text_success')];
 	}

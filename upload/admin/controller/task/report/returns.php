@@ -9,6 +9,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 	/**
 	 * Returns
 	 *
+	 * Calculates the total number of returns and stores the information in the statics table.
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -16,11 +18,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/returns');
 
-		$return_total = $this->model_sale_returns->getTotalReturns(['filter_return_status_id' => $this->config->get('config_return_status_id')]);
-
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->editValue('return', $return_total);
+		$this->model_report_statistics->editValue('return', $this->model_sale_returns->getTotalReturns(['filter_return_status_id' => $this->config->get('config_return_status_id')]));
 
 		return ['success' => $this->language->get('text_success')];
 	}

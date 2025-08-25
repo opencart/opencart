@@ -922,12 +922,12 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Status
+	 * Edit Master ID
 	 *
-	 * Edit category status record in the database.
+	 * Edit product master record in the database.
 	 *
-	 * @param int  $product_id primary key of the product record
-	 * @param bool $status
+	 * @param int $product_id primary key of the product record
+	 * @param int $master_id  primary key of the product record
 	 *
 	 * @return void
 	 *
@@ -935,10 +935,30 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/product');
 	 *
-	 * $this->model_catalog_product->editStatus($product_id, $status);
+	 * $this->model_catalog_product->editMasterId($product_id, 0);
 	 */
-	public function editStatus(int $product_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `status` = '" . (bool)$status . "' WHERE `product_id` = '" . (int)$product_id . "'");
+	public function editMasterId(int $product_id, int $master_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '" . (int)$master_id . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
+	/**
+	 * Edit Sales
+	 *
+	 * Edit product rating record in the database.
+	 *
+	 * @param int $product_id primary key of the product record
+	 * @param int $rating
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->editSale($result['product_id'], $this->model_catalog_review->getRating($product_id));
+	 */
+	public function editSale(int $product_id, int $total): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `sale` = '" . (int)$total . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	/**
@@ -962,12 +982,12 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Master ID
+	 * Edit Status
 	 *
-	 * Edit product master record in the database.
+	 * Edit category status record in the database.
 	 *
-	 * @param int $product_id primary key of the product record
-	 * @param int $master_id  primary key of the product record
+	 * @param int  $product_id primary key of the product record
+	 * @param bool $status
 	 *
 	 * @return void
 	 *
@@ -975,10 +995,10 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/product');
 	 *
-	 * $this->model_catalog_product->editMasterId($product_id, 0);
+	 * $this->model_catalog_product->editStatus($product_id, $status);
 	 */
-	public function editMasterId(int $product_id, int $master_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '" . (int)$master_id . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
+	public function editStatus(int $product_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `status` = '" . (bool)$status . "' WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	/**

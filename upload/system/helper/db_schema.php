@@ -5337,8 +5337,13 @@ function oc_db_schema() {
 				'default' => '1'
 			],
 			[
+				'name'    => 'sales',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
 				'name'    => 'rating',
-				'type'    => 'int(1)',
+				'type'    => 'int(11)',
 				'default' => '0'
 			],
 			[

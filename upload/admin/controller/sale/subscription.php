@@ -731,12 +731,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		// Extension Order Tabs can be called here.
 		$this->load->model('setting/extension');
+		
+		if (!empty($order_info['payment_method']['code'])) {
+			if (isset($order_info['payment_method']['code'])) {
+				$code = oc_substr($order_info['payment_method']['code'], 0, strpos($order_info['payment_method']['code'], '.'));
+			} else {
+				$code = '';
+			}
 
-		if (!empty($order_info)) {
-			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_method']['code']);
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
-				$output = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '.subscription');
+				$output = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'] . '.subscription');
 
 				if (!$output instanceof \Exception) {
 					$this->load->language('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'], 'extension');

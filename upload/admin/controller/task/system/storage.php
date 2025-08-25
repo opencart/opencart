@@ -71,8 +71,6 @@ class Storage extends \Opencart\System\Engine\Controller {
 				'code'   => 'storage',
 				'action' => 'task/system/storage.move',
 				'args'   => [
-					'name'     => $name,
-					'path'     => $path,
 					'base_old' => $base_old,
 					'base_new' => $base_new,
 					'start'    => $start,
@@ -86,7 +84,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 		$task_data = [
 			'code'   => 'storage',
 			'action' => 'task/system/storage.config',
-			'args'   => ['directory' => $base_new]
+			'args'   => ['path' => $base_new]
 		];
 
 		$this->model_setting_task->addTask($task_data);
@@ -145,14 +143,13 @@ class Storage extends \Opencart\System\Engine\Controller {
 	public function config(array $args = []): array {
 		$this->load->language('task/system/storage');
 
-		if (!$args['directory']) {
-
+		if (!is_dir($args['path'])) {
+			return ['error' => $this->language->get('error_storage')];
 		}
 
 		if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
 			return ['error' => $this->language->get('error_writable')];
 		}
-
 
 		$files = [
 			DIR_APPLICATION . 'config.php',
@@ -166,7 +163,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 
 			foreach ($lines as $line_id => $line) {
 				if (str_contains($line, 'define(\'DIR_STORAGE')) {
-					$output .= 'define(\'DIR_STORAGE\', \'' . $args['directory'] . '\');' . "\n";
+					$output .= 'define(\'DIR_STORAGE\', \'' . $args['path'] . '\');' . "\n";
 				} else {
 					$output .= $line;
 				}

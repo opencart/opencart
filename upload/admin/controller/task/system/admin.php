@@ -1,64 +1,13 @@
 <?php
 namespace Opencart\Admin\Controller\Task\System;
 /**
- * Class Security
+ * Class Admin
  *
- * Can be loaded using $this->load->controller('common/security');
+ *
  *
  * @package Opencart\Admin\Controller\Common
  */
-class Security extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return string
-	 */
-	public function index(): string {
-		$this->load->language('task/system/security');
-
-
-
-
-
-		$data['user_token'] = $this->session->data['user_token'];
-
-		return $this->load->view('common/security', $data);
-	}
-
-	/**
-	 * Install
-	 *
-	 * @return void
-	 */
-	public function install(): void {
-		$this->load->language('task/system/security');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'common/security')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$directory = DIR_OPENCART . 'install/';
-
-			if (!is_dir($directory)) {
-				$json['error'] = $this->language->get('error_install');
-			}
-		}
-
-		if (!$json) {
-
-			// Make path into an array
-			oc_directory_delete($directory);
-
-			$json['success'] = $this->language->get('text_install_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
+class Admin extends \Opencart\System\Engine\Controller {
 	/**
 	 * Storage
 	 *
@@ -371,3 +320,4 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 }
+

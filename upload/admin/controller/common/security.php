@@ -199,6 +199,8 @@ class Security extends \Opencart\System\Engine\Controller {
 				'code'   => 'security',
 				'action' => 'task/system/security.storage',
 				'args'   => [
+					'name'     => $name,
+					'path'     => $path,
 					'base_old' => $base_old,
 					'base_new' => $base_new
 				]

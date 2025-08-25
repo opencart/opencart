@@ -184,6 +184,153 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Upload
+	 *
+	 * @return void
+	 */
+	public function upload(): void {
+		$this->load->language('marketplace/installer');
+
+		$json = [];
+
+		// 1. Validate the file uploaded.
+		if (isset($this->request->files['file']['name'])) {
+			$filename = basename($this->request->files['file']['name']);
+			$code = basename($filename, '.ocmod.zip');
+
+			// Use the temporary upload path
+			$temp_file = $this->request->files['file']['tmp_name'];
+
+			// Initialise ZipArchive
+			$zip = new \ZipArchive();
+
+			// Zip error codes
+			$zip_errors = [
+				\ZipArchive::ER_EXISTS => $this->language->get('error_zip_exists'),
+				\ZipArchive::ER_INCONS => $this->language->get('error_zip_incons'),
+				\ZipArchive::ER_INVAL  => $this->language->get('error_zip_inval'),
+				\ZipArchive::ER_MEMORY => $this->language->get('error_zip_memory'),
+				\ZipArchive::ER_NOENT  => $this->language->get('error_zip_noent'),
+				\ZipArchive::ER_NOZIP  => $this->language->get('error_zip_nozip'),
+				\ZipArchive::ER_OPEN   => $this->language->get('error_zip_open'),
+				\ZipArchive::ER_READ   => $this->language->get('error_zip_read'),
+				\ZipArchive::ER_SEEK   => $this->language->get('error_zip_seek'),
+			];
+
+			// Check if the zip is valid
+			$result_code = $zip->open($temp_file);
+
+			if ($result_code !== true) {
+				$json['error'] = $zip_errors[$result_code] ?? $this->language->get('error_unknown');
+
+				if (is_file($temp_file)) {
+					unlink($temp_file);
+				}
+
+				$this->response->setOutput(json_encode($json));
+
+				return;
+			}
+
+			$zip->close();
+
+			// 2. Validate the filename.
+			if (!oc_validate_length($filename, 5, 128)) {
+				$json['error'] = $this->language->get('error_filename');
+			}
+
+			// 3. Validate is ocmod file.
+			if (substr($filename, -10) != '.ocmod.zip') {
+				$json['error'] = $this->language->get('error_file_type');
+			}
+
+			// 4. Check if there is already a file.
+			$file = DIR_STORAGE . 'marketplace/' . $filename;
+
+			if (is_file($file)) {
+				$json['error'] = $this->language->get('error_file_exists');
+
+				unlink($this->request->files['file']['tmp_name']);
+			}
+
+			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
+				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+			}
+
+			if ($this->model_setting_extension->getInstallByCode($code)) {
+				$json['error'] = $this->language->get('error_installed');
+			}
+		} else {
+			$json['error'] = $this->language->get('error_upload');
+		}
+
+		// 5. Validate if the file can be opened and there is install.json that can be read.
+		if (!$json) {
+			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
+
+			// Unzip the files
+			$zip = new \ZipArchive();
+
+			if ($zip->open($file, \ZipArchive::RDONLY)) {
+				$install_content = $zip->getFromName('install.json');
+				if (strlen($install_content) > 0) {
+					$install_info = json_decode($install_content, true);
+
+					if ($install_info) {
+						$keys = [
+							'extension_id',
+							'extension_download_id',
+							'name',
+							'description',
+							'code',
+							'version',
+							'author',
+							'link'
+						];
+
+						foreach ($keys as $key) {
+							if (!isset($install_info[$key])) {
+								$install_info[$key] = '';
+							}
+						}
+					} else {
+						$json['error'] = $this->language->get('error_install_invalid');
+					}
+				} else {
+					$json['error'] = $this->language->get('error_install');
+				}
+
+				$zip->close();
+			} else {
+				$json['error'] = $this->language->get('error_unzip');
+			}
+		}
+
+		if (!$json) {
+			// Extension
+			$extension_data = [
+				'extension_id'          => 0,
+				'extension_download_id' => 0,
+				'name'                  => $install_info['name'],
+				'description'           => $install_info['description'],
+				'code'                  => $code,
+				'version'               => $install_info['version'],
+				'author'                => $install_info['author'],
+				'link'                  => $install_info['link']
+			];
+
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->addInstall($extension_data);
+
+			$json['success'] = $this->language->get('text_upload');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
 	 * Install
 	 *
 	 * @return void

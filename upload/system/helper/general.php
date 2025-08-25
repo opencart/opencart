@@ -219,28 +219,20 @@ function oc_directory_read(string $directory, bool $recursive = false, string $r
 }
 
 // 2. Creating a directory
+/**
+ * Creates a directory recursively.
+ *
+ * @param string $path       the path of the directory to create
+ * @param int    $permission the directory permissions
+ *
+ * @return bool true on success or false on failure
+ */
 function oc_directory_create(string $path, int $permission = 0777): bool {
-	$path_new = '';
-
-	$directories = explode('/', rtrim($path, '/'));
-
-	foreach ($directories as $directory) {
-		if (!$path_new) {
-			$path_new = $directory;
-		} else {
-			$path_new = $path_new . '/' . $directory;
-		}
-
-		if (is_dir($path_new . '/')) {
-			continue;
-		}
-
-		if (!mkdir($path_new . '/', $permission)) {
-			return false;
-		}
+	if (is_dir($path)) {
+		return true;
 	}
 
-	return true;
+	return @mkdir($path, $permission, true) && is_dir($path);
 }
 
 // 3. Removing a directory

@@ -8,50 +8,28 @@ namespace Opencart\System\Library\Compressor;
  * @package Opencart\System\Library\Compressor
  */
 class Gzip {
-	/**
-	 * @var int compression level (1-9)
-	 */
-	private int $level;
-
-	/**
-	 * @var float compression ratio from last operation
-	 */
-	private float $ratio = 0.0;
-
-	/**
-	 * Constructor
-	 *
-	 * Initialize gzip compression with specified level.
-	 *
-	 * @param int $level compression level between 1 and 9
-	 */
-	public function __construct(int $level = 6) {
-		$this->level = max(1, min(9, $level));
-	}
+	private const LEVEL_MIN = 1;
+	private const LEVEL_MAX = 9;
 
 	/**
 	 * Compress
 	 *
-	 * Compresses data using gzip algorithm.
+	 * Compress data with gzip at the given compression level.
+	 * Level range: 1-9. Values outside the range are clamped.
 	 *
-	 * @param string $data raw data to compress
+	 * @param string $data  Raw input data
+	 * @param int    $level Compression level (1-9)
 	 *
-	 * @return false|string compressed gzip data on success, false on failure
+	 * @return false|string Compressed data or false on error / missing support
 	 */
-	public function compress(string $data): false|string {
+	public function compress(string $data, int $level): false|string {
 		if (!$this->isSupported()) {
 			return false;
 		}
 
-		$original_size = strlen($data);
-		$compressed = gzencode($data, $this->level);
+		$level = max(self::LEVEL_MIN, min(self::LEVEL_MAX, $level));
 
-		if ($compressed !== false) {
-			$compressed_size = strlen($compressed);
-			$this->ratio = $original_size > 0 ? ($compressed_size / $original_size) : 0.0;
-		}
-
-		return $compressed;
+		return gzencode($data, $level);
 	}
 
 	/**
@@ -69,17 +47,6 @@ class Gzip {
 		}
 
 		return gzdecode($data);
-	}
-
-	/**
-	 * Get Compression Ratio
-	 *
-	 * Returns the compression efficiency from the last compress() operation.
-	 *
-	 * @return float compression ratio (0.0 to 1.0)
-	 */
-	public function getRatio(): float {
-		return $this->ratio;
 	}
 
 	/**

@@ -8,50 +8,28 @@ namespace Opencart\System\Library\Compressor;
  * @package Opencart\System\Library\Compressor
  */
 class Zstd {
-	/**
-	 * @var int compression level (1-22)
-	 */
-	private int $level;
-
-	/**
-	 * @var float compression ratio from last operation
-	 */
-	private float $ratio = 0.0;
-
-	/**
-	 * Constructor
-	 *
-	 * Initialize zstd compression with specified level.
-	 *
-	 * @param int $level compression level between 1 and 22
-	 */
-	public function __construct(int $level = 6) {
-		$this->level = max(1, min(22, $level));
-	}
+	private const LEVEL_MIN = 1;
+	private const LEVEL_MAX = 22;
 
 	/**
 	 * Compress
 	 *
-	 * Compresses data using zstd algorithm.
+	 * Compress data with Zstandard at the given compression level (1-22).
+	 * Values outside the range are clamped.
 	 *
-	 * @param string $data raw data to compress
+	 * @param string $data  Raw input data
+	 * @param int    $level Compression level (1-22)
 	 *
-	 * @return false|string compressed zstd data on success, false on failure
+	 * @return false|string Compressed data or false on error / missing support
 	 */
-	public function compress(string $data): false|string {
+	public function compress(string $data, int $level): false|string {
 		if (!$this->isSupported()) {
 			return false;
 		}
 
-		$original_size = strlen($data);
-		$compressed = zstd_compress($data, $this->level);
+		$level = max(self::LEVEL_MIN, min(self::LEVEL_MAX, $level));
 
-		if ($compressed !== false) {
-			$compressed_size = strlen($compressed);
-			$this->ratio = $original_size > 0 ? ($compressed_size / $original_size) : 0.0;
-		}
-
-		return $compressed;
+		return zstd_compress($data, $level);
 	}
 
 	/**
@@ -69,17 +47,6 @@ class Zstd {
 		}
 
 		return zstd_uncompress($data);
-	}
-
-	/**
-	 * Get Compression Ratio
-	 *
-	 * Returns compression efficiency from the last compress() operation.
-	 *
-	 * @return float compression ratio (0.0 to 1.0)
-	 */
-	public function getRatio(): float {
-		return $this->ratio;
 	}
 
 	/**

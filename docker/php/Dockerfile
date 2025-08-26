@@ -16,7 +16,6 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 RUN install-php-extensions \
     @composer \
     apcu \
-    brotli \
     gd \
     intl \
     memcached \
@@ -25,8 +24,7 @@ RUN install-php-extensions \
     pdo_mysql \
     pdo_pgsql \
     redis \
-    zip \
-    zstd
+    zip
 
 # Configure www-data user home directory
 RUN usermod -d /home/www-data -m www-data

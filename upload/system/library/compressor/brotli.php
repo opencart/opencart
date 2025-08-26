@@ -8,50 +8,28 @@ namespace Opencart\System\Library\Compressor;
  * @package Opencart\System\Library\Compressor
  */
 class Brotli {
-	/**
-	 * @var int compression level (0-11)
-	 */
-	private int $level;
-
-	/**
-	 * @var float compression ratio from last operation
-	 */
-	private float $ratio = 0.0;
-
-	/**
-	 * Constructor
-	 *
-	 * Initialize brotli compression with specified level.
-	 *
-	 * @param int $level compression level between 0 and 11
-	 */
-	public function __construct(int $level = 6) {
-		$this->level = max(0, min(11, $level));
-	}
+	private const LEVEL_MIN = 0;
+	private const LEVEL_MAX = 11;
 
 	/**
 	 * Compress
 	 *
-	 * Compresses data using brotli algorithm.
+	 * Compress data with Brotli at the given compression level (0-11).
+	 * Values outside the range are clamped.
 	 *
-	 * @param string $data raw data to compress
+	 * @param string $data  Raw input data
+	 * @param int    $level Compression level (0-11)
 	 *
-	 * @return false|string compressed brotli data on success, false on failure
+	 * @return false|string Compressed data or false on error / missing support
 	 */
-	public function compress(string $data): false|string {
+	public function compress(string $data, int $level): false|string {
 		if (!$this->isSupported()) {
 			return false;
 		}
 
-		$original_size = strlen($data);
-		$compressed = brotli_compress($data, $this->level);
+		$level = max(self::LEVEL_MIN, min(self::LEVEL_MAX, $level));
 
-		if ($compressed !== false) {
-			$compressed_size = strlen($compressed);
-			$this->ratio = $original_size > 0 ? ($compressed_size / $original_size) : 0.0;
-		}
-
-		return $compressed;
+		return brotli_compress($data, $level);
 	}
 
 	/**
@@ -69,17 +47,6 @@ class Brotli {
 		}
 
 		return brotli_uncompress($data);
-	}
-
-	/**
-	 * Get Compression Ratio
-	 *
-	 * Returns compression efficiency from the last compress() operation.
-	 *
-	 * @return float compression ratio (0.0 to 1.0)
-	 */
-	public function getRatio(): float {
-		return $this->ratio;
 	}
 
 	/**

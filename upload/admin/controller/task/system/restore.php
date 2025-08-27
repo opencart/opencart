@@ -32,40 +32,23 @@ class Restore extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_file')];
 		}
 
-		// 500 reads at a time;
-		$limit = 500;
+		$maintenance = $this->config->get('config_maintenance');
 
-		$count = 0;
+		$this->config->set('config_maintenance', true);
 
-		$handle = fopen($file, 'r');
+		$task_data = [
+			'code'   => 'restore',
+			'action' => 'task/system/restore.read',
+			'args'   => [
+				'filename' => $args['filename'],
+				'position' => 0,
+				'maintenance' => $maintenance
+			]
+		];
 
-		while (fgets($handle)) $count++;
+		$this->load->model('setting/task');
 
-		fclose($handle);
-
-		for ($i = 0; $i <= ceil($count / $limit); $i++) {
-			$start = ($i - 1) * $limit;
-
-			if ($start > ($count - $limit)) {
-				$end = $count;
-			} else {
-				$end = ($start + $limit);
-			}
-
-			$task_data = [
-				'code'   => 'backup',
-				'action' => 'task/system/restore.read',
-				'args'   => [
-					'filename' => $args['filename'],
-					'start'    => $start,
-					'end'      => $end,
-					'limit'    => $limit,
-					'total'    => $count
-				]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
+		$this->model_setting_task->addTask($task_data);
 
 		return ['success' => $this->language->get('text_success')];
 	}
@@ -78,22 +61,14 @@ class Restore extends \Opencart\System\Engine\Controller {
 	public function read(array $args = []): array {
 		$this->load->language('task/system/restore');
 
-		if (isset($args['position'])) {
-			$position = $args['position'];
-		} else {
-			$position = 0;
-		}
-
 		$required = [
 			'filename',
-			'start',
-			'end',
-			'limit',
-			'total'
+			'position',
+			'maintenance'
 		];
 
 		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
+			if (!isset($args[$value])) {
 				return ['error' => sprintf($this->language->get('error_required'), $value)];
 			}
 		}
@@ -118,7 +93,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 		$handle = fopen($file, 'r');
 
-		fseek($handle, $position, SEEK_SET);
+		fseek($handle, $args['position'], SEEK_SET);
 
 		while (!feof($handle) && ($i < 100)) {
 			$position = ftell($handle);
@@ -126,17 +101,14 @@ class Restore extends \Opencart\System\Engine\Controller {
 			$line = fgets($handle, 4096);
 
 			foreach ($disallowed as $table) {
-
-
-				if (!str_starts_with($table, DB_PREFIX) || in_array($table, $disallowed)) {
-					return ['error' => sprintf($this->language->get('error_table'), $table)];
+				if (str_starts_with($line, "TRUNCATE TABLE `" . DB_PREFIX . $table . "`")) {
+					fseek($handle, $position, SEEK_SET);
 
 					break;
 				}
 			}
 
-
-			if ($i > 0 && (str_starts_with($line, 'TRUNCATE TABLE `' . DB_PREFIX . 'user`') || str_starts_with($line, 'TRUNCATE TABLE `' . DB_PREFIX . 'user_group`'))) {
+			if ($i > 0) {
 				fseek($handle, $position, SEEK_SET);
 
 				break;
@@ -153,24 +125,25 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 		$size = filesize($file);
 
-		if ($position) {
-			$json['progress'] = round(($position / $size) * 100);
-		} else {
-			$json['progress'] = 0;
-		}
-
 		if ($position && !feof($handle)) {
-			$json['text'] = sprintf($this->language->get('text_restore'), $position, $size);
+			$task_data = [
+				'code'   => 'backup',
+				'action' => 'task/system/restore.read',
+				'args'   => [
+					'filename' => $args['filename'],
+					'position' => $position
+				]
+			];
 
-			$json['next'] = $this->url->link('tool/backup.restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position, true);
+			$this->load->model('setting/task');
 
-
+			$this->model_setting_task->addTask($task_data);
 		} else {
-			$json['success'] = $this->language->get('text_success');
+			$this->config->set('config_maintenance', $args['maintenance']);
 		}
 
 		fclose($handle);
 
-		return ['success' => sprintf($this->language->get('text_restore'), $args['table'], $start ?: 1, $end, $record_total)];
+		return ['success' => sprintf($this->language->get('text_restore'), $position, $size)];
 	}
 }

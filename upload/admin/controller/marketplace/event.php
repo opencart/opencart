@@ -110,11 +110,11 @@ class Event extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . urlencode(html_entity_decode($this->request->get['filter_code'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_code=' . $this->request->get['filter_code'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . urlencode(html_entity_decode($this->request->get['filter_status'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -171,7 +171,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			foreach ($selected as $event_id) {
@@ -206,7 +205,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			foreach ($selected as $event_id) {
@@ -241,7 +239,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			foreach ($selected as $event_id) {

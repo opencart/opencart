@@ -15,6 +15,8 @@ $_['column_sort_order'] = 'Sortierreihenfolge';
 $_['column_action']     = 'Aktionen';
 
 // Entry
+$_['entry_code']        = 'Ereigniscode';
+$_['entry_status']      = 'Status';
 $_['entry_description'] = 'Beschreibung';
 $_['entry_trigger']     = 'Auslösen';
 $_['entry_action']      = 'Aktionen';

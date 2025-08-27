@@ -40,8 +40,8 @@ class Restore extends \Opencart\System\Engine\Controller {
 			'code'   => 'restore',
 			'action' => 'task/system/restore.read',
 			'args'   => [
-				'filename' => $args['filename'],
-				'position' => 0,
+				'filename'    => $args['filename'],
+				'position'    => 0,
 				'maintenance' => $maintenance
 			]
 		];
@@ -130,8 +130,9 @@ class Restore extends \Opencart\System\Engine\Controller {
 				'code'   => 'backup',
 				'action' => 'task/system/restore.read',
 				'args'   => [
-					'filename' => $args['filename'],
-					'position' => $position
+					'filename'   => $args['filename'],
+					'position'   => $position,
+					'maintenance'=> $args['maintenance']
 				]
 			];
 

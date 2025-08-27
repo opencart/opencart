@@ -11,7 +11,7 @@ class Task extends \Opencart\System\Engine\Controller {
 	 *
 	 * Starts task queue if not running
 	 *
-	 * model/marketplace/task/addTask/after
+	 * model/setting/task.addTask/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -22,6 +22,7 @@ class Task extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
 
+		echo 'hi';
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
 		if ($task_total) {

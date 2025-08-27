@@ -22,13 +22,12 @@ class Task extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
 
-		echo 'hi';
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
 		if ($task_total) {
 			return;
 		}
 
-		shell_exec('php ' . DIR_APPLICATION . 'index.php start /dev/null 2>/dev/null &');
+		//shell_exec('php ' . DIR_APPLICATION . 'index.php start &');
 	}
 }

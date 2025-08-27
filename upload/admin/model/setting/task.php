@@ -166,7 +166,7 @@ class Task extends \Opencart\System\Engine\Model {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
 
-		$sql .= " ORDER BY `date_added` ASC";
+		$sql .= " ORDER BY `task_id` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

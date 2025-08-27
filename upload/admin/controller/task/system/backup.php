@@ -33,7 +33,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
-		$limit = 10;
+		$limit = 200;
 
 		$backup = (array)$args['backup'];
 
@@ -48,7 +48,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 			$page_total = ceil($record_total / $limit);
 
-			for ($i = 0; $i <= $page_total; $i++) {
+			for ($i = 0; $i < $page_total; $i++) {
 				$start = $i * $limit;
 
 				if ($start > ($record_total - $limit)) {
@@ -66,6 +66,22 @@ class Backup extends \Opencart\System\Engine\Controller {
 						'start'    => $start,
 						'end'      => $end,
 						'total'    => $record_total
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			if (!$page_total) {
+				$task_data = [
+					'code'   => 'backup',
+					'action' => 'task/system/backup.write',
+					'args'   => [
+						'filename' => $filename,
+						'table'    => $table,
+						'start'    => 0,
+						'end'      => 0,
+						'total'    => 0
 					]
 				];
 
@@ -120,7 +136,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$output = '';
 
 		if (!$args['start']) {
-			$output .= 'TRUNCATE TABLE `' . $this->db->escape((string)$args['table']) . '`;' . "\n\n";
+			$output .= "TRUNCATE TABLE `" . $this->db->escape((string)$args['table']) . "`;" . "\n\n";
 		}
 
 		$this->load->model('tool/backup');
@@ -152,7 +168,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$output .= "INSERT INTO `" . $args['table'] . "` ('" . preg_replace('/, $/', '', $fields) . "') VALUES ('" . preg_replace('/, $/', '', $values) . "');" . "\n";
+			$output .= "INSERT INTO `" . $args['table'] . "` (" . preg_replace('/, $/', '', $fields) . ") VALUES (" . preg_replace('/, $/', '', $values) . ");" . "\n";
 		}
 
 		if ($args['end'] == $args['total']) {
@@ -165,6 +181,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
-		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], $args['start'], $args['end'], $args['total'])];
+		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], (!$args['start'] && $args['total']) ? 1 : $args['start'], $args['end'], $args['total'])];
 	}
 }

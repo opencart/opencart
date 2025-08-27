@@ -184,7 +184,7 @@ class Event extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "`status` = '" . $this->db->escape($data['filter_status']) . "'";
+			$implode[] = "`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if ($implode) {
@@ -233,7 +233,7 @@ class Event extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "`status` = '" . $this->db->escape($data['filter_status']) . "'";
+			$implode[] = "`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if ($implode) {

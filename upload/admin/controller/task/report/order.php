@@ -1,23 +1,23 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Report;
 /**
- * Class Order Status
+ * Class Order
  *
  * @package Opencart\Admin\Controller\Task\Report
  */
-class OrderStatus extends \Opencart\System\Engine\Controller {
+class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/report/order_status');
+		$this->load->language('task/report/order');
 
 		// Sale
 		$task_data = [
 			'code'   => 'report',
-			'action' => 'task/report/order_status.sale',
+			'action' => 'task/report/order.sale',
 			'args'   => []
 		];
 
@@ -28,7 +28,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		// Processing
 		$task_data = [
 			'code'   => 'report',
-			'action' => 'task/report/order_status.processing',
+			'action' => 'task/report/order.processing',
 			'args'   => []
 		];
 
@@ -37,7 +37,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		// Complete
 		$task_data = [
 			'code'   => 'report',
-			'action' => 'task/report/order_status.complete',
+			'action' => 'task/report/order.complete',
 			'args'   => []
 		];
 
@@ -46,7 +46,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		// Other
 		$task_data = [
 			'code'   => 'report',
-			'action' => 'task/report/order_status.other',
+			'action' => 'task/report/order.other',
 			'args'   => []
 		];
 
@@ -61,7 +61,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function sale(array $args = []): array {
-		$this->load->language('task/report/order_status');
+		$this->load->language('task/report/order');
 
 		$this->load->model('sale/order');
 
@@ -78,7 +78,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function processing(array $args = []): array {
-		$this->load->language('task/report/order_status');
+		$this->load->language('task/report/order');
 
 		$this->load->model('sale/order');
 
@@ -95,7 +95,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function complete(array $args = []): array {
-		$this->load->language('task/report/order_status');
+		$this->load->language('task/report/order');
 
 		$this->load->model('sale/order');
 
@@ -112,7 +112,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function other(array $args = []): array {
-		$this->load->language('task/report/order_status');
+		$this->load->language('task/report/order');
 
 		$order_status_data = [];
 

@@ -23,7 +23,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Country List
 			$task_data = [
 				'code'   => 'country',
 				'action' => 'task/admin/country.list',
@@ -45,6 +44,10 @@ class Country extends \Opencart\System\Engine\Controller {
 	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/country');
+
+		if (!array_key_exists('language_id', $args)) {
+			return ['error' => $this->language->get('error_language')];
+		}
 
 		$this->load->model('localisation/language');
 
@@ -108,6 +111,17 @@ class Country extends \Opencart\System\Engine\Controller {
 	 */
 	public function info(array $args = []): array {
 		$this->load->language('task/admin/country');
+
+		$required = [
+			'country_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
 
 		$this->load->model('localisation/language');
 

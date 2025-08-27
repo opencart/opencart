@@ -104,6 +104,15 @@ class Restore extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_file')];
 		}
 
+		$disallowed = [
+			DB_PREFIX . 'task',
+			DB_PREFIX . 'user',
+			DB_PREFIX . 'user_authorize',
+			DB_PREFIX . 'user_group',
+			DB_PREFIX . 'user_login',
+			DB_PREFIX . 'user_token'
+		];
+
 		// We set $i so we can batch execute the queries rather than do them all at once.
 		$i = 0;
 
@@ -115,6 +124,17 @@ class Restore extends \Opencart\System\Engine\Controller {
 			$position = ftell($handle);
 
 			$line = fgets($handle, 4096);
+
+			foreach ($disallowed as $table) {
+
+
+				if (!str_starts_with($table, DB_PREFIX) || in_array($table, $disallowed)) {
+					return ['error' => sprintf($this->language->get('error_table'), $table)];
+
+					break;
+				}
+			}
+
 
 			if ($i > 0 && (str_starts_with($line, 'TRUNCATE TABLE `' . DB_PREFIX . 'user`') || str_starts_with($line, 'TRUNCATE TABLE `' . DB_PREFIX . 'user_group`'))) {
 				fseek($handle, $position, SEEK_SET);

@@ -38,6 +38,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
+		if (!array_key_exists('language_id', $args)) {
+			return ['error' => $this->language->get('error_language')];
+		}
+
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);

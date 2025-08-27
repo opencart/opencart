@@ -167,7 +167,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$store->session->data['customer'] = $customer_info;
 
 		// Products
-		$product_data = [];
+		$product_data = [];/**/
 
 		$store->load->model('checkout/subscription');
 
@@ -180,6 +180,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				return ['error' => sprintf($this->language->get('error_product'), $product['name'])];
 			}
 
+
+
 			$option_data = [];
 
 			$options = $store->model_checkout_subscription->getOptions($subscription_info['subscription_id'], $product['subscription_product_id']);
@@ -191,7 +193,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					return ['error' => sprintf($this->language->get('error_option'), $product['name'], $option['name'], $option['product_option_name'])];
 				}
 
-				if ($option['required'] && !isset($option_data[$option['product_option_id']])) {
+				if ($option_info['required'] && !isset($option_data[$option['product_option_id']])) {
 					return ['error' => sprintf($this->language->get('error_option'), $option['name'])];
 				}
 
@@ -206,11 +208,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$price = $product['price'];
 
-			if ($result['trial_status']) {
-				$price = $result['trial_price'];
+			if ($product['trial_status']) {
+				$price = $product['trial_price'];
 			}
 
-			$store->cart->add($product['product_id'], $product['quantity'], $option_data, $result['subscription_plan_id'], ['price' => $price]);
+			$store->cart->add($product['product_id'], $product['quantity'], $option_data, $subscription_plan_info['subscription_plan_id'], ['price' => $price]);
 
 		}
 

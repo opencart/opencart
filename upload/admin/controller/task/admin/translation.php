@@ -89,6 +89,17 @@ class Translation extends \Opencart\System\Engine\Controller {
 	public function write(array $args = []): array {
 		$this->load->language('task/admin/translation');
 
+		$required = [
+			'route',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
+
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);

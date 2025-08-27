@@ -9,6 +9,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Generates backup task list.
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -21,17 +23,17 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (empty($args[$value])) {
-				return ['error' => $this->language->get('error_' . $value)];
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
 			}
 		}
 
 		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
 
-		if (!oc_validate_filename($filename, 5, 128)) {
+		if (!oc_validate_length($filename, 5, 128)) {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
-		$limit = 200;
+		$limit = 10;
 
 		$backup = (array)$args['backup'];
 
@@ -39,11 +41,15 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
+		$this->load->model('tool/backup');
+
 		foreach ($backup as $table) {
 			$record_total = $this->model_tool_backup->getTotalRecords($table);
 
-			for ($i = 0; $i <= ceil($record_total / $limit); $i++) {
-				$start = ($i - 1) * $limit;
+			$page_total = ceil($record_total / $limit);
+
+			for ($i = 0; $i <= $page_total; $i++) {
+				$start = $i * $limit;
 
 				if ($start > ($record_total - $limit)) {
 					$end = $record_total;
@@ -59,7 +65,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 						'table'    => $table,
 						'start'    => $start,
 						'end'      => $end,
-						'limit'    => $limit,
 						'total'    => $record_total
 					]
 				];
@@ -83,7 +88,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			'filename',
 			'table',
 			'start',
-			'limit',
+			'end',
 			'total'
 		];
 
@@ -95,13 +100,17 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		$filename = basename(html_entity_decode($args['filename'], ENT_QUOTES, 'UTF-8'));
 
-		if (!oc_validate_length($filename, 5, 128) || !oc_validate_filename($filename)) {
+		if (!oc_validate_length($filename, 5, 128)) {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
 		$disallowed = [
+			DB_PREFIX . 'task',
 			DB_PREFIX . 'user',
-			DB_PREFIX . 'user_group'
+			DB_PREFIX . 'user_authorize',
+			DB_PREFIX . 'user_group',
+			DB_PREFIX . 'user_login',
+			DB_PREFIX . 'user_token'
 		];
 
 		if (!str_starts_with((string)$args['table'], DB_PREFIX) || in_array((string)$args['table'], $disallowed)) {
@@ -116,7 +125,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/backup');
 
-		$results = $this->model_tool_backup->getRecords((string)$args['table'], (int)$args['start'], (int)$args['limit']);
+		$results = $this->model_tool_backup->getRecords((string)$args['table'], (int)$args['start'], (int)$args['end']);
 
 		foreach ($results as $result) {
 			$fields = '';
@@ -146,7 +155,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$output .= "INSERT INTO `" . $args['table'] . "` ('" . preg_replace('/, $/', '', $fields) . "') VALUES ('" . preg_replace('/, $/', '', $values) . "');" . "\n";
 		}
 
-		if ($args['limit'] == $args['total']) {
+		if ($args['end'] == $args['total']) {
 			$output .= "\n";
 		}
 
@@ -156,6 +165,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
-		return ['success' => sprintf($this->language->get('text_backup'), (string)$args['table'], (int)$args['start'] ?: 1, (int)$args['end'], (int)$args['total'])];
+		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], $args['start'], $args['end'], $args['total'])];
 	}
 }

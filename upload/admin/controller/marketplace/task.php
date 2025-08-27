@@ -14,16 +14,28 @@ class Task extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('marketplace/task');
 
+		if (isset($this->request->get['filter_code'])) {
+			$filter_code = $this->request->get['filter_code'];
+		} else {
+			$filter_code = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';
 
 		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . urlencode(html_entity_decode($this->request->get['filter_code'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_code=' . $this->request->get['filter_code'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . urlencode(html_entity_decode($this->request->get['filter_status'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -67,6 +79,9 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['list'] = $this->getList();
+
+		$data['filter_code'] = $filter_code;
+		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
 

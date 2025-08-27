@@ -16,34 +16,30 @@ class Storage extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/system/storage');
 
-		if (isset($args['name'])) {
-			$name = preg_replace('/[^a-zA-Z0-9_\.]/', '', $args['name']);
-		} else {
-			$name = '';
-		}
+		$required = [
+			'base_old',
+			'base_new'
+		];
 
-		if (isset($args['path'])) {
-			$path = preg_replace('/[^a-zA-Z0-9_\:\/\.]/', '', $args['path']);
-		} else {
-			$path = '';
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
 		}
-
-		$base_old = DIR_STORAGE;
-		$base_new = $path . $name . '/';
 
 		// Check current storage path exists
-		if (!is_dir($base_old)) {
-			return ['error' => $this->language->get('error_storage')];
+		if (empty($args['base_old']) || !is_dir($args['base_old'])) {
+			return ['error' => $this->language->get('error_exists')];
 		}
 
 		// Check the chosen directory is not in the public webspace
 		$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 
-		if ((substr($base_new, 0, strlen($root)) != $root) || ($root == $base_new)) {
+		if ((substr($args['base_new'], 0, strlen($root)) != $root) || ($root == $args['base_new'])) {
 			return ['error' => $this->language->get('error_storage_root')];
 		}
 
-		if (!str_starts_with($name, 'storage')) {
+		if (!str_starts_with(basename($args['base_new']), 'storage')) {
 			return ['error' => $this->language->get('error_storage_name')];
 		}
 
@@ -51,8 +47,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 
 		$limit = 200;
 
-		// Make path into an array
-		$files = oc_directory_read($base_old, true);
+		$files = oc_directory_read($args['base_old'], true);
 
 		$total = count($files);
 
@@ -71,8 +66,8 @@ class Storage extends \Opencart\System\Engine\Controller {
 				'code'   => 'storage',
 				'action' => 'task/system/storage.move',
 				'args'   => [
-					'base_old' => $base_old,
-					'base_new' => $base_new,
+					'base_old' => $args['base_old'],
+					'base_new' => $args['base_new'],
 					'start'    => $start,
 					'end'      => $end
 				]
@@ -84,7 +79,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 		$task_data = [
 			'code'   => 'storage',
 			'action' => 'task/system/storage.config',
-			'args'   => ['path' => $base_new]
+			'args'   => ['path' => $args['base_new']]
 		];
 
 		$this->model_setting_task->addTask($task_data);
@@ -122,8 +117,10 @@ class Storage extends \Opencart\System\Engine\Controller {
 		// Make path into an array
 		$files = oc_directory_read($args['base_old'], true);
 
-		for ($i = $args['start']; $i < $args['end']; $i++) {
-			$destination = substr($files[$i], strlen($args['base_old']));
+		$total = count($files);
+
+		foreach (array_slice($files, $args['start'], $args['end']) as $file) {
+			$destination = substr($file, strlen($args['base_old']));
 
 			oc_directory_create($args['base_new'] . dirname($destination), 0777);
 
@@ -132,7 +129,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_move'), $args['start'], $args['end'])];
+		return ['success' => sprintf($this->language->get('text_move'), $args['start'], $args['end'], $total)];
 	}
 
 	/*
@@ -191,11 +188,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 		$path = DIR_SYSTEM . 'storage/';
 
 		if (!is_dir($path) || DIR_STORAGE == $path) {
-			return ['error' => $this->language->get('error_storage')];
-		}
-
-		if (!$path) {
-			return ['error' => $this->language->get('error_remove')];
+			return ['error' => $this->language->get('error_delete')];
 		}
 
 		// Delete old admin directory

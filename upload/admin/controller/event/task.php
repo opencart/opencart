@@ -28,6 +28,6 @@ class Task extends \Opencart\System\Engine\Controller {
 			return;
 		}
 
-		shell_exec('php ' . DIR_APPLICATION . 'index.php start');
+		shell_exec('php ' . DIR_APPLICATION . 'index.php start /dev/null 2>/dev/null &');
 	}
 }

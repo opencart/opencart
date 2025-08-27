@@ -45,6 +45,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
+		if (!array_key_exists('language_id', $args)) {
+			return ['error' => $this->language->get('error_language')];
+		}
+
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
@@ -97,6 +101,15 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 */
 	public function info(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
+
+		$required = [
+			'country_id',
+			'language_id'
+		];
+
+		if (array_diff(array_keys($args), $required)) {
+			return ['error' => sprintf($this->language->get('error_required'), $value)];
+		}
 
 		$this->load->model('localisation/language');
 

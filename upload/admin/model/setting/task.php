@@ -158,7 +158,7 @@ class Task extends \Opencart\System\Engine\Model {
 			$implode[] = "LCASE(`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code'])) . "'";
 		}
 
-		if (!empty($data['filter_status'])) {
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
 			$implode[] = "`status` = '" . $this->db->escape($data['filter_status']) . "'";
 		}
 
@@ -221,7 +221,7 @@ class Task extends \Opencart\System\Engine\Model {
 			$implode[] = "LCASE(`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code'])) . "'";
 		}
 
-		if (!empty($data['filter_status'])) {
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
 			$implode[] = "`status` = '" . $this->db->escape($data['filter_status']) . "'";
 		}
 

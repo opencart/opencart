@@ -25,7 +25,6 @@
   </div>
   <div class="container-fluid">
     <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_event }}</div>
-
     <div class="row">
       <div id="filter-task" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
         <div class="card">
@@ -38,9 +37,8 @@
               <div class="mb-3">
                 <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
                   <option value=""></option>
-                  {% for status in statuses %}
-                    <option value="{{ status.value }}">{{ status.text }}</option>
-                  {% endfor %}
+                  <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                  <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
               <div class="text-end">

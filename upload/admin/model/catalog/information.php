@@ -196,12 +196,8 @@ class Information extends \Opencart\System\Engine\Model {
 	 *
 	 * $information_info = $this->model_catalog_information->getInformation($information_id);
 	 */
-	public function getInformation(int $information_id, int $language_id = 0): array {
-		if (!$language_id) {
-			$language_id = (int)$this->config->get('config_language_id');
-		}
-
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`) WHERE `information_id` = '" . (int)$information_id . "' AND `language_id` = '" . (int)$language_id . "'");
+	public function getInformation(int $information_id): array {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "information` `i` LEFT JOIN `" . DB_PREFIX . "information_description` `id` ON (`i`.`information_id` = `id`.`information_id`) WHERE `i`.`information_id` = '" . (int)$information_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}

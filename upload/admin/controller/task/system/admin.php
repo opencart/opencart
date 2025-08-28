@@ -22,17 +22,6 @@ class Admin extends \Opencart\System\Engine\Controller {
 
 		$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim($args['name']), ENT_QUOTES, 'UTF-8')));
 
-		$base_old = DIR_OPENCART . 'admin/';
-		$base_new = DIR_OPENCART . $name . '/';
-
-		if (!is_dir($base_old)) {
-			return ['error' => $this->language->get('error_exists')];
-		}
-
-		if (is_dir($base_new)) {
-			return ['error' => $this->language->get('error_admin')];
-		}
-
 		$blocked = [
 			'admin',
 			'catalog',
@@ -44,6 +33,17 @@ class Admin extends \Opencart\System\Engine\Controller {
 
 		if (in_array($name, $blocked)) {
 			return ['error' => sprintf($this->language->get('error_allowed'), $name)];
+		}
+
+		$base_old = DIR_OPENCART . 'admin/';
+		$base_new = DIR_OPENCART . $name . '/';
+
+		if (!is_dir($base_old)) {
+			return ['error' => $this->language->get('error_exists')];
+		}
+
+		if (is_dir($base_new)) {
+			return ['error' => $this->language->get('error_admin')];
 		}
 
 		$limit = 200;
@@ -59,19 +59,13 @@ class Admin extends \Opencart\System\Engine\Controller {
 		for ($i = 0; $i < $page_total; $i++) {
 			$start = ($i - 1) * $limit;
 
-			if ($start > ($total - $limit)) {
-				$end = $total;
-			} else {
-				$end = ($start + $limit);
-			}
-
 			$task_data = [
 				'code'   => 'storage',
 				'action' => 'task/system/storage.move',
 				'args'   => [
 					'name'  => $name,
 					'start' => $start,
-					'end'   => $end
+					'limit' => $limit
 				]
 			];
 
@@ -95,7 +89,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 		$required = [
 			'name',
 			'start',
-			'end'
+			'limit'
 		];
 
 		foreach ($required as $value) {
@@ -106,9 +100,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 
 		$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim($args['name']), ENT_QUOTES, 'UTF-8')));
 
-		$base_old = DIR_OPENCART . 'admin/';
-		$base_new = DIR_OPENCART . $name . '/';
-
+		// 2. Create the new admin folder name
 		$blocked = [
 			'admin',
 			'catalog',
@@ -122,9 +114,15 @@ class Admin extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_allowed'), $name)];
 		}
 
-		// 2. Create the new admin folder name
-		if (!is_dir($base_new)) {
-			mkdir($base_new, 0777);
+		$base_old = DIR_OPENCART . 'admin/';
+		$base_new = DIR_OPENCART . $name . '/';
+
+		if (!is_dir($base_old)) {
+			return ['error' => $this->language->get('error_exists')];
+		}
+
+		if (!is_dir($base_new) && !@mkdir($base_new, 0777)) {
+			return ['error' => $this->language->get('error_admin')];
 		}
 
 		// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
@@ -134,7 +132,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 		$total = count($files);
 
 		// 4. Copy the files across
-		foreach (array_slice($files, $args['start'], $args['end']) as $file) {
+		foreach (array_slice($files, $args['start'], $args['limit']) as $file) {
 			$destination = substr($file, strlen($base_old));
 
 			oc_directory_create($base_new . dirname($destination), 0777);
@@ -144,7 +142,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_move'), $args['start'], $args['end'], $total)];
+		return ['success' => sprintf($this->language->get('text_move'), (!$args['start'] && $total) ? 1 : $args['start'], ($args['start'] > ($total - $args['limit'])) ? $total : $args['start'] + $args['limit'], $total)];
 	}
 
 	/*

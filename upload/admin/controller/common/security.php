@@ -269,10 +269,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			$task_data = [
 				'code'   => 'security',
 				'action' => 'task/system/security.admin',
-				'args'   => [
-					'base_old' => $base_old,
-					'base_new' => $base_new
-				]
+				'args'   => ['name' => $name]
 			];
 
 			$this->load->model('setting/task');

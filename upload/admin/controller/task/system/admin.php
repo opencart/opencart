@@ -16,22 +16,20 @@ class Admin extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/system/admin');
 
-		$required = [
-			'base_old',
-			'base_new'
-		];
-
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
-			}
+		if (!array_key_exists('name', $args)) {
+			return ['error' => $this->language->get('error_name')];
 		}
 
-		if (!is_dir($args['base_old'])) {
+		$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim($args['name']), ENT_QUOTES, 'UTF-8')));
+
+		$base_old = DIR_OPENCART . 'admin/';
+		$base_new = DIR_OPENCART . $name . '/';
+
+		if (!is_dir($base_old)) {
 			return ['error' => $this->language->get('error_exists')];
 		}
 
-		if (is_dir($args['base_new'])) {
+		if (is_dir($base_new)) {
 			return ['error' => $this->language->get('error_admin')];
 		}
 
@@ -44,8 +42,6 @@ class Admin extends \Opencart\System\Engine\Controller {
 			'system'
 		];
 
-		$name = basename($args['base_new']);
-
 		if (in_array($name, $blocked)) {
 			return ['error' => sprintf($this->language->get('error_allowed'), $name)];
 		}
@@ -53,7 +49,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 		$limit = 200;
 
 		// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
-		$files = oc_directory_read($args['base_old'], true);
+		$files = oc_directory_read($base_old, true);
 
 		// 3. Split the file copies into chunks.
 		$total = count($files);
@@ -73,10 +69,9 @@ class Admin extends \Opencart\System\Engine\Controller {
 				'code'   => 'storage',
 				'action' => 'task/system/storage.move',
 				'args'   => [
-					'base_old' => $args['base_old'],
-					'base_new' => $args['base_new'],
-					'start'    => $start,
-					'end'      => $end
+					'name'  => $name,
+					'start' => $start,
+					'end'   => $end
 				]
 			];
 
@@ -86,7 +81,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 		$task_data = [
 			'code'   => 'storage',
 			'action' => 'task/system/storage.config',
-			'args'   => ['path' => $args['base_new']]
+			'args'   => ['name' => $name]
 		];
 
 		$this->model_setting_task->addTask($task_data);
@@ -98,8 +93,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/system/admin');
 
 		$required = [
-			'base_old',
-			'base_new',
+			'name',
 			'start',
 			'end'
 		];
@@ -110,25 +104,43 @@ class Admin extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim($args['name']), ENT_QUOTES, 'UTF-8')));
+
+		$base_old = DIR_OPENCART . 'admin/';
+		$base_new = DIR_OPENCART . $name . '/';
+
+		$blocked = [
+			'admin',
+			'catalog',
+			'extension',
+			'image',
+			'install',
+			'system'
+		];
+
+		if (in_array($name, $blocked)) {
+			return ['error' => sprintf($this->language->get('error_allowed'), $name)];
+		}
+
 		// 2. Create the new admin folder name
-		if (!is_dir($args['base_new'])) {
-			mkdir($args['base_new'], 0777);
+		if (!is_dir($base_new)) {
+			mkdir($base_new, 0777);
 		}
 
 		// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
-		$files = oc_directory_read($args['base_old'], true);
+		$files = oc_directory_read($base_old, true);
 
 		// 3. Split the file copies into chunks.
 		$total = count($files);
 
 		// 4. Copy the files across
 		foreach (array_slice($files, $args['start'], $args['end']) as $file) {
-			$destination = substr($file, strlen($args['base_old']));
+			$destination = substr($file, strlen($base_old));
 
-			oc_directory_create($args['base_new'] . dirname($destination), 0777);
+			oc_directory_create($base_new . dirname($destination), 0777);
 
-			if (is_file($args['base_old'] . $destination) && !is_file($args['base_new'] . $destination)) {
-				copy($args['base_old'] . $destination, $args['base_new'] . $destination);
+			if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
+				copy($base_old . $destination, $base_new . $destination);
 			}
 		}
 
@@ -143,16 +155,33 @@ class Admin extends \Opencart\System\Engine\Controller {
 	public function config(array $args = []): array {
 		$this->load->language('task/system/admin');
 
-		if (!array_key_exists($value, $args)) {
-
+		if (!array_key_exists('name', $args)) {
+			return ['error' => $this->language->get('error_name')];
 		}
 
-		if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
+		$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim($args['name']), ENT_QUOTES, 'UTF-8')));
+
+		$base_new = DIR_OPENCART .  $name . '/';
+
+		$blocked = [
+			'admin',
+			'catalog',
+			'extension',
+			'image',
+			'install',
+			'system'
+		];
+
+		if (in_array($name, $blocked)) {
+			return ['error' => sprintf($this->language->get('error_allowed'), $name)];
+		}
+
+		if (!is_writable($base_new . 'config.php')) {
 			return ['error' => $this->language->get('error_writable')];
 		}
 
-		// Update the old config files
-		$file = $args['base_new'] . 'config.php';
+		// Update the config file
+		$file = $base_new . 'config.php';
 
 		$output = '';
 

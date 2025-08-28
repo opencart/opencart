@@ -98,6 +98,19 @@ class Storage extends \Opencart\System\Engine\Controller {
 	public function move(array $args = []): array {
 		$this->load->language('task/system/storage');
 
+		$required = [
+			'base_old',
+			'base_new',
+			'start',
+			'end'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
+
 		// Check the chosen directory is not in the public webspace
 		$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 

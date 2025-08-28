@@ -28,7 +28,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 		}
 
 		// Check current storage path exists
-		if (empty($args['base_old']) || !is_dir($args['base_old'])) {
+		if (!is_dir($args['base_old'])) {
 			return ['error' => $this->language->get('error_exists')];
 		}
 
@@ -54,13 +54,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 		$page_total = ceil($total / $limit);
 
 		for ($i = 0; $i < $page_total; $i++) {
-			$start = ($i - 1) * $limit;
-
-			if ($start > ($total - $limit)) {
-				$end = $total;
-			} else {
-				$end = ($start + $limit);
-			}
+			$start = $i * $limit;
 
 			$task_data = [
 				'code'   => 'storage',
@@ -69,7 +63,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 					'base_old' => $args['base_old'],
 					'base_new' => $args['base_new'],
 					'start'    => $start,
-					'end'      => $end
+					'limit'    => $limit
 				]
 			];
 
@@ -102,7 +96,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 			'base_old',
 			'base_new',
 			'start',
-			'end'
+			'limit'
 		];
 
 		foreach ($required as $value) {
@@ -132,7 +126,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 
 		$total = count($files);
 
-		foreach (array_slice($files, $args['start'], $args['end']) as $file) {
+		foreach (array_slice($files, $args['start'], $args['limit']) as $file) {
 			$destination = substr($file, strlen($args['base_old']));
 
 			oc_directory_create($args['base_new'] . dirname($destination), 0777);
@@ -142,7 +136,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_move'), $args['start'], $args['end'], $total)];
+		return ['success' => sprintf($this->language->get('text_move'), (!$args['start'] && $total) ? 1 : $args['start'], ($args['start'] > ($args['total'] - $args['limit'])) ? $args['total'] : $args['start'] + $args['limit'], $total)];
 	}
 
 	/*

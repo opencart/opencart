@@ -12,9 +12,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function install(): void {
-		$this->load->language('marketplace/installer');
+		$this->load->language('task/system/installer');
 
-		$json = [];
+
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = (int)$this->request->get['extension_install_id'];

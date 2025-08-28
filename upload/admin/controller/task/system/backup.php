@@ -33,7 +33,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
-		$limit = 200;
+		$limit = 1000;
 
 		$backup = (array)$args['backup'];
 
@@ -51,12 +51,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 			for ($i = 0; $i < $page_total; $i++) {
 				$start = $i * $limit;
 
-				if ($start > ($record_total - $limit)) {
-					$end = $record_total;
-				} else {
-					$end = ($start + $limit);
-				}
-
 				$task_data = [
 					'code'   => 'backup',
 					'action' => 'task/system/backup.write',
@@ -64,8 +58,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 						'filename' => $filename,
 						'table'    => $table,
 						'start'    => $start,
-						'end'      => $end,
-						'total'    => $record_total
+						'limit'    => $limit
 					]
 				];
 
@@ -80,8 +73,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 						'filename' => $filename,
 						'table'    => $table,
 						'start'    => 0,
-						'end'      => 0,
-						'total'    => 0
+						'limit'    => 0
 					]
 				];
 
@@ -104,8 +96,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			'filename',
 			'table',
 			'start',
-			'end',
-			'total'
+			'limit'
 		];
 
 		foreach ($required as $value) {
@@ -136,12 +127,12 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$output = '';
 
 		if (!$args['start']) {
-			$output .= "TRUNCATE TABLE `" . $this->db->escape((string)$args['table']) . "`;" . "\n\n";
+			$output .= "TRUNCATE TABLE `" . $this->db->escape($args['table']) . "`;" . "\n\n";
 		}
 
 		$this->load->model('tool/backup');
 
-		$results = $this->model_tool_backup->getRecords((string)$args['table'], (int)$args['start'], (int)$args['end']);
+		$results = $this->model_tool_backup->getRecords($args['table'], (int)$args['start'], (int)$args['limit']);
 
 		foreach ($results as $result) {
 			$fields = '';
@@ -171,7 +162,9 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$output .= "INSERT INTO `" . $args['table'] . "` (" . preg_replace('/, $/', '', $fields) . ") VALUES (" . preg_replace('/, $/', '', $values) . ");" . "\n";
 		}
 
-		if ($args['total'] && $args['end'] == $args['total']) {
+		$record_total = $this->model_tool_backup->getTotalRecords($args['table']);
+
+		if ($record_total && ($args['start'] + $args['limit']) >= $record_total) {
 			$output .= "\n";
 		}
 
@@ -181,6 +174,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
-		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], (!$args['start'] && $args['total']) ? 1 : $args['start'], $args['end'], $args['total'])];
+		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], (!$args['start'] && $record_total) ? 1 : $args['start'], ($args['start'] > ($record_total - $args['limit'])) ? $record_total : $args['start'] + $args['limit'], $record_total)];
 	}
 }

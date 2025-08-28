@@ -95,7 +95,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 		fseek($handle, $args['position'], SEEK_SET);
 
-		while (!feof($handle) && ($i < 100)) {
+		while (!feof($handle) && ($i < 1000)) {
 			$position = ftell($handle);
 
 			$line = fgets($handle, 4096);
@@ -147,6 +147,6 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
-		return ['success' => sprintf($this->language->get('text_restore'), $progress)];
+		return ['success' => sprintf($this->language->get('text_restore'), $progress . '%')];
 	}
 }

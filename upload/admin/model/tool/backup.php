@@ -55,10 +55,8 @@ class Backup extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query("SELECT COLUMN_NAME AS `name` FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . $table . "' AND COLUMN_KEY = 'PRI'");
 
-		if ($query->num_rows) {
-			foreach ($query->rows as $row) {
-				$primary_data[] = '`' . $query->row['name'] . '`';
-			}
+		foreach ($query->rows as $result) {
+			$primary_data[] = '`' . $result['name'] . '`';
 		}
 
 		$sql = "SELECT * FROM `" . $table . "`";

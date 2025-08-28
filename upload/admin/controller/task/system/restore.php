@@ -16,7 +16,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/system/restore');
 
-		if (!array_key_exists($args, 'filename')) {
+		if (!array_key_exists('filename', $args)) {
 			return ['error' => $this->language->get('error_filename')];
 		}
 
@@ -100,18 +100,14 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 			$line = fgets($handle, 4096);
 
-			foreach ($disallowed as $table) {
-				if (str_starts_with($line, "TRUNCATE TABLE `" . DB_PREFIX . $table . "`")) {
-					fseek($handle, $position, SEEK_SET);
-
-					break;
-				}
-			}
-
 			if ($i > 0) {
-				fseek($handle, $position, SEEK_SET);
+				foreach ($disallowed as $table) {
+					if (str_starts_with($line, "TRUNCATE TABLE `" . DB_PREFIX . $table . "`") || str_starts_with($line, "INSERT INTO `" . DB_PREFIX . $table . "`")) {
+						fseek($handle, $position, SEEK_SET);
 
-				break;
+						break 2;
+					}
+				}
 			}
 
 			if ((substr($line, 0, 14) == 'TRUNCATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') && substr($line, -2) == ";\n") {
@@ -124,6 +120,12 @@ class Restore extends \Opencart\System\Engine\Controller {
 		$position = ftell($handle);
 
 		$size = filesize($file);
+
+		if ($position) {
+			$progress = round(($position / $size) * 100, 2);
+		} else {
+			$progress = 0;
+		}
 
 		if ($position && !feof($handle)) {
 			$task_data = [
@@ -145,6 +147,6 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
-		return ['success' => sprintf($this->language->get('text_restore'), $position, $size)];
+		return ['success' => sprintf($this->language->get('text_restore'), $progress)];
 	}
 }

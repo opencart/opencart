@@ -171,7 +171,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$output .= "INSERT INTO `" . $args['table'] . "` (" . preg_replace('/, $/', '', $fields) . ") VALUES (" . preg_replace('/, $/', '', $values) . ");" . "\n";
 		}
 
-		if ($args['end'] == $args['total']) {
+		if ($args['total'] && $args['end'] == $args['total']) {
 			$output .= "\n";
 		}
 

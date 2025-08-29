@@ -175,13 +175,17 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// Check current storage path exists
 			if (!is_dir($base_old)) {
+				$json['error'] = $this->language->get('error_exists');
+			}
+
+			if (is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
 
-			// Check the chosen directory is not in the public webspace
+			// Check the chosen directory is not in the public webspace C:/xampp/htdocs
 			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 
-			if ((substr($base_new, 0, strlen($root)) != $root) || ($root == $base_new)) {
+			if ((substr($root, 0, strlen($path)) != $path) || ($root == $base_new)) {
 				$json['error'] = $this->language->get('error_storage_root');
 			}
 
@@ -197,7 +201,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'security',
-				'action' => 'task/system/security.storage',
+				'action' => 'task/system/storage',
 				'args'   => [
 					'base_old' => $base_old,
 					'base_new' => $base_new
@@ -268,7 +272,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'security',
-				'action' => 'task/system/security.admin',
+				'action' => 'task/system/admin',
 				'args'   => ['name' => $name]
 			];
 

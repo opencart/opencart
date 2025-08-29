@@ -6,6 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div id="accordion" class="accordion">
+
         {% if install %}
           <div id="security-install" class="accordion-item">
             <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-install" class="accordion-button collapsed"><span class="fa-solid fa-trash-can me-1"></span> {{ text_install }}</button></h5>
@@ -23,6 +24,7 @@
             </div>
           </div>
         {% endif %}
+
         {% if storage %}
           <div id="security-storage" class="accordion-item">
             <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage" class="accordion-button collapsed"><span class="fa-solid fa-folder me-1"></span> {{ text_storage }}</button></h2>
@@ -54,6 +56,7 @@
             </div>
           </div>
         {% endif %}
+
         {% if storage_delete %}
           <div id="security-storage-delete" class="accordion-item">
             <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage-delete" class="accordion-button collapsed"><span class="fa-solid fa-trash-can me-1"></span> {{ text_storage_delete }}</button></h5>
@@ -71,6 +74,7 @@
             </div>
           </div>
         {% endif %}
+
         {% if admin %}
           <div id="security-admin" class="accordion-item">
             <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin" class="accordion-button collapsed"><span class="fa-solid fa-folder me-1"></span> {{ text_admin }}</button></h2>
@@ -94,6 +98,7 @@
             </div>
           </div>
         {% endif %}
+
         {% if admin_delete %}
           <div id="security-admin-delete" class="accordion-item">
             <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin-delete" class="accordion-button collapsed"><span class="fa-solid fa-trash-can me-1"></span> {{ text_admin_delete }}</button></h2>
@@ -111,6 +116,7 @@
             </div>
           </div>
         {% endif %}
+
       </div>
     </div>
   </div>

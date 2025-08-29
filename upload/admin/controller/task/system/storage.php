@@ -32,15 +32,21 @@ class Storage extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_exists')];
 		}
 
+		if (is_dir($args['base_new'])) {
+			return ['error' => $this->language->get('error_storage')];
+		}
+
 		// Check the chosen directory is not in the public webspace
+		$path = str_replace('\\', '/', realpath($args['base_new'] . '/../'));
+
 		$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 
-		if ((substr($args['base_new'], 0, strlen($root)) != $root) || ($root == $args['base_new'])) {
-			return ['error' => $this->language->get('error_storage_root')];
+		if ((substr($root, 0, strlen($path)) != $path) || ($root == $args['base_new'])) {
+			return ['error' => $this->language->get('error_root')];
 		}
 
 		if (!str_starts_with(basename($args['base_new']), 'storage')) {
-			return ['error' => $this->language->get('error_storage_name')];
+			return ['error' => $this->language->get('error_name')];
 		}
 
 		$this->load->model('setting/task');
@@ -106,14 +112,16 @@ class Storage extends \Opencart\System\Engine\Controller {
 		}
 
 		// Check the chosen directory is not in the public webspace
+		$path = str_replace('\\', '/', realpath($args['base_new'] . '/../'));
+
 		$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 
-		if ((substr($args['base_new'], 0, strlen($root)) != $root) || ($root == $args['base_new'])) {
-			return ['error' => $this->language->get('error_storage_root')];
+		if ((substr($root, 0, strlen($path)) != $path) || ($root == $args['base_new'])) {
+			return ['error' => $this->language->get('error_root')];
 		}
 
 		if (!str_starts_with(basename($args['base_new']), 'storage')) {
-			return ['error' => $this->language->get('error_storage_name')];
+			return ['error' => $this->language->get('error_name')];
 		}
 
 		// Create the new storage folder
@@ -136,7 +144,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_move'), (!$args['start'] && $total) ? 1 : $args['start'], ($args['start'] > ($args['total'] - $args['limit'])) ? $args['total'] : $args['start'] + $args['limit'], $total)];
+		return ['success' => sprintf($this->language->get('text_move'), (!$args['start'] && $total) ? 1 : $args['start'], ($args['start'] > ($total - $args['limit'])) ? $total : $args['start'] + $args['limit'], $total)];
 	}
 
 	/*

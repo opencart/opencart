@@ -5,7 +5,7 @@ namespace Opencart\Admin\Controller\Task\System;
  *
  *
  *
- * @package Opencart\Admin\Controller\Common
+ * @package Opencart\Admin\Controller\Task\System
  */
 class Admin extends \Opencart\System\Engine\Controller {
 	/**
@@ -57,11 +57,11 @@ class Admin extends \Opencart\System\Engine\Controller {
 		$page_total = ceil($total / $limit);
 
 		for ($i = 0; $i < $page_total; $i++) {
-			$start = ($i - 1) * $limit;
+			$start = $i * $limit;
 
 			$task_data = [
 				'code'   => 'storage',
-				'action' => 'task/system/storage.move',
+				'action' => 'task/system/admin.move',
 				'args'   => [
 					'name'  => $name,
 					'start' => $start,
@@ -74,7 +74,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 
 		$task_data = [
 			'code'   => 'storage',
-			'action' => 'task/system/storage.config',
+			'action' => 'task/system/admin.config',
 			'args'   => ['name' => $name]
 		];
 

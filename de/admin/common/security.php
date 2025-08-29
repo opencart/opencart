@@ -39,6 +39,7 @@ $_['error_install']                   = 'Achtung: Installationsverzeichnis exist
 $_['error_storage']                   = 'Achtung: Speicherverzeichnis existiert nicht!';
 $_['error_storage_root']              = 'Achtung: Das Speicherverzeichnis muss außerhalb des Web-Roots liegen!';
 $_['error_storage_name']              = 'Warnung: Der Name des Speicherverzeichnisses muss mit „storage“ beginnen! zB „storage_“.';
+$_['error_storage_exists']            = 'Warning: Storage directory already exists!';
 $_['error_admin']                     = 'Achtung: Admin-Verzeichnis existiert nicht!';
 $_['error_admin_allowed']             = 'Achtung: Dieser Admin-Verzeichnisname kann nicht verwendet werden!';
 $_['error_admin_exists']              = 'Achtung: Admin-Verzeichnis existiert bereits!';

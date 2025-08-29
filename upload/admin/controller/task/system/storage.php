@@ -168,8 +168,8 @@ class Storage extends \Opencart\System\Engine\Controller {
 		}
 
 		$files = [
-			DIR_APPLICATION . 'config.php',
-			DIR_OPENCART . 'config.php'
+			DIR_OPENCART . 'config.php',
+			DIR_APPLICATION . 'config.php'
 		];
 
 		foreach ($files as $file) {

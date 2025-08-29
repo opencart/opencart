@@ -32,10 +32,12 @@
               <div class="modal-body">
                 <form id="form-storage">
                   <p>{{ text_storage_description }}</p>
+
                   <div class="mb-3">
                     <label class="form-label">{{ entry_path_current }}</label>
                     <input type="text" value="{{ storage }}" class="form-control is-invalid" readonly/>
                   </div>
+
                   <div class="mb-3">
                     <label class="form-label">{{ entry_path_new }}</label>
                     <div class="input-group">
@@ -48,6 +50,7 @@
                     </div>
                     <div class="form-text">{{ help_storage }}</div>
                   </div>
+
                   <div class="text-end">
                     <button type="button" id="button-storage" class="btn btn-danger"><span class="fa-solid fa-circle-right"></span> {{ button_move }}</button>
                   </div>
@@ -80,7 +83,6 @@
             <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin" class="accordion-button collapsed"><span class="fa-solid fa-folder me-1"></span> {{ text_admin }}</button></h2>
             <div id="accordion-admin" class="accordion-collapse collapse" data-bs-parent="#accordion">
               <div class="modal-body">
-
                 <form id="form-admin">
                   <p>{{ text_admin_description }}</p>
                   <div class="mb-3">
@@ -93,7 +95,6 @@
                     <button type="button" id="button-admin" class="btn btn-danger"><i class="fa-solid fa-circle-right"></i> {{ button_move }}</button>
                   </div>
                 </form>
-
               </div>
             </div>
           </div>

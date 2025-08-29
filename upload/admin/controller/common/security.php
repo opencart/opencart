@@ -77,6 +77,9 @@ class Security extends \Opencart\System\Engine\Controller {
 		// Storage delete
 		$path = DIR_SYSTEM . 'storage/';
 
+		echo $path . "\n";
+		echo DIR_STORAGE;
+
 		if (is_dir($path) && DIR_STORAGE != $path) {
 			$data['storage_delete'] = $path;
 		} else {

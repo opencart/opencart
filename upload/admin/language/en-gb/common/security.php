@@ -35,13 +35,10 @@ $_['help_storage']                    = 'Storage directory name must begin with 
 // Error
 $_['error_permission']                = 'Warning: You do not have permission to modify security!';
 $_['error_install']                   = 'Warning: Install directory does not exist!';
-
 $_['error_storage_exists_old']        = 'Warning: Old storage directory does not exist!';
 $_['error_storage_exists_new']        = 'Warning: New storage directory already exists!';
-
 $_['error_storage_root']              = 'Warning: Storage directory must be outside the web root!';
 $_['error_storage_name']              = 'Warning: Storage directory name must start with `storage`! e.g. `storage_`.';
-
 $_['error_admin_exists_old']          = 'Warning: Old admin directory does not exist!';
 $_['error_admin_exists_new']          = 'Warning: New admin directory already exists!';
 $_['error_admin_allowed']             = 'Warning: This admin directory name can not be used!';

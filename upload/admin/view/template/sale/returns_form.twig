@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" id="button-save" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+        <button type="button" id="button-save" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><span class="fa-solid fa-floppy-disk"></span></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><span class="fa-solid fa-reply"></span></a>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -16,7 +16,7 @@
   </div>
   <div class="container-fluid">
     <div class="card mb-3">
-      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-header"><span class="fa-solid fa-pencil"></span> {{ text_form }}</div>
       <div class="card-body">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col mb-3">
@@ -27,7 +27,7 @@
                   <div id="output-order">{% if order_id %}<a href="{{ order_edit }}" target="_blank">{{ order_id }}</a>{% endif %}</div>
                 </div>
               </section>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-order" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-order" class="btn btn-outline-primary"><span class="fa-solid fa-cog"></span></button>
             </div>
           </div>
           <div class="col mb-3">
@@ -42,7 +42,7 @@
                   {% endif %}
                 </div>
               </section>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><span class="fa-solid fa-cog"></span></button>
             </div>
           </div>
           <div class="col mb-3">
@@ -72,7 +72,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+              <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><span class="fa-solid fa-plus-circle"></span></button></td>
             </tr>
           </tfoot>
         </table>
@@ -119,7 +119,7 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_history }}</div>
+      <div class="card-header"><span class="fa-solid fa-list"></span> {{ text_history }}</div>
       <div class="card-body">
         <div id="history">{{ history }}</div>
         <fieldset>
@@ -148,7 +148,7 @@
               </div>
             </div>
             <div class="text-end">
-              <button type="submit" id="button-history" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
+              <button type="submit" id="button-history" class="btn btn-primary"><span class="fa-solid fa-plus-circle"></span> {{ button_history_add }}</button>
             </div>
             <input type="hidden" name="return_id" value="{{ return_id }}" id="input-return-id"/>
           </form>
@@ -172,7 +172,7 @@
             <input type="hidden" name="date_ordered" value="{{ date_ordered }}" id="input-date-ordered"/>
           </div>
           <div class="text-end">
-            <button type="submit" id="button-order" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-order" class="btn btn-primary"><span class="fa-solid fa-check"></span> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -215,7 +215,7 @@
             <div id="error-telephone" class="invalid-feedback"></div>
           </div>
           <div class="text-end">
-            <button type="submit" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-customer" class="btn btn-primary"><span class="fa-solid fa-check"></span> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -250,7 +250,7 @@
             <div id="error-quantity" class="invalid-feedback"></div>
           </div>
           <div class="text-end">
-            <button type="submit" id="button-product" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_continue }}</button>
+            <button type="submit" id="button-product" class="btn btn-primary"><span class="fa-solid fa-check"></span> {{ button_continue }}</button>
           </div>
         </form>
       </div>
@@ -283,7 +283,7 @@ $('#form-order').on('submit', function(e) {
 
             // Check for errors
             if (json['error']) {
-                $('#form-order').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-order').prepend('<div class="alert alert-danger alert-dismissible"><span class="fa-solid fa-circle-exclamation"></span> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['order_id']) {
@@ -414,7 +414,7 @@ $('#button-save').on('click', function() {
             // Check for errors
             if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><span class="fa-solid fa-circle-exclamation"></span> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 for (key in json['error']) {
@@ -429,7 +429,7 @@ $('#button-save').on('click', function() {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><span class="fa-solid fa-check-circle"></span> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if (json['return_id']) {
                     $('#input-return-id').val(json['return_id']);
@@ -467,13 +467,13 @@ $('#form-history').on('submit', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><span class="fa-solid fa-circle-exclamation"></span> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
                 $('#history').load('index.php?route=sale/returns.history&user_token={{ user_token }}&return_id=' + $('#input-return-id').val());
 
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><span class="fa-solid fa-check-circle"></span> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#input-history').val('');
             }

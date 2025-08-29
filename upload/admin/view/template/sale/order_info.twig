@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fa-solid fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not shipping_method_code %} disabled{% endif %}"><i class="fa-solid fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <div class="float-end"><a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><span class="fa-solid fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not shipping_method_code %} disabled{% endif %}"><span class="fa-solid fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><span class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -13,7 +13,7 @@
   </div>
   <div class="container-fluid">
     <div class="card mb-3">
-      <div class="card-header"><i class="fa-solid fa-info-circle"></i> {{ text_form }}</div>
+      <div class="card-header"><span class="fa-solid fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col mb-3">
@@ -29,9 +29,9 @@
                 </div>
               </section>
               {% if not invoice_no %}
-                <button type="button" id="button-invoice" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+                <button type="button" id="button-invoice" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><span class="fa-solid fa-cog"></i></button>
               {% else %}
-                <button type="button" disabled="disabled" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+                <button type="button" disabled="disabled" class="btn btn-outline-primary"><span class="fa-solid fa-cog"></i></button>
               {% endif %}
             </div>
           </div>
@@ -47,7 +47,7 @@
                   {% endif %}
                 </div>
               </section>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><span class="fa-solid fa-cog"></i></button>
             </div>
           </div>
           <div class="col mb-3">
@@ -155,7 +155,7 @@
                     <td class="text-end">{{ order_product.quantity }}</td>
                     <td class="text-end"><x-currency code="{{ currency_code }}" amount="{{ order_product.price }}" value="{{ currency_value }}"></x-currency></td>
                     <td class="text-end"><x-currency code="{{ currency_code }}" amount="{{ order_product.total }}" value="{{ currency_value }}"></x-currency></td>
-                    <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                    <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><span class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set order_product_row = order_product_row + 1 %}
                 {% endfor %}

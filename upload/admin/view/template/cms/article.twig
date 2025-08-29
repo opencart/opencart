@@ -3,18 +3,18 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-article').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-        <button type="button" id="button-rating" data-bs-toggle="tooltip" title="{{ button_rating }}" class="btn btn-warning"><i class="fa-solid fa-sync"></i></button>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-article').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><span class="fa-solid fa-filter"></span></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><span class="fa-solid fa-plus"></span></a>
+        <button type="button" id="button-rating" data-bs-toggle="tooltip" title="{{ button_rating }}" class="btn btn-warning"><span class="fa-solid fa-sync"></span></button>
         <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><span class="fa-solid fa-list-check"></span> {{ button_action }} <span class="fa-solid fa-caret-down fa-fw"></span></button>
           <ul class="dropdown-menu">
-            <li><button type="submit" form="form-article" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
-            <li><button type="submit" form="form-article" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
+            <li><button type="submit" form="form-article" formaction="{{ enable }}" class="dropdown-item"><span class="fa-solid fa-toggle-on text-success"></span> {{ text_enable }}</button></li>
+            <li><button type="submit" form="form-article" formaction="{{ disable }}" class="dropdown-item"><span class="fa-solid fa-toggle-off text-danger"></span> {{ text_disable }}</button></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><button type="submit" form="form-article" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
+            <li><button type="submit" form="form-article" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><span class="fa-regular fa-trash-can text-danger"></span> {{ text_delete }}</button></li>
           </ul>
         </div>
       </div>
@@ -30,7 +30,7 @@
     <div class="row">
       <div id="filter-article" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
         <div class="card">
-          <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-header"><span class="fa-solid fa-filter"></span> {{ text_filter }}</div>
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
@@ -62,8 +62,8 @@
                 </select>
               </div>
               <div class="text-end">
-                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
-                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                <button type="submit" id="button-filter" class="btn btn-light"><span class="fa-solid fa-filter"></span> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><span class="fa-solid fa-filter-circle-xmark"></span></button>
               </div>
             </form>
           </div>
@@ -71,7 +71,7 @@
       </div>
       <div class="col col-lg-9 col-md-12">
         <div class="card">
-          <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+          <div class="card-header"><span class="fa-solid fa-list"></span> {{ text_list }}</div>
           <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
@@ -113,11 +113,11 @@ $('#button-rating').on('click', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><span class="fa-solid fa-circle-exclamation"></span> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><span class="fa-solid fa-check-circle-circle"></span> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

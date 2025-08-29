@@ -175,7 +175,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// Check current storage path exists
 			if (!is_dir($base_old)) {
-				$json['error'] = $this->language->get('error_exists');
+				$json['error'] = $this->language->get('error_storage_exists');
 			}
 
 			if (is_dir($base_new)) {

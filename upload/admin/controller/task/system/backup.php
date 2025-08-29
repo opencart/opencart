@@ -174,6 +174,18 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
-		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], (!$args['start'] && $record_total) ? 1 : $args['start'], ($args['start'] > ($record_total - $args['limit'])) ? $record_total : $args['start'] + $args['limit'], $record_total)];
+		if ($record_total) {
+			if ($args['start'] > ($record_total - $args['limit'])) {
+				$end = $record_total;
+			} else {
+				$end = $args['start'] + $args['limit'];
+			}
+
+			$progress = round(($end / $record_total) * 100, 2);
+		} else {
+			$progress = 100;
+		}
+
+		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], $progress . '%')];
 	}
 }

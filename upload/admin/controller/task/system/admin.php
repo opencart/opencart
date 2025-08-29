@@ -83,6 +83,15 @@ class Admin extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/*
+	 * Move
+	 *
+	 * Moves admin directory.
+	 *
+	 * @args array []
+	 *
+	 * @return array
+	 */
 	public function move(array $args = []): array {
 		$this->load->language('task/system/admin');
 
@@ -118,11 +127,11 @@ class Admin extends \Opencart\System\Engine\Controller {
 		$base_new = DIR_OPENCART . $name . '/';
 
 		if (!is_dir($base_old)) {
-			return ['error' => $this->language->get('error_exists')];
+			return ['error' => $this->language->get('error_exists_old')];
 		}
 
 		if (!is_dir($base_new) && !@mkdir($base_new, 0777)) {
-			return ['error' => $this->language->get('error_admin')];
+			return ['error' => $this->language->get('error_exists_new')];
 		}
 
 		// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
@@ -142,7 +151,19 @@ class Admin extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_move'), (!$args['start'] && $total) ? 1 : $args['start'], ($args['start'] > ($total - $args['limit'])) ? $total : $args['start'] + $args['limit'], $total)];
+		$progress = 0;
+
+		if ($total) {
+			if ($args['start'] > ($total - $args['limit'])) {
+				$end = $total;
+			} else {
+				$end = $args['start'] + $args['limit'];
+			}
+
+			$progress = round(($end / $total) * 100, 2);
+		}
+
+		return ['success' => sprintf($this->language->get('text_move'), $progress . '%')];
 	}
 
 	/*

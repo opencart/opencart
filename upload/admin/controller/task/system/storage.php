@@ -29,11 +29,11 @@ class Storage extends \Opencart\System\Engine\Controller {
 
 		// Check current storage path exists
 		if (!is_dir($args['base_old'])) {
-			return ['error' => $this->language->get('error_exists')];
+			return ['error' => $this->language->get('error_exists_old')];
 		}
 
 		if (is_dir($args['base_new'])) {
-			return ['error' => $this->language->get('error_storage')];
+			return ['error' => $this->language->get('error_exists_new')];
 		}
 
 		// Check the chosen directory is not in the public webspace
@@ -80,14 +80,6 @@ class Storage extends \Opencart\System\Engine\Controller {
 			'code'   => 'storage',
 			'action' => 'task/system/storage.config',
 			'args'   => ['path' => $args['base_new']]
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'storage',
-			'action' => 'task/system/storage.delete',
-			'args'   => []
 		];
 
 		$this->model_setting_task->addTask($task_data);
@@ -144,7 +136,19 @@ class Storage extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_move'), (!$args['start'] && $total) ? 1 : $args['start'], ($args['start'] > ($total - $args['limit'])) ? $total : $args['start'] + $args['limit'], $total)];
+		$progress = 0;
+
+		if ($total) {
+			if ($args['start'] > ($total - $args['limit'])) {
+				$end = $total;
+			} else {
+				$end = $args['start'] + $args['limit'];
+			}
+
+			$progress = round(($end / $total) * 100, 2);
+		}
+
+		return ['success' => sprintf($this->language->get('text_move'), $progress . '%')];
 	}
 
 	/*
@@ -189,27 +193,6 @@ class Storage extends \Opencart\System\Engine\Controller {
 		}
 
 		return ['success' => $this->language->get('text_config')];
-	}
-
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(array $args = []): array {
-		$this->load->language('task/system/storage');
-
-		// Storage directory exists
-		$path = DIR_SYSTEM . 'storage/';
-
-		if (!is_dir($path) || DIR_STORAGE == $path) {
-			return ['error' => $this->language->get('error_delete')];
-		}
-
-		// Delete old admin directory
-		oc_directory_delete($path);
-
-		return ['success' => $this->language->get('text_delete')];
 	}
 }
 

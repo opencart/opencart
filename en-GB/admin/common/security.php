@@ -39,6 +39,7 @@ $_['error_install']                   = 'Warning: Install directory does not exi
 $_['error_storage']                   = 'Warning: Storage directory does not exist!';
 $_['error_storage_root']              = 'Warning: Storage directory must be outside the web root!';
 $_['error_storage_name']              = 'Warning: Storage directory name must start with `storage`! e.g. `storage_`.';
+$_['error_storage_exists']            = 'Warning: Storage directory already exists!';
 $_['error_admin']                     = 'Warning: Admin directory does not exist!';
 $_['error_admin_allowed']             = 'Warning: This admin directory name can not be used!';
 $_['error_admin_exists']              = 'Warning: Admin directory already exists!';

@@ -32,25 +32,22 @@
               <div class="modal-body">
                 <form id="form-storage">
                   <p>{{ text_storage_description }}</p>
-
                   <div class="mb-3">
                     <label class="form-label">{{ entry_path_current }}</label>
                     <input type="text" value="{{ storage }}" class="form-control is-invalid" readonly/>
                   </div>
-
                   <div class="mb-3">
                     <label class="form-label">{{ entry_path_new }}</label>
                     <div class="input-group">
-                      <select id="input-path" class="form-select">
+                      <select name="path" id="input-path" class="form-select">
                         {% for path in paths %}
                           <option value="{{ path }}">{{ path }}</option>
                         {% endfor %}
                       </select>
-                      <input type="text" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control w-50"/>
+                      <input type="text" name="storage" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control w-50"/>
                     </div>
                     <div class="form-text">{{ help_storage }}</div>
                   </div>
-
                   <div class="text-end">
                     <button type="button" id="button-storage" class="btn btn-danger"><span class="fa-solid fa-circle-right"></span> {{ button_move }}</button>
                   </div>
@@ -88,7 +85,7 @@
                   <div class="mb-3">
                     <div class="input-group">
                       <div class="input-group-text">{{ text_path }}</div>
-                      <input type="text" name="name" id="input-admin" value="admin" placeholder="{{ entry_name }}" class="form-control is-invalid"/>
+                      <input type="text" name="name" value="admin" placeholder="{{ entry_name }}" id="input-admin" class="form-control is-invalid"/>
                     </div>
                   </div>
                   <div class="text-end">

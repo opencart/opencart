@@ -22,7 +22,6 @@ $_['text_admin_delete_success']       = 'Erfolg: Vorheriges Admin-Verzeichnis wu
 $_['text_path']                       = 'Weg';
 
 // Entry
-$_['entry_path']                      = 'Weg';
 $_['entry_path_current']              = 'Aktueller Pfad';
 $_['entry_path_new']                  = 'Neuer Pfad';
 $_['entry_name']                      = 'Verzeichnisname';
@@ -36,12 +35,15 @@ $_['help_storage']                    = 'Der Name des Speicherverzeichnisses mus
 // Error
 $_['error_permission']                = 'Achtung: Sie sind nicht berechtigt, die Sicherheit zu ändern!';
 $_['error_install']                   = 'Achtung: Installationsverzeichnis existiert nicht!';
-$_['error_storage']                   = 'Achtung: Speicherverzeichnis existiert nicht!';
+
+$_['error_storage_exists_old']        = 'Warning: Old storage directory does not exist!';
+$_['error_storage_exists_new']        = 'Warning: New storage directory already exists!';
+
 $_['error_storage_root']              = 'Achtung: Das Speicherverzeichnis muss außerhalb des Web-Roots liegen!';
 $_['error_storage_name']              = 'Warnung: Der Name des Speicherverzeichnisses muss mit „storage“ beginnen! zB „storage_“.';
-$_['error_storage_exists']            = 'Warning: Storage directory already exists!';
-$_['error_admin']                     = 'Achtung: Admin-Verzeichnis existiert nicht!';
+
+$_['error_admin_exists_old']          = 'Warning: Old admin directory does not exist!';
+$_['error_admin_exists_new']          = 'Warning: New admin directory already exists!';
 $_['error_admin_allowed']             = 'Achtung: Dieser Admin-Verzeichnisname kann nicht verwendet werden!';
-$_['error_admin_exists']              = 'Achtung: Admin-Verzeichnis existiert bereits!';
 $_['error_writable']                  = 'Achtung: config.php und admin/config.php müssen beschreibbar gemacht werden!';
 $_['error_remove']                    = 'Warnung: Das zu löschende Verzeichnis existiert nicht!';

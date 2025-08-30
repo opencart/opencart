@@ -11,14 +11,14 @@ $_['text_storage_description']        = 'Es ist sehr wichtig, dass Sie das Speic
 $_['text_storage_move']               = 'Verschieben von %s nach %s von %s Speicherdateien';
 $_['text_storage_success']            = 'Success: Storage directory move has been added to the task queue!';
 $_['text_storage_delete']             = 'Bisheriges Speicherverzeichnis löschen';
-$_['text_storage_delete_description'] = 'Ihr bisheriges Speicherverzeichnis muss gelöscht werden!';
-$_['text_storage_delete_success']     = 'Erfolg: Vorheriges Speicherverzeichnis wurde gelöscht!';
+$_['text_storage_description_delete'] = 'Your previous storage directory needs deleting!';
+$_['text_storage_success_delete']     = 'Success: Previous storage directory has been deleted!';
 $_['text_admin']                      = 'Administratorverzeichnis verschieben';
 $_['text_admin_description']          = 'Bitte geben Sie in das Feld unten einen neuen Administratorverzeichnisnamen ein.';
 $_['text_admin_success']              = 'Success: Admin directory move has been added to the task queue!';
 $_['text_admin_delete']               = 'Vorheriges Admin-Verzeichnis löschen';
-$_['text_admin_delete_description']   = 'Ihr vorheriges Administratorverzeichnis muss gelöscht werden!';
-$_['text_admin_delete_success']       = 'Erfolg: Vorheriges Admin-Verzeichnis wurde gelöscht!';
+$_['text_admin_description_delete']   = 'Your previous admin directory needs deleting!';
+$_['text_admin_success_delete']       = 'Success: Previous admin directory has been deleted!';
 $_['text_path']                       = 'Weg';
 
 // Entry
@@ -35,13 +35,10 @@ $_['help_storage']                    = 'Der Name des Speicherverzeichnisses mus
 // Error
 $_['error_permission']                = 'Achtung: Sie sind nicht berechtigt, die Sicherheit zu ändern!';
 $_['error_install']                   = 'Achtung: Installationsverzeichnis existiert nicht!';
-
 $_['error_storage_exists_old']        = 'Warning: Old storage directory does not exist!';
 $_['error_storage_exists_new']        = 'Warning: New storage directory already exists!';
-
 $_['error_storage_root']              = 'Achtung: Das Speicherverzeichnis muss außerhalb des Web-Roots liegen!';
 $_['error_storage_name']              = 'Warnung: Der Name des Speicherverzeichnisses muss mit „storage“ beginnen! zB „storage_“.';
-
 $_['error_admin_exists_old']          = 'Warning: Old admin directory does not exist!';
 $_['error_admin_exists_new']          = 'Warning: New admin directory already exists!';
 $_['error_admin_allowed']             = 'Achtung: Dieser Admin-Verzeichnisname kann nicht verwendet werden!';

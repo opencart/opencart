@@ -233,7 +233,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			$path = DIR_SYSTEM . 'storage/';
 
 			if (!is_dir($path) || DIR_STORAGE == $path) {
-				$json['error'] = $this->language->get('error_storage');
+				$json['error'] = $this->language->get('error_remove');
 			}
 		}
 
@@ -340,7 +340,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			$path = DIR_OPENCART . 'admin/';
 
 			if (!is_dir($path) || DIR_APPLICATION == $path) {
-				$json['error'] = $this->language->get('error_admin');
+				$json['error'] = $this->language->get('error_remove');
 			}
 		}
 

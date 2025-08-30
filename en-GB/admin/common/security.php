@@ -11,14 +11,14 @@ $_['text_storage_description']        = 'It is very important that you move the 
 $_['text_storage_move']               = 'Moving %s to %s of %s storage files';
 $_['text_storage_success']            = 'Success: Storage directory move has been added to the task queue!';
 $_['text_storage_delete']             = 'Delete previous storage directory';
-$_['text_storage_delete_description'] = 'Your previous storage directory needs deleting!';
-$_['text_storage_delete_success']     = 'Success: Previous storage directory has been deleted!';
+$_['text_storage_description_delete'] = 'Your previous storage directory needs deleting!';
+$_['text_storage_success_delete']     = 'Success: Previous storage directory has been deleted!';
 $_['text_admin']                      = 'Move admin directory';
 $_['text_admin_description']          = 'Please type in a new admin directory name in the field below.';
 $_['text_admin_success']              = 'Success: Admin directory move has been added to the task queue!';
 $_['text_admin_delete']               = 'Delete previous admin directory';
-$_['text_admin_delete_description']   = 'Your previous admin directory needs deleting!';
-$_['text_admin_delete_success']       = 'Success: Previous admin directory has been deleted!';
+$_['text_admin_description_delete']   = 'Your previous admin directory needs deleting!';
+$_['text_admin_success_delete']       = 'Success: Previous admin directory has been deleted!';
 $_['text_path']                       = 'Path';
 
 // Entry
@@ -35,13 +35,10 @@ $_['help_storage']                    = 'Storage directory name must begin with 
 // Error
 $_['error_permission']                = 'Warning: You do not have permission to modify security!';
 $_['error_install']                   = 'Warning: Install directory does not exist!';
-
 $_['error_storage_exists_old']        = 'Warning: Old storage directory does not exist!';
 $_['error_storage_exists_new']        = 'Warning: New storage directory already exists!';
-
 $_['error_storage_root']              = 'Warning: Storage directory must be outside the web root!';
 $_['error_storage_name']              = 'Warning: Storage directory name must start with `storage`! e.g. `storage_`.';
-
 $_['error_admin_exists_old']          = 'Warning: Old admin directory does not exist!';
 $_['error_admin_exists_new']          = 'Warning: New admin directory already exists!';
 $_['error_admin_allowed']             = 'Warning: This admin directory name can not be used!';

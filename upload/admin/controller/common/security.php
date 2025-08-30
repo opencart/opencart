@@ -219,6 +219,36 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function storage_delete() {
+		$this->load->language('common/security');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/security')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Storage directory exists
+			$path = DIR_SYSTEM . 'storage/';
+
+			if (!is_dir($path) || DIR_STORAGE == $path) {
+				$json['error'] = $this->language->get('error_storage');
+			}
+		}
+
+		if (!$json) {
+			// Delete old admin directory
+			oc_directory_delete($path);
+
+			$json['success'] = $this->language->get('text_storage_success_delete');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput(json_encode($json));
+	}
+
 	/**
 	 * Admin
 	 *
@@ -290,49 +320,27 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+
 	/**
 	 * Delete
 	 *
 	 * @return void
 	 */
-	public function delete(): void {
+	public function admin_delete(): void {
 		$this->load->language('common/security');
 
 		$json = [];
-
-		if (isset($this->request->get['remove'])) {
-			$remove = (string)$this->request->get['remove'];
-		} else {
-			$remove = '';
-		}
 
 		if (!$this->user->hasPermission('modify', 'common/security')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$path = '';
-
-			if ($remove == 'storage') {
-				// Storage directory exists
-				$path = DIR_SYSTEM . 'storage/';
-
-				if (!is_dir($path) || DIR_STORAGE == $path) {
-					$json['error'] = $this->language->get('error_storage');
-				}
-			}
-
 			// Admin directory exists
-			if ($remove == 'admin') {
-				$path = DIR_OPENCART . 'admin/';
+			$path = DIR_OPENCART . 'admin/';
 
-				if (!is_dir($path) || DIR_APPLICATION == $path) {
-					$json['error'] = $this->language->get('error_admin');
-				}
-			}
-
-			if (!$path) {
-				$json['error'] = $this->language->get('error_remove');
+			if (!is_dir($path) || DIR_APPLICATION == $path) {
+				$json['error'] = $this->language->get('error_admin');
 			}
 		}
 
@@ -340,7 +348,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			// Delete old admin directory
 			oc_directory_delete($path);
 
-			$json['success'] = $this->language->get('text_' . $remove . '_delete_success');
+			$json['success'] = $this->language->get('text_admin_success_delete');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

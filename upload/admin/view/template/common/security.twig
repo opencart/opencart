@@ -107,7 +107,7 @@ $('#security').on('click', '#button-storage-delete', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security.delete&user_token={{ user_token }}&remove=storage',
+        url: 'index.php?route=common/security.storage_delete&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -174,7 +174,7 @@ $('#security').on('click', '#button-admin-delete', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security.delete&user_token={{ user_token }}&remove=admin',
+        url: 'index.php?route=common/security.admin_delete&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');

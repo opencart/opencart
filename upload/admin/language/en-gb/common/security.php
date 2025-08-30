@@ -11,14 +11,14 @@ $_['text_storage_description']        = 'It is very important that you move the 
 $_['text_storage_move']               = 'Moving %s to %s of %s storage files';
 $_['text_storage_success']            = 'Success: Storage directory move has been added to the task queue!';
 $_['text_storage_delete']             = 'Delete previous storage directory';
-$_['text_storage_delete_description'] = 'Your previous storage directory needs deleting!';
-$_['text_storage_delete_success']     = 'Success: Previous storage directory has been deleted!';
+$_['text_storage_description_delete'] = 'Your previous storage directory needs deleting!';
+$_['text_storage_success_delete']     = 'Success: Previous storage directory has been deleted!';
 $_['text_admin']                      = 'Move admin directory';
 $_['text_admin_description']          = 'Please type in a new admin directory name in the field below.';
 $_['text_admin_success']              = 'Success: Admin directory move has been added to the task queue!';
 $_['text_admin_delete']               = 'Delete previous admin directory';
-$_['text_admin_delete_description']   = 'Your previous admin directory needs deleting!';
-$_['text_admin_delete_success']       = 'Success: Previous admin directory has been deleted!';
+$_['text_admin_description_delete']   = 'Your previous admin directory needs deleting!';
+$_['text_admin_success_delete']       = 'Success: Previous admin directory has been deleted!';
 $_['text_path']                       = 'Path';
 
 // Entry

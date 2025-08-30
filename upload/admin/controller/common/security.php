@@ -175,11 +175,11 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// Check current storage path exists
 			if (!is_dir($base_old)) {
-				$json['error'] = $this->language->get('error_storage_exists');
+				$json['error'] = $this->language->get('error_storage_exists_old');
 			}
 
 			if (is_dir($base_new)) {
-				$json['error'] = $this->language->get('error_storage');
+				$json['error'] = $this->language->get('error_storage_exists_new');
 			}
 
 			// Check the chosen directory is not in the public webspace C:/xampp/htdocs
@@ -274,11 +274,11 @@ class Security extends \Opencart\System\Engine\Controller {
 			$base_new = DIR_OPENCART . $name . '/';
 
 			if (!is_dir($base_old)) {
-				$json['error'] = $this->language->get('error_admin');
+				$json['error'] = $this->language->get('error_admin_exists_old');
 			}
 
 			if (is_dir($base_new)) {
-				$json['error'] = $this->language->get('error_admin_exists');
+				$json['error'] = $this->language->get('error_admin_exists_new');
 			}
 
 			$blocked = [

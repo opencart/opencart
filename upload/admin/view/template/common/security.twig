@@ -68,8 +68,6 @@ $('#security').on('click', '#button-install', function() {
 });
 
 $('#security').on('submit', '#form-storage', function() {
-    var element = this;
-
     $.ajax({
         url: 'index.php?route=common/security.storage&user_token={{ user_token }}',
         type: 'post',
@@ -77,10 +75,10 @@ $('#security').on('submit', '#form-storage', function() {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $(element).button('loading');
+            $('#button-storage').button('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $('#button-storage').button('reset');
         },
         success: function(json) {
             console.log(json);
@@ -144,15 +142,17 @@ $('#security').on('submit', '#form-admin', function() {
         type: 'post',
         data: $('#form-admin').serialize(),
         dataType: 'json',
+        beforeSend: function() {
+            $('#button-admin').button('loading');
+        },
+        complete: function() {
+            $('#button-admin').button('reset');
+        },
         contentType: 'application/x-www-form-urlencoded',
         success: function(json) {
             console.log(json);
 
             $('.alert-dismissible').remove();
-
-            if (json['redirect']) {
-                location = json['redirect'];
-            }
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -162,6 +162,17 @@ $('#security').on('submit', '#form-admin', function() {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#button-refresh').trigger('click');
+
+
+                window.setTimeout(function() {
+                    if (json['redirect']) {
+                        location = json['redirect'];
+                    }
+
+                    $('#alert .alert-dismissible').fadeTo(3000, 0, function() {
+                        $(this).remove();
+                    });
+                }, 3000);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

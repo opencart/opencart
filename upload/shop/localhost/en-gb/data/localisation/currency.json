@@ -73,11 +73,11 @@
     "decimal_place": "2",
     "value": "0.74515872",
     "status": "1",
-    "date_modified": "2025-05-23 10:22:43",
     "decimal_point": ".",
     "thousand_point": ","
   },
   "RUB": {
+    "date_modified": "2025-05-23 10:22:43",
     "currency_id": "6",
     "title": "Russian Ruble",
     "code": "RUB",

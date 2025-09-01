@@ -93,8 +93,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/customer/';
+		$base = DIR_OPENCART . 'shop/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/customer/';
 		$filename = 'customer_group.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
@@ -161,7 +161,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
-		$base = DIR_APPLICATION . 'view/data/';
+		$base = DIR_OPENCART . 'shop/';
 		$directory = $language_info['code'] . '/customer/';
 		$filename = 'customer_group-' . $customer_group_info['country_id'] . '.json';
 

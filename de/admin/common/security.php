@@ -8,7 +8,6 @@ $_['text_install_description']        = 'Ihr Installationsverzeichnis muss gelö
 $_['text_install_success']            = 'Erfolg: Installationsverzeichnis wurde gelöscht!';
 $_['text_storage']                    = 'Speicherverzeichnis verschieben';
 $_['text_storage_description']        = 'Es ist sehr wichtig, dass Sie das Speicherverzeichnis außerhalb des Webverzeichnisses verschieben (z. B. public_html, www oder htdocs).';
-$_['text_storage_move']               = 'Verschieben von %s nach %s von %s Speicherdateien';
 $_['text_storage_success']            = 'Success: Storage directory move has been added to the task queue!';
 $_['text_storage_delete']             = 'Bisheriges Speicherverzeichnis löschen';
 $_['text_storage_description_delete'] = 'Your previous storage directory needs deleting!';

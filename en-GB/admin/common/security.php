@@ -8,7 +8,6 @@ $_['text_install_description']        = 'Your installation directory needs delet
 $_['text_install_success']            = 'Success: Install directory has been deleted!';
 $_['text_storage']                    = 'Move storage directory';
 $_['text_storage_description']        = 'It is very important that you move the storage directory outside of the web directory (e.g. public_html, www or htdocs).';
-$_['text_storage_move']               = 'Moving %s to %s of %s storage files';
 $_['text_storage_success']            = 'Success: Storage directory move has been added to the task queue!';
 $_['text_storage_delete']             = 'Delete previous storage directory';
 $_['text_storage_description_delete'] = 'Your previous storage directory needs deleting!';

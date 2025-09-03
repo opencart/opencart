@@ -54,6 +54,17 @@ class Information extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/information');
 
+		$required = [
+			'store_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
+
 		$this->load->model('setting/task');
 
 		$this->load->model('setting/store');
@@ -87,9 +98,9 @@ class Information extends \Opencart\System\Engine\Controller {
 				'code'   => 'information',
 				'action' => 'task/catalog/information.info',
 				'args'   => [
-					'information_id'  => $information['information_id'],
-					'store_id'        => $store_info['store_id'],
-					'language_id'     => $language_info['language_id']
+					'information_id' => $information['information_id'],
+					'store_id'       => $store_info['store_id'],
+					'language_id'    => $language_info['language_id']
 				]
 			];
 
@@ -104,8 +115,8 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $informations);
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/catalog/';
+		$base = DIR_OPENCART . 'shop/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/catalog/';
 		$filename = 'information.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
@@ -121,6 +132,18 @@ class Information extends \Opencart\System\Engine\Controller {
 
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/information');
+
+		$required = [
+			'information_id',
+			'store_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
 
 		$this->load->model('setting/task');
 
@@ -192,7 +215,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		//$base = DIR_STORE;
 
-		$base = DIR_CATALOG . 'view/data/';
+		$base = DIR_OPENCART . 'shop/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . $this->model_design_seo_url->convert($args['store_id'], $args['language_id'], $args) . '/';
 		$filename = 'index.html';
 
@@ -223,7 +246,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/catalog/information.json';
+				$file = $base = DIR_OPENCART . 'shop/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/catalog/information.json';
 
 				if (is_file($file)) {
 					unlink($file);

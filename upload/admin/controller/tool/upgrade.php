@@ -88,69 +88,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Download
-	 *
-	 * @return void
-	 */
-	public function download(): void {
-		$this->load->language('tool/upgrade');
-
-		$json = [];
-
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
-		} else {
-			$version = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (version_compare($version, VERSION, '<') || !preg_match('/^(\d+\.\d+\.\d+\.\d+)$/', $version)) {
-			$json['error'] = $this->language->get('error_version');
-		}
-
-		if (!$json) {
-			$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
-
-			$handle = fopen($file, 'w');
-
-			set_time_limit(0);
-
-			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
-
-			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 300);
-			curl_setopt($curl, CURLOPT_FILE, $handle);
-
-			curl_exec($curl);
-
-			fclose($handle);
-
-			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-			if ($status != 200) {
-				$json['error'] = $this->language->get('error_download');
-			}
-
-			curl_close($curl);
-		}
-
-		if (!$json) {
-			$json['text'] = $this->language->get('text_install');
-
-			$json['next'] = $this->url->link('tool/upgrade.install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version, true);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
 	 * Install
 	 *
 	 * @return void
@@ -181,61 +118,18 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Unzip the files
-			$zip = new \ZipArchive();
 
-			if ($zip->open($file, \ZipArchive::RDONLY)) {
-				$remove = 'opencart-' . $version . '/upload/';
+			$json['text'] = $this->language->get('text_patch');
 
-				// Check if any of the files already exist.
-				for ($i = 0; $i < $zip->numFiles; $i++) {
-					$source = $zip->getNameIndex($i);
+			$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
 
-					if (substr($source, 0, strlen($remove)) == $remove) {
-						// Only extract the contents of the upload folder
-						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
+			$task_data = [
+				'code'   => 'upgrade',
+				'action' => 'task/system/upgrade',
+				'args'   => []
+			];
 
-						if (substr($destination, 0, 8) == 'install/') {
-							// Default copy location
-							$path = '';
-
-							// Must not have a path before files and directories can be moved
-							$directories = explode('/', dirname($destination));
-
-							foreach ($directories as $directory) {
-								if (!$path) {
-									$path = $directory;
-								} else {
-									$path = $path . '/' . $directory;
-								}
-
-								if (!is_dir(DIR_OPENCART . $path) && !@mkdir(DIR_OPENCART . $path, 0777)) {
-									$json['error'] = sprintf($this->language->get('error_directory'), $path);
-								}
-							}
-
-							// Check if the path is not directory and check there is no existing file
-							if (substr($destination, -1) != '/') {
-								if (is_file(DIR_OPENCART . $destination)) {
-									unlink(DIR_OPENCART . $destination);
-								}
-
-								if (file_put_contents(DIR_OPENCART . $destination, $zip->getFromIndex($i)) === false) {
-									$json['error'] = sprintf($this->language->get('error_copy'), $source, $destination);
-								}
-							}
-						}
-					}
-				}
-
-				$zip->close();
-
-				$json['text'] = $this->language->get('text_patch');
-
-				$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
-			} else {
-				$json['error'] = $this->language->get('error_unzip');
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -113,6 +113,10 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	public function install(array $args = []): array {
 		$this->load->language('task/system/upgrade');
 
+		if (!array_key_exists('version', $args)) {
+			return ['error' => sprintf($this->language->get('error_version'))];
+		}
+
 		if (!isset($args['version']) || version_compare($args['version'], VERSION, '<') || !preg_match('/^(\d+\.\d+\.\d+\.\d+)$/', $args['version'])) {
 			return ['error' => $this->language->get('error_version')];
 		}
@@ -175,7 +179,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$zip->close();
 
-		$json['text'] = $this->language->get('text_patch');
+
 
 		$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
 

@@ -103,12 +103,14 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/admin/customer_group');
 
 		$required = [
-			'country_id',
+			'customer_group_id',
 			'language_id'
 		];
 
-		if (array_diff(array_keys($args), $required)) {
-			return ['error' => sprintf($this->language->get('error_required'), $value)];
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
 		}
 
 		$this->load->model('localisation/language');

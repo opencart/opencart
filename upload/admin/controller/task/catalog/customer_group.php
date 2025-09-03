@@ -54,6 +54,17 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
 
+		$required = [
+			'store_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
+
 		// Store
 		$this->load->model('setting/store');
 
@@ -117,6 +128,18 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 */
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
+
+		$required = [
+			'customer_group_id',
+			'store_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
 
 		// Store
 		$this->load->model('setting/store');

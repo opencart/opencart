@@ -54,6 +54,17 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 
+		$required = [
+			'store_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
+
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
@@ -80,8 +91,8 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$return_reasons = $this->model_localisation_return_reason->getReturnReasons($filter_data);
 
-		$base = DIR_APPLICATION . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
+		$base = DIR_OPENCART . 'shop/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/localisation/';
 		$filename = 'return_reason.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
@@ -108,7 +119,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/return_reason.json';
+				$file = DIR_OPENCART . 'shop/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/localisation/return_reason.json';
 
 				if (is_file($file)) {
 					unlink($file);

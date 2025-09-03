@@ -116,6 +116,18 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
+		$required = [
+			'topic_id',
+			'store_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
+
 		// Store
 		$this->load->model('setting/store');
 
@@ -187,8 +199,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		//$base = DIR_STORE;
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . $this->model_design_seo_url->convert($args['store_id'], $args['language_id'], $args) . '/';
+		$base = DIR_OPENCART . 'shop/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/' . $this->model_design_seo_url->convert($args['store_id'], $args['language_id'], $args) . '/';
 		$filename = 'index.html';
 
 		if (!oc_directory_create($base . $directory, 0777)) {

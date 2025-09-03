@@ -56,15 +56,21 @@ class Sass extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/sass');
 
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
-		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/sass.css';
+		foreach ($stores as $store) {
+			foreach ($languages as $language) {
+				$file = DIR_OPENCART . 'shop/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/data/sass.css';
 
-			if (is_file($file)) {
-				unlink($file);
+				if (is_file($file)) {
+					unlink($file);
+				}
 			}
 		}
 

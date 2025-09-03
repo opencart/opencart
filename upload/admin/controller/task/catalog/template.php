@@ -5,7 +5,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class Translation extends \Opencart\System\Engine\Controller {
+class Template extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -36,7 +36,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$routes = [];
 
-				$directory = DIR_CATALOG . 'language/' . $language['code'] . '/';
+				$directory = DIR_CATALOG . 'view/template/' . $language['code'] . '/';
 
 				$files = oc_directory_read($directory, true, '/.+\.php$/');
 
@@ -134,10 +134,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$language->load($args['route']);
 
 		$filter_data = [
-			'filter_route'       => $args['route'],
 			'filter_store_id'    => $store_info['store_id'],
-			'filter_language_id' => $language_info['language_id']
-
+			'filter_language_id' => $language_info['language_id'],
+			'filter_route'       => $args['route']
 		];
 
 		// Overrides
@@ -201,3 +200,4 @@ class Translation extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_clear')];
 	}
 }
+

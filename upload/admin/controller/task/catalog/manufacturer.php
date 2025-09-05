@@ -9,9 +9,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates manufacturer task list.
-	 *
-	 * @return array
+	 * @return void
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
@@ -46,72 +44,151 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/*
+	 *
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
-		$directory = DIR_CATALOG . 'view/data/catalog/';
+		$required = [
+			'store_id',
+			'language_id'
+		];
 
-		if (!is_dir($directory) && !mkdir($directory, 0777)) {
-			$json['error'] = sprintf($this->language->get('error_directory'), $directory);
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
 		}
 
+		// Store
+		$this->load->model('setting/store');
 
-		return ['success' => $this->language->get('text_success')];
-	}
+		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
-
-	public function info(array $args = []): array {
-		$this->load->language('task/catalog/manufacturer');
-
-
-
-
-		$directory = DIR_CATALOG . 'view/data/catalog/';
-
-		if (!is_dir($directory) && !mkdir($directory, 0777)) {
-			$json['error'] = sprintf($this->language->get('error_directory'), $directory);
+		if (!$store_info) {
+			return ['error' => $this->language->get('error_store')];
 		}
 
-		if (!$json) {
-			$limit = 5;
+		// Language
+		$this->load->model('localisation/language');
 
-			$this->load->model('catalog/manufacturer');
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
-			$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
+		}
 
-			$start = ($page - 1) * $limit;
-			$end = $start > ($manufacturer_total - $limit) ? $manufacturer_total : ($start + $limit);
+		$filter_data = [
+			'filter_store_id'    => $store_info['store_id'],
+			'filter_language_id' => $language_info['language_id'],
+			'filter_status'      => true
+		];
 
-			$filter_data = [
-				'start' => $start,
-				'limit' => $limit
+		$this->load->model('catalog/manufacturer');
+
+		$manufacturers = $this->model_catalog_manufacturer->getManufacturers($filter_data);
+
+		// Sort Order
+		$sorts = [];
+
+		$sorts[] = [
+			'sort'  => 'p.sort_order',
+			'order' => 'ASC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'pd.name',
+			'order' => 'ASC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'pd.name',
+			'order' => 'DESC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'p.price',
+			'order' => 'ASC'
+		];
+
+		$sorts[] = [
+			'sort'  => 'p.price',
+			'order' => 'DESC'
+		];
+
+		if ($this->config->get('config_review_status')) {
+			$sorts[] = [
+				'sort'  => 'rating',
+				'order' => 'ASC'
 			];
 
-			$manufacturers = $this->model_catalog_manufacturer->getManufacturers($filter_data);
+			$sorts[] = [
+				'sort'  => 'rating',
+				'order' => 'DESC'
+			];
+		}
 
-			foreach ($manufacturers as $manufacturer) {
-				if ($manufacturer['status']) {
-					$file = DIR_CATALOG . 'view/data/catalog/manufacturer.' . (int)$manufacturer['manufacturer_id'] . '.json';
+		$sorts[] = [
+			'sort'  => 'p.model',
+			'order' => 'ASC'
+		];
 
-					if (!file_put_contents($file, json_encode($manufacturer))) {
-						$json['error'] = sprintf($this->language->get('error_file'), $file);
+		$sorts[] = [
+			'sort'  => 'p.model',
+			'order' => 'DESC'
+		];
 
-						break;
-					}
+		$this->load->model('setting/task');
+
+		$task_data = [
+			'code'   => 'ssr',
+			'action' => 'task/catalog/ssr',
+			'args'   => [
+				'route'        => 'product/manufacturer',
+				'store_id'     => $store_info['store_id'],
+				'language_id'  => $language_info['language_id']
+			]
+		];
+
+		$this->model_setting_task->addTask($task_data);
+
+		$this->load->model('catalog/product');
+
+		foreach ($manufacturers as $manufacturer) {
+			$filter_data = [
+				'filter_manufacturer_id' => $manufacturer['manufacturer_id'],
+				'filter_store_id'        => $store_info['store_id'],
+				'filter_language_id'     => $language_info['language_id'],
+				'filter_status'          => true
+			];
+
+			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+
+			$page_total = ceil($product_total / (int)$this->config->get('config_pagination'));
+
+			foreach ($sorts as $sort) {
+				for ($i = 1; $i <= $page_total; $i++) {
+					$task_data = [
+						'code'   => 'ssr',
+						'action' => 'task/catalog/ssr',
+						'args'   => [
+							'route'           => 'product/manufacturer',
+							'manufacturer_id' => $manufacturer['manufacturer_id'],
+							'store_id'        => $store_info['store_id'],
+							'language_id'     => $language_info['language_id'],
+							'sort'            => $sort['sort'],
+							'order'           => $sort['order'],
+							'page'            => $i
+						]
+					];
+
+					$this->model_setting_task->addTask($task_data);
 				}
 			}
 		}
 
-
-			$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $manufacturer_total);
-
-			if ($end < $manufacturer_total) {
-				$json['next'] = $this->url->link('task/catalog/manufacturer.info', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
-			} else {
-				$json['success'] = $this->language->get('text_success');
-			}
-
-
+		return ['success' => $this->language->get('text_list')];
 	}
 
 	public function clear(array $args = []): array {
@@ -129,6 +206,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			unlink($file);
 		}
 
-
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

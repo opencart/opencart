@@ -14,8 +14,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 	public function install(): void {
 		$this->load->language('task/system/installer');
 
-
-
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = (int)$this->request->get['extension_install_id'];
 		} else {

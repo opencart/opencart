@@ -134,9 +134,9 @@ class Template extends \Opencart\System\Engine\Controller {
 		$language->load($args['route']);
 
 		$filter_data = [
+			'filter_route'       => $args['route'],
 			'filter_store_id'    => $store_info['store_id'],
-			'filter_language_id' => $language_info['language_id'],
-			'filter_route'       => $args['route']
+			'filter_language_id' => $language_info['language_id']
 		];
 
 		// Overrides

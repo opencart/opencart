@@ -185,7 +185,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
 		$base = DIR_OPENCART . 'shop/';
-		$directory = $language_info['code'] . '/customer/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/customer/';
 		$filename = 'customer_group-' . $customer_group_info['country_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {

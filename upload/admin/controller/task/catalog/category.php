@@ -26,11 +26,17 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$languages = $this->model_localisation_language->getLanguages();
 
+
+
+
+
+
+
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
 				$task_data = [
-					'code'   => 'manufacturer',
-					'action' => 'task/catalog/manufacturer.list',
+					'code'   => 'category',
+					'action' => 'task/catalog/category.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']

@@ -49,15 +49,6 @@ class Category extends \Opencart\System\Engine\Controller {
 
 	}
 
-	public function create(array $args = []): array {
-
-
-
-	}
-
-
-
-
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/category');
 

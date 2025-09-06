@@ -311,7 +311,7 @@
                     <div id="output-affiliate">{% if affiliate_id %}<a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a>{% endif %}</div>
                   </div>
                 </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><span class="fa-solid fa-cog"></i></button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
             <div class="col mb-3">
@@ -323,15 +323,15 @@
                   </div>
                 </div>
                 {% if not commission_total %}
-                  <button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"{% if not affiliate_id %} disabled{% endif %}><span class="fa-solid fa-plus-circle"></i></button>
+                  <button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"{% if not affiliate_id %} disabled{% endif %}><i class="fa-solid fa-plus-circle"></i></button>
                 {% else %}
-                  <button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><span class="fa-solid fa-minus-circle"></i></button>
+                  <button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
                 {% endif %}
               </div>
             </div>
           </div>
         </div>
-        <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <span class="fa-solid fa-angle-down"></i></button>
+        <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fa-solid fa-angle-down"></i></button>
         <div class="row mb-3">
           <div class="col">
             <div class="input-group">
@@ -341,7 +341,7 @@
                   <div id="output-comment">{{ comment }}</div>
                 </div>
               </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-primary"><span class="fa-solid fa-cog"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
         </div>
@@ -356,13 +356,13 @@
           </tbody>
         </table>
         <div class="text-end">
-          <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><span class="fa-solid fa-rotate"></i></button>
-          <button type="button" id="button-confirm" class="btn btn-primary"><span class="fa-solid fa-check"></i> {{ button_confirm }}</button>
+          <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fa-solid fa-rotate"></i></button>
+          <button type="button" id="button-confirm" class="btn btn-primary"><i class="fa-solid fa-check"></i> {{ button_confirm }}</button>
         </div>
       </div>
     </div>
     <div class="card mb-3">
-      <div class="card-header"><span class="fa-solid fa-comment"></i> {{ text_history }}</div>
+      <div class="card-header"><i class="fa-solid fa-comment"></i> {{ text_history }}</div>
       <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link active">{{ tab_history }}</a></li>

@@ -38,7 +38,7 @@
                   <a href="{{ log.download }}" class="btn btn-primary w-100"{% if not log.download %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</a>
                 </div>
                 <div class="col">
-                  <button type="button" value="{{ log.clear }}" data-oc-target="input-log-{{ i }}" class="btn btn-danger w-100"><span class="fa-solid fa-eraser"></i> {{ button_clear }}</button>
+                  <button type="button" value="{{ log.clear }}" data-oc-target="input-log-{{ i }}" class="btn btn-danger w-100"><i class="fa-solid fa-eraser"></i> {{ button_clear }}</button>
                 </div>
               </div>
             </div>
@@ -67,11 +67,11 @@ $('.tab-content .btn-danger').on('click', function() {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><span class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><span class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#' + $(element).attr('data-oc-target')).val('');
                 }

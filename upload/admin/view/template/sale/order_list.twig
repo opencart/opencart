@@ -26,7 +26,7 @@
               <td class="text-end d-none d-lg-table-cell"><x-currency code="{{ order.currency_code }}" amount="{{ order.total }}" value="{{ order.currency_value }}"></x-currency></td>
               <td class="d-none d-lg-table-cell">{{ order.date_added }}</td>
               <td class="d-none d-xl-table-cell">{{ order.date_modified }}</td>
-              <td class="text-end"><a href="{{ order.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa-solid fa-eye"></span></a></td>
+              <td class="text-end"><a href="{{ order.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

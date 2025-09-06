@@ -29,7 +29,7 @@
               <td class="text-end text-nowrap">
                 <div class="btn-group dropdown">
                   <a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary{% if not customer.status %} disabled{% endif %}"><i class="fa-solid fa-pencil"></i></a>
-                  <button type="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle dropdown-toggle-split"><span class="fa-solid fa-caret-down"></span></button>
+                  <button type="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle dropdown-toggle-split"><i class="fa-solid fa-caret-down"></i></button>
                   <ul class="dropdown-menu dropdown-menu-end">
                     <li><h6 class="dropdown-header">{{ text_option }}</h6></li>
                     {% if customer.unlock %}
@@ -49,7 +49,7 @@
           {% endfor %}
         {% else %}
           <tr>
-            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
           </tr>
         {% endif %}
       </tbody>

@@ -3,15 +3,15 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-comment').toggleClass('d-none');" class="btn btn-light d-lg-none"><span class="fa-solid fa-filter"></span></button>
-        <button type="button" id="button-rating" data-bs-toggle="tooltip" title="{{ button_rating }}" class="btn btn-light"><span class="fa-solid fa-sync"></span></button>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-comment').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <button type="button" id="button-rating" data-bs-toggle="tooltip" title="{{ button_rating }}" class="btn btn-light"><i class="fa-solid fa-sync"></i></button>
         <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><span class="fa-solid fa-list-check"></span> {{ button_action }} <span class="fa-solid fa-caret-down fa-fw"></span></button>
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
           <ul class="dropdown-menu">
-            <li><button type="submit" form="form-comment" formaction="{{ approve }}" class="dropdown-item"><span class="fa-solid fa-check text-success"></span> {{ button_approve }}</button></li>
-            <li><button type="submit" form="form-comment" formaction="{{ spam }}" class="dropdown-item"><span class="fa-solid fa-ban text-danger"></span> {{ button_spam }}</button></li>
+            <li><button type="submit" form="form-comment" formaction="{{ approve }}" class="dropdown-item"><i class="fa-solid fa-check text-success"></i> {{ button_approve }}</button></li>
+            <li><button type="submit" form="form-comment" formaction="{{ spam }}" class="dropdown-item"><i class="fa-solid fa-ban text-danger"></i> {{ button_spam }}</button></li>
             <li><hr class="dropdown-divider"></li>
-            <li><button type="submit" form="form-comment" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><span class="fa-regular fa-trash-can text-danger"></span> {{ text_delete }}</button></li>
+            <li><button type="submit" form="form-comment" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>
       </div>
@@ -60,7 +60,7 @@
               </div>
               <div class="text-end">
                 <button type="submit" id="button-filter" class="btn btn-light"><i class="fa fa-filter"></span> {{ button_filter }}</button>
-                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><span class="fa-solid fa-filter-circle-xmark"></span></button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></span></button>
               </div>
             </form>
           </div>
@@ -181,17 +181,17 @@ $('#button-rating').on('click', function() {
                 $('.invalid-feedback').removeClass('d-block');
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><span class="fa-solid fa-circle-exclamation"></span> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></span> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $(element).button('reset');
                 }
 
                 if (json['text']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><span class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><span class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $(element).button('reset');
 

@@ -139,17 +139,17 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'order' => 'DESC'
 		];
 
-		$this->load->model('setting/task');
-
 		$task_data = [
 			'code'   => 'ssr',
 			'action' => 'task/catalog/ssr',
 			'args'   => [
-				'route'        => 'product/manufacturer',
-				'store_id'     => $store_info['store_id'],
-				'language_id'  => $language_info['language_id']
+				'route'       => 'product/manufacturer',
+				'store_id'    => $store_info['store_id'],
+				'language_id' => $language_info['language_id']
 			]
 		];
+
+		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 

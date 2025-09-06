@@ -16,8 +16,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/topic');
 
-		$this->load->model('setting/task');
-
 		// Store
 		$this->load->model('setting/store');
 
@@ -69,11 +67,41 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'order' => 'DESC'
 		];
 
+		$this->load->model('setting/task');
+
 		$this->load->model('cms/article');
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
+
+
+
+				$task_data = [
+					'code'   => 'ssr',
+					'action' => 'task/catalog/ssr',
+					'args'   => [
+						'route'       => 'cms/topic',
+						'store_id'    => $store['store_id'],
+						'language_id' => $language['language_id'],
+						'sort'        => $sort['sort'],
+						'order'       => $sort['order'],
+						'page'        => $i
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+
+
+
+
 				foreach ($topics as $topic_id) {
+
+
+
+
+
+
+
 					$filter_data = [
 						'filter_topic_id'    => $topic_id,
 						'filter_store_id'    => $store['store_id'],

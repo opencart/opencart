@@ -2,8 +2,8 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><button type="submit" form="form-topic" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><span class="fa-solid fa-floppy-disk"></span></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><span class="fa-solid fa-reply"></i></a>
+      <div class="float-end"><button type="submit" form="form-topic" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></span></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><span class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-topic" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <ul class="nav nav-tabs">
@@ -55,8 +55,8 @@
                           <div class="border rounded d-block" style="max-width: 300px;">
                             <img src="{{ topic_description[language.language_id] ? topic_description[language.language_id].thumb : placeholder }}" alt="" title="" id="thumb-image-{{ language.language_id }}" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="topic_description[{{ language.language_id }}][image]" value="{{ topic_description[language.language_id] ? topic_description[language.language_id].image }}" id="input-image-{{ language.language_id }}"/>
                             <div class="d-grid">
-                              <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ language.language_id }}" data-oc-thumb="#thumb-image-{{ language.language_id }}" class="btn btn-primary rounded-0"><span class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
-                              <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ language.language_id }}" data-oc-thumb="#thumb-image-{{ language.language_id }}" class="btn btn-warning rounded-0"><span class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                              <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ language.language_id }}" data-oc-thumb="#thumb-image-{{ language.language_id }}" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                              <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ language.language_id }}" data-oc-thumb="#thumb-image-{{ language.language_id }}" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
                             </div>
                           </div>
                         </div>
@@ -115,7 +115,7 @@
               </div>
             </div>
             <div id="tab-seo" class="tab-pane">
-              <div class="alert alert-info"><span class="fa-solid fa-info-circle"></i> {{ text_keyword }}</div>
+              <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_keyword }}</div>
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>

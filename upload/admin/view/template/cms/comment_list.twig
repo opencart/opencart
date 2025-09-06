@@ -28,12 +28,12 @@
           <tr>
             <td class="text-end text-nowrap">
               {% if comment.approve %}
-                <button type="button" value="{{ comment.approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><span class="fa-solid fa-check"></span></button>
+                <button type="button" value="{{ comment.approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
               {% else %}
-                <button type="button" class="btn btn-success" disabled><span class="fa-solid fa-check"></span></button>
+                <button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>
               {% endif %}
-              <button type="button" value="{{ comment.spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" class="btn btn-warning"><span class="fa-solid fa-ban"></span></button>
-              <button type="button" value="{{ comment.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><span class="fa-solid fa-trash-can"></span></button>
+              <button type="button" value="{{ comment.spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" class="btn btn-warning"><i class="fa-solid fa-ban"></i></button>
+              <button type="button" value="{{ comment.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
             </td>
           </tr>
         {% endfor %}

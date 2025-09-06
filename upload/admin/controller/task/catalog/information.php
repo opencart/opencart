@@ -147,7 +147,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = $base = DIR_OPENCART . 'shop/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/catalog/information.json';
+				$file = DIR_OPENCART . 'shop/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/catalog/information.json';
 
 				if (is_file($file)) {
 					unlink($file);

@@ -5,7 +5,7 @@
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th><a href="{{ sort_name }}"{% if sort == 'fd.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
-          <th><a href="{{ sort_name }}"{% if sort == 'filter_group' %} class="{{ order|lower }}"{% endif %}>{{ column_filter_group }}</a></th>
+          <th><a href="{{ sort_name }}"{% if sort == 'fgd.name' %} class="{{ order|lower }}"{% endif %}>{{ column_filter_group }}</a></th>
           <th class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'f.sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>

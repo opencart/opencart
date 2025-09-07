@@ -9,6 +9,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Trigger
+	 *
 	 * @param string $route
 	 * @param string $prefix
 	 *

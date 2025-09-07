@@ -62,7 +62,7 @@ $_['entry_refunded_order_status']                = 'Refunded order status';
  
 $_['entry_authorisation_reversed_order_status']  = 'Authorisation reversed order status';
 $_['entry_settle_status']                        = 'Settlement status';
-$_['entry_settle_due_date']                      = 'Settlement due date'; 
+$_['entry_settle_due_date']                      = 'Settlement due date';
 $_['entry_geo_zone']                             = 'Geo Zone';
 $_['entry_sort_order']                           = 'Sort Order';
 $_['entry_status']                               = 'Status';

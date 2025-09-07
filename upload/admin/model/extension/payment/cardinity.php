@@ -65,7 +65,7 @@ class ModelExtensionPaymentCardinity extends Model {
 
 		try {
 			$refund = $client->call($method);
-            $this->log("Refund data".print_r($refund, true));
+			$this->log("Refund data".print_r($refund, true));
 
 			return $refund;
 		} catch (Exception $e) {
@@ -98,9 +98,9 @@ class ModelExtensionPaymentCardinity extends Model {
 	}
 
 	public function createMissingTables(){
-        $this->log("Creating missing tables");
-        try {
-            $this->db->query("
+		$this->log("Creating missing tables");
+		try {
+			$this->db->query("
                 CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "cardinity_order` (
                 `cardinity_order_id` INT(11) NOT NULL AUTO_INCREMENT,
                 `order_id` INT(11) NOT NULL,
@@ -110,7 +110,7 @@ class ModelExtensionPaymentCardinity extends Model {
                 ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;
             ");
 
-            $this->db->query("
+			$this->db->query("
                 CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "cardinity_session` (
                 `cardinity_session_id` INT(11) NOT NULL AUTO_INCREMENT,
                 `session_id` VARCHAR(255) NOT NULL,
@@ -118,9 +118,9 @@ class ModelExtensionPaymentCardinity extends Model {
                 PRIMARY KEY (`cardinity_session_id`)
                 ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;
             ");
-        } catch (Exception $e){
-            $this->log("Could not create session tables".$e->getMessage());
-        }
+		} catch (Exception $e){
+			$this->log("Could not create session tables".$e->getMessage());
+		}
 
 	}
 }

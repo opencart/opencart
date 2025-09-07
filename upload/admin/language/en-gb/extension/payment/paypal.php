@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']       					= '<span style="color:#1e91cf; font-weight:bold">PayPal Checkout Integration (Highly Recommended)</span>'; 
+$_['heading_title']       					= '<span style="color:#1e91cf; font-weight:bold">PayPal Checkout Integration (Highly Recommended)</span>';
 $_['heading_title_main']  					= 'PayPal Checkout Integration';
 
 // Text

@@ -12,7 +12,7 @@ class ModelReportStatistics extends Model {
 		if ($query->num_rows) {
 			return $query->row['value'];
 		} else {
-			return null;	
+			return null;
 		}
 	}
 	
@@ -26,5 +26,5 @@ class ModelReportStatistics extends Model {
 		
 	public function removeValue($code, $value) {
 		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = (`value` - '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
-	}	
+	}
 }

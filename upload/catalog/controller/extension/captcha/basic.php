@@ -11,7 +11,7 @@ class ControllerExtensionCaptchaBasic extends Controller {
 
 		$data['route'] = $this->request->get['route'];
 
-		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6); 
+		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6);
 
 		return $this->load->view('extension/captcha/basic', $data);
 	}

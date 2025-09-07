@@ -457,8 +457,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 					$order_reference_id = $amazon_login_pay_order['amazon_order_reference_id'];
 
 					if ($this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open', 'Suspended'))) {
-                        $this->model_extension_payment_amazon_login_pay->closeOrderRef($order_reference_id);
-                    }
+						$this->model_extension_payment_amazon_login_pay->closeOrderRef($order_reference_id);
+					}
 				}
 
 				if ($total_captured >= (double)$amazon_login_pay_order['total']) {
@@ -549,21 +549,21 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-    protected function trimIntegrationDetails() {
-        $integration_keys = array(
-            'payment_amazon_login_pay_merchant_id',
-            'payment_amazon_login_pay_access_key',
-            'payment_amazon_login_pay_access_secret',
-            'payment_amazon_login_pay_client_id',
-            'payment_amazon_login_pay_client_secret'
-        );
+	protected function trimIntegrationDetails() {
+		$integration_keys = array(
+			'payment_amazon_login_pay_merchant_id',
+			'payment_amazon_login_pay_access_key',
+			'payment_amazon_login_pay_access_secret',
+			'payment_amazon_login_pay_client_id',
+			'payment_amazon_login_pay_client_secret'
+		);
 
-        foreach ($this->request->post as $key => $value) {
-            if (in_array($key, $integration_keys)) {
-                $this->request->post[$key] = trim($value);
-            }
-        }
-    }
+		foreach ($this->request->post as $key => $value) {
+			if (in_array($key, $integration_keys)) {
+				$this->request->post[$key] = trim($value);
+			}
+		}
+	}
 
 	protected function validate() {
 		$this->load->model('localisation/currency');

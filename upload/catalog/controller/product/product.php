@@ -617,7 +617,7 @@ class ControllerProductProduct extends Controller {
 			}
 		} else {
 			$json['error'] = $this->language->get('error_product');
-		} 
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

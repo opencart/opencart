@@ -88,7 +88,7 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 				$this->model_extension_payment_laybuy->log('Response: ' . print_r($result, true));
 
-			 	if (isset($result['ACK']) && isset($result['TOKEN']) && $result['ACK'] == 'SUCCESS') {
+				if (isset($result['ACK']) && isset($result['TOKEN']) && $result['ACK'] == 'SUCCESS') {
 					$this->model_extension_payment_laybuy->log('Success response. Redirecting to PayPal.');
 
 					$this->response->redirect($this->config->get('payment_laybuy_gateway_url') . '?TOKEN=' . $result['TOKEN']);

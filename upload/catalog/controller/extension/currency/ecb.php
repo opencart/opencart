@@ -30,4 +30,3 @@ class ControllerExtensionCurrencyEcb extends Controller {
 		return true;
 	}
 }
-

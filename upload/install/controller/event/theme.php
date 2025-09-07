@@ -5,6 +5,6 @@ class ControllerEventTheme extends Controller {
 			$this->config->set('template_engine', 'twig');
 		} elseif (is_file(DIR_TEMPLATE . $view . '.tpl')) {
 			$this->config->set('template_engine', 'php');
-		}		
+		}
 	}
 }

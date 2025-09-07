@@ -17,7 +17,7 @@ final class Loader {
 	 * Constructor
 	 *
 	 * @param	object	$registry
- 	*/
+	*/
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
@@ -29,7 +29,7 @@ final class Loader {
 	 * @param	array	$data
 	 *
 	 * @return	mixed
- 	*/	
+	*/
 	public function controller($route, $data = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -64,7 +64,7 @@ final class Loader {
 	 * 
 	 *
 	 * @param	string	$route
- 	*/	
+	*/
 	public function model($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -98,7 +98,7 @@ final class Loader {
 	 * @param	array	$data
 	 *
 	 * @return	string
- 	*/
+	*/
 	public function view($route, $data = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -139,7 +139,7 @@ final class Loader {
 	 * 
 	 *
 	 * @param	string	$route
- 	*/
+	*/
 	public function library($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -160,7 +160,7 @@ final class Loader {
 	 * 
 	 *
 	 * @param	string	$route
- 	*/	
+	*/
 	public function helper($route) {
 		$file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
 
@@ -175,7 +175,7 @@ final class Loader {
 	 * 
 	 *
 	 * @param	string	$route
- 	*/	
+	*/
 	public function config($route) {
 		$this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
 		
@@ -191,7 +191,7 @@ final class Loader {
 	 * @param	string	$key
 	 *
 	 * @return	array
- 	*/
+	*/
 	public function language($route, $key = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
@@ -248,7 +248,7 @@ final class Loader {
 					$output = call_user_func_array($callable, $args);
 				} else {
 					throw new \Exception('Error: Could not call model/' . $route . '!');
-				}					
+				}
 			}
 			
 			// Trigger the post events
@@ -260,5 +260,5 @@ final class Loader {
 						
 			return $output;
 		};
-	}	
+	}
 }

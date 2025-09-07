@@ -98,5 +98,5 @@ class ModelCustomerCustomerApproval extends Model {
 	
 	public function denyAffiliate($customer_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_approval` WHERE customer_id = '" . (int)$customer_id . "' AND `type` = 'affiliate'");
-	}	
+	}
 }

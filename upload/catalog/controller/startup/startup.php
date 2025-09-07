@@ -90,10 +90,10 @@ class ControllerStartupStartup extends Controller {
 							break 2;
 						}
 					}
-				}	
-			}			
+				}
+			}
 			
-			if (!$detect) { 
+			if (!$detect) {
 				// Try using language folder to detect the language
 				foreach ($browser_languages as $browser_language) {
 					if (array_key_exists(strtolower($browser_language), $languages)) {
@@ -126,7 +126,7 @@ class ControllerStartupStartup extends Controller {
 		$this->registry->set('language', $language);
 		
 		// Set the config language_id
-		$this->config->set('config_language_id', $languages[$code]['language_id']);	
+		$this->config->set('config_language_id', $languages[$code]['language_id']);
 
 		// Customer
 		$customer = new Cart\Customer($this->registry);
@@ -150,7 +150,7 @@ class ControllerStartupStartup extends Controller {
 			setcookie('tracking', $this->request->get['tracking'], time() + 3600 * 24 * 1000, '/');
 		
 			$this->db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $this->db->escape($this->request->get['tracking']) . "'");
-		}		
+		}
 		
 		// Currency
 		$code = '';
@@ -177,7 +177,7 @@ class ControllerStartupStartup extends Controller {
 		
 		if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
 			setcookie('currency', $code, time() + 60 * 60 * 24 * 30, '/');
-		}		
+		}
 		
 		$this->registry->set('currency', new Cart\Currency($this->registry));
 		

@@ -2,7 +2,7 @@
 class ControllerMailAffiliate extends Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/affiliate');
-        
+		
 		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 		$data['text_login'] = $this->language->get('text_login');
 		$data['text_approval'] = $this->language->get('text_approval');
@@ -23,7 +23,7 @@ class ControllerMailAffiliate extends Controller {
 			$data['approval'] = ($this->config->get('config_affiliate_approval') || $customer_group_info['approval']);
 		} else {
 			$data['approval'] = '';
-		}		
+		}
 		
 		$data['login'] = $this->url->link('affiliate/login', '', true);
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
@@ -47,7 +47,7 @@ class ControllerMailAffiliate extends Controller {
 		$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
 		$mail->setText($this->load->view('mail/affiliate', $data));
 		$mail->send();
- 	}
+	}
 	
 	public function alert(&$route, &$args, &$output) {
 		// Send to main admin email if new affiliate email is enabled
@@ -69,13 +69,13 @@ class ControllerMailAffiliate extends Controller {
 				$data['lastname'] = $this->customer->getLastName();
 				$data['email'] = $this->customer->getEmail();
 				$data['telephone'] = $this->customer->getTelephone();
-			} else {	
+			} else {
 				$customer_group_id = $args[1]['customer_group_id'];
 				
 				$data['firstname'] = $args[1]['firstname'];
-				$data['lastname'] = $args[1]['lastname'];	
+				$data['lastname'] = $args[1]['lastname'];
 				$data['email'] = $args[1]['email'];
-				$data['telephone'] = $args[1]['telephone'];		
+				$data['telephone'] = $args[1]['telephone'];
 			}
 			
 			$data['website'] = html_entity_decode($args[1]['website'], ENT_QUOTES, 'UTF-8');
@@ -101,7 +101,7 @@ class ControllerMailAffiliate extends Controller {
 
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));			
+			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(html_entity_decode($this->language->get('text_new_affiliate'), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($this->load->view('mail/affiliate_alert', $data));
 			$mail->send();
@@ -115,6 +115,6 @@ class ControllerMailAffiliate extends Controller {
 					$mail->send();
 				}
 			}
-		}		
+		}
 	}
-}		
+}

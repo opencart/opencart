@@ -119,7 +119,7 @@ class ModelExtensionPaymentG2aPay extends Model {
 		$authorization = $this->config->get('payment_g2apay_api_hash') . ";" . $auth_hash;
 		curl_setopt(
 				$curl, CURLOPT_HTTPHEADER, array(
-			"Authorization: " . $authorization
+					"Authorization: " . $authorization
 				)
 		);
 

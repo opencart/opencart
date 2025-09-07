@@ -31,7 +31,7 @@ class ModelSaleRecurring extends Model {
 
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		} 
+		}
 			 
 		$sort_data = array(
 			'or.order_recurring_id',
@@ -188,10 +188,10 @@ class ModelSaleRecurring extends Model {
 		
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		} 
+		}
 		
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];
-	}	
+	}
 }

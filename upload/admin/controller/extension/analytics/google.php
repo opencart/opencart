@@ -78,7 +78,7 @@ class ControllerExtensionAnalyticsGoogle extends Controller {
 
 		if (!$this->request->post['analytics_google_code']) {
 			$this->error['code'] = $this->language->get('error_code');
-		}			
+		}
 
 		return !$this->error;
 	}

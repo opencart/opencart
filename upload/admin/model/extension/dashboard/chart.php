@@ -210,5 +210,5 @@ class ModelExtensionDashboardChart extends Model {
 		}
 
 		return $customer_data;
-	}	
+	}
 }

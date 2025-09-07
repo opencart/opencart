@@ -11,7 +11,7 @@ class ControllerMailReturn extends Controller {
 			$return_status_id = $args[1];
 		} else {
 			$return_status_id = '';
-		}		
+		}
 		
 		if (isset($args[2])) {
 			$comment = $args[2];
@@ -23,7 +23,7 @@ class ControllerMailReturn extends Controller {
 			$notify = $args[3];
 		} else {
 			$notify = '';
-		}		
+		}
 		
 		if ($notify) {
 			$this->load->model('sale/return');
@@ -55,4 +55,4 @@ class ControllerMailReturn extends Controller {
 			}
 		}
 	}
-}	
+}

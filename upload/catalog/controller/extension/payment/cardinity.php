@@ -41,14 +41,14 @@ class ControllerExtensionPaymentCardinity extends Controller
 				$data['order_id'] = $formattedOrderId; //$this->session->data['order_id'];
 				$data['description'] = $this->session->getId(); //  'OC' . $this->session->data['order_id'];
 				$data['return_url'] = $this->url->link('extension/payment/cardinity/externalPaymentCallback', '', true);
-                $data['notification_url'] = $this->url->link('extension/payment/cardinity/externalPaymentNotification', '', true);
+				$data['notification_url'] = $this->url->link('extension/payment/cardinity/externalPaymentNotification', '', true);
 
-                if (!empty($order_info['email'])){
-                    $data['email_address'] =  $order_info['email'];
-                }
-                if (!empty($order_info['telephone'])){
-                    $data['mobile_phone_number'] =  $order_info['telephone'];
-                }
+				if (!empty($order_info['email'])){
+					$data['email_address'] =  $order_info['email'];
+				}
+				if (!empty($order_info['telephone'])){
+					$data['mobile_phone_number'] =  $order_info['telephone'];
+				}
 
 				$attributes = $this->model_extension_payment_cardinity->createExternalPayment($this->config->get('payment_cardinity_project_key'), $this->config->get('payment_cardinity_project_secret'), $data);
 
@@ -88,7 +88,7 @@ class ControllerExtensionPaymentCardinity extends Controller
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['text_loading'] = $this->language->get('text_loading');
 
-        return $this->load->view('extension/payment/cardinity', $data);
+		return $this->load->view('extension/payment/cardinity', $data);
 	}
 
 	private function setSession()
@@ -114,7 +114,7 @@ class ControllerExtensionPaymentCardinity extends Controller
 				'session_id' => $this->session->getId(),
 				'session_data' => $sessionDataValue,
 			));
-        } catch (Exception $e) {
+		} catch (Exception $e) {
 			$this->testLog("db error" . $e->getMessage());
 		}
 
@@ -139,92 +139,92 @@ class ControllerExtensionPaymentCardinity extends Controller
 
 		$this->session->data = $sessionDataOnDB;
 
-        $this->testLog("Getting session ID ".$sessionId);
-        $this->testLog("Getting session DATA ".substr($serializedSession, 0, 10).".....".substr($serializedSession, -10));
+		$this->testLog("Getting session ID ".$sessionId);
+		$this->testLog("Getting session DATA ".substr($serializedSession, 0, 10).".....".substr($serializedSession, -10));
 
-        return $this->session->data['order_id']; //$sessionDataOnDB['order_id'];
+		return $this->session->data['order_id']; //$sessionDataOnDB['order_id'];
 
 	}
 
-    private function finishProcessExternalPayment($redirect = true){
-        $this->load->language('extension/payment/cardinity');
-        $this->load->model('extension/payment/cardinity');
-        $this->load->model('checkout/order');
+	private function finishProcessExternalPayment($redirect = true){
+		$this->load->language('extension/payment/cardinity');
+		$this->load->model('extension/payment/cardinity');
+		$this->load->model('checkout/order');
 
-        //restore session based on sessionId from description
-        $this->session->start($_POST['description']);
-        $this->getSession($_POST['description']);
+		//restore session based on sessionId from description
+		$this->session->start($_POST['description']);
+		$this->getSession($_POST['description']);
 
-        $message = '';
-        ksort($_POST);
+		$message = '';
+		ksort($_POST);
 
-        foreach ($_POST as $key => $value) {
-            if ($key == 'signature') continue;
-            $message .= $key . $value;
-        }
+		foreach ($_POST as $key => $value) {
+			if ($key == 'signature') continue;
+			$message .= $key . $value;
+		}
 
-        error_reporting(null);
-        $signature = hash_hmac('sha256', $message, $this->config->get('payment_cardinity_project_secret'));
-        error_reporting(E_ALL);
+		error_reporting(null);
+		$signature = hash_hmac('sha256', $message, $this->config->get('payment_cardinity_project_secret'));
+		error_reporting(E_ALL);
 
-        $orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+		$orderInfo = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-        if ($signature == $_POST['signature'] && $_POST['status'] == 'approved') {
-            if ($orderInfo['order_status_id'] != $this->config->get('payment_cardinity_order_status_id')){
-                $this->model_extension_payment_cardinity->addOrder(array(
-                    'order_id'   => $_POST['order_id'],
-                    'payment_id' => $_POST['id'],
-                ));
-                $this->model_extension_payment_cardinity->updateOrder(array(
-                    'payment_status' => 'approved_external',
-                    'payment_id' => $_POST['id'],
-                ));
+		if ($signature == $_POST['signature'] && $_POST['status'] == 'approved') {
+			if ($orderInfo['order_status_id'] != $this->config->get('payment_cardinity_order_status_id')){
+				$this->model_extension_payment_cardinity->addOrder(array(
+					'order_id'   => $_POST['order_id'],
+					'payment_id' => $_POST['id'],
+				));
+				$this->model_extension_payment_cardinity->updateOrder(array(
+					'payment_status' => 'approved_external',
+					'payment_id' => $_POST['id'],
+				));
 
-                $this->logTransaction(array(
-                    'orderId' => $_POST['order_id'],
-                    'transactionId' =>  $_POST['id'],
-                    '3dsVersion' => 'unknown (external)',
-                    'amount' => $_POST['amount'] . " " . $_POST['currency'],
-                    'status' => 'approved'
-                ));
+				$this->logTransaction(array(
+					'orderId' => $_POST['order_id'],
+					'transactionId' =>  $_POST['id'],
+					'3dsVersion' => 'unknown (external)',
+					'amount' => $_POST['amount'] . " " . $_POST['currency'],
+					'status' => 'approved'
+				));
 
-                $this->finalizeOrder($_POST);
-            }
-            if($redirect){
-                $this->response->redirect($this->url->link('checkout/success', '', true));
-            }else{
-                $this->model_extension_payment_cardinity->log("Payment finalized by notification");
-            }
-        } else {
-            $this->model_extension_payment_cardinity->addOrder(array(
-                'order_id'   => $_POST['order_id'],
-                'payment_id' => $_POST['id'],
-            ));
-            $this->model_extension_payment_cardinity->updateOrder(array(
-                'payment_status' => 'failed_external',
-                'payment_id' => $_POST['id'],
-            ));
+				$this->finalizeOrder($_POST);
+			}
+			if($redirect){
+				$this->response->redirect($this->url->link('checkout/success', '', true));
+			}else{
+				$this->model_extension_payment_cardinity->log("Payment finalized by notification");
+			}
+		} else {
+			$this->model_extension_payment_cardinity->addOrder(array(
+				'order_id'   => $_POST['order_id'],
+				'payment_id' => $_POST['id'],
+			));
+			$this->model_extension_payment_cardinity->updateOrder(array(
+				'payment_status' => 'failed_external',
+				'payment_id' => $_POST['id'],
+			));
 
-            $this->failedOrder("Card was declined", $this->language->get("error_payment_declined"));
+			$this->failedOrder("Card was declined", $this->language->get("error_payment_declined"));
 
-            if($redirect){
-                $this->response->redirect($this->url->link('checkout/checkout', '', true));
-            }
-        }
-    }
+			if($redirect){
+				$this->response->redirect($this->url->link('checkout/checkout', '', true));
+			}
+		}
+	}
 	public function externalPaymentCallback()
 	{
-        $this->finishProcessExternalPayment(true);
+		$this->finishProcessExternalPayment(true);
 	}
 
-    public function externalPaymentNotification()
-    {
-        $this->finishProcessExternalPayment(false);
-        echo json_encode([
-            "message" => "Oc3 received notification",
-            "website" => $this->config->get('config_url'),
-        ]);
-    }
+	public function externalPaymentNotification()
+	{
+		$this->finishProcessExternalPayment(false);
+		echo json_encode([
+			"message" => "Oc3 received notification",
+			"website" => $this->config->get('config_url'),
+		]);
+	}
 
 	public function send()
 	{
@@ -257,15 +257,15 @@ class ControllerExtensionPaymentCardinity extends Controller
 				$order_country = $order_info['shipping_iso_code_2'];
 			}
 
-            $cardholder_info = [];
-            if (!empty($order_info['email'])){
-               $cardholder_info['email_address'] =  $order_info['email'];
-            }
-            if (!empty($order_info['telephone'])){
-                $cardholder_info['mobile_phone_number'] =  $order_info['telephone'];
-            }
+			$cardholder_info = [];
+			if (!empty($order_info['email'])){
+			   $cardholder_info['email_address'] =  $order_info['email'];
+			}
+			if (!empty($order_info['telephone'])){
+				$cardholder_info['mobile_phone_number'] =  $order_info['telephone'];
+			}
 
-            $payment_data = array(
+			$payment_data = array(
 				'amount'			 => (float)$this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false),
 				'currency'			 => $order_info['currency_code'],
 				'order_id'			 => $order_id,
@@ -291,7 +291,7 @@ class ControllerExtensionPaymentCardinity extends Controller
 						"color_depth" => (int)$this->request->post['color_depth'],
 						"time_zone" => (int)$this->request->post['time_zone']
 					],
-                    'cardholder_info' => $cardholder_info
+					'cardholder_info' => $cardholder_info
 				],
 			);
 
@@ -304,7 +304,7 @@ class ControllerExtensionPaymentCardinity extends Controller
 			if ($cardinity_order &&  $cardinity_order['payment_id']  && $cardinity_order['payment_status'] !='failed_3dsv1' ) {
 
 				$this->testLog("repeating order");
-				//payment was already created				
+				//payment was already created
 				try {
 					$payment_exist = $this->model_extension_payment_cardinity->getPayment($this->config->get('payment_cardinity_key'), $this->config->get('payment_cardinity_secret'), $cardinity_order['payment_id']);
 

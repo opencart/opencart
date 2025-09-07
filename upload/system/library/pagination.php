@@ -22,10 +22,10 @@ class Pagination {
 	public $text_prev = '&lt;';
 
 	/**
-     * 
-     *
-     * @return	text
-     */
+	 * 
+	 *
+	 * @return	text
+	 */
 	public function render() {
 		$total = $this->total;
 

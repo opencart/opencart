@@ -26,7 +26,7 @@ class ControllerApiLogin extends Controller {
 	
 			if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
 				$json['error']['ip'] = sprintf($this->language->get('error_ip'), $this->request->server['REMOTE_ADDR']);
-			}				
+			}
 				
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');

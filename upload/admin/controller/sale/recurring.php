@@ -279,7 +279,7 @@ class ControllerSaleRecurring extends Controller {
 			$data['recurring_statuses'][$i] = array(
 				'text'  => $this->language->get('text_status_' . $i),
 				'value' => $i,
-			);		
+			);
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -368,7 +368,7 @@ class ControllerSaleRecurring extends Controller {
 				$data['recurring'] = $this->url->link('catalog/recurring/edit', 'user_token=' . $this->session->data['user_token'] . '&recurring_id=' . $order_recurring_info['recurring_id'], true);
 			} else {
 				$data['recurring'] = '';
-			}			
+			}
 			
 			$data['recurring_description'] = $order_recurring_info['recurring_description'];
 			

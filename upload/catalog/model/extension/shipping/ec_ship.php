@@ -254,7 +254,7 @@ class ModelExtensionShippingECShip extends Model {
 				'NY'                         => 'USB',
 				'OTHERS'                     => 'USC',
 			)
- 		);
+		);
 
 		$service = array(
 			'ARM' => $this->config->get('shipping_ec_ship_air_registered_mail'),
@@ -424,7 +424,7 @@ class ModelExtensionShippingECShip extends Model {
 				$error = $this->language->get('text_unavailable');
 			}
 
- 			$url = 'https://service.hongkongpost.hk/API-trial/services/Calculator?wsdl'; 
+			$url = 'https://service.hongkongpost.hk/API-trial/services/Calculator?wsdl';
 
 			// Creating date using yyyy-mm-ddThh:mm:ssZ format
 			$tm_created = gmdate('Y-m-d\TH:i:s\Z');
@@ -473,8 +473,8 @@ class ModelExtensionShippingECShip extends Model {
 				'ecshipUsername'     => $this->config->get('shipping_ec_ship_username'),
 				'integratorUsername' => $this->config->get('shipping_ec_ship_api_username'),
 				'countryCode'        => $address_to['country'],
-			    'shipCode' 			 => '',
-			    'weight'			 => $weight
+				'shipCode' 			 => '',
+				'weight'			 => $weight
 			);
 
 			$objResponseArray = array();
@@ -525,11 +525,11 @@ class api01Req {
 	private $shipCode;
 	private $weight;
 
-    function __construct($ecshipUsername, $integratorUsername, $countryCode, $shipCode, $weight) {
+	function __construct($ecshipUsername, $integratorUsername, $countryCode, $shipCode, $weight) {
 		$this->ecshipUsername 		= $ecshipUsername;
 		$this->integratorUsername   = $integratorUsername;
 		$this->countryCode 			= $countryCode;
 		$this->shipCode			    = $shipCode;
 		$this->weight			    = $weight;
-    }
+	}
 }

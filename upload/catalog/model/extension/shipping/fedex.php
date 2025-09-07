@@ -164,9 +164,9 @@ class ModelExtensionShippingFedex extends Model {
 			$dom->loadXml($response);
 
 			if ($dom->getElementsByTagName('faultcode')->length > 0) {
-    			$error = $dom->getElementsByTagName('cause')->item(0)->nodeValue;
+				$error = $dom->getElementsByTagName('cause')->item(0)->nodeValue;
 
-    			$this->log->write('FEDEX :: ' . $response);
+				$this->log->write('FEDEX :: ' . $response);
 			} elseif ($dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'FAILURE' || $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'ERROR') {
 				$error = $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue;
 

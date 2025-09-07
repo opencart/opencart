@@ -3,7 +3,7 @@ class ControllerStartupError extends Controller {
 	public function index() {
 		$this->registry->set('log', new Log($this->config->get('config_error_filename') ? $this->config->get('config_error_filename') : $this->config->get('error_filename')));
 		
-		set_error_handler(array($this, 'handler'));	
+		set_error_handler(array($this, 'handler'));
 	}
 	
 	public function handler($code, $message, $file, $line) {
@@ -39,5 +39,5 @@ class ControllerStartupError extends Controller {
 		}
 	
 		return true;
-	} 
-} 
+	}
+}

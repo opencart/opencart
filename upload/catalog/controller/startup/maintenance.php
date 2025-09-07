@@ -7,7 +7,7 @@ class ControllerStartupMaintenance extends Controller {
 				$route = $this->request->get['route'];
 			} else {
 				$route = $this->config->get('action_default');
-			}			
+			}
 			
 			$ignore = array(
 				'common/language/language',

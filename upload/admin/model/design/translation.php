@@ -51,16 +51,16 @@ class ModelDesignTranslation extends Model {
 			}
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}	
+		}
 				
 		$query = $this->db->query($sql);
 
 		return $query->rows;
-	}	
+	}
 
 	public function getTotalTranslations() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "translation`");
 		
 		return $query->row['total'];
-	}	
+	}
 }

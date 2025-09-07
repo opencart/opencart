@@ -60,7 +60,7 @@ class ModelUpgrade1009 extends Model {
 			
 			$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_login'");
 			
-			if (!$affiliate_query->num_rows) {			
+			if (!$affiliate_query->num_rows) {
 				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_login`");
 			}
 			
@@ -128,7 +128,7 @@ class ModelUpgrade1009 extends Model {
 		foreach ($files as $file) {
 			$lines = file($file);
 	
-			for ($i = 0; $i < count($lines); $i++) { 
+			for ($i = 0; $i < count($lines); $i++) {
 				if ((strpos($lines[$i], 'DIR_IMAGE') !== false) && (strpos($lines[$i + 1], 'DIR_STORAGE') === false)) {
 					array_splice($lines, $i + 1, 0, array('define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');'));
 				}
@@ -155,7 +155,7 @@ class ModelUpgrade1009 extends Model {
 				
 				if (strpos($lines[$i], 'DIR_SESSION') !== false) {
 					$lines[$i] = 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
-				}				
+				}
 	
 				if (strpos($lines[$i], 'DIR_UPLOAD') !== false) {
 					$lines[$i] = 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n";

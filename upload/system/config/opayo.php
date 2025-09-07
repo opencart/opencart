@@ -1,4 +1,4 @@
-<?php 
+<?php
 $_['opayo_setting'] = array(
 	'general' => array(
 		'environment' => 'live',
@@ -43,35 +43,35 @@ $_['opayo_setting'] = array(
 		),
 		'MasterCard' => array(
 			'code' => 'MC',
-			'name' => 'MasterCard'			
+			'name' => 'MasterCard'
 		),
 		'DELTA' => array(
 			'code' => 'DELTA',
-			'name' => 'Visa Delta/Debit'			
+			'name' => 'Visa Delta/Debit'
 		),
 		'SOLO' => array(
 			'code' => 'SOLO',
-			'name' => 'Solo'			
+			'name' => 'Solo'
 		),
 		'MAESTRO' => array(
 			'code' => 'MAESTRO',
-			'name' => 'Maestro'			
+			'name' => 'Maestro'
 		),
 		'UKE' => array(
 			'code' => 'UKE',
-			'name' => 'Visa Electron UK Debit'			
+			'name' => 'Visa Electron UK Debit'
 		),
 		'AMEX' => array(
 			'code' => 'AMEX',
-			'name' => 'American Express'			
+			'name' => 'American Express'
 		),
 		'DC' => array(
 			'code' => 'DC',
-			'name' => 'Diners Club'			
+			'name' => 'Diners Club'
 		),
 		'JCB' => array(
 			'code' => 'JCB',
-			'name' => 'Japan Credit Bureau'			
+			'name' => 'Japan Credit Bureau'
 		)
 	)
 );

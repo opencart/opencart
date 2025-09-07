@@ -344,9 +344,9 @@ class ModelExtensionPaymentWorldpay extends Model {
 		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 		curl_setopt(
 				$curl, CURLOPT_HTTPHEADER, array(
-			"Authorization: " . $this->config->get('payment_worldpay_service_key'),
-			"Content-Type: application/json",
-			"Content-Length: " . $content_length
+					"Authorization: " . $this->config->get('payment_worldpay_service_key'),
+					"Content-Type: application/json",
+					"Content-Length: " . $content_length
 				)
 		);
 

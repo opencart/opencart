@@ -50,7 +50,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 			$data['status'] = $this->config->get('module_paypal_smart_button_status');
 		}
 		
-		// Setting 		
+		// Setting
 		$_config = new Config();
 		$_config->load('paypal_smart_button');
 		

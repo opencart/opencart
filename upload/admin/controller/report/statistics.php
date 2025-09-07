@@ -9,7 +9,7 @@ class ControllerReportStatistics extends Controller {
 
 		$this->load->model('report/statistics');
 
-		$this->getList();	
+		$this->getList();
 	}
 	
 	public function ordersale() {
@@ -17,19 +17,19 @@ class ControllerReportStatistics extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('report/statistics');		
+		$this->load->model('report/statistics');
 
 		if ($this->validate()) {
 			$this->load->model('sale/order');
 			
-			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(array('filter_order_status' => implode(',', array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status'))))));		
+			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(array('filter_order_status' => implode(',', array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status'))))));
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 			
 			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
 		}
 		
-		$this->getList();	
+		$this->getList();
 	}
 		
 	public function orderprocessing() {
@@ -37,45 +37,45 @@ class ControllerReportStatistics extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('report/statistics');		
+		$this->load->model('report/statistics');
 
 		if ($this->validate()) {
 			$this->load->model('sale/order');
 			
-			$this->model_report_statistics->editValue('order_processing', $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_processing_status')))));		
+			$this->model_report_statistics->editValue('order_processing', $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_processing_status')))));
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 			
 			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
 		}
 		
-		$this->getList();	
+		$this->getList();
 	}
 	
 	public function ordercomplete() {
 		$this->load->language('report/statistics');
 
-		$this->document->setTitle($this->language->get('heading_title'));		
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('report/statistics');
 		
 		if ($this->validate()) {
 			$this->load->model('sale/order');
 			
-			$this->model_report_statistics->editValue('order_complete', $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status')))));		
+			$this->model_report_statistics->editValue('order_complete', $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status')))));
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
-		}		
+		}
 		
-		$this->getList();	
+		$this->getList();
 	}
 	
 	public function orderother() {
 		$this->load->language('report/statistics');
 
-		$this->document->setTitle($this->language->get('heading_title'));	
+		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('report/statistics');
 		
@@ -90,7 +90,7 @@ class ControllerReportStatistics extends Controller {
 				if (!in_array($result['order_status_id'], array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status')))) {
 					$order_status_data[] = $result['order_status_id'];
 				}
-			}		
+			}
 			
 			$this->load->model('sale/order');
 			
@@ -101,13 +101,13 @@ class ControllerReportStatistics extends Controller {
 			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
 		}
 		
-		$this->getList();	
+		$this->getList();
 	}
 
 	public function returns() {
 		$this->load->language('report/statistics');
 
-		$this->document->setTitle($this->language->get('heading_title'));	
+		$this->document->setTitle($this->language->get('heading_title'));
 				
 		$this->load->model('report/statistics');
 		
@@ -118,36 +118,36 @@ class ControllerReportStatistics extends Controller {
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));		
+			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
 		}
 		
-		$this->getList();	
+		$this->getList();
 	}
 	
 	public function customer() {
 		$this->load->language('report/statistics');
 
-		$this->document->setTitle($this->language->get('heading_title'));	
+		$this->document->setTitle($this->language->get('heading_title'));
 				
 		$this->load->model('report/statistics');
 		
-		if ($this->validate()) {	
+		if ($this->validate()) {
 			$this->load->model('customer/customer');
 			
 			$this->model_report_statistics->editValue('customer', $this->model_customer_customer->getTotalCustomers(array('filter_approved' => 0)));
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));		
+			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
 		}
 		
-		$this->getList();	
-	}	
+		$this->getList();
+	}
 		
 	public function affiliate() {
 		$this->load->language('report/statistics');
 
-		$this->document->setTitle($this->language->get('heading_title'));	
+		$this->document->setTitle($this->language->get('heading_title'));
 				
 		$this->load->model('report/statistics');
 		
@@ -161,17 +161,17 @@ class ControllerReportStatistics extends Controller {
 			$this->response->redirect($this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'], true));
 		}
 		
-		$this->getList();				
+		$this->getList();
 	}
 
 	public function product() {
 		$this->load->language('report/statistics');
 
-		$this->document->setTitle($this->language->get('heading_title'));	
+		$this->document->setTitle($this->language->get('heading_title'));
 				
 		$this->load->model('report/statistics');
 		
-		if ($this->validate()) {		
+		if ($this->validate()) {
 			$this->load->model('catalog/product');
 			
 			$this->model_report_statistics->editValue('product', $this->model_catalog_product->getTotalProducts(array('filter_quantity' => 0)));
@@ -182,16 +182,16 @@ class ControllerReportStatistics extends Controller {
 		}
 		
 		$this->getList();
-	}	
+	}
 	
 	public function review() {
 		$this->load->language('report/statistics');
 
-		$this->document->setTitle($this->language->get('heading_title'));	
+		$this->document->setTitle($this->language->get('heading_title'));
 				
-		$this->load->model('report/statistics');	
+		$this->load->model('report/statistics');
 		
-		if ($this->validate()) {	
+		if ($this->validate()) {
 			$this->load->model('catalog/review');
 				
 			$this->model_report_statistics->editValue('review', $this->model_catalog_review->getTotalReviews(array('filter_status' => 0)));
@@ -258,5 +258,5 @@ class ControllerReportStatistics extends Controller {
 		}
 		
 		return !$this->error;
-	}	
+	}
 }

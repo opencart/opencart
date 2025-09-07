@@ -300,7 +300,7 @@ class ModelExtensionPaymentPayPal extends Model {
 			return true;
 		} else {
 			return false;
-		} 		
+		}
 	}
 	
 	public function checkVersion($opencart_version, $paypal_version) {

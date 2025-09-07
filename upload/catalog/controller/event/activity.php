@@ -51,7 +51,7 @@ class ControllerEventActivity extends Controller {
 	
 					$this->model_account_activity->addActivity('reset', $activity_data);
 				}
-			}	
+			}
 		}
 	}
 
@@ -71,7 +71,7 @@ class ControllerEventActivity extends Controller {
 	
 				$this->model_account_activity->addActivity('login', $activity_data);
 			}
-		}	
+		}
 	}
 	
 	// model/account/customer/editCode/after
@@ -91,7 +91,7 @@ class ControllerEventActivity extends Controller {
 
 				$this->model_account_activity->addActivity('forgotten', $activity_data);
 			}
-		}	
+		}
 	}
 	
 	// model/account/customer/addTransaction/after
@@ -113,7 +113,7 @@ class ControllerEventActivity extends Controller {
 				$this->model_account_activity->addActivity('transaction', $activity_data);
 			}
 		}
-	}	
+	}
 	
 	// model/account/customer/addAffiliate/after
 	public function addAffiliate(&$route, &$args, &$output) {
@@ -127,7 +127,7 @@ class ControllerEventActivity extends Controller {
 
 			$this->model_account_activity->addActivity('affiliate_add', $activity_data);
 		}
-	}	
+	}
 	
 	// model/account/customer/editAffiliate/after
 	public function editAffiliate(&$route, &$args, &$output) {
@@ -144,7 +144,7 @@ class ControllerEventActivity extends Controller {
 	}
 	
 	// model/account/address/addAddress/after
-	public function addAddress(&$route, &$args, &$output) { 
+	public function addAddress(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
 
@@ -161,11 +161,11 @@ class ControllerEventActivity extends Controller {
 			}
 
 			$this->model_account_activity->addActivity('address_add', $activity_data);
-		}	
+		}
 	}
 	
 	// model/account/address/editAddress/after
-	public function editAddress(&$route, &$args, &$output) { 
+	public function editAddress(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
 
@@ -175,7 +175,7 @@ class ControllerEventActivity extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('address_edit', $activity_data);
-		}	
+		}
 	}
 	
 	// model/account/address/deleteAddress/after
@@ -214,10 +214,10 @@ class ControllerEventActivity extends Controller {
 				$this->model_account_activity->addActivity('return_guest', $activity_data);
 			}
 		}
-	}	
+	}
 	
 	// model/checkout/order/addOrderHistory/before
-	public function addOrderHistory(&$route, &$args) {	
+	public function addOrderHistory(&$route, &$args) {
 		if ($this->config->get('config_customer_activity')) {
 			// If last order status id is 0 and new order status is not then record as new order
 			$this->load->model('checkout/order');

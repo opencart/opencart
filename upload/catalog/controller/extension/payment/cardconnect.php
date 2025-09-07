@@ -169,7 +169,7 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 
 						$this->model_extension_payment_cardconnect->log('Response: ' . print_r($response_data, true));
 
-					 	if (isset($response_data['respstat']) && $response_data['respstat'] == 'A') {
+						if (isset($response_data['respstat']) && $response_data['respstat'] == 'A') {
 							$this->load->model('checkout/order');
 
 							// if a cheque

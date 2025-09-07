@@ -208,11 +208,11 @@ class ModelExtensionPaymentLaybuy extends Model {
 			$date = date($this->language->get('date_format_short'), strtotime($date));
 
 			$report_content[] = array(
-			'instalment'	=> $month,
-			'amount'		=> $this->currency->format($data['payment_amounts'], $data['currency']),
-			'date'			=> $date,
-			'pp_trans_id'	=> '',
-			'status'		=> 'Pending'
+				'instalment'	=> $month,
+				'amount'		=> $this->currency->format($data['payment_amounts'], $data['currency']),
+				'date'			=> $date,
+				'pp_trans_id'	=> '',
+				'status'		=> 'Pending'
 			);
 		}
 

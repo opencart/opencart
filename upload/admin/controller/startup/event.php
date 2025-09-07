@@ -10,6 +10,6 @@ class ControllerStartupEvent extends Controller {
 			if ((substr($result['trigger'], 0, 6) == 'admin/') && $result['status']) {
 				$this->event->register(substr($result['trigger'], 6), new Action($result['action']), $result['sort_order']);
 			}
-		}		
+		}
 	}
 }

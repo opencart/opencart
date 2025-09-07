@@ -251,22 +251,22 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function isOrderInState($order_reference_id, $states = array()) {
-        return in_array((string)$this->fetchOrder($order_reference_id)->OrderReferenceStatus->State, $states);
-    }
+		return in_array((string)$this->fetchOrder($order_reference_id)->OrderReferenceStatus->State, $states);
+	}
 
-    public function fetchOrder($order_reference_id) {
-    	$order = $this->offAmazon("GetOrderReferenceDetails", array(
-            'AmazonOrderReferenceId' => $order_reference_id
-        ));
+	public function fetchOrder($order_reference_id) {
+		$order = $this->offAmazon("GetOrderReferenceDetails", array(
+			'AmazonOrderReferenceId' => $order_reference_id
+		));
 
-    	$responseBody = $order['ResponseBody'];
+		$responseBody = $order['ResponseBody'];
 
-	    $details_xml = simplexml_load_string($responseBody);
+		$details_xml = simplexml_load_string($responseBody);
 
-        return $details_xml
-            ->GetOrderReferenceDetailsResult
-            ->OrderReferenceDetails;
-    }
+		return $details_xml
+			->GetOrderReferenceDetailsResult
+			->OrderReferenceDetails;
+	}
 
 	public function getTotalCaptured($amazon_login_pay_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "amazon_login_pay_order_transaction` WHERE `amazon_login_pay_order_id` = '" . (int)$amazon_login_pay_order_id . "' AND (`type` = 'capture' OR `type` = 'refund') AND (`status` = 'Completed' OR `status` = 'Closed')");
@@ -445,8 +445,8 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 			$backtrace = debug_backtrace();
 			$class = isset($backtrace[6]['class']) ? $backtrace[6]['class'] . '::' : '';
 			$log->write('Origin: ' . $class . $backtrace[6]['function']);
-            $log->write(!is_string($message) ? print_r($message, true) : $message);
-            unset($log);
+			$log->write(!is_string($message) ? print_r($message, true) : $message);
+			unset($log);
 		}
 	}
 }

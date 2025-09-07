@@ -77,7 +77,7 @@ class ControllerCommonDashboard extends Controller {
 		}
 
 		if (!empty($column)) {
-    			$data['rows'][] = $column;
+				$data['rows'][] = $column;
 		}
 
 		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {

@@ -53,7 +53,7 @@ class ControllerReportReport extends Controller {
 			$sort_order[$key] = $value['sort_order'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $data['reports']);	
+		array_multisort($sort_order, SORT_ASC, $data['reports']);
 		
 		if (isset($this->request->get['code'])) {
 			$data['report'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');

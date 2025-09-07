@@ -26,7 +26,7 @@ class Mail extends \stdClass {
 	 *
 	 * @param	string	$adaptor
 	 *
- 	*/
+	*/
 	public function __construct($adaptor = 'mail') {
 		$class = 'Mail\\' . $adaptor;
 		
@@ -35,85 +35,85 @@ class Mail extends \stdClass {
 		} else {
 			trigger_error('Error: Could not load mail adaptor ' . $adaptor . '!');
 			exit();
-		}	
+		}
 	}
 	
 	/**
-     * 
-     *
-     * @param	mixed	$to
-     */
+	 * 
+	 *
+	 * @param	mixed	$to
+	 */
 	public function setTo($to) {
 		$this->to = $to;
 	}
 	
 	/**
-     * 
-     *
-     * @param	string	$from
-     */
+	 * 
+	 *
+	 * @param	string	$from
+	 */
 	public function setFrom($from) {
 		$this->from = $from;
 	}
 	
 	/**
-     * 
-     *
-     * @param	string	$sender
-     */
+	 * 
+	 *
+	 * @param	string	$sender
+	 */
 	public function setSender($sender) {
 		$this->sender = $sender;
 	}
 	
 	/**
-     * 
-     *
-     * @param	string	$reply_to
-     */
+	 * 
+	 *
+	 * @param	string	$reply_to
+	 */
 	public function setReplyTo($reply_to) {
 		$this->reply_to = $reply_to;
 	}
 	
 	/**
-     * 
-     *
-     * @param	string	$subject
-     */
+	 * 
+	 *
+	 * @param	string	$subject
+	 */
 	public function setSubject($subject) {
 		$this->subject = $subject;
 	}
 	
 	/**
-     * 
-     *
-     * @param	string	$text
-     */
+	 * 
+	 *
+	 * @param	string	$text
+	 */
 	public function setText($text) {
 		$this->text = $text;
 	}
 	
 	/**
-     * 
-     *
-     * @param	string	$html
-     */
+	 * 
+	 *
+	 * @param	string	$html
+	 */
 	public function setHtml($html) {
 		$this->html = $html;
 	}
 	
 	/**
-     * 
-     *
-     * @param	string	$filename
-     */
+	 * 
+	 *
+	 * @param	string	$filename
+	 */
 	public function addAttachment($filename) {
 		$this->attachments[] = $filename;
 	}
 	
 	/**
-     * 
-     *
-     */
+	 * 
+	 *
+	 */
 	public function send() {
 		if (!$this->to) {
 			throw new \Exception('Error: E-Mail to required!');

@@ -204,7 +204,7 @@ class ModelCatalogProduct extends Model {
 
 				if (!$query->num_rows) {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$product_recurring['customer_group_id'] . "', `recurring_id` = '" . (int)$product_recurring['recurring_id'] . "'");
-				}				
+				}
 			}
 		}
 		

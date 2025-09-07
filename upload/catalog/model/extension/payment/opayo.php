@@ -49,7 +49,7 @@ class ModelExtensionPaymentOpayo extends Model {
 		return $card_data;
 	}
 
-	public function addCard($card_data) {		
+	public function addCard($card_data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "opayo_card` SET `customer_id` = '" . $this->db->escape($card_data['customer_id']) . "', `digits` = '" . $this->db->escape($card_data['Last4Digits']) . "', `expiry` = '" . $this->db->escape($card_data['ExpiryDate']) . "', `type` = '" . $this->db->escape($card_data['CardType']) . "', `token` = '" . $this->db->escape($card_data['Token']) . "'");
 		
 		return $this->db->getLastId();

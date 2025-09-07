@@ -45,7 +45,7 @@ return $config
         'heredoc_indentation' => true,
         'heredoc_to_nowdoc' => true,
         'implode_call' => true,
-        'indentation_type' => false,
+        'indentation_type' => true,
         'integer_literal_case' => true,
         'lambda_not_used_import' => true,
         'magic_constant_casing' => true,
@@ -72,7 +72,7 @@ return $config
         'no_spaces_after_function_name' => false,
         'no_spaces_around_offset' => true,
         'no_trailing_comma_in_singleline' => true,
-        'no_trailing_whitespace' => false,
+        'no_trailing_whitespace' => true,
         'no_trailing_whitespace_in_comment' => false,
         'no_unneeded_braces' => true,
         'no_unneeded_final_method' => true,
@@ -117,7 +117,7 @@ return $config
         'set_type_to_cast' => true,
         'short_scalar_cast' => false,
         'simple_to_complex_string_variable' => true,
-        'single_blank_line_at_eof' => false,
+        'single_blank_line_at_eof' => true,
         'single_line_empty_body' => false,
         'single_line_throw' => true,
         'spaces_inside_parentheses' => false,
@@ -135,6 +135,7 @@ return $config
         'unary_operator_spaces' => false,
         'visibility_required' => false,
         'yield_from_array_to_yields' => true,
+		'trailing_comma_in_multiline' => ['elements' => []],
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->in(__DIR__ . '/upload/')

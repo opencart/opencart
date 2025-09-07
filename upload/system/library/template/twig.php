@@ -36,6 +36,6 @@ final class Twig {
 		} catch (\Exception $e) {
 			trigger_error('Error: Could not load template ' . $filename . '!');
 			exit();
-		}	
-	}	
+		}
+	}
 }

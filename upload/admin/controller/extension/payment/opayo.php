@@ -58,7 +58,7 @@ class ControllerExtensionPaymentOpayo extends Controller {
 			$catalog = HTTP_CATALOG;
 		}
 		
-		// Setting 		
+		// Setting
 		$_config = new Config();
 		$_config->load('opayo');
 		
@@ -334,7 +334,7 @@ class ControllerExtensionPaymentOpayo extends Controller {
 			
 			$this->model_extension_payment_opayo->editRecurringStatus($order_recurring_id, 1);
 			
-			$data['success'] = $this->language->get('success_enable_recurring');	
+			$data['success'] = $this->language->get('success_enable_recurring');
 		}
 						
 		$data['error'] = $this->error;
@@ -353,7 +353,7 @@ class ControllerExtensionPaymentOpayo extends Controller {
 			
 			$this->model_extension_payment_opayo->editRecurringStatus($order_recurring_id, 2);
 			
-			$data['success'] = $this->language->get('success_disable_recurring');	
+			$data['success'] = $this->language->get('success_disable_recurring');
 		}
 						
 		$data['error'] = $this->error;
@@ -372,7 +372,7 @@ class ControllerExtensionPaymentOpayo extends Controller {
 		if (!$this->request->post['payment_opayo_vendor']) {
 			$this->error['vendor'] = $this->language->get('error_vendor');
 			$this->error['warning'] = $this->language->get('error_warning');
-		} 
+		}
 
 		return !$this->error;
 	}

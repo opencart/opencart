@@ -15,7 +15,7 @@ class ModelUpgrade1007 extends Model {
 			
 			// Setting
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_directory', `value` = 'default'");
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_status', `value` = '1'");		
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_status', `value` = '1'");
 		}
 				
 		// Setting
@@ -80,7 +80,7 @@ class ModelUpgrade1007 extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "paypal_order_transaction` CHANGE `created` `date_added` datetime NOT NULL");
 		}
 		
-		// Banner	
+		// Banner
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image' AND COLUMN_NAME = 'language_id'");
 		
 		if (!$query->num_rows) {

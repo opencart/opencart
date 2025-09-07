@@ -32,6 +32,3 @@ class ControllerMailTransaction extends Controller {
 		}
 	}
 }
-
-
-

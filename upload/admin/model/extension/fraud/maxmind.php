@@ -58,7 +58,7 @@ class ModelExtensionFraudMaxMind extends Model {
 			  `date_added` datetime NOT NULL,
 			  PRIMARY KEY (`order_id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-		");		
+		");
 	}
 
 	public function uninstall() {
@@ -69,5 +69,5 @@ class ModelExtensionFraudMaxMind extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "maxmind` WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->row;
-	}	
+	}
 }

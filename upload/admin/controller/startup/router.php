@@ -22,7 +22,7 @@ class ControllerStartupRouter extends Controller {
 		
 		$action = new Action($route);
 		
-		// Any output needs to be another Action object. 
+		// Any output needs to be another Action object.
 		$output = $action->execute($this->registry, $data);
 		
 		// Trigger the post events

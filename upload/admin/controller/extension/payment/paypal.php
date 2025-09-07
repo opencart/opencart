@@ -10,7 +10,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		}
 	}
 			
-	public function index() {				
+	public function index() {
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$server = HTTPS_SERVER;
 			$catalog = HTTPS_CATALOG;
@@ -28,7 +28,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		$this->cache->delete('paypal');
 		
-		if (!empty($cache_data['environment']) && !empty($cache_data['authorization_code']) && !empty($cache_data['shared_id']) && !empty($cache_data['seller_nonce']) && !empty($this->request->get['merchantIdInPayPal'])) {							
+		if (!empty($cache_data['environment']) && !empty($cache_data['authorization_code']) && !empty($cache_data['shared_id']) && !empty($cache_data['seller_nonce']) && !empty($this->request->get['merchantIdInPayPal'])) {
 			$this->load->language('extension/payment/paypal');
 			
 			$this->load->model('extension/payment/paypal');
@@ -75,7 +75,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 		
 			$paypal->setAccessToken($token_info);
 			
@@ -148,7 +148,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 				
 				$this->error['warning'] = implode(' ', $error_messages);
 			}
-			   						
+									
 			$this->load->model('setting/setting');
 			
 			$setting = $this->model_setting_setting->getSetting('payment_paypal');
@@ -252,7 +252,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		$data['setting'] = $_config->get('paypal_setting');
 		
-		$data['authorization_type'] = 'automatic';				
+		$data['authorization_type'] = 'automatic';
 		$data['environment'] = 'production';
 					
 		$data['seller_nonce'] = $this->token(50);
@@ -422,7 +422,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -543,7 +543,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -640,7 +640,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 						
 		$data['decimal_place'] = $data['setting']['currency'][$data['currency_code']]['decimal_place'];
 				
-		if ($data['client_id'] && $data['secret']) {										
+		if ($data['client_id'] && $data['secret']) {
 			require_once DIR_SYSTEM . 'library/paypal/paypal.php';
 			
 			$paypal_info = array(
@@ -654,7 +654,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 				
 			$paypal->setAccessToken($token_info);
 					
@@ -695,7 +695,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -793,7 +793,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 						
 		$data['decimal_place'] = $data['setting']['currency'][$data['currency_code']]['decimal_place'];
 				
-		if ($data['client_id'] && $data['secret']) {										
+		if ($data['client_id'] && $data['secret']) {
 			require_once DIR_SYSTEM . 'library/paypal/paypal.php';
 			
 			$paypal_info = array(
@@ -807,7 +807,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 				
 			$paypal->setAccessToken($token_info);
 		
@@ -848,7 +848,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -948,7 +948,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 						
 		$data['decimal_place'] = $data['setting']['currency'][$data['currency_code']]['decimal_place'];
 				
-		if ($data['client_id'] && $data['secret']) {										
+		if ($data['client_id'] && $data['secret']) {
 			require_once DIR_SYSTEM . 'library/paypal/paypal.php';
 			
 			$paypal_info = array(
@@ -962,7 +962,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 				
 			$paypal->setAccessToken($token_info);
 		
@@ -1003,7 +1003,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1101,7 +1101,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 						
 		$data['decimal_place'] = $data['setting']['currency'][$data['currency_code']]['decimal_place'];
 				
-		if ($data['client_id'] && $data['secret']) {										
+		if ($data['client_id'] && $data['secret']) {
 			require_once DIR_SYSTEM . 'library/paypal/paypal.php';
 			
 			$paypal_info = array(
@@ -1115,7 +1115,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 				
 			$paypal->setAccessToken($token_info);
 		
@@ -1156,7 +1156,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1254,7 +1254,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 						
 		$data['decimal_place'] = $data['setting']['currency'][$data['currency_code']]['decimal_place'];
 				
-		if ($data['client_id'] && $data['secret']) {										
+		if ($data['client_id'] && $data['secret']) {
 			require_once DIR_SYSTEM . 'library/paypal/paypal.php';
 			
 			$paypal_info = array(
@@ -1268,7 +1268,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 							
 			$token_info['response_type'] = 'client_token';
 			$token_info['intent'] = 'sdk_init';
@@ -1314,7 +1314,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1413,7 +1413,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 						
 		$data['decimal_place'] = $data['setting']['currency'][$data['currency_code']]['decimal_place'];
 								
-		if ($data['client_id'] && $data['secret']) {										
+		if ($data['client_id'] && $data['secret']) {
 			require_once DIR_SYSTEM . 'library/paypal/paypal.php';
 			
 			$paypal_info = array(
@@ -1427,7 +1427,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 				
 			$paypal->setAccessToken($token_info);
 		
@@ -1468,7 +1468,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1574,7 +1574,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			$data['text_message_footnote'] = $this->language->get('text_message_footnote_us');
 		}
 						
-		if ($data['client_id'] && $data['secret']) {										
+		if ($data['client_id'] && $data['secret']) {
 			require_once DIR_SYSTEM . 'library/paypal/paypal.php';
 			
 			$paypal_info = array(
@@ -1588,7 +1588,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 				
 			$paypal->setAccessToken($token_info);
 		
@@ -1629,7 +1629,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1722,13 +1722,13 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
-		}		
+		}
 									
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -1816,7 +1816,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (!$agree_status) {
 			$this->error['warning'] = $this->language->get('error_agree');
-		}		
+		}
 		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1853,7 +1853,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$data['error'] = $this->error;
 		
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($data));	
+		$this->response->setOutput(json_encode($data));
 	}
 	
 	public function connect() {
@@ -1872,7 +1872,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		$config_setting = $_config->get('paypal_setting');
 				
-		if (!empty($this->request->post['environment']) && !empty($this->request->post['client_id']) && !empty($this->request->post['client_secret']) && !empty($this->request->post['merchant_id'])) {										
+		if (!empty($this->request->post['environment']) && !empty($this->request->post['client_id']) && !empty($this->request->post['client_secret']) && !empty($this->request->post['merchant_id'])) {
 			$this->load->model('extension/payment/paypal');
 			
 			$environment = $this->request->post['environment'];
@@ -1894,7 +1894,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 		
 			$result = $paypal->setAccessToken($token_info);
 			
@@ -1966,7 +1966,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 				
 					$this->error['warning'] = implode(' ', $error_messages);
 				}
-										   						
+																
 				if (!$this->error) {
 					$this->load->model('setting/setting');
 			
@@ -2057,7 +2057,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 				
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($data));
-    }
+	}
 	
 	public function getSaleAnalytics() {
 		$this->load->language('extension/payment/paypal');
@@ -2218,7 +2218,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$this->response->setOutput(json_encode($data));
 	}
 	
-	public function agree() {		
+	public function agree() {
 		$this->load->language('extension/payment/paypal');
 		
 		$this->load->model('extension/payment/paypal');
@@ -2304,7 +2304,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$this->model_setting_event->addEvent('paypal_order_delete_order', 'catalog/model/checkout/order/deleteOrder/before', 'extension/payment/paypal/order_delete_order_before');
 		$this->model_setting_event->addEvent('paypal_customer_delete_customer', 'admin/model/customer/customer/deleteCustomer/before', 'extension/payment/paypal/customer_delete_customer_before');
 		
-		if (version_compare($this->config->get('paypal_version'), '3.1.0', '<')) {			
+		if (version_compare($this->config->get('paypal_version'), '3.1.0', '<')) {
 			$this->load->model('setting/setting');
 			
 			$setting = $this->model_setting_setting->getSetting('payment_paypal');
@@ -2340,13 +2340,13 @@ class ControllerExtensionPaymentPayPal extends Controller {
 
 			$content = $this->getPaymentDetails((int)$this->request->get['order_id']);
 			
-			if ($content) {												
+			if ($content) {
 				$data['tabs'][] = array(
 					'code'    => 'paypal',
 					'title'   => $this->language->get('heading_title_main'),
 					'content' => $content
 				);
-			}	
+			}
 			
 			$this->load->language('sale/order');
 		}
@@ -2448,7 +2448,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 						
 			$paypal->setAccessToken($token_info);
 			
@@ -2487,7 +2487,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 				$transaction_status = $data['transaction_status'];
 
 				if (!empty($payments['authorizations'])) {
-					foreach ($payments['authorizations'] as $authorization) {						
+					foreach ($payments['authorizations'] as $authorization) {
 						$transaction_id = $authorization['id'];
 						
 						if (($authorization['status'] == 'CREATED') || ($authorization['status'] == 'PENDING')) {
@@ -2545,7 +2545,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 							
 				$paypal_order_data['order_id'] = $order_id;
 				$paypal_order_data['transaction_status'] = $transaction_status;
-				$paypal_order_data['transaction_id'] = $transaction_id;				
+				$paypal_order_data['transaction_id'] = $transaction_id;
 
 				$this->model_extension_payment_paypal->editPayPalOrder($paypal_order_data);
 				
@@ -2563,7 +2563,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		return '';
 	}
 			
-	public function capturePayment() {						
+	public function capturePayment() {
 		if ($this->config->get('payment_paypal_status') && !empty($this->request->post['order_id'])) {
 			$this->load->language('extension/payment/paypal');
 			
@@ -2626,7 +2626,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 				$token_info = array(
 					'grant_type' => 'client_credentials'
-				);	
+				);
 						
 				$paypal->setAccessToken($token_info);
 			
@@ -2677,12 +2677,12 @@ class ControllerExtensionPaymentPayPal extends Controller {
 					$paypal_order_data = array();
 							
 					$paypal_order_data['order_id'] = $order_id;
-					$paypal_order_data['transaction_id'] = $transaction_id;	
+					$paypal_order_data['transaction_id'] = $transaction_id;
 					$paypal_order_data['transaction_status'] = $transaction_status;
 
 					$this->model_extension_payment_paypal->editPayPalOrder($paypal_order_data);
 					
-					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {		
+					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {
 						$this->model_extension_payment_paypal->addOrderHistory($setting['general']['order_history_token'], $order_id, $order_status_id, $comment, $notify);
 					}
 												
@@ -2753,7 +2753,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 				$token_info = array(
 					'grant_type' => 'client_credentials'
-				);	
+				);
 						
 				$paypal->setAccessToken($token_info);
 			
@@ -2801,7 +2801,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 	
 					$this->model_extension_payment_paypal->editPayPalOrder($paypal_order_data);
 					
-					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {			
+					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {
 						$this->model_extension_payment_paypal->addOrderHistory($setting['general']['order_history_token'], $order_id, $order_status_id, $comment, $notify);
 					}
 								
@@ -2868,7 +2868,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 				$token_info = array(
 					'grant_type' => 'client_credentials'
-				);	
+				);
 						
 				$paypal->setAccessToken($token_info);
 		
@@ -2907,7 +2907,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 
 					$this->model_extension_payment_paypal->editPayPalOrder($paypal_order_data);
 					
-					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {			
+					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {
 						$this->model_extension_payment_paypal->addOrderHistory($setting['general']['order_history_token'], $order_id, $order_status_id, $comment, $notify);
 					}
 								
@@ -2979,7 +2979,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 				$token_info = array(
 					'grant_type' => 'client_credentials'
-				);	
+				);
 						
 				$paypal->setAccessToken($token_info);
 				
@@ -3160,12 +3160,12 @@ class ControllerExtensionPaymentPayPal extends Controller {
 									
 					$paypal_order_data = array();
 							
-					$paypal_order_data['order_id'] = $order_id;	
+					$paypal_order_data['order_id'] = $order_id;
 					$paypal_order_data['transaction_status'] = $transaction_status;
 
 					$this->model_extension_payment_paypal->editPayPalOrder($paypal_order_data);
 					
-					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {		
+					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {
 						$this->model_extension_payment_paypal->addOrderHistory($setting['general']['order_history_token'], $order_id, $order_status_id, $comment, $notify);
 					}
 													
@@ -3185,7 +3185,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		$data = array();
 		
-		if (!empty($this->request->post['filter_country_code']) && !empty($this->request->post['filter_carrier_name'])) {		
+		if (!empty($this->request->post['filter_country_code']) && !empty($this->request->post['filter_carrier_name'])) {
 			$filter_country_code = $this->request->post['filter_country_code'];
 			$filter_carrier_name = $this->request->post['filter_carrier_name'];
 				
@@ -3210,13 +3210,13 @@ class ControllerExtensionPaymentPayPal extends Controller {
 					);
 				}
 			}
-		}	
+		}
 			
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($data));
 	}
 	
-	public function createTracker() {						
+	public function createTracker() {
 		if ($this->config->get('payment_paypal_status') && !empty($this->request->post['order_id'])) {
 			$this->load->language('extension/payment/paypal');
 			
@@ -3290,7 +3290,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 				$token_info = array(
 					'grant_type' => 'client_credentials'
-				);	
+				);
 						
 				$paypal->setAccessToken($token_info);
 			
@@ -3329,7 +3329,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 					$this->error['warning'] = implode(' ', $error_messages);
 				}
 						
-				if (isset($result['id']) && isset($result['status']) && !$this->error) {					
+				if (isset($result['id']) && isset($result['status']) && !$this->error) {
 					$paypal_order_data = array(
 						'order_id' => $order_id,
 						'tracking_number' => $tracking_number,
@@ -3340,7 +3340,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 
 					$order_status_id = $setting['order_status']['shipped']['id'];
 					
-					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {					
+					if ($order_status_id && ($order_info['order_status_id'] != $order_status_id) && !in_array($order_info['order_status_id'], $setting['final_order_status'])) {
 						$this->model_extension_payment_paypal->addOrderHistory($setting['general']['order_history_token'], $order_id, $order_status_id, $comment, $notify);
 					}
 												
@@ -3355,7 +3355,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$this->response->setOutput(json_encode($data));
 	}
 	
-	public function cancelTracker() {						
+	public function cancelTracker() {
 		if ($this->config->get('payment_paypal_status') && !empty($this->request->post['order_id'])) {
 			$this->load->language('extension/payment/paypal');
 			
@@ -3398,7 +3398,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 				$token_info = array(
 					'grant_type' => 'client_credentials'
-				);	
+				);
 						
 				$paypal->setAccessToken($token_info);
 			
@@ -3434,7 +3434,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 					$this->error['warning'] = implode(' ', $error_messages);
 				}
 						
-				if (!$this->error) {				
+				if (!$this->error) {
 					$paypal_order_data = array(
 						'order_id' => $order_id,
 						'tracking_number' => '',
@@ -3494,7 +3494,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$this->model_extension_payment_paypal->editOrderRecurringStatus($order_recurring_id, 1);
 			
-			$data['success'] = $this->language->get('success_enable_recurring');	
+			$data['success'] = $this->language->get('success_enable_recurring');
 		}
 						
 		$data['error'] = $this->error;
@@ -3513,7 +3513,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$this->model_extension_payment_paypal->editOrderRecurringStatus($order_recurring_id, 2);
 			
-			$data['success'] = $this->language->get('success_disable_recurring');	
+			$data['success'] = $this->language->get('success_disable_recurring');
 		}
 						
 		$data['error'] = $this->error;
@@ -3540,7 +3540,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 	
 		for ($i = 0; $i < $length; $i++) {
 			$token .= $string[mt_rand(0, $max)];
-		}	
+		}
 	
 		return $token;
 	}

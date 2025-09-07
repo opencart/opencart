@@ -131,7 +131,7 @@ class ModelAccountCustomer extends Model {
 		
 		if ($this->config->get('config_affiliate_approval')) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_approval` SET customer_id = '" . (int)$customer_id . "', type = 'affiliate', date_added = NOW()");
-		}		
+		}
 	}
 		
 	public function editAffiliate($customer_id, $data) {
@@ -148,5 +148,5 @@ class ModelAccountCustomer extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `tracking` = '" . $this->db->escape($tracking) . "'");
 
 		return $query->row;
-	}			
+	}
 }

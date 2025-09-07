@@ -55,6 +55,10 @@
 
 # IDE Project files
 /.idea
+/opencart.iml
 /upload/.idea
 /.cache/cache
 /tools
+
+# CS Fixer
+/.php-cs-fixer.cache

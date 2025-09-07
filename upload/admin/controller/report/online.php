@@ -52,7 +52,7 @@ class ControllerReportOnline extends Controller {
 		$data['refresh'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$this->load->model('report/online');
-		$this->load->model('customer/customer');		
+		$this->load->model('customer/customer');
 
 		$data['customers'] = array();
 

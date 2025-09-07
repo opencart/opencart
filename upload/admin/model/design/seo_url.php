@@ -41,7 +41,7 @@ class ModelDesignSeoUrl extends Model {
 		
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		}	
+		}
 		
 		$sort_data = array(
 			'query',
@@ -102,7 +102,7 @@ class ModelDesignSeoUrl extends Model {
 		
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		}		
+		}
 		
 		$query = $this->db->query($sql);
 
@@ -113,7 +113,7 @@ class ModelDesignSeoUrl extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword = '" . $this->db->escape($keyword) . "'");
 
 		return $query->rows;
-	}	
+	}
 	
 	public function getSeoUrlsByQuery($query) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE query = '" . $this->db->escape($query) . "'");
@@ -125,11 +125,11 @@ class ModelDesignSeoUrl extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE query = '" . $this->db->escape($query) . "' AND seo_url_id != '" . (int)$seo_url_id . "'");
 
 		return $query->rows;
-	}	
+	}
 
 	public function getSeoUrlsByKeywordId($seo_url_id, $keyword) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword = '" . $this->db->escape($keyword) . "' AND seo_url_id != '" . (int)$seo_url_id . "'");
 
 		return $query->rows;
-	}	
+	}
 }

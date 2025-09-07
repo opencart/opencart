@@ -126,7 +126,7 @@ class ControllerExtensionThemeDefault extends Controller {
 			$data['theme_default_directory'] = $setting_info['theme_default_directory'];
 		} else {
 			$data['theme_default_directory'] = 'default';
-		}		
+		}
 
 		$data['directories'] = array();
 
@@ -142,7 +142,7 @@ class ControllerExtensionThemeDefault extends Controller {
 			$data['theme_default_product_limit'] = $setting_info['theme_default_product_limit'];
 		} else {
 			$data['theme_default_product_limit'] = 15;
-		}		
+		}
 		
 		if (isset($this->request->post['theme_default_status'])) {
 			$data['theme_default_status'] = $this->request->post['theme_default_status'];
@@ -165,7 +165,7 @@ class ControllerExtensionThemeDefault extends Controller {
 		} elseif (isset($setting_info['theme_default_image_category_width'])) {
 			$data['theme_default_image_category_width'] = $setting_info['theme_default_image_category_width'];
 		} else {
-			$data['theme_default_image_category_width'] = 80;		
+			$data['theme_default_image_category_width'] = 80;
 		}
 		
 		if (isset($this->request->post['theme_default_image_category_height'])) {
@@ -189,7 +189,7 @@ class ControllerExtensionThemeDefault extends Controller {
 		} elseif (isset($setting_info['theme_default_image_thumb_height'])) {
 			$data['theme_default_image_thumb_height'] = $setting_info['theme_default_image_thumb_height'];
 		} else {
-			$data['theme_default_image_thumb_height'] = 228;		
+			$data['theme_default_image_thumb_height'] = 228;
 		}
 		
 		if (isset($this->request->post['theme_default_image_popup_width'])) {

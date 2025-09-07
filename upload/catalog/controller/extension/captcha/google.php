@@ -1,9 +1,9 @@
 <?php
 class ControllerExtensionCaptchaGoogle extends Controller {
-    public function index($error = array()) {
-        $this->load->language('extension/captcha/google');
+	public function index($error = array()) {
+		$this->load->language('extension/captcha/google');
 
-        if (isset($error['captcha'])) {
+		if (isset($error['captcha'])) {
 			$data['error_captcha'] = $error['captcha'];
 		} else {
 			$data['error_captcha'] = '';
@@ -11,12 +11,12 @@ class ControllerExtensionCaptchaGoogle extends Controller {
 
 		$data['site_key'] = $this->config->get('captcha_google_key');
 
-        $data['route'] = $this->request->get['route']; 
+		$data['route'] = $this->request->get['route'];
 
 		return $this->load->view('extension/captcha/google', $data);
-    }
+	}
 
-    public function validate() {
+	public function validate() {
 		if (empty($this->session->data['gcapcha'])) {
 			$this->load->language('extension/captcha/google');
 
@@ -34,5 +34,5 @@ class ControllerExtensionCaptchaGoogle extends Controller {
 				return $this->language->get('error_captcha');
 			}
 		}
-    }
+	}
 }

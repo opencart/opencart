@@ -22,5 +22,5 @@ final class Template {
 
 		throw new \Exception('Error: Could not load template ' . $file . '!');
 		exit();
-	}	
+	}
 }

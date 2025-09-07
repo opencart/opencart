@@ -1,6 +1,6 @@
 <?php
 class ControllerMailForgotten extends Controller {
-	public function index(&$route, &$args, &$output) {			            
+	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/forgotten');
 
 		$data['text_greeting'] = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));

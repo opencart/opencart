@@ -72,7 +72,7 @@ class ControllerAccountAffiliate extends Controller {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_affiliate'),
 				'href' => $this->url->link('account/affiliate/edit', '', true)
-			);		
+			);
 		}
 	
 		if (isset($this->error['warning'])) {
@@ -280,7 +280,7 @@ class ControllerAccountAffiliate extends Controller {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
 			}
-		}			
+		}
 		
 		// Validate agree only if customer not already an affiliate
 		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
@@ -296,5 +296,5 @@ class ControllerAccountAffiliate extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 }

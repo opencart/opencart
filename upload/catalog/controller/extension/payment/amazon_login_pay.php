@@ -1,1006 +1,1006 @@
 <?php
 
 class ControllerExtensionPaymentAmazonLoginPay extends Controller {
-    private $version = "3.2.1";
-    public function session_expired() {
-        $this->load->language('extension/payment/amazon_login_pay');
+	private $version = "3.2.1";
+	public function session_expired() {
+		$this->load->language('extension/payment/amazon_login_pay');
 
-        $this->load->model('extension/payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
-        $this->model_extension_payment_amazon_login_pay->cartRedirect($this->language->get('error_session_expired'));
-    }
+		$this->model_extension_payment_amazon_login_pay->cartRedirect($this->language->get('error_session_expired'));
+	}
 
-    public function address() {
-        $this->load->language('extension/payment/amazon_login_pay');
+	public function address() {
+		$this->load->language('extension/payment/amazon_login_pay');
 
-        $this->load->model('extension/payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
-        $this->document->setTitle($this->language->get('heading_address'));
+		$this->document->setTitle($this->language->get('heading_address'));
 
-        // Verify cart
-        $this->model_extension_payment_amazon_login_pay->verifyCart();
+		// Verify cart
+		$this->model_extension_payment_amazon_login_pay->verifyCart();
 
-        // Verify login
-        $this->model_extension_payment_amazon_login_pay->verifyLogin();
+		// Verify login
+		$this->model_extension_payment_amazon_login_pay->verifyLogin();
 
-        // Verify cart total
-        //$this->model_extension_payment_amazon_login_pay->verifyTotal();
+		// Verify cart total
+		//$this->model_extension_payment_amazon_login_pay->verifyTotal();
 
-        // Cancel an existing order reference
-        unset($this->session->data['order_id']);
-        
-        if (!empty($this->session->data['apalwa']['pay']['order_reference_id']) && !$this->model_extension_payment_amazon_login_pay->isOrderInState($this->session->data['apalwa']['pay']['order_reference_id'], array('Canceled', 'Closed', 'Draft'))) {
-            $this->model_extension_payment_amazon_login_pay->cancelOrder($this->session->data['apalwa']['pay']['order_reference_id'], "Shipment widget has been requested, cancelling this order reference.");
+		// Cancel an existing order reference
+		unset($this->session->data['order_id']);
+		
+		if (!empty($this->session->data['apalwa']['pay']['order_reference_id']) && !$this->model_extension_payment_amazon_login_pay->isOrderInState($this->session->data['apalwa']['pay']['order_reference_id'], array('Canceled', 'Closed', 'Draft'))) {
+			$this->model_extension_payment_amazon_login_pay->cancelOrder($this->session->data['apalwa']['pay']['order_reference_id'], "Shipment widget has been requested, cancelling this order reference.");
 
-            unset($this->session->data['apalwa']['pay']['order_reference_id']);
-        }
+			unset($this->session->data['apalwa']['pay']['order_reference_id']);
+		}
 
-        $data['text_cart'] = $this->language->get('text_cart');
+		$data['text_cart'] = $this->language->get('text_cart');
 
-        $data['shipping_methods'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/shipping_methods', '', true), ENT_COMPAT, "UTF-8");
-        $data['shipping'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/shipping', '', true), ENT_COMPAT, "UTF-8");
-        $data['cart'] = html_entity_decode($this->url->link('checkout/cart'), ENT_COMPAT, "UTF-8");
-        $data['session_expired'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/session_expired'), ENT_COMPAT, "UTF-8");
+		$data['shipping_methods'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/shipping_methods', '', true), ENT_COMPAT, "UTF-8");
+		$data['shipping'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/shipping', '', true), ENT_COMPAT, "UTF-8");
+		$data['cart'] = html_entity_decode($this->url->link('checkout/cart'), ENT_COMPAT, "UTF-8");
+		$data['session_expired'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/session_expired'), ENT_COMPAT, "UTF-8");
 
-        $data['client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
-        $data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
+		$data['client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
+		$data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
 
-        if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
-            $data['sandbox'] = isset($this->session->data['user_id']); // Require an active admin panel session to show debug messages
-        }
+		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+			$data['sandbox'] = isset($this->session->data['user_id']); // Require an active admin panel session to show debug messages
+		}
 
-        $amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
-        $this->document->addScript($amazon_payment_js);
+		$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
+		$this->document->addScript($amazon_payment_js);
 
-        $data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('common/home', '', true),
-            'text' => $this->language->get('text_home')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', '', true),
+			'text' => $this->language->get('text_home')
+		);
 
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('checkout/cart'),
-            'text' => $this->language->get('breadcrumb_cart')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('checkout/cart'),
+			'text' => $this->language->get('breadcrumb_cart')
+		);
 
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/payment/amazon_login_pay/address'),
-            'current' => true,
-            'text' => $this->language->get('breadcrumb_shipping')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/payment/amazon_login_pay/address'),
+			'current' => true,
+			'text' => $this->language->get('breadcrumb_shipping')
+		);
 
-        $data['breadcrumbs'][] = array(
-            'href' => null,
-            'text' => $this->language->get('breadcrumb_payment')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => null,
+			'text' => $this->language->get('breadcrumb_payment')
+		);
 
-        $data['breadcrumbs'][] = array(
-            'href' => null,
-            'text' => $this->language->get('breadcrumb_summary')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => null,
+			'text' => $this->language->get('breadcrumb_summary')
+		);
 
-        $data['content_main'] = $this->load->view('extension/payment/amazon_login_pay_address', $data);
-        $data['column_left'] = $this->load->controller('common/column_left');
-        $data['column_right'] = $this->load->controller('common/column_right');
-        $data['content_top'] = $this->load->controller('common/content_top');
-        $data['content_bottom'] = $this->load->controller('common/content_bottom');
-        $data['footer'] = $this->load->controller('common/footer');
-        $data['header'] = $this->load->controller('common/header');
+		$data['content_main'] = $this->load->view('extension/payment/amazon_login_pay_address', $data);
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 
-        $this->response->setOutput($this->load->view('extension/payment/amazon_login_pay_generic', $data));
-    }
+		$this->response->setOutput($this->load->view('extension/payment/amazon_login_pay_generic', $data));
+	}
 
-    public function shipping_methods() {
-        $this->load->language('extension/payment/amazon_login_pay');
+	public function shipping_methods() {
+		$this->load->language('extension/payment/amazon_login_pay');
 
-        $json = array();
+		$json = array();
 
-        try {
-            $this->load->model('extension/payment/amazon_login_pay');
-            $this->load->model('setting/extension');
+		try {
+			$this->load->model('extension/payment/amazon_login_pay');
+			$this->load->model('setting/extension');
 
-            if (!isset($this->request->get['AmazonOrderReferenceId'])) {
-                throw $this->model_extension_payment_amazon_login_pay->loggedException($this->language->get('error_shipping_methods'), $this->language->get('error_shipping_methods'));
-            }
+			if (!isset($this->request->get['AmazonOrderReferenceId'])) {
+				throw $this->model_extension_payment_amazon_login_pay->loggedException($this->language->get('error_shipping_methods'), $this->language->get('error_shipping_methods'));
+			}
 
-            $order_reference_id = $this->request->get['AmazonOrderReferenceId'];
+			$order_reference_id = $this->request->get['AmazonOrderReferenceId'];
 
-            $this->session->data['apalwa']['pay']['order_reference_id'] = $order_reference_id;
+			$this->session->data['apalwa']['pay']['order_reference_id'] = $order_reference_id;
 
-            $address = $this->model_extension_payment_amazon_login_pay->getAddress($order_reference_id);
+			$address = $this->model_extension_payment_amazon_login_pay->getAddress($order_reference_id);
 
-            $quotes = array();
+			$quotes = array();
 
-            $results = $this->model_setting_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensions('shipping');
 
-            foreach ($results as $result) {
-                if (isset($result['code'])) {
-                    $code = $result['code'];
-                } else {
-                    $code = $result['key'];
-                }
+			foreach ($results as $result) {
+				if (isset($result['code'])) {
+					$code = $result['code'];
+				} else {
+					$code = $result['key'];
+				}
 
-                if ($this->config->get('shipping_' . $code . '_status')) {
-                    $this->load->model('extension/shipping/' . $code);
+				if ($this->config->get('shipping_' . $code . '_status')) {
+					$this->load->model('extension/shipping/' . $code);
 
-                    $quote = $this->{'model_extension_shipping_' . $code}->getQuote($address);
+					$quote = $this->{'model_extension_shipping_' . $code}->getQuote($address);
 
-                    if ($quote && empty($quote['error'])) {
-                        $quotes[$code] = array(
-                            'title' => $quote['title'],
-                            'quote' => $quote['quote'],
-                            'sort_order' => $quote['sort_order'],
-                            'error' => $quote['error']
-                        );
-                    }
-                }
-            }
+					if ($quote && empty($quote['error'])) {
+						$quotes[$code] = array(
+							'title' => $quote['title'],
+							'quote' => $quote['quote'],
+							'sort_order' => $quote['sort_order'],
+							'error' => $quote['error']
+						);
+					}
+				}
+			}
 
-            if (empty($quotes)) {
-                throw new \RuntimeException($this->language->get('error_no_shipping_methods'));
-            }
+			if (empty($quotes)) {
+				throw new \RuntimeException($this->language->get('error_no_shipping_methods'));
+			}
 
-            $sort_order = array();
+			$sort_order = array();
 
-            foreach ($quotes as $key => $value) {
-                $sort_order[$key] = $value['sort_order'];
-            }
+			foreach ($quotes as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
+			}
 
-            array_multisort($sort_order, SORT_ASC, $quotes);
+			array_multisort($sort_order, SORT_ASC, $quotes);
 
-            $this->session->data['apalwa']['pay']['shipping_methods'] = $quotes;
-            $this->session->data['apalwa']['pay']['address'] = $address;
+			$this->session->data['apalwa']['pay']['shipping_methods'] = $quotes;
+			$this->session->data['apalwa']['pay']['address'] = $address;
 
-            $json['quotes'] = $quotes;
+			$json['quotes'] = $quotes;
 
-            if (!empty($this->session->data['apalwa']['pay']['shipping_method']['code'])) {
-                $json['selected'] = $this->session->data['apalwa']['pay']['shipping_method']['code'];
-            } else {
-                $json['selected'] = '';
-            }
-        } catch (\RuntimeException $e) {
-            $json['error'] = $e->getMessage();
-        }
+			if (!empty($this->session->data['apalwa']['pay']['shipping_method']['code'])) {
+				$json['selected'] = $this->session->data['apalwa']['pay']['shipping_method']['code'];
+			} else {
+				$json['selected'] = '';
+			}
+		} catch (\RuntimeException $e) {
+			$json['error'] = $e->getMessage();
+		}
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
-    }
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 
-    public function shipping() {
-        $this->load->language('extension/payment/amazon_login_pay');
+	public function shipping() {
+		$this->load->language('extension/payment/amazon_login_pay');
 
-        $this->load->model('extension/payment/amazon_login_pay');
-        $this->load->model('extension/module/amazon_login');
+		$this->load->model('extension/payment/amazon_login_pay');
+		$this->load->model('extension/module/amazon_login');
 
-        $json = array(
-            'redirect' => null,
-            'error' => null
-        );
+		$json = array(
+			'redirect' => null,
+			'error' => null
+		);
 
-        try {
-            if (!isset($this->request->post['shipping_method'])) {
-                throw $this->model_extension_payment_amazon_login_pay->loggedException("No shipping method provided.", $this->language->get('error_process_order'));
-            }
+		try {
+			if (!isset($this->request->post['shipping_method'])) {
+				throw $this->model_extension_payment_amazon_login_pay->loggedException("No shipping method provided.", $this->language->get('error_process_order'));
+			}
 
-            $shipping_method = explode('.', $this->request->post['shipping_method']);
+			$shipping_method = explode('.', $this->request->post['shipping_method']);
 
-            if (!isset($shipping_method[0]) || !isset($shipping_method[1]) || !isset($this->session->data['apalwa']['pay']['shipping_methods'][$shipping_method[0]]['quote'][$shipping_method[1]])) {
+			if (!isset($shipping_method[0]) || !isset($shipping_method[1]) || !isset($this->session->data['apalwa']['pay']['shipping_methods'][$shipping_method[0]]['quote'][$shipping_method[1]])) {
 
-                throw $this->model_extension_payment_amazon_login_pay->loggedException("Used shipping method is not allowed.", $this->language->get('error_process_order'));
-            }
+				throw $this->model_extension_payment_amazon_login_pay->loggedException("Used shipping method is not allowed.", $this->language->get('error_process_order'));
+			}
 
-            $this->session->data['apalwa']['pay']['shipping_method'] = $this->session->data['apalwa']['pay']['shipping_methods'][$shipping_method[0]]['quote'][$shipping_method[1]];
-            $this->session->data['shipping_method'] = $this->session->data['apalwa']['pay']['shipping_method'];
-            $this->session->data['payment_address'] = $this->session->data['apalwa']['pay']['address'];
-            $this->session->data['shipping_address'] = $this->session->data['apalwa']['pay']['address'];
-            $this->session->data['shipping_country_id'] = $this->session->data['apalwa']['pay']['address']['country_id'];
-            $this->session->data['shipping_zone_id'] = $this->session->data['apalwa']['pay']['address']['zone_id'];
+			$this->session->data['apalwa']['pay']['shipping_method'] = $this->session->data['apalwa']['pay']['shipping_methods'][$shipping_method[0]]['quote'][$shipping_method[1]];
+			$this->session->data['shipping_method'] = $this->session->data['apalwa']['pay']['shipping_method'];
+			$this->session->data['payment_address'] = $this->session->data['apalwa']['pay']['address'];
+			$this->session->data['shipping_address'] = $this->session->data['apalwa']['pay']['address'];
+			$this->session->data['shipping_country_id'] = $this->session->data['apalwa']['pay']['address']['country_id'];
+			$this->session->data['shipping_zone_id'] = $this->session->data['apalwa']['pay']['address']['zone_id'];
 
-            $this->model_extension_module_amazon_login->persistAddress($this->session->data['apalwa']['pay']['address']);
+			$this->model_extension_module_amazon_login->persistAddress($this->session->data['apalwa']['pay']['address']);
 
-            $json['redirect'] = $this->url->link('extension/payment/amazon_login_pay/payment', '', true);
-        } catch (\RuntimeException $e) {
-            $json['error'] = $e->getMessage();
-        }
+			$json['redirect'] = $this->url->link('extension/payment/amazon_login_pay/payment', '', true);
+		} catch (\RuntimeException $e) {
+			$json['error'] = $e->getMessage();
+		}
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
-    }
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 
-    public function payment() {
-        $this->load->language('extension/payment/amazon_login_pay');
+	public function payment() {
+		$this->load->language('extension/payment/amazon_login_pay');
 
-        $this->load->model('extension/payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
-        $this->document->setTitle($this->language->get('heading_payment'));
+		$this->document->setTitle($this->language->get('heading_payment'));
 
-        // Verify cart
-        $this->model_extension_payment_amazon_login_pay->verifyCart();
+		// Verify cart
+		$this->model_extension_payment_amazon_login_pay->verifyCart();
 
-        // Verify login
-        $this->model_extension_payment_amazon_login_pay->verifyLogin();
+		// Verify login
+		$this->model_extension_payment_amazon_login_pay->verifyLogin();
 
-        // Verify total
-        $this->model_extension_payment_amazon_login_pay->verifyTotal();
+		// Verify total
+		$this->model_extension_payment_amazon_login_pay->verifyTotal();
 
-        // Verify shipping
-        $this->model_extension_payment_amazon_login_pay->verifyShipping();
+		// Verify shipping
+		$this->model_extension_payment_amazon_login_pay->verifyShipping();
 
-        $data['confirm'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/confirm', '', true), ENT_COMPAT, "UTF-8");
-        $data['back'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/address', '', true), ENT_COMPAT, "UTF-8");
-        $data['session_expired'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/session_expired'), ENT_COMPAT, "UTF-8");
+		$data['confirm'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/confirm', '', true), ENT_COMPAT, "UTF-8");
+		$data['back'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/address', '', true), ENT_COMPAT, "UTF-8");
+		$data['session_expired'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/session_expired'), ENT_COMPAT, "UTF-8");
 
-        $data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
-        $data['client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
+		$data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
+		$data['client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
 
-        $data['order_reference_id'] = !empty($this->session->data['apalwa']['pay']['order_reference_id']) ? $this->session->data['apalwa']['pay']['order_reference_id'] : null;
+		$data['order_reference_id'] = !empty($this->session->data['apalwa']['pay']['order_reference_id']) ? $this->session->data['apalwa']['pay']['order_reference_id'] : null;
 
-        //detect the buyer multi-currency
-        $amazon_supported_currencies = array('AUD', 'GBP','DKK', 'EUR', 'HKD', 'JPY', 'NZD','NOK', 'ZAR', 'SEK', 'CHF', 'USD');
+		//detect the buyer multi-currency
+		$amazon_supported_currencies = array('AUD', 'GBP','DKK', 'EUR', 'HKD', 'JPY', 'NZD','NOK', 'ZAR', 'SEK', 'CHF', 'USD');
 
-        $data['enabled_buyers_multi_currency'] = false;
-        $data['buyer_currency'] = false;
+		$data['enabled_buyers_multi_currency'] = false;
+		$data['buyer_currency'] = false;
 
-        if ($this->config->get('payment_amazon_login_pay_buyer_multi_currency') && $this->config->get('payment_amazon_login_pay_payment_region') != 'USD') {
-            $session_currency = !empty($this->session->data['currency']) ? $this->session->data['currency'] : $this->config->get('config_currency');
+		if ($this->config->get('payment_amazon_login_pay_buyer_multi_currency') && $this->config->get('payment_amazon_login_pay_payment_region') != 'USD') {
+			$session_currency = !empty($this->session->data['currency']) ? $this->session->data['currency'] : $this->config->get('config_currency');
 
-            if (in_array($session_currency, $amazon_supported_currencies)) {
-                $data['buyer_currency'] = $session_currency;
-                $this->session->data['apalwa']['pay']['buyer_currency'] = $session_currency;
-                $data['enabled_buyers_multi_currency'] = true;
-            }
-        }
+			if (in_array($session_currency, $amazon_supported_currencies)) {
+				$data['buyer_currency'] = $session_currency;
+				$this->session->data['apalwa']['pay']['buyer_currency'] = $session_currency;
+				$data['enabled_buyers_multi_currency'] = true;
+			}
+		}
 
-        if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
-            $data['sandbox'] = isset($this->session->data['user_id']); // Require an active admin panel session to show debug messages
-        }
+		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+			$data['sandbox'] = isset($this->session->data['user_id']); // Require an active admin panel session to show debug messages
+		}
 
-        $data['error'] = '';
-        if (isset($this->session->data['apalwa']['error'])) {
-            $data['error'] = $this->session->data['apalwa']['error'];
-            unset($this->session->data['apalwa']['error']);
-        }
+		$data['error'] = '';
+		if (isset($this->session->data['apalwa']['error'])) {
+			$data['error'] = $this->session->data['apalwa']['error'];
+			unset($this->session->data['apalwa']['error']);
+		}
 
-        $amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
-        $this->document->addScript($amazon_payment_js);
+		$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
+		$this->document->addScript($amazon_payment_js);
 
-        $data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('common/home', '', true),
-            'text' => $this->language->get('text_home')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', '', true),
+			'text' => $this->language->get('text_home')
+		);
 
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('checkout/cart'),
-            'text' => $this->language->get('breadcrumb_cart')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('checkout/cart'),
+			'text' => $this->language->get('breadcrumb_cart')
+		);
 
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/payment/amazon_login_pay/address'),
-            'text' => $this->language->get('breadcrumb_shipping')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/payment/amazon_login_pay/address'),
+			'text' => $this->language->get('breadcrumb_shipping')
+		);
 
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/payment/amazon_login_pay/payment'),
-            'current' => true,
-            'text' => $this->language->get('breadcrumb_payment')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/payment/amazon_login_pay/payment'),
+			'current' => true,
+			'text' => $this->language->get('breadcrumb_payment')
+		);
 
-        $data['breadcrumbs'][] = array(
-            'href' => null,
-            'text' => $this->language->get('breadcrumb_summary')
-        );
+		$data['breadcrumbs'][] = array(
+			'href' => null,
+			'text' => $this->language->get('breadcrumb_summary')
+		);
 
-        $data['content_main'] = $this->load->view('extension/payment/amazon_login_pay_payment', $data);
-        $data['column_left'] = $this->load->controller('common/column_left');
-        $data['column_right'] = $this->load->controller('common/column_right');
-        $data['content_top'] = $this->load->controller('common/content_top');
-        $data['content_bottom'] = $this->load->controller('common/content_bottom');
-        $data['footer'] = $this->load->controller('common/footer');
-        $data['header'] = $this->load->controller('common/header');
+		$data['content_main'] = $this->load->view('extension/payment/amazon_login_pay_payment', $data);
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 
-        $this->response->setOutput($this->load->view('extension/payment/amazon_login_pay_generic', $data));
-    }
+		$this->response->setOutput($this->load->view('extension/payment/amazon_login_pay_generic', $data));
+	}
 
-    public function persist_comment() {
-        if (isset($this->request->post['comment'])) {
-            $this->session->data['comment'] = strip_tags($this->request->post['comment']);
+	public function persist_comment() {
+		if (isset($this->request->post['comment'])) {
+			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
 
-            $this->session->data['apalwa']['pay']['order']['comment'] = $this->session->data['comment'];
-        }
-    }
+			$this->session->data['apalwa']['pay']['order']['comment'] = $this->session->data['comment'];
+		}
+	}
 
-    public function coupon_discard() {
-        $this->load->model('extension/payment/amazon_login_pay');
+	public function coupon_discard() {
+		$this->load->model('extension/payment/amazon_login_pay');
 
-        // Verify reference
-        $this->model_extension_payment_amazon_login_pay->verifyReference();
+		// Verify reference
+		$this->model_extension_payment_amazon_login_pay->verifyReference();
 
-        if ($this->model_extension_payment_amazon_login_pay->isOrderInState($this->session->data['apalwa']['pay']['order_reference_id'], array('Draft'))) {
-            unset($this->session->data['coupon']);
-        }
+		if ($this->model_extension_payment_amazon_login_pay->isOrderInState($this->session->data['apalwa']['pay']['order_reference_id'], array('Draft'))) {
+			unset($this->session->data['coupon']);
+		}
 
-        $this->response->redirect($this->url->link('extension/payment/amazon_login_pay/confirm', '', true));
-    }
+		$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/confirm', '', true));
+	}
 
-    public function standard_checkout() {
-        $this->load->language('extension/payment/amazon_login_pay');
+	public function standard_checkout() {
+		$this->load->language('extension/payment/amazon_login_pay');
 
-        $this->load->model('extension/payment/amazon_login_pay');
+		$this->load->model('extension/payment/amazon_login_pay');
 
-        // Verify cart
-        $this->model_extension_payment_amazon_login_pay->verifyCart();
+		// Verify cart
+		$this->model_extension_payment_amazon_login_pay->verifyCart();
 
-        // Verify login
-        $this->model_extension_payment_amazon_login_pay->verifyLogin();
+		// Verify login
+		$this->model_extension_payment_amazon_login_pay->verifyLogin();
 
-        // Cancel an existing order reference
-        if (!empty($this->session->data['apalwa']['pay']['order_reference_id']) && $this->model_extension_payment_amazon_login_pay->isOrderInState($this->session->data['apalwa']['pay']['order_reference_id'], array('Open'))) {
-            $this->model_extension_payment_amazon_login_pay->cancelOrder($this->session->data['apalwa']['pay']['order_reference_id'], "Shipment widget has been requested, cancelling this order reference.");
-        }
+		// Cancel an existing order reference
+		if (!empty($this->session->data['apalwa']['pay']['order_reference_id']) && $this->model_extension_payment_amazon_login_pay->isOrderInState($this->session->data['apalwa']['pay']['order_reference_id'], array('Open'))) {
+			$this->model_extension_payment_amazon_login_pay->cancelOrder($this->session->data['apalwa']['pay']['order_reference_id'], "Shipment widget has been requested, cancelling this order reference.");
+		}
 
-        // Unset all payment data
-        unset($this->session->data['apalwa']['pay']);
-        unset($this->session->data['order_id']);
+		// Unset all payment data
+		unset($this->session->data['apalwa']['pay']);
+		unset($this->session->data['order_id']);
 
-        // Redirect to the cart
-        $this->response->redirect($this->url->link('checkout/cart', '', true));
-    }
+		// Redirect to the cart
+		$this->response->redirect($this->url->link('checkout/cart', '', true));
+	}
 
-    public function confirm() {
-        $this->load->language('extension/payment/amazon_login_pay');
-        $this->load->language('checkout/checkout');
-        
-        $this->load->model('extension/payment/amazon_login_pay');
+	public function confirm() {
+		$this->load->language('extension/payment/amazon_login_pay');
+		$this->load->language('checkout/checkout');
+		
+		$this->load->model('extension/payment/amazon_login_pay');
 
-        $this->document->setTitle($this->language->get('heading_confirm'));
+		$this->document->setTitle($this->language->get('heading_confirm'));
 
-        // Verify cart
-        $this->model_extension_payment_amazon_login_pay->verifyCart();
+		// Verify cart
+		$this->model_extension_payment_amazon_login_pay->verifyCart();
 
-        // Verify login
-        $this->model_extension_payment_amazon_login_pay->verifyLogin();
+		// Verify login
+		$this->model_extension_payment_amazon_login_pay->verifyLogin();
 
-        // Verify cart total
-        // Not needed, as we will display an error message later on...
+		// Verify cart total
+		// Not needed, as we will display an error message later on...
 
-        // Verify reference
-        $this->model_extension_payment_amazon_login_pay->verifyReference();
+		// Verify reference
+		$this->model_extension_payment_amazon_login_pay->verifyReference();
 
-        // Verify shipping
-        $this->model_extension_payment_amazon_login_pay->verifyShipping();
+		// Verify shipping
+		$this->model_extension_payment_amazon_login_pay->verifyShipping();
 
-        $data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
-        $data['client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
-        
-        if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
-            $data['sandbox'] = isset($this->session->data['user_id']); // Require an active admin panel session to show debug messages
-        }
+		$data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
+		$data['client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
+		
+		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+			$data['sandbox'] = isset($this->session->data['user_id']); // Require an active admin panel session to show debug messages
+		}
 
-        $amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
-        $this->document->addScript($amazon_payment_js);
+		$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
+		$this->document->addScript($amazon_payment_js);
 
-        try {
-            $order = $this->model_extension_payment_amazon_login_pay->makeOrder();
+		try {
+			$order = $this->model_extension_payment_amazon_login_pay->makeOrder();
 
-            $this->session->data['apalwa']['pay']['order'] = $order;
+			$this->session->data['apalwa']['pay']['order'] = $order;
 
-            $data['order_reference_id'] = $this->session->data['apalwa']['pay']['order_reference_id'];
-            $data['order'] = $order;
-        } catch (\RuntimeException $e) {
-            $this->model_extension_payment_amazon_login_pay->cartRedirect($e->getMessage());
-        }
-
-        $data['success'] = '';
-
-        if (!empty($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-            unset($this->session->data['success']);
-        }
-
-        if (isset($this->session->data['coupon'])) {
-            $data['coupon'] = $this->session->data['coupon'];
-        } else {
-            $data['coupon'] = '';
-        }
-
-        if (isset($this->session->data['comment'])) {
-            $data['comment'] = $this->session->data['comment'];
-        } else {
-            $data['comment'] = '';
-        }
-
-        $data['is_order_total_positive'] = $this->model_extension_payment_amazon_login_pay->isTotalPositive();
-        $data['standard_checkout'] = $this->url->link('extension/payment/amazon_login_pay/standard_checkout', '', true);
-
-        $zero_total = $this->currency->format(0, $this->session->data['currency']);
-        $data['error_order_total_zero'] = sprintf($this->language->get('error_order_total_zero'), $zero_total);
-
-        $data['process'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/process', '', true), ENT_COMPAT, "UTF-8");
-        $data['process_us'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/process_us', '', true), ENT_COMPAT, "UTF-8");
-        $data['address'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/address', '', true), ENT_COMPAT, "UTF-8");
-        $data['back'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/payment', '', true), ENT_COMPAT, "UTF-8");
-        $data['session_expired'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/session_expired'), ENT_COMPAT, "UTF-8");
-        $data['coupon_discard'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/coupon_discard', '', true), ENT_COMPAT, "UTF-8");
-        $data['coupon_apply'] = html_entity_decode($this->url->link('extension/total/coupon/coupon', '', true), ENT_COMPAT, "UTF-8");
-        $data['persist_comment'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/persist_comment', '', true), ENT_COMPAT, "UTF-8");
-        $data['is_coupon_change_allowed'] = $this->model_extension_payment_amazon_login_pay->isOrderInState($this->session->data['apalwa']['pay']['order_reference_id'], array('Draft'));
-        $data['error_unexpected_network_error'] = $this->language->get('error_unexpected_network_error');
-        $data['breadcrumbs'] = array();
-
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('common/home', '', true),
-            'text' => $this->language->get('text_home')
-        );
-
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('checkout/cart'),
-            'text' => $this->language->get('breadcrumb_cart')
-        );
-
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/payment/amazon_login_pay/address'),
-            'text' => $this->language->get('breadcrumb_shipping')
-        );
-
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/payment/amazon_login_pay/payment'),
-            'text' => $this->language->get('breadcrumb_payment')
-        );
-
-        $data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/payment/amazon_login_pay/confirm'),
-            'current' => true,
-            'text' => $this->language->get('breadcrumb_summary')
-        );
-
-        //enable mfa only for UK and Europe regions
-        $data['psd_enabled'] = "false";
-        if($this->config->get('payment_amazon_login_pay_payment_region') != 'USD') {
-            $data['psd_enabled'] = "true";
-        }
-        //detect the buyer multi-currency
-        $amazon_supported_currencies = array('AUD', 'GBP','DKK', 'EUR', 'HKD', 'JPY', 'NZD','NOK', 'ZAR', 'SEK', 'CHF', 'USD');
-
-        $data['enabled_buyers_multi_currency'] = false;
-        $data['buyer_currency'] = false;
-
-        if ($this->config->get('payment_amazon_login_pay_buyer_multi_currency') && $this->config->get('payment_amazon_login_pay_payment_region') != 'USD') {
-            $session_currency = !empty($this->session->data['currency']) ? $this->session->data['currency'] : $this->config->get('config_currency');
-
-            if (in_array($session_currency,$amazon_supported_currencies)) {
-                $data['buyer_currency'] = $session_currency;
-                $this->session->data['apalwa']['pay']['buyer_currency'] = $session_currency;
-                $data['enabled_buyers_multi_currency'] = true;
-            }
-        }
-
-        if (!$data['buyer_currency']) {
-            $location_currency = $this->config->get('payment_amazon_login_pay_payment_region');
-            $rate = round($this->currency->getValue($location_currency) / $this->currency->getValue($order['currency_code']), 8);
-            $amount = $this->currency->format($this->currency->convert($order['total'], $this->config->get('config_currency'), $location_currency), $location_currency, 1, true);
-
-            $data['is_amount_converted'] = $order['currency_code'] != $location_currency;
-            $data['text_amount_converted'] = sprintf($this->language->get('text_amount_converted'), $location_currency, $rate, $amount);
-        }
-
-        $data['content_main'] = $this->load->view('extension/payment/amazon_login_pay_confirm', $data);
-        $data['column_left'] = $this->load->controller('common/column_left');
-        $data['column_right'] = $this->load->controller('common/column_right');
-        $data['content_top'] = $this->load->controller('common/content_top');
-        $data['content_bottom'] = $this->load->controller('common/content_bottom');
-        $data['footer'] = $this->load->controller('common/footer');
-        $data['header'] = $this->load->controller('common/header');
-
-        $this->response->setOutput($this->load->view('extension/payment/amazon_login_pay_generic', $data));
-    }
-    //handle the SuccessUrl response
-    public function mfa_success() {
-        $this->load->model('extension/payment/amazon_login_pay');
-        $this->load->model('checkout/order');
-        // Verify cart
-        $this->model_extension_payment_amazon_login_pay->verifyCart();
-        // Verify login
-        $this->model_extension_payment_amazon_login_pay->verifyLogin();
-        // Verify reference
-        $this->model_extension_payment_amazon_login_pay->verifyReference();
-        // Verify shipping
-        $this->model_extension_payment_amazon_login_pay->verifyShipping();
-        // Verify order
-        $this->model_extension_payment_amazon_login_pay->verifyOrder();
-        $this->load->language('extension/payment/amazon_login_pay');
-
-        if (isset($this->request->get['AuthenticationStatus']) && $this->request->get['AuthenticationStatus'] == 'Success') {
-            $this->authorize();
-        } else {
-            $this->model_extension_payment_amazon_login_pay->cartRedirect($this->language->get('error_invaild_request'));
-        }
-    }
-    //handle the FailureUrl response
-    public function mfa_failure() {
-        $this->load->model('extension/payment/amazon_login_pay');
-        $this->load->language('extension/payment/amazon_login_pay');
-
-        if(isset($this->request->get['AuthenticationStatus'])) {
-            $mfa_authorization_status = $this->request->get['AuthenticationStatus'];
-
-            if($mfa_authorization_status == 'Failure') {
-                $text_failed_mfa = $this->language->get('error_failure_mfa');
-                $this->model_extension_payment_amazon_login_pay->cartRedirect($text_failed_mfa);
-            } elseif ($mfa_authorization_status == 'Abandoned') {
-                $this->session->data['apalwa']['error'] = $this->language->get('error_abandoned_mfa');
-                $this->response->redirect($this->url->link('extension/payment/amazon_login_pay/payment', '', true));
-            }
-        } else {
-            $text_invaild_request = $this->language->get('error_invaild_request');
-            $this->model_extension_payment_amazon_login_pay->cartRedirect($text_invaild_request);
-        }
-    }
-
-
-    private function authorize() {
-          $this->load->language('extension/payment/amazon_login_pay');
-          $this->load->language('checkout/checkout');
-
-          $this->load->model('extension/payment/amazon_login_pay');
-          $this->load->model('checkout/order');
-
-          // Verify cart
-          $this->model_extension_payment_amazon_login_pay->verifyCart();
-
-          // Verify reference
-          $this->model_extension_payment_amazon_login_pay->verifyReference();
-
-          // Verify shipping
-          $this->model_extension_payment_amazon_login_pay->verifyShipping();
-
-          // Verify login
-          $this->model_extension_payment_amazon_login_pay->verifyLogin();
-
-          // Verify order
-          $this->model_extension_payment_amazon_login_pay->verifyOrder();
-          try {
-            $order_reference_id = $this->session->data['apalwa']['pay']['order_reference_id'];
-            if (empty($this->session->data['order_id'])) {
-                // Up to this point, everything is fine in the session. Save the order and submit it to Amazon.
-                $order_id = $this->model_checkout_order->addOrder($this->session->data['apalwa']['pay']['order']);
-
-                $this->session->data['order_id'] = $order_id;
-
-                $currency_code = isset($this->session->data['apalwa']['pay']['buyer_currency']) ? $this->session->data['apalwa']['pay']['buyer_currency'] : $this->config->get('payment_amazon_login_pay_payment_region');
-
-                $text_version = sprintf($this->language->get('text_created_by'), $this->version);
-
-                $this->model_extension_payment_amazon_login_pay->submitOrderDetails($order_reference_id, $order_id, $currency_code, $text_version);
-
-            } else {
-                $order_id = $this->session->data['order_id'];
-            }
-            $amazon_order = $this->model_extension_payment_amazon_login_pay->fetchOrder($order_reference_id);
-
-            // The order has been opened for authorization. Store it in the database
-            $amazon_login_pay_order_id = $this->model_extension_payment_amazon_login_pay->findOrAddOrder($amazon_order);
-
-            // Authorize the order
-            $authorization = $this->model_extension_payment_amazon_login_pay->authorizeOrder($amazon_order);
-
-            // Log the authorization
-            $this->model_extension_payment_amazon_login_pay->addAuthorization($amazon_login_pay_order_id, $authorization);
-
-            if ($authorization->AuthorizationStatus->State == 'Declined') {
-                $reason_code = (string)$authorization->AuthorizationStatus->ReasonCode;
-
-                switch ($reason_code) {
-                    case 'InvalidPaymentMethod' :
-                        $this->session->data['apalwa']['error'] = $this->language->get('error_decline_invalid_payment_method');
-
-                        $this->response->redirect($this->url->link('extension/payment/amazon_login_pay/payment', '', true));
-                    break;
-                    default : 
-                        if ($this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open'))) {
-                            $this->model_extension_payment_amazon_login_pay->cancelOrder($order_reference_id, "Authorization has failed with the state: " . $authorization->AuthorizationStatus->State);
-                        }
-
-                        $cart_error_messages = array(
-                            'TransactionTimedOut' => $this->language->get('error_decline_transaction_timed_out'),
-                            'AmazonRejected' => $this->language->get('error_decline_amazon_rejected'),
-                            'ProcessingFailure' => $this->language->get('error_decline_processing_failure')
-                        );
-
-                        if (in_array($reason_code, array_keys($cart_error_messages))) {
-                            //@todo - do the logout with amazon.Login.logout(); instead
-                            unset($this->session->data['apalwa']);
-
-                            // capital L in Amazon cookie name is required, do not alter for coding standards
-                            if (isset($this->request->cookie['amazon_Login_state_cache'])) {
-                                //@todo - rework this by triggering the JavaScript logout
-                                setcookie('amazon_Login_state_cache', null, -1, '/');
-                            }
-
-                            throw new \RuntimeException($cart_error_messages[$reason_code]);
-                        } else {
-                            // This should never occur, but just in case...
-                            throw $this->model_extension_payment_amazon_login_pay->loggedException("Authorization has failed with code: " . $reason_code, $this->language->get('error_process_order'));
-                        }
-                    break;
-                }
-            }
-
-            // Amend the billing address based on the Authorize response
-            if (!empty($authorization->AuthorizationBillingAddress)) {
-                $this->model_extension_payment_amazon_login_pay->updatePaymentAddress($order_id, $authorization->AuthorizationBillingAddress);
-            }
-
-            // Clean the session and redirect to the success page
-            unset($this->session->data['apalwa']['pay']);
-
-            $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_amazon_login_pay_pending_status'), '', $this->config->get('payment_amazon_login_pay_mode') != 'payment');
-
-            // In case a payment has been completed, and the order is not closed, close it.
-            if (isset($authorization->CapturedAmount->Amount) && (float)$authorization->CapturedAmount->Amount && $this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open', 'Suspended'))) {
-                $this->model_extension_payment_amazon_login_pay->closeOrder($order_reference_id, "A capture has been performed. Closing the order.");
-            }
-
-            $this->response->redirect($this->url->link('checkout/success', '', true));
-        } catch (\RuntimeException $e) {
-            $this->model_extension_payment_amazon_login_pay->cartRedirect($e->getMessage());
-        }
-    }
-
-    public function process_us() {
-        $this->load->language('extension/payment/amazon_login_pay');
-        $this->load->language('checkout/checkout');
-
-        $this->load->model('extension/payment/amazon_login_pay');
-        $this->load->model('checkout/order');
-
-        // Verify cart
-        $this->model_extension_payment_amazon_login_pay->verifyCart();
-
-        // Verify login
-        $this->model_extension_payment_amazon_login_pay->verifyLogin();
-
-        // Verify cart total
-        // Not needed, as we will display an error message later on...
-
-        // Verify reference
-        $this->model_extension_payment_amazon_login_pay->verifyReference();
-
-        // Verify shipping
-        $this->model_extension_payment_amazon_login_pay->verifyShipping();
-
-        // Verify order
-        $this->model_extension_payment_amazon_login_pay->verifyOrder();
-
-        try {
-            $order_reference_id = $this->session->data['apalwa']['pay']['order_reference_id'];
-
-            if (empty($this->session->data['order_id'])) {
-                // Up to this point, everything is fine in the session. Save the order and submit it to Amazon.
-                $order_id = $this->model_checkout_order->addOrder($this->session->data['apalwa']['pay']['order']);
-
-                $this->session->data['order_id'] = $order_id;
-
-                $currency_code =  $this->config->get('payment_amazon_login_pay_payment_region');
-
-                $text_version = sprintf($this->language->get('text_created_by'), $this->version);
-
-                $this->model_extension_payment_amazon_login_pay->submitOrderDetails($order_reference_id, $order_id, $currency_code, $text_version);
-            } else {
-                $order_id = $this->session->data['order_id'];
-            }
-
-            // Check constraints
-            $constraints = $this->model_extension_payment_amazon_login_pay->fetchOrder($order_reference_id)->Constraints;
-
-            if (!empty($constraints->Constraint)) {
-                // We do not expect to fall under the other kinds of constraints. For more information, see: https://pay.amazon.com/us/developer/documentation/apireference/201752890
-                $payment_page_errors = array(
-                    'PaymentPlanNotSet' => $this->language->get('error_constraint_payment_plan_not_set'),
-                    'PaymentMethodNotAllowed' => $this->language->get('error_constraint_payment_method_not_allowed'),
-                    'AmountNotSet' => $this->language->get('error_constraint_amount_not_set')
-                );
-
-                $constraint_id = (string)$constraints->Constraint->ConstraintID;
-
-                if (in_array($constraint_id, array_keys($payment_page_errors))) {
-                    $this->session->data['apalwa']['error'] = $payment_page_errors[$constraint_id];
-
-                    $this->response->redirect($this->url->link('extension/payment/amazon_login_pay/payment', '', true));
-                } else {
-                    throw new \RuntimeException($constraints->Constraint->Description);
-                }
-            }
-
-            // Open the order for authorization
-            $this->model_extension_payment_amazon_login_pay->confirmOrder($order_reference_id);
-
-            $amazon_order = $this->model_extension_payment_amazon_login_pay->fetchOrder($order_reference_id);
-
-            // The order has been opened for authorization. Store it in the database
-            $amazon_login_pay_order_id = $this->model_extension_payment_amazon_login_pay->findOrAddOrder($amazon_order);
-
-            // Authorize the order
-            $authorization = $this->model_extension_payment_amazon_login_pay->authorizeOrder($amazon_order);
-
-            // Log the authorization
-            $this->model_extension_payment_amazon_login_pay->addAuthorization($amazon_login_pay_order_id, $authorization);
-
-            if ($authorization->AuthorizationStatus->State == 'Declined') {
-                $reason_code = (string)$authorization->AuthorizationStatus->ReasonCode;
-
-                switch ($reason_code) {
-                    case 'InvalidPaymentMethod' :
-                        $this->session->data['apalwa']['error'] = $this->language->get('error_decline_invalid_payment_method');
-
-                        $this->response->redirect($this->url->link('extension/payment/amazon_login_pay/payment', '', true));
-                    break;
-                    default :
-                        if ($this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open'))) {
-                            $this->model_extension_payment_amazon_login_pay->cancelOrder($order_reference_id, "Authorization has failed with the state: " . $authorization->AuthorizationStatus->State);
-                        }
-
-                        $cart_error_messages = array(
-                            'TransactionTimedOut' => $this->language->get('error_decline_transaction_timed_out'),
-                            'AmazonRejected' => $this->language->get('error_decline_amazon_rejected'),
-                            'ProcessingFailure' => $this->language->get('error_decline_processing_failure')
-                        );
-
-                        if (in_array($reason_code, array_keys($cart_error_messages))) {
-                            //@todo - do the logout with amazon.Login.logout(); instead
-                            unset($this->session->data['apalwa']);
-
-                            // capital L in Amazon cookie name is required, do not alter for coding standards
-                            if (isset($this->request->cookie['amazon_Login_state_cache'])) {
-                                //@todo - rework this by triggering the JavaScript logout
-                                setcookie('amazon_Login_state_cache', null, -1, '/');
-                            }
-
-                            throw new \RuntimeException($cart_error_messages[$reason_code]);
-                        } else {
-                            // This should never occur, but just in case...
-                            throw $this->model_extension_payment_amazon_login_pay->loggedException("Authorization has failed with code: " . $reason_code, $this->language->get('error_process_order'));
-                        }
-                    break;
-                }
-            }
-
-            // Amend the billing address based on the Authorize response
-            if (!empty($authorization->AuthorizationBillingAddress)) {
-                $this->model_extension_payment_amazon_login_pay->updatePaymentAddress($order_id, $authorization->AuthorizationBillingAddress);
-            }
-
-            // Clean the session and redirect to the success page
-            unset($this->session->data['apalwa']['pay']);
-
-            try {
-                $this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_amazon_login_pay_pending_status'), '', $this->config->get('payment_amazon_login_pay_mode') != 'payment');
-            } catch (\Exception $e) {
-                if ($this->config->get('error_log')) {
-                    $this->log->write($e->getMessage());
-                }
-            }
-
-            // In case a payment has been completed, and the order is not closed, close it.
-            if (isset($authorization->CapturedAmount->Amount) && (float)$authorization->CapturedAmount->Amount && $this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open', 'Suspended'))) {
-                $this->model_extension_payment_amazon_login_pay->closeOrder($order_reference_id, "A capture has been performed. Closing the order.");
-            }
-
-            // Log any errors triggered by addOrderHistory, but without displaying them
-            set_error_handler(array($this->model_extension_payment_amazon_login_pay, 'logHandler'));
-
-            $this->response->redirect($this->url->link('checkout/success', '', true));
-        } catch (\RuntimeException $e) {
-            $this->model_extension_payment_amazon_login_pay->cartRedirect($e->getMessage());
-        }
-    }
-    public function process() {
-        $this->load->language('extension/payment/amazon_login_pay');
-        $this->load->language('checkout/checkout');
-
-        $this->load->model('extension/payment/amazon_login_pay');
-        $this->load->model('checkout/order');
-
-        // Verify cart
-        $this->model_extension_payment_amazon_login_pay->verifyCart();
-
-        // Verify login
-        $this->model_extension_payment_amazon_login_pay->verifyLogin();
-
-        // Verify reference
-        $this->model_extension_payment_amazon_login_pay->verifyReference();
-
-        // Verify shipping
-        $this->model_extension_payment_amazon_login_pay->verifyShipping();
-
-        // Verify order
-        $this->model_extension_payment_amazon_login_pay->verifyOrder();
-
-        $json = array();
-
-        try {
-            $order_reference_id = $this->session->data['apalwa']['pay']['order_reference_id'];
-
-            if (empty($this->session->data['order_id'])) {
-                // Up to this point, everything is fine in the session. Save the order and submit it to Amazon.
-                $order_id = $this->model_checkout_order->addOrder($this->session->data['apalwa']['pay']['order']);
-
-                $this->session->data['order_id'] = $order_id;
-
-                if(isset($this->session->data['apalwa']['pay']['buyer_currency'])) {
-                    $currency_code = $this->session->data['apalwa']['pay']['buyer_currency'];
-                } else {
-                    $currency_code =  $this->config->get('payment_amazon_login_pay_payment_region');
-                }
-
-                $text_version = sprintf($this->language->get('text_created_by'), $this->version);
-
-                $this->model_extension_payment_amazon_login_pay->submitOrderDetails($order_reference_id, $order_id, $currency_code, $text_version);
-            } else {
-                $order_id = $this->session->data['order_id'];
-            }
-
-            // Check constraints
-            $constraints = $this->model_extension_payment_amazon_login_pay->fetchOrder($order_reference_id)->Constraints;
-
-            if (!empty($constraints->Constraint)) {
-                // We do not expect to fall under the other kinds of constraints. For more information, see: https://pay.amazon.com/us/developer/documentation/apireference/201752890
-                $payment_page_errors = array(
-                    'PaymentPlanNotSet' => $this->language->get('error_constraint_payment_plan_not_set'),
-                    'PaymentMethodNotAllowed' => $this->language->get('error_constraint_payment_method_not_allowed'),
-                    'AmountNotSet' => $this->language->get('error_constraint_amount_not_set')
-                );
-
-                $constraint_id = (string)$constraints->Constraint->ConstraintID;
-
-                if (in_array($constraint_id, array_keys($payment_page_errors))) {
-                    $this->session->data['apalwa']['error'] = $payment_page_errors[$constraint_id];
-
-                    $json['redirect'] = $this->url->link('extension/payment/amazon_login_pay/payment', '', true);
-                } else {
-                    throw new \RuntimeException($constraints->Constraint->Description);
-                }
-            } else {
-                // Confirm the order reference
-                $this->model_extension_payment_amazon_login_pay->confirmOrder($order_reference_id);
-            }
-        } catch (\RuntimeException $e) {
-            $json['redirect'] = $this->model_extension_payment_amazon_login_pay->cartRedirect($e->getMessage(), true);
-        }
-
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
-    }
-
-    public function ipn() {
-        sleep(5);
-
-        $this->load->model('extension/payment/amazon_login_pay');
-
-        try {
-            if (!isset($this->request->get['token'])) {
-                throw new \RuntimeException('GET variable "token" is missing.');
-            }
-
-            if (trim($this->request->get['token']) == '') {
-                throw new \RuntimeException('GET variable "token" set, but is empty.');
-            }
-
-            if (!$this->config->get('payment_amazon_login_pay_ipn_token')) {
-                throw new \RuntimeException('CONFIG variable "payment_amazon_login_pay_ipn_token" is empty.');
-            }
-
-            if (!hash_equals(trim($this->config->get('payment_amazon_login_pay_ipn_token')), trim($this->request->get['token']))) {
-                throw new \RuntimeException('Token values are different.');
-            }
-
-            // Everything is fine. Process the IPN
-            $body = file_get_contents('php://input');
-
-            $this->model_extension_payment_amazon_login_pay->debugLog('IPN BODY', $body);
-
-            if ($body) {
-                $xml = $this->model_extension_payment_amazon_login_pay->parseIpnBody($body);
-
-                switch ($xml->getName()) {
-                    case 'AuthorizationNotification':
-                        if($this->model_extension_payment_amazon_login_pay->authorizationIpn($xml)) {
-                            $this->load->model('checkout/order');
-                            $oc_order_status_id = $this->config->get('payment_amazon_login_pay_capture_oc_status');
-                            $amazon_capture_id = (string)$xml->AuthorizationDetails->IdList->Id;
-                            $amazon_captured_amount = (float)$xml->AuthorizationDetails->CapturedAmount->Amount;
-                            $amazon_authorization_id = (string)$xml->AuthorizationDetails->AmazonAuthorizationId;
-                            $exploded_authorization_id = explode("-", $amazon_authorization_id);
-                            array_pop($exploded_authorization_id);
-                            $amazon_order_reference_id = implode("-", $exploded_authorization_id);
-                            $order_id = $this->model_extension_payment_amazon_login_pay->findOCOrderId($amazon_order_reference_id);
-                            $amazon_login_pay_order_id = $this->model_extension_payment_amazon_login_pay->findAOrderId($amazon_order_reference_id);
-                            $transaction = array(
-                                'amazon_login_pay_order_id' => $amazon_login_pay_order_id,
-                                'amazon_authorization_id' => $amazon_authorization_id,
-                                'amazon_capture_id' => $amazon_capture_id,
-                                'amazon_refund_id' => '',
-                                'date_added' => date('Y-m-d H:i:s', strtotime((string)$xml->AuthorizationDetails->CreationTimestamp)),
-                                'type' => 'capture',
-                                'status' => 'Completed',
-                                'amount' => $amazon_captured_amount
-                            );
-                            $transaction_exists = (!empty($amazon_capture_id)) ? $this->model_extension_payment_amazon_login_pay->findCapture($amazon_capture_id) : false;
-
-                            if(!isset($transaction_exists) || !$transaction_exists) {
-                                $this->model_extension_payment_amazon_login_pay->addTransaction($transaction);
-                            }
-                            $order_reference_details = $this->model_extension_payment_amazon_login_pay->fetchOrder($amazon_order_reference_id);
-                            $order_reason_code = (string) $order_reference_details->OrderReferenceStatus->ReasonCode;
-                            $order_state = (string) $order_reference_details->OrderReferenceStatus->State;
-                            $order_total = (float) $order_reference_details->OrderTotal->Amount;
-                            $total_captured = $this->model_extension_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order_id);
-                            //chnage the order status only if the order is closed with the response code maxamountcharged or if the order is fully captured
-                            if(($order_state =="Closed" && $order_reason_code =="MaxAmountCharged") || $order_reason_code == "SellerClosed" || $amazon_captured_amount >= $order_total || $total_captured >= $order_total) {
-                                //update the order history
-                                $this->model_checkout_order->addOrderHistory($order_id, $oc_order_status_id, "", true);
-                            }
-                        }
-                        break;
-                    case 'CaptureNotification':
-                        $this->model_extension_payment_amazon_login_pay->captureIpn($xml);
-                        break;
-                    case 'RefundNotification':
-                        $this->model_extension_payment_amazon_login_pay->refundIpn($xml);
-                        break;
-                }
-            }
-        } catch (\RuntimeException $e) {
-            $this->model_extension_payment_amazon_login_pay->debugLog('IPN ERROR', $e->getMessage());
-        }
-
-        $this->response->addHeader('HTTP/1.1 200 OK');
-        $this->response->addHeader('Content-Type: application/json');
-    }
-
-    public function capture(&$route, &$args, &$output) {
-        $this->load->language('extension/payment/amazon_login_pay');
-
-        $this->load->model('extension/payment/amazon_login_pay');
-        $order_id = $args[0];
-
-        $order_info = $this->model_checkout_order->getOrder($order_id);
-
-        if ($order_info['order_status_id'] == $this->config->get('payment_amazon_login_pay_capture_status')) {
-            try {
-                $amazon_login_pay_order = $this->model_extension_payment_amazon_login_pay->getOrderByOrderId($order_id);
-
-                $capture_response = $this->model_extension_payment_amazon_login_pay->captureOrder($amazon_login_pay_order['amazon_authorization_id'], $amazon_login_pay_order['total'], $amazon_login_pay_order['currency_code']);
-
-                if (isset($capture_response->CaptureStatus->State) && in_array($capture_response->CaptureStatus->State, array('Completed', 'Pending'))) {
-                    $order_reference_id = $amazon_login_pay_order['amazon_order_reference_id'];
-
-                    if ($this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open', 'Suspended'))) {
-                        $this->model_extension_payment_amazon_login_pay->closeOrder($order_reference_id, "Captured amount: " . (string)$capture_response->CaptureAmount->Amount . " " . (string)$capture_response->CaptureAmount->CurrencyCode);
-                    }
-
-                    $transaction = array(
-                        'amazon_login_pay_order_id' => $amazon_login_pay_order['amazon_login_pay_order_id'],
-                        'amazon_authorization_id' => $amazon_login_pay_order['amazon_authorization_id'],
-                        'amazon_capture_id' => $capture_response->AmazonCaptureId,
-                        'amazon_refund_id' => '',
-                        'date_added' => date('Y-m-d H:i:s', strtotime((string)$capture_response->CreationTimestamp)),
-                        'type' => 'capture',
-                        'status' => (string)$capture_response->CaptureStatus->State,
-                        'amount' => (float)$capture_response->CaptureAmount->Amount
-                    );
-
-                    $this->model_extension_payment_amazon_login_pay->addTransaction($transaction);
-
-                    $this->model_extension_payment_amazon_login_pay->updateStatus($amazon_login_pay_order['amazon_authorization_id'], 'authorization', 'Closed');
-
-                    $this->model_extension_payment_amazon_login_pay->updateCapturedStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
-                }
-            } catch (\RuntimeException $e) {
-                // Do nothing, as the exception is logged in case of debug logging.
-            }
-        }
-    }
+			$data['order_reference_id'] = $this->session->data['apalwa']['pay']['order_reference_id'];
+			$data['order'] = $order;
+		} catch (\RuntimeException $e) {
+			$this->model_extension_payment_amazon_login_pay->cartRedirect($e->getMessage());
+		}
+
+		$data['success'] = '';
+
+		if (!empty($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+			unset($this->session->data['success']);
+		}
+
+		if (isset($this->session->data['coupon'])) {
+			$data['coupon'] = $this->session->data['coupon'];
+		} else {
+			$data['coupon'] = '';
+		}
+
+		if (isset($this->session->data['comment'])) {
+			$data['comment'] = $this->session->data['comment'];
+		} else {
+			$data['comment'] = '';
+		}
+
+		$data['is_order_total_positive'] = $this->model_extension_payment_amazon_login_pay->isTotalPositive();
+		$data['standard_checkout'] = $this->url->link('extension/payment/amazon_login_pay/standard_checkout', '', true);
+
+		$zero_total = $this->currency->format(0, $this->session->data['currency']);
+		$data['error_order_total_zero'] = sprintf($this->language->get('error_order_total_zero'), $zero_total);
+
+		$data['process'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/process', '', true), ENT_COMPAT, "UTF-8");
+		$data['process_us'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/process_us', '', true), ENT_COMPAT, "UTF-8");
+		$data['address'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/address', '', true), ENT_COMPAT, "UTF-8");
+		$data['back'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/payment', '', true), ENT_COMPAT, "UTF-8");
+		$data['session_expired'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/session_expired'), ENT_COMPAT, "UTF-8");
+		$data['coupon_discard'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/coupon_discard', '', true), ENT_COMPAT, "UTF-8");
+		$data['coupon_apply'] = html_entity_decode($this->url->link('extension/total/coupon/coupon', '', true), ENT_COMPAT, "UTF-8");
+		$data['persist_comment'] = html_entity_decode($this->url->link('extension/payment/amazon_login_pay/persist_comment', '', true), ENT_COMPAT, "UTF-8");
+		$data['is_coupon_change_allowed'] = $this->model_extension_payment_amazon_login_pay->isOrderInState($this->session->data['apalwa']['pay']['order_reference_id'], array('Draft'));
+		$data['error_unexpected_network_error'] = $this->language->get('error_unexpected_network_error');
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', '', true),
+			'text' => $this->language->get('text_home')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('checkout/cart'),
+			'text' => $this->language->get('breadcrumb_cart')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/payment/amazon_login_pay/address'),
+			'text' => $this->language->get('breadcrumb_shipping')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/payment/amazon_login_pay/payment'),
+			'text' => $this->language->get('breadcrumb_payment')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/payment/amazon_login_pay/confirm'),
+			'current' => true,
+			'text' => $this->language->get('breadcrumb_summary')
+		);
+
+		//enable mfa only for UK and Europe regions
+		$data['psd_enabled'] = "false";
+		if($this->config->get('payment_amazon_login_pay_payment_region') != 'USD') {
+			$data['psd_enabled'] = "true";
+		}
+		//detect the buyer multi-currency
+		$amazon_supported_currencies = array('AUD', 'GBP','DKK', 'EUR', 'HKD', 'JPY', 'NZD','NOK', 'ZAR', 'SEK', 'CHF', 'USD');
+
+		$data['enabled_buyers_multi_currency'] = false;
+		$data['buyer_currency'] = false;
+
+		if ($this->config->get('payment_amazon_login_pay_buyer_multi_currency') && $this->config->get('payment_amazon_login_pay_payment_region') != 'USD') {
+			$session_currency = !empty($this->session->data['currency']) ? $this->session->data['currency'] : $this->config->get('config_currency');
+
+			if (in_array($session_currency,$amazon_supported_currencies)) {
+				$data['buyer_currency'] = $session_currency;
+				$this->session->data['apalwa']['pay']['buyer_currency'] = $session_currency;
+				$data['enabled_buyers_multi_currency'] = true;
+			}
+		}
+
+		if (!$data['buyer_currency']) {
+			$location_currency = $this->config->get('payment_amazon_login_pay_payment_region');
+			$rate = round($this->currency->getValue($location_currency) / $this->currency->getValue($order['currency_code']), 8);
+			$amount = $this->currency->format($this->currency->convert($order['total'], $this->config->get('config_currency'), $location_currency), $location_currency, 1, true);
+
+			$data['is_amount_converted'] = $order['currency_code'] != $location_currency;
+			$data['text_amount_converted'] = sprintf($this->language->get('text_amount_converted'), $location_currency, $rate, $amount);
+		}
+
+		$data['content_main'] = $this->load->view('extension/payment/amazon_login_pay_confirm', $data);
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		$this->response->setOutput($this->load->view('extension/payment/amazon_login_pay_generic', $data));
+	}
+	//handle the SuccessUrl response
+	public function mfa_success() {
+		$this->load->model('extension/payment/amazon_login_pay');
+		$this->load->model('checkout/order');
+		// Verify cart
+		$this->model_extension_payment_amazon_login_pay->verifyCart();
+		// Verify login
+		$this->model_extension_payment_amazon_login_pay->verifyLogin();
+		// Verify reference
+		$this->model_extension_payment_amazon_login_pay->verifyReference();
+		// Verify shipping
+		$this->model_extension_payment_amazon_login_pay->verifyShipping();
+		// Verify order
+		$this->model_extension_payment_amazon_login_pay->verifyOrder();
+		$this->load->language('extension/payment/amazon_login_pay');
+
+		if (isset($this->request->get['AuthenticationStatus']) && $this->request->get['AuthenticationStatus'] == 'Success') {
+			$this->authorize();
+		} else {
+			$this->model_extension_payment_amazon_login_pay->cartRedirect($this->language->get('error_invaild_request'));
+		}
+	}
+	//handle the FailureUrl response
+	public function mfa_failure() {
+		$this->load->model('extension/payment/amazon_login_pay');
+		$this->load->language('extension/payment/amazon_login_pay');
+
+		if(isset($this->request->get['AuthenticationStatus'])) {
+			$mfa_authorization_status = $this->request->get['AuthenticationStatus'];
+
+			if($mfa_authorization_status == 'Failure') {
+				$text_failed_mfa = $this->language->get('error_failure_mfa');
+				$this->model_extension_payment_amazon_login_pay->cartRedirect($text_failed_mfa);
+			} elseif ($mfa_authorization_status == 'Abandoned') {
+				$this->session->data['apalwa']['error'] = $this->language->get('error_abandoned_mfa');
+				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/payment', '', true));
+			}
+		} else {
+			$text_invaild_request = $this->language->get('error_invaild_request');
+			$this->model_extension_payment_amazon_login_pay->cartRedirect($text_invaild_request);
+		}
+	}
+
+
+	private function authorize() {
+		  $this->load->language('extension/payment/amazon_login_pay');
+		  $this->load->language('checkout/checkout');
+
+		  $this->load->model('extension/payment/amazon_login_pay');
+		  $this->load->model('checkout/order');
+
+		  // Verify cart
+		  $this->model_extension_payment_amazon_login_pay->verifyCart();
+
+		  // Verify reference
+		  $this->model_extension_payment_amazon_login_pay->verifyReference();
+
+		  // Verify shipping
+		  $this->model_extension_payment_amazon_login_pay->verifyShipping();
+
+		  // Verify login
+		  $this->model_extension_payment_amazon_login_pay->verifyLogin();
+
+		  // Verify order
+		  $this->model_extension_payment_amazon_login_pay->verifyOrder();
+		  try {
+			$order_reference_id = $this->session->data['apalwa']['pay']['order_reference_id'];
+			if (empty($this->session->data['order_id'])) {
+				// Up to this point, everything is fine in the session. Save the order and submit it to Amazon.
+				$order_id = $this->model_checkout_order->addOrder($this->session->data['apalwa']['pay']['order']);
+
+				$this->session->data['order_id'] = $order_id;
+
+				$currency_code = isset($this->session->data['apalwa']['pay']['buyer_currency']) ? $this->session->data['apalwa']['pay']['buyer_currency'] : $this->config->get('payment_amazon_login_pay_payment_region');
+
+				$text_version = sprintf($this->language->get('text_created_by'), $this->version);
+
+				$this->model_extension_payment_amazon_login_pay->submitOrderDetails($order_reference_id, $order_id, $currency_code, $text_version);
+
+			} else {
+				$order_id = $this->session->data['order_id'];
+			}
+			$amazon_order = $this->model_extension_payment_amazon_login_pay->fetchOrder($order_reference_id);
+
+			// The order has been opened for authorization. Store it in the database
+			$amazon_login_pay_order_id = $this->model_extension_payment_amazon_login_pay->findOrAddOrder($amazon_order);
+
+			// Authorize the order
+			$authorization = $this->model_extension_payment_amazon_login_pay->authorizeOrder($amazon_order);
+
+			// Log the authorization
+			$this->model_extension_payment_amazon_login_pay->addAuthorization($amazon_login_pay_order_id, $authorization);
+
+			if ($authorization->AuthorizationStatus->State == 'Declined') {
+				$reason_code = (string)$authorization->AuthorizationStatus->ReasonCode;
+
+				switch ($reason_code) {
+					case 'InvalidPaymentMethod' :
+						$this->session->data['apalwa']['error'] = $this->language->get('error_decline_invalid_payment_method');
+
+						$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/payment', '', true));
+					break;
+					default :
+						if ($this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open'))) {
+							$this->model_extension_payment_amazon_login_pay->cancelOrder($order_reference_id, "Authorization has failed with the state: " . $authorization->AuthorizationStatus->State);
+						}
+
+						$cart_error_messages = array(
+							'TransactionTimedOut' => $this->language->get('error_decline_transaction_timed_out'),
+							'AmazonRejected' => $this->language->get('error_decline_amazon_rejected'),
+							'ProcessingFailure' => $this->language->get('error_decline_processing_failure')
+						);
+
+						if (in_array($reason_code, array_keys($cart_error_messages))) {
+							//@todo - do the logout with amazon.Login.logout(); instead
+							unset($this->session->data['apalwa']);
+
+							// capital L in Amazon cookie name is required, do not alter for coding standards
+							if (isset($this->request->cookie['amazon_Login_state_cache'])) {
+								//@todo - rework this by triggering the JavaScript logout
+								setcookie('amazon_Login_state_cache', null, -1, '/');
+							}
+
+							throw new \RuntimeException($cart_error_messages[$reason_code]);
+						} else {
+							// This should never occur, but just in case...
+							throw $this->model_extension_payment_amazon_login_pay->loggedException("Authorization has failed with code: " . $reason_code, $this->language->get('error_process_order'));
+						}
+					break;
+				}
+			}
+
+			// Amend the billing address based on the Authorize response
+			if (!empty($authorization->AuthorizationBillingAddress)) {
+				$this->model_extension_payment_amazon_login_pay->updatePaymentAddress($order_id, $authorization->AuthorizationBillingAddress);
+			}
+
+			// Clean the session and redirect to the success page
+			unset($this->session->data['apalwa']['pay']);
+
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_amazon_login_pay_pending_status'), '', $this->config->get('payment_amazon_login_pay_mode') != 'payment');
+
+			// In case a payment has been completed, and the order is not closed, close it.
+			if (isset($authorization->CapturedAmount->Amount) && (float)$authorization->CapturedAmount->Amount && $this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open', 'Suspended'))) {
+				$this->model_extension_payment_amazon_login_pay->closeOrder($order_reference_id, "A capture has been performed. Closing the order.");
+			}
+
+			$this->response->redirect($this->url->link('checkout/success', '', true));
+		} catch (\RuntimeException $e) {
+			$this->model_extension_payment_amazon_login_pay->cartRedirect($e->getMessage());
+		}
+	}
+
+	public function process_us() {
+		$this->load->language('extension/payment/amazon_login_pay');
+		$this->load->language('checkout/checkout');
+
+		$this->load->model('extension/payment/amazon_login_pay');
+		$this->load->model('checkout/order');
+
+		// Verify cart
+		$this->model_extension_payment_amazon_login_pay->verifyCart();
+
+		// Verify login
+		$this->model_extension_payment_amazon_login_pay->verifyLogin();
+
+		// Verify cart total
+		// Not needed, as we will display an error message later on...
+
+		// Verify reference
+		$this->model_extension_payment_amazon_login_pay->verifyReference();
+
+		// Verify shipping
+		$this->model_extension_payment_amazon_login_pay->verifyShipping();
+
+		// Verify order
+		$this->model_extension_payment_amazon_login_pay->verifyOrder();
+
+		try {
+			$order_reference_id = $this->session->data['apalwa']['pay']['order_reference_id'];
+
+			if (empty($this->session->data['order_id'])) {
+				// Up to this point, everything is fine in the session. Save the order and submit it to Amazon.
+				$order_id = $this->model_checkout_order->addOrder($this->session->data['apalwa']['pay']['order']);
+
+				$this->session->data['order_id'] = $order_id;
+
+				$currency_code =  $this->config->get('payment_amazon_login_pay_payment_region');
+
+				$text_version = sprintf($this->language->get('text_created_by'), $this->version);
+
+				$this->model_extension_payment_amazon_login_pay->submitOrderDetails($order_reference_id, $order_id, $currency_code, $text_version);
+			} else {
+				$order_id = $this->session->data['order_id'];
+			}
+
+			// Check constraints
+			$constraints = $this->model_extension_payment_amazon_login_pay->fetchOrder($order_reference_id)->Constraints;
+
+			if (!empty($constraints->Constraint)) {
+				// We do not expect to fall under the other kinds of constraints. For more information, see: https://pay.amazon.com/us/developer/documentation/apireference/201752890
+				$payment_page_errors = array(
+					'PaymentPlanNotSet' => $this->language->get('error_constraint_payment_plan_not_set'),
+					'PaymentMethodNotAllowed' => $this->language->get('error_constraint_payment_method_not_allowed'),
+					'AmountNotSet' => $this->language->get('error_constraint_amount_not_set')
+				);
+
+				$constraint_id = (string)$constraints->Constraint->ConstraintID;
+
+				if (in_array($constraint_id, array_keys($payment_page_errors))) {
+					$this->session->data['apalwa']['error'] = $payment_page_errors[$constraint_id];
+
+					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/payment', '', true));
+				} else {
+					throw new \RuntimeException($constraints->Constraint->Description);
+				}
+			}
+
+			// Open the order for authorization
+			$this->model_extension_payment_amazon_login_pay->confirmOrder($order_reference_id);
+
+			$amazon_order = $this->model_extension_payment_amazon_login_pay->fetchOrder($order_reference_id);
+
+			// The order has been opened for authorization. Store it in the database
+			$amazon_login_pay_order_id = $this->model_extension_payment_amazon_login_pay->findOrAddOrder($amazon_order);
+
+			// Authorize the order
+			$authorization = $this->model_extension_payment_amazon_login_pay->authorizeOrder($amazon_order);
+
+			// Log the authorization
+			$this->model_extension_payment_amazon_login_pay->addAuthorization($amazon_login_pay_order_id, $authorization);
+
+			if ($authorization->AuthorizationStatus->State == 'Declined') {
+				$reason_code = (string)$authorization->AuthorizationStatus->ReasonCode;
+
+				switch ($reason_code) {
+					case 'InvalidPaymentMethod' :
+						$this->session->data['apalwa']['error'] = $this->language->get('error_decline_invalid_payment_method');
+
+						$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/payment', '', true));
+					break;
+					default :
+						if ($this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open'))) {
+							$this->model_extension_payment_amazon_login_pay->cancelOrder($order_reference_id, "Authorization has failed with the state: " . $authorization->AuthorizationStatus->State);
+						}
+
+						$cart_error_messages = array(
+							'TransactionTimedOut' => $this->language->get('error_decline_transaction_timed_out'),
+							'AmazonRejected' => $this->language->get('error_decline_amazon_rejected'),
+							'ProcessingFailure' => $this->language->get('error_decline_processing_failure')
+						);
+
+						if (in_array($reason_code, array_keys($cart_error_messages))) {
+							//@todo - do the logout with amazon.Login.logout(); instead
+							unset($this->session->data['apalwa']);
+
+							// capital L in Amazon cookie name is required, do not alter for coding standards
+							if (isset($this->request->cookie['amazon_Login_state_cache'])) {
+								//@todo - rework this by triggering the JavaScript logout
+								setcookie('amazon_Login_state_cache', null, -1, '/');
+							}
+
+							throw new \RuntimeException($cart_error_messages[$reason_code]);
+						} else {
+							// This should never occur, but just in case...
+							throw $this->model_extension_payment_amazon_login_pay->loggedException("Authorization has failed with code: " . $reason_code, $this->language->get('error_process_order'));
+						}
+					break;
+				}
+			}
+
+			// Amend the billing address based on the Authorize response
+			if (!empty($authorization->AuthorizationBillingAddress)) {
+				$this->model_extension_payment_amazon_login_pay->updatePaymentAddress($order_id, $authorization->AuthorizationBillingAddress);
+			}
+
+			// Clean the session and redirect to the success page
+			unset($this->session->data['apalwa']['pay']);
+
+			try {
+				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_amazon_login_pay_pending_status'), '', $this->config->get('payment_amazon_login_pay_mode') != 'payment');
+			} catch (\Exception $e) {
+				if ($this->config->get('error_log')) {
+					$this->log->write($e->getMessage());
+				}
+			}
+
+			// In case a payment has been completed, and the order is not closed, close it.
+			if (isset($authorization->CapturedAmount->Amount) && (float)$authorization->CapturedAmount->Amount && $this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open', 'Suspended'))) {
+				$this->model_extension_payment_amazon_login_pay->closeOrder($order_reference_id, "A capture has been performed. Closing the order.");
+			}
+
+			// Log any errors triggered by addOrderHistory, but without displaying them
+			set_error_handler(array($this->model_extension_payment_amazon_login_pay, 'logHandler'));
+
+			$this->response->redirect($this->url->link('checkout/success', '', true));
+		} catch (\RuntimeException $e) {
+			$this->model_extension_payment_amazon_login_pay->cartRedirect($e->getMessage());
+		}
+	}
+	public function process() {
+		$this->load->language('extension/payment/amazon_login_pay');
+		$this->load->language('checkout/checkout');
+
+		$this->load->model('extension/payment/amazon_login_pay');
+		$this->load->model('checkout/order');
+
+		// Verify cart
+		$this->model_extension_payment_amazon_login_pay->verifyCart();
+
+		// Verify login
+		$this->model_extension_payment_amazon_login_pay->verifyLogin();
+
+		// Verify reference
+		$this->model_extension_payment_amazon_login_pay->verifyReference();
+
+		// Verify shipping
+		$this->model_extension_payment_amazon_login_pay->verifyShipping();
+
+		// Verify order
+		$this->model_extension_payment_amazon_login_pay->verifyOrder();
+
+		$json = array();
+
+		try {
+			$order_reference_id = $this->session->data['apalwa']['pay']['order_reference_id'];
+
+			if (empty($this->session->data['order_id'])) {
+				// Up to this point, everything is fine in the session. Save the order and submit it to Amazon.
+				$order_id = $this->model_checkout_order->addOrder($this->session->data['apalwa']['pay']['order']);
+
+				$this->session->data['order_id'] = $order_id;
+
+				if(isset($this->session->data['apalwa']['pay']['buyer_currency'])) {
+					$currency_code = $this->session->data['apalwa']['pay']['buyer_currency'];
+				} else {
+					$currency_code =  $this->config->get('payment_amazon_login_pay_payment_region');
+				}
+
+				$text_version = sprintf($this->language->get('text_created_by'), $this->version);
+
+				$this->model_extension_payment_amazon_login_pay->submitOrderDetails($order_reference_id, $order_id, $currency_code, $text_version);
+			} else {
+				$order_id = $this->session->data['order_id'];
+			}
+
+			// Check constraints
+			$constraints = $this->model_extension_payment_amazon_login_pay->fetchOrder($order_reference_id)->Constraints;
+
+			if (!empty($constraints->Constraint)) {
+				// We do not expect to fall under the other kinds of constraints. For more information, see: https://pay.amazon.com/us/developer/documentation/apireference/201752890
+				$payment_page_errors = array(
+					'PaymentPlanNotSet' => $this->language->get('error_constraint_payment_plan_not_set'),
+					'PaymentMethodNotAllowed' => $this->language->get('error_constraint_payment_method_not_allowed'),
+					'AmountNotSet' => $this->language->get('error_constraint_amount_not_set')
+				);
+
+				$constraint_id = (string)$constraints->Constraint->ConstraintID;
+
+				if (in_array($constraint_id, array_keys($payment_page_errors))) {
+					$this->session->data['apalwa']['error'] = $payment_page_errors[$constraint_id];
+
+					$json['redirect'] = $this->url->link('extension/payment/amazon_login_pay/payment', '', true);
+				} else {
+					throw new \RuntimeException($constraints->Constraint->Description);
+				}
+			} else {
+				// Confirm the order reference
+				$this->model_extension_payment_amazon_login_pay->confirmOrder($order_reference_id);
+			}
+		} catch (\RuntimeException $e) {
+			$json['redirect'] = $this->model_extension_payment_amazon_login_pay->cartRedirect($e->getMessage(), true);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function ipn() {
+		sleep(5);
+
+		$this->load->model('extension/payment/amazon_login_pay');
+
+		try {
+			if (!isset($this->request->get['token'])) {
+				throw new \RuntimeException('GET variable "token" is missing.');
+			}
+
+			if (trim($this->request->get['token']) == '') {
+				throw new \RuntimeException('GET variable "token" set, but is empty.');
+			}
+
+			if (!$this->config->get('payment_amazon_login_pay_ipn_token')) {
+				throw new \RuntimeException('CONFIG variable "payment_amazon_login_pay_ipn_token" is empty.');
+			}
+
+			if (!hash_equals(trim($this->config->get('payment_amazon_login_pay_ipn_token')), trim($this->request->get['token']))) {
+				throw new \RuntimeException('Token values are different.');
+			}
+
+			// Everything is fine. Process the IPN
+			$body = file_get_contents('php://input');
+
+			$this->model_extension_payment_amazon_login_pay->debugLog('IPN BODY', $body);
+
+			if ($body) {
+				$xml = $this->model_extension_payment_amazon_login_pay->parseIpnBody($body);
+
+				switch ($xml->getName()) {
+					case 'AuthorizationNotification':
+						if($this->model_extension_payment_amazon_login_pay->authorizationIpn($xml)) {
+							$this->load->model('checkout/order');
+							$oc_order_status_id = $this->config->get('payment_amazon_login_pay_capture_oc_status');
+							$amazon_capture_id = (string)$xml->AuthorizationDetails->IdList->Id;
+							$amazon_captured_amount = (float)$xml->AuthorizationDetails->CapturedAmount->Amount;
+							$amazon_authorization_id = (string)$xml->AuthorizationDetails->AmazonAuthorizationId;
+							$exploded_authorization_id = explode("-", $amazon_authorization_id);
+							array_pop($exploded_authorization_id);
+							$amazon_order_reference_id = implode("-", $exploded_authorization_id);
+							$order_id = $this->model_extension_payment_amazon_login_pay->findOCOrderId($amazon_order_reference_id);
+							$amazon_login_pay_order_id = $this->model_extension_payment_amazon_login_pay->findAOrderId($amazon_order_reference_id);
+							$transaction = array(
+								'amazon_login_pay_order_id' => $amazon_login_pay_order_id,
+								'amazon_authorization_id' => $amazon_authorization_id,
+								'amazon_capture_id' => $amazon_capture_id,
+								'amazon_refund_id' => '',
+								'date_added' => date('Y-m-d H:i:s', strtotime((string)$xml->AuthorizationDetails->CreationTimestamp)),
+								'type' => 'capture',
+								'status' => 'Completed',
+								'amount' => $amazon_captured_amount
+							);
+							$transaction_exists = (!empty($amazon_capture_id)) ? $this->model_extension_payment_amazon_login_pay->findCapture($amazon_capture_id) : false;
+
+							if(!isset($transaction_exists) || !$transaction_exists) {
+								$this->model_extension_payment_amazon_login_pay->addTransaction($transaction);
+							}
+							$order_reference_details = $this->model_extension_payment_amazon_login_pay->fetchOrder($amazon_order_reference_id);
+							$order_reason_code = (string) $order_reference_details->OrderReferenceStatus->ReasonCode;
+							$order_state = (string) $order_reference_details->OrderReferenceStatus->State;
+							$order_total = (float) $order_reference_details->OrderTotal->Amount;
+							$total_captured = $this->model_extension_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order_id);
+							//chnage the order status only if the order is closed with the response code maxamountcharged or if the order is fully captured
+							if(($order_state =="Closed" && $order_reason_code =="MaxAmountCharged") || $order_reason_code == "SellerClosed" || $amazon_captured_amount >= $order_total || $total_captured >= $order_total) {
+								//update the order history
+								$this->model_checkout_order->addOrderHistory($order_id, $oc_order_status_id, "", true);
+							}
+						}
+						break;
+					case 'CaptureNotification':
+						$this->model_extension_payment_amazon_login_pay->captureIpn($xml);
+						break;
+					case 'RefundNotification':
+						$this->model_extension_payment_amazon_login_pay->refundIpn($xml);
+						break;
+				}
+			}
+		} catch (\RuntimeException $e) {
+			$this->model_extension_payment_amazon_login_pay->debugLog('IPN ERROR', $e->getMessage());
+		}
+
+		$this->response->addHeader('HTTP/1.1 200 OK');
+		$this->response->addHeader('Content-Type: application/json');
+	}
+
+	public function capture(&$route, &$args, &$output) {
+		$this->load->language('extension/payment/amazon_login_pay');
+
+		$this->load->model('extension/payment/amazon_login_pay');
+		$order_id = $args[0];
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if ($order_info['order_status_id'] == $this->config->get('payment_amazon_login_pay_capture_status')) {
+			try {
+				$amazon_login_pay_order = $this->model_extension_payment_amazon_login_pay->getOrderByOrderId($order_id);
+
+				$capture_response = $this->model_extension_payment_amazon_login_pay->captureOrder($amazon_login_pay_order['amazon_authorization_id'], $amazon_login_pay_order['total'], $amazon_login_pay_order['currency_code']);
+
+				if (isset($capture_response->CaptureStatus->State) && in_array($capture_response->CaptureStatus->State, array('Completed', 'Pending'))) {
+					$order_reference_id = $amazon_login_pay_order['amazon_order_reference_id'];
+
+					if ($this->model_extension_payment_amazon_login_pay->isOrderInState($order_reference_id, array('Open', 'Suspended'))) {
+						$this->model_extension_payment_amazon_login_pay->closeOrder($order_reference_id, "Captured amount: " . (string)$capture_response->CaptureAmount->Amount . " " . (string)$capture_response->CaptureAmount->CurrencyCode);
+					}
+
+					$transaction = array(
+						'amazon_login_pay_order_id' => $amazon_login_pay_order['amazon_login_pay_order_id'],
+						'amazon_authorization_id' => $amazon_login_pay_order['amazon_authorization_id'],
+						'amazon_capture_id' => $capture_response->AmazonCaptureId,
+						'amazon_refund_id' => '',
+						'date_added' => date('Y-m-d H:i:s', strtotime((string)$capture_response->CreationTimestamp)),
+						'type' => 'capture',
+						'status' => (string)$capture_response->CaptureStatus->State,
+						'amount' => (float)$capture_response->CaptureAmount->Amount
+					);
+
+					$this->model_extension_payment_amazon_login_pay->addTransaction($transaction);
+
+					$this->model_extension_payment_amazon_login_pay->updateStatus($amazon_login_pay_order['amazon_authorization_id'], 'authorization', 'Closed');
+
+					$this->model_extension_payment_amazon_login_pay->updateCapturedStatus($amazon_login_pay_order['amazon_login_pay_order_id'], 1);
+				}
+			} catch (\RuntimeException $e) {
+				// Do nothing, as the exception is logged in case of debug logging.
+			}
+		}
+	}
 }

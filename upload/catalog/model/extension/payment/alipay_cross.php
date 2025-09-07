@@ -177,4 +177,3 @@ class ModelExtensionPaymentAlipayCross extends Model {
 		}
 	}
 }
-

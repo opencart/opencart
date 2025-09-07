@@ -1,5 +1,5 @@
 <?php
-class ModelSettingExtension extends Model {	
+class ModelSettingExtension extends Model {
 	public function getInstalled($type) {
 		$extension_data = array();
 
@@ -23,7 +23,7 @@ class ModelSettingExtension extends Model {
 	public function uninstall($type, $code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
-	}	
+	}
 
 	public function addExtensionInstall($filename, $extension_download_id = 0) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `filename` = '" . $this->db->escape($filename) . "', `extension_download_id` = '" . (int)$extension_download_id . "', `date_added` = NOW()");
@@ -42,7 +42,7 @@ class ModelSettingExtension extends Model {
 
 		if ($limit < 1) {
 			$limit = 10;
-		}		
+		}
 		
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` ORDER BY date_added ASC LIMIT " . (int)$start . "," . (int)$limit);
 	

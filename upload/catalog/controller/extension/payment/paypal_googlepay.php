@@ -44,7 +44,7 @@ class ControllerExtensionPaymentPayPalGooglePay extends Controller {
 		
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 				
 			$paypal->setAccessToken($token_info);
 								
@@ -72,9 +72,9 @@ class ControllerExtensionPaymentPayPalGooglePay extends Controller {
 
 			if (!empty($this->error['warning'])) {
 				$this->error['warning'] .= ' ' . sprintf($this->language->get('error_payment'), $this->url->link('information/contact', '', true));
-			}	
+			}
 
-			$data['error'] = $this->error;			
+			$data['error'] = $this->error;
 
 			return $this->load->view('extension/payment/paypal/paypal_googlepay', $data);
 		}
@@ -118,7 +118,7 @@ class ControllerExtensionPaymentPayPalGooglePay extends Controller {
 		
 		$token_info = array(
 			'grant_type' => 'client_credentials'
-		);	
+		);
 				
 		$paypal->setAccessToken($token_info);
 								
@@ -146,9 +146,9 @@ class ControllerExtensionPaymentPayPalGooglePay extends Controller {
 
 		if (!empty($this->error['warning'])) {
 			$this->error['warning'] .= ' ' . sprintf($this->language->get('error_payment'), $this->url->link('information/contact', '', true));
-		}	
+		}
 
-		$data['error'] = $this->error;		
+		$data['error'] = $this->error;
 
 		$this->response->setOutput($this->load->view('extension/payment/paypal/paypal_googlepay_modal', $data));
 	}

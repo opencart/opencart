@@ -9,7 +9,7 @@ function token($length = 32) {
 	
 	for ($i = 0; $i < $length; $i++) {
 		$token .= $string[random_int(0, $max)];
-	}	
+	}
 	
 	return $token;
 }

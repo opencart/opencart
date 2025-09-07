@@ -381,7 +381,7 @@ class ControllerMarketplaceModification extends Controller {
 											else {
 												// Log
 												$log[] = 'NOT FOUND - OPERATIONS ABORTED!';
-											 	break;
+												break;
 											}
 										}
 									}

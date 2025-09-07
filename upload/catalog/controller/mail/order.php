@@ -11,7 +11,7 @@ class ControllerMailOrder extends Controller {
 			$order_status_id = $args[1];
 		} else {
 			$order_status_id = 0;
-		}	
+		}
 
 		if (isset($args[2])) {
 			$comment = $args[2];
@@ -32,12 +32,12 @@ class ControllerMailOrder extends Controller {
 			// If order status is 0 then becomes greater than 0 send main html email
 			if (!$order_info['order_status_id'] && $order_status_id) {
 				$this->add($order_info, $order_status_id, $comment, $notify);
-			} 
+			}
 			
 			// If order status is not 0 then send update text email
 			if ($order_info['order_status_id'] && $order_status_id && $notify) {
 				$this->edit($order_info, $order_status_id, $comment);
-			}		
+			}
 		}
 	}
 		
@@ -342,7 +342,7 @@ class ControllerMailOrder extends Controller {
 			$order_status_id = $args[1];
 		} else {
 			$order_status_id = 0;
-		}	
+		}
 		
 		if (isset($args[2])) {
 			$comment = $args[2];
@@ -358,7 +358,7 @@ class ControllerMailOrder extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		
-		if ($order_info && !$order_info['order_status_id'] && $order_status_id && in_array('order', (array)$this->config->get('config_mail_alert'))) {	
+		if ($order_info && !$order_info['order_status_id'] && $order_status_id && in_array('order', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/order_alert');
 			
 			// HTML Mail
@@ -408,7 +408,7 @@ class ControllerMailOrder extends Controller {
 					$option_data[] = array(
 						'name'  => $order_option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-					);					
+					);
 				}
 					
 				$data['products'][] = array(
@@ -428,7 +428,7 @@ class ControllerMailOrder extends Controller {
 				$data['vouchers'][] = array(
 					'description' => $order_voucher['description'],
 					'amount'      => html_entity_decode($this->currency->format($order_voucher['amount'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
-				);					
+				);
 			}
 
 			$data['totals'] = array();

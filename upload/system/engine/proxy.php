@@ -15,21 +15,21 @@
  * @mixin TWraps
 */
 class Proxy extends \stdClass {
-    /**
-     * 
-     *
-     * @param	string	$key
-     */	
+	/**
+	 * 
+	 *
+	 * @param	string	$key
+	 */
 	public function __get($key) {
 		return $this->{$key};
-	}	
+	}
 
-    /**
-     * 
-     *
-     * @param	string	$key
+	/**
+	 * 
+	 *
+	 * @param	string	$key
 	 * @param	string	$value
-     */	
+	 */
 	public function __set($key, $value) {
 		 $this->{$key} = $value;
 	}
@@ -43,8 +43,8 @@ class Proxy extends \stdClass {
 			$arg_data[] =& $arg;
 		}
 		
-		if (isset($this->{$key})) {		
-			return call_user_func_array($this->{$key}, $arg_data);	
+		if (isset($this->{$key})) {
+			return call_user_func_array($this->{$key}, $arg_data);
 		} else {
 			$trace = debug_backtrace();
 			

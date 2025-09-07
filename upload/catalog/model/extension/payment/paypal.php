@@ -21,7 +21,7 @@ class ModelExtensionPaymentPayPal extends Model {
 				$status = false;
 			}
 
-			if ($status) {			
+			if ($status) {
 				$method_data = array(
 					'code'       => 'paypal',
 					'title'      => $this->language->get('text_paypal_title'),
@@ -63,7 +63,7 @@ class ModelExtensionPaymentPayPal extends Model {
 		
 		if (!empty($data['payment_method'])) {
 			$implode[] = "`payment_method` = '" . $this->db->escape($data['payment_method']) . "'";
-		}	
+		}
 
 		if (!empty($data['vault_id'])) {
 			$implode[] = "`vault_id` = '" . $this->db->escape($data['vault_id']) . "'";
@@ -458,7 +458,7 @@ class ModelExtensionPaymentPayPal extends Model {
 				}
 			}
 			
-			if ($transaction_id && $transaction_status && $currency_code && $amount) {			
+			if ($transaction_id && $transaction_status && $currency_code && $amount) {
 				$paypal_order_recurring_data = array(
 					'order_recurring_id' => $order_recurring_id,
 					'order_id' => $order_data['order_id'],
@@ -562,7 +562,7 @@ class ModelExtensionPaymentPayPal extends Model {
 							}
 						}
 			
-						if ($transaction_id && $transaction_status && $currency_code && $amount) {						
+						if ($transaction_id && $transaction_status && $currency_code && $amount) {
 							if (($transaction_status == 'CREATED') || ($transaction_status == 'COMPLETED') || ($transaction_status == 'PENDING')) {
 								$order_recurring_transaction_data = array(
 									'order_recurring_id' => $order_recurring['order_recurring_id'],
@@ -607,10 +607,10 @@ class ModelExtensionPaymentPayPal extends Model {
 		$environment = $this->config->get('payment_paypal_environment');
 		$partner_id = $setting['partner'][$environment]['partner_id'];
 		$partner_attribution_id = $setting['partner'][$environment]['partner_attribution_id'];
-		$transaction_method = $setting['general']['transaction_method'];		
+		$transaction_method = $setting['general']['transaction_method'];
 										
 		$currency_code = $order_data['currency_code'];
-		$currency_value = $this->currency->getValue($currency_code);				
+		$currency_value = $this->currency->getValue($currency_code);
 		$decimal_place = $setting['currency'][$currency_code]['decimal_place'];
 				
 		require_once DIR_SYSTEM . 'library/paypal/paypal.php';
@@ -631,7 +631,7 @@ class ModelExtensionPaymentPayPal extends Model {
 			
 		$token_info = array(
 			'grant_type' => 'client_credentials'
-		);	
+		);
 				
 		$paypal->setAccessToken($token_info);
 										

@@ -79,7 +79,7 @@ class ControllerExtensionCurrencyEcb extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/currency/ecb')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		} else {
-			if (!empty($this->request->post['currency_ecb_status'])) { 
+			if (!empty($this->request->post['currency_ecb_status'])) {
 				$this->load->model('localisation/currency');
 				$euro_currency = $this->model_localisation_currency->getCurrencyByCode('EUR');
 				if (empty($euro_currency)) {

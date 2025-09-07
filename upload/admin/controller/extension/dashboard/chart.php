@@ -81,7 +81,7 @@ class ControllerExtensionDashboardChart extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 	
 	public function dashboard() {
 		$this->load->language('extension/dashboard/chart');

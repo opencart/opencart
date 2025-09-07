@@ -17,7 +17,7 @@ class ControllerExtensionPaymentOpayo extends Controller {
 		
 			$data['logged'] = $this->customer->isLogged();
 
-			$data['cards'] = array();			
+			$data['cards'] = array();
 		
 			if ($data['logged'] && $data['card_save']) {
 				$this->load->model('extension/payment/opayo');
@@ -319,7 +319,7 @@ class ControllerExtensionPaymentOpayo extends Controller {
 				//loop through any products that are recurring items
 				foreach ($recurring_products as $item) {
 					$this->model_extension_payment_opayo->recurringPayment($item, $payment_data['VendorTxCode']);
-				} 
+				}
 			}
 
 			$json['redirect'] = $this->url->link('checkout/success', '', true);

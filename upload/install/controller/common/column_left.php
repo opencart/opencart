@@ -65,5 +65,5 @@ class ControllerCommonColumnLeft extends Controller {
 		} else {
 			$this->response->redirect($this->url->link('install/step_1'));
 		}
-	}	
+	}
 }

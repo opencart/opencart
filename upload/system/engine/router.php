@@ -19,7 +19,7 @@ final class Router {
 	 * Constructor
 	 *
 	 * @param	object	$route
- 	*/
+	*/
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
@@ -28,7 +28,7 @@ final class Router {
 	 * 
 	 *
 	 * @param	object	$pre_action
- 	*/	
+	*/
 	public function addPreAction(Action $pre_action) {
 		$this->pre_action[] = $pre_action;
 	}
@@ -38,7 +38,7 @@ final class Router {
 	 *
 	 * @param	object	$action
 	 * @param	object	$error
- 	*/		
+	*/
 	public function dispatch(Action $action, Action $error) {
 		$this->error = $error;
 
@@ -62,13 +62,13 @@ final class Router {
 	 *
 	 * @param	object	$action
 	 * @return	object
- 	*/
+	*/
 	private function execute(Action $action) {
 		$result = $action->execute($this->registry);
 
 		if ($result instanceof Action) {
 			return $result;
-		} 
+		}
 		
 		if ($result instanceof Exception) {
 			$action = $this->error;

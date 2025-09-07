@@ -58,12 +58,12 @@ class ControllerUpgradeUpgrade extends Controller {
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('upgrade/upgrade/next', 'step=' . ($step + 1)));
 			} catch (Exception $exception) {
 				$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
-			}		
+			}
 		} else {
 			$json['success'] = $this->language->get('text_success');
 		}
 				
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));			
+		$this->response->setOutput(json_encode($json));
 	}
 }

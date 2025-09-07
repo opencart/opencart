@@ -20,7 +20,7 @@ class ControllerExtensionDashboardActivity extends Controller {
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$data['error_warning'] = ''; 
+			$data['error_warning'] = '';
 		}
 
 		$data['breadcrumbs'] = array();

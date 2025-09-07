@@ -11,7 +11,7 @@ class ControllerMailTransaction extends Controller {
 			$description = $args[1];
 		} else {
 			$description = '';
-		}		
+		}
 		
 		if (isset($args[2])) {
 			$amount = $args[2];
@@ -60,5 +60,5 @@ class ControllerMailTransaction extends Controller {
 			$mail->setText($this->load->view('mail/transaction', $data));
 			$mail->send();
 		}
-	}		
-}	
+	}
+}

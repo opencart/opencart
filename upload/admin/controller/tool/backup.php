@@ -61,12 +61,12 @@ class ControllerToolBackup extends Controller {
 		
 		if (!is_file($filename)) {
 			$json['error'] = $this->language->get('error_file');
-		}	
+		}
 		
 		if (isset($this->request->get['position'])) {
 			$position = $this->request->get['position'];
 		} else {
-			$position = 0; 	
+			$position = 0;
 		}
 				
 		if (!$json) {
@@ -158,7 +158,7 @@ class ControllerToolBackup extends Controller {
 
 			$this->load->model('tool/backup');
 
-			$this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));		
+			$this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));
 		}
-	}	
+	}
 }

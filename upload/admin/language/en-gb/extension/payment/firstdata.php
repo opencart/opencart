@@ -57,7 +57,7 @@ $_['entry_enable_card_store']		 = 'Enable card storage tokens';
 $_['help_total']					 = 'The checkout total the order must reach before this payment method becomes active';
 $_['help_notification']				 = 'You need to supply this URL to First Data to get payment notifications';
 $_['help_debug']					 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
-$_['help_settle']					 = 'If you use pre-auth you must complete a post-auth action within 3-5 days otherwise your transaction will be dropped'; 
+$_['help_settle']					 = 'If you use pre-auth you must complete a post-auth action within 3-5 days otherwise your transaction will be dropped';
 
 // Tab
 $_['tab_account']					 = 'API info';

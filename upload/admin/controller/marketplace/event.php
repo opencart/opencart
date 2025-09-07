@@ -108,7 +108,7 @@ class ControllerMarketplaceEvent extends Controller {
 		}
 
 		$this->getList();
-	}	
+	}
 	
 	public function getList() {
 		if (isset($this->request->get['sort'])) {

@@ -708,7 +708,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= VERSION . "\n";
 			$string .= $extension_id . "\n";
-		 	$string .= $this->request->post['pin'] . "\n";
+			$string .= $this->request->post['pin'] . "\n";
 			$string .= $time . "\n";
 
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
@@ -922,7 +922,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$json['error'] = $this->language->get('error_opencart');
 		}
 					
-		if (!$json) {	
+		if (!$json) {
 			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.

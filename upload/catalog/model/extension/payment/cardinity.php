@@ -10,7 +10,7 @@ class ModelExtensionPaymentCardinity extends Model {
 
 		$orderByThisId= $this->getOrder($data['order_id']);
 		if ($orderByThisId && $orderByThisId['payment_status'] != 'failed_3dsv1') {
-			//avoid creating duplicate order by same id	
+			//avoid creating duplicate order by same id
 		}else{
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "cardinity_order` SET `order_id` = '" . (int)$data['order_id'] . "', `payment_id` = '" . $this->db->escape($data['payment_id']) . "'");
 		}
@@ -76,14 +76,14 @@ class ModelExtensionPaymentCardinity extends Model {
 			"description" => $payment_data['description'],
 			"project_id" => $project_key,
 			"return_url" => $payment_data['return_url'],
-            "notification_url" => $payment_data['notification_url'],
+			"notification_url" => $payment_data['notification_url'],
 		];
-        if(isset($payment_data['email_address'])){
-            $attributes['email_address'] = $payment_data['email_address'];
-        }
-        if(isset($payment_data['mobile_phone_number'])){
-            $attributes['mobile_phone_number'] = $payment_data['mobile_phone_number'];
-        }
+		if(isset($payment_data['email_address'])){
+			$attributes['email_address'] = $payment_data['email_address'];
+		}
+		if(isset($payment_data['mobile_phone_number'])){
+			$attributes['mobile_phone_number'] = $payment_data['mobile_phone_number'];
+		}
 
 		ksort($attributes);
 
@@ -247,7 +247,7 @@ class ModelExtensionPaymentCardinity extends Model {
 
 
 	public function logTransaction($data) {
-		$logFile = 'crd-transactions-'.date('Y-n').'.log';		
+		$logFile = 'crd-transactions-'.date('Y-n').'.log';
 		$log = new Log($logFile);
 		$log->write($data);
 	}

@@ -620,22 +620,22 @@ class PayPal {
 				} else {
 					list($head, $body) = array($parts[0], $parts[1]);
 				}
-            }
+			}
 			
-            $response_headers = array();
-            $header_lines = explode("\r\n", $head);
-            array_shift($header_lines);
+			$response_headers = array();
+			$header_lines = explode("\r\n", $head);
+			array_shift($header_lines);
 			
-            foreach ($header_lines as $line) {
-                list($key, $value) = explode(':', $line, 2);
-                $response_headers[$key] = $value;
-            }
+			foreach ($header_lines as $line) {
+				list($key, $value) = explode(':', $line, 2);
+				$response_headers[$key] = $value;
+			}
 			
 			curl_close($ch);
 			
 			if (isset($buffer) && is_resource($buffer)) {
-                fclose($buffer);
-            }
+				fclose($buffer);
+			}
 
 			$this->last_response = json_decode($body, true);
 			
@@ -643,21 +643,21 @@ class PayPal {
 				$this->errors[] = (array)$this->last_response;
 			}
 			
-			return (array)$this->last_response;		
+			return (array)$this->last_response;
 		}
 	}
 	
 	private function buildQuery($params, $json) {
 		if (is_string($params)) {
-            return $params;
-        }
+			return $params;
+		}
 		
 		if ($json) {
 			return json_encode($params);
 		} else {
 			return http_build_query($params);
 		}
-    }
+	}
 	
 	private function token($length = 32) {
 		// Create random token
@@ -669,7 +669,7 @@ class PayPal {
 	
 		for ($i = 0; $i < $length; $i++) {
 			$token .= $string[mt_rand(0, $max)];
-		}	
+		}
 	
 		return $token;
 	}

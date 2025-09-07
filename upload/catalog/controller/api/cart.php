@@ -196,7 +196,7 @@ class ControllerApiCart extends Controller {
 						'to_email'         => $voucher['to_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
 						'message'          => $voucher['message'],
-						'price'            => $this->currency->format($voucher['amount'], $this->session->data['currency']),			
+						'price'            => $this->currency->format($voucher['amount'], $this->session->data['currency']),
 						'amount'           => $voucher['amount']
 					);
 				}
@@ -209,7 +209,7 @@ class ControllerApiCart extends Controller {
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
-			// Because __call can not keep var references so we put them into an array. 
+			// Because __call can not keep var references so we put them into an array.
 			$total_data = array(
 				'totals' => &$totals,
 				'taxes'  => &$taxes,

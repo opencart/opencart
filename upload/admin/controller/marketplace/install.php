@@ -499,7 +499,7 @@ class ControllerMarketplaceInstall extends Controller {
 						if ($this->isDirEmpty($source)) {
 							rmdir($source);
 						}
-					}					
+					}
 				}
 
 				$this->model_setting_extension->deleteExtensionPath($result['extension_path_id']);
@@ -518,7 +518,7 @@ class ControllerMarketplaceInstall extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 	private function isDirEmpty ($dir_name) {
 		if (!is_dir($dir_name)) {
 			return false;

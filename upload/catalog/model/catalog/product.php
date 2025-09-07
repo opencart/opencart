@@ -548,6 +548,6 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "' AND category_id IN(" . implode(',', $implode) . ")");
-  	    return $query->row;
+		return $query->row;
 	}
 }

@@ -2,7 +2,7 @@
 class ControllerToolLog extends Controller {
 	private $error = array();
 
-	public function index() {		
+	public function index() {
 		$this->load->language('tool/log');
 		
 		$this->document->setTitle($this->language->get('heading_title'));

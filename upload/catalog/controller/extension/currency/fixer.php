@@ -30,4 +30,3 @@ class ControllerExtensionCurrencyFixer extends Controller {
 		return true;
 	}
 }
-

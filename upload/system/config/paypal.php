@@ -1,4 +1,4 @@
-<?php 
+<?php
 $_['paypal_setting'] = array(
 	'version' => '3.2.4',
 	'partner' => array(

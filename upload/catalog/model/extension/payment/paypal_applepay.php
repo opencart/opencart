@@ -23,7 +23,7 @@ class ModelExtensionPaymentPayPalApplePay extends Model {
 				$status = false;
 			}
 
-			if ($status) {			
+			if ($status) {
 				$method_data = array(
 					'code'       => 'paypal_applepay',
 					'title'      => $this->language->get('text_paypal_applepay_title'),

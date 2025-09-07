@@ -94,7 +94,7 @@ class ControllerCommonSecurity extends Controller {
 					mkdir($path . $directory, 0777);
 				}
 
-				// Copy the 
+				// Copy the
 				foreach ($files as $file) {
 					$destination = $path . $directory . substr($file, strlen(DIR_SYSTEM . 'storage/'));
 

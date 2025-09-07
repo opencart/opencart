@@ -21,7 +21,7 @@ class Url {
 	 * @param	string	$url
 	 * @param	string	$ssl
 	 *
- 	*/
+	*/
 	public function __construct($url, $ssl = '') {
 		$this->url = $url;
 		$this->ssl = $ssl;
@@ -31,7 +31,7 @@ class Url {
 	 *
 	 *
 	 * @param	object	$rewrite
- 	*/	
+	*/
 	public function addRewrite($rewrite) {
 		$this->rewrite[] = $rewrite;
 	}
@@ -44,7 +44,7 @@ class Url {
 	 * @param	bool		$secure
 	 *
 	 * @return	string
- 	*/
+	*/
 	public function link($route, $args = '', $secure = false) {
 		if ($this->ssl && $secure) {
 			$url = $this->ssl . 'index.php?route=' . $route;
@@ -64,6 +64,6 @@ class Url {
 			$url = $rewrite->rewrite($url);
 		}
 		
-		return $url; 
+		return $url;
 	}
 }

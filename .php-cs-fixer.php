@@ -83,7 +83,7 @@ return $config
         'no_useless_return' => true,
         'no_useless_sprintf' => true,
         'no_whitespace_before_comma_in_array' => true,
-        'no_whitespace_in_blank_line' => true,
+        'no_whitespace_in_blank_line' => false,
         'normalize_index_brace' => true,
         'nullable_type_declaration' => true,
         'nullable_type_declaration_for_default_null_value' => true,
@@ -117,7 +117,7 @@ return $config
         'set_type_to_cast' => true,
         'short_scalar_cast' => false,
         'simple_to_complex_string_variable' => true,
-        'single_blank_line_at_eof' => false,
+        'single_blank_line_at_eof' => true,
         'single_line_empty_body' => false,
         'single_line_throw' => true,
         'spaces_inside_parentheses' => false,
@@ -135,6 +135,7 @@ return $config
         'unary_operator_spaces' => false,
         'visibility_required' => false,
         'yield_from_array_to_yields' => true,
+		'trailing_comma_in_multiline' => ['elements' => []],
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->in(__DIR__ . '/upload/')

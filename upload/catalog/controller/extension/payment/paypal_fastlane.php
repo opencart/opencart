@@ -41,7 +41,7 @@ class ControllerExtensionPaymentPayPalFastlane extends Controller {
 		
 			$token_info = array(
 				'grant_type' => 'client_credentials'
-			);	
+			);
 				
 			$paypal->setAccessToken($token_info);
 								
@@ -69,9 +69,9 @@ class ControllerExtensionPaymentPayPalFastlane extends Controller {
 
 			if (!empty($this->error['warning'])) {
 				$this->error['warning'] .= ' ' . sprintf($this->language->get('error_payment'), $this->url->link('information/contact', '', true));
-			}	
+			}
 
-			$data['error'] = $this->error;			
+			$data['error'] = $this->error;
 
 			return $this->load->view('extension/payment/paypal/paypal_fastlane', $data);
 		}
@@ -112,7 +112,7 @@ class ControllerExtensionPaymentPayPalFastlane extends Controller {
 		
 		$token_info = array(
 			'grant_type' => 'client_credentials'
-		);	
+		);
 				
 		$paypal->setAccessToken($token_info);
 								
@@ -140,9 +140,9 @@ class ControllerExtensionPaymentPayPalFastlane extends Controller {
 
 		if (!empty($this->error['warning'])) {
 			$this->error['warning'] .= ' ' . sprintf($this->language->get('error_payment'), $this->url->link('information/contact', '', true));
-		}	
+		}
 
-		$data['error'] = $this->error;		
+		$data['error'] = $this->error;
 
 		$this->response->setOutput($this->load->view('extension/payment/paypal/paypal_fastlane_modal', $data));
 	}

@@ -11,7 +11,7 @@ class ModelAccountWishlist extends Model {
 	}
 
 	public function getWishlist() {
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 
 		return $query->rows;
 	}

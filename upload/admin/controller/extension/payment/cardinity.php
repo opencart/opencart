@@ -17,7 +17,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		if(version_compare(phpversion(), '7.2.5', '<') == true){
 			$this->external_mode_only = true;
 			$this->config->set('payment_cardinity_external', 1);
-			$this->model_setting_setting->editSettingValue('payment_cardinity', 'payment_cardinity_external', 1); 
+			$this->model_setting_setting->editSettingValue('payment_cardinity', 'payment_cardinity_external', 1);
 		}
 	
 
@@ -30,10 +30,10 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			$this->model_setting_setting->editSetting('payment_cardinity', $commonSettings, 0);
 			
 			if (isset($this->request->post['api_data'])) {
-				foreach($this->request->post['api_data'] as $store_Id => $storeAPIData){					
+				foreach($this->request->post['api_data'] as $store_Id => $storeAPIData){
 					$allSettings = array_merge($storeAPIData, $commonSettings);
-					$this->model_setting_setting->editSetting('payment_cardinity', $allSettings, $store_Id);	
-				}				
+					$this->model_setting_setting->editSetting('payment_cardinity', $allSettings, $store_Id);
+				}
 			}
 
 
@@ -61,24 +61,24 @@ class ControllerExtensionPaymentCardinity extends Controller {
 					$data['error_key'][$storeId] = $this->error['api_data'][$storeId]['key'];
 				} else {
 					$data['error_key'][$storeId] = '';
-				}	
+				}
 				if (isset($this->error['api_data'][$storeId]['secret'])) {
 					$data['error_secret'][$storeId] = $this->error['api_data'][$storeId]['secret'];
 				} else {
 					$data['error_secret'][$storeId] = '';
-				}	
+				}
 
 				//external
 				if (isset($this->error['api_data'][$storeId]['project_key'])) {
 					$data['error_project_key'][$storeId] = $this->error['api_data'][$storeId]['project_key'];
 				} else {
 					$data['error_project_key'][$storeId] = '';
-				}	
+				}
 				if (isset($this->error['api_data'][$storeId]['project_secret'])) {
 					$data['error_project_secret'][$storeId] = $this->error['api_data'][$storeId]['project_secret'];
 				} else {
 					$data['error_project_secret'][$storeId] = '';
-				}	
+				}
 			}
 		}
 		
@@ -107,7 +107,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 
 		
-		$listOfStore = $this->model_setting_store->getStores(); 
+		$listOfStore = $this->model_setting_store->getStores();
 		
 		
 		//add a index for the default store
@@ -266,9 +266,9 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 			$payment = $this->model_extension_payment_cardinity->getPayment($client, $order['payment_id']);
 
-            if(!$payment){
-                return;
-            }
+			if(!$payment){
+				return;
+			}
 
 			$data['refund_action'] = false;
 
@@ -334,19 +334,19 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		$refund = $this->model_extension_payment_cardinity->refundPayment($client, $this->request->post['payment_id'], (float)number_format($this->request->post['amount'], 2), $this->request->post['description']);
 
 		if ($refund) {
-            if($refund->isApproved()){
-                $success = $this->language->get('refund_approved');
-            }else if($refund->isProcessing()){
-                $success = $this->language->get('refund_processing');
-            }else {
-                $error = $this->language->get('refund_declined');
-            }
-            $json['refund'] = array(
-                'date_added'  => date($this->language->get('datetime_format'), strtotime($refund->getCreated())),
-                'amount'	  => $this->currency->format($refund->getAmount(), $refund->getCurrency(), '1.00000000', true),
-                'status' =>  $refund->getStatus(),
-                'description' =>  $refund->getDescription(),
-            );
+			if($refund->isApproved()){
+				$success = $this->language->get('refund_approved');
+			}else if($refund->isProcessing()){
+				$success = $this->language->get('refund_processing');
+			}else {
+				$error = $this->language->get('refund_declined');
+			}
+			$json['refund'] = array(
+				'date_added'  => date($this->language->get('datetime_format'), strtotime($refund->getCreated())),
+				'amount'	  => $this->currency->format($refund->getAmount(), $refund->getCurrency(), '1.00000000', true),
+				'status' =>  $refund->getStatus(),
+				'description' =>  $refund->getDescription(),
+			);
 		} else {
 			$error = $this->language->get('text_error_generic');
 		}
@@ -379,7 +379,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			//validate by each store
 			foreach($this->request->post['api_data'] as $storeId => $storeAPIdata){
 				
-				//Validate required feilds for internal integration 
+				//Validate required feilds for internal integration
 				if (!$this->request->post['api_data'][$storeId]['payment_cardinity_key']) {
 					$this->error['api_data'][$storeId]['key'] = $this->language->get('error_key');
 					
@@ -387,7 +387,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 				}
 		
 				if (!$this->request->post['api_data'][$storeId]['payment_cardinity_secret']) {
-					$this->error['api_data'][$storeId]['secret'] = $this->language->get('error_secret')."!";					
+					$this->error['api_data'][$storeId]['secret'] = $this->language->get('error_secret')."!";
 					
 					$check_credentials = false;
 				}
@@ -405,17 +405,17 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		
 					$verify_credentials = $this->model_extension_payment_cardinity->verifyCredentials($client);
 		
-					if (!$verify_credentials) {						
+					if (!$verify_credentials) {
 						$this->error['warning'] = $this->language->get('error_connection');
 						
 						
 					}
 				}
 				
-			}		
+			}
 			
 
-		}elseif ($this->request->post['payment_cardinity_external'] == 1) {			
+		}elseif ($this->request->post['payment_cardinity_external'] == 1) {
 
 			//validate by each store
 			foreach($this->request->post['api_data'] as $storeId => $storeAPIdata){
@@ -431,9 +431,9 @@ class ControllerExtensionPaymentCardinity extends Controller {
 					$this->error['api_data'][$storeId]['project_secret'] = $this->language->get('error_project_secret');
 		
 					$check_credentials = false;
-				}		
+				}
 
-			}			
+			}
 		}
 
 		
@@ -451,7 +451,7 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			$fileName = 'cardinity';
 		}else{
 			$fileName = 'crd-transactions-'.$this->request->post['cardinity_trns_year'].'-'. $this->request->post['cardinity_trns_month'];
-		}	
+		}
 		
 		
 		$fileToDownload =  $fileName .'.log';
@@ -470,9 +470,9 @@ class ControllerExtensionPaymentCardinity extends Controller {
 			readfile(DIR_LOGS.$fileToDownload);
 			exit;
 
-        } else {
+		} else {
 			$this->response->redirect($this->url->link('extension/payment/cardinity', 'user_token=' . $this->session->data['user_token'], true));
-		}				
+		}
 
 	}
 

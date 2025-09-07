@@ -29,7 +29,7 @@ class ControllerAccountAccount extends Controller {
 			unset($this->session->data['success']);
 		} else {
 			$data['success'] = '';
-		} 
+		}
 		
 		$data['edit'] = $this->url->link('account/edit', '', true);
 		$data['password'] = $this->url->link('account/password', '', true);
@@ -60,7 +60,7 @@ class ControllerAccountAccount extends Controller {
 			$data['reward'] = $this->url->link('account/reward', '', true);
 		} else {
 			$data['reward'] = '';
-		}		
+		}
 		
 		$data['return'] = $this->url->link('account/return', '', true);
 		$data['transaction'] = $this->url->link('account/transaction', '', true);
@@ -71,13 +71,13 @@ class ControllerAccountAccount extends Controller {
 		
 		$affiliate_info = $this->model_account_customer->getAffiliate($this->customer->getId());
 		
-		if (!$affiliate_info) {	
+		if (!$affiliate_info) {
 			$data['affiliate'] = $this->url->link('account/affiliate/add', '', true);
 		} else {
 			$data['affiliate'] = $this->url->link('account/affiliate/edit', '', true);
 		}
 		
-		if ($affiliate_info) {		
+		if ($affiliate_info) {
 			$data['tracking'] = $this->url->link('account/tracking', '', true);
 		} else {
 			$data['tracking'] = '';

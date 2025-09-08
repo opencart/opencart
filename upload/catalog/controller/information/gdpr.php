@@ -11,7 +11,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function index(): ?\Opencart\System\Engine\Action {
+	public function index() {
 		// Information
 		$this->load->model('catalog/information');
 
@@ -150,7 +150,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function success(): ?\Opencart\System\Engine\Action {
+	public function success() {
 		if (isset($this->request->get['code'])) {
 			$code = (string)$this->request->get['code'];
 		} else {

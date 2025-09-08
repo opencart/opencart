@@ -11,7 +11,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return ?\Opencart\System\Engine\Action
 	 */
-	public function index(): ?\Opencart\System\Engine\Action {
+	public function index() {
 		$this->load->language('information/information');
 
 		// Information

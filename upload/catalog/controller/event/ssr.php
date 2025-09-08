@@ -35,8 +35,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		// 1. Get the main response to cache
 		$output = $this->response->getOutput();
 
-		print_r($this->request->server);
-		
 		// Create the directory and file names.
 		$this->load->model('design/seo_url');
 
@@ -60,7 +58,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $keywords);
 
 		$base = DIR_OPENCART . 'shop/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/html/' . implode('/', $keywords) . '/';
+		$directory = parse_url($this->config->get('config_url'), PHP_URL_HOST) . '/' . implode('/', array_column($keywords, 'keyword')) . '/';
 		$filename = 'index.html';
 
 		if (!oc_directory_create($base . $directory, 0777)) {

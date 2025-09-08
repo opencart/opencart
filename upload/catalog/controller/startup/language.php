@@ -17,7 +17,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return ?\Opencart\System\Engine\Action
 	 */
-	public function index(): ?\Opencart\System\Engine\Action {
+	public function index() {
 		// Languages
 		$this->load->model('localisation/language');
 

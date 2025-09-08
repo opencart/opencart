@@ -560,6 +560,73 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'action'  => 'event/return_reason'
 			];
 
+			// SSR
+			$events[] = [
+				'code'    => 'ssr_article',
+				'trigger' => 'catalog/controller/cms/article/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_topic',
+				'trigger' => 'catalog/controller/cms/topic/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_category',
+				'trigger' => 'catalog/controller/product/category/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_compare',
+				'trigger' => 'catalog/controller/product/compare/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_manufacturer',
+				'trigger' => 'catalog/controller/product/manufacturer/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_product',
+				'trigger' => 'catalog/controller/product/product/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_special',
+				'trigger' => 'catalog/controller/product/special/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_search',
+				'trigger' => 'catalog/controller/product/search/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_contact',
+				'trigger' => 'catalog/controller/information/contact/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_information',
+				'trigger' => 'catalog/controller/information/information/after',
+				'action'  => 'event/ssr'
+			];
+
+			$events[] = [
+				'code'    => 'ssr_sitemap',
+				'trigger' => 'catalog/controller/information/sitemap/after',
+				'action'  => 'event/ssr'
+			];
+
 			// Statistics
 			$events[] = [
 				'code'    => 'statistics_review_add',

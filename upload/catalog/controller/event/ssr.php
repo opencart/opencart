@@ -18,6 +18,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	 * catalog/controller/product/category/after
 	 * catalog/controller/product/compare/after
 	 * catalog/controller/product/manufacturer/after
+	 * catalog/controller/product/product/after
 	 * catalog/controller/product/special/after
 	 * catalog/controller/product/search/after
 	 * catalog/controller/information/contact/after
@@ -30,11 +31,11 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, string &$output): void {
+	public function index(string &$route, array &$args, &$output): void {
 		// 1. Get the main response to cache
 		$output = $this->response->getOutput();
 
-		print_r($this>request->server);
+		print_r($this->request->server);
 		
 		// Create the directory and file names.
 		$this->load->model('design/seo_url');

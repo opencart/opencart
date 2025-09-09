@@ -6,7 +6,7 @@
   <title>{{ title }}</title>
   <base href="{{ base }}"/>
   {% if description %}
-    <meta name="description" content="{{ description }}"/>
+    <meta name="description" content="{{ description|e('html') }}"/>
   {% endif %}
   {% if keywords %}
     <meta name="keywords" content="{{ keywords }}"/>

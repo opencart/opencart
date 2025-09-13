@@ -104,7 +104,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $store_info['store_id']), ENT_QUOTES, 'UTF-8');
 			$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
-			$store_url = $store_info['url'];
+			$store_url = $store_info['store_url'];
 		}
 
 		// Send the email in the correct language
@@ -112,8 +112,10 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
 
-		if (!$language_info) {
-			return;
+		if ($language_info) {
+			$language_code = $language_info['code'];
+		} else {
+			$language_code = $this->config->get('config_language');
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.

@@ -28,6 +28,18 @@ class Task extends \Opencart\System\Engine\Controller {
 			return;
 		}
 
-		//shell_exec('php ' . DIR_APPLICATION . 'index.php start &');
+		/*
+		$handle = popen(DIR_APPLICATION . 'index.php start > ' . DIR_LOGS . 'test.log 2>&1', 'r');
+
+		//echo "'$handle'; " . gettype($handle) . "\n";
+
+		$read = fread($handle, 4096);
+
+		echo $read;
+
+		pclose($handle);
+		*/
+
+		exec('php ' . DIR_APPLICATION . 'index.php start > ' . DIR_LOGS . 'test.log 2>&1');
 	}
 }

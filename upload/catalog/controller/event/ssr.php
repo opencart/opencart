@@ -13,6 +13,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	 *
 	 * Triggers
 	 *
+	 * catalog/controller/common/home/after
 	 * catalog/controller/cms/article/after
 	 * catalog/controller/cms/topic/after
 	 * catalog/controller/product/category/after
@@ -34,7 +35,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		echo $_SERVER['REQUEST_URI'] . "\n";
 		//echo $_SERVER['REQUEST_FILENAME'] . "\n";
-
 
 		// 1. Get the main response
 		$output = $this->response->getOutput();

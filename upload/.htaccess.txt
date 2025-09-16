@@ -50,10 +50,26 @@ RewriteEngine On
 RewriteBase /
 ## Rewrite Rules
 RewriteRule ^system/storage/(.*) index.php?route=error/not_found [L]
+RewriteCond %{REQUEST_URI} !\.(ico|gif|jpg|jpeg|png|webp|js|css|svg|ini|js)$
+RewriteCond %{REQUEST_URI} !^error\.html$
+RewriteCond %{REQUEST_URI} !^index\.php$
+RewriteCond %{REQUEST_URI} !^admin\/
+RewriteCond %{REQUEST_URI} !^catalog\/
+RewriteCond %{REQUEST_URI} !^extension\/
+RewriteCond %{REQUEST_URI} !^image\/
+RewriteCond %{REQUEST_URI} !^shop\/
+RewriteCond %{REQUEST_URI} !^system\/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|webp|js|css|svg)
-RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
+
+RewriteCond %{REQUEST_URI} ^\/([?a-z0-9\_\-\/]+\/)([a-z]{2}-[a-z]{2}\/)([?a-z0-9\_\-s/]+\/)$
+RewriteCond %{DOCUMENT_ROOT}/%1shop/%{HTTP_HOST}/%2%3index.html -f
+RewriteRule ^([a-z]{2}-[a-z]{2}\/)([?a-z0-9\_\-\/]+\/)$ shop\/%{HTTP_HOST}\/$1$2?DOCUMENT_ROOT=%{DOCUMENT_ROOT}&REQUEST_FILENAME=%{REQUEST_FILENAME}&REQUEST_URI=%{REQUEST_URI} [L]
+
+RewriteCond %{REQUEST_URI} !\/shop\/
+RewriteCond %{REQUEST_URI} ^\/([?a-z0-9\_\-\/]+\/)([a-z]{2}-[a-z]{2}\/)([?a-z0-9\_\-\/]+\/)$
+RewriteCond %{DOCUMENT_ROOT}/%1shop/%{HTTP_HOST}/%2%3index.html !-f
+RewriteRule ^([a-z]{2}-[a-z]{2}\/)([?a-z0-9\_\-\/]+\/)$ index\.php?_route_=$1$2&DOCUMENT_ROOT=%{DOCUMENT_ROOT}&REQUEST_FILENAME=%{REQUEST_FILENAME}&REQUEST_URI=%{REQUEST_URI} [L,QSA,END]
 
 ## Optional error documents
 #ErrorDocument 400 /index.php?route=error/not_found

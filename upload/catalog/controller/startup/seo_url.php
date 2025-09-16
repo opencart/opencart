@@ -133,12 +133,13 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$url .= '/' . $result['keyword'];
 		}
 
+		$url .= '/';
 
 		// Rebuild the URL query
 		if ($query) {
 			$url .= '?' . str_replace(['%2F'], ['/'], http_build_query($query));
 		}
 
-		return $url . '/';
+		return $url;
 	}
 }

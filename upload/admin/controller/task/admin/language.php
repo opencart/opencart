@@ -37,10 +37,12 @@ class Language extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
-	/**
-	 * Index
+	/*
+	 * Clear
 	 *
-	 * Clears language list.
+	 * Clears generated language data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

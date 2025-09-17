@@ -47,7 +47,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates country list file.
+	 * Generates country list.
 	 *
 	 * @return array
 	 */

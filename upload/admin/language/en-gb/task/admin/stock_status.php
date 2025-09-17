@@ -1,8 +1,8 @@
 <?php
 // Text
-$_['text_task']       = 'Generating customer group tasks!';
-$_['text_list']       = 'Generating %s customer group list!';
-$_['text_clear']      = 'Customer Group information cleared!';
+$_['text_task']       = 'Generating return status tasks!';
+$_['text_list']       = 'Generating %s return status list!';
+$_['text_clear']      = 'Return Status information cleared!';
 
 // Error
 $_['error_language']  = 'Warning: Language could not be found!';

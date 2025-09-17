@@ -11,6 +11,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates customer group task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
      */
 	public function index(array $args = []): array {
@@ -39,6 +41,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 * List
 	 *
 	 * Generates the customer group list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -96,6 +100,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 * Info
 	 *
 	 * Generates customer group information.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -163,7 +169,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated customer group files.
+	 * Clears generated customer group data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

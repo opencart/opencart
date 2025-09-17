@@ -44,7 +44,9 @@ class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Deletes generated store data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

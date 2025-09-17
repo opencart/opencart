@@ -79,7 +79,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Deletes generated weight class data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

@@ -79,7 +79,9 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Deletes generated subscription status data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

@@ -47,7 +47,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates customer group list file.
+	 * Generates customer group list.
 	 *
 	 * @return array
 	 */

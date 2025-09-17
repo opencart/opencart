@@ -11,6 +11,8 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates information task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -47,7 +49,9 @@ class Information extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates information list file.
+	 * Generates information list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -133,6 +137,12 @@ class Information extends \Opencart\System\Engine\Controller {
 
 	/*
 	 * Clear
+	 *
+	 * Clears generated information data.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
 	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/information');

@@ -38,7 +38,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the return reason list file.
+	 * Generates the return reason list.
 	 *
 	 * @return array
 	 */
@@ -76,6 +76,15 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/*
+	 * Clear
+	 *
+	 * Clears generated return action data.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/return_action');
 

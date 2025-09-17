@@ -47,7 +47,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates return reason list file.
+	 * Generates return reason list.
 	 *
 	 * @return array
 	 */

@@ -79,7 +79,9 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Deletes generated stock status data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

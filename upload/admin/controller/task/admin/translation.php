@@ -144,7 +144,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated translation files.
+	 * Deletes generated translation data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

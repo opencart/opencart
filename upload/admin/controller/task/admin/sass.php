@@ -9,9 +9,11 @@ class Sass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * @throws \Exception\ScssPhp\ScssPhp\Exception\SassException
+	 * @param array<string, string> $args
 	 *
 	 * @return array
+	 *
+	 * @throws \Exception\ScssPhp\ScssPhp\Exception\SassException
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/sass');
@@ -49,7 +51,9 @@ class Sass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated sass files.
+	 * Deletes generated sass file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

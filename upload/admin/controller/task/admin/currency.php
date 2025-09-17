@@ -11,6 +11,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates currency task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -35,6 +37,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates the currency list.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
@@ -69,6 +80,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/*
+	 * Refresh
+	 *
+	 * Grabs the latest currency
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function refresh(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
@@ -94,6 +114,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears generated currency data.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/currency');
 

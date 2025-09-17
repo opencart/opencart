@@ -11,6 +11,8 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates order status task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -39,6 +41,8 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	 * List
 	 *
 	 * Generates the order status list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -76,7 +80,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	/*
+	/**
 	 * Clear
 	 *
 	 * Clears generated order status data.

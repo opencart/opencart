@@ -83,7 +83,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/*
 	 * Refresh
 	 *
-	 * Grabs the latest currency
+	 * Grabs the latest currency values.
 	 *
 	 * @param array<string, string> $args
 	 *

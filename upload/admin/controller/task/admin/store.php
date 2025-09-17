@@ -11,6 +11,8 @@ class Store extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates store list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {

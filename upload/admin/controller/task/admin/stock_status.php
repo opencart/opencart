@@ -11,6 +11,8 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates stock status task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -39,6 +41,8 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	 * List
 	 *
 	 * Generates the stock status list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

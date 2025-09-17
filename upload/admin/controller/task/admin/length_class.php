@@ -11,8 +11,10 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates length class task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
-	 */
+     */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/length_class');
 
@@ -39,6 +41,8 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	 * List
 	 *
 	 * Generates the length class list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -76,7 +80,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	/*
+	/**
 	 * Clear
 	 *
 	 * Clears generated length class data.

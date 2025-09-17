@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Admin;
-
 /**
  * Class Translation
  *
@@ -11,6 +10,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 * Index
 	 *
 	 * Generates the translation list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

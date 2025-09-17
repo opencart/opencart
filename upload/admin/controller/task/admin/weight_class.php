@@ -11,6 +11,8 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates weight class task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -40,6 +42,8 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates the weight class list.
 	 *
+	 * @param array<string, string> $args
+	 *                                   
 	 * @return array
 	 */
 	public function list(array $args = []): array {

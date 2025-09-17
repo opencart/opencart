@@ -9,11 +9,13 @@ class Sass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Generates SASS file.
+	 *
+	 * @throws \Exception\ScssPhp\ScssPhp\Exception\SassException
+	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
-	 *
-	 * @throws \Exception\ScssPhp\ScssPhp\Exception\SassException
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/sass');

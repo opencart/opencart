@@ -11,6 +11,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates subscription status task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -39,6 +41,8 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	 * List
 	 *
 	 * Generates the subscription status list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

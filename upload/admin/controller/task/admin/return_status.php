@@ -11,7 +11,9 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates return status task list.
 	 *
-	 * @return void
+	 * @param array<string, string> $args
+	 *
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/return_status');
@@ -39,6 +41,8 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	 * List
 	 *
 	 * Generates the return status list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -76,7 +80,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-	/*
+	/**
 	 * Clear
 	 *
 	 * Clears generated return status data.

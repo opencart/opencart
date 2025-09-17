@@ -33,9 +33,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		echo $_SERVER['REQUEST_URI'] . "\n";
-		//echo $_SERVER['REQUEST_FILENAME'] . "\n";
-
 		// 1. Get the main response
 		$output = $this->response->getOutput();
 

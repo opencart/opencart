@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Information
  *
- * @package Opencart\Admin\Controller\Task\Catalog
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Information extends \Opencart\System\Engine\Controller {
 	/**

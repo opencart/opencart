@@ -60,7 +60,7 @@ RewriteRule ^system/(.*) index.php?route=error/not_found [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{QUERY_STRING} !route=
-RewriteCond %{ENV:REWRITE_PATH} ^([a-z]{2}-[a-z]{2}\/)|$
+RewriteCond %{ENV:REWRITE_PATH} ^([a-z]{2}-[a-z]{2}\/)|^$
 RewriteCond %{REQUEST_FILENAME} ^(.+\/)
 RewriteCond %1shop/%{HTTP_HOST}/%{ENV:REWRITE_PATH}index.html -f
 RewriteRule ^(.+)$ shop\/%{HTTP_HOST}\/%{ENV:REWRITE_PATH} [L,QSA]
@@ -68,7 +68,7 @@ RewriteRule ^(.+)$ shop\/%{HTTP_HOST}\/%{ENV:REWRITE_PATH} [L,QSA]
 # Redirect any requests to index.php so the pages can be generated and cached
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{ENV:REWRITE_PATH} ^([a-z]{2}-[a-z]{2}\/)|$
+RewriteCond %{ENV:REWRITE_PATH} ^([a-z]{2}-[a-z]{2}\/)|^$
 RewriteCond %{REQUEST_FILENAME} ^(.+\/)
 RewriteCond %1shop/%{HTTP_HOST}/%{ENV:REWRITE_PATH}index.html !-f
 RewriteRule ^(.+)$ index\.php?_route_=%{ENV:REWRITE_PATH} [L,QSA]

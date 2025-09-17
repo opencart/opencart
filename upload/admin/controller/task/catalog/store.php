@@ -45,12 +45,21 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function task() {
-
-	}
-
 	public function clear(array $args = []): array {
-		$this->load->language('task/catalog/currency');
+		$this->load->language('task/admin/store');
 
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/setting/setting.json';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

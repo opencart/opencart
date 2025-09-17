@@ -85,6 +85,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Write
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function write(array $args = []): array {

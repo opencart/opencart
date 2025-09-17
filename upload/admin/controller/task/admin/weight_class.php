@@ -43,7 +43,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	 * Generates the weight class list.
 	 *
 	 * @param array<string, string> $args
-	 *                                   
+	 *
 	 * @return array
 	 */
 	public function list(array $args = []): array {

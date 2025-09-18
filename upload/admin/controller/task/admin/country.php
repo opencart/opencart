@@ -40,7 +40,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the country list.
+	 * Generates the JSON country list file.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -109,7 +109,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generates country information.
+	 * Generates the JSON country information file.
 	 *
 	 * @param array<string, string> $args
 	 *

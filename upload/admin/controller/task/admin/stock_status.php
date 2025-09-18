@@ -9,7 +9,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates stock status task list.
+	 * Generate stock status task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -83,7 +83,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Deletes generated stock status data.
+	 * Delete generated JSON stock status files.
 	 *
 	 * @param array<string, string> $args
 	 *

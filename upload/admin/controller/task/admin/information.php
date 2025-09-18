@@ -9,7 +9,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates information task list.
+	 * Generate information task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -138,7 +138,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated information data.
+	 * Delete generated JSON information files.
 	 *
 	 * @param array<string, string> $args
 	 *

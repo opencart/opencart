@@ -9,7 +9,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates length class task list.
+	 * Generate length class task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -83,7 +83,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated length class data.
+	 * Delete generated JSON length class files.
 	 *
 	 * @param array<string, string> $args
 	 *

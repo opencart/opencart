@@ -9,7 +9,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates customer group task list.
+	 * Generate customer group task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -169,7 +169,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated customer group data.
+	 * Delete generated JSON customer group files.
 	 *
 	 * @param array<string, string> $args
 	 *

@@ -9,7 +9,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates return action task list.
+	 * Generate return action task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -83,7 +83,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated return action data.
+	 * Delete generated JSON return action files.
 	 *
 	 * @param array<string, string> $args
 	 *

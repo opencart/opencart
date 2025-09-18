@@ -9,7 +9,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates return reason task list.
+	 * Generate return reason task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -83,7 +83,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated return reason data.
+	 * Delete generated JSON return reason files.
 	 *
 	 * @param array<string, string> $args
 	 *

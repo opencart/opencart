@@ -9,7 +9,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates return status task list.
+	 * Generate return status task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -83,7 +83,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated return status data.
+	 * Delete generated JSON return status files.
 	 *
 	 * @param array<string, string> $args
 	 *

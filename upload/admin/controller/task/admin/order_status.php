@@ -9,7 +9,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates order status task list.
+	 * Generate order status task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -83,7 +83,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated order status data.
+	 * Delete generated JSON order status files.
 	 *
 	 * @param array<string, string> $args
 	 *

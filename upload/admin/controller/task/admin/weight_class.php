@@ -40,7 +40,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates JSON weight class list file.
+	 * Generate JSON weight class list file.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -83,7 +83,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Deletes generated weight class data.
+	 * Delete generated JSON weight class files.
 	 *
 	 * @param array<string, string> $args
 	 *

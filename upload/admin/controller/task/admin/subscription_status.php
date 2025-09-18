@@ -83,7 +83,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Deletes generated subscription status data.
+	 * Delete generated JSON subscription status files.
 	 *
 	 * @param array<string, string> $args
 	 *

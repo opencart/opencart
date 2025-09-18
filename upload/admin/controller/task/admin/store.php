@@ -9,7 +9,7 @@ class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates store list.
+	 * Generate JSON store list file.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -46,7 +46,7 @@ class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Deletes generated store data.
+	 * Delete generated JSON store files.
 	 *
 	 * @param array<string, string> $args
 	 *

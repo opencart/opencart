@@ -178,7 +178,7 @@ class Template extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated translation data.
+	 * Delete generated template files.
 	 *
 	 * @param array<string, string> $args
 	 *

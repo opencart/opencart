@@ -9,7 +9,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates subscription status task list.
+	 * Generate subscription status task list.
 	 *
 	 * @param array<string, string> $args
 	 *

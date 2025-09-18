@@ -11,6 +11,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Generate subscription task list.
+	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {

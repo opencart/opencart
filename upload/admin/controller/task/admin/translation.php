@@ -9,7 +9,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the translation list.
+	 * Generate translation task list.
 	 *
 	 * @param array<string, string> $args
 	 *

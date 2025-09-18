@@ -9,7 +9,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates weight class task list.
+	 * Generate weight class task list.
 	 *
 	 * @param array<string, string> $args
 	 *

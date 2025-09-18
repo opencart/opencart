@@ -208,7 +208,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country data.
+	 * Delete generated JSON country files.
 	 *
 	 * @param array<string, string> $args
 	 *

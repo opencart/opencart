@@ -48,7 +48,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears language data.
+	 * Delete generated JSON language files.
 	 *
 	 * @param array<string, string> $args
 	 *

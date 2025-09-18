@@ -102,7 +102,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears review data.
+	 * Delete generated JSON review files.
 	 *
 	 * @param array<string, string> $args
 	 *

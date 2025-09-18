@@ -166,7 +166,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated banner data.
+	 * Delete generated JSON banner files.
 	 *
 	 * @param array<string, string> $args
 	 *

@@ -9,6 +9,8 @@ class Sass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Generate SASS file.
+	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
@@ -51,7 +53,7 @@ class Sass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated SASS files.
+	 * Delete generated SASS file.
 	 *
 	 * @param array<string, string> $args
 	 *

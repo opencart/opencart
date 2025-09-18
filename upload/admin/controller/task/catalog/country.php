@@ -49,7 +49,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate country list.
+	 * Generate JSON country list file.
 	 *
 	 * @param array<string, string> $args
 	 *

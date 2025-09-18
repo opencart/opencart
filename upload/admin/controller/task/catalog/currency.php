@@ -49,7 +49,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate currency list.
+	 * Generate JSON currency list file.
 	 *
 	 * @param array<string, string> $args
 	 *

@@ -49,7 +49,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate review list.
+	 * Generate JSON review list file.
 	 *
 	 * @param array<string, string> $args
 	 *

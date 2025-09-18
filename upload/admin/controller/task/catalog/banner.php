@@ -49,7 +49,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate banner list.
+	 * Generate JSON banner list file.
 	 *
 	 * @param array<string, string> $args
 	 *

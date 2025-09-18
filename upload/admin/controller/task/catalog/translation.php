@@ -179,7 +179,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated translation data.
+	 * Delete generated JSON translation files.
 	 *
 	 * @param array<string, string> $args
 	 *

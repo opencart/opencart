@@ -50,7 +50,7 @@ class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated store data.
+	 * Delete generated JSON generated store files.
 	 *
 	 * @param array<string, string> $args
 	 *

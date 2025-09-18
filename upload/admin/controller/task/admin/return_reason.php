@@ -40,7 +40,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the return reason list.
+	 * Generate JSON return reason list file.
 	 *
 	 * @param array<string, string> $args
 	 *

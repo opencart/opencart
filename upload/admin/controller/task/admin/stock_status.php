@@ -40,7 +40,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the stock status list.
+	 * Generate JSON stock status list file.
 	 *
 	 * @param array<string, string> $args
 	 *

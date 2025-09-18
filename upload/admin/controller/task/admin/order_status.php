@@ -40,7 +40,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the order status list.
+	 * Generate JSON order status list file.
 	 *
 	 * @param array<string, string> $args
 	 *

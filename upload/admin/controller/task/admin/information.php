@@ -49,7 +49,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates information list.
+	 * Generate JSON information list file.
 	 *
 	 * @param array<string, string> $args
 	 *

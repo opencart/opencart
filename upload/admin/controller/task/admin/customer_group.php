@@ -40,7 +40,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the customer group list.
+	 * Generate JSON customer group list file.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -99,7 +99,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generates customer group information.
+	 * Generate JSON customer group information file.
 	 *
 	 * @param array<string, string> $args
 	 *

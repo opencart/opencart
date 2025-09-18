@@ -40,7 +40,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the weight class list.
+	 * Generates JSON weight class list file.
 	 *
 	 * @param array<string, string> $args
 	 *

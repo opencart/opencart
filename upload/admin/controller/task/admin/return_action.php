@@ -40,7 +40,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the return action list.
+	 * Generate JSON return action list file.
 	 *
 	 * @param array<string, string> $args
 	 *

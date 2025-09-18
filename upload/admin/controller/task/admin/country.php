@@ -9,7 +9,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates country task list.
+	 * Generate country task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -40,7 +40,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the JSON country list file.
+	 * Generate JSON country list file.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -109,7 +109,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generates the JSON country information file.
+	 * Generate JSON country information file.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -178,7 +178,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country data.
+	 * Delete generated JSON country files.
 	 *
 	 * @param array<string, string> $args
 	 *

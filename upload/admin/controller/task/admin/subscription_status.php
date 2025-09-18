@@ -40,7 +40,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the subscription status list.
+	 * Generate JSON subscription status list file.
 	 *
 	 * @param array<string, string> $args
 	 *

@@ -40,7 +40,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the length class list.
+	 * Generate JSON length class list file.
 	 *
 	 * @param array<string, string> $args
 	 *

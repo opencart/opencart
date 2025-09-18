@@ -40,7 +40,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates the return status list.
+	 * Generate JSON return status list file.
 	 *
 	 * @param array<string, string> $args
 	 *

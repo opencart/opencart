@@ -9,7 +9,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates currency task list.
+	 * Generate currency task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -49,7 +49,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates currency list.
+	 * Generate currency list.
 	 *
 	 * @param array<string, string> $args
 	 *

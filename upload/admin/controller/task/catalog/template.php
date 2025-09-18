@@ -9,7 +9,7 @@ class Template extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the template list.
+	 * Generate the template list.
 	 *
 	 * @param array<string, string> $args
 	 *

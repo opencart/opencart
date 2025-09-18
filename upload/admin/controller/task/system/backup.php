@@ -9,7 +9,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates backup task list.
+	 * Generate backup task list.
 	 *
 	 * @return array
 	 */

@@ -9,7 +9,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates language list.
+	 * Generate language list.
 	 *
 	 * @param array<string, string> $args
 	 *

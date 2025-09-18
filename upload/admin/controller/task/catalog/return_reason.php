@@ -9,7 +9,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates return reason task list.
+	 * Generate return reason task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -49,7 +49,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates return reason list.
+	 * Generate return reason list.
 	 *
 	 * @param array<string, string> $args
 	 *

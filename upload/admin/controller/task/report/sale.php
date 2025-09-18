@@ -9,7 +9,7 @@ class Sale extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates rating task list.
+	 * Generate rating task list.
 	 *
 	 * @return array
 	 */

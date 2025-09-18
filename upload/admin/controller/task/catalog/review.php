@@ -9,7 +9,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates review task list.
+	 * Generate review task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -49,7 +49,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates review list.
+	 * Generate review list.
 	 *
 	 * @param array<string, string> $args
 	 *

@@ -9,7 +9,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates customer group task list.
+	 * Generate customer group task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -49,7 +49,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates customer group list.
+	 * Generate customer group list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -126,7 +126,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generates customer group information.
+	 * Generate customer group information.
 	 *
 	 * @param array<string, string> $args
 	 *

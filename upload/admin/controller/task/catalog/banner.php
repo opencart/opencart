@@ -9,7 +9,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates banner task list.
+	 * Generate banner task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -49,7 +49,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates banner list.
+	 * Generate banner list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -111,7 +111,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generates banner information.
+	 * Generate banner information.
 	 *
 	 * @param array<string, string> $args
 	 *

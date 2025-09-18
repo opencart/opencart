@@ -9,7 +9,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates country task list.
+	 * Generate country task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -49,7 +49,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates country list.
+	 * Generate country list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -128,7 +128,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generates country information.
+	 * Generate country information.
 	 *
 	 * @param array<string, string> $args
 	 *

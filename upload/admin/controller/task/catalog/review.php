@@ -9,7 +9,9 @@ class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates return reason task list.
+	 * Generates review task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -47,7 +49,9 @@ class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates return reason list.
+	 * Generates review list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -95,6 +99,15 @@ class Review extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears review data.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 

@@ -85,6 +85,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Write
 	 *
+	 * Writes the translation files.
+	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array

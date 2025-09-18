@@ -11,6 +11,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates banner task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -47,7 +49,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generates customer group list.
+	 * Generates banner list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -109,6 +113,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates banner information.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function banner(array $args = []): array {
@@ -160,7 +166,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated banners.
+	 * Clears generated banner data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

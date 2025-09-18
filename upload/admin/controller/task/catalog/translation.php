@@ -11,6 +11,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates the translation list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -87,6 +89,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 	/*
 	 * Write
+	 *
+	 * Write JSON translation file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -173,7 +179,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated translation files.
+	 * Clears generated translation data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

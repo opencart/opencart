@@ -11,6 +11,8 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates return reason task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -48,6 +50,8 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	 * List
 	 *
 	 * Generates return reason list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -106,6 +110,15 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears language data.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 

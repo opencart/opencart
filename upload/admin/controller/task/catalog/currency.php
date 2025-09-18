@@ -11,7 +11,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates currency task list.
 	 *
-	 * @return void
+	 * @param array<string, string> $args
+	 *
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/currency');
@@ -44,6 +46,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generates currency list.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
@@ -96,7 +107,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Clears generated currency data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

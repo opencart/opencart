@@ -11,6 +11,8 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates country task list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -48,6 +50,8 @@ class Country extends \Opencart\System\Engine\Controller {
 	 * List
 	 *
 	 * Generates country list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -125,6 +129,8 @@ class Country extends \Opencart\System\Engine\Controller {
 	 * Info
 	 *
 	 * Generates country information.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -211,7 +217,9 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Clears generated country data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

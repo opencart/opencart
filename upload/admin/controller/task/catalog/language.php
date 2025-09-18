@@ -11,6 +11,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generates language list.
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -44,9 +46,11 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Index
+	 * Clear
 	 *
-	 * Clears language list.
+	 * Clears language data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

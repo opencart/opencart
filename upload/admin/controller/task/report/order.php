@@ -9,6 +9,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -58,6 +60,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Order Sale
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function sale(array $args = []): array {
@@ -74,6 +78,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Order Processing
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -92,6 +98,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Order Complete
 	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function complete(array $args = []): array {
@@ -108,6 +116,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Order Other
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

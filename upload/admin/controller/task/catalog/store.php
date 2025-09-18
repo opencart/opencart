@@ -7,11 +7,13 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  */
 class Store extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generate
+	 * Index
 	 *
-	 * @return void
+	 * @param array<string, string> $args
+	 *
+	 * @return array
 	 */
-	public function index(): void {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/store');
 
 		$this->load->model('setting/store');
@@ -45,6 +47,15 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Clears generated store data.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/store');
 

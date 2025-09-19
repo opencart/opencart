@@ -50,7 +50,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/admin/weight_class');
 
 		if (!array_key_exists('language_id', $args)) {
-			return ['error' => $this->language->get('error_language')];
+			return ['error' => $this->language->get('error_required', 'language_id')];
 		}
 
 		$this->load->model('localisation/language');

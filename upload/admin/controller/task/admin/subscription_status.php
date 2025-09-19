@@ -33,7 +33,6 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
-
 		return ['success' => $this->language->get('text_task')];
 	}
 

@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_success']    = 'Generated language list!';
-$_['text_clear']      = 'Language information cleared!';
+$_['text_clear']      = 'Language data cleared!';
 
 // Error
 $_['error_language']  = 'Warning: Language could not be found!';

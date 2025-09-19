@@ -9,7 +9,9 @@ class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates return reason task list.
+	 * Generate review task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -41,13 +43,15 @@ class Review extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates return reason list file.
+	 * Generate JSON review list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -85,16 +89,25 @@ class Review extends \Opencart\System\Engine\Controller {
 		$filename = 'return_reason.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($return_reason_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => $this->language->get('text_list', $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Delete generated JSON review files.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 

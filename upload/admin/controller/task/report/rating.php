@@ -9,7 +9,7 @@ class Rating extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates rating task list.
+	 * Generate rating task list.
 	 *
 	 * @return array
 	 */
@@ -27,27 +27,21 @@ class Rating extends \Opencart\System\Engine\Controller {
 		$page_total = ceil($product_total / $limit);
 
 		for ($i = 1; $i <= $page_total; $i++) {
-			$start = ($i - 1) * $limit;
-
-			if ($start > ($product_total - $limit)) {
-				$end = $product_total;
-			} else {
-				$end = ($start + $limit);
-			}
+			$start = $i * $limit;
 
 			$task_data = [
 				'code'   => 'rating',
 				'action' => 'task/report/rating.list',
 				'args'   => [
 					'start' => $start,
-					'end'   => $end
+					'limit' => $limit
 				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
@@ -70,6 +64,8 @@ class Rating extends \Opencart\System\Engine\Controller {
 			$this->model_catalog_product->editRating($result['product_id'], $this->model_catalog_review->getRating($result['product_id']));
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $args['start'], $args['end'])];
+		$product_total = $this->model_catalog_product->getTotalProducts();
+
+		return ['success' => $this->language->get('text_list', $args['start'], ($args['start'] > ($product_total - $args['limit'])) ? $product_total : $args['start'] + $args['limit'])];
 	}
 }

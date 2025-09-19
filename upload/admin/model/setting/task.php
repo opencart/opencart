@@ -152,11 +152,21 @@ class Task extends \Opencart\System\Engine\Model {
 
 		$sql = "SELECT * FROM `" . DB_PREFIX . "task`";
 
-		if (!empty($data['filter_status'])) {
-			$sql .= " WHERE `status` = '" . $this->db->escape($data['filter_status']) . "'";
+		$implode = [];
+
+		if (!empty($data['filter_code'])) {
+			$implode[] = "LCASE(`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code'])) . "'";
 		}
 
-		$sql .= " ORDER BY `date_added` ASC";
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$implode[] = "`status` = '" . $this->db->escape($data['filter_status']) . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$sql .= " ORDER BY `task_id` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -205,8 +215,18 @@ class Task extends \Opencart\System\Engine\Model {
 	public function getTotalTasks(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task`";
 
-		if (!empty($data['filter_status'])) {
-			$sql .= " WHERE `status` = '" . $this->db->escape($data['filter_status']) . "'";
+		$implode = [];
+
+		if (!empty($data['filter_code'])) {
+			$implode[] = "LCASE(`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code'])) . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$implode[] = "`status` = '" . $this->db->escape($data['filter_status']) . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
 
 		$query = $this->db->query($sql);

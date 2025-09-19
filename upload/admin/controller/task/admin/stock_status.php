@@ -9,7 +9,9 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates stock status task list.
+	 * Generate stock status task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -32,18 +34,24 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates the stock status list.
+	 * Generate JSON stock status list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/stock_status');
+
+		if (!array_key_exists('language_id', $args)) {
+			return ['error' => $this->language->get('error_language')];
+		}
 
 		$this->load->model('localisation/language');
 
@@ -62,20 +70,22 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$filename = 'stock_status.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($stock_statuses))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => $this->language->get('text_list', $language_info['name'])];
 	}
 
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Delete generated JSON stock status files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

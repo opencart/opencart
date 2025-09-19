@@ -11,6 +11,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
+	 * Generate subscription task list.
+	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
@@ -167,7 +171,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$store->session->data['customer'] = $customer_info;
 
 		// Products
-		$product_data = [];
+		$product_data = [];/**/
 
 		$store->load->model('checkout/subscription');
 
@@ -177,8 +181,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$product_info = $store->model_catalog_product->getProduct($product['product_id']);
 
 			if (!$product_info) {
-				return ['error' => sprintf($this->language->get('error_product'), $product['name'])];
+				return ['error' => $this->language->get('error_product', $product['name'])];
 			}
+
+
 
 			$option_data = [];
 
@@ -188,11 +194,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$option_info = $store->model_catalog_product->getOption($product_info['product_id'], $option['product_option_id']);
 
 				if (!$option_info) {
-					return ['error' => sprintf($this->language->get('error_option'), $product['name'], $option['name'], $option['product_option_name'])];
+					return ['error' => $this->language->get('error_option', $product['name'], $option['name'], $option['product_option_name'])];
 				}
 
-				if ($option['required'] && !isset($option_data[$option['product_option_id']])) {
-					return ['error' => sprintf($this->language->get('error_option'), $option['name'])];
+				if ($option_info['required'] && !isset($option_data[$option['product_option_id']])) {
+					return ['error' => $this->language->get('error_option', $option['name'])];
 				}
 
 				if ($option['type'] == 'select' || $option['type'] == 'radio') {
@@ -206,21 +212,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$price = $product['price'];
 
-			if ($result['trial_status']) {
-				$price = $result['trial_price'];
+			if ($product['trial_status']) {
+				$price = $product['trial_price'];
 			}
 
-			$store->cart->add($product['product_id'], $product['quantity'], $option_data, $result['subscription_plan_id'], ['price' => $price]);
+			$store->cart->add($product['product_id'], $product['quantity'], $option_data, $subscription_plan_info['subscription_plan_id'], ['price' => $price]);
 
 		}
-
-
-
 
 		// Payment Address
-		if () {
-			$store->session->data['payment_address'] = $payment_address_info;
-		}
+		$store->session->data['payment_address'] = $payment_address_info;
 
 		// Payment Method
 		$store->session->data['payment_method'] = $subscription_info['payment_method'];

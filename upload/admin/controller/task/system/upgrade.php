@@ -113,6 +113,10 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	public function install(array $args = []): array {
 		$this->load->language('task/system/upgrade');
 
+		if (!array_key_exists('version', $args)) {
+			return ['error' => $this->language->get('error_version', 'version')];
+		}
+
 		if (!isset($args['version']) || version_compare($args['version'], VERSION, '<') || !preg_match('/^(\d+\.\d+\.\d+\.\d+)$/', $args['version'])) {
 			return ['error' => $this->language->get('error_version')];
 		}
@@ -155,7 +159,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						}
 
 						if (!is_dir(DIR_OPENCART . $path) && !@mkdir(DIR_OPENCART . $path, 0777)) {
-							$json['error'] = sprintf($this->language->get('error_directory'), $path);
+							return ['error' => $this->language->get('error_directory', $path)];
 						}
 					}
 
@@ -166,7 +170,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						}
 
 						if (file_put_contents(DIR_OPENCART . $destination, $zip->getFromIndex($i)) === false) {
-							$json['error'] = sprintf($this->language->get('error_copy'), $source, $destination);
+							return ['error' => $this->language->get('error_copy', $source, $destination)];
 						}
 					}
 				}
@@ -175,12 +179,12 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$zip->close();
 
-		$json['text'] = $this->language->get('text_patch');
+
 
 		$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
 
 
 
-
+		return ['success' => $this->language->get('text_success')];
 	}
 }

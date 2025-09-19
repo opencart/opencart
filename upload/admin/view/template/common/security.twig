@@ -67,63 +67,45 @@ $('#security').on('click', '#button-install', function() {
     });
 });
 
-$('#security').on('click', '#button-storage', function() {
-    var element = this;
+$('#security').on('submit', '#form-storage', function() {
+    $.ajax({
+        url: 'index.php?route=common/security.storage&user_token={{ user_token }}',
+        type: 'post',
+        data: $('#form-storage').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-storage').button('loading');
+        },
+        complete: function() {
+            $('#button-storage').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
 
-    $(element).button('loading');
+            $('.alert-dismissible').remove();
 
-    var next = 'index.php?route=common/security.storage&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val());
-
-    var storage = function() {
-        return $.ajax({
-            url: next,
-            dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded',
-            success: function(json) {
-                console.log(json);
-
-                $('.alert-dismissible').remove();
-
-                if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $(element).button('reset');
-                }
-
-                if (json['text']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $(element).button('reset');
-
-                    $('#button-refresh').trigger('click');
-                }
-
-                if (json['next']) {
-                    next = json['next'];
-
-                    chain.attach(storage);
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
-                $(element).button('reset');
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
-        });
-    };
 
-    chain.attach(storage);
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 $('#security').on('click', '#button-storage-delete', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security.delete&user_token={{ user_token }}&remove=storage',
+        url: 'index.php?route=common/security.storage_delete&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -152,67 +134,58 @@ $('#security').on('click', '#button-storage-delete', function() {
     });
 });
 
-$('#security').on('click', '#button-admin', function() {
+$('#security').on('submit', '#form-admin', function() {
     var element = this;
 
-    $(element).button('loading');
+    $.ajax({
+        url: 'index.php?route=common/security.admin&user_token={{ user_token }}',
+        type: 'post',
+        data: $('#form-admin').serialize(),
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-admin').button('loading');
+        },
+        complete: function() {
+            $('#button-admin').button('reset');
+        },
+        contentType: 'application/x-www-form-urlencoded',
+        success: function(json) {
+            console.log(json);
 
-    var next = 'index.php?route=common/security.admin&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-admin').val());
+            $('.alert-dismissible').remove();
 
-    var admin = function() {
-        return $.ajax({
-            url: next,
-            dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded',
-            success: function(json) {
-                console.log(json);
-
-                $('.alert-dismissible').remove();
-
-                if (json['redirect']) {
-                    location = json['redirect'];
-                }
-
-                if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $(element).button('reset');
-                }
-
-                if (json['text']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $(element).button('reset');
-
-                    $('#button-refresh').trigger('click');
-                }
-
-                if (json['next']) {
-                    next = json['next'];
-
-                    chain.attach(admin);
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
-                $(element).button('reset');
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
-        });
-    };
 
-    chain.attach(admin);
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#button-refresh').trigger('click');
+
+
+                window.setTimeout(function() {
+                    if (json['redirect']) {
+                        location = json['redirect'];
+                    }
+
+                    $('#alert .alert-dismissible').fadeTo(3000, 0, function() {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 $('#security').on('click', '#button-admin-delete', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security.delete&user_token={{ user_token }}&remove=admin',
+        url: 'index.php?route=common/security.admin_delete&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');

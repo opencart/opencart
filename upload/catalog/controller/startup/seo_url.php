@@ -25,7 +25,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			// Decode URL
 			if (isset($this->request->get['_route_'])) {
-				$parts = explode('/', $this->request->get['_route_']);
+				$parts = explode('/', trim($this->request->get['_route_'], '/'));
 
 				// remove any empty arrays from trailing
 				if (oc_strlen(end($parts)) == 0) {
@@ -132,6 +132,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		foreach ($paths as $result) {
 			$url .= '/' . $result['keyword'];
 		}
+
+		$url .= '/';
 
 		// Rebuild the URL query
 		if ($query) {

@@ -36,8 +36,12 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 
 		$ignore = [
+			DB_PREFIX . 'task',
 			DB_PREFIX . 'user',
-			DB_PREFIX . 'user_group'
+			DB_PREFIX . 'user_authorize',
+			DB_PREFIX . 'user_group',
+			DB_PREFIX . 'user_login',
+			DB_PREFIX . 'user_token'
 		];
 
 		$data['tables'] = [];
@@ -146,8 +150,12 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		if ($backup) {
 			$disallowed = [
+				DB_PREFIX . 'task',
 				DB_PREFIX . 'user',
-				DB_PREFIX . 'user_group'
+				DB_PREFIX . 'user_authorize',
+				DB_PREFIX . 'user_group',
+				DB_PREFIX . 'user_login',
+				DB_PREFIX . 'user_token'
 			];
 
 			foreach ($backup as $table) {

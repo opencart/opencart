@@ -9,6 +9,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Review
 	 *
+	 * Trigger
+	 *
 	 * catalog/model/catalog/review/addReview/after
 	 *
 	 * @param string            $route
@@ -26,6 +28,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Add Return
+	 *
+	 * Trigger
 	 *
 	 * catalog/model/account/returns.addReturn/after
 	 *
@@ -45,6 +49,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add History
 	 *
+	 * Trigger
+	 * 
 	 * catalog/model/checkout/order.addHistory/before
 	 *
 	 * @param string            $route

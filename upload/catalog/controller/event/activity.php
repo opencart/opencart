@@ -9,6 +9,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Customer
 	 *
+	 * Trigger
+	 *
 	 * catalog/model/account/customer/addCustomer/after
 	 *
 	 * @param string            $route
@@ -34,7 +36,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Customer
 	 *
-	 * catalog/model/account/customer/editCustomer/after
+	 * Trigger
+     *
+     * catalog/model/account/customer/editCustomer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -58,6 +62,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Edit Password
+	 *
+	 * Trigger
 	 *
 	 * catalog/model/account/customer/editPassword/after
 	 *
@@ -97,6 +103,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Login
 	 *
+	 * Trigger
+	 *
 	 * catalog/model/account/customer/deleteLoginAttempts/after
 	 *
 	 * @param string            $route
@@ -124,6 +132,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Forgotten
+	 *
+	 * Trigger
 	 *
 	 * catalog/model/account/customer/addToken/after
 	 *
@@ -155,6 +165,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Add Transaction
+	 *
+	 * Trigger
 	 *
 	 * catalog/model/account/customer/addTransaction/after
 	 *
@@ -188,6 +200,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Affiliate
 	 *
+	 * Trigger
+	 *
 	 * catalog/model/account/affiliate/addAffiliate/after
 	 *
 	 * @param string            $route
@@ -212,6 +226,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Edit Affiliate
+	 *
+	 * Trigger
 	 *
 	 * catalog/model/account/affiliate/editAffiliate/after
 	 *
@@ -238,6 +254,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Address
 	 *
+	 * Trigger
+	 *
 	 * catalog/model/account/address/addAddress/after
 	 *
 	 * @param string            $route
@@ -262,6 +280,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Edit Address
+	 *
+	 * Trigger
 	 *
 	 * catalog/model/account/address/editAddress/after
 	 *
@@ -288,6 +308,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Delete Address
 	 *
+	 * Trigger
+	 *
 	 * catalog/model/account/address/deleteAddress/after
 	 *
 	 * @param string            $route
@@ -312,6 +334,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Add Return
+	 *
+	 * Trigger
 	 *
 	 * catalog/model/account/returns/addReturn/after
 	 *
@@ -347,6 +371,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Add History
+	 *
+	 * Trigger
 	 *
 	 * catalog/model/checkout/order/addHistory/before
 	 *

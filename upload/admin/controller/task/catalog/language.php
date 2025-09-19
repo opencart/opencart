@@ -9,7 +9,9 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates language list.
+	 * Generate language list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -26,16 +28,16 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+				$base = DIR_OPENCART . 'shop/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/localisation/';
 				$filename = 'language.json';
 
 				if (!oc_directory_create($base . $directory, 0777)) {
-					return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+					return ['error' => $this->language->get('error_directory', $directory)];
 				}
 
 				if (!file_put_contents($base . $directory . $filename, json_encode($languages))) {
-					return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+					return ['error' => $this->language->get('error_file', $directory . $filename)];
 				}
 			}
 		}
@@ -44,9 +46,11 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Index
+	 * Clear
 	 *
-	 * Clears language list.
+	 * Delete generated JSON language files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -63,7 +67,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/language.json';
+				$file = DIR_OPENCART . 'shop/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/localisation/language.json';
 
 				if (is_file($file)) {
 					unlink($file);

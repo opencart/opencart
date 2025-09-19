@@ -11,6 +11,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * Dump all the language vars into the template.
 	 *
+	 * Trigger
+	 *
 	 * view/ * /before
 	 *
 	 * @param string                $route
@@ -31,6 +33,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * 1. Before controller load store all current loaded language data
 	 *
+	 * Trigger
+	 *
 	 * controller/ * /before
 	 *
 	 * @param string            $route
@@ -50,6 +54,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * After
 	 *
 	 * 2. After controller load restore old language data
+	 *
+	 * Trigger
 	 *
 	 * controller/ * /after
 	 *

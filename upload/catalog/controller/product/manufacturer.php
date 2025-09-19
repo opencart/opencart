@@ -70,7 +70,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function info(): ?\Opencart\System\Engine\Action {
+	public function info() {
 		if (isset($this->request->get['product_id'])) {
 			return $this->load->controller('product/product');
 		}

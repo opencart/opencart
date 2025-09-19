@@ -9,7 +9,9 @@ class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates store list.
+	 * Generate JSON store list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -30,11 +32,11 @@ class Store extends \Opencart\System\Engine\Controller {
 			$filename = 'store.json';
 
 			if (!oc_directory_create($base . $directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+				return ['error' => $this->language->get('error_directory', $directory)];
 			}
 
 			if (!file_put_contents($base . $directory . $filename, json_encode($stores))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+				return ['error' => $this->language->get('error_file', $directory . $filename)];
 			}
 		}
 
@@ -44,7 +46,9 @@ class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Delete generated JSON store files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

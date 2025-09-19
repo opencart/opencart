@@ -7382,10 +7382,6 @@ function oc_db_schema() {
 				'type' => 'enum(\'pending\',\'processing\',\'paused\',\'complete\',\'failed\')'
 			],
 			[
-				'name' => 'response',
-				'type' => 'text'
-			],
-			[
 				'name' => 'date_added',
 				'type' => 'datetime'
 			],
@@ -7415,7 +7411,7 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'comment',
+				'name' => 'output',
 				'type' => 'text'
 			],
 			[

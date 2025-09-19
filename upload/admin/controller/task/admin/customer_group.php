@@ -9,7 +9,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates customer group task list.
+	 * Generate customer group task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
      */
@@ -32,18 +34,24 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates the customer group list.
+	 * Generate JSON customer group list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
+
+		if (!array_key_exists('language_id', $args)) {
+			return ['error' => $this->language->get('error_language')];
+		}
 
 		$this->load->model('localisation/language');
 
@@ -78,25 +86,38 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$filename = 'customer_group.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($customer_groups))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => $this->language->get('text_list', $language_info['name'])];
 	}
 
 	/**
 	 * Info
 	 *
-	 * Generates customer group information.
+	 * Generate JSON customer group information file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function info(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
+
+		$required = [
+			'customer_group_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => $this->language->get('error_required', $value)];
+			}
+		}
 
 		$this->load->model('localisation/language');
 
@@ -135,20 +156,22 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_info + $description_info + ['custom_field' => $custom_fields]))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $customer_group_info['name'])];
+		return ['success' => $this->language->get('text_info', $language_info['name'], $customer_group_info['name'])];
 	}
 
 	/**
 	 * Clear
 	 *
-	 * Clears generated customer group files.
+	 * Delete generated JSON customer group files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

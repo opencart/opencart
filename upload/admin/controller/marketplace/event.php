@@ -14,9 +14,29 @@ class Event extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('marketplace/event');
 
+		if (isset($this->request->get['filter_code'])) {
+			$filter_code = $this->request->get['filter_code'];
+		} else {
+			$filter_code = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$url = '';
+
+		if (isset($this->request->get['filter_code'])) {
+			$url .= '&filter_code=' . $this->request->get['filter_code'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -39,6 +59,9 @@ class Event extends \Opencart\System\Engine\Controller {
 		$data['disable'] = $this->url->link('marketplace/event.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
+
+		$data['filter_code'] = $filter_code;
+		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -66,6 +89,18 @@ class Event extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		if (isset($this->request->get['filter_code'])) {
+			$filter_code = (string)$this->request->get['filter_code'];
+		} else {
+			$filter_code = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -74,6 +109,14 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_code'])) {
+			$url .= '&filter_code=' . $this->request->get['filter_code'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -81,8 +124,10 @@ class Event extends \Opencart\System\Engine\Controller {
 		$data['action'] = $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$filter_data = [
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'filter_code'   => $filter_code,
+			'filter_status' => $filter_status,
+			'start'         => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'         => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('setting/event');
@@ -90,7 +135,7 @@ class Event extends \Opencart\System\Engine\Controller {
 		$data['events'] = $this->model_setting_event->getEvents($filter_data);
 
 		// Total Events
-		$event_total = $this->model_setting_event->getTotalEvents();
+		$event_total = $this->model_setting_event->getTotalEvents($filter_data);
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
@@ -126,7 +171,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			foreach ($selected as $event_id) {
@@ -161,7 +205,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			foreach ($selected as $event_id) {
@@ -196,7 +239,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Event
 			$this->load->model('setting/event');
 
 			foreach ($selected as $event_id) {

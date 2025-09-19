@@ -840,6 +840,11 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 			}
 
+			// Codes
+			if (isset($override['product_code'])) {
+				$product_data['product_code'] = $this->model_catalog_product->getCodes($product['product_id']);
+			}
+			
 			// Attributes
 			if (isset($override['product_attribute'])) {
 				$product_data['product_attribute'] = $this->model_catalog_product->getAttributes($product['product_id']);

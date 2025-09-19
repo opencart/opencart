@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Admin;
-
 /**
  * Class Translation
  *
@@ -10,7 +9,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the translation list.
+	 * Generate translation task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -78,16 +79,31 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * Write
 	 *
+	 * Writes the translation files.
+	 *
+	 * @param array<string, string> $args
+	 *
 	 * @return array
 	 */
 	public function write(array $args = []): array {
 		$this->load->language('task/admin/translation');
+
+		$required = [
+			'route',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => $this->language->get('error_required', $value)];
+			}
+		}
 
 		$this->load->model('localisation/language');
 
@@ -120,20 +136,22 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$filename = substr($args['route'], $pos + 1) . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_write'), $language_info['code'])];
+		return ['success' => $this->language->get('text_write', $language_info['code'])];
 	}
 
 	/**
 	 * Clear
 	 *
-	 * Clears generated translation files.
+	 * Deletes generated translation data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

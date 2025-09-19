@@ -123,14 +123,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	public function getAntispams(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "antispam`";
 
-		$implode = [];
-
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "LCASE(`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
+			$sql .= " WHERE LCASE(`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
 		}
 
 		$sort_data = ['keyword'];
@@ -190,14 +184,8 @@ class Antispam extends \Opencart\System\Engine\Model {
 	public function getTotalAntispams(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "antispam`";
 
-		$implode = [];
-
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "LCASE(`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
+			$sql .= " WHERE LCASE(`keyword`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_keyword'])) . "'";
 		}
 
 		$query = $this->db->query($sql);

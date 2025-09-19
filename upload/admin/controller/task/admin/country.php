@@ -9,7 +9,9 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates country task list.
+	 * Generate country task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -23,7 +25,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			// Country List
 			$task_data = [
 				'code'   => 'country',
 				'action' => 'task/admin/country.list',
@@ -33,18 +34,24 @@ class Country extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates the country list file.
+	 * Generate JSON country list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/country');
+
+		if (!array_key_exists('language_id', $args)) {
+			return ['error' => $this->language->get('error_required', 'language_id')];
+		}
 
 		$this->load->model('localisation/language');
 
@@ -89,25 +96,38 @@ class Country extends \Opencart\System\Engine\Controller {
 		$filename = 'country.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($countries))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => $this->language->get('text_list', $language_info['name'])];
 	}
 
 	/**
 	 * Info
 	 *
-	 * Generates country information.
+	 * Generate JSON country information file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function info(array $args = []): array {
 		$this->load->language('task/admin/country');
+
+		$required = [
+			'country_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => $this->language->get('error_required', $value)];
+			}
+		}
 
 		$this->load->model('localisation/language');
 
@@ -145,20 +165,22 @@ class Country extends \Opencart\System\Engine\Controller {
 		$filename = 'country-' . $country_info['country_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + ['zone' => $zones]))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $country_info['name'])];
+		return ['success' => $this->language->get('text_info', $language_info['name'], $country_info['name'])];
 	}
 
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Delete generated JSON country files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

@@ -153,14 +153,14 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['name'])) {
-			$name = preg_replace('/[^a-zA-Z0-9_\.]/', '', basename(html_entity_decode(trim($this->request->get['name']), ENT_QUOTES, 'UTF-8')));
+		if (isset($this->request->post['name'])) {
+			$name = preg_replace('/[^a-zA-Z0-9_\.]/', '', basename(html_entity_decode(trim($this->request->post['name']), ENT_QUOTES, 'UTF-8')));
 		} else {
 			$name = '';
 		}
 
-		if (isset($this->request->get['path'])) {
-			$path = preg_replace('/[^a-zA-Z0-9_\:\/\.]/', '', html_entity_decode(trim($this->request->get['path']), ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->post['path'])) {
+			$path = preg_replace('/[^a-zA-Z0-9_\:\/\.]/', '', html_entity_decode(trim($this->request->post['path']), ENT_QUOTES, 'UTF-8'));
 		} else {
 			$path = '';
 		}
@@ -175,13 +175,17 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// Check current storage path exists
 			if (!is_dir($base_old)) {
-				$json['error'] = $this->language->get('error_storage');
+				$json['error'] = $this->language->get('error_storage_exists_old');
 			}
 
-			// Check the chosen directory is not in the public webspace
+			if (is_dir($base_new)) {
+				$json['error'] = $this->language->get('error_storage_exists_new');
+			}
+
+			// Check the chosen directory is not in the public webspace C:/xampp/htdocs
 			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 
-			if ((substr($base_new, 0, strlen($root)) != $root) || ($root == $base_new)) {
+			if ((substr($root, 0, strlen($path)) != $path) || ($root == $base_new)) {
 				$json['error'] = $this->language->get('error_storage_root');
 			}
 
@@ -197,10 +201,8 @@ class Security extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'security',
-				'action' => 'task/system/security.storage',
+				'action' => 'task/system/storage',
 				'args'   => [
-					'name'     => $name,
-					'path'     => $path,
 					'base_old' => $base_old,
 					'base_new' => $base_new
 				]
@@ -217,6 +219,35 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function storage_delete() {
+		$this->load->language('common/security');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/security')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Storage directory exists
+			$path = DIR_SYSTEM . 'storage/';
+
+			if (!is_dir($path) || DIR_STORAGE == $path) {
+				$json['error'] = $this->language->get('error_remove');
+			}
+		}
+
+		if (!$json) {
+			// Delete old admin directory
+			oc_directory_delete($path);
+
+			$json['success'] = $this->language->get('text_storage_success_delete');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	/**
 	 * Admin
 	 *
@@ -227,8 +258,8 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['name'])) {
-			$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim((string)$this->request->get['name']), ENT_QUOTES, 'UTF-8')));
+		if (isset($this->request->post['name'])) {
+			$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim((string)$this->request->post['name']), ENT_QUOTES, 'UTF-8')));
 		} else {
 			$name = 'admin';
 		}
@@ -242,11 +273,11 @@ class Security extends \Opencart\System\Engine\Controller {
 			$base_new = DIR_OPENCART . $name . '/';
 
 			if (!is_dir($base_old)) {
-				$json['error'] = $this->language->get('error_admin');
+				$json['error'] = $this->language->get('error_admin_exists_old');
 			}
 
 			if (is_dir($base_new)) {
-				$json['error'] = $this->language->get('error_admin_exists');
+				$json['error'] = $this->language->get('error_admin_exists_new');
 			}
 
 			$blocked = [
@@ -270,11 +301,8 @@ class Security extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'security',
-				'action' => 'task/system/security.admin',
-				'args'   => [
-					'base_old' => $base_old,
-					'base_new' => $base_new
-				]
+				'action' => 'task/system/admin',
+				'args'   => ['name' => $name]
 			];
 
 			$this->load->model('setting/task');
@@ -296,43 +324,20 @@ class Security extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function delete(): void {
+	public function admin_delete(): void {
 		$this->load->language('common/security');
 
 		$json = [];
-
-		if (isset($this->request->get['remove'])) {
-			$remove = (string)$this->request->get['remove'];
-		} else {
-			$remove = '';
-		}
 
 		if (!$this->user->hasPermission('modify', 'common/security')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$path = '';
-
-			if ($remove == 'storage') {
-				// Storage directory exists
-				$path = DIR_SYSTEM . 'storage/';
-
-				if (!is_dir($path) || DIR_STORAGE == $path) {
-					$json['error'] = $this->language->get('error_storage');
-				}
-			}
-
 			// Admin directory exists
-			if ($remove == 'admin') {
-				$path = DIR_OPENCART . 'admin/';
+			$path = DIR_OPENCART . 'admin/';
 
-				if (!is_dir($path) || DIR_APPLICATION == $path) {
-					$json['error'] = $this->language->get('error_admin');
-				}
-			}
-
-			if (!$path) {
+			if (!is_dir($path) || DIR_APPLICATION == $path) {
 				$json['error'] = $this->language->get('error_remove');
 			}
 		}
@@ -341,7 +346,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			// Delete old admin directory
 			oc_directory_delete($path);
 
-			$json['success'] = $this->language->get('text_' . $remove . '_delete_success');
+			$json['success'] = $this->language->get('text_admin_success_delete');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

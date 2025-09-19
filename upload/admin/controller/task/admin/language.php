@@ -9,7 +9,9 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates language list.
+	 * Generate language list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -26,11 +28,11 @@ class Language extends \Opencart\System\Engine\Controller {
 			$filename = 'language.json';
 
 			if (!oc_directory_create($base . $directory, 0777)) {
-				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+				return ['error' => $this->language->get('error_directory', $directory)];
 			}
 
 			if (!file_put_contents($base . $directory . $filename, json_encode($languages))) {
-				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+				return ['error' => $this->language->get('error_file', $directory . $filename)];
 			}
 		}
 
@@ -38,9 +40,11 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Index
+	 * Clear
 	 *
-	 * Clears language list.
+	 * Clears generated language data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

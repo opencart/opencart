@@ -21,7 +21,7 @@ class Task extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function index(): ?\Opencart\System\Engine\Action {
+	public function index() {
 		if (php_sapi_name() == 'cli') {
 			if (isset($this->request->server['argv'])) {
 				$argv = (array)$this->request->server['argv'];

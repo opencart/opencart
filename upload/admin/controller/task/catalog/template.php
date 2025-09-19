@@ -1,15 +1,15 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
- * Class Translation
+ * Class Template
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class Translation extends \Opencart\System\Engine\Controller {
+class Template extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate the translation list.
+	 * Generate the template list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -38,7 +38,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$routes = [];
 
-				$directory = DIR_CATALOG . 'language/' . $language['code'] . '/';
+				$directory = DIR_CATALOG . 'view/template/' . $language['code'] . '/';
 
 				$files = oc_directory_read($directory, true, '/.+\.php$/');
 
@@ -84,13 +84,13 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => $this->language->get('text_success')];
 	}
 
 	/*
 	 * Write
 	 *
-	 * Write JSON translation file.
+	 * Write template file.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -143,7 +143,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'filter_route'       => $args['route'],
 			'filter_store_id'    => $store_info['store_id'],
 			'filter_language_id' => $language_info['language_id']
-
 		];
 
 		// Overrides
@@ -179,7 +178,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Delete generated JSON translation files.
+	 * Delete generated template files.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -209,3 +208,4 @@ class Translation extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_clear')];
 	}
 }
+

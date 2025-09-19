@@ -11,7 +11,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function index(): ?\Opencart\System\Engine\Action {
+	public function index() {
 		if (isset($this->request->get['article_id'])) {
 			return $this->load->controller('cms/article');
 		}

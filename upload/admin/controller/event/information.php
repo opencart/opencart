@@ -23,7 +23,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'information',
-			'action' => 'task/catalog/information',
+			'action' => 'task/admin/information',
 			'args'   => []
 		];
 

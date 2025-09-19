@@ -5,7 +5,7 @@ namespace Opencart\Admin\Controller\Task\System;
  *
  *
  *
- * @package Opencart\Admin\Controller\Common
+ * @package Opencart\Admin\Controller\Task\System
  */
 class Admin extends \Opencart\System\Engine\Controller {
 	/**
@@ -16,196 +16,223 @@ class Admin extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/system/admin');
 
-
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
+		if (!array_key_exists('name', $args)) {
+			return ['error' => $this->language->get('error_name')];
 		}
 
-		if (isset($this->request->get['name'])) {
-			$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim((string)$this->request->get['name']), ENT_QUOTES, 'UTF-8')));
-		} else {
-			$name = 'admin';
+		$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim($args['name']), ENT_QUOTES, 'UTF-8')));
+
+		$blocked = [
+			'admin',
+			'catalog',
+			'extension',
+			'image',
+			'install',
+			'system'
+		];
+
+		if (in_array($name, $blocked)) {
+			return ['error' => $this->language->get('error_allowed', $name)];
 		}
 
-		if (!$this->user->hasPermission('modify', 'common/security')) {
-			$json['error'] = $this->language->get('error_permission');
+		$base_old = DIR_OPENCART . 'admin/';
+		$base_new = DIR_OPENCART . $name . '/';
+
+		if (!is_dir($base_old)) {
+			return ['error' => $this->language->get('error_exists')];
 		}
 
-		if (!$json) {
-			$base_old = DIR_OPENCART . 'admin/';
-			$base_new = DIR_OPENCART . $name . '/';
+		if (is_dir($base_new)) {
+			return ['error' => $this->language->get('error_admin')];
+		}
 
-			if (!is_dir($base_old)) {
-				$json['error'] = $this->language->get('error_admin');
-			}
+		$limit = 200;
 
-			if ($page == 1 && is_dir($base_new)) {
-				$json['error'] = $this->language->get('error_admin_exists');
-			}
+		// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
+		$files = oc_directory_read($base_old, true);
 
-			$blocked = [
-				'admin',
-				'catalog',
-				'extension',
-				'image',
-				'install',
-				'system'
+		// 3. Split the file copies into chunks.
+		$total = count($files);
+
+		$page_total = ceil($total / $limit);
+
+		for ($i = 0; $i < $page_total; $i++) {
+			$start = $i * $limit;
+
+			$task_data = [
+				'code'   => 'storage',
+				'action' => 'task/system/admin.move',
+				'args'   => [
+					'name'  => $name,
+					'start' => $start,
+					'limit' => $limit
+				]
 			];
 
-			if (in_array($name, $blocked)) {
-				$json['error'] = sprintf($this->language->get('error_admin_allowed'), $name);
-			}
-
-			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
-				$json['error'] = $this->language->get('error_writable');
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
-		if (!$json) {
-			// 2. Create the new admin folder name
-			if (!is_dir($base_new)) {
-				mkdir($base_new, 0777);
-			}
+		$task_data = [
+			'code'   => 'storage',
+			'action' => 'task/system/admin.config',
+			'args'   => ['name' => $name]
+		];
 
-			// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
-			$files = oc_directory_read($base_old, true);
+		$this->model_setting_task->addTask($task_data);
 
-			// 3. Split the file copies into chunks.
-			$total = count($files);
-			$limit = 200;
-
-			$start = ($page - 1) * $limit;
-			$end = ($start > ($total - $limit)) ? $total : ($start + $limit);
-
-			// 4. Copy the files across
-			foreach (array_slice($files, $start, $end) as $file) {
-				$destination = substr($file, strlen($base_old));
-
-				oc_directory_create($base_new . dirname($destination), 0777);
-
-				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
-					copy($base_old . $destination, $base_new . $destination);
-				}
-			}
-
-			if ($end < $total) {
-				$json['text'] = sprintf($this->language->get('text_admin_move'), $start, $end, $total);
-
-				$json['next'] = $this->url->link('common/security.admin', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&page=' . ($page + 1), true);
-			} else {
-				// Update the old config files
-				$file = $base_new . 'config.php';
-
-				$output = '';
-
-				$lines = file($file);
-
-				foreach ($lines as $line_id => $line) {
-					$status = true;
-
-					if (strpos($line, 'define(\'HTTP_SERVER') !== false) {
-						$output .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, '/admin/')) . '/' . $name . '/\');' . "\n";
-
-						$status = false;
-					}
-
-					if (strpos($line, 'define(\'DIR_APPLICATION') !== false) {
-						$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $name . '/\');' . "\n";
-
-						$status = false;
-					}
-
-					if ($status) {
-						$output .= $line;
-					}
-				}
-
-				$file = fopen($file, 'w');
-
-				fwrite($file, $output);
-
-				fclose($file);
-
-				$this->session->data['success'] = $this->language->get('text_admin_success');
-
-				// 6. Redirect to the new admin
-				$json['redirect'] = str_replace('&amp;', '&', substr(HTTP_SERVER, 0, -6) . $name . '/index.php?route=common/login');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return ['success' => $this->language->get('text_task')];
 	}
 
-	public function move(array $args = []): array {
-
-
-
-
-
-
-
-
-	}
-
-	/**
-	 * Delete
+	/*
+	 * Move
 	 *
-	 * @return void
+	 * Moves admin directory.
+	 *
+	 * @args array []
+	 *
+	 * @return array
 	 */
-	public function delete(array $args = []): array {
-		$this->load->language('task/system/security');
+	public function move(array $args = []): array {
+		$this->load->language('task/system/admin');
 
-		$json = [];
+		$required = [
+			'name',
+			'start',
+			'limit'
+		];
 
-		if (isset($this->request->get['remove'])) {
-			$remove = (string)$this->request->get['remove'];
-		} else {
-			$remove = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'common/security')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$path = '';
-
-			if ($remove == 'storage') {
-				// Storage directory exists
-				$path = DIR_SYSTEM . 'storage/';
-
-				if (!is_dir($path) || DIR_STORAGE == $path) {
-					$json['error'] = $this->language->get('error_storage');
-				}
-			}
-
-			// Admin directory exists
-			if ($remove == 'admin') {
-				$path = DIR_OPENCART . 'admin/';
-
-				if (!is_dir($path) || DIR_APPLICATION == $path) {
-					$json['error'] = $this->language->get('error_admin');
-				}
-			}
-
-			if (!$path) {
-				$json['error'] = $this->language->get('error_remove');
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => $this->language->get('error_required', $value)];
 			}
 		}
 
-		if (!$json) {
-			// Delete old admin directory
-			oc_directory_delete($path);
+		$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim($args['name']), ENT_QUOTES, 'UTF-8')));
 
-			$json['success'] = $this->language->get('text_' . $remove . '_delete_success');
+		// 2. Create the new admin folder name
+		$blocked = [
+			'admin',
+			'catalog',
+			'extension',
+			'image',
+			'install',
+			'system'
+		];
+
+		if (in_array($name, $blocked)) {
+			return ['error' => $this->language->get('error_allowed', $name)];
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$base_old = DIR_OPENCART . 'admin/';
+		$base_new = DIR_OPENCART . $name . '/';
+
+		if (!is_dir($base_old)) {
+			return ['error' => $this->language->get('error_exists_old')];
+		}
+
+		if (!is_dir($base_new) && !@mkdir($base_new, 0777)) {
+			return ['error' => $this->language->get('error_exists_new')];
+		}
+
+		// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
+		$files = oc_directory_read($base_old, true);
+
+		// 3. Split the file copies into chunks.
+		$total = count($files);
+
+		// 4. Copy the files across
+		foreach (array_slice($files, $args['start'], $args['limit']) as $file) {
+			$destination = substr($file, strlen($base_old));
+
+			oc_directory_create($base_new . dirname($destination), 0777);
+
+			if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
+				copy($base_old . $destination, $base_new . $destination);
+			}
+		}
+
+		$progress = 0;
+
+		if ($total) {
+			if ($args['start'] > ($total - $args['limit'])) {
+				$end = $total;
+			} else {
+				$end = $args['start'] + $args['limit'];
+			}
+
+			$progress = round(($end / $total) * 100, 2);
+		}
+
+		return ['success' => $this->language->get('text_move', $progress . '%')];
+	}
+
+	/*
+	 * Config
+	 *
+	 * Modify the config files
+	 */
+	public function config(array $args = []): array {
+		$this->load->language('task/system/admin');
+
+		if (!array_key_exists('name', $args)) {
+			return ['error' => $this->language->get('error_name')];
+		}
+
+		$name = preg_replace('/[^a-zA-Z0-9]/', '', basename(html_entity_decode(trim($args['name']), ENT_QUOTES, 'UTF-8')));
+
+		$base_new = DIR_OPENCART .  $name . '/';
+
+		$blocked = [
+			'admin',
+			'catalog',
+			'extension',
+			'image',
+			'install',
+			'system'
+		];
+
+		if (in_array($name, $blocked)) {
+			return ['error' => $this->language->get('error_allowed', $name)];
+		}
+
+		if (!is_writable($base_new . 'config.php')) {
+			return ['error' => $this->language->get('error_writable')];
+		}
+
+		// Update the config file
+		$file = $base_new . 'config.php';
+
+		$output = '';
+
+		$lines = file($file);
+
+		foreach ($lines as $line_id => $line) {
+			$status = true;
+
+			if (strpos($line, 'define(\'HTTP_SERVER') !== false) {
+				$output .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, '/admin/')) . '/' . $name . '/\');' . "\n";
+
+				$status = false;
+			}
+
+			if (strpos($line, 'define(\'DIR_APPLICATION') !== false) {
+				$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $name . '/\');' . "\n";
+
+				$status = false;
+			}
+
+			if ($status) {
+				$output .= $line;
+			}
+		}
+
+		$file = fopen($file, 'w');
+
+		fwrite($file, $output);
+
+		fclose($file);
+
+		return ['success' => $this->language->get('text_config')];
 	}
 }
 

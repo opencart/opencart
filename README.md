@@ -3,7 +3,7 @@
 ## Overview
 
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg?style=flat-square)](https://php.net/)
-[![GitHub release](https://img.shields.io/github/v/release/opencart/opencart)](https://github.com/opencart/opencart)
+[![GitHub release](https://img.shields.io/github/v/release/opencart/opencart)](https://github.com/opencart/opencart/releases)
 [![Lint](https://github.com/opencart/opencart/actions/workflows/Lint.yml/badge.svg)](https://github.com/opencart/opencart/actions/workflows/Lint.yml)
 
 OpenCart is a free open source e-commerce platform for online merchants. OpenCart provides a professional and reliable foundation from which to build a successful online store.
@@ -180,4 +180,4 @@ To receive developer notifications about release information, sign up to the new
 - [How to documents](http://docs.opencart.com/en-gb/introduction/)
 - [Newsletter](https://newsletter.opencart.com/h/r/B660EBBE4980C85C)
 - [Discussions](https://github.com/opencart/opencart/discussions)
-- [Chat] (https://teams.live.com/l/community/FEAMBRGMM2X2wz82gI)
+- [Chat](https://teams.live.com/l/community/FEAMBRGMM2X2wz82gI)

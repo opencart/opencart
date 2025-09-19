@@ -8,7 +8,9 @@
           <ul class="dropdown-menu">
             <li><button type="submit" form="form-event" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
             <li><button type="submit" form="form-event" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li><button type="submit" form="form-event" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>
@@ -23,9 +25,36 @@
   </div>
   <div class="container-fluid">
     <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_event }}</div>
-    <div class="card">
-      <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="list" class="card-body">{{ list }}</div>
+    <div class="row">
+      <div id="filter-task" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <form id="form-filter">
+              <div class="mb-3">
+                <label for="input-code" class="form-label">{{ entry_code }}</label> <input type="text" name="filter_code" value="{{ filter_code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                  <option value=""></option>
+                  <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                  <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
+                </select>
+              </div>
+              <div class="text-end">
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-9 col-md-12">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -34,6 +63,16 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
     $('#list').load(this.href);
+});
+
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
+
+    let url = $(this).serialize();
+
+    window.history.pushState({}, null, 'index.php?route=marketplace/event&user_token={{ user_token }}&' + url);
+
+    $('#list').load('index.php?route=marketplace/event.list&user_token={{ user_token }}&' + url);
 });
 //--></script>
 {{ footer }}

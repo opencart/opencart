@@ -9,7 +9,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates banner task list.
+	 * Generate banner task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -41,18 +43,31 @@ class Banner extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates customer group list file.
+	 * Generate JSON banner list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/banner');
+
+		$required = [
+			'store_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => $this->language->get('error_required'), $value];
+			}
+		}
 
 		$this->load->model('setting/store');
 
@@ -89,14 +104,16 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 
 	/**
 	 * Info
 	 *
-	 * Generates banner information.
+	 * Generate banner information.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -136,20 +153,22 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$filename = 'banner-' . $args['banner_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory'), $directory];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($banner_info + ['banner_image' => $this->model_design_banner->getImageDescription($banner_info['banner_id'], $language_info['language_id'])]))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file'), $directory . $filename];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $banner_info['name'])];
+		return ['success' => $this->language->get('text_info'), $store_info['name'], $language_info['name'], $banner_info['name']];
 	}
 
 	/**
 	 * Clear
 	 *
-	 * Clears generated banners.
+	 * Delete generated JSON banner files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

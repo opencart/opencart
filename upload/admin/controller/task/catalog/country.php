@@ -9,7 +9,9 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates country task list.
+	 * Generate country task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -41,13 +43,15 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates country list file.
+	 * Generate JSON country list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -106,30 +110,44 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $countries);
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
+		$base = DIR_OPENCART . 'shop/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/localisation/';
 		$filename = 'country.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($countries))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['name'])];
+		return ['success' => $this->language->get('text_list', $store_info['name'], $language_info['name'])];
 	}
 
 	/**
 	 * Info
 	 *
-	 * Generates country information.
+	 * Generate country information.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/country');
+
+		$required = [
+			'country_id',
+			'store_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => $this->language->get('error_required', $value)];
+			}
+		}
 
 		$this->load->model('setting/store');
 
@@ -181,25 +199,27 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$zones = $this->model_localisation_zone->getZones($filter_data);
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
+		$base = DIR_OPENCART . 'shop/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/localisation/';
 		$filename = 'country-' . $args['country_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zones]))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $country_info['name'])];
+		return ['success' => $this->language->get('text_info', $store_info['name'], $language_info['name'], $country_info['name'])];
 	}
 
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Delete generated JSON country files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -216,8 +236,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+				$base = DIR_OPENCART . 'shop/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/localisation/';
 
 				$file = $base . $directory . 'country.json';
 

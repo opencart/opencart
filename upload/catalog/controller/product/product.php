@@ -11,7 +11,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return ?\Opencart\System\Engine\Action
 	 */
-	public function index(): ?\Opencart\System\Engine\Action {
+	public function index() {
 		$this->load->language('product/product');
 
 		// Product

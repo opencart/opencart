@@ -32,7 +32,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 		];
 
 		if (in_array($name, $blocked)) {
-			return ['error' => sprintf($this->language->get('error_allowed'), $name)];
+			return ['error' => $this->language->get('error_allowed', $name)];
 		}
 
 		$base_old = DIR_OPENCART . 'admin/';
@@ -103,7 +103,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+				return ['error' => $this->language->get('error_required', $value)];
 			}
 		}
 
@@ -120,7 +120,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 		];
 
 		if (in_array($name, $blocked)) {
-			return ['error' => sprintf($this->language->get('error_allowed'), $name)];
+			return ['error' => $this->language->get('error_allowed', $name)];
 		}
 
 		$base_old = DIR_OPENCART . 'admin/';
@@ -163,7 +163,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 			$progress = round(($end / $total) * 100, 2);
 		}
 
-		return ['success' => sprintf($this->language->get('text_move'), $progress . '%')];
+		return ['success' => $this->language->get('text_move', $progress . '%')];
 	}
 
 	/*
@@ -192,7 +192,7 @@ class Admin extends \Opencart\System\Engine\Controller {
 		];
 
 		if (in_array($name, $blocked)) {
-			return ['error' => sprintf($this->language->get('error_allowed'), $name)];
+			return ['error' => $this->language->get('error_allowed', $name)];
 		}
 
 		if (!is_writable($base_new . 'config.php')) {

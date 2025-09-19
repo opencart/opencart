@@ -23,7 +23,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (empty($args[$value])) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+				return ['error' => $this->language->get('error_required', $value)];
 			}
 		}
 
@@ -101,7 +101,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+				return ['error' => $this->language->get('error_required', $value)];
 			}
 		}
 
@@ -121,7 +121,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!str_starts_with((string)$args['table'], DB_PREFIX) || in_array((string)$args['table'], $disallowed)) {
-			return ['error' => sprintf($this->language->get('error_table'), $args['table'])];
+			return ['error' => $this->language->get('error_table', $args['table'])];
 		}
 
 		$output = '';
@@ -186,6 +186,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 			$progress = 100;
 		}
 
-		return ['success' => sprintf($this->language->get('text_backup'), $args['table'], $progress . '%')];
+		return ['success' => $this->language->get('text_backup', $args['table'], $progress . '%')];
 	}
 }

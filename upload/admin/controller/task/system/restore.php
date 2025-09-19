@@ -69,7 +69,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (!isset($args[$value])) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+				return ['error' => $this->language->get('error_required', $value)];
 			}
 		}
 
@@ -147,6 +147,6 @@ class Restore extends \Opencart\System\Engine\Controller {
 
 		fclose($handle);
 
-		return ['success' => sprintf($this->language->get('text_restore'), $progress . '%')];
+		return ['success' => $this->language->get('text_restore', $progress . '%')];
 	}
 }

@@ -34,7 +34,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
@@ -50,7 +50,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/admin/country');
 
 		if (!array_key_exists('language_id', $args)) {
-			return ['error' => $this->language->get('error_language')];
+			return ['error' => $this->language->get('error_required', 'language_id')];
 		}
 
 		$this->load->model('localisation/language');
@@ -96,14 +96,14 @@ class Country extends \Opencart\System\Engine\Controller {
 		$filename = 'country.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($countries))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => $this->language->get('text_list', $language_info['name'])];
 	}
 
 	/**
@@ -125,7 +125,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+				return ['error' => $this->language->get('error_required', $value)];
 			}
 		}
 
@@ -165,14 +165,14 @@ class Country extends \Opencart\System\Engine\Controller {
 		$filename = 'country-' . $country_info['country_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory', $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + ['zone' => $zones]))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $country_info['name'])];
+		return ['success' => $this->language->get('text_info', $language_info['name'], $country_info['name'])];
 	}
 
 	/**

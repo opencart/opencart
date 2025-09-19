@@ -65,7 +65,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+				return ['error' => $this->language->get('error_required'), $value];
 			}
 		}
 
@@ -153,14 +153,14 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$filename = 'banner-' . $args['banner_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			return ['error' => $this->language->get('error_directory'), $directory];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($banner_info + ['banner_image' => $this->model_design_banner->getImageDescription($banner_info['banner_id'], $language_info['language_id'])]))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			return ['error' => $this->language->get('error_file'), $directory . $filename];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $banner_info['name'])];
+		return ['success' => $this->language->get('text_info'), $store_info['name'], $language_info['name'], $banner_info['name']];
 	}
 
 	/**

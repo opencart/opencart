@@ -173,7 +173,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_file', $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('write')];
 	}
 
 	/**

@@ -1,8 +1,8 @@
 <?php
 // Text
-$_['text_task']       = 'Generating order status tasks!';
-$_['text_list']       = 'Generating %s order status list!';
-$_['text_clear']      = 'Order Status information cleared!';
+$_['text_task']       = 'Generating information task list!';
+$_['text_list']       = 'Generating %s information list!';
+$_['text_clear']      = 'Information data cleared!';
 
 // Error
 $_['error_language']  = 'Warning: Language could not be found!';

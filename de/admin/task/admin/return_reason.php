@@ -1,10 +1,11 @@
 <?php
 // Text
-$_['text_task']       = 'Generating return reason tasks!';
+$_['text_task']       = 'Generating return reason task list!';
 $_['text_list']       = 'Generating %s return reason list!';
-$_['text_clear']      = 'Return Reason information cleared!';
+$_['text_clear']      = 'Return Reason data cleared!';
 
 // Error
-$_['error_language']  = 'Achtung: Sprache konnte nicht gefunden werden!';
-$_['error_directory'] = 'Warning: Directory %s does not exist or is not writable!';
-$_['error_file']      = 'Warning: File %s could not be written!';
+$_['error_required']  = 'Error: %s required!';
+$_['error_language']  = 'Error: Language could not be found!';
+$_['error_directory'] = 'Error: Directory %s does not exist or is not writable!';
+$_['error_file']      = 'Error: File %s could not be written!';

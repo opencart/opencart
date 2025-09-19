@@ -3,7 +3,7 @@
 $_['text_task']         = 'Generating country task list!';
 $_['text_list']         = 'Generating %s country list!';
 $_['text_info']         = 'Generating %s %s country information!';
-$_['text_clear']        = 'Country information cleared!';
+$_['text_clear']        = 'Country data cleared!';
 
 // Error
 $_['error_required']    = 'Error: %s required!';

@@ -107,7 +107,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+				return ['error' => $this->language->get('error_required', $value)];
 			}
 		}
 

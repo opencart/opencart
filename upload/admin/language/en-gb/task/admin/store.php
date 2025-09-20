@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_task']       = 'Generating store tasks!';
+$_['text_task']       = 'Generating store task list!';
 $_['text_list']       = 'Generating %s store list!';
 $_['text_clear']      = 'Store information cleared!';
 

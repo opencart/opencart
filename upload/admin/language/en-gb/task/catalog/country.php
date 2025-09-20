@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_task']       = 'Generating country tasks!';
+$_['text_task']       = 'Generating country task list!';
 $_['text_list']       = 'Generating %s %s country list!';
 $_['text_info']       = 'Generating %s %s %s country information!';
 

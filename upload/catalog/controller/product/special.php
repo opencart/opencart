@@ -21,7 +21,7 @@ class Special extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'p.sort_order';
+			$sort = 'sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -149,32 +149,32 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_default'),
-			'value' => 'p.sort_order-ASC',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.sort_order&order=ASC' . $url)
+			'value' => 'sort_order-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=sort_order&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_name_asc'),
-			'value' => 'pd.name-ASC',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=pd.name&order=ASC' . $url)
+			'value' => 'name-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=name&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_name_desc'),
-			'value' => 'pd.name-DESC',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=pd.name&order=DESC' . $url)
+			'value' => 'name-DESC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=name&order=DESC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_price_asc'),
-			'value' => 'ps.price-ASC',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=ps.price&order=ASC' . $url)
+			'value' => 'price-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=price&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_price_desc'),
-			'value' => 'ps.price-DESC',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=ps.price&order=DESC' . $url)
+			'value' => 'price-DESC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=price&order=DESC' . $url)
 		];
 
 		if ($this->config->get('config_review_status')) {
@@ -193,14 +193,14 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_model_asc'),
-			'value' => 'p.model-ASC',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.model&order=ASC' . $url)
+			'value' => 'model-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=model&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_model_desc'),
-			'value' => 'p.model-DESC',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.model&order=DESC' . $url)
+			'value' => 'model-DESC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=model&order=DESC' . $url)
 		];
 
 		$url = '';

@@ -135,8 +135,19 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$url .= '/';
 
-		// Rebuild the URL query
+		// Any remaining queries can be converted
 		if ($query) {
+			foreach ($query as $key => $value) {
+				if (is_string($value)) {
+					$key = str_replace('_id', '', $key);
+					$key = str_replace('_', '-', $key);
+
+					$url .= $key . '-' . str_replace('/', '-', $value) . '/';
+
+					unset($query[$key]);
+				}
+			}
+
 			$url .= '?' . str_replace(['%2F'], ['/'], http_build_query($query));
 		}
 

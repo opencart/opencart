@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_task']       = 'Generating subscription tasks!';
+$_['text_task']       = 'Generating subscription task list!';
 $_['text_list']       = 'Generating %s subscription list!';
 $_['text_info']       = 'Generating %s %s subscription information!';
 

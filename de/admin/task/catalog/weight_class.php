@@ -2,7 +2,7 @@
 // Text
 $_['text_task']       = 'Generating weight class task list!';
 $_['text_list']       = 'Generating %s weight class list!';
-$_['text_clear']      = 'Weight Class information cleared!';
+$_['text_clear']      = 'Weight Class data cleared!';
 
 // Error
 $_['error_required']  = 'Error: %s required!';

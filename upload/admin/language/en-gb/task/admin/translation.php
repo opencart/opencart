@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_task']       = 'Generating translation tasks!';
+$_['text_task']       = 'Generating translation task list!';
 $_['text_list']       = 'Generating %s translation list!';
 $_['text_clear']      = 'Translation information cleared!';
 

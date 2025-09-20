@@ -2,7 +2,7 @@
 // Text
 $_['text_task']       = 'Generating currency task list!';
 $_['text_list']       = 'Generating %s %s currency list!';
-$_['text_clear']      = 'Currency information cleared!';
+$_['text_clear']      = 'Currency data cleared!';
 
 // Error
 $_['error_store']     = 'Warning: Store could not be found!';

@@ -7799,10 +7799,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'seo_query',
+		'name'  => 'seo_path',
 		'field' => [
 			[
-				'name'           => 'seo_query_id',
+				'name'           => 'seo_path_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
 			],
@@ -7815,11 +7815,11 @@ function oc_db_schema() {
 				'type' => 'varchar(255)'
 			],
 			[
-				'name' => 'keyword_match',
+				'name' => 'path_match',
 				'type' => 'varchar(255)'
 			],
 			[
-				'name' => 'keyword_replace',
+				'name' => 'path_replace',
 				'type' => 'varchar(255)'
 			],
 			[
@@ -7829,7 +7829,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'seo_profile_id'
+			'seo_path_id'
 		],
 		'index' => [
 			[

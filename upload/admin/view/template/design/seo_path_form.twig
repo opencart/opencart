@@ -1,0 +1,63 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-seo-url" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-seo-url" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3">
+            <label for="input-query-match" class="col-sm-2 col-form-label">{{ entry_query_match }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="query_match" value="{{ query_match }}" placeholder="{{ entry_query_match }}" id="input-query-match" class="form-control" required/>
+              <div id="error-query-match" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-query-replace" class="col-sm-2 col-form-label">{{ entry_query_replace }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="query_replace" value="{{ query_replace }}" placeholder="{{ entry_query_replace }}" id="input-query-replace" class="form-control" required/>
+              <div id="error-query-replace" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-path-match" class="col-sm-2 col-form-label">{{ entry_path_match }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="path_match" value="{{ path_match }}" placeholder="{{ entry_path_match }}" id="input-path-match" class="form-control" required/>
+              <div id="error-path-match" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-path-replace" class="col-sm-2 col-form-label">{{ entry_path_replace }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="path_replace" value="{{ path_replace }}" placeholder="{{ entry_path_replace }}" id="input-path-replace" class="form-control" required/>
+              <div id="error-path-replace" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+              <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              <div class="form-text">{{ help_sort_order }}</div>
+            </div>
+          </div>
+          <input type="hidden" name="seo_path_id" value="{{ seo_path_id }}" id="input-seo-path-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

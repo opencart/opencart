@@ -7799,10 +7799,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'seo_profile',
+		'name'  => 'seo_query',
 		'field' => [
 			[
-				'name'           => 'seo_profile_id',
+				'name'           => 'seo_query_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
 			],

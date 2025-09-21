@@ -218,7 +218,8 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 		$post_info = $this->request->post + $required;
 
 		if (!$json) {
-			// SEO
+			$this->load->model('design/seo_path');
+
 			if (!$post_info['seo_path_id']) {
 				$json['seo_path_id'] = $this->model_design_seo_path->addSeoPath($post_info);
 			} else {

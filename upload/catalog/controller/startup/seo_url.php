@@ -10,6 +10,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	 * @var array<string, string>
 	 */
 	private array $data = [];
+	private array $query = [];
+	private array $match = [];
 
 	/**
 	 * Index
@@ -20,6 +22,14 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
+
+			$this->load->model('design/seo_path');
+
+			$results = $this->model_design_seo_path->getSeoPaths();
+
+			foreach ($results as $result) {
+				$this->query[$result['query_match']] = $result['query_replace'];
+			}
 
 			$this->load->model('design/seo_url');
 
@@ -42,8 +52,19 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 					}
 				}
 
+
+
+
+
+
 				if (!isset($this->request->get['route'])) {
 					$this->request->get['route'] = $this->config->get('action_default');
+				}
+
+				if ($parts) {
+
+
+					$this->request->get['route'] = $this->config->get('action_error');
 				}
 
 				if ($parts) {
@@ -138,14 +159,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		// Any remaining queries can be converted
 		if ($query) {
 			foreach ($query as $key => $value) {
-				if (is_string($value)) {
-					$key = str_replace('_id', '', $key);
-					$key = str_replace('_', '-', $key);
 
 					$url .= $key . '-' . str_replace('/', '-', $value) . '/';
 
 					unset($query[$key]);
-				}
+
 			}
 
 			$url .= '?' . str_replace(['%2F'], ['/'], http_build_query($query));

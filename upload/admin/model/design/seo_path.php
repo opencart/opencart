@@ -26,7 +26,7 @@ class SeoPath extends \Opencart\System\Engine\Model {
 	 *
 	 * $seo_path_id = $this->model_design_seo_path->addSeoPath($key, $value, $keyword, $store_id, $language_id, $sort_order);
 	 */
-	public function addSeoPath(string $key, array $data): int {
+	public function addSeoPath(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_path` SET `query_match` = '" . $this->db->escape($data['query_match'])  . "', `query_replace` = '" . $this->db->escape($data['query_replace'])  . "', `path_match` = '" . $this->db->escape($data['path_match']) . "', `path_replace` = '" . $this->db->escape($data['path_replace']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		return $this->db->getLastId();

@@ -54,7 +54,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 		$filter_data = [
 			'sort'  => 'date_added',
-			'order' => 'DESC',
+			'order' => 'desc',
 			'start' => ($page - 1) * $limit,
 			'limit' => $limit
 		];

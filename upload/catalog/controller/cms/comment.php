@@ -31,7 +31,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order']) && $this->request->get['route'] == 'cms/comment') {
 			$order = $this->request->get['order'];
 		} else {
-			$order = 'DESC';
+			$order = 'desc';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -65,8 +65,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_date_added_desc'),
-			'value' => 'date_added-DESC',
-			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=date_added&order=DESC')
+			'value' => 'date_added-desc',
+			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=date_added&order=desc')
 		];
 
 		$data['sorts'][] = [
@@ -77,8 +77,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_rating_desc'),
-			'value' => 'rating-DESC',
-			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=rating&order=DESC')
+			'value' => 'rating-desc',
+			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=rating&order=desc')
 		];
 
 		$data['sort'] = $sort;
@@ -132,7 +132,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order']) && $this->request->get['route'] == 'cms/comment.list') {
 			$order = $this->request->get['order'];
 		} else {
-			$order = 'DESC';
+			$order = 'desc';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -325,7 +325,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$filter_data = [
 				'customer_id' => $this->customer->getId(),
 				'sort'        => 'date_added',
-				'order'       => 'DESC',
+				'order'       => 'desc',
 				'start'       => 0,
 				'limit'       => 1
 			];

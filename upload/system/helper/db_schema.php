@@ -7799,6 +7799,52 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'seo_profile',
+		'field' => [
+			[
+				'name'           => 'seo_profile_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'query_match',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'query_replace',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'keyword_match',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'keyword_replace',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'seo_profile_id'
+		],
+		'index' => [
+			[
+				'name' => 'sort_order',
+				'key'  => [
+					'sort_order'
+				]
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'user',
 		'field' => [
 			[

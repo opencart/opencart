@@ -39,7 +39,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
-			$order = 'ASC';
+			$order = 'asc';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -302,51 +302,51 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_name_asc'),
-			'value' => 'name-ASC',
+			'value' => 'name-asc',
 			'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=name&order=asc' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_name_desc'),
-			'value' => 'name-DESC',
+			'value' => 'name-desc',
 			'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=name&order=desc' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_price_asc'),
-			'value' => 'price-ASC',
+			'value' => 'price-asc',
 			'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=price&order=asc' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_price_desc'),
-			'value' => 'price-DESC',
+			'value' => 'price-desc',
 			'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=price&order=desc' . $url)
 		];
 
 		if ($this->config->get('config_review_status')) {
 			$data['sorts'][] = [
 				'text'  => $this->language->get('text_rating_desc'),
-				'value' => 'rating-DESC',
+				'value' => 'rating-desc',
 				'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=rating&order=desc' . $url)
 			];
 
 			$data['sorts'][] = [
 				'text'  => $this->language->get('text_rating_asc'),
-				'value' => 'rating-ASC',
+				'value' => 'rating-asc',
 				'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=rating&order=asc' . $url)
 			];
 		}
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_model_asc'),
-			'value' => 'model-ASC',
+			'value' => 'model-asc',
 			'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=model&order=asc' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_model_desc'),
-			'value' => 'model-DESC',
+			'value' => 'model-desc',
 			'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=model&order=desc' . $url)
 		];
 

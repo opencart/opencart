@@ -22,9 +22,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 
-			$this->load->model('design/seo_path');
+			$this->load->model('design/seo_regex');
 
-			$this->regex = $this->model_design_seo_path->getSeoPaths();
+			$this->regex = $this->model_design_seo_regex->getSeoPaths();
 
 			$this->match = array_column($results, 'query_match');
 			$this->replace = array_column($results, 'query_replace');

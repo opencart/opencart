@@ -24,7 +24,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('design/seo_regex');
 
-			$this->regex = $this->model_design_seo_regex->getSeoPaths();
+			$this->regex = $this->model_design_seo_regex->getSeoRegexes();
 
 			$this->match = array_column($results, 'query_match');
 			$this->replace = array_column($results, 'query_replace');

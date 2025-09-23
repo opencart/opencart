@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Design;
 /**
  * Class Seo Paths
  *
- * Can be called using $this->load->model('design/seo_path');
+ * Can be called using $this->load->model('design/seo_regex');
  *
  * @package Opencart\Catalog\Model\Design
  */
@@ -17,12 +17,12 @@ class SeoPath extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $this->load->model('design/seo_path');
+	 * $this->load->model('design/seo_regex');
 	 *
-	 * $seo_path_info = $this->model_design_seo_path->getSeoUrlByKeyword($keyword);
+	 * $seo_regex_info = $this->model_design_seo_regex->getSeoUrlByKeyword($keyword);
 	 */
 	public function getSeoPaths(): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "seo_path`");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "seo_regex`");
 
 		return $query->rows;
 	}

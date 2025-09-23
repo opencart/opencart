@@ -5,6 +5,7 @@ $_['heading_title']     = 'Veranstaltungen';
 // Text
 $_['text_success']      = 'Erfolg: Sie haben Ereignisse geändert!';
 $_['text_list']         = 'Veranstaltungsliste';
+$_['text_filter']       = 'Filter';
 $_['text_event']        = 'Ereignisse werden von Erweiterungen verwendet, um die Standardfunktionalität Ihres Shops zu überschreiben. Wenn Sie Probleme haben, können Sie die Ereignisse hier deaktivieren oder aktivieren.';
 $_['text_info']         = 'Informationen zur Veranstaltung';
 

@@ -1,18 +1,18 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
 /**
- * Class SEO Path
+ * Class SEO Regex
  *
  * @package Opencart\Admin\Controller\Design
  */
-class SeoPath extends \Opencart\System\Engine\Controller {
+class SeoRegex extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
 	 * @return void
 	 */
 	public function index(): void {
-		$this->load->language('design/seo_path');
+		$this->load->language('design/seo_regex');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -31,11 +31,11 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/seo_path', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('design/seo_path.form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/seo_path.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('design/seo_regex.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/seo_regex.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -45,7 +45,7 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/seo_path', $data));
+		$this->response->setOutput($this->load->view('design/seo_regex', $data));
 	}
 
 	/**
@@ -54,7 +54,7 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function list(): void {
-		$this->load->language('design/seo_path');
+		$this->load->language('design/seo_regex');
 
 		$this->response->setOutput($this->getList());
 	}
@@ -77,37 +77,37 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('design/seo_path.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('design/seo_regex.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// SEO
-		$data['seo_paths'] = [];
+		$data['seo_regexs'] = [];
 
 		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('design/seo_path');
+		$this->load->model('design/seo_regex');
 
-		$results = $this->model_design_seo_path->getSeoPaths($filter_data);
+		$results = $this->model_design_seo_regex->getSeoRegexes($filter_data);
 
 		foreach ($results as $result) {
-			$data['seo_paths'][] = ['edit' => $this->url->link('design/seo_path.form', 'user_token=' . $this->session->data['user_token'] . '&seo_path_id=' . $result['seo_path_id'] . $url)] + $result;
+			$data['seo_regexs'][] = ['edit' => $this->url->link('design/seo_regex.form', 'user_token=' . $this->session->data['user_token'] . '&seo_regex_id=' . $result['seo_regex_id'] . $url)] + $result;
 		}
 
-		$seo_path_total = $this->model_design_seo_path->getTotalSeoPaths();
+		$seo_regex_total = $this->model_design_seo_regex->getTotalSeoRegexes();
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $seo_path_total,
+			'total' => $seo_regex_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('design/seo_path.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('design/seo_regex.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($seo_path_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($seo_path_total - $this->config->get('config_pagination_admin'))) ? $seo_path_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $seo_path_total, ceil($seo_path_total / $this->config->get('config_pagination_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($seo_regex_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($seo_regex_total - $this->config->get('config_pagination_admin'))) ? $seo_regex_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $seo_regex_total, ceil($seo_regex_total / $this->config->get('config_pagination_admin')));
 
-		return $this->load->view('design/seo_path_list', $data);
+		return $this->load->view('design/seo_regex_list', $data);
 	}
 
 	/**
@@ -116,11 +116,11 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function form(): void {
-		$this->load->language('design/seo_path');
+		$this->load->language('design/seo_regex');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['text_form'] = !isset($this->request->get['seo_path_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_form'] = !isset($this->request->get['seo_regex_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
 
@@ -137,50 +137,50 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/seo_path', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('design/seo_path.save', 'user_token=' . $this->session->data['user_token']);
-		$data['back'] = $this->url->link('design/seo_path', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('design/seo_regex.save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['seo_path_id'])) {
-			$this->load->model('design/seo_path');
+		if (isset($this->request->get['seo_regex_id'])) {
+			$this->load->model('design/seo_regex');
 
-			$seo_path_info = $this->model_design_seo_path->getSeoPath($this->request->get['seo_path_id']);
+			$seo_regex_info = $this->model_design_seo_regex->getSeoRegex($this->request->get['seo_regex_id']);
 		}
 
-		if (!empty($seo_path_info)) {
-			$data['seo_path_id'] = $seo_path_info['seo_path_id'];
+		if (!empty($seo_regex_info)) {
+			$data['seo_regex_id'] = $seo_regex_info['seo_regex_id'];
 		} else {
-			$data['seo_path_id'] = 0;
+			$data['seo_regex_id'] = 0;
 		}
 
-		if (!empty($seo_path_info)) {
-			$data['query_match'] = $seo_path_info['query_match'];
+		if (!empty($seo_regex_info)) {
+			$data['query_match'] = $seo_regex_info['query_match'];
 		} else {
 			$data['query_match'] = '';
 		}
 
-		if (!empty($seo_path_info)) {
-			$data['query_replace'] = $seo_path_info['query_replace'];
+		if (!empty($seo_regex_info)) {
+			$data['query_replace'] = $seo_regex_info['query_replace'];
 		} else {
 			$data['query_replace'] = '';
 		}
 
-		if (!empty($seo_path_info)) {
-			$data['path_match'] = $seo_path_info['path_match'];
+		if (!empty($seo_regex_info)) {
+			$data['path_match'] = $seo_regex_info['path_match'];
 		} else {
 			$data['path_match'] = '';
 		}
 
-		if (!empty($seo_path_info)) {
-			$data['path_replace'] = $seo_path_info['path_replace'];
+		if (!empty($seo_regex_info)) {
+			$data['path_replace'] = $seo_regex_info['path_replace'];
 		} else {
 			$data['path_replace'] = '';
 		}
 
-		if (!empty($seo_path_info)) {
-			$data['sort_order'] = $seo_path_info['sort_order'];
+		if (!empty($seo_regex_info)) {
+			$data['sort_order'] = $seo_regex_info['sort_order'];
 		} else {
 			$data['sort_order'] = 0;
 		}
@@ -189,7 +189,7 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/seo_path_form', $data));
+		$this->response->setOutput($this->load->view('design/seo_regex_form', $data));
 	}
 
 	/**
@@ -198,16 +198,16 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function save(): void {
-		$this->load->language('design/seo_path');
+		$this->load->language('design/seo_regex');
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'design/seo_path')) {
+		if (!$this->user->hasPermission('modify', 'design/seo_regex')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		$required = [
-			'seo_path_id'   => 0,
+			'seo_regex_id'   => 0,
 			'query_match'   => '',
 			'query_replace' => '',
 			'path_match'    => '',
@@ -218,12 +218,12 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 		$post_info = $this->request->post + $required;
 
 		if (!$json) {
-			$this->load->model('design/seo_path');
+			$this->load->model('design/seo_regex');
 
-			if (!$post_info['seo_path_id']) {
-				$json['seo_path_id'] = $this->model_design_seo_path->addSeoPath($post_info);
+			if (!$post_info['seo_regex_id']) {
+				$json['seo_regex_id'] = $this->model_design_seo_regex->addSeoRegex($post_info);
 			} else {
-				$this->model_design_seo_path->editSeoPath($post_info['seo_path_id'], $post_info);
+				$this->model_design_seo_regex->editSeoRegex($post_info['seo_regex_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -239,7 +239,7 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function delete(): void {
-		$this->load->language('design/seo_path');
+		$this->load->language('design/seo_regex');
 
 		$json = [];
 
@@ -249,16 +249,16 @@ class SeoPath extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
-		if (!$this->user->hasPermission('modify', 'design/seo_path')) {
+		if (!$this->user->hasPermission('modify', 'design/seo_regex')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
 			// SEO
-			$this->load->model('design/seo_path');
+			$this->load->model('design/seo_regex');
 
-			foreach ($selected as $seo_path_id) {
-				$this->model_design_seo_path->deleteSeoPath($seo_path_id);
+			foreach ($selected as $seo_regex_id) {
+				$this->model_design_seo_regex->deleteSeoRegex($seo_regex_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

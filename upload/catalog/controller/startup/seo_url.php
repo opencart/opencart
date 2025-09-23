@@ -10,7 +10,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	 * @var array<string, string>
 	 */
 	private array $data = [];
-	private array $query = [];
 	private array $match = [];
 
 	/**
@@ -25,11 +24,12 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('design/seo_path');
 
-			$results = $this->model_design_seo_path->getSeoPaths();
+			$this->regex = $this->model_design_seo_path->getSeoPaths();
 
-			foreach ($results as $result) {
-				$this->query[$result['query_match']] = $result['query_replace'];
-			}
+			$this->match = array_column($results, 'query_match');
+			$this->replace = array_column($results, 'query_replace');
+
+			print_r($this->query);
 
 			$this->load->model('design/seo_url');
 
@@ -53,18 +53,16 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				}
 
 
+				if ($parts) {
+					foreach ($results as $result) {
 
+					}
 
-
+					$this->request->get['route'] = $this->config->get('action_error');
+				}
 
 				if (!isset($this->request->get['route'])) {
 					$this->request->get['route'] = $this->config->get('action_default');
-				}
-
-				if ($parts) {
-
-
-					$this->request->get['route'] = $this->config->get('action_error');
 				}
 
 				if ($parts) {
@@ -126,18 +124,35 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				$value = '';
 			}
 
-			$index = $key . '=' . $value;
+			if (!isset($this->data[$language_id][$part])) {
+				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
 
-			if (!isset($this->data[$language_id][$index])) {
-				$this->data[$language_id][$index] = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
-			}
+				if ($seo_url_info) {
+					$this->data[$language_id][$part] = $seo_url_info;
 
-			if ($this->data[$language_id][$index]) {
-				$paths[] = $this->data[$language_id][$index];
+					unset($query[$key]);
 
-				unset($query[$key]);
+					continue;
+				}
+
+				$output = preg_replace($this->match, $this->replace, $part, 1, $count);
+
+				if ($count) {
+					$this->data[$language_id][$part] = [
+
+
+					];$output;
+
+					unset($query[$key]);
+				}
+
+				if ($this->data[$language_id][$index]) {
+					$paths[] = $this->data[$language_id][$index];
+
+				}
 			}
 		}
+
 
 		$sort_order = [];
 
@@ -158,14 +173,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		// Any remaining queries can be converted
 		if ($query) {
-			foreach ($query as $key => $value) {
-
-					$url .= $key . '-' . str_replace('/', '-', $value) . '/';
-
-					unset($query[$key]);
-
-			}
-
 			$url .= '?' . str_replace(['%2F'], ['/'], http_build_query($query));
 		}
 

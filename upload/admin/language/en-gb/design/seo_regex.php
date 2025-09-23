@@ -1,13 +1,13 @@
 <?php
 // Heading
-$_['heading_title']        = 'SEO Path';
+$_['heading_title']        = 'SEO Regexes';
 
 // Text
-$_['text_success']         = 'Success: You have modified SEO Paths!';
-$_['text_list']            = 'SEO Path List';
-$_['text_add']             = 'Add SEO Path';
-$_['text_edit']            = 'Edit SEO Path';
-$_['text_filter']          = 'Filter';
+$_['text_success']         = 'Success: You have modified SEO Regexes!';
+$_['text_list']            = 'SEO Regex List';
+$_['text_add']             = 'Add SEO Regex';
+$_['text_edit']            = 'Edit SEO Regex';
+
 
 // Column
 $_['column_query_match']   = 'Query Match';
@@ -28,4 +28,4 @@ $_['entry_sort_order']     = 'Sort Order';
 $_['help_sort_order']      = 'The sort order of the keywords in the URL.';
 
 // Error
-$_['error_permission']    = 'Warning: You do not have permission to modify SEO URL!';
+$_['error_permission']    = 'Warning: You do not have permission to modify SEO Regexes!';

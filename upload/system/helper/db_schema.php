@@ -7804,10 +7804,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'seo_path',
+		'name'  => 'seo_regex',
 		'field' => [
 			[
-				'name'           => 'seo_path_id',
+				'name'           => 'seo_regex_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
 			],
@@ -7834,7 +7834,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'seo_path_id'
+			'seo_regex_id'
 		],
 		'index' => [
 			[

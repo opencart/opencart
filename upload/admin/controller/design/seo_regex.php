@@ -168,15 +168,15 @@ class SeoRegex extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($seo_regex_info)) {
-			$data['path_match'] = $seo_regex_info['path_match'];
+			$data['keyword_match'] = $seo_regex_info['keyword_match'];
 		} else {
-			$data['path_match'] = '';
+			$data['keyword_match'] = '';
 		}
 
 		if (!empty($seo_regex_info)) {
-			$data['path_replace'] = $seo_regex_info['path_replace'];
+			$data['keyword_replace'] = $seo_regex_info['keyword_replace'];
 		} else {
-			$data['path_replace'] = '';
+			$data['keyword_replace'] = '';
 		}
 
 		if (!empty($seo_regex_info)) {
@@ -210,8 +210,8 @@ class SeoRegex extends \Opencart\System\Engine\Controller {
 			'seo_regex_id'   => 0,
 			'query_match'   => '',
 			'query_replace' => '',
-			'path_match'    => '',
-			'path_replace'  => '',
+			'keyword_match'    => '',
+			'keyword_replace'  => '',
 			'sort_order'    => 0
 		];
 

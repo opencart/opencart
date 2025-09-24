@@ -7820,11 +7820,11 @@ function oc_db_schema() {
 				'type' => 'varchar(255)'
 			],
 			[
-				'name' => 'path_match',
+				'name' => 'keyword_match',
 				'type' => 'varchar(255)'
 			],
 			[
-				'name' => 'path_replace',
+				'name' => 'keyword_replace',
 				'type' => 'varchar(255)'
 			],
 			[

@@ -27,7 +27,7 @@ class SeoRegex extends \Opencart\System\Engine\Model {
 	 * $seo_regex_id = $this->model_design_seo_regex->addSeoRegex($key, $value, $keyword, $store_id, $language_id, $sort_order);
 	 */
 	public function addSeoRegex(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_regex` SET `query_match` = '" . $this->db->escape($data['query_match'])  . "', `query_replace` = '" . $this->db->escape($data['query_replace'])  . "', `path_match` = '" . $this->db->escape($data['path_match']) . "', `path_replace` = '" . $this->db->escape($data['path_replace']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_regex` SET `query_match` = '" . $this->db->escape($data['query_match'])  . "', `query_replace` = '" . $this->db->escape($data['query_replace'])  . "', `keyword_match` = '" . $this->db->escape($data['keyword_match']) . "', `keyword_replace` = '" . $this->db->escape($data['keyword_replace']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		return $this->db->getLastId();
 	}
@@ -52,7 +52,7 @@ class SeoRegex extends \Opencart\System\Engine\Model {
 	 * $this->model_design_seo_regex->editSeoRegex($seo_regex_id, $key, $value, $keyword, $store_id, $language_id, $sort_order);
 	 */
 	public function editSeoRegex(int $seo_regex_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "seo_regex` SET `query_match` = '" . $this->db->escape($data['query_match'])  . "', `query_replace` = '" . $this->db->escape($data['query_replace'])  . "', `path_match` = '" . $this->db->escape($data['path_match']) . "', `path_replace` = '" . $this->db->escape($data['path_replace']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `seo_regex_id` = '" . (int)$seo_regex_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "seo_regex` SET `query_match` = '" . $this->db->escape($data['query_match'])  . "', `query_replace` = '" . $this->db->escape($data['query_replace'])  . "', `keyword_match` = '" . $this->db->escape($data['keyword_match']) . "', `keyword_replace` = '" . $this->db->escape($data['keyword_replace']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `seo_regex_id` = '" . (int)$seo_regex_id . "'");
 	}
 
 	/**

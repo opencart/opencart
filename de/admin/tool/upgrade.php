@@ -11,6 +11,9 @@ $_['text_date_added']      = 'Veröffentlichungsdatum';
 $_['text_change']          = 'Änderungsprotokoll';
 $_['text_status']          = 'Upgrade-Status';
 $_['text_ready']           = 'Klicken Sie auf die Schaltfläche „Upgrade“, um auf die neueste Version zu aktualisieren ...';
+$_['text_download']        = 'Das Neueste wird heruntergeladen...';
+$_['text_install']         = 'Dateien werden kopiert...';
+$_['text_patch']           = 'Patches anwenden...';
 
 // Button
 $_['button_upgrade']       = 'Aktualisierung';

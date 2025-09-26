@@ -11,6 +11,9 @@ $_['text_date_added']      = 'Release Date';
 $_['text_change']          = 'Change Log';
 $_['text_status']          = 'Upgrade Status';
 $_['text_ready']           = 'Click the upgrade button to upgrade to the latest version...';
+$_['text_download']        = 'Downloading latest...';
+$_['text_install']         = 'Copying files...';
+$_['text_patch']           = 'Applying patches...';
 
 // Button
 $_['button_upgrade']       = 'Upgrade';

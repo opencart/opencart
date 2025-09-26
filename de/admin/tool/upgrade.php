@@ -3,7 +3,6 @@
 $_['heading_title']        = 'Aktualisierung';
 
 // Text
-$_['text_success']         = 'Erfolg: Sie verwenden die neueste Version %s!';
 $_['text_upgrade']         = 'Überprüfen Sie die neueste Version';
 $_['text_information']     = 'Versionsinformationen';
 $_['text_current_version'] = 'Aktuelle Version';
@@ -18,7 +17,6 @@ $_['button_upgrade']       = 'Aktualisierung';
 
 // Error
 $_['error_permission']     = 'Achtung: Sie sind nicht berechtigt, Upgrades zu ändern!';
-$_['error_connection']     = 'Verbindung zum Upgrade-Server konnte nicht hergestellt werden!';
 $_['error_version']        = 'Version ist niedriger als die aktuelle Version!';
 $_['error_download']       = 'Upgrade konnte nicht heruntergeladen werden!';
 $_['error_file']           = 'Upgrade-Datei konnte nicht gefunden werden!';

@@ -89,14 +89,14 @@ class Review extends \Opencart\System\Engine\Controller {
 		$filename = 'return_reason.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => $this->language->get('error_directory', $directory)];
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($return_reason_data))) {
-			return ['error' => $this->language->get('error_file', $directory . $filename)];
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_list', $language_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
 	/**

@@ -31,7 +31,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				$filename = 'currency.json';
 
 				if (!oc_directory_create($base . $directory, 0777)) {
-					$json['error'] = $this->language->get('error_directory', $directory);
+					$json['error'] = sprintf($this->language->get('error_directory'), $directory);
 
 					break;
 				}
@@ -39,7 +39,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				$file = $base . $directory . $filename;
 
 				if (!file_put_contents($file, json_encode($stores))) {
-					$json['error'] = $this->language->get('error_file', $directory . $filename);
+					$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
 
 					break;
 				}

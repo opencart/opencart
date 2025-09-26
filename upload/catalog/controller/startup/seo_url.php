@@ -47,11 +47,14 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				}
 
 				foreach ($this->regex as $result) {
-					$query = preg_replace($result['keyword_match'], $result['keyword_replace'], $part, 1, $count);
+					$query = preg_replace($result['keyword_match'], $result['keyword_replace'], $value, 1, $count);
 
 					if ($count) {
 
+
 						unset($parts[$key]);
+
+						continue;
 					}
 				}
 			}
@@ -126,6 +129,10 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 					$this->data[$part] = $seo_url_info;
 
 					unset($query[$key]);
+
+					$paths[] = $this->data[$part];
+
+					continue;
 				}
 
 				// Run through the regexes to match and replace queries to a path
@@ -139,12 +146,12 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 						];
 
 						unset($query[$key]);
+
+						$paths[] = $this->data[$part];
+
+						continue;
 					}
 				}
-			}
-
-			if ($this->data[$part]) {
-				$paths[] = $this->data[$part];
 			}
 		}
 

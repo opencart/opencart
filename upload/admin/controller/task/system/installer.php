@@ -39,15 +39,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
 
 			if (!is_file($file)) {
-				$json['error'] = $this->language->get('error_file', $extension_install_info['code'] . '.ocmod.zip');
+				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code'] . '.ocmod.zip');
 			}
 
 			if ($page == 1 && is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
-				$json['error'] = $this->language->get('error_directory_exists', $extension_install_info['code'] . '/');
+				$json['error'] = sprintf($this->language->get('error_directory_exists'), $extension_install_info['code'] . '/');
 			}
 
 			if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
-				$json['error'] = $this->language->get('error_directory', $extension_install_info['code'] . '/');
+				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
 			}
 		} else {
 			$json['error'] = $this->language->get('error_extension');
@@ -128,7 +128,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = $this->language->get('text_install', $start, $end, $total);
+			$json['text'] = sprintf($this->language->get('text_install'), $start, $end, $total);
 
 			$url = '';
 
@@ -209,7 +209,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$extension_total = $this->model_setting_extension->getTotalExtensionsByExtension($extension_install_info['code']);
 
 			if ($extension_total) {
-				$json['error'] = $this->language->get('error_uninstall', $extension_total);
+				$json['error'] = sprintf($this->language->get('error_uninstall'), $extension_total);
 			}
 		} else {
 			$json['error'] = $this->language->get('error_extension');

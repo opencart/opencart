@@ -23,7 +23,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (!array_key_exists($value, $args)) {
-				return ['error' => $this->language->get('error_required', $value)];
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
 			}
 		}
 
@@ -99,7 +99,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 
 		foreach ($required as $value) {
 			if (!array_key_exists($value, $args)) {
-				return ['error' => $this->language->get('error_required', $value)];
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
 			}
 		}
 
@@ -148,7 +148,7 @@ class Storage extends \Opencart\System\Engine\Controller {
 			$progress = round(($end / $total) * 100, 2);
 		}
 
-		return ['success' => $this->language->get('text_move', $progress . '%')];
+		return ['success' => sprintf($this->language->get('text_move'), $progress . '%')];
 	}
 
 	/*

@@ -181,7 +181,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$product_info = $store->model_catalog_product->getProduct($product['product_id']);
 
 			if (!$product_info) {
-				return ['error' => $this->language->get('error_product', $product['name'])];
+				return ['error' => sprintf($this->language->get('error_product'), $product['name'])];
 			}
 
 
@@ -194,11 +194,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$option_info = $store->model_catalog_product->getOption($product_info['product_id'], $option['product_option_id']);
 
 				if (!$option_info) {
-					return ['error' => $this->language->get('error_option', $product['name'], $option['name'], $option['product_option_name'])];
+					return ['error' => sprintf($this->language->get('error_option'), $product['name'], $option['name'], $option['product_option_name'])];
 				}
 
 				if ($option_info['required'] && !isset($option_data[$option['product_option_id']])) {
-					return ['error' => $this->language->get('error_option', $option['name'])];
+					return ['error' => sprintf($this->language->get('error_option'), $option['name'])];
 				}
 
 				if ($option['type'] == 'select' || $option['type'] == 'radio') {

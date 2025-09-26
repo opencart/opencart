@@ -66,6 +66,6 @@ class Sale extends \Opencart\System\Engine\Controller {
 
 		$product_total = $this->model_catalog_product->getTotalProducts();
 
-		return ['success' => $this->language->get('text_list', $args['start'], ($args['start'] > ($product_total - $args['limit'])) ? $product_total : $args['start'] + $args['limit'])];
+		return ['success' => sprintf($this->language->get('text_list'), $args['start'], ($args['start'] > ($product_total - $args['limit'])) ? $product_total : $args['start'] + $args['limit'])];
 	}
 }

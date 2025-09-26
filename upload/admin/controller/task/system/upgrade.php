@@ -170,7 +170,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						}
 
 						if (file_put_contents(DIR_OPENCART . $destination, $zip->getFromIndex($i)) === false) {
-							return ['error' => sprintf($this->language->get('error_copy'), $source, $destination))];
+							return ['error' => sprintf($this->language->get('error_copy'), $source, $destination)];
 						}
 					}
 				}

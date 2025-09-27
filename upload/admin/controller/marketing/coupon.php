@@ -330,7 +330,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		if (!empty($coupon_info)) {
 			$data['uses_total'] = $coupon_info['uses_total'];
 		} else {
-			$data['uses_total'] = 1;
+			$data['uses_total'] = '';
 		}
 
 		if (!empty($coupon_info)) {

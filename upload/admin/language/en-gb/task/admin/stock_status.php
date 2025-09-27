@@ -1,8 +1,8 @@
 <?php
 // Text
-$_['text_task']       = 'Generating subscription status task list!';
-$_['text_list']       = 'Generating %s subscription status list!';
-$_['text_clear']      = 'Subscription Status data cleared!';
+$_['text_task']       = 'Generating stock status task list!';
+$_['text_list']       = 'Generating %s stock status list!';
+$_['text_clear']      = 'Return Status data cleared!';
 
 // Error
 $_['error_required']  = 'Error: %s required!';

@@ -9,7 +9,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates weight class task list.
+	 * Generate weight class task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -32,13 +34,15 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates the weight class list.
+	 * Generate JSON weight class list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -46,7 +50,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/admin/weight_class');
 
 		if (!array_key_exists('language_id', $args)) {
-			return ['error' => $this->language->get('error_language')];
+			return ['error' => sprintf($this->language->get('error_required'), 'language_id')];
 		}
 
 		$this->load->model('localisation/language');
@@ -79,7 +83,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Delete generated JSON weight class files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

@@ -7,11 +7,13 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  */
 class Store extends \Opencart\System\Engine\Controller {
 	/**
-	 * Generate
+	 * Index
 	 *
-	 * @return void
+	 * @param array<string, string> $args
+	 *
+	 * @return array
 	 */
-	public function index(): void {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/store');
 
 		$this->load->model('setting/store');
@@ -36,7 +38,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 				$file = $base . $directory . $filename;
 
-				if (!file_put_contents($file, json_encode($currencies))) {
+				if (!file_put_contents($file, json_encode($stores))) {
 					$json['error'] = sprintf($this->language->get('error_file'), $directory . $filename);
 
 					break;
@@ -45,12 +47,30 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function task() {
-
-	}
-
+	/**
+	 * Clear
+	 *
+	 * Delete generated JSON generated store files.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
-		$this->load->language('task/catalog/currency');
+		$this->load->language('task/admin/store');
 
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		foreach ($languages as $language) {
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/setting/setting.json';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+
+		return ['success' => $this->language->get('text_clear')];
 	}
 }

@@ -1,8 +1,7 @@
 <?php
 // Text
-$_['text_task']       = 'Generating language tasks!';
-$_['text_list']       = 'Generating %s language list!';
-$_['text_clear']      = 'Language information cleared!';
+$_['text_success']    = 'Generated language list!';
+$_['text_clear']      = 'Language data cleared!';
 
 // Error
 $_['error_language']  = 'Warning: Language could not be found!';

@@ -9,7 +9,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the translation list.
+	 * Generate the translation list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -82,11 +84,15 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/*
 	 * Write
+	 *
+	 * Write JSON translation file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -167,13 +173,15 @@ class Translation extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('write')];
 	}
 
 	/**
 	 * Clear
 	 *
-	 * Clears generated translation files.
+	 * Delete generated JSON translation files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

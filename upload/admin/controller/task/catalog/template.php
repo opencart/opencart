@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
- * Class Translation
+ * Class Template
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -9,7 +9,9 @@ class Template extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the translation list.
+	 * Generate the template list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -87,6 +89,10 @@ class Template extends \Opencart\System\Engine\Controller {
 
 	/*
 	 * Write
+	 *
+	 * Write template file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -172,7 +178,9 @@ class Template extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated translation files.
+	 * Delete generated template files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

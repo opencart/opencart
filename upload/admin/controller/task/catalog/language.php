@@ -9,7 +9,9 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates language list.
+	 * Generate language list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -44,9 +46,11 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Index
+	 * Clear
 	 *
-	 * Clears language list.
+	 * Delete generated JSON language files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

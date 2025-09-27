@@ -11,6 +11,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new custom_field list
 	 *
+	 * Triggers
+	 *
 	 * model/customer/custom_field/addCustomField/after
 	 * model/customer/custom_field/editCustomField/after
 	 * model/customer/custom_field/deleteCustomField/after
@@ -23,8 +25,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'custom_field',
-			'action' => 'task/catalog/custom_field',
+			'code'   => 'customer_group',
+			'action' => 'task/catalog/customer_group',
 			'args'   => []
 		];
 
@@ -33,8 +35,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		$task_data = [
-			'code'   => 'custom_field',
-			'action' => 'task/admin/custom_field',
+			'code'   => 'customer_group',
+			'action' => 'task/admin/customer_group',
 			'args'   => []
 		];
 

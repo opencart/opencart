@@ -9,7 +9,7 @@ class Restore extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates restore task list.
+	 * Generate restore task list.
 	 *
 	 * @return array
 	 */

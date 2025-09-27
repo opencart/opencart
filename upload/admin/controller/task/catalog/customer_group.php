@@ -9,7 +9,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates customer group task list.
+	 * Generate customer group task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -41,13 +43,15 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates customer group list file.
+	 * Generate JSON customer group list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -122,7 +126,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generates customer group information.
+	 * Generate customer group information.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -202,7 +208,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Delete generated JSON country files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

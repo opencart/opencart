@@ -5,6 +5,7 @@ $_['heading_title']     = 'Events';
 // Text
 $_['text_success']      = 'Success: You have modified events!';
 $_['text_list']         = 'Event List';
+$_['text_filter']       = 'Filter';
 $_['text_event']        = 'Events are used by extensions to override the default functionality of your store. If you have issues you can disable or enable the events here.';
 $_['text_info']         = 'Event Information';
 

@@ -9,10 +9,12 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates length class task list.
+	 * Generate length class task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
-	 */
+     */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/length_class');
 
@@ -32,13 +34,15 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates the length class list file.
+	 * Generate JSON length class list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -76,6 +80,15 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Delete generated JSON length class files.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/length_class');
 

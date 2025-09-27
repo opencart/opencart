@@ -9,7 +9,9 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates stock status task list.
+	 * Generate stock status task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -32,13 +34,15 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates the stock status list.
+	 * Generate JSON stock status list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -79,7 +83,9 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Delete generated JSON stock status files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

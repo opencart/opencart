@@ -9,7 +9,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates currency task list.
+	 * Generate currency task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -32,14 +34,23 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
+	/**
+	 * List
+	 *
+	 * Generate JSON currency list file.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
 		if (!array_key_exists('language_id', $args)) {
-			return ['error' => $this->language->get('error_language')];
+			return ['error' => sprintf($this->language->get('error_required'), 'language_id')];
 		}
 
 		$this->load->model('localisation/language');
@@ -69,6 +80,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/*
+	 * Refresh
+	 *
+	 * Gets the latest currency values and updates the database.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function refresh(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
@@ -91,9 +111,18 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_refresh')];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Delete generated JSON currency files.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/currency');
 

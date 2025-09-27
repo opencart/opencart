@@ -9,7 +9,9 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates subscription status task list.
+	 * Generate subscription status task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -31,14 +33,15 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
-
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates the subscription status list.
+	 * Generate JSON subscription status list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -79,7 +82,9 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated country files.
+	 * Delete generated JSON subscription status files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

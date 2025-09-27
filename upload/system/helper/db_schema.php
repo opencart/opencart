@@ -6730,6 +6730,11 @@ function oc_db_schema() {
 				'type' => 'text'
 			],
 			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime'
 			]
@@ -7382,10 +7387,6 @@ function oc_db_schema() {
 				'type' => 'enum(\'pending\',\'processing\',\'paused\',\'complete\',\'failed\')'
 			],
 			[
-				'name' => 'response',
-				'type' => 'text'
-			],
-			[
 				'name' => 'date_added',
 				'type' => 'datetime'
 			],
@@ -7415,7 +7416,7 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'comment',
+				'name' => 'output',
 				'type' => 'text'
 			],
 			[
@@ -7794,6 +7795,52 @@ function oc_db_schema() {
 				'key'  => [
 					'key',
 					'value'
+				]
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'seo_regex',
+		'field' => [
+			[
+				'name'           => 'seo_regex_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'query_match',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'query_replace',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'keyword_match',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'keyword_replace',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'seo_regex_id'
+		],
+		'index' => [
+			[
+				'name' => 'sort_order',
+				'key'  => [
+					'sort_order'
 				]
 			]
 		],

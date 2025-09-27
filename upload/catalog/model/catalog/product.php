@@ -214,19 +214,43 @@ class Product extends \Opencart\System\Engine\Model {
 		$sql .= " GROUP BY `p`.`product_id`";
 
 		$sort_data = [
-			'pd.name',
-			'p.model',
-			'p.quantity',
-			'p.price',
+			'name',
+			'model',
+			'quantity',
+			'price',
 			'rating',
-			'p.sort_order',
-			'p.date_added'
+			'sort_order',
+			'date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
-				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
-			} elseif ($data['sort'] == 'p.price') {
+			switch ($data['sort']) {
+				case 'name':
+					$sort = 'pd.name';
+					break;
+				case 'model':
+					$sort = 'p.model';
+					break;
+				case 'quantity':
+					$sort = 'p.quantity';
+					break;
+				case 'price':
+					$sort = 'p.price';
+					break;
+				case 'rating':
+					$sort = 'rating';
+					break;
+				case 'sort_order':
+					$sort = 'p.sort_order';
+					break;
+				case 'date_added':
+					$sort = 'p.date_added';
+					break;
+			}
+
+			if ($data['sort'] == 'name' || $data['sort'] == 'model') {
+				$sql .= " ORDER BY LCASE(" . $sort . ")";
+			} elseif ($data['sort'] == 'price') {
 				$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
 			} else {
 				$sql .= " ORDER BY " . $data['sort'];

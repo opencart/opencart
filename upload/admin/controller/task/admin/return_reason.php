@@ -9,7 +9,9 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates return reason task list.
+	 * Generate return reason task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -32,13 +34,15 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates the return reason list file.
+	 * Generate JSON return reason list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -76,6 +80,15 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Delete generated JSON return reason files.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/return_reason');
 

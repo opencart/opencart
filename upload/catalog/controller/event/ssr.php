@@ -13,6 +13,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	 *
 	 * Triggers
 	 *
+	 * catalog/controller/common/home/after
 	 * catalog/controller/cms/article/after
 	 * catalog/controller/cms/topic/after
 	 * catalog/controller/product/category/after
@@ -32,14 +33,13 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		// 1. Get the main response to cache
+		// 1. Get the main response
 		$output = $this->response->getOutput();
+
+		$keywords = [];
 
 		// Create the directory and file names.
 		$this->load->model('design/seo_url');
-
-		// Create the directory and file names.
-		$keywords = [];
 
 		foreach ($this->request->get as $key => $value) {
 			$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($key, $value, $this->config->get('config_store_id'), $this->config->get('config_language_id'));
@@ -57,6 +57,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $keywords);
 
+		// Create the directory and file names.
 		$base = DIR_OPENCART . 'shop/';
 		$directory = parse_url($this->config->get('config_url'), PHP_URL_HOST) . '/' . implode('/', array_column($keywords, 'keyword')) . '/';
 		$filename = 'index.html';

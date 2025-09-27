@@ -1,15 +1,17 @@
 <?php
-namespace Opencart\Admin\Controller\Task\Catalog;
+namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Information
  *
- * @package Opencart\Admin\Controller\Task\Catalog
+ * @package Opencart\Admin\Controller\Task\Admin
  */
 class Information extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates information task list.
+	 * Generate information task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -41,13 +43,15 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates information list file.
+	 * Generate JSON information list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -125,14 +129,20 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!file_put_contents($base . $directory . $filename, json_encode($informations))) {
-			return ['error' => $this->language->get('error_file')];
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['name'])];
 	}
 
-	/*
+	/**
 	 * Clear
+	 *
+	 * Delete generated JSON information files.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
 	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/information');

@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Admin;
-
 /**
  * Class Translation
  *
@@ -10,7 +9,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates the translation list.
+	 * Generate translation task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -78,11 +79,15 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * Write
+	 *
+	 * Writes the translation files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -144,7 +149,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated translation files.
+	 * Deletes generated translation data.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

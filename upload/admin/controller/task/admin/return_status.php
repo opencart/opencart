@@ -9,9 +9,11 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates return status task list.
+	 * Generate return status task list.
 	 *
-	 * @return void
+	 * @param array<string, string> $args
+	 *
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/return_status');
@@ -32,13 +34,15 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates the return status list file.
+	 * Generate JSON return status list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -76,6 +80,15 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
+	/**
+	 * Clear
+	 *
+	 * Delete generated JSON return status files.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/return_status');
 

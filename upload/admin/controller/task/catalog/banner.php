@@ -9,7 +9,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generates banner task list.
+	 * Generate banner task list.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -41,13 +43,15 @@ class Banner extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
 	 * List
 	 *
-	 * Generates customer group list file.
+	 * Generate JSON banner list file.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -100,14 +104,16 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 
 	/**
 	 * Info
 	 *
-	 * Generates banner information.
+	 * Generate banner information.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
@@ -160,7 +166,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * Clear
 	 *
-	 * Clears generated banners.
+	 * Delete generated JSON banner files.
+	 *
+	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */

@@ -3,8 +3,6 @@ namespace Opencart\Admin\Controller\Task\System;
 /**
  * Class Admin
  *
- *
- *
  * @package Opencart\Admin\Controller\Task\System
  */
 class Admin extends \Opencart\System\Engine\Controller {

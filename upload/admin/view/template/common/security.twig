@@ -68,24 +68,20 @@ $('#security').on('click', '#button-install', function() {
 });
 
 $('#security').on('submit', '#form-storage', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     $(element).button('loading');
 
-    var next = 'index.php?route=common/security.storage&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val());
-
-    var storage = function() {
+    var storage = function(next) {
         return $.ajax({
             url: next,
-            data: $('#form-storage').serialize(),
             dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded',
             success: function(json) {
                 console.log(json);
 
                 $('.alert-dismissible').remove();
-
-                next = '';
 
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -106,21 +102,16 @@ $('#security').on('submit', '#form-storage', function(e) {
                 }
 
                 if (json['next']) {
-                    next = json['next'];
-
-                    chain.attach(storage);
+                    storage(json['next']);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
-        }).done(function() {
-
-            storage
         });
-  };
+    };
 
-  chain.attach(storage);
+    storage('index.php?route=common/security.storage&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val()));
 });
 
 $('#security').on('click', '#button-storage-delete', function() {

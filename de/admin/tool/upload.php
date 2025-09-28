@@ -24,5 +24,5 @@ $_['error_permission']   = 'Achtung: Sie sind nicht berechtigt, Uploads zu ände
 $_['error_not_found']    = 'Fehler: Datei %s konnte nicht gefunden werden!';
 $_['error_headers_sent'] = 'Fehler: Header bereits versendet!';
 $_['error_upload']       = 'Datei konnte nicht hochgeladen werden!';
-$_['error_filename']     = 'Filename must be between 5 and 128 characters!';
+$_['error_filename']     = 'Der Dateiname muss zwischen 3 und 128 Zeichen lang sein!';
 $_['error_file_type']    = 'Ungültiger Dateityp!';

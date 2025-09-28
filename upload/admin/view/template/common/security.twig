@@ -147,7 +147,9 @@ $('#security').on('click', '#button-storage-delete', function() {
     });
 });
 
-$('#security').on('submit', '#form-admin', function() {
+$('#security').on('submit', '#form-admin', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     $.ajax({

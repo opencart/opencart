@@ -216,11 +216,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			foreach (array_slice($files, $start, $end) as $file) {
 				$destination = substr($file, strlen($base_old));
 
-				$directory = dirname($base_new . $destination);
-
-				if (is_dir($directory) && !oc_directory_create($directory, 0777)) {
-					$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-				}
+				oc_directory_create($base_new . dirname($destination), 0777);
 
 				// Must not have a path before files and directories can be moved
 				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
@@ -365,12 +361,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			foreach (array_slice($files, $start, $end) as $file) {
 				$destination = substr($file, strlen($base_old));
 
-				// Must not have a path before files and directories can be moved
-				$directory = dirname($base_new . $destination);
-
-				if (is_dir($directory) && !oc_directory_create($directory, 0777)) {
-					$json['error'] = sprintf($this->language->get('error_directory'), $destination);
-				}
+				oc_directory_create($base_new . dirname($destination), 0777);
 
 				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
 					copy($base_old . $destination, $base_new . $destination);

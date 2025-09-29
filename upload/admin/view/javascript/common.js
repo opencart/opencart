@@ -547,7 +547,7 @@ $(document).ready(function() {
         var element = this;
 
         $.ajax({
-            url: 'index.php?route=common/language.save&user_token={{ user_token }}',
+            url: 'index.php?route=common/language.save&user_token=' + getURLVar('user_token'),
             type: 'post',
             data: 'code=' + $(element).attr('href') + '&redirect=' + encodeURIComponent($('#input-redirect').val()),
             dataType: 'json',

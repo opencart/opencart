@@ -184,14 +184,12 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_storage_exists_old');
 			}
 
-			if (is_dir($base_new)) {
+			if ($page == 1 && is_dir($base_new)) {
 				$json['error'] = $this->language->get('error_storage_exists_new');
 			}
 
 			// Check the chosen directory is not in the public webspace C:/xampp/htdocs
 			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../')) . '/';
-echo $root . "\n";
-echo $path;
 
 			if ((substr($root, 0, strlen($path)) != $path) || ($root == $base_new)) {
 				$json['error'] = $this->language->get('error_storage_root');
@@ -207,7 +205,7 @@ echo $path;
 		}
 
 		if (!$json) {
-			$files = oc_directory_read($base_old);
+			$files = oc_directory_read($base_old, true);
 
 			$total = count($files);
 			$limit = 200;
@@ -351,7 +349,7 @@ echo $path;
 		}
 
 		if (!$json) {
-			$files = oc_directory_read($base_old);
+			$files = oc_directory_read($base_old, true);
 
 			$total = count($files);
 			$limit = 200;

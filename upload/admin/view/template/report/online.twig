@@ -54,11 +54,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                
                 {% if customers %}
                 {% for customer in customers %}
                 <tr>
-                  <td class="text-left"><a href="//whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
+                  <td class="text-left"><a href="https://whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
                   <td class="text-left">{{ customer.customer }}</td>
                   <td class="text-left"><a href="{{ customer.url }}" target="_blank" rel="noreferrer">{{ customer.url|split('', 30)|join('<br/>
                     ') }}</a></td>
@@ -76,7 +75,6 @@
                 </tr>
                 {% endif %}
                   </tbody>
-                
               </table>
             </div>
             <div class="row">

@@ -154,13 +154,13 @@ class Security extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['name'])) {
-			$name = preg_replace('/[^a-zA-Z0-9_\.]/', '', basename(html_entity_decode(trim($this->request->get['name']), ENT_QUOTES, 'UTF-8')));
+			$name = preg_replace('/[^a-zA-Z0-9_\-]/', '', basename(html_entity_decode(trim($this->request->get['name']), ENT_QUOTES, 'UTF-8')));
 		} else {
 			$name = '';
 		}
 
 		if (isset($this->request->get['path'])) {
-			$path = preg_replace('/[^a-zA-Z0-9_\:\/\.]/', '', html_entity_decode(trim($this->request->get['path']), ENT_QUOTES, 'UTF-8'));
+			$path = preg_replace('/[^a-zA-Z0-9_\:\/\.\-]/', '', html_entity_decode(trim($this->request->get['path']), ENT_QUOTES, 'UTF-8'));
 		} else {
 			$path = '';
 		}
@@ -189,7 +189,9 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// Check the chosen directory is not in the public webspace C:/xampp/htdocs
-			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
+			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../')) . '/';
+echo $root . "\n";
+echo $path;
 
 			if ((substr($root, 0, strlen($path)) != $path) || ($root == $base_new)) {
 				$json['error'] = $this->language->get('error_storage_root');

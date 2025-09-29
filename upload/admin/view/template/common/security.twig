@@ -72,9 +72,11 @@ $('#security').on('submit', '#form-storage', function(e) {
 
     var element = this;
 
-    $(element).button('loading');
+    $('#button-storage').button('loading');
 
     var storage = function(next) {
+        console.log(next);
+
         return $.ajax({
             url: next,
             dataType: 'json',
@@ -86,7 +88,7 @@ $('#security').on('submit', '#form-storage', function(e) {
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $(element).button('reset');
+                    $('#button-storage').button('reset');
                 }
 
                 if (json['text']) {
@@ -96,7 +98,7 @@ $('#security').on('submit', '#form-storage', function(e) {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $(element).button('reset');
+                    $('#button-storage').button('reset');
 
                     $('#button-refresh').trigger('click');
                 }

@@ -12,6 +12,7 @@
             <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-install" class="accordion-button collapsed"><i class="fa-solid fa-trash-can me-1"></i> {{ text_install }}</button></h5>
             <div id="accordion-install" class="accordion-collapse collapse" data-bs-parent="#accordion">
               <div class="modal-body">
+                <div id="alert-install"></div>
                 <p>{{ text_install_description }}</p>
                 <div class="input-group mb-3">
                   <div class="input-group-text">{{ text_path }}</div>
@@ -63,6 +64,7 @@
             <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage-delete" class="accordion-button collapsed"><i class="fa-solid fa-trash-can me-1"></i> {{ text_storage_delete }}</button></h5>
             <div id="accordion-storage-delete" class="accordion-collapse collapse" data-bs-parent="#accordion">
               <div class="modal-body">
+                <div id="alert-storage"></div>
                 <p>{{ text_storage_description_delete }}</p>
                 <div class="input-group mb-3">
                   <div class="input-group-text">{{ text_path }}</div>
@@ -104,6 +106,7 @@
             <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin-delete" class="accordion-button collapsed"><i class="fa-solid fa-trash-can me-1"></i> {{ text_admin_delete }}</button></h2>
             <div id="accordion-admin-delete" class="accordion-collapse collapse" data-bs-parent="#accordion">
               <div class="modal-body">
+                <div id="alert-admin"></div>
                 <p>{{ text_admin_description_delete }}</p>
                 <div class="input-group mb-3">
                   <div class="input-group-text">{{ text_path }}</div>

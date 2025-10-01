@@ -263,6 +263,11 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/*
+	 * Storage Delete
+	 *
+	 * @return void
+	 */
 	public function storage_delete() {
 		$this->load->language('common/security');
 

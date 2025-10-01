@@ -20,148 +20,118 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 			$ssrs = [];
 
 			$ssrs[] = [
-				'code'   => 'article',
-				'action' => 'catalog/data/article'
-			];
-
-			$ssrs[] = [
 				'code'   => 'banner',
-				'action' => 'catalog/data/banner'
-			];
-
-			$ssrs[] = [
-				'code'   => 'category',
-				'action' => 'catalog/data/category'
+				'action' => 'task/catalog/banner'
 			];
 
 			$ssrs[] = [
 				'code'   => 'country',
-				'action' => 'catalog/data/country'
+				'action' => 'task/catalog/country'
 			];
 
 			$ssrs[] = [
 				'code'   => 'country',
-				'action' => 'admin/data/country'
+				'action' => 'task/admin/country'
 			];
 
 			$ssrs[] = [
 				'code'   => 'currency',
-				'action' => 'ssr/catalog/currency'
+				'action' => 'task/catalog/currency'
 			];
 
 			$ssrs[] = [
 				'code'   => 'currency',
-				'action' => 'ssr/admin/currency'
-			];
-
-			$ssrs[] = [
-				'code'   => 'custom_field',
-				'action' => 'catalog/data/custom_field'
-			];
-
-			$ssrs[] = [
-				'code'   => 'custom_field',
-				'action' => 'admin/data/custom_field'
+				'action' => 'task/admin/currency'
 			];
 
 			$ssrs[] = [
 				'code'   => 'customer_group',
-				'action' => 'ssr/catalog/customer_group'
+				'action' => 'task/catalog/customer_group'
 			];
 
 			$ssrs[] = [
 				'code'   => 'customer_group',
-				'action' => 'ssr/admin/customer_group'
+				'action' => 'task/admin/customer_group'
 			];
 
 			$ssrs[] = [
 				'code'   => 'information',
-				'action' => 'catalog/data/information'
+				'action' => 'task/admin/information'
 			];
 
 			$ssrs[] = [
 				'code'   => 'language',
-				'action' => 'catalog/data/language'
+				'action' => 'task/catalog/language'
 			];
 
 			$ssrs[] = [
 				'code'   => 'language',
-				'action' => 'admin/data/language'
-			];
-
-			$ssrs[] = [
-				'code'   => 'language',
-				'action' => 'catalog/data/language'
-			];
-
-			$ssrs[] = [
-				'code'   => 'language',
-				'action' => 'admin/data/language'
+				'action' => 'task/admin/language'
 			];
 
 			$ssrs[] = [
 				'code'   => 'length_class',
-				'action' => 'catalog/data/length_class'
+				'action' => 'task/catalog/length_class'
 			];
 
 			$ssrs[] = [
 				'code'   => 'length_class',
-				'action' => 'admin/data/length_class'
-			];
-
-			$ssrs[] = [
-				'code'   => 'manufacturer',
-				'action' => 'catalog/data/manufacturer'
-			];
-
-			$ssrs[] = [
-				'code'   => 'option',
-				'action' => 'catalog/data/option'
-			];
-
-			$ssrs[] = [
-				'code'   => 'option',
-				'action' => 'admin/data/option'
+				'action' => 'task/admin/length_class'
 			];
 
 			$ssrs[] = [
 				'code'   => 'order_status',
-				'action' => 'admin/order_status'
+				'action' => 'task/admin/order_status'
 			];
 
 			$ssrs[] = [
-				'code'   => 'product',
-				'action' => 'catalog/data/product'
-			];
-
-			$ssrs[] = [
-				'code'   => 'return_reason',
-				'action' => 'catalog/data/return_reason'
+				'code'   => 'return_action',
+				'action' => 'task/admin/return_action'
 			];
 
 			$ssrs[] = [
 				'code'   => 'return_reason',
-				'action' => 'admin/data/return_reason'
+				'action' => 'task/catalog/return_reasonn'
+			];
+
+			$ssrs[] = [
+				'code'   => 'return_reason',
+				'action' => 'task/admin/return_reason'
+			];
+
+			$ssrs[] = [
+				'code'   => 'return_status',
+				'action' => 'task/admin/return_status'
+			];
+
+			$ssrs[] = [
+				'code'   => 'review',
+				'action' => 'task/catalog/review'
+			];
+
+			$ssrs[] = [
+				'code'   => 'sass',
+				'action' => 'task/catalog/stock_status'
+			];
+
+			$ssrs[] = [
+				'code'   => 'stock_status',
+				'action' => 'task/admin/stock_status'
 			];
 
 			$ssrs[] = [
 				'code'   => 'store',
-				'action' => 'catalog/data/store'
+				'action' => 'task/admin/store'
 			];
 
 			$ssrs[] = [
-				'code'   => 'store',
-				'action' => 'admin/data/store'
+				'code'   => 'subscription_status',
+				'action' => 'task/admin/subscription_status'
 			];
 
 			$ssrs[] = [
 				'code'   => 'theme',
-				'action' => 'catalog/data/theme'
-			];
-
-			$ssrs[] = [
-				'code'   => 'topic',
-				'action' => 'catalog/data/topic'
+				'action' => 'task/catalog/theme'
 			];
 
 			$ssrs[] = [

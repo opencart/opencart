@@ -36,6 +36,13 @@
               <div class="input-group-text">{{ entry_route }}</div>
               <select name="route" id="input-route" class="form-select">
                 <option value=""></option>
+
+                <optgroup label="{{ text_stylesheet }}">
+                  {% for stylesheet in stylesheets %}
+                    <option value="{{ stylesheet }}"{% if stylesheet == route %} selected{% endif %}>{{ stylesheet }}</option>
+                  {% endfor %}
+                </optgroup>
+
                 <optgroup label="{{ text_default }}">
                   {% for template in templates %}
                     <option value="{{ template }}"{% if template == route %} selected{% endif %}>{{ template }}</option>

@@ -257,6 +257,21 @@ class Theme extends \Opencart\System\Engine\Controller {
 		}
 
 		// We grab the files from the default template directory
+		$directory = DIR_CATALOG . 'view/stylesheet/';
+
+		$data['stylesheets'] = [];
+
+		$files = oc_directory_read($directory, true);
+
+		foreach ($files as $file) {
+			$stylesheet = substr(substr($file, 0, strrpos($file, '.')), strlen($directory));
+
+			if ($stylesheet) {
+				$data['stylesheets'][] = $stylesheet;
+			}
+		}
+
+		// We grab the files from the default template directory
 		$directory = DIR_CATALOG . 'view/template/';
 
 		$data['templates'] = [];

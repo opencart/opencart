@@ -117,12 +117,10 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 
     $(element).button('loading');
 
-    var next = $(element).attr('href');
-
     $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
     $('#progress-text').html('');
 
-    var installer = function() {
+    var installer = function(next) {
         return $.ajax({
             url: next,
             dataType: 'json',
@@ -153,9 +151,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
                 }
 
                 if (json['next']) {
-                    next = json['next'];
-
-                    chain.attach(installer);
+                    installer(json['next']);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -166,7 +162,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
         });
     };
 
-    chain.attach(installer);
+    installer($(element).attr('href'));
 });
 
 // Delete

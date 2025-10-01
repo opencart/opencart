@@ -105,6 +105,8 @@ $('#security').on('submit', '#form-storage', function(e) {
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $('#button-storage').button('reset');
             }
         });
     };
@@ -165,6 +167,8 @@ $('#security').on('submit', '#form-admin', function(e) {
 
                 if (json['error']) {
                     $('#alert-admin').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#button-admin').button('reset');
                 }
 
                 if (json['text']) {
@@ -173,6 +177,8 @@ $('#security').on('submit', '#form-admin', function(e) {
 
                 if (json['success']) {
                     $('#alert-admin').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#button-admin').button('reset');
 
                     $('#button-refresh').trigger('click');
                 }
@@ -183,6 +189,8 @@ $('#security').on('submit', '#form-admin', function(e) {
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $('#button-admin').button('reset');
             }
         });
     };

@@ -80,8 +80,28 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 			];
 
 			$ssrs[] = [
-				'code'   => 'order_status',
-				'action' => 'task/admin/order_status'
+				'code'   => 'report_order',
+				'action' => 'task/report/order'
+			];
+
+			$ssrs[] = [
+				'code'   => 'report_return',
+				'action' => 'task/report/returns'
+			];
+
+			$ssrs[] = [
+				'code'   => 'report_review',
+				'action' => 'task/report/review'
+			];
+
+			$ssrs[] = [
+				'code'   => 'report_sale',
+				'action' => 'task/report/sale'
+			];
+
+			$ssrs[] = [
+				'code'   => 'report_stock',
+				'action' => 'task/report/stock'
 			];
 
 			$ssrs[] = [
@@ -136,17 +156,17 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 
 			$ssrs[] = [
 				'code'   => 'translation',
-				'action' => 'catalog/ata/translation'
+				'action' => 'task/catalog/translation'
 			];
 
 			$ssrs[] = [
 				'code'   => 'weight_class',
-				'action' => 'catalog/data/weight_class'
+				'action' => 'task/catalog/weight_class'
 			];
 
 			$ssrs[] = [
 				'code'   => 'weight_class',
-				'action' => 'admin/data/weight_class'
+				'action' => 'task/admin/weight_class'
 			];
 
 			foreach ($ssrs as $ssr) {

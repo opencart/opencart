@@ -58,7 +58,9 @@ $('#security').on('click', '#button-install', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#button-refresh').trigger('click');
+                setTimeout(function() {
+                    $('#button-refresh').trigger('click');
+                }, 3000);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -94,9 +96,9 @@ $('#security').on('submit', '#form-storage', function(e) {
                 if (json['success']) {
                     $('#alert-storage').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    setTimeout(function() {
-                        $('#button-storage').button('reset');
+                    $('#button-storage').button('reset');'' +
 
+                    setTimeout(function() {
                         $('#button-refresh').trigger('click');
                     }, 3000);
                 }
@@ -140,7 +142,11 @@ $('#security').on('click', '#button-storage-delete', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#button-refresh').trigger('click');
+                $('#button-storage').button('reset');
+
+                setTimeout(function() {
+                    $('#button-refresh').trigger('click');
+                }, 3000);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -183,8 +189,6 @@ $('#security').on('submit', '#form-admin', function(e) {
                     $('#alert-admin').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#button-admin').button('reset');
-
-                    $('#button-refresh').trigger('click');
                 }
 
                 if (json['next']) {
@@ -220,13 +224,15 @@ $('#security').on('click', '#button-admin-delete', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert-admin').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert-admin').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#button-refresh').trigger('click');
+                setTimeout(function() {
+                    $('#button-refresh').trigger('click');
+                }, 3000);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

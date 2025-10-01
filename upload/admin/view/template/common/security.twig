@@ -162,7 +162,9 @@ $('#security').on('submit', '#form-admin', function(e) {
                 $('.alert-dismissible').remove();
 
                 if (json['redirect']) {
-                    location = json['redirect'];
+                    setTimeout(function(redirect) {
+                        location = redirect;
+                    }, 3000, json['redirect']);
                 }
 
                 if (json['error']) {

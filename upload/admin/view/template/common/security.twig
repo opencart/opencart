@@ -24,9 +24,13 @@ $('#button-refresh').on('click', function() {
 
             $('#security').html(html);
 
-            $('#modal-security').modal('show');
+            if ($('#modal-security .accordion-item').length > 0) {
+                $('#modal-security').modal('show');
 
-            $('#accordion .accordion-header:first button').trigger('click');
+                $('#accordion .accordion-header:first button').trigger('click');
+            } else {
+                $('#modal-security').modal('dispose');
+            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

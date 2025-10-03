@@ -9,8 +9,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	/**
 	 * @var array<string, string>
 	 */
-	private array $data = [];
 	private array $regex = [];
+	private array $data = [];
 
 	/**
 	 * Index
@@ -22,9 +22,17 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 
+			$this->regex = [];
+
 			$this->load->model('design/seo_regex');
 
-			$this->regex = $this->model_design_seo_regex->getSeoRegexes();
+			$results = $this->model_design_seo_regex->getSeoRegexes();
+
+			foreach ($results as $result) {
+				$this->regex[$result['key']][] = $result;
+			}
+
+
 
 			// Decode URL
 			if (!isset($this->request->get['_route_'])) {
@@ -48,11 +56,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 					continue;
 				}
 
-				foreach ($this->regex as $result) {
-					$query = preg_replace($result['keyword_match'], $result['keyword_replace'], $value, 1, $count);
+				foreach ($results as $result) {
+					$query = preg_replace($result['keyword'], $result['value'], $value, 1, $count);
 
 					if ($count) {
-
+						$this->request->get[$result['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
 
 						unset($parts[$key]);
 
@@ -137,27 +145,22 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			}
 
 			// Run through the regexes to match and replace queries to a path
-			foreach ($this->regex as $result) {
-				$keyword = preg_replace($result['query_match'], $result['query_replace'], $index, -1, $count);
+			if (isset($this->regex[$key])) {
+				foreach ($this->regex[$key] as $result) {
+					$keyword = preg_replace($result['match'], $result['replace'], $value, -1, $count);
 
-				if ($count) {
-					echo $count . "\n";
+					if ($count) {
+						$this->data[$index] = $result + ['keyword' => $keyword];
 
-					echo '$keyword ' . $keyword . "\n";
+						$paths[] = $this->data[$index];
 
-					$this->data[$index] = $result + ['keyword' => $keyword];
+						unset($query[$key]);
 
-					$paths[] = $this->data[$index];
-
-					unset($query[$key]);
-
-					continue;
+						continue;
+					}
 				}
 			}
 		}
-
-
-		print_r($paths);
 
 		$sort_order = [];
 
@@ -173,7 +176,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$url .= '/';
 
-		// Any remaining queries can be converted
+		// Any remaining queries can be added to the end
 		if ($query) {
 			$url .= '?' . str_replace(['%2F'], ['/'], http_build_query($query));
 		}

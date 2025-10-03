@@ -158,27 +158,33 @@ class SeoRegex extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($seo_regex_info)) {
-			$data['query_match'] = $seo_regex_info['query_match'];
+			$data['key'] = $seo_regex_info['key'];
 		} else {
-			$data['query_match'] = '';
+			$data['key'] = '';
 		}
 
 		if (!empty($seo_regex_info)) {
-			$data['query_replace'] = $seo_regex_info['query_replace'];
+			$data['match'] = $seo_regex_info['match'];
 		} else {
-			$data['query_replace'] = '';
+			$data['match'] = '';
 		}
 
 		if (!empty($seo_regex_info)) {
-			$data['keyword_match'] = $seo_regex_info['keyword_match'];
+			$data['replace'] = $seo_regex_info['replace'];
 		} else {
-			$data['keyword_match'] = '';
+			$data['replace'] = '';
 		}
 
 		if (!empty($seo_regex_info)) {
-			$data['keyword_replace'] = $seo_regex_info['keyword_replace'];
+			$data['keyword'] = $seo_regex_info['keyword'];
 		} else {
-			$data['keyword_replace'] = '';
+			$data['keyword'] = '';
+		}
+
+		if (!empty($seo_regex_info)) {
+			$data['value'] = $seo_regex_info['value'];
+		} else {
+			$data['value'] = '';
 		}
 
 		if (!empty($seo_regex_info)) {
@@ -209,12 +215,13 @@ class SeoRegex extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'seo_regex_id'   => 0,
-			'query_match'   => '',
-			'query_replace' => '',
-			'keyword_match'    => '',
-			'keyword_replace'  => '',
-			'sort_order'    => 0
+			'seo_regex_id' => 0,
+			'key'          => '',
+			'match'        => '',
+			'replace'      => '',
+			'keyword'      => '',
+			'value'        => '',
+			'sort_order'   => 0
 		];
 
 		$post_info = $this->request->post + $required;

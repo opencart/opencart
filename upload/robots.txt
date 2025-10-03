@@ -1,4 +1,5 @@
 user-agent: *
+Disallow: /*?redirect=$
 Disallow: /*?page=$
 Disallow: /*&page=$
 Disallow: /*?sort=

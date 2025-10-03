@@ -26,14 +26,16 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			$this->regex = $this->model_design_seo_regex->getSeoRegexes();
 
-			$this->load->model('design/seo_url');
-
 			// Decode URL
 			if (!isset($this->request->get['_route_'])) {
 				return null;
 			}
 
+			//HTTP_SERVER
+
 			$parts = explode('/', trim($this->request->get['_route_'], '/'));
+
+			$this->load->model('design/seo_url');
 
 			foreach ($parts as $key => $value) {
 				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($value);
@@ -100,61 +102,62 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$url .= ':' . $url_info['port'];
 		}
 
+		// Build the path
+		$url .= str_replace('/index.php', '', $url_info['path']);
+
+		// Parse the query into its separate parts
 		parse_str($url_info['query'], $query);
 
 		// Start changing the URL query into a path
 		$paths = [];
 
-		// Parse the query into its separate parts
-		$parts = explode('&', $url_info['query']);
+		foreach ($query as $key => $value) {
+			$index = $key . '=' . $value;
 
-		foreach ($parts as $part) {
-			$pair = explode('=', $part);
+			// If already found cached query in property use.
+			if (isset($this->data[$index])) {
+				$paths[] = $this->data[$index];
 
-			if (!isset($this->data[$part])) {
-				if (isset($pair[0])) {
-					$key = (string)$pair[0];
-				}
+				unset($query[$key]);
 
-				if (isset($pair[1])) {
-					$value = (string)$pair[1];
-				} else {
-					$value = '';
-				}
+				continue;
+			}
 
-				// See if there is an SEO URL setup for the query
-				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
+			// See if there is an SEO URL setup for the query
+			$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value);
 
-				if ($seo_url_info) {
-					$this->data[$part] = $seo_url_info;
+			if ($seo_url_info) {
+				$this->data[$index] = $seo_url_info;
+
+				$paths[] = $seo_url_info;
+
+				unset($query[$key]);
+
+				continue;
+			}
+
+			// Run through the regexes to match and replace queries to a path
+			foreach ($this->regex as $result) {
+				$keyword = preg_replace($result['query_match'], $result['query_replace'], $index, -1, $count);
+
+				if ($count) {
+					echo $count . "\n";
+
+					echo '$keyword ' . $keyword . "\n";
+
+					$this->data[$index] = $result + ['keyword' => $keyword];
+
+					$paths[] = $this->data[$index];
 
 					unset($query[$key]);
 
-					$paths[] = $this->data[$part];
-
 					continue;
-				}
-
-				// Run through the regexes to match and replace queries to a path
-				foreach ($this->regex as $result) {
-					$keyword = preg_replace($result['query_match'], $result['query_replace'], $part, 1, $count);
-
-					if ($count) {
-						$this->data[$part] = [
-							'keyword'    => $keyword,
-							'sort_order' => $result['sort_order']
-						];
-
-						unset($query[$key]);
-
-						$paths[] = $this->data[$part];
-
-						continue;
-					}
 				}
 			}
 		}
 
+
+		print_r($paths);
 
 		$sort_order = [];
 
@@ -163,9 +166,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $paths);
-
-		// Build the path
-		$url .= str_replace('/index.php', '', $url_info['path']);
 
 		foreach ($paths as $result) {
 			$url .= '/' . $result['keyword'];

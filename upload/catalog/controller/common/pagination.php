@@ -43,8 +43,8 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			$limit = 10;
 		}
 
-		if (isset($setting['url']) && is_callable($setting['url'])) {
-			$callback = $setting['url'];
+		if (isset($setting['callback']) && is_callable($setting['callback'])) {
+			$callback = $setting['callback'];
 		} else {
 			return '';
 		}

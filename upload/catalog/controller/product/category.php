@@ -409,10 +409,10 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $product_total,
-			'page'  => $page,
-			'limit' => $limit,
-			'url'   => function(int $page) use ($url): string {
+			'total'    => $product_total,
+			'page'     => $page,
+			'limit'    => $limit,
+			'callback' => function(int $page) use ($url): string {
 				return $this->url->link('product/category', 'language=' . $this->config->get('config_language') . $url . ($page ? '&page=' . $page : ''));
 			}
 		]);

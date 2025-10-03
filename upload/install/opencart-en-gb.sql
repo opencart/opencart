@@ -3208,13 +3208,11 @@ VALUES ('banner', 'Renders banner data', 'task/catalog/banner', NOW()),
        ('length_class', 'Renders length class data', 'task/admin/length_class', NOW()),
        ('option', 'Renders option data', 'task/catalog/option', NOW()),
        ('order_status', 'Renders order status data', 'task/admin/order_status', NOW()),
-
        ('report_order', 'Renders report order data', 'task/report/order', NOW()),
        ('report_return', 'Renders report return data', 'task/report/returns', NOW()),
        ('report_review', 'Renders report review data', 'task/report/review', NOW()),
        ('report_sale', 'Renders report sale data', 'task/report/sale', NOW()),
        ('report_stock', 'Renders report stock data', 'task/report/stock', NOW()),
-
        ('return_action', 'Renders return action data', 'task/admin/return_action', NOW()),
        ('return_reason', 'Renders return reason data', 'task/catalog/return_reason', NOW()),
        ('return_reason', 'Renders return reason data', 'task/admin/return_reason', NOW()),

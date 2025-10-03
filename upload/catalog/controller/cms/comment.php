@@ -178,7 +178,9 @@ class Comment extends \Opencart\System\Engine\Controller {
 			'total' => $comment_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page={page}')
+			'callback' => function(int $page) use ($article_id): string {
+				return $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&article_id=' . $article_id . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($comment_total - $limit)) ? $comment_total : ((($page - 1) * $limit) + $limit), $comment_total, ceil($comment_total / $limit));

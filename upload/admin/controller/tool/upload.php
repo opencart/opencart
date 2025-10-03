@@ -220,7 +220,9 @@ class Upload extends \Opencart\System\Engine\Controller {
 			'total' => $upload_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($upload_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($upload_total - $this->config->get('config_pagination_admin'))) ? $upload_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $upload_total, ceil($upload_total / $this->config->get('config_pagination_admin')));

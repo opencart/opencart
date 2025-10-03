@@ -105,7 +105,9 @@ class Ssr extends \Opencart\System\Engine\Controller {
 			'total' => $ssr_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/ssr.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('marketplace/ssr.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ssr_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($ssr_total - $this->config->get('config_pagination_admin'))) ? $ssr_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $ssr_total, ceil($ssr_total / $this->config->get('config_pagination_admin')));

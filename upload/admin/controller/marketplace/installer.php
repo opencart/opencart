@@ -175,7 +175,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 			'total' => $extension_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/installer.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'callback' => function(int $page): string {
+				return $this->url->link('marketplace/installer.list', 'user_token=' . $this->session->data['user_token'] . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($extension_total - $this->config->get('config_pagination_admin'))) ? $extension_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $extension_total, ceil($extension_total / $this->config->get('config_pagination_admin')));

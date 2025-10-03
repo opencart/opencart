@@ -154,7 +154,9 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			'total' => $tax_class_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/tax_class.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('localisation/tax_class.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($tax_class_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($tax_class_total - $this->config->get('config_pagination_admin'))) ? $tax_class_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $tax_class_total, ceil($tax_class_total / $this->config->get('config_pagination_admin')));

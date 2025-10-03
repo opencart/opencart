@@ -142,7 +142,9 @@ class Event extends \Opencart\System\Engine\Controller {
 			'total' => $event_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'callback' => function(int $page): string {
+				return $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($event_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($event_total - $this->config->get('config_pagination_admin'))) ? $event_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $event_total, ceil($event_total / $this->config->get('config_pagination_admin')));

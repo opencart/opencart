@@ -108,7 +108,9 @@ class Cron extends \Opencart\System\Engine\Controller {
 			'total' => $cron_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'callback' => function(int $page): string {
+				return $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($cron_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($cron_total - $this->config->get('config_pagination_admin'))) ? $cron_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $cron_total, ceil($cron_total / $this->config->get('config_pagination_admin')));

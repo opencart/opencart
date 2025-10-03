@@ -7812,19 +7812,23 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'query_match',
+				'name' => 'key',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'match',
 				'type' => 'varchar(255)'
 			],
 			[
-				'name' => 'query_replace',
+				'name' => 'replace',
 				'type' => 'varchar(255)'
 			],
 			[
-				'name' => 'keyword_match',
+				'name' => 'keyword',
 				'type' => 'varchar(255)'
 			],
 			[
-				'name' => 'keyword_replace',
+				'name' => 'value',
 				'type' => 'varchar(255)'
 			],
 			[

@@ -16,7 +16,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return ?\Opencart\System\Engine\Action
 	 */
-	public function index() {
+	public function index(): void {
 		// Languages
 		$this->load->model('localisation/language');
 
@@ -42,24 +42,16 @@ class Language extends \Opencart\System\Engine\Controller {
 			$code = $this->config->get('config_language_catalog');
 		}
 
-		if ($code) {
-			// If extension switch add language directory
-			if (self::$languages[$code]['extension']) {
-				$this->language->addPath('extension/' . self::$languages[$code]['extension'], DIR_EXTENSION . self::$languages[$code]['extension'] . '/catalog/language/');
-			}
-
-			// Set the config language_id key
-			$this->config->set('config_language_id', self::$languages[$code]['language_id']);
-			$this->config->set('config_language', self::$languages[$code]['code']);
-
-			$this->load->language('default');
-		} else {
-			$this->config->set('config_language', $this->config->get('language_code'));
-
-			$this->request->get['route'] = 'error/not_found';
+		// If extension switch add language directory
+		if (self::$languages[$code]['extension']) {
+			$this->language->addPath('extension/' . self::$languages[$code]['extension'], DIR_EXTENSION . self::$languages[$code]['extension'] . '/catalog/language/');
 		}
 
-		return null;
+		// Set the config language_id key
+		$this->config->set('config_language_id', self::$languages[$code]['language_id']);
+		$this->config->set('config_language', self::$languages[$code]['code']);
+
+		$this->load->language('default');
 	}
 
 	/**

@@ -258,7 +258,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			'total' => count($paths),
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		return $this->load->view('common/filemanager_list', $data);

@@ -48,7 +48,7 @@ This project includes a Docker-based environment for local development.
 
 ### Prerequisites
 
-* You must have Docker and Docker Compose installed on your machine. [Docker Desktop](https://www.docker.com/products/docker-desktop/) is the easiest way to get them.
+* You must have Docker and Docker Compose installed on your machine. If you're installing `Composer` separately from Docker, make sure to install `docker-compose-v2`. Using the older `docker-compose` version may cause the build process (specifically the make build step) to fail. [Docker Desktop](https://www.docker.com/products/docker-desktop/) is the easiest way to get them.
 * You must have `make` installed on your system (usually pre-installed on macOS and Linux distributions).
 
 > [!IMPORTANT]

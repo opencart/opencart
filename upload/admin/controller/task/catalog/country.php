@@ -174,7 +174,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$country_info['status']) {
-			//return [];
+			return [];
 		}
 
 		$description_info = $this->model_localisation_country->getDescription((int)$country_info['country_id'], $language_info['language_id']);
@@ -186,7 +186,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$stores = $this->model_localisation_country->getStores((int)$country_info['country_id']);
 
 		if (!in_array($language_info['language_id'], $stores)) {
-			//return [];
+			return [];
 		}
 
 		$filter_data = [

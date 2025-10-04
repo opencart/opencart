@@ -162,7 +162,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_country_id'])) {
-			$sql .= " AND `c`.`country_id = '" . $this->db->escape(oc_strtolower($data['filter_country_id']) . '%') . "'";
+			$sql .= " AND `z`.`country_id` = '" . $this->db->escape(oc_strtolower($data['filter_country_id']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
@@ -178,7 +178,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY `cd`.`name`, `zd`.`name`";
+			$sql .= " ORDER BY `cd`.`name` ASC, `zd`.`name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -286,7 +286,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_country_id'])) {
-			$implode[] = "`z`.`country_id = '" . $this->db->escape(oc_strtolower($data['filter_country_id']) . '%') . "'";
+			$implode[] = "`z`.`country_id` = '" . $this->db->escape(oc_strtolower($data['filter_country_id']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_country'])) {

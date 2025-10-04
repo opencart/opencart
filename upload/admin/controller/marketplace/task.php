@@ -200,9 +200,13 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
-			if (!$task_total) {
-				shell_exec('php ' . DIR_APPLICATION . 'index.php start');
-			}
+			//if (!$task_total) {
+
+		//	}
+
+
+
+			pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
 
 			$json['success'] = $this->language->get('text_success');
 		}

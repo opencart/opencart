@@ -57,7 +57,7 @@ class Task extends \Opencart\System\Engine\Controller {
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
 		if ($task_total) {
-			return;
+		//	return;
 		}
 
 		$filter_data = [
@@ -87,13 +87,13 @@ class Task extends \Opencart\System\Engine\Controller {
 			if (isset($output['error'])) {
 				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output);
 
-				fwrite(STDOUT, $output['error'] . "\n");
+				//fwrite(STDOUT, $output['error'] . "\n");
 			}
 
 			if (isset($output['success'])) {
 				$this->model_setting_task->editStatus($task['task_id'], 'complete', $output);
 
-				fwrite(STDOUT, $output['success'] . "\n");
+				//fwrite(STDOUT, $output['success'] . "\n");
 
 				$this->model_setting_task->deleteTask($task['task_id']);
 

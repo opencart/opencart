@@ -4,8 +4,8 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-task').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="button" id="button-start"  data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-success"><i class="fa-solid fa-play"></i></button>
-        <button type="button" id="button-pause"  data-bs-toggle="tooltip" title="{{ button_pause }}" class="btn btn-warning"><i class="fa-solid fa-pause"></i></button>
+        <button type="button" id="button-start" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-success"><i class="fa-solid fa-play"></i></button>
+        <button type="button" id="button-pause" data-bs-toggle="tooltip" title="{{ button_pause }}" class="btn btn-warning"><i class="fa-solid fa-pause"></i></button>
         <button type="button" id="button-clear" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa-solid fa-eraser"></i></button>
         <div class="btn-group">
           <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
@@ -16,7 +16,9 @@
             <li><button type="submit" form="form-task" formaction="{{ paused }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-warning"></i> {{ text_paused }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ complete }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-success"></i> {{ text_complete }}</button></li>
             <li><button type="submit" form="form-task" formaction="{{ failed }}" class="dropdown-item"><i class="fa-solid fa-circle-exclamation text-danger"></i> {{ text_failed }}</button></li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li><button type="submit" form="form-task" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
           </ul>
         </div>
@@ -94,6 +96,8 @@ $('#button-start').on('click', function(e) {
             $('#button-start').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -123,6 +127,8 @@ $('#button-pause').on('click', function(e) {
             $('#button-pause').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -152,6 +158,8 @@ $('#button-clear').on('click', function(e) {
             $('#button-clear').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {

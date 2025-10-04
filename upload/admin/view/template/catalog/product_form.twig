@@ -1593,7 +1593,7 @@
     {% for customer_group in customer_groups %}
 	  html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>';
     {% endfor %}
-	  html += '    <select>';
+	  html += '    </select>';
 	  html += '  </td>';
 	  html += '  <td class="left">';
 	  html += '    <a onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';

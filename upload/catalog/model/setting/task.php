@@ -28,4 +28,46 @@ class Task extends \Opencart\System\Engine\Model {
 
 		return $this->db->getLastId();
 	}
+
+	/**
+	 * Get Total Task(s)
+	 *
+	 * Get the total number of total task records in the database.
+	 *
+	 * @return int total number of task records
+	 *
+	 * @example
+	 *
+	 * $filter_data = [
+	 *     'sort'  => 'code',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('setting/task');
+	 *
+	 * $task_total = $this->model_setting_task->getTotalTasks($filter_data);
+	 */
+	public function getTotalTasks(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task`";
+
+		$implode = [];
+
+		if (!empty($data['filter_code'])) {
+			$implode[] = "LCASE(`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code'])) . "'";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$implode[] = "`status` = '" . $this->db->escape($data['filter_status']) . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
 }

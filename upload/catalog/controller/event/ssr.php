@@ -62,8 +62,6 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		$directory = parse_url($this->config->get('config_url'), PHP_URL_HOST) . '/' . implode('/', array_column($keywords, 'keyword')) . '/';
 		$filename = 'index.html';
 
-		echo $directory . "\n";
-
 		oc_directory_create($base . $directory, 0777);
 
 		file_put_contents($base . $directory . $filename, $output);

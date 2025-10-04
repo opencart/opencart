@@ -20,9 +20,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {
-			$this->url->addRewrite($this);
+			$this->load->model('design/seo_url');
 
-			$this->regex = [];
+			$this->url->addRewrite($this);
 
 			$this->load->model('design/seo_regex');
 
@@ -32,24 +32,19 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				$this->regex[$result['key']][] = $result;
 			}
 
-
-
 			// Decode URL
 			if (!isset($this->request->get['_route_'])) {
 				return null;
 			}
 
 			//HTTP_SERVER
-
 			$parts = explode('/', trim($this->request->get['_route_'], '/'));
-
-			$this->load->model('design/seo_url');
 
 			foreach ($parts as $key => $value) {
 				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($value);
 
 				if ($seo_url_info) {
-					$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
+					$this->request->get[$seo_url_info['key']] = $seo_url_info['value'];
 
 					unset($parts[$key]);
 
@@ -57,10 +52,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				}
 
 				foreach ($results as $result) {
-					$query = preg_replace($result['keyword'], $result['value'], $value, 1, $count);
-
-					if ($count) {
-						$this->request->get[$result['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
+					if (preg_match($result['keyword'], $value)) {
+						$this->request->get[$result['key']] = preg_replace($result['keyword'], $result['value'], $value);
 
 						unset($parts[$key]);
 
@@ -146,17 +139,15 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			// Run through the regexes to match and replace queries to a path
 			if (isset($this->regex[$key])) {
-				foreach ($this->regex[$key] as $result) {
-					$keyword = preg_replace($result['match'], $result['replace'], $value, -1, $count);
-
-					if ($count) {
-						$this->data[$index] = $result + ['keyword' => $keyword];
+				foreach ((array)$this->regex[$key] as $result) {
+					if (preg_match($result['match'], $value)) {
+						$this->data[$index] = ['keyword' => preg_replace($result['match'], $result['replace'], $value)] + $result;
 
 						$paths[] = $this->data[$index];
 
 						unset($query[$key]);
 
-						continue;
+						break;
 					}
 				}
 			}

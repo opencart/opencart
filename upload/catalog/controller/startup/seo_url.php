@@ -37,7 +37,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				return null;
 			}
 
-			//HTTP_SERVER
 			$parts = explode('/', trim($this->request->get['_route_'], '/'));
 
 			foreach ($parts as $key => $value) {

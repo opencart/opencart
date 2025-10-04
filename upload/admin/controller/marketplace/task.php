@@ -202,11 +202,13 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			//if (!$task_total) {
 
-		//	}
+			//}
 
-
-
-			pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
+			if (substr(php_uname(), 0, 7) == 'Windows') {
+				pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
+			} else {
+				exec(DIR_APPLICATION . 'index.php start > /dev/null &');
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

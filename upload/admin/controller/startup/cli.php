@@ -48,6 +48,9 @@ class Task extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		register_shutdown_function([$this, '']);
+		
+		
 		return null;
 	}
 
@@ -111,5 +114,9 @@ class Task extends \Opencart\System\Engine\Controller {
 	public function usage() {
 		$results = oc_directory_read(DIR_CATALOG);
 
+	}
+
+	public function close() {
+		
 	}
 }

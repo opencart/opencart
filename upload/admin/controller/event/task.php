@@ -31,7 +31,6 @@ class Task extends \Opencart\System\Engine\Controller {
 		/*
 		$handle = popen(DIR_APPLICATION . 'index.php start > ' . DIR_LOGS . 'test.log 2>&1', 'r');
 
-		//echo "'$handle'; " . gettype($handle) . "\n";
 
 		$read = fread($handle, 4096);
 

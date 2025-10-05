@@ -34,32 +34,15 @@ class Ssr extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		// 1. Get the main response
+		if (!isset($this->request->get['_route_'])) {
+			return;
+		}
+
 		$output = $this->response->getOutput();
-
-		$keywords = [];
-
-		// Create the directory and file names.
-		$this->load->model('design/seo_url');
-
-		foreach ($this->request->get as $key => $value) {
-			$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($key, $value);
-
-			if ($seo_url_info) {
-				$keywords[] = $seo_url_info;
-			}
-		}
-
-		$sort_order = [];
-
-		foreach ($keywords as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $keywords);
 
 		// Create the directory and file names.
 		$base = DIR_OPENCART . 'shop/';
-		$directory = parse_url($this->config->get('config_url'), PHP_URL_HOST) . '/' . implode('/', array_column($keywords, 'keyword')) . '/';
+		$directory = parse_url($this->config->get('config_url'), PHP_URL_HOST) . '/' . $this->request->get['_route_'];
 		$filename = 'index.html';
 
 		oc_directory_create($base . $directory, 0777);

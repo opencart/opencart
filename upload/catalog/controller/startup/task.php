@@ -1,3 +1,4 @@
+
 <?php
 namespace Opencart\Catalog\Controller\Event;
 /**
@@ -28,7 +29,6 @@ class Task extends \Opencart\System\Engine\Controller {
 			return;
 		}
 
-
 		$handle = popen(DIR_APPLICATION . 'index.php start > ' . DIR_LOGS . 'test.log 2>&1', 'r');
 
 		//echo "'$handle'; " . gettype($handle) . "\n";
@@ -39,7 +39,10 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		pclose($handle);
 
-
 		//exec('php ' . DIR_APPLICATION . 'index.php start 2>&1');
+	}
+
+	public function trigger(string &$route, array &$args, &$output): void {
+
 	}
 }

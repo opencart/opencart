@@ -27,7 +27,6 @@ $_['action_pre_action']  = [
 	'startup/seo_url',
 	'startup/session',
 	'startup/customer',
-	'startup/currency',
 	'startup/tax',
 	'startup/application',
 	'startup/extension',

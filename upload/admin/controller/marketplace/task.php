@@ -203,6 +203,9 @@ class Task extends \Opencart\System\Engine\Controller {
 			//if (!$task_total) {
 
 			//}
+			$output = shell_exec('ps aux | grep php');
+			echo $output;
+
 
 			if (strtoupper(substr(php_uname(), 0, 3)) == 'WIN') {
 				pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));

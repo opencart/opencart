@@ -15,38 +15,18 @@ namespace Opencart\Admin\Controller\Startup;
  *
  * php c://xampp/htdocs/opencart-master/upload/install/cli_install.php start
  */
-class Cli extends \Opencart\System\Engine\Controller {
+class Task extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
 	public function index() {
-		if (php_sapi_name() == 'cli') {
-			if (isset($this->request->server['argv'])) {
-				$argv = (array)$this->request->server['argv'];
-			} else {
-				$argv = [];
-			}
 
-			// Just displays the path to the file
-			$script = array_shift($argv);
 
-			// Get the arguments passed with the command
-			$command = array_shift($argv);
 
-			switch ($command) {
-				case 'start':
-					return new \Opencart\System\Engine\Action('startup/task.start', $argv);
 
-					break;
-				case 'usage':
-				default:
-					return new \Opencart\System\Engine\Action('startup/task.usage', $argv);
 
-					break;
-			}
-		}
 
 		return null;
 	}
@@ -57,7 +37,7 @@ class Cli extends \Opencart\System\Engine\Controller {
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
 		if ($task_total) {
-			//	return;
+		//	return;
 		}
 
 		$filter_data = [
@@ -114,6 +94,6 @@ class Cli extends \Opencart\System\Engine\Controller {
 	}
 
 	public function close() {
-
+		
 	}
 }

@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Admin\Controller\Common;
+namespace Opencart\Admin\Controller\System;
 /**
  * Class Notification
  *
- * @package Opencart\Admin\Controller\Startup
+ * @package Opencart\Admin\Controller\System
  */
 class Notification extends \Opencart\System\Engine\Controller {
 	/**

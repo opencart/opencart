@@ -1135,7 +1135,8 @@ VALUES ('task', 'Processes tasks such as theme and static files generation, send
        ('currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, NOW(), NOW()),
        ('gdpr', 'Deletes and send emails to customers who have requested their GPDR data to be deleted.', 'day', 'cron/gdpr', 1, NOW(), NOW()),
        ('subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, NOW(), NOW()),
-       ('backup', 'Starts the backup process.', 'day', 'cron/backup', 0, NOW(), NOW());
+       ('backup', 'Starts the backup process.', 'day', 'cron/backup', 0, NOW(), NOW()),
+       ('notification', 'Contacts the OpenCart server to see if there are any notifications such as new release.', 'week', 'cron/notification', 0, NOW(), NOW());
 
 -----------------------------------------------------------
 
@@ -2192,11 +2193,10 @@ VALUES (1, 'category', 'link', 'catalog/category', 'catalog', 1),
        (19, 'marketplace', 'link', 'marketplace/marketplace', 'extension', 1),
        (20, 'installer', 'link', 'marketplace/installer', 'extension', 2),
        (21, 'extension_2', 'link', 'marketplace/extension', 'extension', 3),
-       (22, 'ssr', 'link', 'marketplace/ssr', 'extension', 6),
-       (23, 'task', 'link', 'marketplace/task', 'extension', 5),
-       (24, 'event', 'link', 'marketplace/event', 'extension', 7),
-       (25, 'startup', 'link', 'marketplace/startup', 'extension', 8),
-       (26, 'cron', 'link', 'marketplace/cron', 'extension', 9),
+       (23, 'task', 'link', 'marketplace/task', 'extension', 4),
+       (24, 'event', 'link', 'marketplace/event', 'extension', 5),
+       (25, 'startup', 'link', 'marketplace/startup', 'extension', 6),
+       (26, 'cron', 'link', 'marketplace/cron', 'extension', 7),
        (27, 'layout', 'link', 'design/layout', 'design', 1),
        (28, 'theme', 'link', 'design/theme', 'design', 2),
        (29, 'translation', 'link', 'design/translation', 'design', 3),
@@ -3185,45 +3185,6 @@ VALUES (0, 1, 'language', 'en-gb', 'en-gb', -2),
        (0, 1, 'sort', 'model', 'model', 9),
        (0, 1, 'order', 'asc', 'asc', 10),
        (0, 1, 'order', 'desc', 'desc', 10);
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_ssr`
---
-
-INSERT INTO `oc_ssr` (`code`, `description`, `action`, `date_modified`)
-VALUES ('banner', 'Renders banner data', 'task/catalog/banner', NOW()),
-       ('country', 'Renders country data', 'task/catalog/country', NOW()),
-       ('country', 'Renders country data', 'task/admin/country', NOW()),
-       ('currency', 'Renders currency data', 'task/catalog/currency', NOW()),
-       ('currency', 'Renders currency data', 'task/admin/currency', NOW()),
-       ('customer_group', 'Renders customer group data', 'task/catalog/customer_group', NOW()),
-       ('customer_group', 'Renders customer group data', 'task/admin/customer_group', NOW()),
-       ('information', 'Renders information data', 'task/admin/information', NOW()),
-       ('language', 'Renders language data', 'task/catalog/language', NOW()),
-       ('language', 'Renders language data', 'task/admin/language', NOW()),
-       ('length_class', 'Renders length class data', 'task/catalog/length_class', NOW()),
-       ('length_class', 'Renders length class data', 'task/admin/length_class', NOW()),
-       ('option', 'Renders option data', 'task/catalog/option', NOW()),
-       ('order_status', 'Renders order status data', 'task/admin/order_status', NOW()),
-       ('report_order', 'Renders report order data', 'task/report/order', NOW()),
-       ('report_return', 'Renders report return data', 'task/report/returns', NOW()),
-       ('report_review', 'Renders report review data', 'task/report/review', NOW()),
-       ('report_sale', 'Renders report sale data', 'task/report/sale', NOW()),
-       ('report_stock', 'Renders report stock data', 'task/report/stock', NOW()),
-       ('return_action', 'Renders return action data', 'task/admin/return_action', NOW()),
-       ('return_reason', 'Renders return reason data', 'task/catalog/return_reason', NOW()),
-       ('return_reason', 'Renders return reason data', 'task/admin/return_reason', NOW()),
-       ('return_status', 'Renders return status data', 'task/admin/return_status', NOW()),
-       ('sass', 'Renders stylesheets', 'task/catalog/sass', NOW()),
-       ('stock_status', 'Renders stock status data', 'task/admin/stock_status', NOW()),
-       ('store', 'Renders store data', 'task/admin/store', NOW()),
-       ('subscription_status', 'Renders subscription status data', 'task/admin/subscription_status', NOW()),
-       ('theme', 'Renders theme data', 'task/catalog/theme', NOW()),
-       ('translation', 'Renders translation data', 'task/catalog/translation', NOW()),
-       ('weight_class', 'Renders weight class data', 'task/catalog/weight_class', NOW()),
-       ('weight_class', 'Renders weight class', 'task/admin/weight_class', NOW());
 
 -----------------------------------------------------------
 

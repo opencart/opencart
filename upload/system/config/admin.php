@@ -33,7 +33,7 @@ $_['action_pre_action'] = [
 	'startup/startup',
 	'startup/error',
 	'startup/event',
-	'startup/task',
+	//'startup/task',
 	'startup/login',
 	'startup/authorize',
 	'startup/permission'

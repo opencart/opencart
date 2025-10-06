@@ -1,10 +1,10 @@
 
 <?php
-namespace Opencart\Catalog\Controller\Event;
+namespace Opencart\Catalog\Controller\Startup;
 /**
  * Class Task
  *
- * @package Opencart\Admin\Controller\Event
+ * @package Opencart\Admin\Controller\Startup
  */
 class Task extends \Opencart\System\Engine\Controller {
 	/**
@@ -12,15 +12,13 @@ class Task extends \Opencart\System\Engine\Controller {
 	 *
 	 * Starts task queue if not running
 	 *
-	 * model/setting/task.addTask/after
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 * @param mixed             $output
-	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, &$output): void {
+	public function index(): void {
+		register_shutdown_function([$this, 'trigger']);
+	}
+
+	public function trigger(): void {
 		$this->load->model('setting/task');
 
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
@@ -29,20 +27,8 @@ class Task extends \Opencart\System\Engine\Controller {
 			return;
 		}
 
-		$handle = popen(DIR_APPLICATION . 'index.php start > ' . DIR_LOGS . 'test.log 2>&1', 'r');
-
-		//echo "'$handle'; " . gettype($handle) . "\n";
-
-		$read = fread($handle, 4096);
-
-		echo $read;
-
-		pclose($handle);
+		pclose(popen(DIR_APPLICATION . 'index.php start > ' . DIR_LOGS . 'test.log 2>&1', 'r'));
 
 		//exec('php ' . DIR_APPLICATION . 'index.php start 2>&1');
-	}
-
-	public function trigger(string &$route, array &$args, &$output): void {
-
 	}
 }

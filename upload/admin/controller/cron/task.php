@@ -23,7 +23,11 @@ class Task extends \Opencart\System\Engine\Controller {
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
 		if (!$task_total) {
-			shell_exec('php ' . DIR_APPLICATION . 'index.php start');
+			if (substr(strtoupper(php_uname()), 0, 3) == 'WIN') {
+				pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
+			} else {
+				exec(DIR_APPLICATION . 'index.php start > /dev/null 2>&1 &');
+			}
 		}
 	}
 }

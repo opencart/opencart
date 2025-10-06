@@ -1,14 +1,31 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Shipping;
+namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
+/**
+ * Class Pickup
+ *
+ * Can be called from $this->load->model('extension/opencart/shipping/pickup');
+ *
+ * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
+ */
 class Pickup extends \Opencart\System\Engine\Model {
-	function getQuote($address) {
+	/**
+	 * Get Quote
+	 *
+	 * @param array<string, mixed> $address array of data
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getQuote(array $address): array {
 		$this->load->language('extension/opencart/shipping/pickup');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('shipping_pickup_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+		// Geo Zone
+		$this->load->model('localisation/geo_zone');
+
+		$results = $this->model_localisation_geo_zone->getGeoZone((int)$this->config->get('shipping_pickup_geo_zone_id'), (int)$address['country_id'], (int)$address['zone_id']);
 
 		if (!$this->config->get('shipping_pickup_geo_zone_id')) {
 			$status = true;
-		} elseif ($query->num_rows) {
+		} elseif ($results) {
 			$status = true;
 		} else {
 			$status = false;
@@ -21,15 +38,15 @@ class Pickup extends \Opencart\System\Engine\Model {
 
 			$quote_data['pickup'] = [
 				'code'         => 'pickup.pickup',
-				'title'        => $this->language->get('text_description'),
+				'name'         => $this->language->get('text_description'),
 				'cost'         => 0.00,
 				'tax_class_id' => 0,
-				'text'         => $this->currency->format(0.00, $this->session->data['currency'])
+				'text'         => 0.00
 			];
 
 			$method_data = [
 				'code'       => 'pickup',
-				'title'      => $this->language->get('text_title'),
+				'name'       => $this->language->get('heading_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_pickup_sort_order'),
 				'error'      => false

@@ -1,27 +1,71 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Catalog\Controller\Event;
+/**
+ * Class Statistics
+ *
+ * @package Opencart\Catalog\Controller\Event
+ */
 class Statistics extends \Opencart\System\Engine\Controller {
-	// catalog/model/catalog/review/addReview/after
-	public function addReview(&$route, &$args, &$output) {
+	/**
+	 * Add Review
+	 *
+	 * Trigger
+	 *
+	 * catalog/model/catalog/review/addReview/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
+	public function addReview(string &$route, array &$args, &$output): void {
+		// Stats
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->addValue('review', 1);	
+		$this->model_report_statistics->addValue('review', 1);
 	}
-		
-	// catalog/model/account/returns/addReturn/after
-	public function addReturn(&$route, &$args, &$output) {
+
+	/**
+	 * Add Return
+	 *
+	 * Trigger
+	 *
+	 * catalog/model/account/returns.addReturn/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
+	public function addReturn(string &$route, array &$args, &$output): void {
+		// Stats
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->addValue('return', 1);
+		$this->model_report_statistics->addValue('returns', 1);
 	}
-	
-	// catalog/model/checkout/order/addHistory/before
-	public function addHistory(&$route, &$args) {
+
+	/**
+	 * Add History
+	 *
+	 * Trigger
+	 * 
+	 * catalog/model/checkout/order.addHistory/before
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 *
+	 * @return void
+	 */
+	public function addHistory(string &$route, array &$args): void {
+		// Order
 		$this->load->model('checkout/order');
-				
+
 		$order_info = $this->model_checkout_order->getOrder($args[0]);
 
 		if ($order_info) {
+			// Stats
 			$this->load->model('report/statistics');
 
 			$old_status_id = $order_info['order_status_id'];
@@ -36,7 +80,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			if (in_array($new_status_id, $active_status) && !in_array($old_status_id, $active_status)) {
 				$this->model_report_statistics->addValue('order_sale', $order_info['total']);
 			}
-			
+
 			// If order status not in complete or processing remove value to sale total
 			if (!in_array($new_status_id, $active_status) && in_array($old_status_id, $active_status)) {
 				$this->model_report_statistics->removeValue('order_sale', $order_info['total']);

@@ -87,7 +87,7 @@ class RetryMiddleware
             $retries,
             CommandInterface $command,
             RequestInterface $request,
-            ResultInterface $result = null,
+            ?ResultInterface $result = null,
             $error = null
         ) use ($maxRetries, $retryCurlErrors, $extraConfig) {
             // Allow command-level options to override this value
@@ -216,7 +216,7 @@ class RetryMiddleware
      */
     public function __invoke(
         CommandInterface $command,
-        RequestInterface $request = null
+        ?RequestInterface $request = null
     ) {
         $retries = 0;
         $requestStats = [];
@@ -249,7 +249,7 @@ class RetryMiddleware
             }
             if ($value instanceof \Exception || $value instanceof \Throwable) {
                 if (!$decider($retries, $command, $request, null, $value)) {
-                    return Promise\rejection_for(
+                    return Promise\Create::rejectionFor(
                         $this->bindStatsToReturn($value, $requestStats)
                     );
                 }

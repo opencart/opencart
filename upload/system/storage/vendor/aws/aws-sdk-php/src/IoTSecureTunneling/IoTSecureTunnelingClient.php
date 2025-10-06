@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTunnelsAsync(array $args = [])
  * @method \Aws\Result openTunnel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise openTunnelAsync(array $args = [])
+ * @method \Aws\Result rotateTunnelAccessToken(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise rotateTunnelAccessTokenAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

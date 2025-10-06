@@ -1,102 +1,24 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
+/**
+ * Class File Manager
+ *
+ * Can be loaded using $this->load->controller('common/filemanager');
+ *
+ * @package Opencart\Admin\Controller\Common
+ */
 class FileManager extends \Opencart\System\Engine\Controller {
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('common/filemanager');
 
-		// Make sure we have the correct directory
-		if (isset($this->request->get['directory'])) {
-			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
-		} else {
-			$directory = DIR_IMAGE . 'catalog/';
-		}
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = basename(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		} else {
-			$filter_name = '';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$data['directories'] = [];
-
-		// Get directories
-		$directories = glob($directory . '*', GLOB_ONLYDIR);
-
-		if ($directories) {
-			// Split the array based on current page number and max number of items per page of 10
-			$images = array_slice($directories, ($page - 1) * 16, 16);
-
-			foreach ($images as $image) {
-				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
-					$name = basename($image);
-
-					$url = '';
-
-					if (isset($this->request->get['target'])) {
-						$url .= '&target=' . $this->request->get['target'];
-					}
-
-					if (isset($this->request->get['thumb'])) {
-						$url .= '&thumb=' . $this->request->get['thumb'];
-					}
-
-					if (isset($this->request->get['ckeditor'])) {
-						$url .= '&ckeditor=' . $this->request->get['ckeditor'];
-					}
-
-					$data['directories'][] = [
-						'name' => $name,
-						'path' => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-						'type' => 'directory',
-						'href' => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url)
-					];
-				}
-			}
-		}
-
-		$this->load->model('tool/image');
-
-		$data['images'] = [];
-
-		$files = glob($directory . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
-
-		if ($files) {
-			// Split the array based on current page number and max number of items per page of 10
-			$images = array_slice($files, ($page - 1) * 16, 16 - count($data['directories']));
-
-			foreach ($images as $image) {
-				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
-					$name = basename($image);
-
-					$data['images'][] = [
-						'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 136, 136),
-						'name'  => $name,
-						'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-						'href'  => HTTP_CATALOG . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
-					];
-				}
-			}
-		}
-
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->get['directory'])) {
-			$data['directory'] = urldecode($this->request->get['directory']);
-		} else {
-			$data['directory'] = '';
-		}
-
-		if (isset($this->request->get['filter_name'])) {
-			$data['filter_name'] = $this->request->get['filter_name'];
-		} else {
-			$data['filter_name'] = '';
-		}
+		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
 		// Return the target ID for the file manager to set the value
 		if (isset($this->request->get['target'])) {
@@ -118,13 +40,150 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$data['ckeditor'] = '';
 		}
 
+		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('common/filemanager', $data));
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('common/filemanager');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	/**
+	 * Get List
+	 *
+	 * @return string
+	 */
+	public function getList(): string {
+		$base = DIR_IMAGE . 'catalog/';
+
+		// Make sure we have the correct directory
+		if (!empty($this->request->get['directory'])) {
+			$directory = $base . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
+		} else {
+			$directory = $base;
+		}
+
+		if (!empty($this->request->get['filter_name'])) {
+			$filter_name = basename(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$url = '';
+
+		if (isset($this->request->get['target'])) {
+			$url .= '&target=' . $this->request->get['target'];
+		}
+
+		if (isset($this->request->get['thumb'])) {
+			$url .= '&thumb=' . $this->request->get['thumb'];
+		}
+
+		if (isset($this->request->get['ckeditor'])) {
+			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
+		}
+
+		$allowed = [
+			'ico',
+			'gif',
+			'jpg',
+			'jpe',
+			'jpeg',
+			'png',
+			'webp',
+		];
+
+		$limit = 16;
+		$start = ($page - 1) * $limit;
+
+		$files = [];
+		$directories = [];
+
+		// Get directories and files
+		$paths = oc_directory_read($directory);
+
+		foreach (array_slice($paths, $start, $limit) as $path) {
+			if (substr($path, 0, strlen($base)) !== $base) {
+				continue;
+			}
+
+			if (substr($path, -1) == '/') {
+				$directories[] = $path;
+
+				continue;
+			}
+
+			if (!in_array(\strtolower(substr($path, strrpos($path, '.') + 1)), $allowed)) {
+				continue;
+			}
+
+			if ($filter_name && !str_starts_with(basename($path), $filter_name)) {
+				continue;
+			}
+
+			$files[] = $path;
+		}
+
+		$data['directories'] = [];
+
+		// Split the array based on current page number and max number of items per page of 10
+		foreach ($directories as $directory) {
+			$data['directories'][] = [
+				'name' => basename($directory),
+				'path' => oc_substr($directory, oc_strlen($base)) . '/',
+				'href' => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(oc_substr($directory, oc_strlen($base))) . $url)
+			];
+		}
+
+		// Image
+		$data['images'] = [];
+
+		$this->load->model('tool/image');
+
+		foreach ($files as $file) {
+			$data['images'][] = [
+				'name'  => basename($file),
+				'thumb' => $this->model_tool_image->resize(oc_substr($file, oc_strlen(DIR_IMAGE)), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
+				'path'  => oc_substr($file, oc_strlen($base)),
+				'href'  => HTTP_CATALOG . 'image/catalog/' . oc_substr($file, oc_strlen($base))
+			];
+		}
+
+		if (isset($this->request->get['directory'])) {
+			$data['directory'] = urldecode($this->request->get['directory']);
+		} else {
+			$data['directory'] = '';
+		}
+
+		if (isset($this->request->get['filter_name'])) {
+			$data['filter_name'] = $this->request->get['filter_name'];
+		} else {
+			$data['filter_name'] = '';
+		}
+
 		// Parent
 		$url = '';
 
 		if (isset($this->request->get['directory'])) {
 			$pos = strrpos($this->request->get['directory'], '/');
 
-			if ($pos) {
+			if ($pos !== false) {
 				$url .= '&directory=' . urlencode(substr($this->request->get['directory'], 0, $pos));
 			}
 		}
@@ -141,7 +200,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
 		}
 
-		$data['parent'] = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['parent'] = $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Refresh
 		$url = '';
@@ -153,7 +212,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
-		
+
 		if (isset($this->request->get['target'])) {
 			$url .= '&target=' . $this->request->get['target'];
 		}
@@ -170,7 +229,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['refresh'] = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['refresh'] = $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$url = '';
 
@@ -196,16 +255,23 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		// Get total number of files and directories
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => count(array_merge((array)$directories, (array)$files)),
+			'total' => count($paths),
 			'page'  => $page,
-			'limit' => 16,
-			'url'   => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'limit' => $limit,
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
-		$this->response->setOutput($this->load->view('common/filemanager', $data));
+		return $this->load->view('common/filemanager_list', $data);
 	}
 
-	public function upload() {
+	/**
+	 * Upload
+	 *
+	 * @return void
+	 */
+	public function upload(): void {
 		$this->load->language('common/filemanager');
 
 		$json = [];
@@ -215,15 +281,17 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$base = DIR_IMAGE . 'catalog/';
+
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
+			$directory = $base . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
-			$directory = DIR_IMAGE . 'catalog/';
+			$directory = $base;
 		}
 
-		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+		// Check it's a directory
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)) . '/', 0, strlen($base)) != $base) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -246,36 +314,41 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			foreach ($files as $file) {
 				if (is_file($file['tmp_name'])) {
 					// Sanitize the filename
-					$filename = preg_replace('[/\\?%*:|"<>]', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
+					$filename = preg_replace('/[\/\\\?%*:|"<>]/', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
 
 					// Validate the filename length
-					if ((utf8_strlen($filename) < 4) || (utf8_strlen($filename) > 255)) {
+					if (!oc_validate_length($filename, 4, 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
 
 					// Allowed file extension types
 					$allowed = [
-						'jpg',
-						'jpeg',
+						'ico',
 						'gif',
-						'png'
+						'jpg',
+						'jpe',
+						'jpeg',
+						'png',
+						'webp',
 					];
 
-					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
-						$json['error'] = $this->language->get('error_filetype');
+					if (!in_array(\strtolower(substr($filename, strrpos($filename, '.') + 1)), $allowed)) {
+						$json['error'] = $this->language->get('error_file_type');
 					}
 
 					// Allowed file mime types
 					$allowed = [
+						'image/x-icon',
 						'image/jpeg',
 						'image/pjpeg',
 						'image/png',
 						'image/x-png',
-						'image/gif'
+						'image/gif',
+						'image/webp'
 					];
 
 					if (!in_array($file['type'], $allowed)) {
-						$json['error'] = $this->language->get('error_filetype');
+						$json['error'] = $this->language->get('error_file_type');
 					}
 
 					// Return any upload error
@@ -300,10 +373,17 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function folder() {
+	/**
+	 * Folder
+	 *
+	 * @return void
+	 */
+	public function folder(): void {
 		$this->load->language('common/filemanager');
 
 		$json = [];
+
+		$base = DIR_IMAGE . 'catalog/';
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
@@ -312,36 +392,36 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
+			$directory = $base . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
-			$directory = DIR_IMAGE . 'catalog/';
+			$directory = $base;
 		}
 
-		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+		if (isset($this->request->post['folder'])) {
+			// Sanitize the folder name
+			$folder = preg_replace('/[\/\\\?%*&:|"<>]/', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
+		} else {
+			$folder = '';
+		}
+
+		// Check it's a directory
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)) . '/', 0, strlen($base)) != $base) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			// Sanitize the folder name
-			$folder = preg_replace('[/\\?%*:|"<>]', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
-
-			// Validate the filename length
-			if ((utf8_strlen($folder) < 3) || (utf8_strlen($folder) > 128)) {
-				$json['error'] = $this->language->get('error_folder');
-			}
-
-			// Check if directory already exists or not
-			if (is_dir($directory . '/' . $folder)) {
-				$json['error'] = $this->language->get('error_exists');
-			}
+		// Validate the filename length
+		if (!oc_validate_length($folder, 3, 128)) {
+			$json['error'] = $this->language->get('error_folder');
+		} elseif (is_dir($directory . $folder)) {
+			$json['error'] = $this->language->get('error_exists');
 		}
 
 		if (!$json) {
-			mkdir($directory . '/' . $folder, 0777);
-			chmod($directory . '/' . $folder, 0777);
+			mkdir($directory . $folder, 0777);
 
-			@touch($directory . '/' . $folder . '/' . 'index.html');
+			chmod($directory . $folder, 0777);
+
+			@touch($directory . $folder . '/' . 'index.html');
 
 			$json['success'] = $this->language->get('text_directory');
 		}
@@ -350,10 +430,17 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete() {
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
 		$this->load->language('common/filemanager');
 
 		$json = [];
+
+		$base = DIR_IMAGE . 'catalog/';
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
@@ -372,7 +459,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$path = html_entity_decode($path, ENT_QUOTES, 'UTF-8');
 
 			// Check path exists
-			if (($path == DIR_IMAGE . 'catalog') || (substr(str_replace('\\', '/', realpath(DIR_IMAGE . $path)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog')) {
+			if (($path == $base) || (substr(str_replace('\\', '/', realpath($base . $path)) . '/', 0, strlen($base)) != $base)) {
 				$json['error'] = $this->language->get('error_delete');
 
 				break;
@@ -382,48 +469,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Loop through each path
 			foreach ($paths as $path) {
-				$path = rtrim(DIR_IMAGE . html_entity_decode($path, ENT_QUOTES, 'UTF-8'), '/');
-
-				// If path is just a file delete it
-				if (is_file($path)) {
-					unlink($path);
-
-				// If path is a directory begin deleting each file and sub folder
-				} elseif (is_dir($path)) {
-					$files = [];
-
-					// Make path into an array
-					$path = [$path];
-
-					// While the path array is still populated keep looping through
-					while (count($path) != 0) {
-						$next = array_shift($path);
-
-						foreach (glob($next) as $file) {
-							// If directory add to path array
-							if (is_dir($file)) {
-								$path[] = $file . '/*';
-							}
-
-							// Add the file to the files to be deleted array
-							$files[] = $file;
-						}
-					}
-
-					// Reverse sort the file array
-					rsort($files);
-
-					foreach ($files as $file) {
-						// If file just delete
-						if (is_file($file)) {
-							unlink($file);
-
-						// If directory use the remove directory function
-						} elseif (is_dir($file)) {
-							rmdir($file);
-						}
-					}
-				}
+				oc_directory_delete(rtrim($base . html_entity_decode($path, ENT_QUOTES, 'UTF-8'), '/'));
 			}
 
 			$json['success'] = $this->language->get('text_delete');

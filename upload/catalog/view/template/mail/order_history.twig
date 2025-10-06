@@ -1,0 +1,24 @@
+{{ text_order_id }} {{ order_id }}<br/>
+{{ text_date_added }} {{ date_added }}<br/>
+<br/>
+{{ text_order_status }}<br/>
+<br/>
+{{ order_status }}<br/>
+<br/>
+{% if link %}
+{{ text_link }}<br/>
+<br/>
+{{ link }}<br/>
+{% endif %}
+{% if comment %}
+<br/>
+{{ text_comment }}<br/>
+<br/>
+{{ comment }}<br/>
+{{ text_footer }}<br/>
+{% else %} 
+{{ text_footer }}<br/>
+{% endif %}
+<br/>
+{{ store }}<br/>
+{{ store_url }}

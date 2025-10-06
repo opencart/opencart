@@ -2,6 +2,7 @@
 namespace Aws\Multipart;
 
 use Aws\AwsClientInterface as Client;
+use Aws\Exception\AwsException;
 use GuzzleHttp\Psr7;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\StreamInterface as Stream;
@@ -58,6 +59,18 @@ abstract class AbstractUploader extends AbstractUploadManager
                     $data + $this->state->getId()
                 );
                 $command->getHandlerList()->appendSign($resultHandler, 'mup');
+                $numberOfParts = $this->getNumberOfParts($this->state->getPartSize());
+                if (isset($numberOfParts) && $partNumber > $numberOfParts) {
+                    throw new $this->config['exception_class'](
+                        $this->state,
+                        new AwsException(
+                            "Maximum part number for this job exceeded, file has likely been corrupted." .
+                            "  Please restart this upload.",
+                            $command
+                        )
+                    );
+                }
+
                 yield $command;
                 if ($this->source->tell() > $partStartPos) {
                     continue;
@@ -105,7 +118,7 @@ abstract class AbstractUploader extends AbstractUploadManager
      * Turns the provided source into a stream and stores it.
      *
      * If a string is provided, it is assumed to be a filename, otherwise, it
-     * passes the value directly to `Psr7\stream_for()`.
+     * passes the value directly to `Psr7\Utils::streamFor()`.
      *
      * @param mixed $source
      *
@@ -115,15 +128,23 @@ abstract class AbstractUploader extends AbstractUploadManager
     {
         // Use the contents of a file as the data source.
         if (is_string($source)) {
-            $source = Psr7\try_fopen($source, 'r');
+            $source = Psr7\Utils::tryFopen($source, 'r');
         }
 
         // Create a source stream.
-        $stream = Psr7\stream_for($source);
+        $stream = Psr7\Utils::streamFor($source);
         if (!$stream->isReadable()) {
             throw new IAE('Source stream must be readable.');
         }
 
         return $stream;
+    }
+
+    protected function getNumberOfParts($partSize)
+    {
+        if ($sourceSize = $this->source->getSize()) {
+            return ceil($sourceSize/$partSize);
+        }
+        return null;
     }
 }

@@ -1,0 +1,32 @@
+<form id="form-antispam" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th><a href="{{ sort_keyword }}"{% if sort == 'keyword' %} class="{{ order|lower }}"{% endif %}>{{ column_keyword }}</a></th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if antispams %}
+          {% for antispam in antispams %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ antispam.antispam_id }}" class="form-check-input"/></td>
+              <td>{{ antispam.keyword }}</td>
+              <td class="text-end"><a href="{{ antispam.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="3">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

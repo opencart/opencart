@@ -12,7 +12,7 @@ class Ec2ParamBuilder extends QueryParamBuilder
     protected function queryName(Shape $shape, $default = null)
     {
         return ($shape['queryName']
-            ?: ucfirst($shape['locationName']))
+            ?: ucfirst(@$shape['locationName'] ?: ""))
                 ?: $default;
     }
 
@@ -28,9 +28,7 @@ class Ec2ParamBuilder extends QueryParamBuilder
         &$query
     ) {
         // Handle empty list serialization
-        if (!$value) {
-            $query[$prefix] = false;
-        } else {
+        if (!empty($value)) {
             $items = $shape->getMember();
             foreach ($value as $k => $v) {
                 $this->format($items, $v, $prefix . '.' . ($k + 1), $query);

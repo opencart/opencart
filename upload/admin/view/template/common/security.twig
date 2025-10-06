@@ -1,139 +1,247 @@
-<div id="modal-security" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-danger"><i class="fas fa-exclamation-triangle"></i> {{ heading_title }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_security }}</div>
-        <form>
-          <fieldset>
-            <legend>{{ text_choose }}</legend>
-            <div class="form-group">
-              <select name="type" id="input-type" class="form-control">
-                <option value="automatic">{{ text_automatic }}</option>
-                <option value="manual">{{ text_manual }}</option>
-              </select>
-            </div>
-          </fieldset>
-          <fieldset id="collapse-automatic" class="collapse">
-            <legend>{{ text_automatic }}</legend>
-            <div class="form-group">
-              <div class="input-group">
-                <div class="input-group-prepend dropdown">
-                  <button type="button" id="button-path" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
-                  <div class="dropdown-menu">
-                    {% for path in paths %}
-                      {% if path|length > document_root|length %}
-                        <a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
-                      {% else %}
-                        <a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
-                </div>
-                <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
-                <div class="input-group-append">
-                  <button type="button" id="button-move" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
-                </div>
-              </div>
-              <input type="hidden" name="path" value="{{ document_root }}"/>
-            </div>
-          </fieldset>
-          <fieldset id="collapse-manual" class="collapse">
-            <legend>{{ text_manual }}</legend>
-            <div class="card bg-light">
-              <div class="card-body" style="height: 300px; overflow-y: scroll;"></div>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<div id="security">{{ list }}</div>
+<button type="button" id="button-refresh" class="btn btn-danger d-none"><i class="fa-solid fa-sync"></i></button>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-	$('#modal-security').modal('show');
+    $('#modal-security').modal('show');
+
+    $('#accordion .accordion-header:first button').trigger('click');
 });
 
-$('#modal-security select[name=\'type\']').on('change', function() {
-	$('#modal-security fieldset.collapse').removeClass('show');
+$('#button-refresh').on('click', function() {
+    var element = this;
 
-	$('#modal-security #collapse-' + $(this).val()).addClass('show');
+    $.ajax({
+        url: 'index.php?route=common/security.list&user_token={{ user_token }}',
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $('#modal-security').modal('dispose');
+
+            $('#security').html(html);
+
+            console.log($('#modal-security .accordion-item').length);
+
+            if ($('#modal-security .accordion-item').length > 0) {
+                $('#modal-security').modal('show');
+
+                $('#accordion .accordion-header:first button').trigger('click');
+            } else {
+                $('#modal-security').modal('dispose');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
-$('#modal-security select[name=\'type\']').trigger('change');
+$('#security').on('click', '#button-install', function() {
+    var element = this;
 
-$('#modal-security .dropdown-menu a').on('click', function(e) {
-	e.preventDefault();
+    $.ajax({
+        url: 'index.php?route=common/security.install&user_token={{ user_token }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
 
-	$('#modal-security #button-path').html($(this).html() + ' <span class="fas fa-caret-down"></span>');
+            $('.alert-dismissible').remove();
 
-	$('#modal-security input[name=\'path\']').val($(this).attr('href'));
+            if (json['error']) {
+                $('#alert-install').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert-install').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                setTimeout(function() {
+                    $('#button-refresh').trigger('click');
+                }, 3000);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
+$('#security').on('submit', '#form-storage', function(e) {
+    e.preventDefault();
 
-$('#modal-security .dropdown-menu a').on('click', function(e) {
-	e.preventDefault();
+    $('#button-storage').button('loading');
 
-	$('#button-path').html($(this).text() + ' <span class="fas fa-caret-down"></span>');
+    var storage = function(next) {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
 
-	$('input[name=\'path\']').val($(this).attr('href'));
+                $('.alert-dismissible').remove();
 
-	$('input[name=\'path\']').trigger('change');
+                if (json['error']) {
+                    $('#alert-storage').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#button-storage').button('reset');
+                }
+
+                if (json['text']) {
+                    $('#alert-storage').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert-storage').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#button-storage').button('reset');
+
+                    setTimeout(function() {
+                        $('#button-refresh').trigger('click');
+                    }, 3000);
+                }
+
+                if (json['next']) {
+                    storage(json['next']);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $('#button-storage').button('reset');
+            }
+        });
+    };
+
+    storage('index.php?route=common/security.storage&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val()));
 });
 
-$('#button-move').on('click', function() {
-	var element = this;
+$('#security').on('click', '#button-storage-delete', function() {
+    var element = this;
 
-	$.ajax({
-		url: 'index.php?route=common/security|move&user_token={{ user_token }}',
-		type: 'post',
-		data: $('input[name=\'path\'], input[name=\'directory\']'),
-		dataType: 'json',
-		crossDomain: true,
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
+    $.ajax({
+        url: 'index.php?route=common/security.storage_delete&user_token={{ user_token }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
 
-			if (json['error']) {
-				$('#modal-security .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
+            $('.alert-dismissible').remove();
 
-			if (json['success']) {
-				$('#modal-security .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+            if (json['error']) {
+                $('#alert-storage').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert-storage').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                setTimeout(function() {
+                    $('#button-refresh').trigger('click');
+                }, 3000);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
-$('#modal-security select[name=\'type\']').on('change', function() {
-	html = '<ol>';
-	html += '  <li><p>{{ text_move }}</p>';
-	html += '    <p><strong>{{ storage }}</strong></p>';
-	html += '    <p>{{ text_to }}</p>';
-	html += '    <p><strong>' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/</strong></p></li>';
-	html += '   <li><p>{{ text_config }}</p>';
-	html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
-	html += '     <p>{{ text_by }}</p>';
-	html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
-	html += '   <li><p>{{ text_admin }}</p>';
-	html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
-	html += '     <p>{{ text_by }}</p>';
-	html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
-	html += '</ol>';
+$('#security').on('submit', '#form-admin', function(e) {
+    e.preventDefault();
 
-	$('#collapse-manual .card-body').html(html);
+    $('#button-admin').button('loading');
+
+    var admin = function(next) {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+
+                $('.alert-dismissible').remove();
+
+                if (json['redirect']) {
+                    setTimeout(function(redirect) {
+                        location = redirect;
+                    }, 3000, json['redirect']);
+                }
+
+                if (json['error']) {
+                    $('#alert-admin').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#button-admin').button('reset');
+                }
+
+                if (json['text']) {
+                    $('#alert-admin').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert-admin').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#button-admin').button('reset');
+                }
+
+                if (json['next']) {
+                    admin(json['next']);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $('#button-admin').button('reset');
+            }
+        });
+    };
+
+    admin('index.php?route=common/security.admin&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-admin').val()));
 });
 
-$('input[name=\'path\']').trigger('change');
+$('#security').on('click', '#button-admin-delete', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=common/security.admin_delete&user_token={{ user_token }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert-admin').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert-admin').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                setTimeout(function() {
+                    $('#button-refresh').trigger('click');
+                }, 3000);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 //--></script>

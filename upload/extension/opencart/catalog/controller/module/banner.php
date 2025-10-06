@@ -1,15 +1,26 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
+/**
+ * Class Banner
+ *
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Module
+ */
 class Banner extends \Opencart\System\Engine\Controller {
-	public function index($setting) {
+	/**
+	 * Index
+	 *
+	 * @param array<string, mixed> $setting array of filters
+	 *
+	 * @return string
+	 */
+	public function index(array $setting): string {
 		static $module = 0;
 
+		// Banner
 		$this->load->model('design/banner');
-		$this->load->model('tool/image');
 
-		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
-		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
-		$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
+		// Image
+		$this->load->model('tool/image');
 
 		$data['banners'] = [];
 
@@ -20,13 +31,25 @@ class Banner extends \Opencart\System\Engine\Controller {
 				$data['banners'][] = [
 					'title' => $result['title'],
 					'link'  => $result['link'],
-					'image' => $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $setting['width'], $setting['height'])
+					'image' => $this->config->get('config_url') . 'image/' . $result['image']
 				];
 			}
 		}
 
-		$data['module'] = $module++;
+		if ($data['banners']) {
+			$data['module'] = $module++;
 
-		return $this->load->view('extension/opencart/module/banner', $data);
+			$data['effect'] = $setting['effect'];
+			$data['controls'] = $setting['controls'];
+			$data['indicators'] = $setting['indicators'];
+			$data['items'] = $setting['items'];
+			$data['interval'] = $setting['interval'];
+			$data['width'] = $setting['width'];
+			$data['height'] = $setting['height'];
+
+			return $this->load->view('extension/opencart/module/banner', $data);
+		} else {
+			return '';
+		}
 	}
 }

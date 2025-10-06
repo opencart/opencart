@@ -4,6 +4,7 @@ namespace Aws\S3\Crypto;
 use Aws\Crypto\DecryptionTraitV2;
 use Aws\Exception\CryptoException;
 use Aws\HashingStream;
+use Aws\MetricsBuilder;
 use Aws\PhpHash;
 use Aws\Crypto\AbstractCryptoClientV2;
 use Aws\Crypto\EncryptionTraitV2;
@@ -105,10 +106,13 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         S3Client $client,
         $instructionFileSuffix = null
     ) {
-        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->client = $client;
         $this->instructionFileSuffix = $instructionFileSuffix;
         $this->legacyWarningCount = 0;
+        MetricsBuilder::appendMetricsCaptureMiddleware(
+            $this->client->getHandlerList(),
+            MetricsBuilder::S3_CRYPTO_V2
+        );
     }
 
     private static function getDefaultStrategy()
@@ -176,8 +180,8 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
 
         $envelope = new MetadataEnvelope();
 
-        return Promise\promise_for($this->encrypt(
-            Psr7\stream_for($args['Body']),
+        return Promise\Create::promiseFor($this->encrypt(
+            Psr7\Utils::streamFor($args['Body']),
             $args,
             $provider,
             $envelope

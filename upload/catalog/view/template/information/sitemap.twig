@@ -2,7 +2,7 @@
 <div id="information-sitemap" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
@@ -12,23 +12,23 @@
         <div class="col-sm-6">
           <ul>
             {% for category_1 in categories %}
-            <li><a href="{{ category_1.href }}">{{ category_1.name }}</a>
-              {% if category_1.children %}
-              <ul>
-                {% for category_2 in category_1.children %}
-                <li><a href="{{ category_2.href }}">{{ category_2.name }}</a>
-                  {% if category_2.children %}
+              <li><a href="{{ category_1.href }}">{{ category_1.name }}</a>
+                {% if category_1.children %}
                   <ul>
-                    {% for category_3 in category_2.children %}
-                    <li><a href="{{ category_3.href }}">{{ category_3.name }}</a></li>
+                    {% for category_2 in category_1.children %}
+                      <li><a href="{{ category_2.href }}">{{ category_2.name }}</a>
+                        {% if category_2.children %}
+                          <ul>
+                            {% for category_3 in category_2.children %}
+                              <li><a href="{{ category_3.href }}">{{ category_3.name }}</a></li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </li>
                     {% endfor %}
                   </ul>
-                  {% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-              {% endif %}
-            </li>
+                {% endif %}
+              </li>
             {% endfor %}
           </ul>
         </div>
@@ -44,13 +44,13 @@
                 <li><a href="{{ download }}">{{ text_download }}</a></li>
               </ul>
             </li>
-            <li><a href="{{ history }}">{{ text_cart }}</a></li>
+            <li><a href="{{ cart }}">{{ text_cart }}</a></li>
             <li><a href="{{ checkout }}">{{ text_checkout }}</a></li>
             <li><a href="{{ search }}">{{ text_search }}</a></li>
             <li>{{ text_information }}
               <ul>
                 {% for information in informations %}
-                <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+                  <li><a href="{{ information.href }}">{{ information.title }}</a></li>
                 {% endfor %}
                 <li><a href="{{ contact }}">{{ text_contact }}</a></li>
               </ul>

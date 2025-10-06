@@ -1,26 +1,20 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Report;
+namespace Opencart\Admin\Controller\Extension\Opencart\Report;
+/**
+ * Class Customer Search
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
+ */
 class CustomerSearch extends \Opencart\System\Engine\Controller {
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('extension/opencart/report/customer_search');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('report_customer_search', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -39,21 +33,11 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/report/customer_search', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/report/customer_search', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/report/customer_search.save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
-
-		if (isset($this->request->post['report_customer_search_status'])) {
-			$data['report_customer_search_status'] = $this->request->post['report_customer_search_status'];
-		} else {
-			$data['report_customer_search_status'] = $this->config->get('report_customer_search_status');
-		}
-
-		if (isset($this->request->post['report_customer_search_sort_order'])) {
-			$data['report_customer_search_sort_order'] = $this->request->post['report_customer_search_sort_order'];
-		} else {
-			$data['report_customer_search_sort_order'] = $this->config->get('report_customer_search_sort_order');
-		}
+		$data['report_customer_search_status'] = $this->config->get('report_customer_search_status');
+		$data['report_customer_search_sort_order'] = $this->config->get('report_customer_search_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -61,18 +45,66 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/customer_search_form', $data));
 	}
-	
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/opencart/report/customer_search')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
 
-		return !$this->error;
-	}
-	
-	public function report() {
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
 		$this->load->language('extension/opencart/report/customer_search');
 
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/report/customer_search')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Setting
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('report_customer_search', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Report
+	 *
+	 * @return void
+	 */
+	public function report(): void {
+		$this->load->language('extension/opencart/report/customer_search');
+
+		$data['list'] = $this->getReport();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('extension/opencart/report/customer_search', $data));
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('extension/opencart/report/customer_search');
+
+		$this->response->setOutput($this->getReport());
+	}
+
+	/**
+	 * Get Report
+	 *
+	 * @return string
+	 */
+	public function getReport(): string {
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -109,9 +141,7 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/customer');
-		$this->load->model('catalog/category');
-
+		// Search
 		$data['searches'] = [];
 
 		$filter_data = [
@@ -124,6 +154,13 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination')
 		];
 
+		// Extension
+		$this->load->model('extension/opencart/report/customer');
+
+		// Category
+		$this->load->model('catalog/category');
+
+		// Total Searches
 		$search_total = $this->model_extension_opencart_report_customer->getTotalCustomerSearches($filter_data);
 
 		$results = $this->model_extension_opencart_report_customer->getCustomerSearches($filter_data);
@@ -138,22 +175,20 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($result['customer_id'] > 0) {
-				$customer = sprintf($this->language->get('text_customer'), $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']), $result['customer']);
+				$customer = sprintf($this->language->get('text_customer'), $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']), $result['customer']);
 			} else {
 				$customer = $this->language->get('text_guest');
 			}
 
 			$data['searches'][] = [
-				'keyword'     => $result['keyword'],
-				'products'    => $result['products'],
-				'category'    => $category,
-				'customer'    => $customer,
-				'ip'          => $result['ip'],
-				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added']))
+				'keyword'    => $result['keyword'],
+				'products'   => $result['products'],
+				'category'   => $category,
+				'customer'   => $customer,
+				'ip'         => $result['ip'],
+				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -177,11 +212,14 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $search_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/customer_search|report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_search' . $url . '&page={page}')
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('extension/opencart/report/customer_search.list', 'user_token=' . $this->session->data['user_token'] . '&code=customer_search' . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($search_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($search_total - $this->config->get('config_pagination'))) ? $search_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $search_total, ceil($search_total / $this->config->get('config_pagination')));
@@ -192,6 +230,8 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
 
-		$this->response->setOutput($this->load->view('extension/opencart/report/customer_search', $data));
+		$data['user_token'] = $this->session->data['user_token'];
+
+		return $this->load->view('extension/opencart/report/customer_search_list', $data);
 	}
 }

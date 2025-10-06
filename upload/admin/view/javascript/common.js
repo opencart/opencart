@@ -1,417 +1,571 @@
 function getURLVar(key) {
-	var value = [];
+    var value = [];
 
-	var query = String(document.location).split('?');
+    var query = String(document.location).split('?');
 
-	if (query[1]) {
-		var part = query[1].split('&');
+    if (query[1]) {
+        var part = query[1].split('&');
 
-		for (i = 0; i < part.length; i++) {
-			var data = part[i].split('=');
+        for (i = 0; i < part.length; i++) {
+            var data = part[i].split('=');
 
-			if (data[0] && data[1]) {
-				value[data[0]] = data[1];
-			}
-		}
+            if (data[0] && data[1]) {
+                value[data[0]] = data[1];
+            }
+        }
 
-		if (value[key]) {
-			return value[key];
-		} else {
-			return '';
-		}
-	}
-}
-
-function isIE() {
-    if (!!window.ActiveXObject || "ActiveXObject" in window) return true;
+        if (value[key]) {
+            return value[key];
+        } else {
+            return '';
+        }
+    }
 }
 
 $(document).ready(function() {
-	$('form').trigger('reset');
-	
-	//Form Submit for IE Browser
-	if (isIE()) {
-		$('button[type=\'submit\']').on('click', function() {
-			$('form[id*=\'form-\']').submit();
-		});
-	}
+    // Tooltip
+    var oc_tooltip = function() {
+        // Get tooltip instance
+        tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
 
-	// Highlight any found errors
-	$('.invalid-tooltip').each(function() {
-		var element = $(this).parent().find(':input');
+        if (!tooltip) {
+            // Apply to current element
+            tooltip.show();
+        }
+    }
 
-		if (element.hasClass('form-control')) {
-			element.addClass('is-invalid');
-		}
-	});
+    $(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', oc_tooltip);
 
-	$('.invalid-tooltip').show();
+    $(document).on('click', 'button', function() {
+        $('.tooltip').remove();
+    });
 
-	// tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
+    $(document).on('click', '[data-bs-toggle=\'pagination\'] a', function(e) {
+        e.preventDefault();
 
-	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
-		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-	});
+        var element = this;
 
-	// tooltip remove
-	$('[data-toggle=\'tooltip\']').on('remove', function() {
-		$(this).tooltip('dispose');
-	});
+        //[data-bs-target='pagination']
 
-	// Tooltip remove fixed
-	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
-		$('body > .tooltip').remove();
-	});
+        $(this.target).load(this.href);
+    });
 
-	// https://github.com/opencart/opencart/issues/2595
-	$.event.special.remove = {
-		remove: function(o) {
-			if (o.handler) {
-				o.handler.apply(this, arguments);
-			}
-		}
-	}
+    // Alert Fade
+    $('#alert').observe(function() {
+        window.setTimeout(function() {
+            $('#alert .alert-dismissible').fadeTo(3000, 0, function() {
+                $(this).remove();
+            });
+        }, 3000);
+    });
 
-	// Fix for overflow in responsive tables
-	$('.table-responsive').on('show.bs.dropdown', function() {
-		$('.table-responsive').css('overflow', 'inherit');
-	});
+    // Button
+    +function($) {
+        $.fn.button = function(state) {
+            return this.each(function() {
+                let element = this;
 
-	$('.table-responsive').on('hide.bs.dropdown', function() {
-		$('.table-responsive').css('overflow', 'auto');
-	});
+                if (state == 'loading') {
+                    this.html = $(element).html();
 
-	$('#button-menu').on('click', function(e) {
-		e.preventDefault();
+                    $(element).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
+                }
 
-		$('#column-left').toggleClass('active');
-	});
+                if (state == 'reset') {
+                    $(element).width('').html(this.html);
+                }
 
-	// Set last page opened on the menu
-	$('#menu a[href]').on('click', function() {
-		sessionStorage.setItem('menu', $(this).attr('href'));
-	});
+                // If button
+                if ($(element).is('button')) {
+                    if (state == 'loading') {
+                        this.state = $(element).prop('disabled');
 
-	if (!sessionStorage.getItem('menu')) {
-		$('#menu #dashboard').addClass('active');
-	} else {
-		// Sets active and open to selected page in the left column menu.
-		$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parent().addClass('active');
-	}
+                        $(element).prop('disabled', true);
+                    }
 
-	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li > a').removeClass('collapsed');
+                    if (state == 'reset') {
+                        $(element).prop('disabled', this.state);
+                    }
+                }
 
-	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
+                // If link
+                if ($(element).is('a')) {
+                    if (state == 'loading') {
+                        this.state = $(element).hasClass('disabled');
 
-	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
+                        $(element).addClass('disabled');
+                    }
+
+                    if (state == 'reset') {
+                        if (this.state) {
+                            $(element).addClass('disabled');
+                        } else {
+                            $(element).removeClass('disabled');
+                        }
+                    }
+                }
+            });
+        }
+    }(jQuery);
 });
 
-// Image Manager
-$(document).on('click', '[data-toggle=\'image\']', function(e) {
-	var element = this;
+function decodeHTMLEntities(html) {
+    var d = document.createElement('div');
 
-	$('#modal-image').remove();
+    d.innerHTML = html;
 
-	$.ajax({
-		url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(this).attr('data-target')) + '&thumb=' + encodeURIComponent($(this).attr('data-thumb')),
-		dataType: 'html',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(html) {
-			$('body').append(html);
+    return d.textContent;
+}
 
-			$('#modal-image').modal('show');
-		}
-	});
-});
+// Observe
++function($) {
+    $.fn.observe = function(callback) {
+        observer = new MutationObserver(callback);
 
-$(document).on('click', '[data-toggle=\'clear\']', function() {
-	$($(this).attr('data-thumb')).attr('src', $($(this).attr('data-thumb')).attr('data-placeholder'));
-
-	$($(this).attr('data-target')).val('');
-});
+        observer.observe($(this)[0], {
+            characterData: false,
+            childList: true,
+            attributes: false
+        });
+    };
+}(jQuery);
 
 // Chain ajax calls.
 class Chain {
-	constructor() {
-		this.start = false;
-		this.data = [];
-	}
+    constructor() {
+        this.start = false;
+        this.data = [];
+    }
 
-	attach(call) {
-		this.data.push(call);
+    attach(call) {
+        this.data.push(call);
 
-		if (!this.start) {
-			this.execute();
-		}
-	}
+        if (!this.start) {
+            this.execute();
+        }
+    }
 
-	execute() {
-		if (this.data.length) {
-			this.start = true;
+    execute() {
+        if (this.data.length) {
+            this.start = true;
 
-			(this.data.shift())().done(function() {
-				chain.execute();
-			});
-		} else {
-			this.start = false;
-		}
-	}
+            var call = this.data.shift();
+
+            var jqxhr = call();
+
+            jqxhr.done(function() {
+                chain.execute();
+            });
+        } else {
+            this.start = false;
+        }
+    }
 }
 
 var chain = new Chain();
 
+// Forms
+$(document).on('submit', 'form', function(e) {
+    var element = this;
+    var button = (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) ? e.originalEvent.submitter : '';
+
+    if ($(element).attr('data-oc-toggle') == 'ajax' || $(button).attr('data-oc-toggle') == 'ajax') {
+        e.preventDefault();
+
+        var form = e.target;
+        var action = $(button).attr('formaction') || $(form).attr('action');
+        var method = $(button).attr('formmethod') || $(form).attr('method') || 'post';
+        var enctype = $(button).attr('formenctype') || $(form).attr('enctype') || 'application/x-www-form-urlencoded';
+
+        console.log($(form).attr('data-oc-load'));
+
+        console.log('Element');
+        console.log(element);
+
+        console.log('Form');
+        console.log(form);
+
+        console.log('Action');
+        console.log(action);
+
+        console.log('Button');
+        console.log(button);
+
+        console.log('Method');
+        console.log(method);
+
+        console.log('Enctype');
+        console.log(enctype);
+
+        console.log('Data');
+        console.log($(element).serialize());
+
+        console.log('Event');
+        console.log(e);
+
+        // https://github.com/opencart/opencart/issues/9690
+        if (typeof CKEDITOR != 'undefined') {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }
+
+        $.ajax({
+            url: action.replaceAll('&amp;', '&'),
+            type: method,
+            data: $(form).serialize(),
+            dataType: 'json',
+            contentType: enctype,
+            beforeSend: function() {
+                $(button).button('loading');
+            },
+            complete: function() {
+                $(button).button('reset');
+            },
+            success: function(json, textStatus) {
+                console.log(json);
+                console.log(textStatus);
+
+                $('.alert-dismissible').remove();
+                $(element).find('.is-invalid').removeClass('is-invalid');
+                $(element).find('.invalid-feedback').removeClass('d-block');
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (typeof json['error'] == 'string') {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (typeof json['error'] == 'object') {
+                    if (json['error']['warning']) {
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+
+                    for (key in json['error']) {
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                    }
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    // Refresh
+                    var url = $(form).attr('data-oc-load');
+                    var target = $(form).attr('data-oc-target');
+
+                    if (url !== undefined && target !== undefined) {
+                        $(target).load(url);
+                    }
+                }
+
+                // Replace any form values that correspond to form names.
+                for (key in json) {
+                    $(element).find('[name=\'' + key + '\']').val(json[key]);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+});
+
+// Upload
+$(document).on('click', '[data-oc-toggle=\'upload\']', function() {
+    var element = this;
+
+    if (!$(element).prop('disabled')) {
+        $('#form-upload').remove();
+
+        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value=""/></form>');
+
+        $('#form-upload input[name=\'file\']').trigger('click');
+
+        $('#form-upload input[name=\'file\']').on('change', function(e) {
+            if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
+                alert($(element).attr('data-oc-size-error'));
+
+                $(this).val('');
+            }
+        });
+
+        if (typeof timer != 'undefined') {
+            clearInterval(timer);
+        }
+
+        var timer = setInterval(function() {
+            if ($('#form-upload input[name=\'file\']').val() != '') {
+                clearInterval(timer);
+
+                $.ajax({
+                    url: $(element).attr('data-oc-url'),
+                    type: 'post',
+                    data: new FormData($('#form-upload')[0]),
+                    dataType: 'json',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $(element).button('loading');
+                    },
+                    complete: function() {
+                        $(element).button('reset');
+                    },
+                    success: function(json) {
+                        console.log(json);
+
+                        if (json['error']) {
+                            alert(json['error']);
+                        }
+
+                        if (json['success']) {
+                            alert(json['success']);
+                        }
+
+                        if (json['code']) {
+                            $($(element).attr('data-oc-target')).val(json['code']);
+
+                            $(element).parent().find('[data-oc-toggle=\'download\'], [data-oc-toggle=\'clear\']').prop('disabled', false);
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
+                });
+            }
+        }, 500);
+    }
+});
+
+$(document).on('click', '[data-oc-toggle=\'download\']', function(e) {
+    var element = this;
+
+    var value = $($(element).attr('data-oc-target')).val();
+
+    if (value != '') {
+        location = 'index.php?route=tool/upload.download&user_token=' + getURLVar('user_token') + '&code=' + value;
+    }
+});
+
+$(document).on('click', '[data-oc-toggle=\'clear\']', function() {
+    var element = this;
+
+    // Images
+    var thumb = $(this).attr('data-oc-thumb');
+
+    if (thumb !== undefined) {
+        $(thumb).attr('src', $(thumb).attr('data-oc-placeholder'));
+    }
+
+    // Custom fields
+    var download = $(element).parent().find('[data-oc-toggle=\'download\']');
+
+    if (download.length) {
+        $(element).parent().find('[data-oc-toggle=\'download\'], [data-oc-toggle=\'clear\']').prop('disabled', true);
+    }
+
+    $($(this).attr('data-oc-target')).val('');
+});
+
+// Image Manager
+$(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
+    var element = this;
+
+    $('#modal-image').remove();
+
+    $.ajax({
+        url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(element).attr('data-oc-target')) + '&thumb=' + encodeURIComponent($(element).attr('data-oc-thumb')),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $('body').append(html);
+
+            $('#modal-image').modal('show');
+        }
+    });
+});
+
 // Autocomplete
-(function($) {
-	$.fn.autocomplete = function(option) {
-		return this.each(function() {
-			var $this = $(this);
-			var $dropdown = $('<div class="dropdown-menu"/>');
-
-			this.timer = null;
-			this.items = [];
-
-			$.extend(this, option);
-
-			if (!$(this).parent().hasClass('input-group')) {
-				$(this).wrap('<div class="dropdown">');
-			} else {
-				$(this).parent().wrap('<div class="dropdown">');
-			}
-
-			$this.attr('autocomplete', 'off');
-			$this.active = false;
-
-			// Focus
-			$this.on('focus', function() {
-				this.request();
-			});
-
-			// Blur
-			$this.on('blur', function(e) {
-				if (!$this.active) {
-					this.hide();
-				}
-			});
-
-			$this.parent().on('mouseover', function(e) {
-				$this.active = true;
-			});
-
-			$this.parent().on('mouseout', function(e) {
-				$this.active = false;
-			});
-
-			// Keydown
-			$this.on('keydown', function(event) {
-				switch (event.keyCode) {
-					case 27: // escape
-						this.hide();
-						break;
-					default:
-						this.request();
-						break;
-				}
-			});
-
-			// Click
-			this.click = function(event) {
-				event.preventDefault();
-
-				var value = $(event.target).attr('href');
-
-				if (value && this.items[value]) {
-					this.select(this.items[value]);
-
-					this.hide();
-				}
-			}
-
-			// Show
-			this.show = function() {
-				$dropdown.addClass('show');
-			}
-
-			// Hide
-			this.hide = function() {
-				$dropdown.removeClass('show');
-			}
-
-			// Request
-			this.request = function() {
-				clearTimeout(this.timer);
-
-				this.timer = setTimeout(function(object) {
-					object.source($(object).val(), $.proxy(object.response, object));
-				}, 50, this);
-			}
-
-			// Response
-			this.response = function(json) {
-				var html = '';
-				var category = {};
-				var name;
-				var i = 0, j = 0;
-
-				if (json.length) {
-					for (i = 0; i < json.length; i++) {
-						// update element items
-						this.items[json[i]['value']] = json[i];
-
-						if (!json[i]['category']) {
-							// ungrouped items
-							html += '<a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a>';
-						} else {
-							// grouped items
-							name = json[i]['category'];
-
-							if (!category[name]) {
-								category[name] = [];
-							}
-
-							category[name].push(json[i]);
-						}
-					}
-
-					for (name in category) {
-						html += '<h6 class="dropdown-header">' + name + '</h6>';
-
-						for (j = 0; j < category[name].length; j++) {
-							html += '<a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a>';
-						}
-					}
-				}
-
-				if (html) {
-					this.show();
-				} else {
-					this.hide();
-				}
-
-				$dropdown.html(html);
-			}
-
-			$dropdown.on('click', '> a', $.proxy(this.click, this));
-
-			$this.after($dropdown);
-		});
-	}
-})(window.jQuery);
-
 +function($) {
-	'use strict';
+    $.fn.autocomplete = function(option) {
+        return this.each(function() {
+            var element = this;
+            var $dropdown = $('#' + $(element).attr('data-oc-target'));
 
-	// BUTTON PUBLIC CLASS DEFINITION
-	// ==============================
+            this.timer = null;
+            this.items = [];
 
-	var Button = function(element, options) {
-		this.$element = $(element)
-		this.options = $.extend({}, Button.DEFAULTS, options)
-		this.isLoading = false
-	}
+            $.extend(this, option);
 
-	Button.VERSION = '3.3.5'
+            // Focus in
+            $(element).on('focusin', function() {
+                element.request();
+            });
 
-	Button.DEFAULTS = {
-		loadingText: 'loading...'
-	}
+            // Focus out
+            $(element).on('focusout', function(e) {
+                if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
+                    this.timer = setTimeout(function(object) {
+                        object.removeClass('show');
+                    }, 50, $dropdown);
+                }
+            });
 
-	Button.prototype.setState = function(state) {
-		var d = 'disabled'
-		var $el = this.$element
-		var val = $el.is('input') ? 'val' : 'html'
-		var data = $el.data()
+            // Input
+            $(element).on('input', function(e) {
+                element.request();
+            });
 
-		state += 'Text'
+            // Click
+            $dropdown.on('click', 'a', function(e) {
+                e.preventDefault();
 
-		if (data.resetText == null) $el.data('resetText', $el[val]())
+                var value = $(this).attr('href');
 
-		// push to event loop to allow forms to submit
-		setTimeout($.proxy(function() {
-			$el[val](data[state] == null ? this.options[state] : data[state])
+                if (element.items[value] !== undefined) {
+                    element.select(element.items[value]);
 
-			if (state == 'loadingText') {
-				this.isLoading = true
-				$el.addClass(d).attr(d, d)
-			} else if (this.isLoading) {
-				this.isLoading = false
-				$el.removeClass(d).removeAttr(d)
-			}
-		}, this), 0)
-	}
+                    $dropdown.removeClass('show');
+                }
+            });
 
-	Button.prototype.toggle = function() {
-		var changed = true
-		var $parent = this.$element.closest('[data-toggle="buttons"]')
+            // Request
+            this.request = function() {
+                clearTimeout(this.timer);
 
-		if ($parent.length) {
-			var $input = this.$element.find('input')
-			if ($input.prop('type') == 'radio') {
-				if ($input.prop('checked')) changed = false
-				$parent.find('.active').removeClass('active')
-				this.$element.addClass('active')
-			} else if ($input.prop('type') == 'checkbox') {
-				if (($input.prop('checked')) !== this.$element.hasClass('active')) changed = false
-				this.$element.toggleClass('active')
-			}
-			$input.prop('checked', this.$element.hasClass('active'))
-			if (changed) $input.trigger('change')
-		} else {
-			this.$element.attr('aria-pressed', !this.$element.hasClass('active'))
-			this.$element.toggleClass('active')
-		}
-	}
+                $('#autocomplete-loading').remove();
+                $dropdown.find('li').remove();
 
+                $dropdown.prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
+                $dropdown.addClass('show');
 
-	// BUTTON PLUGIN DEFINITION
-	// ========================
+                this.timer = setTimeout(function(object) {
+                    object.source($(object).val(), $.proxy(object.response, object));
+                }, 150, this);
+            }
 
-	function Plugin(option) {
-		return this.each(function() {
-			var $this = $(this)
-			var data = $this.data('bs.button')
-			var options = typeof option == 'object' && option
+            // Response
+            this.response = function(json) {
+                var html = '';
+                var category = {};
+                var name;
+                var i = 0, j = 0;
 
-			if (!data) $this.data('bs.button', (data = new Button(this, options)))
+                if (json.length) {
+                    for (i = 0; i < json.length; i++) {
+                        // update element items
+                        this.items[json[i]['value']] = json[i];
 
-			if (option == 'toggle') data.toggle()
-			else if (option) data.setState(option)
-		})
-	}
+                        if (!json[i]['category']) {
+                            // ungrouped items
+                            html += '<li><a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a></li>';
+                        } else {
+                            // grouped items
+                            name = json[i]['category'];
 
-	var old = $.fn.button
+                            if (!category[name]) {
+                                category[name] = [];
+                            }
 
-	$.fn.button = Plugin
-	$.fn.button.Constructor = Button
+                            category[name].push(json[i]);
+                        }
+                    }
 
+                    for (name in category) {
+                        html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
 
-	// BUTTON NO CONFLICT
-	// ==================
+                        for (j = 0; j < category[name].length; j++) {
+                            html += '<li><a href="' + category[name][j]['value'] + '" class="dropdown-item">' + category[name][j]['label'] + '</a></li>';
+                        }
+                    }
 
-	$.fn.button.noConflict = function() {
-		$.fn.button = old
-		return this
-	}
-
-
-	// BUTTON DATA-API
-	// ===============
-
-	$(document)
-		.on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
-			var $btn = $(e.target)
-			if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
-			Plugin.call($btn, 'toggle')
-			if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault()
-		})
-		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
-			$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
-		})
-
+                    $dropdown.html(html);
+                } else {
+                    $dropdown.removeClass('show');
+                }
+            }
+        });
+    }
 }(jQuery);
+
+$(document).ready(function() {
+    // Header
+    $('#header-notification [data-bs-toggle=\'modal\']').on('click', function(e) {
+        e.preventDefault();
+
+        var element = this;
+
+        $('#modal-notification').remove();
+
+        $.ajax({
+            url: $(element).attr('href'),
+            dataType: 'html',
+            success: function(html) {
+                $('body').append(html);
+
+                $('#modal-notification').modal('show');
+            }
+        });
+    });
+
+    // Menu
+    $('#button-menu').on('click', function(e) {
+        e.preventDefault();
+
+        $('#column-left').toggleClass('active');
+    });
+
+    // Set last page opened on the menu
+    $('#menu a[href]').on('click', function() {
+        sessionStorage.setItem('menu', $(this).attr('href'));
+    });
+
+    if (!sessionStorage.getItem('menu')) {
+        $('#menu #menu-dashboard').addClass('active');
+    } else {
+        // Sets active and open to selected page in the left column menu.
+        $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parent().addClass('active');
+    }
+
+    $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').children('a').removeClass('collapsed');
+
+    $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
+
+    $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
+
+    $('#nav-language .dropdown-item').on('click', function(e) {
+        e.preventDefault();
+
+        var element = this;
+
+        $.ajax({
+            url: 'index.php?route=common/language.save&user_token=' + getURLVar('user_token'),
+            type: 'post',
+            data: 'code=' + $(element).attr('href') + '&redirect=' + encodeURIComponent($('#input-redirect').val()),
+            dataType: 'json',
+            success: function(json) {
+                console.log($(element).attr('href'));
+                console.log($('input-redirect').val());
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});

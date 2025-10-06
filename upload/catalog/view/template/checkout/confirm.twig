@@ -1,55 +1,57 @@
-{% if not redirect %}
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover">
-      <thead>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{{ column_product }}</th>
+        <th class="text-end">{{ column_total }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
         <tr>
-          <td class="text-left">{{ column_name }}</td>
-          <td class="text-left">{{ column_model }}</td>
-          <td class="text-right">{{ column_quantity }}</td>
-          <td class="text-right">{{ column_price }}</td>
-          <td class="text-right">{{ column_total }}</td>
+          <td>{{ product.quantity }}x <a href="{{ product.href }}">{{ product.name }}</a>
+
+            <ul class="list-unstyled mb-0">
+              <li>
+                <small> - {{ text_model }}: {{ product.model }}</small>
+              </li>
+              {% for option in product.option %}
+                <li>
+                  <small> - {{ option.name }}: {{ option.value }}</small>
+                </li>
+              {% endfor %}
+
+              {% if product.subscription %}
+                <li>
+                  <small> - {{ text_subscription }}: {{ product.subscription }}</small>
+                </li>
+              {% endif %}
+
+              {% if product.reward %}
+                <li>
+                  <small> - {{ text_points }}: {{ product.reward }}</small>
+                </li>
+              {% endif %}
+            </ul>
+          </td>
+          <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>
         </tr>
-      </thead>
-      <tbody>
-        {% for product in products %}
-          <tr>
-            <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %}
-                <br/>
-                &nbsp;
-                <small> - {{ option.name }}: {{ option.value }}</small> {% endfor %}
-              {% if product.recurring %}
-                <br/>
-                <span class="label label-info">{{ text_recurring_item }}</span>
-                <small>{{ product.recurring }}</small> {% endif %}</td>
-            <td class="text-left">{{ product.model }}</td>
-            <td class="text-right">{{ product.quantity }}</td>
-            <td class="text-right">{{ product.price }}</td>
-            <td class="text-right">{{ product.total }}</td>
-          </tr>
-        {% endfor %}
-        {% for voucher in vouchers %}
-          <tr>
-            <td class="text-left">{{ voucher.description }}</td>
-            <td class="text-left"></td>
-            <td class="text-right">1</td>
-            <td class="text-right">{{ voucher.amount }}</td>
-            <td class="text-right">{{ voucher.amount }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-      <tfoot>
-        {% for total in totals %}
-          <tr>
-            <td colspan="4" class="text-right"><strong>{{ total.title }}:</strong></td>
-            <td class="text-right">{{ total.text }}</td>
-          </tr>
-        {% endfor %}
-      </tfoot>
-    </table>
-  </div>
-  {{ payment }}
-{% else %}
-  <script type="text/javascript"><!--
-  location = '{{ redirect }}';
-  //--></script>
-{% endif %} 
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      {% for total in totals %}
+        <tr>
+          <td class="text-end"><strong>{{ total.title }}</strong></td>
+          <td class="text-end"><x-currency code="{{ currency }}" amount="{{ total.value }}"></x-currency></td>
+        </tr>
+      {% endfor %}
+    </tfoot>
+  </table>
+</div>
+<div id="checkout-payment">
+  {% if payment %}
+    {{ payment }}
+  {% else %}
+    <div class="text-end"><button type="button" class="btn btn-primary" disabled>{{ button_confirm }}</button></div>
+  {% endif %}
+</div>

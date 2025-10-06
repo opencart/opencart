@@ -1,7 +1,19 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
+/**
+ * Class Dashboard
+ *
+ * Can be loaded using $this->load->controller('common/dashboard');
+ *
+ * @package Opencart\Admin\Controller\Common
+ */
 class Dashboard extends \Opencart\System\Engine\Controller {
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('common/dashboard');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -18,15 +30,6 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
-		// Check install directory exists
-		if (is_dir(DIR_CATALOG . '../install')) {
-			$data['error_install'] = $this->language->get('error_install');
-		} else {
-			$data['error_install'] = '';
-		}
-
 		// Dashboard Extensions
 		$dashboards = [];
 
@@ -38,10 +41,9 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $extension) {
 			if ($this->config->get('dashboard_' . $extension['code'] . '_status') && $this->user->hasPermission('access', 'extension/' . $extension['extension'] . '/dashboard/' . $extension['code'])) {
-				$output = $this->load->controller('extension/' . $extension['extension'] . '/dashboard/' . $extension['code'] . '|dashboard');
+				$output = $this->load->controller('extension/' . $extension['extension'] . '/dashboard/' . $extension['code'] . '.dashboard');
 
-				//if (!$output instanceof \Exception) {
-				if ($output) {
+				if (!$output instanceof \Exception) {
 					$dashboards[] = [
 						'code'       => $extension['code'],
 						'width'      => $this->config->get('dashboard_' . $extension['code'] . '_width'),
@@ -78,14 +80,8 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!empty($column)) {
+		if ($column) {
 			$data['rows'][] = $column;
-		}
-
-		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
-			$data['security'] = $this->load->controller('common/security');
-		} else {
-			$data['security'] = '';
 		}
 
 		if ($this->user->hasPermission('access', 'common/developer')) {
@@ -93,6 +89,10 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['developer_status'] = false;
 		}
+
+		$data['security'] = $this->load->controller('common/security');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

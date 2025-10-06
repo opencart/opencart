@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -14,25 +14,35 @@ CKEDITOR.editorConfig = function( config ) {
 	config.language = $(this).attr('data-lang');
 	config.filebrowserWindowWidth = '800';
 	config.filebrowserWindowHeight = '500';
-	config.resize_enabled = false;
+	config.resize_enabled = true;
+	config.resize_dir = 'vertical';
 	config.htmlEncodeOutput = false;
 	config.entities = false;
-	config.extraPlugins = 'opencart,codemirror'; //
+	config.extraPlugins = 'opencart,codemirror,youtube';
 	config.codemirror_theme = 'monokai';
 	config.toolbar = 'Custom';
+	config.allowedContent = true;
+	config.startupOutlineBlocks = false;
+	config.disableNativeSpellChecker = false;
+	config.browserContextMenuOnCtrl = true;
+	config.resize_enabled = true;
+	config.resize_dir = 'vertical';
+	config.versionCheck = false;
+    config.removePlugins = 'iframe';
 
 	config.toolbar_Custom = [
 		['Source'],
+		['ShowBlocks'],
 		['Maximize'],
 		['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
 		['NumberedList','BulletedList','-','Outdent','Indent'],
-		['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
 		['SpecialChar'],
 		'/',
 		['Undo','Redo'],
-		['Font','FontSize'],
+		['Format','Font','FontSize'],
 		['TextColor','BGColor'],
 		['Link','Unlink','Anchor'],
-		['Image','OpenCart','Table','HorizontalRule']
+		['Image','OpenCart','Youtube','Table','HorizontalRule']
 	];
 };

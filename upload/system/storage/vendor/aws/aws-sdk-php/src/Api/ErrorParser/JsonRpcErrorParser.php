@@ -15,7 +15,7 @@ class JsonRpcErrorParser extends AbstractErrorParser
 
     private $parser;
 
-    public function __construct(Service $api = null, JsonParser $parser = null)
+    public function __construct(?Service $api = null, ?JsonParser $parser = null)
     {
         parent::__construct($api);
         $this->parser = $parser ?: new JsonParser();
@@ -23,7 +23,7 @@ class JsonRpcErrorParser extends AbstractErrorParser
 
     public function __invoke(
         ResponseInterface $response,
-        CommandInterface $command = null
+        ?CommandInterface $command = null
     ) {
         $data = $this->genericHandler($response);
 
@@ -33,8 +33,10 @@ class JsonRpcErrorParser extends AbstractErrorParser
         }
 
         if (isset($data['parsed']['__type'])) {
-            $parts = explode('#', $data['parsed']['__type']);
-            $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
+            if (!isset($data['code'])) {
+                $parts = explode('#', $data['parsed']['__type']);
+                $data['code'] = isset($parts[1]) ? $parts[1] : $parts[0];
+            }
             $data['message'] = isset($data['parsed']['message'])
                 ? $data['parsed']['message']
                 : null;

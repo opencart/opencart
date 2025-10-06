@@ -1,0 +1,18 @@
+<h3>{{ heading_title }}</h3>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3">
+  {% for blog in blogs %}
+    <div class="col mb-4">
+      <div class="product-thumb">
+        <div class="image">
+          <a href="{{ blog.href }}"><img src="{{ blog.thumb }}" alt="{{ blog.name }}" title="{{ blog.name }}" class="img-fluid"/></a>
+        </div>
+        <div class="content">
+          <div class="description">
+            <h4><a href="{{ blog.href }}">{{ blog.name }}</a></h4>
+            <p>{{ blog.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

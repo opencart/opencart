@@ -62,7 +62,15 @@ class XmlParser
                 }
             }
         }
-
+        if (isset($shape['union'])
+            && $shape['union']
+            && empty($target)
+        ) {
+            foreach ($value as $key => $val) {
+                $name = $val->children()->getName();
+                $target['Unknown'][$name] = $val->$name;
+            }
+        }
         return $target;
     }
 

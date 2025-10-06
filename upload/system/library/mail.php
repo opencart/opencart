@@ -1,144 +1,157 @@
 <?php
 /**
  * @package		OpenCart
+ *
  * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
-*/
-
-/**
-* Mail class
-*/
+ *
+ * @see		https://www.opencart.com
+ */
 namespace Opencart\System\Library;
+/**
+ * Class Mail
+ */
 class Mail {
-	protected $to;
-	protected $from;
-	protected $sender;
-	protected $reply_to;
-	protected $subject;
-	protected $text;
-	protected $html;
-	protected $attachments = [];
+	private string $class;
+	/**
+	 * @var array<string, mixed>
+	 */
+	private array $option = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$adaptor
-	 *
- 	*/
-	public function __construct($adaptor = 'mail') {
+	 * @param string               $adaptor
+	 * @param array<string, mixed> $option
+	 */
+	public function __construct(string $adaptor = 'mail', array $option = []) {
 		$class = 'Opencart\System\Library\Mail\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->adaptor = new $class();
+			$this->class = $class;
+			$this->option = $option;
 		} else {
-			trigger_error('Error: Could not load mail adaptor ' . $adaptor . '!');
-			exit();
+			throw new \Exception('Error: Could not load mail adaptor ' . $adaptor . '!');
 		}
 	}
 
 	/**
-     *
-     *
-     * @param	mixed	$to
-     */
-	public function setTo($to) {
-		$this->to = $to;
+	 * Set To
+	 *
+	 * @param array<string>|string $to
+	 *
+	 * @return void
+	 */
+	public function setTo($to): void {
+		$this->option['to'] = $to;
 	}
 
 	/**
-     *
-     *
-     * @param	string	$from
-     */
-	public function setFrom($from) {
-		$this->from = $from;
+	 * Set From
+	 *
+	 * @param string $from
+	 *
+	 * @return void
+	 */
+	public function setFrom(string $from): void {
+		$this->option['from'] = $from;
 	}
 
 	/**
-     *
-     *
-     * @param	string	$sender
-     */
-	public function setSender($sender) {
-		$this->sender = $sender;
+	 * Set Sender
+	 *
+	 * @param string $sender
+	 *
+	 * @return void
+	 */
+	public function setSender(string $sender): void {
+		$this->option['sender'] = $sender;
 	}
 
 	/**
-     *
-     *
-     * @param	string	$reply_to
-     */
-	public function setReplyTo($reply_to) {
-		$this->reply_to = $reply_to;
+	 * Set Reply To
+	 *
+	 * @param string $reply_to
+	 *
+	 * @return void
+	 */
+	public function setReplyTo(string $reply_to): void {
+		$this->option['reply_to'] = $reply_to;
 	}
 
 	/**
-     *
-     *
-     * @param	string	$subject
-     */
-	public function setSubject($subject) {
-		$this->subject = $subject;
+	 * Set Subject
+	 *
+	 * @param string $subject
+	 *
+	 * @return void
+	 */
+	public function setSubject(string $subject): void {
+		$this->option['subject'] = $subject;
 	}
 
 	/**
-     *
-     *
-     * @param	string	$text
-     */
-	public function setText($text) {
-		$this->text = $text;
+	 * Set Text
+	 *
+	 * @param string $text
+	 *
+	 * @return void
+	 */
+	public function setText(string $text): void {
+		$this->option['text'] = $text;
 	}
 
 	/**
-     *
-     *
-     * @param	string	$html
-     */
-	public function setHtml($html) {
-		$this->html = $html;
+	 * Set Html
+	 *
+	 * @param string $html
+	 *
+	 * @return void
+	 */
+	public function setHtml(string $html): void {
+		$this->option['html'] = $html;
 	}
 
 	/**
-     *
-     *
-     * @param	string	$filename
-     */
-	public function addAttachment($filename) {
-		$this->attachments[] = $filename;
+	 * Add Attachment
+	 *
+	 * @param string $filename
+	 *
+	 * @return void
+	 */
+	public function addAttachment(string $filename): void {
+		$this->option['attachments'][] = $filename;
 	}
 
 	/**
-     *
-     *
-     */
-	public function send() {
-		if (!$this->to) {
+	 * Send
+	 *
+	 * @return bool
+	 */
+	public function send(): bool {
+		if (empty($this->option['to'])) {
 			throw new \Exception('Error: E-Mail to required!');
 		}
 
-		if (!$this->from) {
+		if (empty($this->option['from'])) {
 			throw new \Exception('Error: E-Mail from required!');
 		}
 
-		if (!$this->sender) {
+		if (empty($this->option['sender'])) {
 			throw new \Exception('Error: E-Mail sender required!');
 		}
 
-		if (!$this->subject) {
+		if (empty($this->option['subject'])) {
 			throw new \Exception('Error: E-Mail subject required!');
 		}
 
-		if (!$this->text && !$this->html) {
+		if (empty($this->option['text']) && empty($this->option['html'])) {
 			throw new \Exception('Error: E-Mail message required!');
 		}
 
-		foreach (get_object_vars($this) as $key => $value) {
-			$this->adaptor->$key = $value;
-		}
+		$mail = new $this->class($this->option);
 
-		$this->adaptor->send();
+		return $mail->send();
 	}
 }

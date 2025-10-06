@@ -1,7 +1,19 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Admin\Controller\Startup;
+/**
+ * Class Session
+ *
+ * @package Opencart\Admin\Controller\Startup
+ */
 class Session extends \Opencart\System\Engine\Controller {
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @throws \Exception
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
 		$this->registry->set('session', $session);
 
@@ -15,14 +27,13 @@ class Session extends \Opencart\System\Engine\Controller {
 
 		// Require higher security for session cookies
 		$option = [
-			'max-age'  => time() + $this->config->get('session_expire'),
-			'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
-			'domain'   => $this->request->server['HTTP_HOST'],
+			'expires'  => $this->config->get('session_expire') ? time() + (int)$this->config->get('session_expire') : 0,
+			'path'     => $this->config->get('session_path'),
 			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => false,
-			'SameSite' => 'strict'
+			'SameSite' => $this->config->get('session_samesite')
 		];
 
-		oc_setcookie($this->config->get('session_name'), $session->getId(), $option);
+		setcookie($this->config->get('session_name'), $session->getId(), $option);
 	}
 }

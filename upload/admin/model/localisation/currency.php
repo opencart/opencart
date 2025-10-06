@@ -1,116 +1,257 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Admin\Model\Localisation;
+/**
+ * Class Currency
+ *
+ * Can be loaded using $this->load->model('localisation/currency');
+ *
+ * @package Opencart\Admin\Model\Localisation
+ */
 class Currency extends \Opencart\System\Engine\Model {
-	public function addCurrency($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW()");
-
-		$currency_id = $this->db->getLastId();
+	/**
+	 * Add Currency
+	 *
+	 * Create a new currency record in the database.
+	 *
+	 * @param array<string, mixed> $data array of data
+	 *
+	 * @return int returns the primary key of the new currency record
+	 *
+	 * @example
+	 *
+	 * $currency_data = [
+	 *     'title'         => 'Currency Title',
+	 *     'code'          => 'Currency Code',
+	 *     'symbol_left'   => '$',
+	 *     'symbol_right'  => '',
+	 *     'decimal_place' => 2,
+	 *     'value'         => 0.00000000,
+	 *     'status'        => 0
+	 * ];
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $currency_id = $this->model_localisation_currency->addCurrency($currency_data);
+	 */
+	public function addCurrency(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . (int)$data['decimal_place'] . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW()");
 
 		$this->cache->delete('currency');
-		
-		return $currency_id;
+
+		return $this->db->getLastId();
 	}
 
-	public function editCurrency($currency_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");
+	/**
+	 * Edit Currency
+	 *
+	 * Edit currency record in the database.
+	 *
+	 * @param int                  $currency_id primary key of the currency record
+	 * @param array<string, mixed> $data        array of data
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $currency_data = [
+	 *     'title'         => 'Currency Title',
+	 *     'code'          => 'Currency Code',
+	 *     'symbol_left'   => '$',
+	 *     'symbol_right'  => '',
+	 *     'decimal_place' => 2,
+	 *     'value'         => 0.00000000,
+	 *     'status'        => 1
+	 * ];
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $this->model_localisation_currency->editCurrency($currency_id, $currency_data);
+	 */
+	public function editCurrency(int $currency_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . (int)$data['decimal_place'] . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)($data['status'] ?? 0) . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		$this->cache->delete('currency');
 	}
 
-	public function editValueByCode($code, $value) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `value` = '" . (float)$value . "', `date_modified` = NOW() WHERE `code` = '" . $this->db->escape((string)$code) . "'");
+	/**
+	 * Edit Value By Code
+	 *
+	 * @param string $code
+	 * @param float  $value
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $this->model_localisation_currency->editValueByCode($code, $value);
+	 */
+	public function editValueByCode(string $code, float $value): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `value` = '" . (float)$value . "', `date_modified` = NOW() WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		$this->cache->delete('currency');
 	}
 
-	public function deleteCurrency($currency_id) {
+	/**
+	 * Delete Currency
+	 *
+	 * Delete currency record in the database.
+	 *
+	 * @param int $currency_id primary key of the currency record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $this->model_localisation_currency->deleteCurrency($currency_id);
+	 */
+	public function deleteCurrency(int $currency_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		$this->cache->delete('currency');
 	}
 
-	public function getCurrency($currency_id) {
+	/**
+	 * Get Currency
+	 *
+	 * Get the record of the currency record in the database.
+	 *
+	 * @param int $currency_id primary key of the currency record
+	 *
+	 * @return array<string, mixed> currency record that has currency ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $currency_info = $this->model_localisation_currency->getCurrency($currency_id);
+	 */
+	public function getCurrency(int $currency_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		return $query->row;
 	}
 
-	public function getCurrencyByCode($currency) {
+	/**
+	 * Get Currency By Code
+	 *
+	 * @param string $currency primary key of the currency record
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $currency_info = $this->model_localisation_currency->getCurrencyByCode($currency);
+	 */
+	public function getCurrencyByCode(string $currency): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `code` = '" . $this->db->escape($currency) . "'");
 
 		return $query->row;
 	}
 
-	public function getCurrencies($data = []) {
-		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "currency`";
+	/**
+	 * Get Currencies
+	 *
+	 * Get the record of the currency records in the database.
+	 *
+	 * @param array<string, mixed> $data array of filters
+	 *
+	 * @return array<string, array<string, mixed>> currency records
+	 *
+	 * @example
+	 *
+	 * $filter_data = [
+	 *     'sort'  => 'title',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $results = $this->model_localisation_currency->getCurrencies($filter_data);
+	 */
+	public function getCurrencies(array $data = []): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "currency`";
 
-			$sort_data = [
-				'title',
-				'code',
-				'value',
-				'date_modified'
-			];
+		$sort_data = [
+			'title',
+			'code',
+			'value',
+			'date_modified'
+		];
 
-			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-				$sql .= " ORDER BY " . $data['sort'];
-			} else {
-				$sql .= " ORDER BY `title`";
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
+		} else {
+			$sql .= " ORDER BY `title`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
 			}
 
-			if (isset($data['order']) && ($data['order'] == 'DESC')) {
-				$sql .= " DESC";
-			} else {
-				$sql .= " ASC";
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
 			}
 
-			if (isset($data['start']) || isset($data['limit'])) {
-				if ($data['start'] < 0) {
-					$data['start'] = 0;
-				}
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
 
-				if ($data['limit'] < 1) {
-					$data['limit'] = 20;
-				}
+		$results = $this->cache->get('currency.' . md5($sql));
 
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-			}
-
+		if (!$results) {
 			$query = $this->db->query($sql);
 
-			return $query->rows;
-		} else {
-			$currency_data = $this->cache->get('currency');
+			$results = $query->rows;
 
-			if (!$currency_data) {
-				$currency_data = [];
-
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` ORDER BY `title` ASC");
-
-				foreach ($query->rows as $result) {
-					$currency_data[$result['code']] = [
-						'currency_id'   => $result['currency_id'],
-						'title'         => $result['title'],
-						'code'          => $result['code'],
-						'symbol_left'   => $result['symbol_left'],
-						'symbol_right'  => $result['symbol_right'],
-						'decimal_place' => $result['decimal_place'],
-						'value'         => $result['value'],
-						'status'        => $result['status'],
-						'date_modified' => $result['date_modified']
-					];
-				}
-
-				$this->cache->set('currency', $currency_data);
-			}
-
-			return $currency_data;
+			$this->cache->set('currency.' . md5($sql), $results);
 		}
+
+		$currency_data = [];
+
+		foreach ($results as $result) {
+			$currency_data[$result['code']] = $result;
+		}
+
+		return $currency_data;
 	}
 
-	public function getTotalCurrencies() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "currency`");
+	/**
+	 * Get Total Currencies
+	 *
+	 * Get the total number of currency records in the database.
+	 *
+	 * @return int total number of currency records
+	 *
+	 * @example
+	 *
+	 * $filter_data = [
+	 *     'sort'  => 'title',
+	 *     'order' => 'DESC',
+	 *     'start' => 0,
+	 *     'limit' => 10
+	 * ];
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $currency_total = $this->model_localisation_currency->getTotalCurrencies($filter_data);
+	 */
+	public function getTotalCurrencies(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "currency`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

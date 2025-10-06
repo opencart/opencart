@@ -1,0 +1,189 @@
+{{ header }}
+<div id="account-subscription" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">
+    {{ column_left }}
+    <div id="content" class="col">
+      {{ content_top }}
+      <div class="row">
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_subscription_id }}</strong>
+            <br/>
+            #{{ subscription_id }}
+          </div>
+        </div>
+        {% if order_id %}
+          <div class="col mb-3">
+            <div class="form-control" style="min-height: 64px;">
+              <strong class="lead">{{ text_order_id }}</strong>
+              <br/>
+              <a href="{{ order_link }}" target="_blank">{{ order_id }}</a>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      {% if payment_address or shipping_address %}
+        <div class="row">
+          {% if payment_address %}
+            <div class="col mb-3">
+              <div class="form-control" style="min-height: 128px;">
+                <strong class="lead">{{ text_payment_address }}</strong>
+                <br/>
+                {{ payment_address }}
+              </div>
+            </div>
+          {% endif %}
+          {% if shipping_address %}
+            <div class="col mb-3">
+              <div class="form-control" style="min-height: 128px;">
+                <strong class="lead">{{ text_shipping_address }}</strong>
+                <br/>
+                {{ shipping_address }}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="row">
+        {% if shipping_method %}
+          <div class="col mb-3">
+            <div class="form-control" style="min-height: 64px;">
+              <strong class="lead">{{ text_shipping_method }}</strong>
+              <br/>
+              {{ shipping_method }}
+            </div>
+          </div>
+        {% endif %}
+        <div class="col mb-3">
+          <div class="form-control" style="min-height: 64px;">
+            <strong class="lead">{{ text_payment_method }}</strong>
+            <br/>
+            {{ payment_method }}
+          </div>
+        </div>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>{{ column_product }}</th>
+            <th class="text-end">{{ column_quantity }}</th>
+            <th class="text-end">{{ column_trial_price }}</th>
+            <th class="text-end">{{ column_price }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if products %}
+            {% for product in products %}
+              <tr>
+                <td><a href="{{ product.product_edit }}" target="_blank">{{ product.name }}</a>
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <small> - {{ text_model }}: {{ product.model }}</small>
+                    </li>
+                    {% for option in product.option %}
+                      <li>
+                        <small> - {{ option.name }}: {{ option.value }}</small>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </td>
+                <td class="text-end">{{ product.quantity }}</td>
+                <td class="text-end"><x-currency code="{{ currency_code }}" value="{{ currency_value }}" amount="{{ product.trial_price }}"></x-currency></td>
+                <td class="text-end"><x-currency code="{{ currency_code }}" value="{{ currency_value }}" amount="{{ product.price }}"></x-currency></td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="4" class="text-center">{{ text_no_results }}</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+      <div class="form-control mb-3" style="min-height: 64px;">
+        <strong class="lead">{{ text_subscription_plan }}</strong>
+        <br/>
+        {{ description }}
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <div class="form-control">
+            <strong class="lead">{{ text_date_next }}</strong>
+            <br/>
+            {{ date_next }}
+          </div>
+        </div>
+        {% if duration %}
+        <div class="col">
+          <div class="form-control">
+            <strong class="lead">{{ text_remaining }}</strong>
+            <br/>
+            {{ remaining }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="text-end mb-3">
+        <button type="button" id="button-cancel" class="btn btn-danger">{{ button_cancel }}</button>
+      </div>
+      <h2>{{ text_history }}</h2>
+      <div id="history">{{ history }}</div>
+      <h2>{{ text_order }}</h2>
+      <div id="order">{{ order }}</div>
+      <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-cancel').on('click', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=account/subscription.cancel&language={{ language }}&customer_token={{ customer_token }}&subscription_id={{ subscription_id }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#history').load('index.php?route=account/subscription.history&language={{ language }}&customer_token={{ customer_token }}&subscription_id={{ subscription_id }}');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+
+$('#order').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#order').load(this.href);
+});
+//--></script>
+{{ footer }}

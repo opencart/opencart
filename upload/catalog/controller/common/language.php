@@ -1,11 +1,49 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
+/**
+ * Class Language
+ *
+ * Can be called from $this->load->controller('common/language');
+ *
+ * @package Opencart\Catalog\Controller\Common
+ */
 class Language extends \Opencart\System\Engine\Controller {
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return string
+	 */
+	public function index(): string {
 		$this->load->language('common/language');
 
-		$data['code'] = $this->config->get('config_language');
+		$data['action'] = $this->url->link('common/language.save', 'language=' . $this->config->get('config_language'));
 
+		$data['code'] = $this->request->get['language'] ?? $this->config->get('config_language');
+
+		// Languages
+		$data['languages'] = [];
+
+		$this->load->model('localisation/language');
+
+		$results = $this->model_localisation_language->getLanguages();
+
+		foreach ($results as $result) {
+			if ($result['status']) {
+				$data['languages'][$result['code']] = $result;
+			}
+		}
+
+		$code = $data['code'];
+
+		if (isset($data['languages'][$code])) {
+			$data['name'] = $data['languages'][$code]['name'];
+			$data['image'] = $data['languages'][$code]['image'];
+		} else {
+			$data['name'] = '';
+			$data['image'] = '';
+		}
+
+		// Build the url
 		$url_data = $this->request->get;
 
 		if (isset($url_data['route'])) {
@@ -21,51 +59,77 @@ class Language extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if ($url_data) {
-			$url = '&' . urldecode(http_build_query($url_data));
+			$url .= '&' . urldecode(http_build_query($url_data, '', '&'));
 		}
 
-		$data['languages'] = [];
-
-		$this->load->model('localisation/language');
-
-		$results = $this->model_localisation_language->getLanguages();
-
-		foreach ($results as $result) {
-			$data['languages'][] = [
-				'name' => $result['name'],
-				'code' => $result['code'],
-				'href' => $this->url->link('common/language|language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
-			];
-		}
+		// Make sure we are not using SEO urls
+		$data['redirect'] = $this->config->get('config_url') . 'index.php?route=' . $route . $url;
 
 		return $this->load->view('common/language', $data);
 	}
 
-	public function language() {
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
-		} else {
-			$code = $this->config->get('config_language');
-		}
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
+		$this->load->language('common/language');
 
-		if (isset($this->request->get['redirect'])) {
-			$redirect =  htmlspecialchars_decode($this->request->get['redirect'], ENT_COMPAT, 'UTF-8');
-		} else {
-			$redirect = '';
-		}
+		$json = [];
 
-		$option = [
-			'max-age'  => time() + 60 * 60 * 24 * 30,
-			'path'     => '/',
-			'SameSite' => 'lax'
+		$required = [
+			'code'     => '',
+			'redirect' => ''
 		];
 
-		oc_setcookie('language', $code, $option);
+		$post_info = $this->request->post + $required;
 
-		if ($redirect && substr($redirect, 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
-			$this->response->redirect($redirect);
-		} else {
-			$this->response->redirect($this->url->link($this->config->get('action_default'), 'language=' . $code));
+		// Language
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguageByCode($post_info['code']);
+
+		if (!$language_info) {
+			$json['error'] = $this->language->get('error_language');
 		}
+
+		if (!$json) {
+			unset($this->session->data['order_id']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+
+			if ($post_info['redirect']) {
+				$redirect = urldecode(html_entity_decode($post_info['redirect'], ENT_QUOTES, 'UTF-8'));
+
+				// Build the url
+				$url_info = parse_url($redirect);
+
+				parse_str($url_info['query'], $query);
+
+				if (isset($query['route'])) {
+					$route = $query['route'];
+				} else {
+					$route = $this->config->get('action_default');
+				}
+
+				unset($query['route']);
+
+				$query['language'] = $post_info['code'];
+
+				$redirect = $this->url->link($route, $query, true);
+			} else {
+				$redirect = '';
+			}
+
+			if (str_starts_with($redirect, $this->config->get('config_url'))) {
+				$json['redirect'] = $redirect;
+			} else {
+				$json['redirect'] = $this->url->link($this->config->get('action_default'), 'language=' . $post_info['code'], true);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

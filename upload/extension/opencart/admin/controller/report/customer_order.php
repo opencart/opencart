@@ -1,26 +1,20 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Report;
+namespace Opencart\Admin\Controller\Extension\Opencart\Report;
+/**
+ * Class Customer Order
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
+ */
 class CustomerOrder extends \Opencart\System\Engine\Controller {
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('extension/opencart/report/customer_order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('report_customer_order', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -39,21 +33,11 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/report/customer_order', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/report/customer_order', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/report/customer_order.save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
-
-		if (isset($this->request->post['report_customer_order_status'])) {
-			$data['report_customer_order_status'] = $this->request->post['report_customer_order_status'];
-		} else {
-			$data['report_customer_order_status'] = $this->config->get('report_customer_order_status');
-		}
-
-		if (isset($this->request->post['report_customer_order_sort_order'])) {
-			$data['report_customer_order_sort_order'] = $this->request->post['report_customer_order_sort_order'];
-		} else {
-			$data['report_customer_order_sort_order'] = $this->config->get('report_customer_order_sort_order');
-		}
+		$data['report_customer_order_status'] = $this->config->get('report_customer_order_status');
+		$data['report_customer_order_sort_order'] = $this->config->get('report_customer_order_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -61,18 +45,71 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/customer_order_form', $data));
 	}
-	
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/opencart/report/customer_order')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
 
-		return !$this->error;
-	}
-			
-	public function report() {
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
 		$this->load->language('extension/opencart/report/customer_order');
 
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/report/customer_order')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Setting
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('report_customer_order', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Report
+	 *
+	 * @return void
+	 */
+	public function report(): void {
+		$this->load->language('extension/opencart/report/customer_order');
+
+		$data['list'] = $this->getReport();
+
+		// Order Statuses
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('extension/opencart/report/customer_order', $data));
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('extension/opencart/report/customer_order');
+
+		$this->response->setOutput($this->getReport());
+	}
+
+	/**
+	 * Get Report
+	 *
+	 * @return string
+	 */
+	public function getReport(): string {
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -103,19 +140,21 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/customer');
-
+		// Customers
 		$data['customers'] = [];
 
 		$filter_data = [
-			'filter_date_start'			=> $filter_date_start,
-			'filter_date_end'			=> $filter_date_end,
-			'filter_customer'			=> $filter_customer,
-			'filter_order_status_id'	=> $filter_order_status_id,
-			'start'						=> ($page - 1) * $this->config->get('config_pagination'),
-			'limit'						=> $this->config->get('config_pagination')
+			'filter_date_start'      => $filter_date_start,
+			'filter_date_end'        => $filter_date_end,
+			'filter_customer'        => $filter_customer,
+			'filter_order_status_id' => $filter_order_status_id,
+			'start'                  => ($page - 1) * $this->config->get('config_pagination'),
+			'limit'                  => $this->config->get('config_pagination')
 		];
 
+		$this->load->model('extension/opencart/report/customer');
+
+		// Total Customers
 		$customer_total = $this->model_extension_opencart_report_customer->getTotalOrders($filter_data);
 
 		$results = $this->model_extension_opencart_report_customer->getOrders($filter_data);
@@ -128,16 +167,10 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'orders'         => $result['orders'],
 				'products'       => $result['products'],
-				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
+				'total'          => $result['total'],
+				'edit'           => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$url = '';
 
@@ -157,11 +190,14 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/customer_order|report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_order' . $url . '&page={page}')
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('extension/opencart/report/customer_order.report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_order' . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_total - $this->config->get('config_pagination'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_total, ceil($customer_total / $this->config->get('config_pagination')));
@@ -171,6 +207,10 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		$this->response->setOutput($this->load->view('extension/opencart/report/customer_order', $data));
+		$data['currency'] = $this->config->get('config_currency');
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		return $this->load->view('extension/opencart/report/customer_order_list', $data);
 	}
 }

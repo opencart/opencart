@@ -1,50 +1,20 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Admin\Controller\Extension\Opencart\Module;
+/**
+ * Class Banner
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Module
+ */
 class Banner extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('extension/opencart/module/banner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/module');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			if (!isset($this->request->get['module_id'])) {
-				$this->model_setting_module->addModule('opencart.banner', $this->request->post);
-			} else {
-				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['width'])) {
-			$data['error_width'] = $this->error['width'];
-		} else {
-			$data['error_width'] = '';
-		}
-
-		if (isset($this->error['height'])) {
-			$data['error_height'] = $this->error['height'];
-		} else {
-			$data['error_height'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -71,28 +41,28 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('extension/opencart/module/banner', 'user_token=' . $this->session->data['user_token']);
+			$data['save'] = $this->url->link('extension/opencart/module/banner.save', 'user_token=' . $this->session->data['user_token']);
 		} else {
-			$data['action'] = $this->url->link('extension/opencart/module/banner', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
+			$data['save'] = $this->url->link('extension/opencart/module/banner.save', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
 		}
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
-		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		// Extension
+		if (isset($this->request->get['module_id'])) {
+			$this->load->model('setting/module');
+
 			$module_info = $this->model_setting_module->getModule($this->request->get['module_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['name'])) {
 			$data['name'] = $module_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['banner_id'])) {
-			$data['banner_id'] = $this->request->post['banner_id'];
-		} elseif (!empty($module_info)) {
+		// Banner
+		if (isset($module_info['banner_id'])) {
 			$data['banner_id'] = $module_info['banner_id'];
 		} else {
 			$data['banner_id'] = '';
@@ -102,28 +72,58 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['banners'] = $this->model_design_banner->getBanners();
 
-		if (isset($this->request->post['width'])) {
-			$data['width'] = $this->request->post['width'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['effect'])) {
+			$data['effect'] = $module_info['effect'];
+		} else {
+			$data['effect'] = '';
+		}
+
+		if (isset($module_info['items'])) {
+			$data['items'] = $module_info['items'];
+		} else {
+			$data['items'] = 4;
+		}
+
+		if (isset($module_info['controls'])) {
+			$data['controls'] = $module_info['controls'];
+		} else {
+			$data['controls'] = '';
+		}
+
+		if (isset($module_info['indicators'])) {
+			$data['indicators'] = $module_info['indicators'];
+		} else {
+			$data['indicators'] = '';
+		}
+
+		if (isset($module_info['interval'])) {
+			$data['interval'] = $module_info['interval'];
+		} else {
+			$data['interval'] = 5000;
+		}
+
+		if (isset($module_info['width'])) {
 			$data['width'] = $module_info['width'];
 		} else {
 			$data['width'] = '';
 		}
 
-		if (isset($this->request->post['height'])) {
-			$data['height'] = $this->request->post['height'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['height'])) {
 			$data['height'] = $module_info['height'];
 		} else {
 			$data['height'] = '';
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
 			$data['status'] = '';
+		}
+
+		if (isset($this->request->get['module_id'])) {
+			$data['module_id'] = (int)$this->request->get['module_id'];
+		} else {
+			$data['module_id'] = 0;
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -133,23 +133,120 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/banner', $data));
 	}
 
-	protected function validate() {
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
+		$this->load->language('extension/opencart/module/banner');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/module/banner')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
-			$this->error['name'] = $this->language->get('error_name');
+		$required = [
+			'module_id' => 0,
+			'name'      => '',
+			'interval'  => 0,
+			'width'     => 0,
+			'height'    => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 3, 64)) {
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!$this->request->post['width']) {
-			$this->error['width'] = $this->language->get('error_width');
+		if (!$post_info['interval']) {
+			$json['error']['interval'] = $this->language->get('error_interval');
 		}
 
-		if (!$this->request->post['height']) {
-			$this->error['height'] = $this->language->get('error_height');
+		if (!$post_info['width']) {
+			$json['error']['width'] = $this->language->get('error_width');
 		}
 
-		return !$this->error;
+		if (!$post_info['height']) {
+			$json['error']['height'] = $this->language->get('error_height');
+		}
+
+		if (!$json) {
+			// Extension
+			$this->load->model('setting/module');
+
+			if (!$post_info['module_id']) {
+				$json['module_id'] = $this->model_setting_module->addModule('opencart.banner', $post_info);
+			} else {
+				$this->model_setting_module->editModule($post_info['module_id'], $post_info);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Add
+	 *
+	 * @return void
+	 */
+	public function add(): void {
+		$this->load->language('extension/opencart/module/banner');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/banner')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Extension
+			$this->load->model('setting/module');
+
+			$this->model_setting_module->addModule('opencart.banner', ['name' => $this->language->get('heading_title')]);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('extension/opencart/module/banner');
+
+		$json = [];
+
+		if (isset($this->request->get['module_id'])) {
+			$module_id = $this->request->get['module_id'];
+		} else {
+			$module_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/banner')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Extension
+			$this->load->model('setting/module');
+
+			$this->model_setting_module->deleteModule($module_id);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

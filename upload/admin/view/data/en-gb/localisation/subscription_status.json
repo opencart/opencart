@@ -1,0 +1,20 @@
+{
+  "5": {
+    "stock_status_id": "5",
+    "language_id": "1",
+    "name": "Out Of Stock",
+    "subscription_status_id": "5"
+  },
+  "7": {
+    "stock_status_id": "7",
+    "language_id": "1",
+    "name": "In Stock",
+    "subscription_status_id": "7"
+  },
+  "6": {
+    "stock_status_id": "6",
+    "language_id": "1",
+    "name": "2-3 Days",
+    "subscription_status_id": "6"
+  }
+}

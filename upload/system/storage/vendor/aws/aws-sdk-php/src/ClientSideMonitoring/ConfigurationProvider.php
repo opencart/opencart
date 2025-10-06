@@ -87,7 +87,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $configProviders[] = self::fallback();
 
         $memo = self::memoize(
-            call_user_func_array('self::chain', $configProviders)
+            call_user_func_array([ConfigurationProvider::class, 'chain'], $configProviders)
         );
 
         if (isset($config['csm']) && $config['csm'] instanceof CacheInterface) {
@@ -108,7 +108,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             // Use credentials from environment variables, if available
             $enabled = getenv(self::ENV_ENABLED);
             if ($enabled !== false) {
-                return Promise\promise_for(
+                return Promise\Create::promiseFor(
                     new Configuration(
                         $enabled,
                         getenv(self::ENV_HOST) ?: self::DEFAULT_HOST,
@@ -132,7 +132,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function fallback()
     {
         return function() {
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration(
                     self::DEFAULT_ENABLED,
                     self::DEFAULT_HOST,
@@ -161,7 +161,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'aws_csm');
 
         return function () use ($profile, $filename) {
-            if (!is_readable($filename)) {
+            if (!@is_readable($filename)) {
                 return self::reject("Cannot read CSM config from $filename");
             }
             $data = \Aws\parse_ini_file($filename, true);
@@ -172,7 +172,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 return self::reject("'$profile' not found in config file");
             }
             if (!isset($data[$profile]['csm_enabled'])) {
-                return self::reject("Required CSM config values not present in 
+                return self::reject("Required CSM config values not present in
                     INI profile '{$profile}' ({$filename})");
             }
 
@@ -191,7 +191,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 $data[$profile]['csm_client_id'] = self::DEFAULT_CLIENT_ID;
             }
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration(
                     $data[$profile]['csm_enabled'],
                     $data[$profile]['csm_host'],

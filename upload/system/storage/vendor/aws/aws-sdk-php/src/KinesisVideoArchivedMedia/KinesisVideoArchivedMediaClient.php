@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDASHStreamingSessionURLAsync(array $args = [])
  * @method \Aws\Result getHLSStreamingSessionURL(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getHLSStreamingSessionURLAsync(array $args = [])
+ * @method \Aws\Result getImages(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getImagesAsync(array $args = [])
  * @method \Aws\Result getMediaForFragmentList(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMediaForFragmentListAsync(array $args = [])
  * @method \Aws\Result listFragments(array $args = [])

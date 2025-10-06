@@ -137,7 +137,7 @@ trait EncryptionTrait
      * @param array $cipherOptions Options for use in determining the cipher to
      *                             be used for encrypting data.
      *
-     * @return [AesStreamInterface, string]
+     * @return array returns an array with two elements as follows: [string, AesStreamInterface]
      *
      * @internal
      */
@@ -156,7 +156,7 @@ trait EncryptionTrait
                     $cipherOptions['Iv'],
                     $cipherOptions['Aad'] = isset($cipherOptions['Aad'])
                         ? $cipherOptions['Aad']
-                        : null,
+                        : '',
                     $cipherOptions['TagLength'],
                     $cipherOptions['KeySize']
                 );
@@ -173,7 +173,7 @@ trait EncryptionTrait
                     $cipherTextStream->createStream()
                 ]);
                 $cipherOptions['Tag'] = $cipherTextStream->getTag();
-                $appendStream->addStream(Psr7\stream_for($cipherOptions['Tag']));
+                $appendStream->addStream(Psr7\Utils::streamFor($cipherOptions['Tag']));
                 return [$appendStream, $cipherTextStream->getAesName()];
             default:
                 $cipherMethod = $this->buildCipherMethod(

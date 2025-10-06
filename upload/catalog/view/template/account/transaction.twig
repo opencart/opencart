@@ -8,38 +8,36 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <p>{{ text_total }} <b>{{ total }}</b>.</p>
+      <p>{{ text_total }} <strong><x-currency code="{{ currency }}" amount="{{ total }}"></x-currency></strong>.</p>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left">{{ column_date_added }}</td>
-            <td class="text-left">{{ column_description }}</td>
-            <td class="text-right">{{ column_amount }}</td>
+            <th>{{ column_date_added }}</th>
+            <th>{{ column_description }}</th>
+            <th class="text-end">{{ column_amount }}</th>
           </tr>
         </thead>
         <tbody>
           {% if transactions %}
             {% for transaction in transactions %}
               <tr>
-                <td class="text-left">{{ transaction.date_added }}</td>
-                <td class="text-left">{{ transaction.description }}</td>
-                <td class="text-right">{{ transaction.amount }}</td>
+                <td>{{ transaction.date_added }}</td>
+                <td>{{ transaction.description }}</td>
+                <td class="text-end"><x-currency code="{{ currency }}" amount="{{ transaction.amount }}"></x-currency></td>
               </tr>
             {% endfor %}
           {% else %}
             <tr>
-              <td class="text-center" colspan="5">{{ text_no_results }}</td>
+              <td class="text-center" colspan="3">{{ text_no_results }}</td>
             </tr>
           {% endif %}
         </tbody>
       </table>
-      <div class="row">
-        <div class="col-sm-6 text-left">{{ pagination }}</div>
-        <div class="col-sm-6 text-right">{{ results }}</div>
+      <div class="row mb-3">
+        <div class="col-sm-6 text-start">{{ pagination }}</div>
+        <div class="col-sm-6 text-end">{{ results }}</div>
       </div>
-      <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-      </div>
+      <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>

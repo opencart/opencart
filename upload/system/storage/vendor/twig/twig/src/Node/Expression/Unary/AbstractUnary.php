@@ -18,16 +18,30 @@ use Twig\Node\Node;
 
 abstract class AbstractUnary extends AbstractExpression
 {
+    /**
+     * @param AbstractExpression $node
+     */
     public function __construct(Node $node, int $lineno)
     {
-        parent::__construct(['node' => $node], [], $lineno);
+        if (!$node instanceof AbstractExpression) {
+            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance argument to "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($node));
+        }
+
+        parent::__construct(['node' => $node], ['with_parentheses' => false], $lineno);
     }
 
     public function compile(Compiler $compiler): void
     {
-        $compiler->raw(' ');
+        if ($this->hasExplicitParentheses()) {
+            $compiler->raw('(');
+        } else {
+            $compiler->raw(' ');
+        }
         $this->operator($compiler);
         $compiler->subcompile($this->getNode('node'));
+        if ($this->hasExplicitParentheses()) {
+            $compiler->raw(')');
+        }
     }
 
     abstract public function operator(Compiler $compiler): Compiler;

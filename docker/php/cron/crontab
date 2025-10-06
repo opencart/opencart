@@ -1,0 +1,16 @@
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+
+# Test cron jobs
+# Use the service name (e.g., 'apache') instead of 'localhost' for inter-container communication.
+# The URL should be enclosed in single quotes to prevent the shell from interpreting special characters like '&'.
+# We also need to specify the Host header so that Apache serves the correct virtual host.
+# * * * * * www-data curl -s -H 'Host: localhost' 'http://apache/index.php?route=common/home&language=en-gb&test_cron=Cron_via_controller_works!' >> /var/log/cron.log 2>&1
+
+# Make sure the file ends with a newline

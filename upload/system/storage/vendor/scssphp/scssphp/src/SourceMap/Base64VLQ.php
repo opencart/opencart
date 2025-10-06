@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -10,8 +11,6 @@
  */
 
 namespace ScssPhp\ScssPhp\SourceMap;
-
-use ScssPhp\ScssPhp\SourceMap\Base64;
 
 /**
  * Base 64 VLQ
@@ -35,6 +34,8 @@ use ScssPhp\ScssPhp\SourceMap\Base64;
  *
  * @author John Lenz <johnlenz@google.com>
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @internal
  */
 class Base64VLQ
 {
@@ -50,7 +51,7 @@ class Base64VLQ
     /**
      * Returns the VLQ encoded value.
      *
-     * @param integer $value
+     * @param int $value
      *
      * @return string
      */
@@ -79,9 +80,9 @@ class Base64VLQ
      * Decodes VLQValue.
      *
      * @param string $str
-     * @param integer $index
+     * @param int    $index
      *
-     * @return integer
+     * @return int
      */
     public static function decode($str, &$index)
     {
@@ -106,9 +107,9 @@ class Base64VLQ
      *   1 becomes 2 (10 binary), -1 becomes 3 (11 binary)
      *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
      *
-     * @param integer $value
+     * @param int $value
      *
-     * @return integer
+     * @return int
      */
     private static function toVLQSigned($value)
     {
@@ -125,9 +126,9 @@ class Base64VLQ
      *   2 (10 binary) becomes 1, 3 (11 binary) becomes -1
      *   4 (100 binary) becomes 2, 5 (101 binary) becomes -2
      *
-     * @param integer $value
+     * @param int $value
      *
-     * @return integer
+     * @return int
      */
     private static function fromVLQSigned($value)
     {

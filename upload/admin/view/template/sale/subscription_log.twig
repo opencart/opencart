@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>{{ column_date_added }}</th>
+        <th>{{ column_status }}</th>
+        <th>{{ column_code }}</th>
+        <th>{{ column_description }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if logs %}
+        {% for log in logs %}
+          <tr>
+            <td>{{ log.date_added }}</td>
+            <td>{% if log.status %}{{ text_enabled }}{% else %}{{ text_disabled }}{% endif %}</td>
+            <td>{{ log.code }}</td>
+            <td>{{ log.description }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

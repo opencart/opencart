@@ -1,0 +1,34 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-start">{{ column_campaign }}</th>
+        <th class="text-start">{{ column_code }}</th>
+        <th class="text-end">{{ column_clicks }}</th>
+        <th class="text-end">{{ column_orders }}</th>
+        <th class="text-end">{{ column_total }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if marketings %}
+        {% for marketing in marketings %}
+          <tr>
+            <td class="text-start">{{ marketing.campaign }}</td>
+            <td class="text-start">{{ marketing.code }}</td>
+            <td class="text-end">{{ marketing.clicks }}</td>
+            <td class="text-end">{{ marketing.orders }}</td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ marketing.total }}"></x-currency></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="5">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

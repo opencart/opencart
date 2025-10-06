@@ -1,6 +1,6 @@
 ﻿/*
- Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
 */
 CKEDITOR.plugins.setLang("specialchar","ro",{euro:"Simbol EURO €",lsquo:"Ghilimea simplă stânga",rsquo:"Ghilimea simplă dreapta",ldquo:"Ghilimea dublă stânga",rdquo:"Ghilimea dublă dreapta",ndash:"liniuță despărțire cu spații",mdash:"liniuță despărțire cuvinte fără spații",iexcl:"semnul exclamației inversat",cent:"simbol cent",pound:"simbol lira sterlină",curren:"simbol monedă",yen:"simbol yen",brvbar:"bara verticală întreruptă",sect:"simbol paragraf",uml:"tréma",copy:"simbol drept de autor",ordf:"Indicatorul ordinal feminin a superscript",
 laquo:"Left-pointing double angle quotation mark",not:"Not sign",reg:"Registered sign",macr:"Macron",deg:"Degree sign",sup2:"Superscript two",sup3:"Superscript three",acute:"Acute accent",micro:"Micro sign",para:"Pilcrow sign",middot:"Middle dot",cedil:"Sedila",sup1:"Superscript one",ordm:"Masculine ordinal indicator",raquo:"Right-pointing double angle quotation mark",frac14:"Vulgar fraction one quarter",frac12:"Vulgar fraction one half",frac34:"Vulgar fraction three quarters",iquest:"Semnul întrebării inversat",

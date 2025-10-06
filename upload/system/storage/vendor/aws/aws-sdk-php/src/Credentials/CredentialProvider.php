@@ -7,7 +7,6 @@ use Aws\CacheInterface;
 use Aws\Exception\CredentialsException;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
-
 /**
  * Credential providers are functions that accept no arguments and return a
  * promise that is fulfilled with an {@see \Aws\Credentials\CredentialsInterface}
@@ -49,18 +48,23 @@ class CredentialProvider
     const ENV_PROFILE = 'AWS_PROFILE';
     const ENV_ROLE_SESSION_NAME = 'AWS_ROLE_SESSION_NAME';
     const ENV_SECRET = 'AWS_SECRET_ACCESS_KEY';
+    const ENV_ACCOUNT_ID = 'AWS_ACCOUNT_ID';
     const ENV_SESSION = 'AWS_SESSION_TOKEN';
     const ENV_TOKEN_FILE = 'AWS_WEB_IDENTITY_TOKEN_FILE';
+    const ENV_SHARED_CREDENTIALS_FILE = 'AWS_SHARED_CREDENTIALS_FILE';
 
     /**
-     * Create a default credential provider that first checks for environment
-     * variables, then checks for the "default" profile in ~/.aws/credentials,
+     * Create a default credential provider that
+     * first checks for environment variables,
+     * then checks for assumed role via web identity,
+     * then checks for cached SSO credentials from the CLI,
+     * then check for credential_process in the "default" profile in ~/.aws/credentials,
+     * then checks for the "default" profile in ~/.aws/credentials,
+     * then for credential_process in the "default profile" profile in ~/.aws/config,
      * then checks for "profile default" profile in ~/.aws/config (which is
-     * the default profile of AWS CLI), then tries to make a GET Request to
-     * fetch credentials if Ecs environment variable is presented, then checks
-     * for credential_process in the "default" profile in ~/.aws/credentials,
-     * then for credential_process in the "default profile" profile in
-     * ~/.aws/config, and finally checks for EC2 instance profile credentials.
+     * the default profile of AWS CLI),
+     * then tries to make a GET Request to fetch credentials if ECS environment variable is presented,
+     * finally checks for EC2 instance profile credentials.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided credentials.
@@ -74,11 +78,14 @@ class CredentialProvider
     {
         $cacheable = [
             'web_identity',
-            'ecs',
+            'sso',
             'process_credentials',
             'process_config',
+            'ecs',
             'instance'
         ];
+
+        $profileName = getenv(self::ENV_PROFILE) ?: 'default';
 
         $defaultChain = [
             'env' => self::env(),
@@ -88,22 +95,28 @@ class CredentialProvider
             !isset($config['use_aws_shared_config_files'])
             || $config['use_aws_shared_config_files'] !== false
         ) {
+            $defaultChain['sso'] = self::sso(
+                $profileName,
+                self::getHomeDir() . '/.aws/config',
+                $config
+            );
+            $defaultChain['process_credentials'] = self::process();
             $defaultChain['ini'] = self::ini();
+            $defaultChain['process_config'] = self::process(
+                'profile ' . $profileName,
+                self::getHomeDir() . '/.aws/config'
+            );
             $defaultChain['ini_config'] = self::ini(
-                'profile default',
+                'profile '. $profileName,
                 self::getHomeDir() . '/.aws/config'
             );
         }
 
-        if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
+        if (self::shouldUseEcs()) {
             $defaultChain['ecs'] = self::ecsCredentials($config);
+        } else {
+            $defaultChain['instance'] = self::instanceProfile($config);
         }
-        $defaultChain['process_credentials'] = self::process();
-        $defaultChain['process_config'] = self::process(
-            'profile default',
-            self::getHomeDir() . '/.aws/config'
-        );
-        $defaultChain['instance'] = self::instanceProfile($config);
 
         if (isset($config['credentials'])
             && $config['credentials'] instanceof CacheInterface
@@ -121,8 +134,8 @@ class CredentialProvider
 
         return self::memoize(
             call_user_func_array(
-                'self::chain',
-                $defaultChain
+                [CredentialProvider::class, 'chain'],
+                array_values($defaultChain)
             )
         );
     }
@@ -136,7 +149,7 @@ class CredentialProvider
      */
     public static function fromCredentials(CredentialsInterface $creds)
     {
-        $promise = Promise\promise_for($creds);
+        $promise = Promise\Create::promiseFor($creds);
 
         return function () use ($promise) {
             return $promise;
@@ -157,12 +170,20 @@ class CredentialProvider
             throw new \InvalidArgumentException('No providers in chain');
         }
 
-        return function () use ($links) {
+        return function ($previousCreds = null) use ($links) {
             /** @var callable $parent */
             $parent = array_shift($links);
             $promise = $parent();
             while ($next = array_shift($links)) {
-                $promise = $promise->otherwise($next);
+                if ($next instanceof InstanceProfileProvider
+                    && $previousCreds instanceof Credentials
+                ) {
+                    $promise = $promise->otherwise(
+                        function () use ($next, $previousCreds) {return $next($previousCreds);}
+                    );
+                } else {
+                    $promise = $promise->otherwise($next);
+                }
             }
             return $promise;
         };
@@ -208,7 +229,7 @@ class CredentialProvider
                         return $creds;
                     }
                     // Refresh the result and forward the promise.
-                    return $result = $provider();
+                    return $result = $provider($creds);
                 })
                 ->otherwise(function($reason) use (&$result) {
                     // Cleanup rejected promise.
@@ -239,7 +260,7 @@ class CredentialProvider
         return function () use ($provider, $cache, $cacheKey) {
             $found = $cache->get($cacheKey);
             if ($found instanceof CredentialsInterface && !$found->isExpired()) {
-                return Promise\promise_for($found);
+                return Promise\Create::promiseFor($found);
             }
 
             return $provider()
@@ -271,9 +292,19 @@ class CredentialProvider
             // Use credentials from environment variables, if available
             $key = getenv(self::ENV_KEY);
             $secret = getenv(self::ENV_SECRET);
+            $accountId = getenv(self::ENV_ACCOUNT_ID) ?: null;
+            $token = getenv(self::ENV_SESSION) ?: null;
+
             if ($key && $secret) {
-                return Promise\promise_for(
-                    new Credentials($key, $secret, getenv(self::ENV_SESSION) ?: NULL)
+                return Promise\Create::promiseFor(
+                    new Credentials(
+                        $key,
+                        $secret,
+                        $token,
+                        null,
+                        $accountId,
+                        CredentialSources::ENVIRONMENT
+                    )
                 );
             }
 
@@ -294,6 +325,40 @@ class CredentialProvider
     public static function instanceProfile(array $config = [])
     {
         return new InstanceProfileProvider($config);
+    }
+
+    /**
+     * Credential provider that retrieves cached SSO credentials from the CLI
+     *
+     * @return callable
+     */
+    public static function sso($ssoProfileName = 'default',
+                               $filename = null,
+                               $config = []
+    ) {
+        $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
+
+        return function () use ($ssoProfileName, $filename, $config) {
+            if (!@is_readable($filename)) {
+                return self::reject("Cannot read credentials from $filename");
+            }
+            $profiles = self::loadProfiles($filename);
+
+            if (isset($profiles[$ssoProfileName])) {
+                $ssoProfile = $profiles[$ssoProfileName];
+            } elseif (isset($profiles['profile ' . $ssoProfileName])) {
+                $ssoProfileName = 'profile ' . $ssoProfileName;
+                $ssoProfile = $profiles[$ssoProfileName];
+            } else {
+                return self::reject("Profile {$ssoProfileName} does not exist in {$filename}.");
+            }
+
+            if (!empty($ssoProfile['sso_session'])) {
+                return CredentialProvider::getSsoCredentials($profiles, $ssoProfileName, $filename, $config);
+            } else {
+                return CredentialProvider::getSsoCredentialsLegacy($profiles, $ssoProfileName, $filename, $config);
+            }
+        };
     }
 
     /**
@@ -353,7 +418,8 @@ class CredentialProvider
                     'WebIdentityTokenFile' => $tokenFromEnv,
                     'SessionName' => $sessionName,
                     'client' => $stsClient,
-                    'region' => $region
+                    'region' => $region,
+                    'source' => CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN
                 ]);
 
                 return $provider();
@@ -382,7 +448,8 @@ class CredentialProvider
                         'WebIdentityTokenFile' => $profile['web_identity_token_file'],
                         'SessionName' => $sessionName,
                         'client' => $stsClient,
-                        'region' => $region
+                        'region' => $region,
+                        'source' => CredentialSources::PROFILE_STS_WEB_ID_TOKEN
                     ]);
 
                     return $provider();
@@ -396,7 +463,8 @@ class CredentialProvider
 
     /**
      * Credentials provider that creates credentials using an ini file stored
-     * in the current user's home directory.
+     * in the current user's home directory.  A source can be provided
+     * in this file for assuming a role using the credential_source config option.
      *
      * @param string|null $profile  Profile to use. If not specified will use
      *                              the "default" profile in "~/.aws/credentials".
@@ -414,7 +482,7 @@ class CredentialProvider
      */
     public static function ini($profile = null, $filename = null, array $config = [])
     {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
+        $filename = self::getFileName($filename);
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename, $config) {
@@ -426,7 +494,7 @@ class CredentialProvider
                 : false;
             $stsClient = isset($config['stsClient']) ? $config['stsClient'] : null;
 
-            if (!is_readable($filename)) {
+            if (!@is_readable($filename)) {
                 return self::reject("Cannot read credentials from $filename");
             }
             $data = self::loadProfiles($filename);
@@ -463,7 +531,8 @@ class CredentialProvider
                     $data,
                     $profile,
                     $filename,
-                    $stsClient
+                    $stsClient,
+                    $config
                 );
             }
 
@@ -477,15 +546,18 @@ class CredentialProvider
             if (empty($data[$profile]['aws_session_token'])) {
                 $data[$profile]['aws_session_token']
                     = isset($data[$profile]['aws_security_token'])
-                        ? $data[$profile]['aws_security_token']
-                        : null;
+                    ? $data[$profile]['aws_security_token']
+                    : null;
             }
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Credentials(
                     $data[$profile]['aws_access_key_id'],
                     $data[$profile]['aws_secret_access_key'],
-                    $data[$profile]['aws_session_token']
+                    $data[$profile]['aws_session_token'],
+                    null,
+                    $data[$profile]['aws_account_id'] ?? null,
+                    CredentialSources::PROFILE
                 )
             );
         };
@@ -504,11 +576,11 @@ class CredentialProvider
      */
     public static function process($profile = null, $filename = null)
     {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
+        $filename = self::getFileName($filename);
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
-            if (!is_readable($filename)) {
+            if (!@is_readable($filename)) {
                 return self::reject("Cannot read process credentials from $filename");
             }
             $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
@@ -560,12 +632,21 @@ class CredentialProvider
                 $processData['SessionToken'] = null;
             }
 
-            return Promise\promise_for(
+            $accountId = null;
+            if (!empty($processData['AccountId'])) {
+                $accountId = $processData['AccountId'];
+            } elseif (!empty($data[$profile]['aws_account_id'])) {
+                $accountId = $data[$profile]['aws_account_id'];
+            }
+
+            return Promise\Create::promiseFor(
                 new Credentials(
                     $processData['AccessKeyId'],
                     $processData['SecretAccessKey'],
                     $processData['SessionToken'],
-                    $expires
+                    $expires,
+                    $accountId,
+                    CredentialSources::PROFILE_PROCESS
                 )
             );
         };
@@ -576,37 +657,67 @@ class CredentialProvider
      *
      * @return callable
      */
-    private static function loadRoleProfile($profiles, $profileName, $filename, $stsClient)
-    {
+    private static function loadRoleProfile(
+        $profiles,
+        $profileName,
+        $filename,
+        $stsClient,
+        $config = []
+    ) {
         $roleProfile = $profiles[$profileName];
         $roleArn = isset($roleProfile['role_arn']) ? $roleProfile['role_arn'] : '';
         $roleSessionName = isset($roleProfile['role_session_name'])
             ? $roleProfile['role_session_name']
             : 'aws-sdk-php-' . round(microtime(true) * 1000);
 
-        if (empty($profiles[$profileName]['source_profile'])) {
-            return self::reject("source_profile is not set using profile " .
-                $profileName
+        if (
+            empty($roleProfile['source_profile'])
+            == empty($roleProfile['credential_source'])
+        ) {
+            return self::reject("Either source_profile or credential_source must be set " .
+                "using profile " . $profileName . ", but not both."
             );
         }
 
-        $sourceProfileName = $roleProfile['source_profile'];
-        if (!isset($profiles[$sourceProfileName])) {
-            return self::reject("source_profile " . $sourceProfileName
-                . " using profile " . $profileName . " does not exist"
-            );
+        $sourceProfileName = "";
+        if (!empty($roleProfile['source_profile'])) {
+            $sourceProfileName = $roleProfile['source_profile'];
+            if (!isset($profiles[$sourceProfileName])) {
+                return self::reject("source_profile " . $sourceProfileName
+                    . " using profile " . $profileName . " does not exist"
+                );
+            }
+            if (isset($config['visited_profiles']) &&
+                in_array($roleProfile['source_profile'], $config['visited_profiles'])
+            ) {
+                return self::reject("Circular source_profile reference found.");
+            }
+            $config['visited_profiles'] [] = $roleProfile['source_profile'];
+        } else {
+            if (empty($roleArn)) {
+                return self::reject(
+                    "A role_arn must be provided with credential_source in " .
+                    "file {$filename} under profile {$profileName} "
+                );
+            }
         }
-        $sourceRegion = isset($profiles[$sourceProfileName]['region'])
-            ? $profiles[$sourceProfileName]['region']
-            : 'us-east-1';
 
         if (empty($stsClient)) {
-            $config = [
-                'preferStaticCredentials' => true
-            ];
-            $sourceCredentials = call_user_func(
-                CredentialProvider::ini($sourceProfileName, $filename, $config)
-            )->wait();
+            $sourceRegion = isset($profiles[$sourceProfileName]['region'])
+                ? $profiles[$sourceProfileName]['region']
+                : 'us-east-1';
+            $config['preferStaticCredentials'] = true;
+            $sourceCredentials = null;
+            if (!empty($roleProfile['source_profile'])){
+                $sourceCredentials = call_user_func(
+                    CredentialProvider::ini($sourceProfileName, $filename, $config)
+                )->wait();
+            } else {
+                $sourceCredentials = self::getCredentialsFromSource(
+                    $profileName,
+                    $filename
+                );
+            }
             $stsClient = new StsClient([
                 'credentials' => $sourceCredentials,
                 'region' => $sourceRegion,
@@ -618,9 +729,12 @@ class CredentialProvider
             'RoleArn' => $roleArn,
             'RoleSessionName' => $roleSessionName
         ]);
+        $credentials = $stsClient->createCredentials(
+            $result,
+            CredentialSources::STS_ASSUME_ROLE
+        );
 
-        $creds = $stsClient->createCredentials($result);
-        return Promise\promise_for($creds);
+        return Promise\Create::promiseFor($credentials);
     }
 
     /**
@@ -679,7 +793,7 @@ class CredentialProvider
         }
 
         if (file_exists($configFile)) {
-        $configProfileData = \Aws\parse_ini_file($configFile, true, INI_SCANNER_RAW);
+            $configProfileData = \Aws\parse_ini_file($configFile, true, INI_SCANNER_RAW);
             foreach ($configProfileData as $name => $profile) {
                 // standardize config profile names
                 $name = str_replace('profile ', '', $name);
@@ -692,8 +806,218 @@ class CredentialProvider
         return $profiles;
     }
 
+    public static function getCredentialsFromSource(
+        $profileName = '',
+        $filename = '',
+        $config = []
+    ) {
+        $data = self::loadProfiles($filename);
+        $credentialSource = !empty($data[$profileName]['credential_source'])
+            ? $data[$profileName]['credential_source']
+            : null;
+        $credentialsPromise = null;
+
+        switch ($credentialSource) {
+            case 'Environment':
+                $credentialsPromise = self::env();
+                break;
+            case 'Ec2InstanceMetadata':
+                $credentialsPromise = self::instanceProfile($config);
+                break;
+            case 'EcsContainer':
+                $credentialsPromise = self::ecsCredentials($config);
+                break;
+            default:
+                throw new CredentialsException(
+                    "Invalid credential_source found in config file: {$credentialSource}. Valid inputs "
+                    . "include Environment, Ec2InstanceMetadata, and EcsContainer."
+                );
+        }
+
+        $credentialsResult = null;
+        try {
+            $credentialsResult = $credentialsPromise()->wait();
+        } catch (\Exception $reason) {
+            return self::reject(
+                "Unable to successfully retrieve credentials from the source specified in the"
+                . " credentials file: {$credentialSource}; failure message was: "
+                . $reason->getMessage()
+            );
+        }
+        return function () use ($credentialsResult) {
+            return Promise\Create::promiseFor($credentialsResult);
+        };
+    }
+
     private static function reject($msg)
     {
         return new Promise\RejectedPromise(new CredentialsException($msg));
     }
+
+    /**
+     * @param $filename
+     * @return string
+     */
+    private static function getFileName($filename)
+    {
+        if (!isset($filename)) {
+            $filename = getenv(self::ENV_SHARED_CREDENTIALS_FILE) ?:
+                (self::getHomeDir() . '/.aws/credentials');
+        }
+        return $filename;
+    }
+
+    /**
+     * @return boolean
+     */
+    public static function shouldUseEcs()
+    {
+        //Check for relative uri. if not, then full uri.
+        //fall back to server for each as getenv is not thread-safe.
+        return !empty(getenv(EcsCredentialProvider::ENV_URI))
+            || !empty($_SERVER[EcsCredentialProvider::ENV_URI])
+            || !empty(getenv(EcsCredentialProvider::ENV_FULL_URI))
+            || !empty($_SERVER[EcsCredentialProvider::ENV_FULL_URI]);
+    }
+
+    /**
+     * @param $profiles
+     * @param $ssoProfileName
+     * @param $filename
+     * @param $config
+     * @return Promise\PromiseInterface
+     */
+    private static function getSsoCredentials($profiles, $ssoProfileName, $filename, $config)
+    {
+        if (empty($config['ssoOidcClient'])) {
+            $ssoProfile = $profiles[$ssoProfileName];
+            $sessionName = $ssoProfile['sso_session'];
+            if (empty($profiles['sso-session ' . $sessionName])) {
+                return self::reject(
+                    "Could not find sso-session {$sessionName} in {$filename}"
+                );
+            }
+            $ssoSession = $profiles['sso-session ' . $ssoProfile['sso_session']];
+            $ssoOidcClient = new Aws\SSOOIDC\SSOOIDCClient([
+                'region' => $ssoSession['sso_region'],
+                'version' => '2019-06-10',
+                'credentials' => false
+            ]);
+        } else {
+            $ssoOidcClient = $config['ssoClient'];
+        }
+
+        $tokenPromise = new Aws\Token\SsoTokenProvider(
+            $ssoProfileName,
+            $filename,
+            $ssoOidcClient
+        );
+        $token = $tokenPromise()->wait();
+        $ssoCredentials = CredentialProvider::getCredentialsFromSsoService(
+            $ssoProfile,
+            $ssoSession['sso_region'],
+            $token->getToken(),
+            $config
+        );
+        $expiration = $ssoCredentials['expiration'];
+        return Promise\Create::promiseFor(
+            new Credentials(
+                $ssoCredentials['accessKeyId'],
+                $ssoCredentials['secretAccessKey'],
+                $ssoCredentials['sessionToken'],
+                $expiration,
+                $ssoProfile['sso_account_id'],
+                CredentialSources::PROFILE_SSO
+            )
+        );
+    }
+
+    /**
+     * @param $profiles
+     * @param $ssoProfileName
+     * @param $filename
+     * @param $config
+     * @return Promise\PromiseInterface
+     */
+    private static function getSsoCredentialsLegacy($profiles, $ssoProfileName, $filename, $config)
+    {
+        $ssoProfile = $profiles[$ssoProfileName];
+        if (empty($ssoProfile['sso_start_url'])
+            || empty($ssoProfile['sso_region'])
+            || empty($ssoProfile['sso_account_id'])
+            || empty($ssoProfile['sso_role_name'])
+        ) {
+            return self::reject(
+                "Profile {$ssoProfileName} in {$filename} must contain the following keys: "
+                . "sso_start_url, sso_region, sso_account_id, and sso_role_name."
+            );
+        }
+        $tokenLocation = self::getHomeDir()
+            . '/.aws/sso/cache/'
+            . sha1($ssoProfile['sso_start_url'])
+            . ".json";
+
+        if (!@is_readable($tokenLocation)) {
+            return self::reject("Unable to read token file at $tokenLocation");
+        }
+        $tokenData = json_decode(file_get_contents($tokenLocation), true);
+        if (empty($tokenData['accessToken']) || empty($tokenData['expiresAt'])) {
+            return self::reject(
+                "Token file at {$tokenLocation} must contain an access token and an expiration"
+            );
+        }
+        try {
+            $expiration = (new DateTimeResult($tokenData['expiresAt']))->getTimestamp();
+        } catch (\Exception $e) {
+            return self::reject("Cached SSO credentials returned an invalid expiration");
+        }
+        $now = time();
+        if ($expiration < $now) {
+            return self::reject("Cached SSO credentials returned expired credentials");
+        }
+        $ssoCredentials = CredentialProvider::getCredentialsFromSsoService(
+            $ssoProfile,
+            $ssoProfile['sso_region'],
+            $tokenData['accessToken'],
+            $config
+        );
+        return Promise\Create::promiseFor(
+            new Credentials(
+                $ssoCredentials['accessKeyId'],
+                $ssoCredentials['secretAccessKey'],
+                $ssoCredentials['sessionToken'],
+                $expiration,
+                $ssoProfile['sso_account_id'],
+                CredentialSources::PROFILE_SSO_LEGACY
+            )
+        );
+    }
+    /**
+     * @param array $ssoProfile
+     * @param string $clientRegion
+     * @param string $accessToken
+     * @param array $config
+     * @return array|null
+     */
+    private static function getCredentialsFromSsoService($ssoProfile, $clientRegion, $accessToken, $config)
+    {
+        if (empty($config['ssoClient'])) {
+            $ssoClient = new Aws\SSO\SSOClient([
+                'region' => $clientRegion,
+                'version' => '2019-06-10',
+                'credentials' => false
+            ]);
+        } else {
+            $ssoClient = $config['ssoClient'];
+        }
+        $ssoResponse = $ssoClient->getRoleCredentials([
+            'accessToken' => $accessToken,
+            'accountId' => $ssoProfile['sso_account_id'],
+            'roleName' => $ssoProfile['sso_role_name']
+        ]);
+
+        $ssoCredentials = $ssoResponse['roleCredentials'];
+        return $ssoCredentials;
+    }
 }
+

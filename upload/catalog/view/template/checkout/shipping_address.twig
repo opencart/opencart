@@ -1,442 +1,318 @@
-<form>
-  {% if addresses %}
+<fieldset id="shipping-address" style="display: {% if payment_address_required and not addresses %}none{% else %}block{% endif %};">
+  <legend>{{ heading_title }}</legend>
+  <div id="shipping-addresses" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <div class="form-check">
-      <label><input class="form-check-input" type="radio" name="shipping_address" value="existing" checked="checked"/> {{ text_address_existing }}</label>
-    </div>
-    <div id="shipping-existing">
-      <select name="address_id" class="form-control">
-        {% for address in addresses %}
-          {% if address.address_id == address_id %}
-            <option value="{{ address.address_id }}" selected="selected">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
-          {% else %}
-            <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
-          {% endif %}
-        {% endfor %}
-      </select>
+      <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input"{% if addresses %} checked{% endif %}/>
+      <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
     </div>
     <div class="form-check">
-      <label><input class="form-check-input" type="radio" name="shipping_address" value="new"/> {{ text_address_new }}</label>
+      <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"{% if not addresses %} checked{% endif %}/>
+      <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
     </div>
-  {% endif %}
+  </div>
+  <div id="shipping-existing" style="display: {% if addresses %}block{% else %}none{% endif %};">
+    <select name="address_id" id="input-shipping-address" class="form-select">
+      <option value="">{{ text_select }}</option>
+      {% for address in addresses %}
+        <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+      {% endfor %}
+    </select>
+    <div id="error-shipping-address" class="invalid-feedback"></div>
+  </div>
   <br/>
-  <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
-    <div class="form-group row required">
-      <label class="col-sm-2 col-form-label" for="input-shipping-firstname">{{ entry_firstname }}</label>
-      <div class="col-sm-10">
-        <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-sm-2 col-form-label" for="input-shipping-lastname">{{ entry_lastname }}</label>
-      <div class="col-sm-10">
-        <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label" for="input-shipping-company">{{ entry_company }}</label>
-      <div class="col-sm-10">
-        <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-sm-2 col-form-label" for="input-shipping-address-1">{{ entry_address_1 }}</label>
-      <div class="col-sm-10">
-        <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label" for="input-shipping-address-2">{{ entry_address_2 }}</label>
-      <div class="col-sm-10">
-        <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-sm-2 col-form-label" for="input-shipping-city">{{ entry_city }}</label>
-      <div class="col-sm-10">
-        <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-sm-2 col-form-label" for="input-shipping-postcode">{{ entry_postcode }}</label>
-      <div class="col-sm-10">
-        <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-sm-2 col-form-label" for="input-shipping-country">{{ entry_country }}</label>
-      <div class="col-sm-10">
-        <select name="country_id" id="input-shipping-country" class="form-control">
-          <option value="">{{ text_select }}</option>
-          {% for country in countries %}
-            {% if country.country_id == country_id %}
-              <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
-            {% else %}
-              <option value="{{ country.country_id }}">{{ country.name }}</option>
-            {% endif %}
-          {% endfor %}
-        </select>
-      </div>
-    </div>
-    <div class="form-group row required">
-      <label class="col-sm-2 col-form-label" for="input-shipping-zone">{{ entry_zone }}</label>
-      <div class="col-sm-10">
-        <select name="zone_id" id="input-shipping-zone" class="form-control"> </select>
-      </div>
-    </div>
-    {% for custom_field in custom_fields %}
-      {% if custom_field.type == 'select' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-          <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
-          <div class="col-sm-10">
-            <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">
-              <option value="">{{ text_select }}</option>
-              {% for custom_field_value in custom_field.custom_field_value %}
-                <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
+  <div id="shipping-new" style="display: {% if not addresses %}block{% else %}none{% endif %};">
+    <form id="form-shipping-address">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-3">
+          <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label >
+          <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control" required/>
+          <div id="error-shipping-firstname" class="invalid-feedback"></div>
         </div>
-      {% endif %}
-      {% if custom_field.type == 'radio' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-          <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
-          <div class="col-sm-10">
-            <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
-              {% for custom_field_value in custom_field.custom_field_value %}
-                <div class="form-check">
-                  <label><input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}</label>
-                </div>
-              {% endfor %}
+        <div class="col mb-3">
+          <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
+          <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control" required/>
+          <div id="error-shipping-lastname" class="invalid-feedback"></div>
+        </div>
+        <div class="col mb-3">
+          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
+          <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+        </div>
+        <div class="col mb-3">
+          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
+          <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control" required/>
+          <div id="error-shipping-address-1" class="invalid-feedback"></div>
+        </div>
+        <div class="col mb-3">
+          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
+          <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+        </div>
+        <div class="col mb-3">
+          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
+          <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control" required/>
+          <div id="error-shipping-city" class="invalid-feedback"></div>
+        </div>
+        <div class="col mb-3">
+          <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
+          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control" required/>
+          <div id="error-shipping-postcode" class="invalid-feedback"></div>
+        </div>
+        <div class="col mb-3">
+          <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
+          <x-country name="country_id" value="{{ country_id }}" id="x-shipping-country" postcode="1" target="input-shipping-postcode" input-id="input-shipping-country" input-class="form-select" required>
+            <option value="0">{{ text_select }}</option>
+          </x-country>
+          <div id="error-shipping-country" class="invalid-feedback"></div>
+        </div>
+        <div class="col mb-3">
+          <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
+          <x-zone name="zone_id" value="{{ zone_id }}" target="x-shipping-country" input-id="input-shipping-zone" input-class="form-select" required>
+            <option value="0">{{ text_select }}</option>
+          </x-zone>
+          <div id="error-shipping-zone" class="invalid-feedback"></div>
+        </div>
+
+        {% for custom_field in custom_fields %}
+
+          {% if custom_field.type == 'select' %}
+            <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
+                <option value="">{{ text_select }}</option>
+                {% for custom_field_value in custom_field.custom_field_value %}
+                  <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                {% endfor %}
+              </select>
+              <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
-          </div>
-        </div>
-      {% endif %}
-      {% if custom_field.type == 'checkbox' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-          <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
-          <div class="col-sm-10">
-            <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
-              {% for custom_field_value in custom_field.custom_field_value %}
-                <div class="form-check">
-                  <label><input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}</label>
-                </div>
-              {% endfor %}
+          {% endif %}
+
+          {% if custom_field.type == 'radio' %}
+            <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
+              <label class="form-label">{{ custom_field.name }}</label>
+              <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}">
+                {% for custom_field_value in custom_field.custom_field_value %}
+                  <div class="form-check">
+                    <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                    <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                  </div>
+                {% endfor %}
+              </div>
+              <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
-          </div>
-        </div>
-      {% endif %}
-      {% if custom_field.type == 'text' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-          <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
-          <div class="col-sm-10">
-            <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-          </div>
-        </div>
-      {% endif %}
-      {% if custom_field.type == 'textarea' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-          <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
-          <div class="col-sm-10">
-            <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
-          </div>
-        </div>
-      {% endif %}
-      {% if custom_field.type == 'file' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-          <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
-          <div class="col-sm-10">
-            <button type="button" id="button-shipping-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-            <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="" id="input-shipping-custom-field{{ custom_field.custom_field_id }}"/>
-          </div>
-        </div>
-      {% endif %}
-      {% if custom_field.type == 'date' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-          <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
-          <div class="col-sm-10">
-            <div class="input-group date">
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-              <div class="input-group-append">
-                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+          {% endif %}
+
+          {% if custom_field.type == 'checkbox' %}
+            <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
+              <label class="form-label">{{ custom_field.name }}</label>
+              <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}">
+                {% for custom_field_value in custom_field.custom_field_value %}
+                  <div class="form-check">
+                    <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                    <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                  </div>
+                {% endfor %}
+              </div>
+              <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+            </div>
+          {% endif %}
+
+          {% if custom_field.type == 'text' %}
+            <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+              <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+            </div>
+          {% endif %}
+
+          {% if custom_field.type == 'textarea' %}
+            <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.value }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
+              <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+            </div>
+          {% endif %}
+
+          {% if custom_field.type == 'file' %}
+            <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
+              <label class="form-label">{{ custom_field.name }}</label>
+              <div>
+                <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
+                <input type="hidden" name="custom_field{{ custom_field.custom_field_id }}]" value="" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
+                <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
               </div>
             </div>
-          </div>
-        </div>
-      {% endif %}
-      {% if custom_field.type == 'time' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-          <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
-          <div class="col-sm-10">
-            <div class="input-group time">
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-              <div class="input-group-append">
-                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-              </div>
+          {% endif %}
+
+          {% if custom_field.type == 'date' %}
+            <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <input type="date" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+              <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
-          </div>
-        </div>
-      {% endif %}
-      {% if custom_field.type == 'datetime' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
-          <label class="col-sm-2 col-form-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
-          <div class="col-sm-10">
-            <div class="input-group datetime">
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
-              <div class="input-group-append">
-                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-              </div>
+          {% endif %}
+
+          {% if custom_field.type == 'time' %}
+            <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <input type="time" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+              <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
-          </div>
-        </div>
-      {% endif %}
-    {% endfor %}
+          {% endif %}
+
+          {% if custom_field.type == 'datetime' %}
+            <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <input type="datetime-local" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+              <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+            </div>
+          {% endif %}
+
+        {% endfor %}
+
+      </div>
+      <div class="text-end mb-3">
+        <button type="submit" id="button-shipping-address" class="btn btn-primary">{{ button_continue }}</button>
+      </div>
+    </form>
   </div>
-  <div class="d-inline-block pt-2 pd-2 w-100">
-    <div class="float-right">
-      <button type="button" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
-    </div>
-  </div>
-</form>
+</fieldset>
 <script type="text/javascript"><!--
-$('input[name=\'shipping_address\']').on('change', function() {
-	if (this.value == 'new') {
-		$('#shipping-existing').hide();
-		$('#shipping-new').show();
-	} else {
-		$('#shipping-existing').show();
-		$('#shipping-new').hide();
-	}
+$('input[name=\'shipping_existing\']').on('change', function() {
+    if ($(this).val() == 1) {
+        $('#shipping-existing').show();
+        $('#shipping-new').hide();
+    } else {
+        $('#shipping-existing').hide();
+        $('#shipping-new').show();
+    }
 });
 
-// Shipping Address
-$('#button-shipping-address').on('click', function() {
-	chain.attach(function() {
-		return $.ajax({
-			url: 'index.php?route=checkout/shipping_address|save',
-			type: 'post',
-			data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
-			dataType: 'json',
-			beforeSend: function() {
-				$('#button-shipping-address').button('loading');
-			},
-			success: function(json) {
-				$('.alert-dismissible, .text-danger').remove();
-				$('.form-group').removeClass('has-error');
+// Existing Shipping Address
+$('#input-shipping-address').on('change', function() {
+    var element = this;
 
-				if (json['redirect']) {
-					location = json['redirect'];
-				} else if (json['error']) {
-					$('#button-shipping-address').button('reset');
+    $.ajax({
+        url: 'index.php?route=checkout/shipping_address.address&language={{ language }}&address_id=' + $(element).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            console.log(json);
 
-					if (json['error']['warning']) {
-						$('#collapse-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-					}
+            $('#input-shipping-address').removeClass('is-invalid');
+            $('#error-shipping-address').removeClass('d-block');
 
-					for (i in json['error']) {
-						var element = $('#input-shipping-' + i.replace('_', '-'));
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
 
-						if ($(element).parent().hasClass('input-group')) {
-							$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
-						} else {
-							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
-						}
-					}
+            if (json['error']) {
+                $('#input-shipping-address').addClass('is-invalid');
+                $('#error-shipping-address').html(json['error']).addClass('d-block');
+            }
 
-					// Highlight any found errors
-					$('.text-danger').parent().parent().addClass('has-error');
-				} else {
-					chain.attach(function() {
-						return $.ajax({
-							url: 'index.php?route=checkout/shipping_method',
-							dataType: 'html',
-							complete: function() {
-								$('#button-shipping-address').button('reset');
-							},
-							success: function(html) {
-								$('#collapse-shipping-method .card-body').html(html);
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-								$('#heading-shipping-method').attr('data-toggle', 'collapse');
+                $('#input-shipping-method').val('');
+                $('#input-payment-method').val('');
 
-								$('#heading-shipping-method').trigger('click');
-
-								$('#heading-payment-method').removeAttr('data-toggle');
-								$('#heading-checkout-confirm').removeAttr('data-toggle');
-							},
-							error: function(xhr, ajaxOptions, thrownError) {
-								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-							}
-						});
-					});
-
-					chain.attach(function() {
-						return $.ajax({
-							url: 'index.php?route=checkout/payment_address',
-							dataType: 'html',
-							success: function(html) {
-								$('#collapse-payment-address .card-body').html(html);
-							},
-							error: function(xhr, ajaxOptions, thrownError) {
-								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-							}
-						});
-					});
-
-					chain.attach(function() {
-						return $.ajax({
-							url: 'index.php?route=checkout/shipping_address',
-							dataType: 'html',
-							success: function(html) {
-								$('#collapse-shipping-address .card-body').html(html);
-							},
-							error: function(xhr, ajaxOptions, thrownError) {
-								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-							}
-						});
-					});
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
-});
-//--></script>
-<script type="text/javascript"><!--
-$('#collapse-shipping-address .form-group[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-shipping-address .form-group').length - 2) {
-		$('#collapse-shipping-address .form-group').eq(parseInt($(this).attr('data-sort')) + 2).before(this);
-	}
-
-	if ($(this).attr('data-sort') > $('#collapse-shipping-address .form-group').length - 2) {
-		$('#collapse-shipping-address .form-group:last').after(this);
-	}
-
-	if ($(this).attr('data-sort') == $('#collapse-shipping-address .form-group').length - 2) {
-		$('#collapse-shipping-address .form-group:last').after(this);
-	}
-
-	if ($(this).attr('data-sort') < -$('#collapse-shipping-address .form-group').length - 2) {
-		$('#collapse-shipping-address .form-group:first').before(this);
-	}
-});
-//--></script>
-<script type="text/javascript"><!--
-$('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on('click', function() {
-	var element = this;
-
-	$('#form-upload').remove();
-
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
-	$('#form-upload input[name=\'file\']').trigger('click');
-
-	if (typeof timer != 'undefined') {
-		clearInterval(timer);
-	}
-
-	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file\']').val() != '') {
-			clearInterval(timer);
-
-			$.ajax({
-				url: 'index.php?route=tool/upload',
-				type: 'post',
-				dataType: 'json',
-				data: new FormData($('#form-upload')[0]),
-				cache: false,
-				contentType: false,
-				processData: false,
-				beforeSend: function() {
-					$(element).button('loading');
-				},
-				complete: function() {
-					$(element).button('reset');
-				},
-				success: function(json) {
-					$(element).parent().find('.text-danger').remove();
-
-					if (json['error']) {
-						$(element).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
-					}
-
-					if (json['success']) {
-						alert(json['success']);
-
-						$(element).parent().find('input[name^=\'custom_field\']').val(json['code']);
-					}
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				}
-			});
-		}
-	}, 500);
-});
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
+                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
-$('.time').datetimepicker({
-	'format': 'HH:mm',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
+// New Shipping Address
+$('#form-shipping-address').on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=checkout/shipping_address.save&language={{ language }}',
+        type: 'post',
+        data: $('#form-shipping-address').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-shipping-address').button('loading');
+        },
+        complete: function() {
+            $('#button-shipping-address').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('#form-shipping-address').find('.is-invalid').removeClass('is-invalid');
+            $('#form-shipping-address').find('.invalid-feedback').removeClass('d-block');
+
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (i in json['error']) {
+                    for (key in json['error']) {
+                        $('#input-shipping-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        $('#error-shipping-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                    }
+                }
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#form-shipping-address')[0].reset();
+
+                var html = '<option value="">{{ text_select|escape('js') }}</option>';
+
+                if (json['addresses']) {
+                    for (i in json['addresses']) {
+                        html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + (json['addresses'][i]['company'] ? json['addresses'][i]['company'] + ', ' : '') + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
+                    }
+                }
+
+                // Shipping Address
+                $('#input-shipping-address').html(html);
+
+                $('#input-shipping-address').val(json['address_id']);
+
+                $('#shipping-addresses').css({display: 'block'});
+
+                $('#input-shipping-existing').trigger('click');
+
+                // Payment Address
+                var payment_address_id = $('#input-payment-address').val();
+
+                $('#input-payment-address').html(html);
+
+                if (payment_address_id) {
+                    $('#input-payment-address').val(payment_address_id);
+                }
+
+                $('#payment-addresses').css({display: 'block'});
+
+                $('#input-payment-existing').trigger('click');
+
+                $('#input-shipping-method').val('');
+                $('#input-payment-method').val('');
+
+                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
-
-$('.datetime').datetimepicker({
-	'format': 'YYYY-MM-DD HH:mm',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
-});
-//--></script>
-<script type="text/javascript"><!--
-$('#collapse-shipping-address select[name=\'country_id\']').on('change', function() {
-
-	chain.attach(function() {
-		return $.ajax({
-			url: 'index.php?route=checkout/checkout|country&country_id=' + $('#collapse-shipping-address select[name=\'country_id\']').val(),
-			dataType: 'json',
-			beforeSend: function() {
-				$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', true);
-			},
-			complete: function() {
-				$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', false);
-			},
-			success: function(json) {
-				if (json['postcode_required'] == '1') {
-					$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
-				} else {
-					$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
-				}
-
-				html = '<option value="">{{ text_select }}</option>';
-
-				if (json['zone'] && json['zone'] != '') {
-					for (i = 0; i < json['zone'].length; i++) {
-						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-						if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
-							html += ' selected="selected"';
-						}
-
-						html += '>' + json['zone'][i]['name'] + '</option>';
-					}
-				} else {
-					html += '<option value="0" selected="selected">{{ text_none }}</option>';
-				}
-
-				$('#collapse-shipping-address select[name=\'zone_id\']').html(html);
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
-});
-
-$('#collapse-shipping-address select[name=\'country_id\']').trigger('change');
 //--></script>

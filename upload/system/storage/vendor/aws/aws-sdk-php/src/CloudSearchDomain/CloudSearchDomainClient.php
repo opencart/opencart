@@ -3,6 +3,7 @@ namespace Aws\CloudSearchDomain;
 
 use Aws\AwsClient;
 use Aws\CommandInterface;
+use Aws\HandlerList;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7;
@@ -35,6 +36,7 @@ class CloudSearchDomainClient extends AwsClient
             // (e.g. http://search-blah.{region}.cloudsearch.amazonaws.com)
             return explode('.', new Uri($args['endpoint']))[1];
         };
+        unset($args['endpoint']['default']);
 
         return $args;
     }
@@ -49,7 +51,7 @@ class CloudSearchDomainClient extends AwsClient
         return static function (callable $handler) {
             return function (
                 CommandInterface $c,
-                RequestInterface $r = null
+                ?RequestInterface $r = null
             ) use ($handler) {
                 if ($c->getName() !== 'Search') {
                     return $handler($c, $r);
@@ -75,7 +77,7 @@ class CloudSearchDomainClient extends AwsClient
 
         $query = $r->getUri()->getQuery();
         $req = $r->withMethod('POST')
-            ->withBody(Psr7\stream_for($query))
+            ->withBody(Psr7\Utils::streamFor($query))
             ->withHeader('Content-Length', strlen($query))
             ->withHeader('Content-Type', 'application/x-www-form-urlencoded')
             ->withUri($r->getUri()->withQuery(''));

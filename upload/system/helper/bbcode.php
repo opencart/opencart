@@ -1,6 +1,6 @@
 <?php
-/* BBCode Converter that converts BBCode written for OpenCart */
-function bbcode_decode($string) {
+// BBCode Converter that converts BBCode written for OpenCart
+function oc_bbcode_decode(string $string): string {
 	$pattern = [];
 	$replace = [];
 
@@ -61,10 +61,8 @@ function bbcode_decode($string) {
 	$replace[12] = '<span style="color: $1;">$2</span>';
 
 	// YouTube
-	$pattern[9] = '/\[youtube\](.*?)\[\/youtube\]/is';
-	$replace[9] = '<iframe width="560" height="315" src="http://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>';
+	$pattern[13] = '/\[youtube\](.*?)\[\/youtube\]/is';
+	$replace[13] = '<iframe width="560" height="315" src="http://www.youtube.com/embed/$1" allowfullscreen></iframe>';
 
-	$string = preg_replace($pattern, $replace, $string);
-
-	return $string;
-}  
+	return preg_replace($pattern, $replace, $string);
+}

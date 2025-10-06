@@ -1,0 +1,789 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Class Opencart\Admin\Model\Cms\Topic | OpenCart API API</title>
+	<link rel="stylesheet" href="http://localhost\opencart-master/docs/api/assets/main.css">
+	<script src="http://localhost\opencart-master/docs/api/assets/main.js" defer></script>
+</head>
+
+<body class="layout">
+	<div class="layout-aside">
+	<div class="menu">
+			<div class="menu-section">
+				<h3>Namespaces</h3>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.html">Opencart</a>
+	<ul>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.html">Admin</a>
+	<ul>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Controller.html">Controller</a>
+			</li>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.html">Model</a>
+	<ul>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Catalog.html">Catalog</a>
+			</li>
+			<li class="menuGroup-item active">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Cms.html">Cms</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Customer.html">Customer</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Design.html">Design</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Extension.html">Extension</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Localisation.html">Localisation</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Marketing.html">Marketing</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Report.html">Report</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Sale.html">Sale</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Setting.html">Setting</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Tool.html">Tool</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.User.html">User</a>
+			</li>
+	</ul>
+			</li>
+	</ul>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Catalog.html">Catalog</a>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.System.html">System</a>
+			</li>
+	</ul>
+			</li>
+			<li class="menuGroup-item">
+				<a href="http://localhost\opencart-master/docs/api/namespace-none.html">none</a>
+			</li>
+	</ul>
+			</div>
+
+		<div class="menu-section">
+			<h3>Classes</h3>
+			<ul>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Cms.Antispam.html">
+							Antispam
+						</a>
+					</li>
+					<li>
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Cms.Article.html">
+							Article
+						</a>
+					</li>
+					<li class="active">
+						<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Cms.Topic.html">
+							Topic
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div class="layout-main">
+		<div class="layout-navbar">
+	<nav class="navbar">
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="http://localhost\opencart-master/docs/api/index.html">Overview</a>
+				</li>
+				<li>
+					
+						<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Cms.html">Namespace</a>
+					
+				</li>
+<li class="active"><a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Cms.Topic.html">Class</a></li>				<li>
+					<a href="http://localhost\opencart-master/docs/api/tree.html">Tree</a>
+				</li>
+			</ul>
+		</div>
+		<div class="navbar-right">
+	<div class="search" data-elements="http://localhost\opencart-master/docs/api/assets/elements.js">
+		<input class="search-input" placeholder="Search class, function or namespace" autofocus>
+		<ul class="search-results"></ul>
+	</div>
+		</div>
+	</nav>
+		</div>
+
+		<div class="layout-content">
+		<h1>
+			Class <a href="http://localhost\opencart-master/docs/api/namespace-Opencart.html">Opencart</a>\<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.html">Admin</a>\<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.html">Model</a>\<a href="http://localhost\opencart-master/docs/api/namespace-Opencart.Admin.Model.Cms.html">Cms</a>\<a href="http://localhost\opencart-master/docs/api/Opencart.Admin.Model.Cms.Topic.html">Topic</a>
+		</h1>
+
+
+	<table class="classLikeSignatureTable">
+
+
+
+		<tr>
+			<th><code>extends</code></th>
+			<td>
+<code><a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span title="Opencart\System\Engine\Model">Model</span></a></code>			</td>
+		</tr>
+
+	</table>
+		<div class="classLikeDescription">
+	<div class="description"><p>Class Topic</p>
+</div>
+		</div>
+
+			<div class="classLikeSection">
+	<ul class="classTree">
+	<li>
+<a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span>Opencart\System\Engine\Model</span></a>
+
+
+	<ul class="classTree">
+	<li>
+<b><span class="active">Opencart\Admin\Model\Cms\Topic</span></b>
+
+
+	</li>
+	</ul>
+	</li>
+	</ul>
+			</div>
+
+		<div class="classLikeSection">
+			<b>Located at</b> <a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#8" title="Go to source code">admin\model\cms\topic.php</a><br>
+		</div>
+
+
+
+		<table class="table" id="methods">
+			<tr>
+				<th class="table-heading sortable" colspan="3" title="Switch between natural and alphabetical order">Methods</th>
+			</tr>
+
+	<tr class="expandable collapsed" data-order="addTopic" id="_addTopic">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#9-45" title="Go to source code">addTopic</a>(<span>array&lt;string, mixed&gt; <var>$data</var></span>): int</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Add Topic</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Add Topic</p>
+</div>
+
+
+							<h4>Returns</h4>
+							<div><p>$topic</p>
+</div>
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_addTopic">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="editTopic" id="_editTopic">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#47-86" title="Go to source code">editTopic</a>(<span>int <var>$topic_id</var></span>, <span>array&lt;string, mixed&gt; <var>$data</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Edit Topic</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Edit Topic</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_editTopic">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteTopic" id="_deleteTopic">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#88-106" title="Go to source code">deleteTopic</a>(<span>int <var>$topic_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Topic</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Topic</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteTopic">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTopic" id="_getTopic">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#108-129" title="Go to source code">getTopic</a>(<span>int <var>$topic_id</var></span>): array&lt;string, mixed&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Topic</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Topic</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTopic">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTopics" id="_getTopics">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#131-183" title="Go to source code">getTopics</a>(<span>array&lt;string, mixed&gt; <var>$data</var> = []</span>): array&lt;int, array&lt;string, mixed&gt;&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Topics</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Topics</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTopics">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getTotalTopics" id="_getTotalTopics">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#185-194" title="Go to source code">getTotalTopics</a>(): int</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Total Topics</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Total Topics</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getTotalTopics">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="addDescription" id="_addDescription">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#196-207" title="Go to source code">addDescription</a>(<span>int <var>$topic_id</var></span>, <span>int <var>$language_id</var></span>, <span>array&lt;string, mixed&gt; <var>$data</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Add Description</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Add Description</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_addDescription">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteDescriptions" id="_deleteDescriptions">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#209-218" title="Go to source code">deleteDescriptions</a>(<span>int <var>$topic_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Description</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Description</p>
+</div>
+
+							<h4>Parameters</h4>
+							<table>
+									<tr>
+										<td><var>$topic_id</var>&nbsp;&nbsp;</td>
+										<td><p>primary key of the attribute record to be fetched</p>
+</td>
+									</tr>
+							</table>
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteDescriptions">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteDescriptionsByLanguageId" id="_deleteDescriptionsByLanguageId">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#220-229" title="Go to source code">deleteDescriptionsByLanguageId</a>(<span>int <var>$language_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Descriptions By Language ID</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Descriptions By Language ID</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteDescriptionsByLanguageId">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getDescriptions" id="_getDescriptions">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#231-255" title="Go to source code">getDescriptions</a>(<span>int <var>$topic_id</var></span>): array&lt;int, array&lt;string, mixed&gt;&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Descriptions</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Descriptions</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getDescriptions">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getDescriptionsByLanguageId" id="_getDescriptionsByLanguageId">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#257-268" title="Go to source code">getDescriptionsByLanguageId</a>(<span>int <var>$language_id</var></span>): array&lt;int, array&lt;string, string&gt;&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Descriptions By Language ID</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Descriptions By Language ID</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getDescriptionsByLanguageId">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="addStore" id="_addStore">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#270-280" title="Go to source code">addStore</a>(<span>int <var>$topic_id</var></span>, <span>int <var>$store_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Add Store</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Add Store</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_addStore">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteStores" id="_deleteStores">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#282-291" title="Go to source code">deleteStores</a>(<span>int <var>$topic_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Stores</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Stores</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteStores">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="getStores" id="_getStores">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#293-310" title="Go to source code">getStores</a>(<span>int <var>$topic_id</var></span>): array&lt;int, int&gt;</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Get Stores</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Get Stores</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_getStores">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="addLayout" id="_addLayout">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#312-323" title="Go to source code">addLayout</a>(<span>int <var>$topic_id</var></span>, <span>int <var>$store_id</var></span>, <span>int <var>$layout_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Add Layout</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Add Layout</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_addLayout">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteLayouts" id="_deleteLayouts">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#325-334" title="Go to source code">deleteLayouts</a>(<span>int <var>$article_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Layouts</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Layouts</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteLayouts">#</a>
+		</td>
+	</tr>
+	<tr class="expandable collapsed" data-order="deleteLayoutsByLayoutId" id="_deleteLayoutsByLayoutId">
+			<td class="table-cell table-shrink">
+				<code class="nowrap">
+					
+	public
+					
+					
+				</code>
+			</td>
+
+			<td class="table-cell">
+				<code><a href="http://localhost\opencart-master/docs/api/source-admin.model.cms.topic.html#336-345" title="Go to source code">deleteLayoutsByLayoutId</a>(<span>int <var>$layout_id</var></span>): void</code>
+
+
+	<div class="expandable-collapsedView">
+		<p>Delete Layouts By Layout ID</p>
+
+	</div>
+
+	<div class="expandable-expandedView">
+	<div class="description"><p>Delete Layouts By Layout ID</p>
+</div>
+
+
+
+
+	</div>
+			</td>
+		<td class="table-anchor">
+			<a href="#_deleteLayoutsByLayoutId">#</a>
+		</td>
+	</tr>
+		</table>
+		<table class="table">
+			<tr>
+				<th class="table-heading">Methods inherited from <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span>Opencart\System\Engine\Model</span></a></th>
+			</tr>
+			<tr>
+				<td class="table-cell">
+<code><a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___construct">__construct()</a>, <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___get">__get()</a>, <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___set">__set()</a>, <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#___isset">__isset()</a></code>				</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<table class="table">
+			<tr>
+				<th class="table-heading">Properties inherited from <a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html"><span>Opencart\System\Engine\Model</span></a></th>
+			</tr>
+			<tr>
+				<td class="table-cell">
+<code><var><a href="http://localhost\opencart-master/docs/api/Opencart.System.Engine.Model.html#$registry">$registry</a></var></code>				</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+		</div>
+
+		<div class="layout-footer">
+			OpenCart API API documentation generated by <a href="https://www.apigen.org">ApiGen dev-master</a>
+		</div>
+	</div>
+
+	<div class="layout-rest">
+		<div class="navbar"></div>
+	</div>
+</body>
+</html>

@@ -3,8 +3,6 @@ namespace Aws\Crypto\Polyfill;
 
 /**
  * Class Gmac
- *
- * @package Aws\Crypto\Polyfill
  */
 class Gmac
 {

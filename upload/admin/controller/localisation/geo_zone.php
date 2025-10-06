@@ -1,125 +1,86 @@
 <?php
-namespace Opencart\Application\Controller\Localisation;
+namespace Opencart\Admin\Controller\Localisation;
+/**
+ * Class Geo Zone
+ *
+ * @package Opencart\Admin\Controller\Localisation
+ */
 class GeoZone extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('localisation/geo_zone');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('localisation/geo_zone');
+		$url = '';
 
-		$this->getList();
-	}
-
-	public function add() {
-		$this->load->language('localisation/geo_zone');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/geo_zone');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_geo_zone->addGeoZone($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getForm();
-	}
-
-	public function edit() {
-		$this->load->language('localisation/geo_zone');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/geo_zone');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_geo_zone->editGeoZone($this->request->get['geo_zone_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getForm();
-	}
-
-	public function delete() {
-		$this->load->language('localisation/geo_zone');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/geo_zone');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $geo_zone_id) {
-				$this->model_localisation_geo_zone->deleteGeoZone($geo_zone_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
-	}
-
-	protected function getList() {
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('localisation/geo_zone.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/geo_zone.delete', 'user_token=' . $this->session->data['user_token']);
+
+		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('localisation/geo_zone', $data));
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('localisation/geo_zone');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	/**
+	 * Get List
+	 *
+	 * @return string
+	 */
+	public function getList(): string {
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'name';
 		}
 
 		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
+			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
@@ -144,61 +105,24 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
+		$data['action'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['add'] = $this->url->link('localisation/geo_zone|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/geo_zone|delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
+		// Geo Zones
 		$data['geo_zones'] = [];
 
 		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
+		$this->load->model('localisation/geo_zone');
 
 		$results = $this->model_localisation_geo_zone->getGeoZones($filter_data);
 
 		foreach ($results as $result) {
-			$data['geo_zones'][] = [
-				'geo_zone_id' => $result['geo_zone_id'],
-				'name'        => $result['name'],
-				'description' => $result['description'],
-				'edit'        => $this->url->link('localisation/geo_zone|edit', 'user_token=' . $this->session->data['user_token'] . '&geo_zone_id=' . $result['geo_zone_id'] . $url)
-			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
+			$data['geo_zones'][] = ['edit' => $this->url->link('localisation/geo_zone.form', 'user_token=' . $this->session->data['user_token'] . '&geo_zone_id=' . $result['geo_zone_id'] . $url)] + $result;
 		}
 
 		$url = '';
@@ -209,12 +133,9 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['sort_name'] = $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_description'] = $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . '&sort=description' . $url);
+		// Sorts
+		$data['sort_name'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_description'] = $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . '&sort=description' . $url);
 
 		$url = '';
 
@@ -226,45 +147,38 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Geo Zones
+		$geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
+
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $geo_zone_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'limit' => $this->config->get('config_pagination_admin'),
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('localisation/geo_zone.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($geo_zone_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($geo_zone_total - $this->config->get('config_pagination'))) ? $geo_zone_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $geo_zone_total, ceil($geo_zone_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($geo_zone_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($geo_zone_total - $this->config->get('config_pagination_admin'))) ? $geo_zone_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $geo_zone_total, ceil($geo_zone_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('localisation/geo_zone_list', $data));
+		return $this->load->view('localisation/geo_zone_list', $data);
 	}
 
-	protected function getForm() {
+	/**
+	 * Form
+	 *
+	 * @return void
+	 */
+	public function form(): void {
+		$this->load->language('localisation/geo_zone');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['geo_zone_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['description'])) {
-			$data['error_description'] = $this->error['description'];
-		} else {
-			$data['error_description'] = '';
-		}
 
 		$url = '';
 
@@ -292,47 +206,42 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['geo_zone_id'])) {
-			$data['action'] = $this->url->link('localisation/geo_zone|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('localisation/geo_zone.save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		// Geo Zone
+		if (isset($this->request->get['geo_zone_id'])) {
+			$this->load->model('localisation/geo_zone');
+
+			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone((int)$this->request->get['geo_zone_id']);
+		}
+
+		if (!empty($geo_zone_info)) {
+			$data['geo_zone_id'] = $geo_zone_info['geo_zone_id'];
 		} else {
-			$data['action'] = $this->url->link('localisation/geo_zone|edit', 'user_token=' . $this->session->data['user_token'] . '&geo_zone_id=' . $this->request->get['geo_zone_id'] . $url);
+			$data['geo_zone_id'] = 0;
 		}
 
-		$data['cancel'] = $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['geo_zone_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($this->request->get['geo_zone_id']);
-		}
-
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($geo_zone_info)) {
+		if (!empty($geo_zone_info)) {
 			$data['name'] = $geo_zone_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['description'])) {
-			$data['description'] = $this->request->post['description'];
-		} elseif (!empty($geo_zone_info)) {
+		if (!empty($geo_zone_info)) {
 			$data['description'] = $geo_zone_info['description'];
 		} else {
 			$data['description'] = '';
 		}
 
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
-		if (isset($this->request->post['zone_to_geo_zone'])) {
-			$data['zone_to_geo_zones'] = $this->request->post['zone_to_geo_zone'];
-		} elseif (!empty($geo_zone_info)) {
-			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZoneToGeoZones($this->request->get['geo_zone_id']);
+		// Countries
+		if (!empty($geo_zone_info)) {
+			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZones($geo_zone_info['geo_zone_id']);
 		} else {
 			$data['zone_to_geo_zones'] = [];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -341,37 +250,104 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/geo_zone_form', $data));
 	}
 
-	protected function validateForm() {
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
+		$this->load->language('localisation/geo_zone');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'localisation/geo_zone')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$this->error['name'] = $this->language->get('error_name');
+		$required = [
+			'geo_zone_id'      => 0,
+			'name'             => '',
+			'description'      => '',
+			'zone_to_geo_zone' => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 3, 32)) {
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if ((utf8_strlen($this->request->post['description']) < 3) || (utf8_strlen($this->request->post['description']) > 255)) {
-			$this->error['description'] = $this->language->get('error_description');
+		if (!oc_validate_length($post_info['description'], 3, 255)) {
+			$json['error']['description'] = $this->language->get('error_description');
 		}
 
-		return !$this->error;
+		if (!isset($this->request->post['zone_to_geo_zone'])) {
+
+
+		}
+
+
+		if (!$json) {
+			// Geo Zone
+			$this->load->model('localisation/geo_zone');
+
+			if (!$post_info['geo_zone_id']) {
+				$json['geo_zone_id'] = $this->model_localisation_geo_zone->addGeoZone($post_info);
+			} else {
+				$this->model_localisation_geo_zone->editGeoZone($post_info['geo_zone_id'], $post_info);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'localisation/geo_zone')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('localisation/geo_zone');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
+		if (!$this->user->hasPermission('modify', 'localisation/geo_zone')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Tax Rate
 		$this->load->model('localisation/tax_rate');
 
-		foreach ($this->request->post['selected'] as $geo_zone_id) {
+		// Total Tax Rates
+		foreach ($selected as $geo_zone_id) {
 			$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRatesByGeoZoneId($geo_zone_id);
 
 			if ($tax_rate_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_tax_rate'), $tax_rate_total);
+				$json['error'] = sprintf($this->language->get('error_tax_rate'), $tax_rate_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			// Geo Zone
+			$this->load->model('localisation/geo_zone');
+
+			foreach ($selected as $geo_zone_id) {
+				$this->model_localisation_geo_zone->deleteGeoZone($geo_zone_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

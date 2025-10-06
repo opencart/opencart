@@ -1,0 +1,22 @@
+{
+  "6": {
+    "stock_status_id": "6",
+    "language_id": "1",
+    "name": "2-3 Days"
+  },
+  "7": {
+    "stock_status_id": "7",
+    "language_id": "1",
+    "name": "In Stock"
+  },
+  "5": {
+    "stock_status_id": "5",
+    "language_id": "1",
+    "name": "Out Of Stock"
+  },
+  "8": {
+    "stock_status_id": "8",
+    "language_id": "1",
+    "name": "Pre-Order"
+  }
+}

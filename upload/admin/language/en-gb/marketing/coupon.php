@@ -9,7 +9,7 @@ $_['text_add']            = 'Add Coupon';
 $_['text_edit']           = 'Edit Coupon';
 $_['text_percent']        = 'Percentage';
 $_['text_amount']         = 'Fixed Amount';
-$_['text_coupon']         = 'Coupon History';
+$_['text_coupon']         = 'History';
 
 // Column
 $_['column_name']         = 'Coupon Name';
@@ -34,8 +34,7 @@ $_['entry_shipping']      = 'Free Shipping';
 $_['entry_total']         = 'Total Amount';
 $_['entry_category']      = 'Category';
 $_['entry_product']       = 'Products';
-$_['entry_date_start']    = 'Date Start';
-$_['entry_date_end']      = 'Date End';
+$_['entry_date']          = 'Dates';
 $_['entry_uses_total']    = 'Uses Per Coupon';
 $_['entry_uses_customer'] = 'Uses Per Customer';
 $_['entry_status']        = 'Status';

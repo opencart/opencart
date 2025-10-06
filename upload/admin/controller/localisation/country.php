@@ -1,125 +1,197 @@
 <?php
-namespace Opencart\Application\Controller\Localisation;
+namespace Opencart\Admin\Controller\Localisation;
+/**
+ * Class Country
+ *
+ * @package Opencart\Admin\Controller\Localisation
+ */
 class Country extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('localisation/country');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('localisation/country');
-
-		$this->getList();
-	}
-
-	public function add() {
-		$this->load->language('localisation/country');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/country');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_country->addCountry($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = (string)$this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
 		}
 
-		$this->getForm();
-	}
-
-	public function edit() {
-		$this->load->language('localisation/country');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/country');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_country->editCountry($this->request->get['country_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['filter_iso_code_2'])) {
+			$filter_iso_code_2 = (string)$this->request->get['filter_iso_code_2'];
+		} else {
+			$filter_iso_code_2 = '';
 		}
 
-		$this->getForm();
-	}
-
-	public function delete() {
-		$this->load->language('localisation/country');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/country');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $country_id) {
-				$this->model_localisation_country->deleteCountry($country_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['filter_iso_code_3'])) {
+			$filter_iso_code_3 = (string)$this->request->get['filter_iso_code_3'];
+		} else {
+			$filter_iso_code_3 = '';
 		}
 
-		$this->getList();
-	}
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
 
-	protected function getList() {
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
+		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_2'])) {
+			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_3'])) {
+			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('localisation/country.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/country.delete', 'user_token=' . $this->session->data['user_token']);
+		$data['enable']	= $this->url->link('localisation/country.enable', 'user_token=' . $this->session->data['user_token']);
+		$data['disable'] = $this->url->link('localisation/country.disable', 'user_token=' . $this->session->data['user_token']);
+
+		$data['list'] = $this->getList();
+
+		// Stores
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+
+		// Languages
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		$data['filter_name'] = $filter_name;
+		$data['filter_iso_code_2'] = $filter_iso_code_2;
+		$data['filter_iso_code_3'] = $filter_iso_code_3;
+		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_language_id'] = $filter_language_id;
+		$data['filter_status'] = $filter_status;
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('localisation/country', $data));
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('localisation/country');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	/**
+	 * Get List
+	 *
+	 * @return string
+	 */
+	public function getList(): string {
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = (string)$this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_iso_code_2'])) {
+			$filter_iso_code_2 = (string)$this->request->get['filter_iso_code_2'];
+		} else {
+			$filter_iso_code_2 = '';
+		}
+
+		if (isset($this->request->get['filter_iso_code_3'])) {
+			$filter_iso_code_3 = (string)$this->request->get['filter_iso_code_3'];
+		} else {
+			$filter_iso_code_3 = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = $this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = $this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = '';
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$filter_status = $this->request->get['filter_status'];
+		} else {
+			$filter_status = '';
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'name';
 		}
 
 		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
+			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
@@ -132,6 +204,26 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_2'])) {
+			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_3'])) {
+			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -144,65 +236,56 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
+		$data['action'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['add'] = $this->url->link('localisation/country|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/country|delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
+		// Countries
 		$data['countries'] = [];
 
 		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'filter_name'        => $filter_name,
+			'filter_iso_code_2'  => $filter_iso_code_2,
+			'filter_iso_code_3'  => $filter_iso_code_3,
+			'filter_store_id'    => $filter_store_id,
+			'filter_language_id' => $filter_language_id,
+			'filter_status'      => $filter_status,
+			'sort'               => $sort,
+			'order'              => $order,
+			'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'              => $this->config->get('config_pagination_admin')
 		];
 
-		$country_total = $this->model_localisation_country->getTotalCountries();
+		$this->load->model('localisation/country');
 
 		$results = $this->model_localisation_country->getCountries($filter_data);
 
 		foreach ($results as $result) {
-			$data['countries'][] = [
-				'country_id' => $result['country_id'],
-				'name'       => $result['name'] . (($result['country_id'] == $this->config->get('config_country_id')) ? $this->language->get('text_default') : ''),
-				'iso_code_2' => $result['iso_code_2'],
-				'iso_code_3' => $result['iso_code_3'],
-				'edit'       => $this->url->link('localisation/country|edit', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)
-			];
+			$data['countries'][] = ['edit' => $this->url->link('localisation/country.form', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)] + $result;
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
-		}
+		// Default
+		$data['country_id'] = $this->config->get('config_country_id');
 
 		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_2'])) {
+			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_3'])) {
+			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -210,15 +293,33 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['sort_name'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_iso_code_2'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_2' . $url);
-		$data['sort_iso_code_3'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
+		// Sorts
+		$data['sort_name'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_iso_code_2'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_2' . $url);
+		$data['sort_iso_code_3'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
+		$data['sort_status'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 
 		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_2'])) {
+			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_3'])) {
+			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -228,41 +329,60 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Countries
+		$country_total = $this->model_localisation_country->getTotalCountries($filter_data);
+
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $country_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'limit' => $this->config->get('config_pagination_admin'),
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($country_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($country_total - $this->config->get('config_pagination'))) ? $country_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $country_total, ceil($country_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($country_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($country_total - $this->config->get('config_pagination_admin'))) ? $country_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $country_total, ceil($country_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('localisation/country_list', $data));
+		return $this->load->view('localisation/country_list', $data);
 	}
 
-	protected function getForm() {
+	/**
+	 * Form
+	 *
+	 * @return void
+	 */
+	public function form(): void {
+		$this->load->language('localisation/country');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['country_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
 		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_2'])) {
+			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_iso_code_3'])) {
+			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -288,61 +408,74 @@ class Country extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['country_id'])) {
-			$data['action'] = $this->url->link('localisation/country|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('localisation/country.save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		// Country
+		if (isset($this->request->get['country_id'])) {
+			$this->load->model('localisation/country');
+
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->get['country_id']);
+		}
+
+		if (!empty($country_info)) {
+			$data['country_id'] = $country_info['country_id'];
 		} else {
-			$data['action'] = $this->url->link('localisation/country|edit', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $this->request->get['country_id'] . $url);
+			$data['country_id'] = 0;
 		}
 
-		$data['cancel'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url);
+		// Languages
+		$this->load->model('localisation/language');
 
-		if (isset($this->request->get['country_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
-		}
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($country_info)) {
-			$data['name'] = $country_info['name'];
+		if (!empty($country_info)) {
+			$data['country_description'] = $this->model_localisation_country->getDescriptions($country_info['country_id']);
 		} else {
-			$data['name'] = '';
+			$data['country_description'] = [];
 		}
 
-		if (isset($this->request->post['iso_code_2'])) {
-			$data['iso_code_2'] = $this->request->post['iso_code_2'];
-		} elseif (!empty($country_info)) {
+		if (!empty($country_info)) {
 			$data['iso_code_2'] = $country_info['iso_code_2'];
 		} else {
 			$data['iso_code_2'] = '';
 		}
 
-		if (isset($this->request->post['iso_code_3'])) {
-			$data['iso_code_3'] = $this->request->post['iso_code_3'];
-		} elseif (!empty($country_info)) {
+		if (!empty($country_info)) {
 			$data['iso_code_3'] = $country_info['iso_code_3'];
 		} else {
 			$data['iso_code_3'] = '';
 		}
 
-		if (isset($this->request->post['address_format'])) {
-			$data['address_format'] = $this->request->post['address_format'];
-		} elseif (!empty($country_info)) {
-			$data['address_format'] = $country_info['address_format'];
+		// Address Formats
+		$this->load->model('localisation/address_format');
+
+		$data['address_formats'] = $this->model_localisation_address_format->getAddressFormats();
+
+		if (!empty($country_info)) {
+			$data['address_format_id'] = $country_info['address_format_id'];
 		} else {
-			$data['address_format'] = '';
+			$data['address_format_id'] = '';
 		}
 
-		if (isset($this->request->post['postcode_required'])) {
-			$data['postcode_required'] = $this->request->post['postcode_required'];
-		} elseif (!empty($country_info)) {
+		if (!empty($country_info)) {
 			$data['postcode_required'] = $country_info['postcode_required'];
 		} else {
 			$data['postcode_required'] = 0;
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($country_info)) {
+		// Stores
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+
+		if (!empty($country_info)) {
+			$data['country_store'] = $this->model_localisation_country->getStores($country_info['country_id']);
+		} else {
+			$data['country_store'] = [0];
+		}
+
+		if (!empty($country_info)) {
 			$data['status'] = $country_info['status'];
 		} else {
 			$data['status'] = '1';
@@ -355,84 +488,239 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/country_form', $data));
 	}
 
-	protected function validateForm() {
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
+		$this->load->language('localisation/country');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'localisation/country')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 1) || (utf8_strlen($this->request->post['name']) > 128)) {
-			$this->error['name'] = $this->language->get('error_name');
+		$required = [
+			'country_id'          => 0,
+			'country_description' => [],
+			'iso_code_2'          => '',
+			'iso_code_3'          => '',
+			'address_format_id'   => 0,
+			'postcode_required'   => 0,
+			'country_store'       => [],
+			'status'              => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['country_description'] as $language_id => $value) {
+			if (!oc_validate_length($value['name'], 1, 128)) {
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+			}
 		}
 
-		return !$this->error;
+		if (oc_strlen($post_info['iso_code_2']) != 2) {
+			$json['error']['iso_code_2'] = $this->language->get('error_iso_code_2');
+		}
+
+		if (oc_strlen($post_info['iso_code_3']) != 3) {
+			$json['error']['iso_code_3'] = $this->language->get('error_iso_code_3');
+		}
+
+		if (!$json) {
+			// Country
+			$this->load->model('localisation/country');
+
+			if (!$post_info['country_id']) {
+				$json['country_id'] = $this->model_localisation_country->addCountry($post_info);
+			} else {
+				$this->model_localisation_country->editCountry($post_info['country_id'], $post_info);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'localisation/country')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+	/**
+	 * Enable
+	 *
+	 * @return void
+	 */
+	public function enable(): void {
+		$this->load->language('localisation/country');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
+		if (!$this->user->hasPermission('modify', 'localisation/country')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('localisation/country');
+
+			foreach ($selected as $country_id) {
+				$this->model_localisation_country->editStatus((int)$country_id, true);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Disable
+	 *
+	 * @return void
+	 */
+	public function disable(): void {
+		$this->load->language('localisation/country');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'localisation/country')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('localisation/country');
+
+			foreach ($selected as $country_id) {
+				$this->model_localisation_country->editStatus((int)$country_id, false);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('localisation/country');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'localisation/country')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Setting
 		$this->load->model('setting/store');
+
+		// Customer
 		$this->load->model('customer/customer');
+
+		// Zones
 		$this->load->model('localisation/zone');
+
+		// Geo Zones
 		$this->load->model('localisation/geo_zone');
 
-		foreach ($this->request->post['selected'] as $country_id) {
+		foreach ($selected as $country_id) {
 			if ($this->config->get('config_country_id') == $country_id) {
-				$this->error['warning'] = $this->language->get('error_default');
+				$json['error'] = $this->language->get('error_default');
 			}
 
 			$store_total = $this->model_setting_store->getTotalStoresByCountryId($country_id);
 
 			if ($store_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
+			// Total Customers
 			$address_total = $this->model_customer_customer->getTotalAddressesByCountryId($country_id);
 
 			if ($address_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_address'), $address_total);
+				$json['error'] = sprintf($this->language->get('error_address'), $address_total);
 			}
 
+			// Total Zones
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId($country_id);
 
 			if ($zone_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_zone'), $zone_total);
+				$json['error'] = sprintf($this->language->get('error_zone'), $zone_total);
 			}
 
+			// Total Geo Zones
 			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByCountryId($country_id);
 
 			if ($zone_to_geo_zone_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_zone_to_geo_zone'), $zone_to_geo_zone_total);
+				$json['error'] = sprintf($this->language->get('error_zone_to_geo_zone'), $zone_to_geo_zone_total);
 			}
 		}
 
-		return !$this->error;
-	}
-	
-	public function country() {
-		$json = [];
+		if (!$json) {
+			// Country
+			$this->load->model('localisation/country');
 
-		$this->load->model('localisation/country');
+			foreach ($selected as $country_id) {
+				$this->model_localisation_country->deleteCountry($country_id);
+			}
 
-		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
-
-		if ($country_info) {
-			$this->load->model('localisation/zone');
-
-			$json = [
-				'country_id'        => $country_info['country_id'],
-				'name'              => $country_info['name'],
-				'iso_code_2'        => $country_info['iso_code_2'],
-				'iso_code_3'        => $country_info['iso_code_3'],
-				'address_format'    => $country_info['address_format'],
-				'postcode_required' => $country_info['postcode_required'],
-				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']
-			];
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
+
+	/**
+	 * Country
+	 *
+	 * @return void
+	 */
+	public function country(): void {
+		$json = [];
+
+		if (isset($this->request->get['country_id'])) {
+			$country_id = (int)$this->request->get['country_id'];
+		} else {
+			$country_id = 0;
+		}
+
+		// Country
+		$this->load->model('localisation/country');
+
+		$country_info = $this->model_localisation_country->getCountry($country_id);
+
+		if ($country_info) {
+			// Zones
+			$this->load->model('localisation/zone');
+
+			$json = ['zone' => $this->model_localisation_zone->getZonesByCountryId($country_id)] + $country_info;
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

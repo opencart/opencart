@@ -1,31 +1,38 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Catalog\Controller\Mail;
+/**
+ * Class Register
+ *
+ * @package Opencart\Catalog\Controller\Mail
+ */
 class Register extends \Opencart\System\Engine\Controller {
-	// catalog/model/account/customer/addCustomer/after
-	public function index(&$route, &$args, &$output) {
+	/**
+	 * Index
+	 *
+	 * catalog/model/account/customer.addCustomer/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @throws \Exception
+	 *
+	 * @return void
+	 */
+	public function index(string &$route, array &$args, &$output): void {
 		$this->load->language('mail/register');
 
-		$this->load->model('tool/image');
+		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-		} else {
-			$data['logo'] = '';
-		}
+		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $store_name);
 
-		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$data['text_login'] = $this->language->get('text_login');
-		$data['text_approval'] = $this->language->get('text_approval');
-		$data['text_service'] = $this->language->get('text_service');
-		$data['text_thanks'] = $this->language->get('text_thanks');
-		$data['button_login'] = $this->language->get('button_login');
-
+		// Customer Group
 		$this->load->model('account/customer_group');
 
 		if (isset($args[0]['customer_group_id'])) {
-			$customer_group_id = $args[0]['customer_group_id'];
+			$customer_group_id = (int)$args[0]['customer_group_id'];
 		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
+			$customer_group_id = (int)$this->config->get('config_customer_group_id');
 		}
 
 		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
@@ -36,97 +43,108 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['approval'] = '';
 		}
 
-		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+
+		$data['store'] = $store_name;
 		$data['store_url'] = $this->config->get('config_url');
-		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-		$mail->parameter = $this->config->get('config_mail_parameter');
-		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+		$task_data = [
+			'code'   => 'mail_register',
+			'action' => 'task/system/mail',
+			'args'   => [
+				'to'      => $args[0]['email'],
+				'from'    => $this->config->get('config_email'),
+				'sender'  => $store_name,
+				'subject' => sprintf($this->language->get('text_subject'), $store_name),
+				'content' => $this->load->view('mail/register', $data)
+			]
+		];
 
-		$mail->setTo($args[0]['email']);
-		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
-		$mail->setHtml($this->load->view('mail/register', $data));
-		$mail->send();
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
 	}
 
-	// catalog/model/account/customer/addCustomer/after
-	public function alert(&$route, &$args, &$output) {
+	/**
+	 * Alert
+	 *
+	 * catalog/model/account/customer.addCustomer/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @throws \Exception
+	 *
+	 * @return void
+	 */
+	public function alert(string &$route, array &$args, &$output): void {
 		// Send to main admin email if new account email is enabled
-		if (in_array('account', (array)$this->config->get('config_mail_alert'))) {
-			$this->load->language('mail/register');
+		if (!in_array('account', (array)$this->config->get('config_mail_alert'))) {
+			return;
+		}
 
-			$data['text_signup'] = $this->language->get('text_signup');
-			$data['text_firstname'] = $this->language->get('text_firstname');
-			$data['text_lastname'] = $this->language->get('text_lastname');
-			$data['text_customer_group'] = $this->language->get('text_customer_group');
-			$data['text_email'] = $this->language->get('text_email');
-			$data['text_telephone'] = $this->language->get('text_telephone');
 
-			$data['firstname'] = $args[0]['firstname'];
-			$data['lastname'] = $args[0]['lastname'];
 
-			$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
-			$data['store_url'] = $this->config->get('config_url');
-			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+		$this->load->language('mail/register');
 
-			$this->load->model('tool/image');
+		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
+		$data['firstname'] = $args[0]['firstname'];
+		$data['lastname'] = $args[0]['lastname'];
 
-			$this->load->model('account/customer_group');
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 
-			if (isset($args[0]['customer_group_id'])) {
-				$customer_group_id = $args[0]['customer_group_id'];
-			} else {
-				$customer_group_id = $this->config->get('config_customer_group_id');
-			}
+		// Customer Group
+		$this->load->model('account/customer_group');
 
-			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+		if (isset($args[0]['customer_group_id'])) {
+			$customer_group_id = (int)$args[0]['customer_group_id'];
+		} else {
+			$customer_group_id = (int)$this->config->get('config_customer_group_id');
+		}
 
-			if ($customer_group_info) {
-				$data['customer_group'] = $customer_group_info['name'];
-			} else {
-				$data['customer_group'] = '';
-			}
+		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
-			$data['email'] = $args[0]['email'];
-			$data['telephone'] = $args[0]['telephone'];
+		if ($customer_group_info) {
+			$data['customer_group'] = $customer_group_info['name'];
+		} else {
+			$data['customer_group'] = '';
+		}
 
-			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+		$data['email'] = $args[0]['email'];
+		$data['telephone'] = $args[0]['telephone'];
 
-			$mail->setTo($this->config->get('config_email'));
-			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode($this->language->get('text_new_customer'), ENT_QUOTES, 'UTF-8'));
-			$mail->setText($this->load->view('mail/register_alert', $data));
-			$mail->send();
+		$data['store'] = $store_name;
+		$data['store_url'] = $this->config->get('config_url');
 
-			// Send to additional alert emails if new account email is enabled
-			$emails = explode(',', (string)$this->config->get('config_mail_alert_email'));
+		// Send to additional alert emails if new affiliate email is enabled
+		$emails = [];
 
-			foreach ($emails as $email) {
-				if (utf8_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					$mail->setTo($email);
-					$mail->send();
-				}
-			}
+		$emails[] = $this->config->get('config_email');
+
+		$tos = explode(',', (string)$this->config->get('config_mail_alert_email'));
+
+		foreach ($tos as $to) {
+			$emails[] = trim($to);
+		}
+
+		$this->load->model('setting/task');
+
+		foreach ($emails as $email) {
+			$task_data = [
+				'code'   => 'mail_alert',
+				'action' => 'task/system/mail',
+				'args'   => [
+					'to'      => $email,
+					'from'    => $this->config->get('config_email'),
+					'sender'  => $store_name,
+					'subject' => $this->language->get('text_new_customer'),
+					'content' => $this->load->view('mail/register_alert', $data)
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
 		}
 	}
 }

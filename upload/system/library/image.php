@@ -1,143 +1,171 @@
 <?php
 /**
- * @package		OpenCart
- * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
- * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
-*/
-
-/**
-* Image class
-*/
+ * @package        OpenCart
+ *
+ * @author         Daniel Kerr
+ * @copyright      Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license        https://opensource.org/licenses/GPL-3.0
+ *
+ * @see           https://www.opencart.com
+ */
 namespace Opencart\System\Library;
+/**
+ * Class Image
+ */
 class Image {
-	private $file;
+	/**
+	 * @var string
+	 */
+	private string $file;
+	/**
+	 * @var mixed
+	 */
 	private $image;
-	private $width;
-	private $height;
-	private $bits;
-	private $mime;
+	/**
+	 * @var int
+	 */
+	private int $width;
+	/**
+	 * @var int
+	 */
+	private int $height;
+	/**
+	 * @var string
+	 */
+	private string $bits;
+	/**
+	 * @var string
+	 */
+	private string $mime;
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$file
-	 *
- 	*/
-	public function __construct($file) {
+	 * @param string $file
+	 */
+	public function __construct(string $file) {
 		if (!extension_loaded('gd')) {
 			exit('Error: PHP GD is not installed!');
 		}
-		
-		if (file_exists($file)) {
-			$this->file = $file;
 
-			$info = getimagesize($file);
+		if (!is_file($file)) {
+			throw new \Exception('Error: Could not load image ' . $file . '!');
+		}
 
-			$this->width  = $info[0];
-			$this->height = $info[1];
-			$this->bits = isset($info['bits']) ? $info['bits'] : '';
-			$this->mime = isset($info['mime']) ? $info['mime'] : '';
+		$this->file = $file;
 
-			if ($this->mime == 'image/gif') {
-				$this->image = imagecreatefromgif($file);
-			} elseif ($this->mime == 'image/png') {
-				$this->image = imagecreatefrompng($file);
-			} elseif ($this->mime == 'image/jpeg') {
-				$this->image = imagecreatefromjpeg($file);
-			}
-		} else {
-			error_log('Error: Could not load image ' . $file . '!');
+		$info = getimagesize($file);
+
+		$this->width = $info[0];
+		$this->height = $info[1];
+		$this->bits = $info['bits'] ?? '';
+		$this->mime = $info['mime'] ?? '';
+
+		if ($this->mime == 'image/gif') {
+			$this->image = imagecreatefromgif($file);
+		} elseif ($this->mime == 'image/png') {
+			$this->image = imagecreatefrompng($file);
+
+			imageinterlace($this->image, false);
+		} elseif ($this->mime == 'image/jpeg') {
+			$this->image = imagecreatefromjpeg($file);
+		} elseif ($this->mime == 'image/webp') {
+			$this->image = imagecreatefromwebp($file);
 		}
 	}
-	
+
 	/**
-     * 
-	 * 
-	 * @return	string
-     */
-	public function getFile() {
+	 * Get File
+	 *
+	 * @return string
+	 */
+	public function getFile(): string {
 		return $this->file;
 	}
 
 	/**
-     * 
-	 * 
-	 * @return	array
-     */
+	 * Get Image
+	 *
+	 * @return mixed
+	 */
 	public function getImage() {
-		return $this->image;
+		return $this->image ?: null;
 	}
-	
+
 	/**
-     * 
-	 * 
-	 * @return	string
-     */
-	public function getWidth() {
+	 * Get Width
+	 *
+	 * @return int
+	 */
+	public function getWidth(): int {
 		return $this->width;
 	}
-	
+
 	/**
-     * 
-	 * 
-	 * @return	string
-     */
-	public function getHeight() {
+	 * Get Height
+	 *
+	 * @return int
+	 */
+	public function getHeight(): int {
 		return $this->height;
 	}
-	
+
 	/**
-     * 
-	 * 
-	 * @return	string
-     */
-	public function getBits() {
+	 * Get Bits
+	 *
+	 * @return string
+	 */
+	public function getBits(): string {
 		return $this->bits;
 	}
-	
+
 	/**
-     * 
-	 * 
-	 * @return	string
-     */
-	public function getMime() {
+	 * Get Mime
+	 *
+	 * @return string
+	 */
+	public function getMime(): string {
 		return $this->mime;
 	}
-	
+
 	/**
-     * 
-     *
-     * @param	string	$file
-	 * @param	int		$quality
-     */
-	public function save($file, $quality = 90) {
+	 * Save
+	 *
+	 * @param string $file
+	 * @param int    $quality
+	 *
+	 * @return void
+	 */
+	public function save(string $file, int $quality = 90): void {
 		$info = pathinfo($file);
 
 		$extension = strtolower($info['extension']);
 
-		if (is_resource($this->image)) {
+		if (is_object($this->image) || is_resource($this->image)) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
 				imagejpeg($this->image, $file, $quality);
 			} elseif ($extension == 'png') {
 				imagepng($this->image, $file);
 			} elseif ($extension == 'gif') {
 				imagegif($this->image, $file);
+			} elseif ($extension == 'webp') {
+				imagewebp($this->image, $file);
 			}
 
 			imagedestroy($this->image);
 		}
 	}
-	
+
 	/**
-     * 
-     *
-     * @param	int	$width
-	 * @param	int	$height
-	 * @param	string	$default
-     */
-	public function resize($width = 0, $height = 0, $default = '') {
+	 * Resize
+	 *
+	 * @param int    $width
+	 * @param int    $height
+	 * @param string $default
+	 *
+	 * @return void
+	 */
+	public function resize(int $width = 0, int $height = 0, string $default = ''): void {
 		if (!$this->width || !$this->height) {
 			return;
 		}
@@ -157,7 +185,7 @@ class Image {
 			$scale = min($scale_w, $scale_h);
 		}
 
-		if ($scale == 1 && $scale_h == $scale_w && $this->mime != 'image/png') {
+		if ($scale == 1 && $scale_h == $scale_w && ($this->mime != 'image/png' && $this->mime != 'image/webp')) {
 			return;
 		}
 
@@ -176,6 +204,13 @@ class Image {
 			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
 
 			imagecolortransparent($this->image, $background);
+		} elseif ($this->mime == 'image/webp') {
+			imagealphablending($this->image, false);
+			imagesavealpha($this->image, true);
+
+			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
+
+			imagecolortransparent($this->image, $background);
 		} else {
 			$background = imagecolorallocate($this->image, 255, 255, 255);
 		}
@@ -188,69 +223,77 @@ class Image {
 		$this->width = $width;
 		$this->height = $height;
 	}
-	
+
 	/**
-     * 
-     *
-     * @param	string	$watermark
-	 * @param	string	$position
-     */
-	public function watermark($watermark, $position = 'bottomright') {
-		switch($position) {
+	 * Watermark
+	 *
+	 * @param self   $watermark
+	 * @param string $position
+	 *
+	 * @return void
+	 */
+	public function watermark(self $watermark, string $position = 'bottomright'): void {
+		switch ($position) {
 			case 'topleft':
 				$watermark_pos_x = 0;
 				$watermark_pos_y = 0;
 				break;
 			case 'topcenter':
-				$watermark_pos_x = intval(($this->width - $watermark->getWidth()) / 2);
+				$watermark_pos_x = (int)(($this->width - $watermark->getWidth()) / 2);
 				$watermark_pos_y = 0;
 				break;
 			case 'topright':
-				$watermark_pos_x = $this->width - $watermark->getWidth();
+				$watermark_pos_x = ($this->width - $watermark->getWidth());
 				$watermark_pos_y = 0;
 				break;
 			case 'middleleft':
 				$watermark_pos_x = 0;
-				$watermark_pos_y = intval(($this->height - $watermark->getHeight()) / 2);
+				$watermark_pos_y = (int)(($this->height - $watermark->getHeight()) / 2);
 				break;
 			case 'middlecenter':
-				$watermark_pos_x = intval(($this->width - $watermark->getWidth()) / 2);
-				$watermark_pos_y = intval(($this->height - $watermark->getHeight()) / 2);
+				$watermark_pos_x = (int)(($this->width - $watermark->getWidth()) / 2);
+				$watermark_pos_y = (int)(($this->height - $watermark->getHeight()) / 2);
 				break;
 			case 'middleright':
-				$watermark_pos_x = $this->width - $watermark->getWidth();
-				$watermark_pos_y = intval(($this->height - $watermark->getHeight()) / 2);
+				$watermark_pos_x = ($this->width - $watermark->getWidth());
+				$watermark_pos_y = (int)(($this->height - $watermark->getHeight()) / 2);
 				break;
 			case 'bottomleft':
 				$watermark_pos_x = 0;
-				$watermark_pos_y = $this->height - $watermark->getHeight();
+				$watermark_pos_y = ($this->height - $watermark->getHeight());
 				break;
 			case 'bottomcenter':
-				$watermark_pos_x = intval(($this->width - $watermark->getWidth()) / 2);
-				$watermark_pos_y = $this->height - $watermark->getHeight();
+				$watermark_pos_x = (int)(($this->width - $watermark->getWidth()) / 2);
+				$watermark_pos_y = ($this->height - $watermark->getHeight());
 				break;
 			case 'bottomright':
-				$watermark_pos_x = $this->width - $watermark->getWidth();
-				$watermark_pos_y = $this->height - $watermark->getHeight();
+				$watermark_pos_x = ($this->width - $watermark->getWidth());
+				$watermark_pos_y = ($this->height - $watermark->getHeight());
+				break;
+			default:
+				$watermark_pos_x = 0;
+				$watermark_pos_y = 0;
 				break;
 		}
-		
-		imagealphablending( $this->image, true);
-		imagesavealpha( $this->image, true);
+
+		imagealphablending($this->image, true);
+		imagesavealpha($this->image, true);
 		imagecopy($this->image, $watermark->getImage(), $watermark_pos_x, $watermark_pos_y, 0, 0, $watermark->getWidth(), $watermark->getHeight());
 
 		imagedestroy($watermark->getImage());
 	}
-	
+
 	/**
-     * 
-     *
-     * @param	int		$top_x
-	 * @param	int		$top_y
-	 * @param	int		$bottom_x
-	 * @param	int		$bottom_y
-     */
-	public function crop($top_x, $top_y, $bottom_x, $bottom_y) {
+	 * Crop
+	 *
+	 * @param int $top_x
+	 * @param int $top_y
+	 * @param int $bottom_x
+	 * @param int $bottom_y
+	 *
+	 * @return void
+	 */
+	public function crop(int $top_x, int $top_y, int $bottom_x, int $bottom_y): void {
 		$image_old = $this->image;
 		$this->image = imagecreatetruecolor($bottom_x - $top_x, $bottom_y - $top_y);
 
@@ -260,14 +303,16 @@ class Image {
 		$this->width = $bottom_x - $top_x;
 		$this->height = $bottom_y - $top_y;
 	}
-	
+
 	/**
-     * 
-     *
-     * @param	int		$degree
-	 * @param	string	$color
-     */
-	public function rotate($degree, $color = 'FFFFFF') {
+	 * Rotate
+	 *
+	 * @param int    $degree
+	 * @param string $color
+	 *
+	 * @return void
+	 */
+	public function rotate(int $degree, string $color = 'FFFFFF'): void {
 		$rgb = $this->html2rgb($color);
 
 		$this->image = imagerotate($this->image, $degree, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
@@ -275,68 +320,93 @@ class Image {
 		$this->width = imagesx($this->image);
 		$this->height = imagesy($this->image);
 	}
-	
-	/**
-     * 
-     *
-     */
-	private function filter() {
-        $args = func_get_args();
 
-        call_user_func_array('imagefilter', $args);
-	}
-	
 	/**
-     * 
-     *
-     * @param	string	$text
-	 * @param	int		$x
-	 * @param	int		$y 
-	 * @param	int		$size
-	 * @param	string	$color
-     */
-	private function text($text, $x = 0, $y = 0, $size = 5, $color = '000000') {
+	 * Filter
+	 *
+	 * @return void
+	 */
+	private function filter(): void {
+		$args = func_get_args();
+
+		imagefilter(...$args);
+	}
+
+	/**
+	 * Text
+	 *
+	 * @param string $text
+	 * @param int    $x
+	 * @param int    $y
+	 * @param int    $size
+	 * @param string $color
+	 *
+	 * @return void
+	 */
+	private function text(string $text, int $x = 0, int $y = 0, int $size = 5, string $color = '000000'): void {
 		$rgb = $this->html2rgb($color);
 
 		imagestring($this->image, $size, $x, $y, $text, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
 	}
-	
+
 	/**
-     * 
-     *
-     * @param	object	$merge
-	 * @param	object	$x
-	 * @param	object	$y
-	 * @param	object	$opacity
-     */
-	private function merge($merge, $x = 0, $y = 0, $opacity = 100) {
+	 * Merge
+	 *
+	 * @param self $merge
+	 * @param int  $x
+	 * @param int  $y
+	 * @param int  $opacity
+	 *
+	 * @return void
+	 */
+	private function merge(self $merge, int $x = 0, int $y = 0, int $opacity = 100): void {
 		imagecopymerge($this->image, $merge->getImage(), $x, $y, 0, 0, $merge->getWidth(), $merge->getHeight(), $opacity);
 	}
-	
+
 	/**
-     * 
-     *
-     * @param	string	$color
-	 * 
-	 * @return	array
-     */
-	private function html2rgb($color) {
+	 * HTML2RGB
+	 *
+	 * @param string $color
+	 *
+	 * @return array<int, int>
+	 */
+	private function html2rgb(string $color): array {
 		if ($color[0] == '#') {
 			$color = substr($color, 1);
 		}
 
 		if (strlen($color) == 6) {
-			list($r, $g, $b) = [$color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]];
+			[
+				$r,
+				$g,
+				$b
+			] = [
+				$color[0] . $color[1],
+				$color[2] . $color[3],
+				$color[4] . $color[5]
+			];
 		} elseif (strlen($color) == 3) {
-			list($r, $g, $b) = [$color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]];
+			[
+				$r,
+				$g,
+				$b
+			] = [
+				$color[0] . $color[0],
+				$color[1] . $color[1],
+				$color[2] . $color[2]
+			];
 		} else {
-			return false;
+			return [];
 		}
 
 		$r = hexdec($r);
 		$g = hexdec($g);
 		$b = hexdec($b);
 
-		return [$r, $g, $b];
+		return [
+			$r,
+			$g,
+			$b
+		];
 	}
 }

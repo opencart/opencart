@@ -1,52 +1,20 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Admin\Controller\Extension\Opencart\Module;
+/**
+ * Class Best Seller
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Module
+ */
 class BestSeller extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('extension/opencart/module/bestseller');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/module');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			if (!isset($this->request->get['module_id'])) {
-				$this->model_setting_module->addModule('opencart.bestseller', $this->request->post);
-			} else {
-				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
-			}
-
-			$this->cache->delete('product');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['width'])) {
-			$data['error_width'] = $this->error['width'];
-		} else {
-			$data['error_width'] = '';
-		}
-
-		if (isset($this->error['height'])) {
-			$data['error_height'] = $this->error['height'];
-		} else {
-			$data['error_height'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -73,56 +41,53 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token']);
+			$data['save'] = $this->url->link('extension/opencart/module/bestseller.save', 'user_token=' . $this->session->data['user_token']);
 		} else {
-			$data['action'] = $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
+			$data['save'] = $this->url->link('extension/opencart/module/bestseller.save', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
 		}
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
-		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		// Extension
+		if (isset($this->request->get['module_id'])) {
+			$this->load->model('setting/module');
+
 			$module_info = $this->model_setting_module->getModule($this->request->get['module_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['name'])) {
 			$data['name'] = $module_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['limit'])) {
-			$data['limit'] = $this->request->post['limit'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['axis'])) {
+			$data['axis'] = $module_info['axis'];
+		} else {
+			$data['axis'] = '';
+		}
+
+		if (isset($module_info['limit'])) {
 			$data['limit'] = $module_info['limit'];
 		} else {
 			$data['limit'] = 5;
 		}
 
-		if (isset($this->request->post['width'])) {
-			$data['width'] = $this->request->post['width'];
-		} elseif (!empty($module_info)) {
-			$data['width'] = $module_info['width'];
-		} else {
-			$data['width'] = 200;
-		}
-
-		if (isset($this->request->post['height'])) {
-			$data['height'] = $this->request->post['height'];
-		} elseif (!empty($module_info)) {
-			$data['height'] = $module_info['height'];
-		} else {
-			$data['height'] = 200;
-		}
-
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
 			$data['status'] = '';
 		}
+
+		if (isset($this->request->get['module_id'])) {
+			$data['module_id'] = (int)$this->request->get['module_id'];
+		} else {
+			$data['module_id'] = 0;
+		}
+
+		$data['report'] = $this->getReport();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -131,23 +96,274 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/bestseller', $data));
 	}
 
-	protected function validate() {
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
+		$this->load->language('extension/opencart/module/bestseller');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
-			$this->error['name'] = $this->language->get('error_name');
+		$required = [
+			'module_id' => 0,
+			'name'      => ''
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!oc_validate_length($post_info['name'], 3, 64)) {
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if (!$this->request->post['width']) {
-			$this->error['width'] = $this->language->get('error_width');
+		if (!$json) {
+	  		// Extension
+			$this->load->model('setting/module');
+
+			if (!$post_info['module_id']) {
+				$json['module_id'] = $this->model_setting_module->addModule('opencart.bestseller', $post_info);
+			} else {
+				$this->model_setting_module->editModule($post_info['module_id'], $post_info);
+			}
+
+			$this->cache->delete('product');
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		if (!$this->request->post['height']) {
-			$this->error['height'] = $this->language->get('error_height');
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Install
+	 *
+	 * @return void
+	 */
+	public function install(): void {
+		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			// Extension
+			$this->load->model('extension/opencart/module/bestseller');
+
+			$this->model_extension_opencart_module_bestseller->install();
+		}
+	}
+
+	/**
+	 * Uninstall
+	 *
+	 * @return void
+	 */
+	public function uninstall(): void {
+		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			// Extension
+			$this->load->model('extension/opencart/module/bestseller');
+
+			$this->model_extension_opencart_module_bestseller->uninstall();
+		}
+	}
+
+	/**
+	 * Add
+	 *
+	 * @return void
+	 */
+	public function add(): void {
+		$this->load->language('extension/opencart/module/bestseller');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			// Extension
+			$this->load->model('setting/module');
+
+			$this->model_setting_module->addModule('opencart.bestseller', ['name' => $this->language->get('heading_title')]);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('extension/opencart/module/bestseller');
+
+		$json = [];
+
+		if (isset($this->request->get['module_id'])) {
+			$module_id = $this->request->get['module_id'];
+		} else {
+			$module_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Extension
+			$this->load->model('setting/module');
+
+			$this->model_setting_module->deleteModule($module_id);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Report
+	 *
+	 * @return void
+	 */
+	public function report(): void {
+		$this->load->language('extension/opencart/module/bestseller');
+
+		$this->response->setOutput($this->getReport());
+	}
+
+	/**
+	 * Get Report
+	 *
+	 * @return string
+	 */
+	public function getReport(): string {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'extension/opencart/module/bestseller.report') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		// Reports
+		$data['reports'] = [];
+
+		// Extension
+		$this->load->model('extension/opencart/module/bestseller');
+
+		// Product
+		$this->load->model('catalog/product');
+
+		$results = $this->model_extension_opencart_module_bestseller->getReports(($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+
+			if ($product_info) {
+				$product = $product_info['name'];
+			} else {
+				$product = '';
+			}
+
+			$data['reports'][] = [
+				'product' => $product,
+				'total'   => $result['total'],
+				'edit'    => $this->url->link('catalog/product.edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'])
+			];
+		}
+
+		// Total Reports
+		$report_total = $this->model_extension_opencart_module_bestseller->getTotalReports();
+
+		// Pagination
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $report_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'callback' => function(int $page): string {
+				return $this->url->link('extension/opencart/module/bestseller.report', 'user_token=' . $this->session->data['user_token'] . ($page ? '&page=' . $page : ''));
+			}
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));
+
+		return $this->load->view('extension/opencart/module/bestseller_report', $data);
+	}
+
+	/**
+	 * Sync
+	 *
+	 * @return void
+	 */
+	public function sync(): void {
+		$this->load->language('extension/opencart/module/bestseller');
+
+		$json = [];
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Bestseller
+			$this->load->model('extension/opencart/module/bestseller');
+
+			// Product
+			$this->load->model('catalog/product');
+
+			// Order
+			$this->load->model('sale/order');
+
+			$total = $this->model_catalog_product->getTotalProducts();
+			$limit = 10;
+
+			$start = ($page - 1) * $limit;
+			$end = $start > ($total - $limit) ? $total : ($start + $limit);
+
+			$product_data = [
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
+			];
+
+			$results = $this->model_catalog_product->getProducts($product_data);
+
+			foreach ($results as $result) {
+				// Total Products
+				$product_total = $this->model_sale_order->getTotalProductsByProductId($result['product_id']);
+
+				if ($product_total) {
+					$this->model_extension_opencart_module_bestseller->editTotal($result['product_id'], $product_total);
+				} else {
+					$this->model_extension_opencart_module_bestseller->delete($result['product_id']);
+				}
+			}
+
+			if ($end < $total) {
+				$json['text'] = sprintf($this->language->get('text_next'), $end, $total);
+
+				$json['next'] = $this->url->link('extension/opencart/module/bestseller.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+			} else {
+				$json['success'] = sprintf($this->language->get('text_next'), $end, $total);
+
+				$json['next'] = '';
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

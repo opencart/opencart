@@ -3,6 +3,23 @@
 /upload/config.php
 /upload/admin/config.php
 
+# Install Files
+/upload/install.lock
+
+# Catalog JSON Files
+/upload/catalog/view/data/*
+!/upload/catalog/view/data/index.html
+
+# Catalog HTML Files
+/upload/catalog/view/html/*
+!/upload/catalog/view/html/index.html
+
+# CSS Files
+/upload/catalog/view/stylesheet/stylesheet.css
+
+# Catalog HTML Files
+/upload/shop/*
+
 # Image Cache Files
 /upload/image/cache/*
 !/upload/image/cache/index.html
@@ -24,8 +41,8 @@
 !/upload/system/storage/logs/index.html
 
 # Marketplace Files
-/upload/system/storage/marketplace/*
-!/upload/system/storage/marketplace/index.html
+#/upload/system/storage/marketplace/*
+#!/upload/system/storage/marketplace/index.html
 
 # Session Files
 /upload/system/storage/session/*
@@ -35,9 +52,13 @@
 /upload/system/storage/upload/*
 !/upload/system/storage/upload/index.html
 
-# If you want to ignore install file use following lines [on development mode]
-# /upload/install/*
-
 # IDE Project files
-/.idea
-/upload/.idea
+/upload/.idea/*
+/.idea/*
+/.DS_Store
+/.cache
+/.php-cs-fixer.cache
+
+# ENV
+.env
+.env.docker

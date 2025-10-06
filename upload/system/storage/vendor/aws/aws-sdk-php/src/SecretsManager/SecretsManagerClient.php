@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Secrets Manager** service.
+ * @method \Aws\Result batchGetSecretValue(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetSecretValueAsync(array $args = [])
  * @method \Aws\Result cancelRotateSecret(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelRotateSecretAsync(array $args = [])
  * @method \Aws\Result createSecret(array $args = [])
@@ -29,10 +31,16 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putResourcePolicyAsync(array $args = [])
  * @method \Aws\Result putSecretValue(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putSecretValueAsync(array $args = [])
+ * @method \Aws\Result removeRegionsFromReplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise removeRegionsFromReplicationAsync(array $args = [])
+ * @method \Aws\Result replicateSecretToRegions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise replicateSecretToRegionsAsync(array $args = [])
  * @method \Aws\Result restoreSecret(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreSecretAsync(array $args = [])
  * @method \Aws\Result rotateSecret(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rotateSecretAsync(array $args = [])
+ * @method \Aws\Result stopReplicationToReplica(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopReplicationToReplicaAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

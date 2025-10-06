@@ -1,6 +1,6 @@
 ﻿/*
- Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
 */
 CKEDITOR.plugins.setLang("a11yhelp","ro",{title:"Instrucțiuni Accesibilitate",contents:"Cuprins. Pentru a închide acest dialog, apăsați tasta ESC.",legend:[{name:"General",items:[{name:"Editor bară de instrumente.",legend:"Apasă ${toolbarFocus} pentru a naviga pe de instrumente. Pentru deplasarea la următorul sau anteriorul grup de instrumente se folosesc tastele TAB și SHIFT+TAB. Pentru deplasare pe urmatorul sau anteriorul instrument se folosesc tastele SĂGEATĂ DREAPTA sau SĂGEATĂ STÂNGA. Tasta SPAȚIU sau ENTER activează instrumentul."},
 {name:"Dialog editor",legend:"În interiorul unui dialog, se apasă TAB pentru navigarea la următorul element de dialog, SHIFT+TAB pentru deplasarea la anteriorul element de dialog, ENTER pentru validare dialog, ESC pentru anulare dialog. Când un dialog are secțiuni multiple, lista secțiunilor este accesibilă cu ALT+F10 sau cu TAB ca parte a ordonării secționării dialogului. Cu lista secțiunii activată, deplasarea înainte înapoi se face cu tastele SĂGEATĂ DREAPTA și respectiv STÂNGA."},{name:"Editor meniu contextual",

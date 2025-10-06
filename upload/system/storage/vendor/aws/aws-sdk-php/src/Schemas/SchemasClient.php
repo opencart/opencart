@@ -65,5 +65,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateRegistryAsync(array $args = [])
  * @method \Aws\Result updateSchema(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSchemaAsync(array $args = [])
+ * @method \Aws\Result exportSchema(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise exportSchemaAsync(array $args = [])
  */
 class SchemasClient extends AwsClient {}

@@ -46,7 +46,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
 {
     const ENV_USE_ARN_REGION = 'AWS_S3_USE_ARN_REGION';
     const INI_USE_ARN_REGION = 's3_use_arn_region';
-    const DEFAULT_USE_ARN_REGION = false;
+    const DEFAULT_USE_ARN_REGION = true;
 
     public static $cacheKey = 'aws_s3_use_arn_region_config';
 
@@ -80,7 +80,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $configProviders[] = self::fallback();
 
         $memo = self::memoize(
-            call_user_func_array('self::chain', $configProviders)
+            call_user_func_array([ConfigurationProvider::class, 'chain'], $configProviders)
         );
 
         if (isset($config['use_arn_region'])
@@ -103,7 +103,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             // Use config from environment variables, if available
             $useArnRegion = getenv(self::ENV_USE_ARN_REGION);
             if (!empty($useArnRegion)) {
-                return Promise\promise_for(
+                return Promise\Create::promiseFor(
                     new Configuration($useArnRegion)
                 );
             }
@@ -131,7 +131,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
-            if (!is_readable($filename)) {
+            if (!@is_readable($filename)) {
                 return self::reject("Cannot read configuration from $filename");
             }
 
@@ -144,7 +144,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 return self::reject("'$profile' not found in config file");
             }
             if (!isset($data[$profile][self::INI_USE_ARN_REGION])) {
-                return self::reject("Required S3 Use Arn Region config values 
+                return self::reject("Required S3 Use Arn Region config values
                     not present in INI profile '{$profile}' ({$filename})");
             }
 
@@ -153,7 +153,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 $data[$profile][self::INI_USE_ARN_REGION] = false;
             }
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration($data[$profile][self::INI_USE_ARN_REGION])
             );
         };
@@ -167,7 +167,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function fallback()
     {
         return function () {
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration(self::DEFAULT_USE_ARN_REGION)
             );
         };

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -15,16 +16,18 @@ namespace ScssPhp\ScssPhp;
  * Block
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @internal
  */
 class Block
 {
     /**
-     * @var string
+     * @var string|null
      */
     public $type;
 
     /**
-     * @var \ScssPhp\ScssPhp\Block
+     * @var Block|null
      */
     public $parent;
 
@@ -34,22 +37,22 @@ class Block
     public $sourceName;
 
     /**
-     * @var integer
+     * @var int
      */
     public $sourceIndex;
 
     /**
-     * @var integer
+     * @var int
      */
     public $sourceLine;
 
     /**
-     * @var integer
+     * @var int
      */
     public $sourceColumn;
 
     /**
-     * @var array
+     * @var array|null
      */
     public $selectors;
 
@@ -64,7 +67,7 @@ class Block
     public $children;
 
     /**
-     * @var \ScssPhp\ScssPhp\Block
+     * @var Block|null
      */
     public $selfParent;
 }

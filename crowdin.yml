@@ -1,0 +1,12 @@
+preserve_hierarchy: 1
+files:
+  - source: upload/admin/language/en-gb/**/*.php
+    translation: admin/**/%file_name%.%file_extension%
+  - source: upload/catalog/language/en-gb/**/*.php
+    translation: catalog/**/%file_name%.%file_extension%
+  - source: upload/install/language/en-gb/**/*.php
+    translation: install/**/%file_name%.%file_extension%
+  - source: upload/extension/opencart/admin/language/en-gb/**/*.php
+    translation: extension/opencart/admin/**/%file_name%.%file_extension%
+  - source: upload/extension/opencart/catalog/language/en-gb/**/*.php
+    translation: extension/opencart/catalog/**/%file_name%.%file_extension%

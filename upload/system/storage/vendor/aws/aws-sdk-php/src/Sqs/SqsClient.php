@@ -13,6 +13,8 @@ use Psr\Http\Message\RequestInterface;
  *
  * @method \Aws\Result addPermission(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addPermissionAsync(array $args = [])
+ * @method \Aws\Result cancelMessageMoveTask(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelMessageMoveTaskAsync(array $args = [])
  * @method \Aws\Result changeMessageVisibility(array $args = [])
  * @method \GuzzleHttp\Promise\Promise changeMessageVisibilityAsync(array $args = [])
  * @method \Aws\Result changeMessageVisibilityBatch(array $args = [])
@@ -31,6 +33,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise getQueueUrlAsync(array $args = [])
  * @method \Aws\Result listDeadLetterSourceQueues(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDeadLetterSourceQueuesAsync(array $args = [])
+ * @method \Aws\Result listMessageMoveTasks(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listMessageMoveTasksAsync(array $args = [])
  * @method \Aws\Result listQueueTags(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listQueueTagsAsync(array $args = [])
  * @method \Aws\Result listQueues(array $args = [])
@@ -47,6 +51,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise sendMessageBatchAsync(array $args = [])
  * @method \Aws\Result setQueueAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setQueueAttributesAsync(array $args = [])
+ * @method \Aws\Result startMessageMoveTask(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startMessageMoveTaskAsync(array $args = [])
  * @method \Aws\Result tagQueue(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagQueueAsync(array $args = [])
  * @method \Aws\Result untagQueue(array $args = [])
@@ -58,7 +64,6 @@ class SqsClient extends AwsClient
     {
         parent::__construct($config);
         $list = $this->getHandlerList();
-        $list->appendBuild($this->queueUrl(), 'sqs.queue_url');
         $list->appendSign($this->validateMd5(), 'sqs.md5');
     }
 
@@ -85,29 +90,6 @@ class SqsClient extends AwsClient
             $queueArn = substr_replace($queueArn, '.fifo', -5);
         }
         return $queueArn;
-    }
-
-    /**
-     * Moves the URI of the queue to the URI in the input parameter.
-     *
-     * @return callable
-     */
-    private function queueUrl()
-    {
-        return static function (callable $handler) {
-            return function (
-                CommandInterface $c,
-                RequestInterface $r = null
-            ) use ($handler) {
-                if ($c->hasParam('QueueUrl')) {
-                    $r = $r->withUri(UriResolver::resolve(
-                        $r->getUri(),
-                        new Uri($c['QueueUrl'])
-                    ));
-                }
-                return $handler($c, $r);
-            };
-        };
     }
 
     /**
@@ -187,7 +169,7 @@ class SqsClient extends AwsClient
         return static function (callable $handler) {
             return function (
                 CommandInterface $c,
-                RequestInterface $r = null
+                ?RequestInterface $r = null
             ) use ($handler) {
                 if ($c->getName() !== 'ReceiveMessage') {
                     return $handler($c, $r);
@@ -233,7 +215,7 @@ class SqsClient extends AwsClient
                                             ]
                                         );
                                     }
-                                } else if (isset($msg['MessageAttributes'])) {
+                                } else if (!empty($msg['MessageAttributes'])) {
                                     throw new SqsException(
                                         sprintf(
                                             'No Attribute MD5 found. Expected %s',

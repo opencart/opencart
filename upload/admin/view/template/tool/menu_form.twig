@@ -1,0 +1,80 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-menu" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-menu" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              {% for language in languages %}
+                <div class="input-group">
+                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                  <input type="text" name="menu_description[{{ language.language_id }}][name]" value="{{ menu_description[language.language_id] ? menu_description[language.language_id].name }}" id="input-name-{{ language.language_id }}" placeholder="{{ entry_name }}" class="form-control" required/>
+                </div>
+                <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" required/>
+              <div id="error-code" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3{% if type != 'link' %} d-none{% endif %}">
+            <label for="input-route" class="col-sm-2 col-form-label">{{ entry_route }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="route" value="{{ route }}" placeholder="{{ entry_route }}" id="input-route" class="form-control"{% if type == 'link' %} required{% endif %}/>
+              <div id="error-route" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_parent }}</label>
+            <div class="col-sm-10">
+              <select name="parent" id="input-parent" class="form-select">
+                {% for menu in menus %}
+                  <option value="{{ menu.code }}"{% if menu.code == parent %} selected{% endif %}>{{ menu.name }}</option>
+                  {% for children_1 in menu.children %}
+                    <option value="{{ children_1.code }}"{% if children_1.code == parent %} selected{% endif %}>&nbsp;&nbsp;&nbsp;{{ children_1.name }}</option>
+                    {% for children_2 in children_1.children %}
+                      <option value="{{ children_2.code }}"{% if children_2.code == parent %} selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ children_2.name }}</option>
+                      {% for children_3 in children_2.children %}
+                        <option value="{{ children_3.code }}"{% if children_3.code == parent %} selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ children_3.name }}</option>
+                      {% endfor %}
+                    {% endfor %}
+                  {% endfor %}
+                {% endfor %}
+              </select>
+              <div id="error-parent" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+              <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+            </div>
+          </div>
+          <input type="hidden" name="menu_id" value="{{ menu_id }}" id="input-menu-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

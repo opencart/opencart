@@ -63,6 +63,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteVpcLinkAsync(array $args = [])
  * @method \Aws\Result exportApi(array $args = [])
  * @method \GuzzleHttp\Promise\Promise exportApiAsync(array $args = [])
+ * @method \Aws\Result resetAuthorizersCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise resetAuthorizersCacheAsync(array $args = [])
  * @method \Aws\Result getApiResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getApiResourceAsync(array $args = [])
  * @method \Aws\Result getApiMapping(array $args = [])

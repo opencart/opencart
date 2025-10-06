@@ -9,6 +9,9 @@ class Operation extends AbstractModel
     private $input;
     private $output;
     private $errors;
+    private $staticContextParams = [];
+    private $contextParams;
+    private $operationContextParams = [];
 
     public function __construct(array $definition, ShapeMap $shapeMap)
     {
@@ -22,7 +25,16 @@ class Operation extends AbstractModel
             $definition['http']['requestUri'] = '/';
         }
 
+        if (isset($definition['staticContextParams'])) {
+            $this->staticContextParams = $definition['staticContextParams'];
+        }
+
+        if (isset($definition['operationContextParams'])) {
+            $this->operationContextParams = $definition['operationContextParams'];
+        }
+
         parent::__construct($definition, $shapeMap);
+        $this->contextParams = $this->setContextParams();
     }
 
     /**
@@ -93,5 +105,54 @@ class Operation extends AbstractModel
         }
 
         return $this->errors;
+    }
+
+    /**
+     * Gets static modeled static values used for
+     * endpoint resolution.
+     *
+     * @return array
+     */
+    public function getStaticContextParams()
+    {
+        return $this->staticContextParams;
+    }
+
+    /**
+     * Gets definition of modeled dynamic values used
+     * for endpoint resolution
+     *
+     * @return array
+     */
+    public function getContextParams()
+    {
+        return $this->contextParams;
+    }
+
+    /**
+     * Gets definition of modeled dynamic values used
+     * for endpoint resolution
+     *
+     * @return array
+     */
+    public function getOperationContextParams(): array
+    {
+        return $this->operationContextParams;
+    }
+
+    private function setContextParams()
+    {
+        $members = $this->getInput()->getMembers();
+        $contextParams = [];
+
+        foreach($members as $name => $shape) {
+            if (!empty($contextParam = $shape->getContextParam())) {
+                $contextParams[$contextParam['name']] = [
+                    'shape' => $name,
+                    'type' => $shape->getType()
+                ];
+            }
+        }
+        return $contextParams;
     }
 }

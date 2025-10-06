@@ -393,6 +393,9 @@ class EndpointDiscoveryMiddleware
             $split = explode('/', $parsed['path'], 2);
             $parsed['host'] = $split[0];
             if (isset($split[1])) {
+                if (substr($split[1], 0 , 1) !== '/') {
+                    $split[1] = '/' . $split[1];
+                }
                 $parsed['path'] = $split[1];
             } else {
                 $parsed['path'] = '';

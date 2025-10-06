@@ -1,0 +1,237 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
+          <ul class="dropdown-menu">
+            <li><button type="submit" form="form-product" formaction="{{ copy }}" class="dropdown-item"><i class="fa-solid fa-copy"></i> {{ text_copy }}</button></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button type="submit" form="form-product" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
+            <li><button type="submit" form="form-product" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button type="submit" form="form-product" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
+          </ul>
+        </div>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div id="filter-product" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <form id="form-filter">
+              <div class="mb-3">
+                <label for="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-name" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-model" class="form-label">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" data-oc-target="autocomplete-model" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-model" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-category" class="form-label">{{ entry_category }}</label> <input type="text" name="filter_category" value="{{ filter_category }}" placeholder="{{ entry_category }}" id="input-category" data-oc-target="autocomplete-category" class="form-control" autocomplete="off"/>
+                <input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" id="input-category-id"/>
+                <ul id="autocomplete-category" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-manufacturer" class="form-label">{{ entry_manufacturer }}</label> <input type="text" name="filter_manufacturer" value="{{ filter_manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" data-oc-target="autocomplete-manufacturer" class="form-control" autocomplete="off"/>
+                <input type="hidden" name="filter_manufacturer_id" value="{{ filter_manufacturer_id }}" id="input-manufacturer-id"/>
+                <ul id="autocomplete-manufacturer" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-price-from" class="form-label">{{ entry_price }}</label>
+                <div class="row">
+                  <div class="col">
+                    <input type="text" name="filter_price_from" value="{{ filter_price_from }}" placeholder="{{ text_from }}" id="input-price-from" class="form-control"/>
+                  </div>
+                  <label class="col-auto col-form-label px-0"><i class="fa-solid fa-minus"></i></label>
+                  <div class="col">
+                    <input type="text" name="filter_price_to" value="{{ filter_price_to }}" placeholder="{{ text_to }}" id="input-price-to" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="input-quantity-from" class="form-label">{{ entry_quantity }}</label>
+                <div class="row">
+                  <div class="col">
+                    <input type="text" name="filter_quantity_from" value="{{ filter_quantity_from }}" placeholder="{{ text_from }}" id="input-quantity-from" class="form-control"/>
+                  </div>
+                  <label class="col-auto col-form-label px-0"><i class="fa-solid fa-minus"></i></label>
+                  <div class="col">
+                    <input type="text" name="filter_quantity_to" value="{{ filter_quantity_to }}" placeholder="{{ text_to }}" id="input-quantity-to" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="input-store-id" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store-id" class="form-select">
+                  <option value=""></option>
+                  {% for store in stores %}
+                    <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="input-language" class="form-label">{{ entry_language }}</label>
+                <select name="filter_language_id" id="input-store" class="form-select">
+                  <option value=""></option>
+                  {% for language in languages %}
+                    <option value="{{ language.language_id }}"{% if language.language_id == filter_language_id %} selected{% endif %}>{{ language.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                  <option value=""></option>
+                  <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                  <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
+                </select>
+              </div>
+              <div class="text-end">
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-9 col-md-12">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#list').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#list').load(this.href);
+});
+
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
+
+    let url = $(this).serialize();
+
+    window.history.pushState({}, null, 'index.php?route=catalog/product&user_token={{ user_token }}&' + url);
+
+    $('#list').load('index.php?route=catalog/product.list&user_token={{ user_token }}&' + url);
+});
+
+$('#input-name').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-name').val(decodeHTMLEntities(item['label']));
+    }
+});
+
+$('#input-model').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_model=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['model'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-model').val(decodeHTMLEntities(item['label']));
+    }
+});
+
+$('#input-category').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                json.unshift({
+                    name: '{{ text_none }}',
+                    category_id: '',
+                });
+
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['category_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        if (item['value']) {
+            $('#input-category').val(decodeHTMLEntities(item['label']));
+            $('#input-category-id').val(item['value']);
+        } else {
+            $('#input-category').val('');
+            $('#input-category-id').val('');
+        }
+    }
+});
+
+$('#input-manufacturer').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/manufacturer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                json.unshift({
+                    name: '{{ text_none }}',
+                    category_id: '',
+                });
+
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['manufacturer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        if (item['value']) {
+            $('#input-manufacturer').val(decodeHTMLEntities(item['label']));
+            $('#input-manufacturer-id').val(item['value']);
+        } else {
+            $('#input-manufacturer').val('');
+            $('#input-manufacturer-id').val('');
+        }
+    }
+});
+//--></script>
+{{ footer }}

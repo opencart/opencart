@@ -43,5 +43,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateLedger(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLedgerAsync(array $args = [])
+ * @method \Aws\Result updateLedgerPermissionsMode(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateLedgerPermissionsModeAsync(array $args = [])
  */
 class QLDBClient extends AwsClient {}

@@ -2,6 +2,9 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
+use AWS\CRT\Auth\SignatureType;
+use AWS\CRT\Auth\SigningAlgorithm;
+use AWS\CRT\Auth\SigningConfigAWS;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -10,24 +13,74 @@ use Psr\Http\Message\RequestInterface;
 class S3SignatureV4 extends SignatureV4
 {
     /**
-     * Always add a x-amz-content-sha-256 for data integrity.
+     * S3-specific signing logic
+     *
+     * {@inheritdoc}
      */
+    use SignatureTrait;
+
     public function signRequest(
         RequestInterface $request,
-        CredentialsInterface $credentials
+        CredentialsInterface $credentials,
+        $signingService = null
     ) {
+        // Always add a x-amz-content-sha-256 for data integrity
         if (!$request->hasHeader('x-amz-content-sha256')) {
             $request = $request->withHeader(
-                'X-Amz-Content-Sha256',
+                'x-amz-content-sha256',
                 $this->getPayload($request)
             );
         }
+        $useCrt =
+            strpos($request->getUri()->getHost(), "accesspoint.s3-global")
+            !== false;
+        if (!$useCrt) {
+            if (strpos($request->getUri()->getHost(), "s3-object-lambda")) {
+                return parent::signRequest($request, $credentials, "s3-object-lambda");
+            }
+            return parent::signRequest($request, $credentials);
+        }
+        $signingService = $signingService ?: 's3';
+        return $this->signWithV4a($credentials, $request, $signingService);
+    }
 
-        return parent::signRequest($request, $credentials);
+    /**
+     * @param CredentialsInterface $credentials
+     * @param RequestInterface $request
+     * @param $signingService
+     * @param SigningConfigAWS|null $signingConfig
+     * @return RequestInterface
+     *
+     * Instantiates a separate sigv4a signing config.  All services except S3
+     * use double encoding.  All services except S3 require path normalization.
+     */
+    protected function signWithV4a(
+        CredentialsInterface $credentials,
+        RequestInterface $request,
+        $signingService,
+        ?SigningConfigAWS $signingConfig = null
+    ){
+        $this->verifyCRTLoaded();
+        $credentials_provider = $this->createCRTStaticCredentialsProvider($credentials);
+        $signingConfig = new SigningConfigAWS([
+            'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
+            'signature_type' => SignatureType::HTTP_REQUEST_HEADERS,
+            'credentials_provider' => $credentials_provider,
+            'signed_body_value' => $this->getPayload($request),
+            'region' => $this->region,
+            'should_normalize_uri_path' => false,
+            'use_double_uri_encode' => false,
+            'service' => $signingService,
+            'date' => time(),
+        ]);
+
+        return parent::signWithV4a($credentials, $request, $signingService, $signingConfig);
     }
 
     /**
      * Always add a x-amz-content-sha-256 for data integrity.
+     *
+     * {@inheritdoc}
      */
     public function presign(
         RequestInterface $request,
@@ -40,6 +93,9 @@ class S3SignatureV4 extends SignatureV4
                 'X-Amz-Content-Sha256',
                 $this->getPresignedPayload($request)
             );
+        }
+        if (strpos($request->getUri()->getHost(), "accesspoint.s3-global")) {
+            $request = $request->withHeader("x-amz-region-set", "*");
         }
 
         return parent::presign($request, $credentials, $expires, $options);

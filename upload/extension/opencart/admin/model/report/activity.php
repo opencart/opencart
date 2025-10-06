@@ -1,8 +1,24 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Report;
+namespace Opencart\Admin\Model\Extension\Opencart\Report;
+/**
+ * Class Activity
+ *
+ * Can be called from $this->load->model('extension/opencart/report/activity');
+ *
+ * @package Opencart\Admin\Model\Extension\Opencart\Report
+ */
 class Activity extends \Opencart\System\Engine\Model {
-	public function getActivities() {
-		$query = $this->db->query("SELECT a.`key`, a.`data`, a.`date_added` FROM ((SELECT CONCAT('customer_', ca.`key`) AS `key`, ca.`data`, ca.`date_added` FROM `" . DB_PREFIX . "customer_activity` ca) UNION (SELECT CONCAT('affiliate_', aa.`key`) AS `key`, aa.`data`, aa.`date_added` FROM `" . DB_PREFIX . "affiliate_activity` aa)) a ORDER BY a.`date_added` DESC LIMIT 0,5");
+	/**
+	 * Get Activities
+	 *
+	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $results = $this->model_extension_opencart_report_activity->getActivities();
+	 */
+	public function getActivities(): array {
+		$query = $this->db->query("SELECT `key`, `data`, `date_added` FROM `" . DB_PREFIX . "customer_activity` ORDER BY `date_added` DESC LIMIT 0,5");
 
 		return $query->rows;
 	}

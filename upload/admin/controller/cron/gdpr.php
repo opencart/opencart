@@ -1,20 +1,31 @@
 <?php
-namespace Opencart\Application\Controller\Cron;
+namespace Opencart\Admin\Controller\Cron;
+/**
+ * Class Gdpr
+ *
+ * @package Opencart\Catalog\Controller\Cron
+ */
 class Gdpr extends \Opencart\System\Engine\Controller {
-	public function index($cron_id, $code, $cycle, $date_added, $date_modified) {
-		$this->load->model('customer/gdpr');
-		$this->load->model('customer/customer');
+	/**
+	 * Index
+	 *
+	 * @param int    $cron_id
+	 * @param string $code
+	 * @param string $cycle
+	 * @param string $date_added
+	 * @param string $date_modified
+	 *
+	 * @return void
+	 */
+	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
+		$task_data = [
+			'code'   => 'gdpr',
+			'action' => 'task/admin/gdpr',
+			'args'   => []
+		];
 
-		$results = $this->model_customer_gdpr->getExpires();
+		$this->load->model('setting/task');
 
-		foreach ($results as $result) {
-			$this->model_customer_gdpr->editStatus($result['gdpr_id'], 3);
-
-			$customer_info = $this->model_customer_customer->getCustomerByEmail($result['email']);
-
-			if ($customer_info) {
-				$this->model_customer_customer->deleteCustomer($customer_info['customer_id']);
-			}
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 }

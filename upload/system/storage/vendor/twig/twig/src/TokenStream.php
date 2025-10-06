@@ -21,14 +21,17 @@ use Twig\Error\SyntaxError;
  */
 final class TokenStream
 {
-    private $tokens;
     private $current = 0;
-    private $source;
 
-    public function __construct(array $tokens, Source $source = null)
-    {
-        $this->tokens = $tokens;
-        $this->source = $source ?: new Source('', '');
+    public function __construct(
+        private array $tokens,
+        private ?Source $source = null,
+    ) {
+        if (null === $this->source) {
+            trigger_deprecation('twig/twig', '3.16', \sprintf('Not passing a "%s" object to "%s" constructor is deprecated.', Source::class, __CLASS__));
+
+            $this->source = new Source('', '');
+        }
     }
 
     public function __toString()
@@ -60,24 +63,22 @@ final class TokenStream
      */
     public function nextIf($primary, $secondary = null)
     {
-        if ($this->tokens[$this->current]->test($primary, $secondary)) {
-            return $this->next();
-        }
+        return $this->tokens[$this->current]->test($primary, $secondary) ? $this->next() : null;
     }
 
     /**
      * Tests a token and returns it or throws a syntax error.
      */
-    public function expect($type, $value = null, string $message = null): Token
+    public function expect($type, $value = null, ?string $message = null): Token
     {
         $token = $this->tokens[$this->current];
         if (!$token->test($type, $value)) {
             $line = $token->getLine();
-            throw new SyntaxError(sprintf('%sUnexpected token "%s"%s ("%s" expected%s).',
+            throw new SyntaxError(\sprintf('%sUnexpected token "%s"%s ("%s" expected%s).',
                 $message ? $message.'. ' : '',
                 Token::typeToEnglish($token->getType()),
-                $token->getValue() ? sprintf(' of value "%s"', $token->getValue()) : '',
-                Token::typeToEnglish($type), $value ? sprintf(' with value "%s"', $value) : ''),
+                $token->getValue() ? \sprintf(' of value "%s"', $token->getValue()) : '',
+                Token::typeToEnglish($type), $value ? \sprintf(' with value "%s"', $value) : ''),
                 $line,
                 $this->source
             );
@@ -112,7 +113,7 @@ final class TokenStream
      */
     public function isEOF(): bool
     {
-        return /* Token::EOF_TYPE */ -1 === $this->tokens[$this->current]->getType();
+        return Token::EOF_TYPE === $this->tokens[$this->current]->getType();
     }
 
     public function getCurrent(): Token
@@ -120,11 +121,6 @@ final class TokenStream
         return $this->tokens[$this->current];
     }
 
-    /**
-     * Gets the source associated with this stream.
-     *
-     * @internal
-     */
     public function getSourceContext(): Source
     {
         return $this->source;

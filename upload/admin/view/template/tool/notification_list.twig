@@ -1,0 +1,38 @@
+<form id="form-notification" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th class="text-center"></th>
+          <th>{{ column_message }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if notifications %}
+          {% set notification_row = 0 %}
+          {% for notification in notifications %}
+            <tr id="notification-row-{{ notification_row }}"{% if not notification.status %} class="table-disabled"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ notification.notification_id }}" class="form-check-input"/></td>
+              <td class="text-primary" style="width: 1px;"><i class="fa-regular fa-bell fa-3x"></i></td>
+              <td><a href="{{ notification.view }}" class="text-primary{% if not notification.status %} font-weight-bold{% endif %}">{{ notification.title }}</a>
+                <br/>
+                <div class="text-muted">{{ notification.date_added }}</div></td>
+              <td class="text-end"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" id="button-view-{{ notification.notification_id }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button></td>
+            </tr>
+            {% set notification_row = notification_row + 1 %}
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="4">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

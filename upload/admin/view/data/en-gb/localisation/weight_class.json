@@ -1,0 +1,30 @@
+{
+  "2": {
+    "weight_class_id": "2",
+    "language_id": "1",
+    "title": "Gram",
+    "unit": "g",
+    "value": "1000.00000000"
+  },
+  "1": {
+    "weight_class_id": "1",
+    "language_id": "1",
+    "title": "Kilogram",
+    "unit": "kg",
+    "value": "1.00000000"
+  },
+  "4": {
+    "weight_class_id": "4",
+    "language_id": "1",
+    "title": "Ounce",
+    "unit": "oz",
+    "value": "35.27400000"
+  },
+  "3": {
+    "weight_class_id": "3",
+    "language_id": "1",
+    "title": "Pound ",
+    "unit": "lb",
+    "value": "2.20460000"
+  }
+}

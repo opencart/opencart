@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{{ column_ip }}</th>
+        <th>{{ column_store }}</th>
+        <th>{{ column_country }}</th>
+        <th>{{ column_date_added }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if reports %}
+        {% for report in reports %}
+          <tr>
+            <td><a href="https://whatismyipaddress.com/ip/{{ report.ip }}" target="_blank">{{ report.ip }}</a></td>
+            <td>{{ report.store }}</td>
+            <td>{{ report.country }}</td>
+            <td>{{ report.date_added }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

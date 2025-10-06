@@ -1,0 +1,146 @@
+#!/bin/bash
+set -e
+
+echo "--- OpenCart initialization ---"
+
+# ================================================================
+# STEP 1: SYNC ENVIRONMENT VARIABLES TO EXISTING CONFIGS
+# ================================================================
+
+# Change to OpenCart directory
+cd /var/www/upload
+
+CONFIG_FILE="config.php"
+ADMIN_CONFIG_FILE="admin/config.php"
+
+# Function to update a config value only if it differs from the environment variable
+update_config_if_changed() {
+    local file=$1
+    local key=$2
+    local env_value=$3
+
+    # Ensure the file exists and is not empty
+    if [ ! -f "$file" ] || [ ! -s "$file" ]; then
+        return
+    fi
+
+    # Extract the current value
+    local current_value=$(grep "define('$key'" "$file" | sed -n "s/.*define('$key',[ ]*'\([^']*\)').*$/\1/p")
+
+    # Update only if the value has changed
+    if [ "$current_value" != "$env_value" ]; then
+        echo "--- Value for '$key' in '$file' is outdated. Updating '$current_value' -> '$env_value' ---"
+
+        sed -i "s/define('$key',[ ]*'[^']*')/define('$key', '$env_value')/g" "$file"
+
+        echo "--- Updated '$key' to '$env_value' in '$file' ---"
+    fi
+}
+
+if [ -f "$CONFIG_FILE" ]; then
+    echo "--- STEP 1: Syncing environment variables to config.php ---"
+    update_config_if_changed "$CONFIG_FILE" "DB_DRIVER" "${DB_DRIVER:-mysqli}"
+    update_config_if_changed "$CONFIG_FILE" "DB_HOSTNAME" "${DB_HOSTNAME:-mysql}"
+    update_config_if_changed "$CONFIG_FILE" "DB_USERNAME" "${DB_USERNAME:-opencart}"
+    update_config_if_changed "$CONFIG_FILE" "DB_PASSWORD" "${DB_PASSWORD:-opencart}"
+    update_config_if_changed "$CONFIG_FILE" "DB_DATABASE" "${DB_DATABASE:-opencart}"
+    update_config_if_changed "$CONFIG_FILE" "DB_PORT" "${DB_PORT:-3306}"
+fi
+
+if [ -f "$ADMIN_CONFIG_FILE" ]; then
+    echo "--- STEP 1: Syncing environment variables to admin/config.php ---"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_DRIVER" "${DB_DRIVER:-mysqli}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_HOSTNAME" "${DB_HOSTNAME:-mysql}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_USERNAME" "${DB_USERNAME:-opencart}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_PASSWORD" "${DB_PASSWORD:-opencart}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_DATABASE" "${DB_DATABASE:-opencart}"
+    update_config_if_changed "$ADMIN_CONFIG_FILE" "DB_PORT" "${DB_PORT:-3306}"
+fi
+
+# ================================================================
+# STEP 2: OPENCART INSTALLATION (IF NEEDED)
+# ================================================================
+
+if [ ! -f "install.lock" ] && [ -f "install/cli_install.php" ]; then
+    echo "--- Starting OpenCart installation ---"
+
+    # Copy config files if they don't exist
+    if [ -f "config-dist.php" ] && [ ! -s "config.php" ]; then
+        cp "config-dist.php" "config.php"
+        echo "--- Copied config-dist.php to config.php ---"
+    fi
+
+    if [ -f "admin/config-dist.php" ] && [ ! -s "admin/config.php" ]; then
+        cp "admin/config-dist.php" "admin/config.php"
+        echo "--- Copied admin/config-dist.php to admin/config.php ---"
+    fi
+
+    # Run installer
+    php install/cli_install.php install \
+        --username "${OPENCART_USERNAME:-admin}" \
+        --password "${OPENCART_PASSWORD:-admin}" \
+        --email "${OPENCART_ADMIN_EMAIL:-admin@example.com}" \
+        --http_server "${OPENCART_HTTP_SERVER:-http://localhost/}" \
+        --db_driver "${DB_DRIVER:-mysqli}" \
+        --db_hostname "${DB_HOSTNAME:-mysql}" \
+        --db_username "${DB_USERNAME:-opencart}" \
+        --db_password "${DB_PASSWORD:-opencart}" \
+        --db_database "${DB_DATABASE:-opencart}" \
+        --db_port "${DB_PORT:-3306}" \
+        --db_prefix "${DB_PREFIX:-oc_}" \
+        && touch "install.lock" \
+        && echo "--- OpenCart installation completed ---" \
+        || echo "--- OpenCart installation failed ---"
+fi
+
+# ================================================================
+# STEP 3: SETUP WEB SERVER FILES
+# ================================================================
+
+# Copy .htaccess.txt to .htaccess if needed
+if [ -f ".htaccess.txt" ] && [ ! -f ".htaccess" ]; then
+    cp ".htaccess.txt" ".htaccess"
+    echo "--- STEP 3: Copied .htaccess.txt to .htaccess ---"
+fi
+
+# ================================================================
+# STEP 4: FIX FILE PERMISSIONS
+# ================================================================
+
+# Fix ownership for all files by targeting the real directory.
+echo "--- STEP 4: Fixing ownership on /var/www/upload ---"
+chown -R www-data:www-data /var/www/upload
+echo "--- Ownership fixed ---"
+
+# Set permissions for storage relocation
+echo "--- STEP 4: Setting permissions for storage relocation ---"
+chown www-data:www-data /var/www
+chmod 775 /var/www
+
+# ================================================================
+# STEP 5: SETUP CRON
+# ================================================================
+echo "--- STEP 5: Setting up cron ---"
+
+cp /var/www/docker/php/cron/crontab /etc/cron.d/opencart
+
+# Give execution rights on the cron job
+chmod 0644 /etc/cron.d/opencart
+
+# Create cron log file with proper permissions
+touch /var/log/cron.log
+chown www-data:www-data /var/log/cron.log
+chmod 644 /var/log/cron.log
+
+echo "--- Cron setup finished ---"
+
+# ================================================================
+# STEP 6: START SUPERVISOR
+# ================================================================
+
+echo "--- STEP 6: Starting Supervisor ---"
+# Create supervisor run and log directories
+mkdir -p /var/run/supervisor /var/log/supervisor
+
+# Execute the CMD from the Dockerfile (or the command passed to docker run)
+exec "$@"

@@ -1,0 +1,57 @@
+<form id="form-ssr" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th>{{ column_code }}</th>
+          <th>{{ column_action }}</th>
+          <th class="d-none d-lg-table-cell">{{ column_date_modified }}</th>
+          <th class="text-end" style="width: 1px;">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if ssrs %}
+          {% for ssr in ssrs %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ ssr.ssr_id }}" class="form-check-input"/></td>
+              <td>{{ ssr.code }}</td>
+              <td>{{ ssr.action }}</td>
+              <td class="d-none d-lg-table-cell">{{ ssr.date_modified }}</td>
+              <td class="text-end text-nowrap"><button type="button" value="{{ ssr.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
+                <button type="button" value="{{ ssr.clear }}" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa-solid fa-eraser"></i></button>
+                {% if ssr.description %}
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#modal-ssr-{{ ssr.ssr_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+                {% else %}
+                  <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>
+                {% endif %}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>
+{% for ssr in ssrs %}
+  {% if ssr.description %}
+    <div id="modal-ssr-{{ ssr.ssr_id }}" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body"><textarea rows="5" class="form-control" readonly>{{ ssr.description }}</textarea></div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}

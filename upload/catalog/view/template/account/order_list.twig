@@ -13,40 +13,36 @@
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <td class="text-right">{{ column_order_id }}</td>
-                <td class="text-left">{{ column_customer }}</td>
-                <td class="text-right">{{ column_product }}</td>
-                <td class="text-left">{{ column_status }}</td>
-                <td class="text-right">{{ column_total }}</td>
-                <td class="text-left">{{ column_date_added }}</td>
-                <td></td>
+                <th class="text-end">{{ column_order_id }}</th>
+                <th class="text-end">{{ column_product_total }}</th>
+                <th>{{ column_status }}</th>
+                <th class="text-end">{{ column_total }}</th>
+                <th>{{ column_date_added }}</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {% for order in orders %}
                 <tr>
-                  <td class="text-right">#{{ order.order_id }}</td>
-                  <td class="text-left">{{ order.name }}</td>
-                  <td class="text-right">{{ order.products }}</td>
-                  <td class="text-left">{{ order.status }}</td>
-                  <td class="text-right">{{ order.total }}</td>
-                  <td class="text-left">{{ order.date_added }}</td>
-                  <td class="text-right"><a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
+                  <td class="text-end">#{{ order.order_id }}</td>
+                  <td class="text-end">{{ order.product_total }}</td>
+                  <td>{{ order.status }}</td>
+                  <td class="text-end"><x-currency code="{{ order.currency_code }}" amount="{{ order.total }}" value="{{ order.currency_value }}"></x-currency></td>
+                  <td>{{ order.date_added }}</td>
+                  <td class="text-end"><a href="{{ order.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
                 </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
-        <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
+        <div class="row mb-3">
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
         </div>
       {% else %}
         <p>{{ text_no_results }}</p>
       {% endif %}
-      <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-      </div>
+      <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>

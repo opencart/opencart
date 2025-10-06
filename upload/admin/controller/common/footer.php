@@ -1,7 +1,19 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
+/**
+ * Class Footer
+ *
+ * Can be loaded using $this->load->controller('common/footer');
+ *
+ * @package Opencart\Admin\Controller\Common
+ */
 class Footer extends \Opencart\System\Engine\Controller {
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return string
+	 */
+	public function index(): string {
 		$this->load->language('common/footer');
 
 		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
@@ -9,7 +21,9 @@ class Footer extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['text_version'] = '';
 		}
-		
+
+		$data['bootstrap'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
+
 		return $this->load->view('common/footer', $data);
 	}
 }

@@ -45,6 +45,10 @@ class ResultPaginator implements \Iterator
         $this->operation = $operation;
         $this->args = $args;
         $this->config = $config;
+        MetricsBuilder::appendMetricsCaptureMiddleware(
+            $this->client->getHandlerList(),
+            MetricsBuilder::PAGINATOR
+        );
     }
 
     /**
@@ -68,7 +72,7 @@ class ResultPaginator implements \Iterator
      */
     public function each(callable $handleResult)
     {
-        return Promise\coroutine(function () use ($handleResult) {
+        return Promise\Coroutine::of(function () use ($handleResult) {
             $nextToken = null;
             do {
                 $command = $this->createNextCommand($this->args, $nextToken);
@@ -76,7 +80,7 @@ class ResultPaginator implements \Iterator
                 $nextToken = $this->determineNextToken($result);
                 $retVal = $handleResult($result);
                 if ($retVal !== null) {
-                    yield Promise\promise_for($retVal);
+                    yield Promise\Create::promiseFor($retVal);
                 }
             } while ($nextToken);
         });
@@ -101,21 +105,34 @@ class ResultPaginator implements \Iterator
     /**
      * @return Result
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->valid() ? $this->result : false;
     }
 
+    /**
+     * @return mixed
+     */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->valid() ? $this->requestCount - 1 : null;
     }
 
+    /**
+     * @return void
+     */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->result = null;
     }
 
+    /**
+     * @return bool
+     */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         if ($this->result) {
@@ -123,10 +140,26 @@ class ResultPaginator implements \Iterator
         }
 
         if ($this->nextToken || !$this->requestCount) {
+            //Forward/backward paging can result in a case where the last page's nextforwardtoken
+            //is the same as the one that came before it.  This can cause an infinite loop.
+            $hasBidirectionalPaging = $this->config['output_token'] === 'nextForwardToken';
+            if ($hasBidirectionalPaging && $this->nextToken) {
+                $tokenKey = $this->config['input_token'];
+                $previousToken = $this->nextToken[$tokenKey];
+            }
+
             $this->result = $this->client->execute(
                 $this->createNextCommand($this->args, $this->nextToken)
             );
+
             $this->nextToken = $this->determineNextToken($this->result);
+
+            if (isset($previousToken)
+                && $previousToken === $this->nextToken[$tokenKey]
+            ) {
+                return false;
+            }
+
             $this->requestCount++;
             return true;
         }
@@ -134,6 +167,10 @@ class ResultPaginator implements \Iterator
         return false;
     }
 
+    /**
+     * @return void
+     */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->requestCount = 0;
@@ -141,7 +178,7 @@ class ResultPaginator implements \Iterator
         $this->result = null;
     }
 
-    private function createNextCommand(array $args, array $nextToken = null)
+    private function createNextCommand(array $args, ?array $nextToken = null)
     {
         return $this->client->getCommand($this->operation, array_merge($args, ($nextToken ?: [])));
     }

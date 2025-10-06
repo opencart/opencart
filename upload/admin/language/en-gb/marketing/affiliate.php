@@ -18,7 +18,11 @@ $_['text_history']              = 'History';
 $_['text_history_add']          = 'Add History';
 $_['text_transaction']          = 'Transactions';
 $_['text_transaction_add']      = 'Add Transaction';
-$_['text_report']               = 'Report';
+$_['text_report']               = 'Reports';
+$_['text_filter']               = 'Filter';
+$_['text_payment_cheque']       = 'Cheque Payment';
+$_['text_payment_paypal']       = 'PayPal Payment';
+$_['text_payment_bank']         = 'Bank Transfer Payment';
 
 // Column
 $_['column_name']               = 'Customer Name';
@@ -38,13 +42,12 @@ $_['column_action']             = 'Action';
 
 // Entry
 $_['entry_customer']            = 'Customer';
-$_['entry_status']              = 'Status';
 $_['entry_company']             = 'Company';
 $_['entry_tracking']            = 'Tracking Code';
 $_['entry_website']             = 'Web Site';
 $_['entry_commission']          = 'Commission (%)';
 $_['entry_tax']                 = 'Tax ID';
-$_['entry_payment']             = 'Payment Method';
+$_['entry_payment_method']      = 'Payment Method';
 $_['entry_cheque']              = 'Cheque Payee Name';
 $_['entry_paypal']              = 'PayPal Email Account';
 $_['entry_bank_name']           = 'Bank Name';
@@ -55,7 +58,10 @@ $_['entry_bank_account_number'] = 'Account Number';
 $_['entry_comment']             = 'Comment';
 $_['entry_description']         = 'Description';
 $_['entry_amount']              = 'Amount';
-$_['entry_date_added']          = 'Date Added';
+$_['entry_date_from']           = 'Date From';
+$_['entry_date_to']             = 'Date To';
+$_['entry_status']              = 'Status';
+$_['entry_limit']               = 'Limit';
 
 // Help
 $_['help_tracking']             = 'The tracking code that will be used to track referrals.';
@@ -68,8 +74,10 @@ $_['error_customer']            = 'Warning: Customer required!';
 $_['error_already']             = 'Warning: Customer is already registered as an affiliate!';
 $_['error_tracking']            = 'Tracking Code required!';
 $_['error_exists']              = 'Tracking code is being used by another affiliate!';
+$_['error_payment_method']      = 'Payment method required!';
 $_['error_cheque']              = 'Cheque Payee Name required!';
 $_['error_paypal']              = 'PayPal Email Address does not appear to be valid!';
 $_['error_bank_account_name']   = 'Account Name required!';
 $_['error_bank_account_number'] = 'Account Number required!';
 $_['error_custom_field']        = '%s required!';
+$_['error_regex']               = '%s is not a valid input!';

@@ -3,8 +3,8 @@
 error_reporting(E_ALL);
 
 // Check Version
-if (version_compare(phpversion(), '7.3.0', '<')) {
-	exit('PHP7.3+ Required');
+if (version_compare(PHP_VERSION, '8.0', '<')) {
+	exit('PHP8.0+ Required');
 }
 
 if (!ini_get('date.timezone')) {
@@ -25,7 +25,7 @@ if (!isset($_SERVER['DOCUMENT_ROOT'])) {
 }
 
 if (!isset($_SERVER['REQUEST_URI'])) {
-	$_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 
 	if (isset($_SERVER['QUERY_STRING'])) {
 		$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
@@ -45,15 +45,16 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 	$_SERVER['HTTPS'] = false;
 }
 
-// Helper
-require_once(DIR_SYSTEM . 'helper/general.php');
-require_once(DIR_SYSTEM . 'helper/utf8.php');
-
-// Vendor Autoloader
-require_once(DIR_STORAGE . 'vendor/autoload.php');
+// Check IP
+if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CLIENT_IP'];
+}
 
 // OpenCart Autoloader
 require_once(DIR_SYSTEM . 'engine/autoloader.php');
 
-// Framework
-require_once(DIR_SYSTEM . 'framework.php');
+// Need config to store application values
+require_once(DIR_SYSTEM . 'engine/config.php');
+
+// Helper
+require_once(DIR_SYSTEM . 'helper/general.php');

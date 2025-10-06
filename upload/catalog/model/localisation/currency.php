@@ -1,35 +1,101 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Catalog\Model\Localisation;
+/**
+ * Class Currency
+ *
+ * Can be called using $this->load->model('localisation/currency');
+ *
+ * @package Opencart\Catalog\Model\Localisation
+ */
 class Currency extends \Opencart\System\Engine\Model {
-	public function getCurrencyByCode($currency) {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `code` = '" . $this->db->escape($currency) . "'");
+	/**
+	 * Edit Value By Code
+	 *
+	 * @param string $code
+	 * @param float  $value
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $this->model_localisation_currency->editValueByCode($code, $value);
+	 */
+	public function editValueByCode(string $code, float $value): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `value` = '" . (float)$value . "', `date_modified` = NOW() WHERE `code` = '" . $this->db->escape($code) . "'");
+
+		$this->cache->delete('currency');
+	}
+
+	/**
+	 * Get Currency
+	 *
+	 * Get the record of the currency record in the database.
+	 *
+	 * @param int $currency_id primary key of the currency record
+	 *
+	 * @return array<string, mixed> currency record that has currency ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $currency_info = $this->model_localisation_currency->getCurrency($currency_id);
+	 */
+	public function getCurrency(int $currency_id): array {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		return $query->row;
 	}
 
-	public function getCurrencies() {
-		$currency_data = $this->cache->get('currency');
+	/**
+	 * Get Currency By Code
+	 *
+	 * @param string $currency primary key of the currency record
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $currency_info = $this->model_localisation_currency->getCurrencyByCode($currency);
+	 */
+	public function getCurrencyByCode(string $currency): array {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `code` = '" . $this->db->escape($currency) . "' AND `status` = '1'");
+
+		return $query->row;
+	}
+
+	/**
+	 * Get Currencies
+	 *
+	 * Get the record of the currency records in the database.
+	 *
+	 * @return array<string, array<string, mixed>> currency records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/currency');
+	 *
+	 * $currencies = $this->model_localisation_currency->getCurrencies();
+	 */
+	public function getCurrencies(): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "currency` WHERE `status` = '1' ORDER BY `title` ASC";
+
+		$currency_data = $this->cache->get('currency.' . md5($sql));
 
 		if (!$currency_data) {
 			$currency_data = [];
 
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` ORDER BY `title` ASC");
+			$query = $this->db->query($sql);
 
 			foreach ($query->rows as $result) {
-				$currency_data[$result['code']] = [
-					'currency_id'   => $result['currency_id'],
-					'title'         => $result['title'],
-					'code'          => $result['code'],
-					'symbol_left'   => $result['symbol_left'],
-					'symbol_right'  => $result['symbol_right'],
-					'decimal_place' => $result['decimal_place'],
-					'value'         => $result['value'],
-					'status'        => $result['status'],
-					'date_modified' => $result['date_modified']
-				];
+				$currency_data[$result['code']] = $result;
 			}
 
-			$this->cache->set('currency', $currency_data);
+			$this->cache->set('currency.' . md5($sql), $currency_data);
 		}
 
 		return $currency_data;

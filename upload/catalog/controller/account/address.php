@@ -1,137 +1,27 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
+/**
+ * Class Address
+ *
+ * @package Opencart\Catalog\Controller\Account
+ */
 class Address extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
+		$this->load->language('account/address');
 
-	public function index() {
-		if (!$this->customer->isLogged()) {
+		if (!$this->load->controller('account/login.validate')) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
-
-		$this->load->language('account/address');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('account/address');
-
-		$this->getList();
-	}
-
-	public function add() {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
-		$this->load->language('account/address');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
-
-		$this->load->model('account/address');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_add');
-
-			$this->response->redirect($this->url->link('account/address', 'language=' . $this->config->get('config_language')));
-		}
-
-		$this->getForm();
-	}
-
-	public function edit() {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
-		$this->load->language('account/address');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
-
-		$this->load->model('account/address');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
-
-			// Default Shipping Address
-			if (isset($this->session->data['shipping_address']['address_id']) && ($this->request->get['address_id'] == $this->session->data['shipping_address']['address_id'])) {
-				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
-
-				unset($this->session->data['shipping_method']);
-				unset($this->session->data['shipping_methods']);
-			}
-
-			// Default Payment Address
-			if (isset($this->session->data['payment_address']['address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address']['address_id'])) {
-				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
-
-				unset($this->session->data['payment_method']);
-				unset($this->session->data['payment_methods']);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_edit');
-
-			$this->response->redirect($this->url->link('account/address', 'language=' . $this->config->get('config_language')));
-		}
-
-		$this->getForm();
-	}
-
-	public function delete() {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
-		$this->load->language('account/address');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('account/address');
-
-		if (isset($this->request->get['address_id']) && $this->validateDelete()) {
-			$this->model_account_address->deleteAddress($this->request->get['address_id']);
-
-			// Default Shipping Address
-			if (isset($this->session->data['shipping_address']['address_id']) && ($this->request->get['address_id'] == $this->session->data['shipping_address']['address_id'])) {
-				unset($this->session->data['shipping_address']);
-				unset($this->session->data['shipping_method']);
-				unset($this->session->data['shipping_methods']);
-			}
-
-			// Default Payment Address
-			if (isset($this->session->data['payment_address']['address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address']['address_id'])) {
-				unset($this->session->data['payment_address']);
-				unset($this->session->data['payment_method']);
-				unset($this->session->data['payment_methods']);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_delete');
-
-			$this->response->redirect($this->url->link('account/address', 'language=' . $this->config->get('config_language')));
-		}
-
-		$this->getList();
-	}
-
-	protected function getList() {
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
@@ -139,19 +29,13 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/address', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/address', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
@@ -161,17 +45,56 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['success'] = '';
 		}
 
+		$data['add'] = $this->url->link('account/address.form', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+
+		$data['list'] = $this->getList();
+
+		$data['language'] = $this->config->get('config_language');
+
+		$data['customer_token'] = $this->session->data['customer_token'];
+
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		$this->response->setOutput($this->load->view('account/address', $data));
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('account/address');
+
+		if (!$this->load->controller('account/login.validate')) {
+			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+		}
+
+		$this->response->setOutput($this->getList());
+	}
+
+	/**
+	 * Get List
+	 *
+	 * @return string
+	 */
+	protected function getList(): string {
+		// Addresses
 		$data['addresses'] = [];
 
-		$results = $this->model_account_address->getAddresses();
+		$this->load->model('account/address');
+
+		$results = $this->model_account_address->getAddresses($this->customer->getId());
 
 		foreach ($results as $result) {
-			if ($result['address_format']) {
-				$format = $result['address_format'];
-			} else {
-				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-			}
-
 			$find = [
 				'{firstname}',
 				'{lastname}',
@@ -199,27 +122,37 @@ class Address extends \Opencart\System\Engine\Controller {
 			];
 
 			$data['addresses'][] = [
-				'address_id' => $result['address_id'],
-				'address'    => str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format)))),
-				'update'     => $this->url->link('account/address|edit', 'language=' . $this->config->get('config_language') . '&address_id=' . $result['address_id']),
-				'delete'     => $this->url->link('account/address|delete', 'language=' . $this->config->get('config_language') . '&address_id=' . $result['address_id'])
-			];
+				'address' => str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\\s\\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $result['address_format'])))),
+				'edit'    => $this->url->link('account/address.form', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $result['address_id']),
+				'delete'  => $this->url->link('account/address.delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $result['address_id'])
+			] + $result;
 		}
 
-		$data['add'] = $this->url->link('account/address|add', 'language=' . $this->config->get('config_language'));
-		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
-
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
-		$data['footer'] = $this->load->controller('common/footer');
-		$data['header'] = $this->load->controller('common/header');
-
-		$this->response->setOutput($this->load->view('account/address_list', $data));
+		return $this->load->view('account/address_list', $data);
 	}
 
-	protected function getForm() {
+	/**
+	 * Form
+	 *
+	 * @return void
+	 */
+	public function form(): void {
+		$this->load->language('account/address');
+
+		if (!$this->load->controller('account/login.validate')) {
+			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+		}
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$data['text_address'] = !isset($this->request->get['address_id']) ? $this->language->get('text_address_add') : $this->language->get('text_address_edit');
+
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -229,168 +162,105 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/address', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/address', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
 		if (!isset($this->request->get['address_id'])) {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_address_add'),
-				'href' => $this->url->link('account/address|add', 'language=' . $this->config->get('config_language'))
+				'href' => $this->url->link('account/address.form', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 			];
 		} else {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_address_edit'),
-				'href' => $this->url->link('account/address|edit', 'language=' . $this->config->get('config_language') . '&address_id=' . $this->request->get['address_id'])
+				'href' => $this->url->link('account/address.form', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . (int)$this->request->get['address_id'])
 			];
 		}
 
-		$data['text_address'] = !isset($this->request->get['address_id']) ? $this->language->get('text_address_add') : $this->language->get('text_address_edit');
-
-		if (isset($this->error['firstname'])) {
-			$data['error_firstname'] = $this->error['firstname'];
-		} else {
-			$data['error_firstname'] = '';
-		}
-
-		if (isset($this->error['lastname'])) {
-			$data['error_lastname'] = $this->error['lastname'];
-		} else {
-			$data['error_lastname'] = '';
-		}
-
-		if (isset($this->error['address_1'])) {
-			$data['error_address_1'] = $this->error['address_1'];
-		} else {
-			$data['error_address_1'] = '';
-		}
-
-		if (isset($this->error['city'])) {
-			$data['error_city'] = $this->error['city'];
-		} else {
-			$data['error_city'] = '';
-		}
-
-		if (isset($this->error['postcode'])) {
-			$data['error_postcode'] = $this->error['postcode'];
-		} else {
-			$data['error_postcode'] = '';
-		}
-
-		if (isset($this->error['country'])) {
-			$data['error_country'] = $this->error['country'];
-		} else {
-			$data['error_country'] = '';
-		}
-
-		if (isset($this->error['zone'])) {
-			$data['error_zone'] = $this->error['zone'];
-		} else {
-			$data['error_zone'] = '';
-		}
-
-		if (isset($this->error['custom_field'])) {
-			$data['error_custom_field'] = $this->error['custom_field'];
-		} else {
-			$data['error_custom_field'] = [];
-		}
-
 		if (!isset($this->request->get['address_id'])) {
-			$data['action'] = $this->url->link('account/address|add', 'language=' . $this->config->get('config_language'));
+			$data['save'] = $this->url->link('account/address.save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		} else {
-			$data['action'] = $this->url->link('account/address|edit', 'language=' . $this->config->get('config_language') . '&address_id=' . $this->request->get['address_id']);
+			$data['save'] = $this->url->link('account/address.save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . (int)$this->request->get['address_id']);
 		}
 
-		if (isset($this->request->get['address_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$address_info = $this->model_account_address->getAddress($this->request->get['address_id']);
+		$this->session->data['upload_token'] = oc_token(32);
+
+		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token']);
+
+		// Customer
+		if (isset($this->request->get['address_id'])) {
+			$this->load->model('account/address');
+
+			$address_info = $this->model_account_address->getAddress($this->customer->getId(), (int)$this->request->get['address_id']);
 		}
 
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($address_info)) {
+		if (!empty($address_info)) {
 			$data['firstname'] = $address_info['firstname'];
 		} else {
 			$data['firstname'] = '';
 		}
 
-		if (isset($this->request->post['lastname'])) {
-			$data['lastname'] = $this->request->post['lastname'];
-		} elseif (!empty($address_info)) {
+		if (!empty($address_info)) {
 			$data['lastname'] = $address_info['lastname'];
 		} else {
 			$data['lastname'] = '';
 		}
 
-		if (isset($this->request->post['company'])) {
-			$data['company'] = $this->request->post['company'];
-		} elseif (!empty($address_info)) {
+		if (!empty($address_info)) {
 			$data['company'] = $address_info['company'];
 		} else {
 			$data['company'] = '';
 		}
 
-		if (isset($this->request->post['address_1'])) {
-			$data['address_1'] = $this->request->post['address_1'];
-		} elseif (!empty($address_info)) {
+		if (!empty($address_info)) {
 			$data['address_1'] = $address_info['address_1'];
 		} else {
 			$data['address_1'] = '';
 		}
 
-		if (isset($this->request->post['address_2'])) {
-			$data['address_2'] = $this->request->post['address_2'];
-		} elseif (!empty($address_info)) {
+		if (!empty($address_info)) {
 			$data['address_2'] = $address_info['address_2'];
 		} else {
 			$data['address_2'] = '';
 		}
 
-		if (isset($this->request->post['postcode'])) {
-			$data['postcode'] = $this->request->post['postcode'];
-		} elseif (!empty($address_info)) {
+		if (!empty($address_info)) {
 			$data['postcode'] = $address_info['postcode'];
 		} else {
 			$data['postcode'] = '';
 		}
 
-		if (isset($this->request->post['city'])) {
-			$data['city'] = $this->request->post['city'];
-		} elseif (!empty($address_info)) {
+		if (!empty($address_info)) {
 			$data['city'] = $address_info['city'];
 		} else {
 			$data['city'] = '';
 		}
 
-		if (isset($this->request->post['country_id'])) {
-			$data['country_id'] = (int)$this->request->post['country_id'];
-		}  elseif (!empty($address_info)) {
+		// Countries
+		if (!empty($address_info)) {
 			$data['country_id'] = $address_info['country_id'];
 		} else {
-			$data['country_id'] = $this->config->get('config_country_id');
+			$data['country_id'] = (int)$this->config->get('config_country_id');
 		}
 
-		if (isset($this->request->post['zone_id'])) {
-			$data['zone_id'] = (int)$this->request->post['zone_id'];
-		}  elseif (!empty($address_info)) {
+		// Zones
+		if (!empty($address_info)) {
 			$data['zone_id'] = $address_info['zone_id'];
 		} else {
-			$data['zone_id'] = '';
+			$data['zone_id'] = 0;
 		}
 
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
-		// Custom fields
+		// Custom Fields
 		$data['custom_fields'] = [];
 
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {
@@ -398,23 +268,21 @@ class Address extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($this->request->post['custom_field']['address'])) {
-			$data['address_custom_field'] = $this->request->post['custom_field']['address'];
-		} elseif (isset($address_info)) {
+		if (!empty($address_info)) {
 			$data['address_custom_field'] = $address_info['custom_field'];
 		} else {
 			$data['address_custom_field'] = [];
 		}
 
-		if (isset($this->request->post['default'])) {
-			$data['default'] = $this->request->post['default'];
-		} elseif (isset($this->request->get['address_id'])) {
-			$data['default'] = $this->customer->getAddressId() == $this->request->get['address_id'];
+		if (isset($this->request->get['address_id'])) {
+			$data['default'] = $address_info['default'];
 		} else {
 			$data['default'] = false;
 		}
 
-		$data['back'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+		$data['back'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -426,66 +294,221 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/address_form', $data));
 	}
 
-	protected function validateForm() {
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$this->error['firstname'] = $this->language->get('error_firstname');
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
+		$this->load->language('account/address');
+
+		$json = [];
+
+		$required = [
+			'firstname'  => '',
+			'lastname'   => '',
+			'address_1'  => '',
+			'address_2'  => '',
+			'city'       => '',
+			'postcode'   => '',
+			'country_id' => 0,
+			'zone_id'    => 0
+		];
+
+		$post_info = $this->request->post + $required;
+
+		if (!$this->load->controller('account/login.validate')) {
+			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$this->error['lastname'] = $this->language->get('error_lastname');
-		}
+		if (!$json) {
+			if (!oc_validate_length((string)$post_info['firstname'], 1, 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
 
-		if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
-			$this->error['address_1'] = $this->language->get('error_address_1');
-		}
+			if (!oc_validate_length((string)$post_info['lastname'], 1, 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
 
-		if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
-			$this->error['city'] = $this->language->get('error_city');
-		}
+			if (!oc_validate_length((string)$post_info['address_1'], 3, 128)) {
+				$json['error']['address_1'] = $this->language->get('error_address_1');
+			}
 
-		$this->load->model('localisation/country');
+			if (!oc_validate_length((string)$post_info['city'], 2, 128)) {
+				$json['error']['city'] = $this->language->get('error_city');
+			}
 
-		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+			// Country
+			$this->load->model('localisation/country');
 
-		if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
-			$this->error['postcode'] = $this->language->get('error_postcode');
-		}
+			$country_info = $this->model_localisation_country->getCountry((int)$post_info['country_id']);
 
-		if ($this->request->post['country_id'] == '' || !is_numeric($this->request->post['country_id'])) {
-			$this->error['country'] = $this->language->get('error_country');
-		}
+			if ($country_info && $country_info['postcode_required'] && !oc_validate_length((string)$post_info['postcode'], 2, 10)) {
+				$json['error']['postcode'] = $this->language->get('error_postcode');
+			}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
-			$this->error['zone'] = $this->language->get('error_zone');
-		}
+			if (!$country_info) {
+				$json['error']['country'] = $this->language->get('error_country');
+			}
 
-		// Custom field validation
-		$this->load->model('account/custom_field');
+			// Zones
+			$this->load->model('localisation/zone');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+			// Total Zones
+			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
 
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'address') {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/']])) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+			if ($zone_total && !$post_info['zone_id']) {
+				$json['error']['zone'] = $this->language->get('error_zone');
+			}
+
+			// Custom fields validation
+			$this->load->model('account/custom_field');
+
+			$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'address') {
+					if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex((string)$post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
 				}
+			}
+
+			if (isset($this->request->get['address_id']) && ($this->customer->getAddressId() == (int)$this->request->get['address_id']) && !(bool)$post_info['default']) {
+				$json['error']['warning'] = $this->language->get('error_default');
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			// Address
+			$this->load->model('account/address');
+
+			// Add Address
+			if (!isset($this->request->get['address_id'])) {
+				$this->model_account_address->addAddress($this->customer->getId(), $post_info);
+
+				$this->session->data['success'] = $this->language->get('text_add');
+
+				$json['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+			}
+
+			// Edit Address
+			if (isset($this->request->get['address_id'])) {
+				$this->model_account_address->editAddress($this->customer->getId(), (int)$this->request->get['address_id'], $post_info);
+
+				// If address is in session update it.
+				if (isset($this->session->data['shipping_address']['address_id']) && ($this->session->data['shipping_address']['address_id'] == (int)$this->request->get['address_id'])) {
+					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getId(), (int)$this->request->get['address_id']);
+
+					unset($this->session->data['order_id']);
+					unset($this->session->data['shipping_method']);
+					unset($this->session->data['shipping_methods']);
+					unset($this->session->data['payment_method']);
+					unset($this->session->data['payment_methods']);
+				}
+
+				// If address is in session update it.
+				if (isset($this->session->data['payment_address']['address_id']) && ($this->session->data['payment_address']['address_id'] == (int)$this->request->get['address_id'])) {
+					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getId(), (int)$this->request->get['address_id']);
+
+					unset($this->session->data['order_id']);
+					unset($this->session->data['shipping_method']);
+					unset($this->session->data['shipping_methods']);
+					unset($this->session->data['payment_method']);
+					unset($this->session->data['payment_methods']);
+				}
+
+				$json['success'] = $this->language->get('text_edit');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete() {
-		if ($this->model_account_address->getTotalAddresses() == 1) {
-			$this->error['warning'] = $this->language->get('error_delete');
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('account/address');
+
+		$json = [];
+
+		if (isset($this->request->get['address_id'])) {
+			$address_id = (int)$this->request->get['address_id'];
+		} else {
+			$address_id = 0;
 		}
 
-		if ($this->customer->getAddressId() == $this->request->get['address_id']) {
-			$this->error['warning'] = $this->language->get('error_default');
+		if (!$this->load->controller('account/login.validate')) {
+			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		return !$this->error;
+		if (!$json) {
+			if ($this->customer->getAddressId() == $address_id) {
+				$json['error'] = $this->language->get('error_default');
+			}
+
+			// Total Addresses
+			$this->load->model('account/address');
+
+			if ($this->model_account_address->getTotalAddresses($this->customer->getId()) == 1) {
+				$json['error'] = $this->language->get('error_delete');
+			}
+
+			// Subscriptions
+			$this->load->model('account/subscription');
+
+			// Total Subscriptions
+			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByShippingAddressId($address_id);
+
+			if ($subscription_total) {
+				$json['error'] = sprintf($this->language->get('error_subscription'), $subscription_total);
+			}
+
+			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByPaymentAddressId($address_id);
+
+			if ($subscription_total) {
+				$json['error'] = sprintf($this->language->get('error_subscription'), $subscription_total);
+			}
+		}
+
+		if (!$json) {
+			// Delete address from database.
+			$this->model_account_address->deleteAddresses($this->customer->getId(), $address_id);
+
+			// Delete address from session.
+			if (isset($this->session->data['shipping_address']['address_id']) && ($this->session->data['shipping_address']['address_id'] == $address_id)) {
+				unset($this->session->data['order_id']);
+				unset($this->session->data['shipping_address']);
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
+			}
+
+			// Delete address from session.
+			if (isset($this->session->data['payment_address']['address_id']) && ($this->session->data['payment_address']['address_id'] == $address_id)) {
+				unset($this->session->data['order_id']);
+				unset($this->session->data['payment_address']);
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
+			}
+
+			$json['success'] = $this->language->get('text_delete');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

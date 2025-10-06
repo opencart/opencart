@@ -11,8 +11,9 @@
 
 namespace Twig\TokenParser;
 
-use Twig\Node\Expression\TempNameExpression;
+use Twig\Node\Expression\Variable\LocalVariable;
 use Twig\Node\Node;
+use Twig\Node\Nodes;
 use Twig\Node\PrintNode;
 use Twig\Node\SetNode;
 use Twig\Token;
@@ -23,27 +24,25 @@ use Twig\Token;
  *   {% apply upper %}
  *      This text becomes uppercase
  *   {% endapply %}
+ *
+ * @internal
  */
 final class ApplyTokenParser extends AbstractTokenParser
 {
     public function parse(Token $token): Node
     {
         $lineno = $token->getLine();
-        $name = $this->parser->getVarName();
-
-        $ref = new TempNameExpression($name, $lineno);
-        $ref->setAttribute('always_defined', true);
-
-        $filter = $this->parser->getExpressionParser()->parseFilterExpressionRaw($ref, $this->getTag());
+        $ref = new LocalVariable(null, $lineno);
+        $filter = $this->parser->getExpressionParser()->parseFilterExpressionRaw($ref);
 
         $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
         $body = $this->parser->subparse([$this, 'decideApplyEnd'], true);
         $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
 
-        return new Node([
-            new SetNode(true, $ref, $body, $lineno, $this->getTag()),
-            new PrintNode($filter, $lineno, $this->getTag()),
-        ]);
+        return new Nodes([
+            new SetNode(true, $ref, $body, $lineno),
+            new PrintNode($filter, $lineno),
+        ], $lineno);
     }
 
     public function decideApplyEnd(Token $token): bool

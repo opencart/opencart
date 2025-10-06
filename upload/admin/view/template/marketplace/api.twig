@@ -1,64 +1,70 @@
-<div id="modal-opencart" class="modal">
+<div id="modal-api" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title"><i class="fas fa-cog"></i> {{ heading_title }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h5 class="modal-title"><i class="fa-solid fa-cog"></i> {{ heading_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_signup }}</div>
-        <div class="form-group">
-          <label for="input-username" class="col-form-label">{{ entry_username }}</label> <input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
-        </div>
-        <div class="form-group">
-          <label for="input-secret" class="col-form-label">{{ entry_secret }}</label> <textarea name="opencart_secret" placeholder="{{ entry_secret }}" rows="8" id="input-secret" class="form-control"></textarea>
-        </div>
+        <form id="form-api">
+          <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_signup }}</div>
+          <div class="mb-3">
+            <label for="input-username" class="form-label">{{ entry_username }}</label> <input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+            <div id="error-username" class="invalid-feedback"></div>
+          </div>
+          <div class="mb-3">
+            <label for="input-secret" class="form-label">{{ entry_secret }}</label> <textarea name="opencart_secret" placeholder="{{ entry_secret }}" rows="8" id="input-secret" class="form-control"></textarea>
+            <div id="error-secret" class="invalid-feedback"></div>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_save }}</button>
+        <button type="submit" form="form-api" id="button-save" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-save').on('click', function(e) {
-	$.ajax({
-		url: 'index.php?route=marketplace/api|save&user_token={{ user_token }}',
-		type: 'post',
-		dataType: 'json',
-		data: $('#modal-opencart :input'),
-		beforeSend: function() {
-			$('#button-save').button('loading');
-		},
-		complete: function() {
-			$('#button-save').button('reset');
-		},
-		success: function(json) {
-			$('.alert-dismissible, .invalid-tooltip').remove();
+$('#form-api').on('submit', function(e) {
+    e.preventDefault();
 
-			if (json['error']) {
-				if (json['error']['warning']) {
-					$('#modal-opencart .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
+    $.ajax({
+        url: 'index.php?route=marketplace/api.save&user_token={{ user_token }}',
+        type: 'post',
+        dataType: 'json',
+        data: $('#form-api').serialize(),
+        beforeSend: function() {
+            $('#button-save').button('loading');
+        },
+        complete: function() {
+            $('#button-save').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
 
-				if (json['error']['username']) {
-					$('input[name=\'username\']').after('<div class="invalid-tooltip d-block">' + json['error']['username'] + '</div>');
-				}
+            $('.alert-dismissible').remove();
+            $('.invalid-feedback').removeClass('d-block');
 
-				if (json['error']['secret']) {
-					$('textarea[name=\'secret\']').after('<div class="invalid-tooltip d-block">' + json['error']['secret'] + '</div>');
-				}
-			}
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#modal-api .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
 
-			if (json['success']) {
-				$('#modal-opencart .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
 
-				window.location.reload();
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+            if (json['success']) {
+                $('#modal-api .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                window.location.reload();
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 //--></script> 

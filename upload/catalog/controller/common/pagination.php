@@ -1,7 +1,30 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
+/**
+ * Class Pagination
+ *
+ * Can be loaded using $this->load->controller('common/pagination', $setting);
+ *
+ * @example
+ *
+ * $setting = [
+ *     'total' => 10,
+ *     'page'  => 1,
+ *     'limit' => 10,
+ *     'url'   => ''
+ * ];
+ *
+ * @package Opencart\Catalog\Controller\Common
+ */
 class Pagination extends \Opencart\System\Engine\Controller {
-	public function index($setting) {
+	/**
+	 * Index
+	 *
+	 * @param array<string, mixed> $setting array of filters
+	 *
+	 * @return string
+	 */
+	public function index(array $setting): string {
 		if (isset($setting['total'])) {
 			$total = $setting['total'];
 		} else {
@@ -14,22 +37,22 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (isset($setting['limit'])) {
+		if (isset($setting['limit']) && (int)$setting['limit']) {
 			$limit = (int)$setting['limit'];
 		} else {
 			$limit = 10;
 		}
 
-		if (isset($setting['url'])) {
-			$url = str_replace('%7Bpage%7D', '{page}', (string)$setting['url']);
+		if (isset($setting['callback']) && is_callable($setting['callback'])) {
+			$callback = $setting['callback'];
 		} else {
-			$url = '';
+			return '';
 		}
 
 		$num_links = 8;
 		$num_pages = ceil($total / $limit);
 
-		if ($url && $page > 1 && $num_pages < $page) {
+		if ($page > 1 && $num_pages < $page) {
 			$back = true;
 		} else {
 			$back = false;
@@ -38,12 +61,12 @@ class Pagination extends \Opencart\System\Engine\Controller {
 		$data['page'] = $page;
 
 		if ($page > 1) {
-			$data['first'] = str_replace(['&amp;page={page}', '?page={page}', '&page={page}'], '', $url);
+			$data['first'] = $callback(0);
 
 			if ($page - 1 === 1) {
-				$data['prev'] = str_replace(['&amp;page={page}', '?page={page}', '&page={page}'], '', $url);
+				$data['prev'] = $callback(0);
 			} else {
-				$data['prev'] = str_replace('{page}', $page - 1, $url);
+				$data['prev'] = $callback($page - 1);
 			}
 		} else {
 			$data['first'] = '';
@@ -74,14 +97,14 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			for ($i = $start; $i <= $end; $i++) {
 				$data['links'][] = [
 					'page' => $i,
-					'href' => str_replace('{page}', $i, $url)
+					'href' => $callback($i)
 				];
 			}
 		}
 
 		if ($num_pages > $page) {
-			$data['next'] = str_replace('{page}', $page + 1, $url);
-			$data['last'] = str_replace('{page}', $num_pages, $url);
+			$data['next'] = $callback($page + 1);
+			$data['last'] = $callback($num_pages);
 		} else {
 			$data['next'] = '';
 			$data['last'] = '';

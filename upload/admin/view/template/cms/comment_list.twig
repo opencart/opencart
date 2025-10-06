@@ -1,0 +1,51 @@
+<form id="form-comment" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+        <th>{{ column_comment }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if comments %}
+        {% for comment in comments %}
+          <tr>
+            <td class="text-center" rowspan="2"><input type="checkbox" name="selected[]" value="{{ comment.article_comment_id }}" class="form-check-input"/></td>
+            <td><a href="{{ comment.article_edit }}" target="_blank">{{ comment.article }}</a>
+              <p>
+                {% if comment.customer_edit %}
+                  <small>{{ text_by }} <a href="{{ comment.customer_edit }}" target="_blank">{{ comment.author }}</a></small>
+                {% else %}
+                  <small> - {{ text_by }} {{ comment.author }}</small>
+                {% endif %}
+                <small> - {{ comment.date_added }}</small>
+                <br/>
+                <small>{{ text_rating }} {{ comment.rating }}</small>
+              </p>
+              <p>{{ comment.comment }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-end text-nowrap">
+              {% if comment.approve %}
+                <button type="button" value="{{ comment.approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
+              {% else %}
+                <button type="button" class="btn btn-success" disabled><i class="fa-solid fa-check"></i></button>
+              {% endif %}
+              <button type="button" value="{{ comment.spam }}" data-bs-toggle="tooltip" title="{{ button_spam }}" class="btn btn-warning"><i class="fa-solid fa-ban"></i></button>
+              <button type="button" value="{{ comment.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+            </td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="2">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

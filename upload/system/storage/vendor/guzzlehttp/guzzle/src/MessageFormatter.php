@@ -32,17 +32,19 @@ use Psr\Http\Message\ResponseInterface;
  * - {res_headers}:    Response headers
  * - {req_body}:       Request body
  * - {res_body}:       Response body
+ *
+ * @final
  */
-class MessageFormatter
+class MessageFormatter implements MessageFormatterInterface
 {
     /**
      * Apache Common Log Format.
      *
-     * @link https://httpd.apache.org/docs/2.4/logs.html#common
+     * @see https://httpd.apache.org/docs/2.4/logs.html#common
      *
      * @var string
      */
-    public const CLF = "{hostname} {req_header_User-Agent} - [{date_common_log}] \"{method} {target} HTTP/{version}\" {code} {res_header_Content-Length}";
+    public const CLF = '{hostname} {req_header_User-Agent} - [{date_common_log}] "{method} {target} HTTP/{version}" {code} {res_header_Content-Length}';
     public const DEBUG = ">>>>>>>>\n{request}\n<<<<<<<<\n{response}\n--------\n{error}";
     public const SHORT = '[{ts}] "{method} {target} HTTP/{version}" {code}';
 
@@ -66,11 +68,8 @@ class MessageFormatter
      * @param ResponseInterface|null $response Response that was received
      * @param \Throwable|null        $error    Exception that was received
      */
-    public function format(
-        RequestInterface $request,
-        ?ResponseInterface $response = null,
-        ?\Throwable $error = null
-    ): string {
+    public function format(RequestInterface $request, ?ResponseInterface $response = null, ?\Throwable $error = null): string
+    {
         $cache = [];
 
         /** @var string */
@@ -84,16 +83,16 @@ class MessageFormatter
                 $result = '';
                 switch ($matches[1]) {
                     case 'request':
-                        $result = Psr7\str($request);
+                        $result = Psr7\Message::toString($request);
                         break;
                     case 'response':
-                        $result = $response ? Psr7\str($response) : '';
+                        $result = $response ? Psr7\Message::toString($response) : '';
                         break;
                     case 'req_headers':
                         $result = \trim($request->getMethod()
-                                . ' ' . $request->getRequestTarget())
-                            . ' HTTP/' . $request->getProtocolVersion() . "\r\n"
-                            . $this->headers($request);
+                                .' '.$request->getRequestTarget())
+                            .' HTTP/'.$request->getProtocolVersion()."\r\n"
+                            .$this->headers($request);
                         break;
                     case 'res_headers':
                         $result = $response ?
@@ -102,14 +101,26 @@ class MessageFormatter
                                 $response->getProtocolVersion(),
                                 $response->getStatusCode(),
                                 $response->getReasonPhrase()
-                            ) . "\r\n" . $this->headers($response)
+                            )."\r\n".$this->headers($response)
                             : 'NULL';
                         break;
                     case 'req_body':
-                        $result = $request->getBody();
+                        $result = $request->getBody()->__toString();
                         break;
                     case 'res_body':
-                        $result = $response ? $response->getBody() : 'NULL';
+                        if (!$response instanceof ResponseInterface) {
+                            $result = 'NULL';
+                            break;
+                        }
+
+                        $body = $response->getBody();
+
+                        if (!$body->isSeekable()) {
+                            $result = 'RESPONSE_NOT_LOGGEABLE';
+                            break;
+                        }
+
+                        $result = $response->getBody()->__toString();
                         break;
                     case 'ts':
                     case 'date_iso_8601':
@@ -126,7 +137,7 @@ class MessageFormatter
                         break;
                     case 'uri':
                     case 'url':
-                        $result = $request->getUri();
+                        $result = $request->getUri()->__toString();
                         break;
                     case 'target':
                         $result = $request->getRequestTarget();
@@ -166,6 +177,7 @@ class MessageFormatter
                 }
 
                 $cache[$matches[1]] = $result;
+
                 return $result;
             },
             $this->template
@@ -179,7 +191,7 @@ class MessageFormatter
     {
         $result = '';
         foreach ($message->getHeaders() as $name => $values) {
-            $result .= $name . ': ' . \implode(', ', $values) . "\r\n";
+            $result .= $name.': '.\implode(', ', $values)."\r\n";
         }
 
         return \trim($result);

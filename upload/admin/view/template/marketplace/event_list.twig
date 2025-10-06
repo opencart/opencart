@@ -1,0 +1,66 @@
+<form id="form-event" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th>{{ column_code }}</th>
+          <th class="text-center">{{ column_status }}</th>
+          <th class="text-end d-none d-lg-table-cell">{{ column_sort_order }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if events %}
+          {% for event in events %}
+            <tr{% if not event.status %} class="table-disabled"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ event.event_id }}" class="form-check-input"/></td>
+              <td>{{ event.code }}</td>
+              <td class="text-center">{% if event.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
+              <td class="text-end d-none d-lg-table-cell">{{ event.sort_order }}</td>
+              <td class="text-end text-nowrap"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-event-{{ event.event_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="4">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>
+{% for event in events %}
+  <div id="modal-event-{{ event.event_id }}" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="input-description-{{ event.event_id }}" class="form-label">{{ entry_description }}</label>
+            <textarea rows="5" id="input-description-{{ event.event_id }}" class="form-control" readonly>{{ event.description }}</textarea>
+          </div>
+          <div class="mb-3">
+            <label for="input-trigger-{{ event.event_id }}" class="form-label">{{ entry_trigger }}</label>
+            <input type="text" value="{{ event.trigger }}" id="input-trigger-{{ event.event_id }}" class="form-control" readonly/>
+          </div>
+          <div>
+            <label for="input-action-{{ event.event_id }}" class="form-label">{{ entry_action }}</label>
+            <input type="text" value="{{ event.action }}" id="input-action-{{ event.event_id }}" class="form-control" readonly/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -11,11 +12,15 @@
 
 namespace ScssPhp\ScssPhp\Exception;
 
+@trigger_error(sprintf('The "%s" class is deprecated.', ServerException::class), E_USER_DEPRECATED);
+
 /**
  * Server Exception
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @deprecated The Scssphp server should define its own exception instead.
  */
-class ServerException extends \Exception
+class ServerException extends \Exception implements SassException
 {
 }

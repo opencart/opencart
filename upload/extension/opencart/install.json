@@ -1,0 +1,7 @@
+{
+  "name": "OpenCart Default Extensions",
+  "description": "This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.",
+  "version": "1.0",
+  "author": "OpenCart Ltd",
+  "link": "https://www.opencart.com"
+}

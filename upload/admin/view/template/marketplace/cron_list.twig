@@ -1,0 +1,64 @@
+<form id="form-cron" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th>{{ column_code }}</th>
+          <th>{{ column_cycle }}</th>
+          <th>{{ column_action }}</th>
+          <th class="text-center">{{ column_status }}</th>
+          <th class="d-none d-lg-table-cell">{{ column_date_modified }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if crons %}
+          {% for cron in crons %}
+            <tr{% if not cron.status %} class="table-disabled"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ cron.cron_id }}" class="form-check-input"/></td>
+              <td>{{ cron.code }}</td>
+              <td>{{ cron.cycle }}</td>
+              <td>{{ cron.action }}</td>
+              <td class="text-center">{% if cron.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
+              <td class="d-none d-lg-table-cell">{{ cron.date_modified }}</td>
+              <td class="text-end text-nowrap"><button type="button" value="{{ cron.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
+                {% if cron.description %}
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#modal-cron-{{ cron.cron_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+                {% else %}
+                  <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>
+                {% endif %}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="87">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>
+{% for cron in crons %}
+  {% if cron.description %}
+    <div id="modal-cron-{{ cron.cron_id }}" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body"><textarea rows="5" class="form-control" readonly>{{ cron.description }}</textarea></div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}

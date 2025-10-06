@@ -1,0 +1,251 @@
+name: opencart
+
+services:
+  apache:
+    container_name: opencart-apache
+    build:
+      context: .
+      dockerfile: docker/apache/Dockerfile
+    ports:
+      - "${HTTP_EXPOSE_PORT:-80}:${HTTP_PORT:-80}"
+    volumes:
+      - .:/var/www
+    depends_on:
+      php:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - opencart
+
+#  nginx:
+#    container_name: opencart-nginx
+#    build:
+#      context: .
+#      dockerfile: docker/nginx/Dockerfile
+#      target: ${OPENCART_ENV:-development}
+#    ports:
+#      - "${HTTP_EXPOSE_PORT:-80}:80"
+#    volumes:
+#      - .:/var/www
+#    depends_on:
+#      php:
+#        condition: service_healthy
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost/"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 40s
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 256M
+#          cpus: '0.5'
+#        reservations:
+#          memory: 128M
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10m"
+#        max-file: "3"
+#    networks:
+#      - opencart
+
+  php:
+    container_name: opencart-php
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        - PHP_VERSION=${PHP_VERSION:-8.4}
+    ports:
+      - "${PHP_FPM_EXPOSE_PORT:-9000}:${PHP_FPM_PORT:-9000}"
+    environment:
+      - TZ=${TZ:-UTC}
+      - OPENCART_USERNAME=${OPENCART_USERNAME:-admin}
+      - OPENCART_PASSWORD=${OPENCART_PASSWORD:-admin}
+      - OPENCART_ADMIN_EMAIL=${OPENCART_ADMIN_EMAIL:-admin@example.com}
+      - OPENCART_HTTP_SERVER=${OPENCART_HTTP_SERVER:-http://localhost/}
+      - DB_DRIVER=${DB_DRIVER:-mysqli}
+      - DB_HOSTNAME=${DB_HOSTNAME:-mysql}
+      - DB_USERNAME=${DB_USERNAME:-opencart}
+      - DB_PASSWORD=${DB_PASSWORD:-opencart}
+      - DB_DATABASE=${DB_DATABASE:-opencart}
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_PREFIX=${DB_PREFIX:-oc_}
+    volumes:
+      - .:/var/www
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "php-fpm -t || exit 1"]
+      interval: 1s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+        reservations:
+          memory: 128M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - opencart
+
+  mysql:
+    container_name: opencart-mysql
+    image: mariadb
+    ports:
+      - "${DB_EXPOSE_PORT:-3306}:${DB_PORT:-3306}"
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-opencart}
+      - MARIADB_DATABASE=${DB_DATABASE:-opencart}
+      - MARIADB_USER=${DB_USERNAME:-opencart}
+      - MARIADB_PASSWORD=${DB_PASSWORD:-opencart}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-opencart}"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - opencart
+
+  postgres:
+    container_name: opencart-postgres
+    image: postgres:latest
+    profiles: [postgres]
+    ports:
+      - "${DB_EXPOSE_PORT:-5432}:${DB_PORT:-5432}"
+    environment:
+      - POSTGRES_USER=${DB_USERNAME:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-opencart}
+      - POSTGRES_DB=${DB_DATABASE:-opencart}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - opencart
+
+  redis:
+    container_name: opencart-redis
+    image: redis:latest
+    profiles: [redis]
+    ports:
+      - "${CACHE_EXPOSE_PORT:-6379}:${CACHE_PORT:-6379}"
+    volumes:
+      - redis-data:/data
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - opencart
+
+  memcached:
+    container_name: opencart-memcached
+    image: memcached:latest
+    profiles: [memcached]
+    ports:
+      - "${CACHE_EXPOSE_PORT:-11211}:${CACHE_PORT:-11211}"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - opencart
+
+  adminer:
+    container_name: opencart-adminer
+    image: adminer:latest
+    profiles: [adminer]
+    ports:
+      - "${ADMINER_EXPOSE_PORT:-8080}:${ADMINER_PORT:-8080}"
+    environment:
+      - ADMINER_DEFAULT_SERVER=mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - opencart
+
+volumes:
+  mysql-data:
+  postgres-data:
+  redis-data:
+
+networks:
+  opencart:
+    driver: bridge
+    name: opencart-network

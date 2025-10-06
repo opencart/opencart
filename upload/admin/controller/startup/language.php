@@ -1,19 +1,91 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Admin\Controller\Startup;
+/**
+ * Class Language
+ *
+ * @package Opencart\Admin\Controller\Startup
+ */
 class Language extends \Opencart\System\Engine\Controller {
-	public function index() {
-		// Language
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($this->config->get('config_admin_language')) . "'");
+	/**
+	 * @var array<string, array<string, string>>
+	 */
+	private static array $languages = [];
 
-		if ($query->num_rows) {
-			$this->config->set('config_language_id', $query->row['language_id']);
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
+		// Languages
+		$this->load->model('localisation/language');
+
+		$results = $this->model_localisation_language->getLanguages();
+
+		foreach ($results as $result) {
+			self::$languages[$result['code']] = $result;
+		}
+		
+		$language_info = [];
+
+		// Set default language
+		if (isset(self::$languages[$this->config->get('config_language_admin')])) {
+			$language_info = self::$languages[$this->config->get('config_language_admin')];
 		}
 
-		// Language
-		//$language = new \Opencart\System\Library\Language();
-		//$language->addPath(DIR_LANGUAGE . $this->config->get('config_admin_language') . '/');
-		//$language->load($this->config->get('config_admin_language'));
-		
-		//$this->registry->set('language', $language);
+		// If cookie has language stored
+		if (isset($this->request->cookie['language']) && isset(self::$languages[$this->request->cookie['language']])) {
+			$language_info = self::$languages[$this->request->cookie['language']];
+		}
+
+		if ($language_info) {
+			if ($language_info['extension']) {
+				$this->language->addPath('extension/' . $language_info['extension'], DIR_EXTENSION . $language_info['extension'] . '/admin/language/');
+			}
+
+			// Set the config language_id key
+			$this->config->set('config_language_id', $language_info['language_id']);
+			$this->config->set('config_language_admin', $language_info['code']);
+
+			$this->load->language('default');
+		}
+	}
+
+	/**
+	 * After
+	 *
+	 * Fill the language up with default values
+	 *
+	 * @param string       $route
+	 * @param string       $prefix
+	 * @param string       $code
+	 * @param array<mixed> $output
+	 *
+	 * @return void
+	 */
+	public function after(string &$route, string &$prefix, string &$code, array &$output): void {
+		if (!$code) {
+			$code = $this->config->get('config_language_admin');
+		}
+
+		// Use $this->language->load so it's not triggering infinite loops
+		$this->language->load($route, $prefix, $code);
+
+		if (isset(self::$languages[$code])) {
+			$language_info = self::$languages[$code];
+
+			$path = '';
+
+			if ($language_info['extension']) {
+				$extension = 'extension/' . $language_info['extension'];
+
+				if (oc_substr($route, 0, strlen($extension)) != $extension) {
+					$path = $extension . '/';
+				}
+			}
+
+			// Use $this->language->load so it's not triggering infinite loops
+			$this->language->load($path . $route, $prefix, $code);
+		}
 	}
 }

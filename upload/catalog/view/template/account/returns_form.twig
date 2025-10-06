@@ -1,0 +1,133 @@
+{{ header }}
+<div id="account-return" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <p>{{ text_description }}</p>
+      <form id="form-return" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <fieldset>
+          <legend>{{ text_order }}</legend>
+          <div class="row mb-3">
+            <label for="input-order-id" class="col-sm-2 col-form-label">{{ entry_order_id }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" required/>
+              <div id="error-order-id" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-date-ordered" class="col-sm-2 col-form-label">{{ entry_date_ordered }}</label>
+            <div class="col-sm-10 col-md-4">
+              <input type="date" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" id="input-date-ordered" class="form-control"/>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_customer }}</legend>
+          <div class="row mb-3">
+            <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required/>
+              <div id="error-firstname" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required/>
+              <div id="error-lastname" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
+              <div id="error-email" class="invalid-feedback"></div>
+            </div>
+          </div>
+          {% if config_telephone_display %}
+          <div class="row mb-3">
+            <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"{% if config_telephone_required %} required{% endif %}/>
+              <div id="error-telephone" class="invalid-feedback"></div>
+            </div>
+          </div>
+          {% endif %}
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_product }}</legend>
+          <div class="row mb-3">
+            <label for="input-product" class="col-sm-2 col-form-label">{{ entry_product }}</label>
+            <div class="col-sm-10">
+              <input type="hidden" name="product_id" value="{{ product_id }}"/>
+              <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" required/>
+              <div id="error-product" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-model" class="col-sm-2 col-form-label">{{ entry_model }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" required/>
+              <div id="error-model" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-quantity" class="col-sm-2 col-form-label">{{ entry_quantity }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="quantity" value="1" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label required">{{ entry_reason }}</label>
+            <div class="col-sm-10">
+              <div id="input-reason">
+                {% for return_reason in return_reasons %}
+                  <div class="form-check">
+                    <input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}" id="input-return-reason-{{ return_reason.return_reason_id }}" class="form-check-input"/> <label for="input-return-reason-{{ return_reason.return_reason_id }}" class="form-check-label">{{ return_reason.name }}</label>
+                  </div>
+                {% endfor %}
+              </div>
+              <div id="error-reason" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label required">{{ entry_opened }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-check-inline">
+                <input type="radio" name="opened" value="1" id="input-opened-yes" class="form-check-input" checked/>
+                <label for="input-opened-yes" class="form-check-label">{{ text_yes }}</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="opened" value="0" id="input-opened-no" class="form-check-input"/>
+                <label for="input-opened-no" class="form-check-label">{{ text_no }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_fault_detail }}</label>
+            <div class="col-sm-10">
+              <textarea name="comment" rows="5" placeholder="{{ entry_fault_detail }}" id="input-comment" class="form-control"></textarea>
+            </div>
+          </div>
+          {{ captcha }}
+        </fieldset>
+        <div class="row">
+          <div class="col-3"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+          <div class="col text-end">
+            {% if text_agree %}
+              <label for="input-agree" class="form-check-label">{{ text_agree }}</label>
+              <x-switch name="agree" value="1" input-id="input-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline align-top"></x-switch>
+            {% endif %}
+            <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
+          </div>
+        </div>
+      </form>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

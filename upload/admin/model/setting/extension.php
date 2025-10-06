@@ -1,19 +1,110 @@
 <?php
-namespace Opencart\Application\Model\Setting;
+namespace Opencart\Admin\Model\Setting;
+/**
+ * Class Extension
+ *
+ * Can be loaded using $this->load->model('setting/extension');
+ *
+ * @package Opencart\Admin\Model\Setting
+ */
 class Extension extends \Opencart\System\Engine\Model {
-	public function getExtensions() {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
+	/**
+	 * Get Extensions
+	 *
+	 * Get the record of the extension records in the database.
+	 *
+	 * @return array<int, array<string, mixed>> extension records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $results = $this->model_setting_extension->getExtensions();
+	 */
+	public function getExtensions(): array {
+		$query = $this->db->query("SELECT DISTINCT `extension` FROM `" . DB_PREFIX . "extension`");
 
 		return $query->rows;
 	}
 
-	public function getExtensionsByType($type) {
+	/**
+	 * Get Extensions By Type
+	 *
+	 * @param string $type
+	 *
+	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $results = $this->model_setting_extension->getExtensionsByType($type);
+	 */
+	public function getExtensionsByType(string $type): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY `code` ASC");
 
 		return $query->rows;
 	}
 
-	public function install($type, $extension, $code) {
+	/**
+	 * Get Extension By Code
+	 *
+	 * @param string $type
+	 * @param string $code
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $extension_info = $this->model_setting_extension->getExtensionByCode($type, $code);
+	 */
+	public function getExtensionByCode(string $type, string $code): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
+	/**
+	 * Get Total Extensions By Extension
+	 *
+	 * Get the total number of total extensions by extension records in the database.
+	 *
+	 * @param string $extension
+	 *
+	 * @return int total number of extension records that have extension ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $extension_total = $this->model_setting_extension->getTotalExtensionsByExtension($extension);
+	 */
+	public function getTotalExtensionsByExtension(string $extension): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension` WHERE `extension` = '" . $this->db->escape($extension) . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Install
+	 *
+	 * Create a new extension record in the database.
+	 *
+	 * @param string $type
+	 * @param string $extension
+	 * @param string $code
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $this->model_setting_extension->install($type, $extension, $code);
+	 */
+	public function install(string $type, string $extension, string $code): void {
 		$extensions = $this->getExtensionsByType($type);
 
 		$codes = array_column($extensions, 'code');
@@ -23,44 +114,190 @@ class Extension extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function uninstall($type, $code) {
+	/**
+	 * Uninstall
+	 *
+	 * Delete extension record in the database.
+	 *
+	 * @param string $type
+	 * @param string $code
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $this->model_setting_extension->uninstall($type, $code);
+	 */
+	public function uninstall(string $type, string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
+
+		// Setting
+		$this->load->model('setting/setting');
+
+		$this->model_setting_setting->deleteSettingsByCode($type . '_' . $code);
 	}
 
-	public function addInstall($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `image` = '" . $this->db->escape($data['image']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
-	
+	/**
+	 * Add Install
+	 *
+	 * Create a new extension install record in the database.
+	 *
+	 * @param array<string, mixed> $data array of data
+	 *
+	 * @return int returns the primary key of the new extension install record
+	 *
+	 * @example
+	 *
+	 * $extension_install_data = [
+	 *     'extension_id'          => 1,
+	 *     'extension_download_id' => 1,
+	 *     'name'                  => 'Extension Install Name',
+	 *     'description'           => 'Extension Install Description',
+	 *     'code'                  => 'Extension Install Code',
+	 *     'version'               => '1.00',
+	 *     'author'                => 'Author Name',
+	 *     'link'                  => '',
+	 *     'status'                => 0
+	 * ];
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $this->model_setting_extension->addInstall($extension_install_data);
+	 */
+	public function addInstall(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
+
 		return $this->db->getLastId();
 	}
 
-	public function deleteInstall($extension_install_id) {
+	/**
+	 * Delete Install
+	 *
+	 * Delete extension install record in the database.
+	 *
+	 * @param int $extension_install_id primary key of the extension install record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $this->model_setting_extension->deleteInstall($extension_install_id);
+	 */
+	public function deleteInstall(int $extension_install_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 
-	public function editStatus($extension_install_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
+	/**
+	 * Edit Status
+	 *
+	 * Edit extension install record in the database.
+	 *
+	 * Edit extension install status record in the database.
+	 *
+	 * @param int  $extension_install_id primary key of the extension install record
+	 * @param bool $status
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $this->model_setting_extension->editStatus($extension_install_id, $status);
+	 */
+	public function editStatus(int $extension_install_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (bool)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 
-	public function getInstall($extension_install_id) {
+	/**
+	 * Get Install
+	 *
+	 * Get the record of the extension install record in the database.
+	 *
+	 * @param int $extension_install_id primary key of the extension install record
+	 *
+	 * @return array<string, mixed> install record that has extension install ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
+	 */
+	public function getInstall(int $extension_install_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 
 		return $query->row;
 	}
 
-	public function getInstallByExtensionDownloadId($extension_download_id) {
+	/**
+	 * Get Install By Extension Download ID
+	 *
+	 * Get the record of the extension install by download record in the database.
+	 *
+	 * @param int $extension_download_id primary key of the extension download record
+	 *
+	 * @return array<string, mixed> install record that has extension download ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $extension_install_info = $this->model_setting_extension->getInstallByExtensionDownloadId($extension_download_id);
+	 */
+	public function getInstallByExtensionDownloadId(int $extension_download_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_download_id` = '" . (int)$extension_download_id . "'");
 
 		return $query->row;
 	}
 
-	public function getInstallByCode($code) {
+	/**
+	 * Get Install By Code
+	 *
+	 * @param string $code
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $install_info = $this->model_setting_extension->getInstallByCode($code);
+	 */
+	public function getInstallByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
 	}
 
-	public function getInstalls($data = []) {
+	/**
+	 * Get Installs
+	 *
+	 * Get the record of the extension install records in the database.
+	 *
+	 * @param array<string, mixed> $data array of filters
+	 *
+	 * @return array<int, array<string, mixed>> install records
+	 *
+	 * @example
+	 *
+	 * $filter_data = [
+	 *     'filter_extension_download_id' => 1,
+	 *     'sort'                         => 'name',
+	 *     'order'                        => 'DESC',
+	 *     'start'                        => 0,
+	 *     'limit'                        => 10
+	 * ];
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $results = $this->model_setting_extension->getInstalls($filter_data);
+	 */
+	public function getInstalls(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {
@@ -98,11 +335,34 @@ class Extension extends \Opencart\System\Engine\Model {
 		}
 
 		$query = $this->db->query($sql);
-	
+
 		return $query->rows;
 	}
 
-	public function getTotalInstalls($data = []) {
+	/**
+	 * Get Total Installs
+	 *
+	 * Get the total number of total extension install records in the database.
+	 *
+	 * @param array<string, mixed> $data array of filters
+	 *
+	 * @return int total number of install records
+	 *
+	 * @example
+	 *
+	 * $filter_data = [
+	 *     'filter_extension_download_id' => 1,
+	 *     'sort'                         => 'name',
+	 *     'order'                        => 'DESC',
+	 *     'start'                        => 0,
+	 *     'limit'                        => 10
+	 * ];
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
+	 */
+	public function getTotalInstalls(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {
@@ -111,32 +371,108 @@ class Extension extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function addPath($extension_install_id, $path) {
+	/**
+	 * Add Path
+	 *
+	 * Create a new extension path record in the database.
+	 *
+	 * @param int    $extension_install_id primary key of the extension install record
+	 * @param string $path
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $this->model_setting_extension->addPath($extension_install_id, $path);
+	 */
+	public function addPath(int $extension_install_id, string $path): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_path` SET `extension_install_id` = '" . (int)$extension_install_id . "', `path` = '" . $this->db->escape($path) . "'");
 	}
-		
-	public function deletePath($extension_path_id) {
+
+	/**
+	 * Delete Path
+	 *
+	 * Delete extension path record in the database.
+	 *
+	 * @param int $extension_path_id primary key of the extension path record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $this->model_setting_extension->deletePath($extension_path_id);
+	 */
+	public function deletePath(int $extension_path_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_path` WHERE `extension_path_id` = '" . (int)$extension_path_id . "'");
 	}
-	
-	public function getPathsByExtensionInstallId($extension_install_id) {
+
+	/**
+	 * Get Paths By Extension Install ID
+	 *
+	 * Get the record of the extension paths by install records in the database.
+	 *
+	 * @param int $extension_install_id primary key of the extension install record
+	 *
+	 * @return array<int, array<string, mixed>> path records that have extension install ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $results = $this->model_setting_extension->getPathsByExtensionInstallId($extension_install_id);
+	 */
+	public function getPathsByExtensionInstallId(int $extension_install_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `extension_install_id` = '" . (int)$extension_install_id . "' ORDER BY `extension_path_id` ASC");
 
 		return $query->rows;
 	}
 
-	public function getPaths($path) {
+	/**
+	 * Get Paths
+	 *
+	 * Get the record of the extension path records in the database.
+	 *
+	 * @param string $path
+	 *
+	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $paths = $this->model_setting_extension->getPaths($path);
+	 */
+	public function getPaths(string $path): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "' ORDER BY `path` ASC");
 
 		return $query->rows;
 	}
 
-	public function getTotalPaths($path) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
+	/**
+	 * Get Total Paths
+	 *
+	 * Get the total number of total extension path records in the database.
+	 *
+	 * @param string $path
+	 *
+	 * @return int
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $path_total = $this->model_setting_extension->getTotalPaths($path);
+	 */
+	public function getTotalPaths(string $path): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
 
-		return $query->rows;
+		return (int)$query->row['total'];
 	}
 }

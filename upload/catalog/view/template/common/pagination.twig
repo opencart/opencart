@@ -6,7 +6,7 @@
     <li class="page-item"><a href="{{ prev }}" class="page-link">&lt;</a></li>
   {% endif %}
   {% for link in links %}
-    {% if  link.page == page %}
+    {% if link.page == page %}
       <li class="page-item active"><span class="page-link">{{ link.page }}</span></li>
     {% else %}
       <li class="page-item"><a href="{{ link.href }}" class="page-link">{{ link.page }}</a></li>

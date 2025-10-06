@@ -1,76 +1,167 @@
 <?php
 namespace Opencart\System\Library\DB;
-final class PgSQL {
-	private $connection;
+/**
+ * Class PgSQL
+ *
+ * @package Opencart\System\Library\DB
+ */
+class PgSQL {
+	/**
+	 * @var mixed
+	 */
+	private $db;
 
-	public function __construct($hostname, $username, $password, $database, $port = '5432') {
-		$this->connection = @pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database);
+	/**
+	 * Constructor
+	 *
+	 * @param array<string, mixed> $option Database connection options array with keys:
+	 *                                     - 'hostname' (string, required): Database server hostname
+	 *                                     - 'username' (string, required): Database username
+	 *                                     - 'password' (string, required): Database password
+	 *                                     - 'database' (string, required): Database name
+	 *                                     - 'port' (string, optional): Database port (default: '5432')
+	 *
+	 * @throws \Exception If database connection fails
+	 *
+	 * @example
+	 * $pgsql = new PgSQL([
+	 *     'hostname' => 'localhost',
+	 *     'username' => 'postgres',
+	 *     'password' => 'password',
+	 *     'database' => 'opencart',
+	 *     'port'     => '5432'
+	 * ]);
+	 */
+	public function __construct(array $option = []) {
+		$required = [
+			'hostname',
+			'username',
+			'database'
+		];
 
-		if (!$this->connection) {
-			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
-		}
-
-		pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
-	}
-
-	public function query($sql) {
-		$resource = pg_query($this->connection, $sql);
-
-		if ($resource) {
-			if (is_resource($resource)) {
-				$i = 0;
-
-				$data = [];
-
-				while ($result = pg_fetch_assoc($resource)) {
-					$data[$i] = $result;
-
-					$i++;
-				}
-
-				pg_free_result($resource);
-
-				$query = new \stdClass();
-				$query->row = isset($data[0]) ? $data[0] : [];
-				$query->rows = $data;
-				$query->num_rows = $i;
-
-				unset($data);
-
-				return $query;
-			} else {
-				return true;
+		foreach ($required as $key) {
+			if (empty($option[$key])) {
+				throw new \Exception('Error: Database ' . $key . ' required!');
 			}
+		}
+
+		if (isset($option['port'])) {
+			$port = $option['port'];
 		} else {
-			throw new \Exception('Error: ' . pg_result_error($this->connection) . '<br />' . $sql);
+			$port = '5432';
+		}
+
+		try {
+			$pg = @pg_connect('host=' . $option['hostname'] . ' port=' . $port . ' user=' . $option['username'] . ' password=' . $option['password'] . ' dbname=' . $option['database'] . ' options=\'--client_encoding=UTF8\' ');
+		} catch (\Exception $e) {
+			throw new \Exception('Error: Could not connect to the database please make sure the database server, username and password is correct!');
+		}
+
+		if ($pg) {
+			$this->db = $pg;
+			pg_query($this->db, "SET CLIENT_ENCODING TO 'UTF8'");
+
+			// Sync PHP and DB time zones
+			pg_query($this->db, "SET TIMEZONE = '" . $this->escape(date('P')) . "'");
 		}
 	}
 
-	public function escape($value) {
-		return pg_escape_string($this->connection, $value);
-	}
+	/**
+	 * Query
+	 *
+	 * Execute SQL query and return result object
+	 *
+	 * @param string $sql SQL query to execute
+	 *
+	 * @return \stdClass Query result with row, rows, and num_rows properties
+	 *
+	 * @throws \Exception If query execution fails
+	 */
+	public function query(string $sql): \stdClass {
+		$resource = pg_query($this->db, $sql);
 
-	public function countAffected() {
-		return pg_affected_rows($this->connection);
-	}
-
-	public function isConnected() {
-		if (pg_connection_status($this->connection) == PGSQL_CONNECTION_OK) {
-			return true;
-		} else {
-			return false;
+		if ($resource === false) {
+			throw new \Exception('Error: ' . pg_last_error($this->db) . '<br/>' . $sql);
 		}
+
+		$data = [];
+
+		while ($result = pg_fetch_assoc($resource)) {
+			$data[] = $result;
+		}
+
+		pg_free_result($resource);
+
+		$query = new \stdClass();
+		$query->row = $data[0] ?? [];
+		$query->rows = $data;
+		$query->num_rows = count($data);
+
+		return $query;
 	}
 
-	public function getLastId() {
+	/**
+	 * Escape
+	 *
+	 * Escape string value for safe SQL usage
+	 *
+	 * @param string $value String value to escape
+	 *
+	 * @return string Escaped string value
+	 */
+	public function escape(string $value): string {
+		return pg_escape_string($this->db, $value);
+	}
+
+	/**
+	 * Count Affected
+	 *
+	 * Get number of rows affected by the last query
+	 *
+	 * @return int Number of affected rows
+	 */
+	public function countAffected(): int {
+		return pg_affected_rows($this->db);
+	}
+
+	/**
+	 * Get Last Id
+	 *
+	 * Get the last inserted sequence value
+	 *
+	 * @return int Last inserted ID
+	 *
+	 * @throws \Exception If sequence value cannot be retrieved
+	 */
+	public function getLastId(): int {
 		$query = $this->query("SELECT LASTVAL() AS `id`");
 
 		return $query->row['id'];
 	}
 
+	/**
+	 * Is Connected
+	 *
+	 * Check if database connection is active
+	 *
+	 * @return bool True if connected, false otherwise
+	 */
+	public function isConnected(): bool {
+		return pg_connection_status($this->db) == PGSQL_CONNECTION_OK;
+	}
+
+	/**
+	 * Destructor
+	 *
+	 * Closes the database connection when object is destroyed
+	 *
+	 * @return void
+	 */
 	public function __destruct() {
-		if ($this->isConnected()) {
-			pg_close($this->connection);
+		if ($this->db) {
+			pg_close($this->db);
+
+			$this->db = null;
 		}
 	}
 }

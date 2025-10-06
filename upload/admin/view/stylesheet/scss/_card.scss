@@ -3,31 +3,66 @@
 //
 
 .card {
+  // scss-docs-start card-css-vars
+  --#{$prefix}card-spacer-y: #{$card-spacer-y};
+  --#{$prefix}card-spacer-x: #{$card-spacer-x};
+  --#{$prefix}card-title-spacer-y: #{$card-title-spacer-y};
+  --#{$prefix}card-title-color: #{$card-title-color};
+  --#{$prefix}card-subtitle-color: #{$card-subtitle-color};
+  --#{$prefix}card-border-width: #{$card-border-width};
+  --#{$prefix}card-border-color: #{$card-border-color};
+  --#{$prefix}card-border-radius: #{$card-border-radius};
+  --#{$prefix}card-box-shadow: #{$card-box-shadow};
+  --#{$prefix}card-inner-border-radius: #{$card-inner-border-radius};
+  --#{$prefix}card-cap-padding-y: #{$card-cap-padding-y};
+  --#{$prefix}card-cap-padding-x: #{$card-cap-padding-x};
+  --#{$prefix}card-cap-bg: #{$card-cap-bg};
+  --#{$prefix}card-cap-color: #{$card-cap-color};
+  --#{$prefix}card-height: #{$card-height};
+  --#{$prefix}card-color: #{$card-color};
+  --#{$prefix}card-bg: #{$card-bg};
+  --#{$prefix}card-img-overlay-padding: #{$card-img-overlay-padding};
+  --#{$prefix}card-group-margin: #{$card-group-margin};
+  // scss-docs-end card-css-vars
+
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0; // See https://github.com/twbs/bootstrap/pull/22740#issuecomment-305868106
+  height: var(--#{$prefix}card-height);
+  color: var(--#{$prefix}body-color);
   word-wrap: break-word;
-  background-color: $card-bg;
+  background-color: var(--#{$prefix}card-bg);
   background-clip: border-box;
-  border: $card-border-width solid $card-border-color;
-  @include border-radius($card-border-radius);
+  border: var(--#{$prefix}card-border-width) solid var(--#{$prefix}card-border-color);
+  @include border-radius(var(--#{$prefix}card-border-radius));
+  @include box-shadow(var(--#{$prefix}card-box-shadow));
 
   > hr {
     margin-right: 0;
     margin-left: 0;
   }
 
-  > .list-group:first-child {
-    .list-group-item:first-child {
-      @include border-top-radius($card-border-radius);
+  > .list-group {
+    border-top: inherit;
+    border-bottom: inherit;
+
+    &:first-child {
+      border-top-width: 0;
+      @include border-top-radius(var(--#{$prefix}card-inner-border-radius));
+    }
+
+    &:last-child  {
+      border-bottom-width: 0;
+      @include border-bottom-radius(var(--#{$prefix}card-inner-border-radius));
     }
   }
 
-  > .list-group:last-child {
-    .list-group-item:last-child {
-      @include border-bottom-radius($card-border-radius);
-    }
+  // Due to specificity of the above selector (`.card > .list-group`), we must
+  // use a child selector here to prevent double borders.
+  > .card-header + .list-group,
+  > .list-group + .card-footer {
+    border-top: 0;
   }
 }
 
@@ -35,17 +70,19 @@
   // Enable `flex-grow: 1` for decks and groups so that card blocks take up
   // as much space as possible, ensuring footers are aligned to the bottom.
   flex: 1 1 auto;
-  padding: $card-spacer-x;
-  color: $card-color;
+  padding: var(--#{$prefix}card-spacer-y) var(--#{$prefix}card-spacer-x);
+  color: var(--#{$prefix}card-color);
 }
 
 .card-title {
-  margin-bottom: $card-spacer-y;
+  margin-bottom: var(--#{$prefix}card-title-spacer-y);
+  color: var(--#{$prefix}card-title-color);
 }
 
 .card-subtitle {
-  margin-top: -$card-spacer-y / 2;
+  margin-top: calc(-.5 * var(--#{$prefix}card-title-spacer-y)); // stylelint-disable-line function-disallowed-list
   margin-bottom: 0;
+  color: var(--#{$prefix}card-subtitle-color);
 }
 
 .card-text:last-child {
@@ -53,12 +90,12 @@
 }
 
 .card-link {
-  @include hover {
-    text-decoration: none;
+  &:hover {
+    text-decoration: if($link-hover-decoration == underline, none, null);
   }
 
   + .card-link {
-    margin-left: $card-spacer-x;
+    margin-left: var(--#{$prefix}card-spacer-x);
   }
 }
 
@@ -67,34 +104,25 @@
 //
 
 .card-header {
-  padding: $card-spacer-y $card-spacer-x;
+  padding: var(--#{$prefix}card-cap-padding-y) var(--#{$prefix}card-cap-padding-x);
   margin-bottom: 0; // Removes the default margin-bottom of <hN>
-  color: $card-cap-color;
-  background-color: $card-cap-bg;
-  border-bottom: $card-border-width solid $card-border-color;
-
-  /* OpenCart Start */
-  font-size: 0.9375rem;
-  /* OpenCart End */
+  color: var(--#{$prefix}card-cap-color);
+  background-color: var(--#{$prefix}card-cap-bg);
+  border-bottom: var(--#{$prefix}card-border-width) solid var(--#{$prefix}card-border-color);
 
   &:first-child {
-    @include border-radius($card-inner-border-radius $card-inner-border-radius 0 0);
-  }
-
-  + .list-group {
-    .list-group-item:first-child {
-      border-top: 0;
-    }
+    @include border-radius(var(--#{$prefix}card-inner-border-radius) var(--#{$prefix}card-inner-border-radius) 0 0);
   }
 }
 
 .card-footer {
-  padding: $card-spacer-y $card-spacer-x;
-  background-color: $card-cap-bg;
-  border-top: $card-border-width solid $card-border-color;
+  padding: var(--#{$prefix}card-cap-padding-y) var(--#{$prefix}card-cap-padding-x);
+  color: var(--#{$prefix}card-cap-color);
+  background-color: var(--#{$prefix}card-cap-bg);
+  border-top: var(--#{$prefix}card-border-width) solid var(--#{$prefix}card-border-color);
 
   &:last-child {
-    @include border-radius(0 0 $card-inner-border-radius $card-inner-border-radius);
+    @include border-radius(0 0 var(--#{$prefix}card-inner-border-radius) var(--#{$prefix}card-inner-border-radius));
   }
 }
 
@@ -104,15 +132,20 @@
 //
 
 .card-header-tabs {
-  margin-right: -$card-spacer-x / 2;
-  margin-bottom: -$card-spacer-y;
-  margin-left: -$card-spacer-x / 2;
+  margin-right: calc(-.5 * var(--#{$prefix}card-cap-padding-x)); // stylelint-disable-line function-disallowed-list
+  margin-bottom: calc(-1 * var(--#{$prefix}card-cap-padding-y)); // stylelint-disable-line function-disallowed-list
+  margin-left: calc(-.5 * var(--#{$prefix}card-cap-padding-x)); // stylelint-disable-line function-disallowed-list
   border-bottom: 0;
+
+  .nav-link.active {
+    background-color: var(--#{$prefix}card-bg);
+    border-bottom-color: var(--#{$prefix}card-bg);
+  }
 }
 
 .card-header-pills {
-  margin-right: -$card-spacer-x / 2;
-  margin-left: -$card-spacer-x / 2;
+  margin-right: calc(-.5 * var(--#{$prefix}card-cap-padding-x)); // stylelint-disable-line function-disallowed-list
+  margin-left: calc(-.5 * var(--#{$prefix}card-cap-padding-x)); // stylelint-disable-line function-disallowed-list
 }
 
 // Card image
@@ -122,51 +155,24 @@
   right: 0;
   bottom: 0;
   left: 0;
-  padding: $card-img-overlay-padding;
+  padding: var(--#{$prefix}card-img-overlay-padding);
+  @include border-radius(var(--#{$prefix}card-inner-border-radius));
 }
 
-.card-img {
-  width: 100%; // Required because we use flexbox and this inherently applies align-self: stretch
-  @include border-radius($card-inner-border-radius);
-}
-
-// Card image caps
-.card-img-top {
-  width: 100%; // Required because we use flexbox and this inherently applies align-self: stretch
-  @include border-top-radius($card-inner-border-radius);
-}
-
+.card-img,
+.card-img-top,
 .card-img-bottom {
   width: 100%; // Required because we use flexbox and this inherently applies align-self: stretch
-  @include border-bottom-radius($card-inner-border-radius);
 }
 
+.card-img,
+.card-img-top {
+  @include border-top-radius(var(--#{$prefix}card-inner-border-radius));
+}
 
-// Card deck
-
-.card-deck {
-  display: flex;
-  flex-direction: column;
-
-  .card {
-    margin-bottom: $card-deck-margin;
-  }
-
-  @include media-breakpoint-up(sm) {
-    flex-flow: row wrap;
-    margin-right: -$card-deck-margin;
-    margin-left: -$card-deck-margin;
-
-    .card {
-      display: flex;
-      // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
-      flex: 1 0 0%;
-      flex-direction: column;
-      margin-right: $card-deck-margin;
-      margin-bottom: 0; // Override the default
-      margin-left: $card-deck-margin;
-    }
-  }
+.card-img,
+.card-img-bottom {
+  @include border-bottom-radius(var(--#{$prefix}card-inner-border-radius));
 }
 
 
@@ -175,22 +181,19 @@
 //
 
 .card-group {
-  display: flex;
-  flex-direction: column;
-
   // The child selector allows nested `.card` within `.card-group`
   // to display properly.
   > .card {
-    margin-bottom: $card-group-margin;
+    margin-bottom: var(--#{$prefix}card-group-margin);
   }
 
   @include media-breakpoint-up(sm) {
+    display: flex;
     flex-flow: row wrap;
     // The child selector allows nested `.card` within `.card-group`
     // to display properly.
     > .card {
-      // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
-      flex: 1 0 0%;
+      flex: 1 0 0;
       margin-bottom: 0;
 
       + .card {
@@ -201,93 +204,35 @@
       // Handle rounded corners
       @if $enable-rounded {
         &:not(:last-child) {
-          @include border-right-radius(0);
+          @include border-end-radius(0);
 
-          .card-img-top,
-          .card-header {
-            // stylelint-disable-next-line property-blacklist
+          > .card-img-top,
+          > .card-header {
+            // stylelint-disable-next-line property-disallowed-list
             border-top-right-radius: 0;
           }
-          .card-img-bottom,
-          .card-footer {
-            // stylelint-disable-next-line property-blacklist
+          > .card-img-bottom,
+          > .card-footer {
+            // stylelint-disable-next-line property-disallowed-list
             border-bottom-right-radius: 0;
           }
         }
 
         &:not(:first-child) {
-          @include border-left-radius(0);
+          @include border-start-radius(0);
 
-          .card-img-top,
-          .card-header {
-            // stylelint-disable-next-line property-blacklist
+          > .card-img-top,
+          > .card-header {
+            // stylelint-disable-next-line property-disallowed-list
             border-top-left-radius: 0;
           }
-          .card-img-bottom,
-          .card-footer {
-            // stylelint-disable-next-line property-blacklist
+          > .card-img-bottom,
+          > .card-footer {
+            // stylelint-disable-next-line property-disallowed-list
             border-bottom-left-radius: 0;
           }
         }
       }
-    }
-  }
-}
-
-
-//
-// Columns
-//
-
-.card-columns {
-  .card {
-    margin-bottom: $card-columns-margin;
-  }
-
-  @include media-breakpoint-up(sm) {
-    column-count: $card-columns-count;
-    column-gap: $card-columns-gap;
-    orphans: 1;
-    widows: 1;
-
-    .card {
-      display: inline-block; // Don't let them vertically span multiple columns
-      width: 100%; // Don't let their width change
-    }
-  }
-}
-
-
-//
-// Accordion
-//
-
-.accordion {
-  > .card {
-    overflow: hidden;
-
-    &:not(:first-of-type) {
-      .card-header:first-child {
-        @include border-radius(0);
-      }
-
-      &:not(:last-of-type) {
-        border-bottom: 0;
-        @include border-radius(0);
-      }
-    }
-
-    &:first-of-type {
-      border-bottom: 0;
-      @include border-bottom-radius(0);
-    }
-
-    &:last-of-type {
-      @include border-top-radius(0);
-    }
-
-    .card-header {
-      margin-bottom: -$card-border-width;
     }
   }
 }

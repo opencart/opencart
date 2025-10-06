@@ -1,0 +1,61 @@
+<form id="form-startup" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th>{{ column_code }}</th>
+          <th>{{ column_action }}</th>
+          <th class="text-center">{{ column_status }}</th>
+          <th class="text-end">{{ column_sort_order }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if startups %}
+          {% for startup in startups %}
+            <tr{% if not startup.status %} class="table-disabled"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ startup.startup_id }}" class="form-check-input"/></td>
+              <td>{{ startup.code }}</td>
+              <td>{{ startup.action }}</td>
+              <td class="text-center">{% if startup.status %}
+                  <span class="badge bg-success">{{ text_enabled }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ text_disabled }}</span>
+                {% endif %}</td>
+              <td class="text-end">{{ startup.sort_order }}</td>
+              <td class="text-end text-nowrap">{% if startup.description %}
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-startup-{{ startup.startup_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
+              {% else %}
+                <button type="button" class="btn btn-info" disabled><i class="fa-solid fa-info-circle"></i></button>
+              {% endif %}</td>
+            </tr>
+        {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>
+{% for startup in startups %}
+  {% if startup.description %}
+    <div id="modal-startup-{{ startup.startup_id }}" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body"><textarea rows="5" class="form-control" readonly>{{ startup.description }}</textarea></div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}

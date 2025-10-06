@@ -1,0 +1,42 @@
+<form id="form-seo-regex" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th>{{ column_key }}</th>
+          <th>{{ column_match }}</th>
+          <th>{{ column_replace }}</th>
+          <th>{{ column_keyword }}</th>
+          <th>{{ column_value }}</th>
+          <th>{{ column_sort_order }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if seo_regexs %}
+          {% for seo_regex in seo_regexs %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ seo_regex.seo_regex_id }}" class="form-check-input"/></td>
+              <td>{{ seo_regex.key }}</td>
+              <td>{{ seo_regex.match }}</td>
+              <td>{{ seo_regex.replace }}</td>
+              <td>{{ seo_regex.keyword }}</td>
+              <td>{{ seo_regex.value }}</td>
+              <td>{{ seo_regex.sort_order }}</td>
+              <td class="text-end"><a href="{{ seo_regex.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="8">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

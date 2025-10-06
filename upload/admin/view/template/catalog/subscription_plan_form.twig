@@ -1,0 +1,116 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-subscription-plan" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-subscription-plan" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              {% for language in languages %}
+                <div class="input-group">
+                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                  <input type="text" name="subscription_plan_description[{{ language.language_id }}][name]" value="{{ subscription_plan_description[language.language_id] ? subscription_plan_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
+                  <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <fieldset>
+            <legend>{{ text_trial }}</legend>
+            <div class="row mb-3">
+              <label for="input-trial-duration" class="col-sm-2 col-form-label">{{ entry_trial_duration }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" id="input-trial-duration" class="form-control"/>
+                <div class="form-text">{{ help_trial_duration }}</div>
+                <div id="error-trial-duration" class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="input-trial-cycle" class="col-sm-2 col-form-label">{{ entry_trial_cycle }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="trial_cycle" value="{{ trial_cycle }}" placeholder="{{ entry_trial_cycle }}" id="input-trial-cycle" class="form-control"/>
+                <div class="form-text">{{ help_trial_cycle }}</div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="input-trial-frequency" class="col-sm-2 col-form-label">{{ entry_trial_frequency }}</label>
+              <div class="col-sm-10">
+                <select name="trial_frequency" id="input-trial-frequency" class="form-select">
+                  {% for frequency_option in frequencies %}
+                    <option value="{{ frequency_option.value }}"{% if trial_frequency == frequency_option.value %} selected{% endif %}>{{ frequency_option.text }}</option>
+                  {% endfor %}
+                </select>
+                <div class="form-text">{{ help_trial_frequency }}</div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_trial_status }}</label>
+              <div class="col-sm-10">
+                <div class="col-sm-10">
+                  <x-switch name="trial_status" value="1" checked="{{ trial_status }}" input-id="input-trial-status" input-class="form-switch form-switch-lg"></x-switch>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>{{ text_subscription }}</legend>
+            <div class="row mb-3">
+              <label for="input-duration" class="col-sm-2 col-form-label">{{ entry_duration }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" id="input-duration" class="form-control"/>
+                <div class="form-text">{{ help_duration }}</div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="input-cycle" class="col-sm-2 col-form-label">{{ entry_cycle }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" id="input-cycle" class="form-control"/>
+                <div class="form-text">{{ help_cycle }}</div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="input-frequency" class="col-sm-2 col-form-label">{{ entry_frequency }}</label>
+              <div class="col-sm-10">
+                <select name="frequency" id="input-frequency" class="form-select">
+                  {% for frequency_option in frequencies %}
+                    <option value="{{ frequency_option.value }}"{% if frequency == frequency_option.value %} selected{% endif %}>{{ frequency_option.text }}</option>
+                  {% endfor %}
+                </select>
+                <div class="form-text">{{ help_frequency }}</div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+              <div class="col-sm-10">
+                <x-switch name="status" value="1" checked="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+              <div class="col-sm-10">
+                <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              </div>
+            </div>
+          </fieldset>
+          <input type="hidden" name="subscription_plan_id" value="{{ subscription_plan_id }}" id="input-subscription-plan-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

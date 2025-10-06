@@ -1,28 +1,75 @@
 <?php
 /**
  * @package		OpenCart
+ *
  * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
-*/
+ *
+ * @see		https://www.opencart.com
+ */
 
 /**
-* Model class
-*/
+ * Model class
+ */
 namespace Opencart\System\Engine;
+/**
+ * Class Model
+ *
+ * @mixin \Opencart\System\Engine\Registry
+ */
 class Model {
-	protected $registry;
+	/**
+	 * @var \Opencart\System\Engine\Registry
+	 */
+	protected \Opencart\System\Engine\Registry $registry;
 
-	public function __construct($registry) {
+	/**
+	 * Constructor
+	 *
+	 * @param \Opencart\System\Engine\Registry $registry
+	 */
+	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
 	}
 
-	public function __get($key) {
+	/**
+	 * __get
+	 *
+	 * @param string $key
+	 *
+	 * @return object
+	 */
+	public function __get(string $key): object {
+		if (!$this->registry->has($key)) {
+			throw new \Exception('Error: Could not call registry key ' . $key . '!');
+		}
+
 		return $this->registry->get($key);
 	}
 
-	public function __set($key, $value) {
+	/**
+	 * __set
+	 *
+	 * @param string $key
+	 * @param object $value
+	 *
+	 * @return void
+	 */
+	public function __set(string $key, object $value): void {
 		$this->registry->set($key, $value);
+	}
+
+	/**
+	 * __isset
+	 *
+	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
+	public function __isset(string $key): bool {
+		return $this->registry->has($key);
 	}
 }

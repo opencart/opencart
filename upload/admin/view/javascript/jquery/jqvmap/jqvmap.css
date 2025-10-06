@@ -23,12 +23,11 @@
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	background: #000000;
-	padding: 3px;
 	color: white;
-	width: 10px;
-	height: 10px;
+	font: 11px/1 san-serif;
+	width: 12px;
+	height: 12px;
 	cursor: pointer;
-	line-height: 10px;
 	text-align: center;
 }
 .jqvmap-zoomin

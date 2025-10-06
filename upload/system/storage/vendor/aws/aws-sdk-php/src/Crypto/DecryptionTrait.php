@@ -81,14 +81,14 @@ trait DecryptionTrait
             $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
         );
 
-        $decryptionSteam = $this->getDecryptingStream(
+        $decryptionStream = $this->getDecryptingStream(
             $cipherText,
             $cek,
             $cipherOptions
         );
         unset($cek);
 
-        return $decryptionSteam;
+        return $decryptionStream;
     }
 
     private function getTagFromCiphertextStream(
@@ -143,7 +143,7 @@ trait DecryptionTrait
         $cek,
         $cipherOptions
     ) {
-        $cipherTextStream = Psr7\stream_for($cipherText);
+        $cipherTextStream = Psr7\Utils::streamFor($cipherText);
         switch ($cipherOptions['Cipher']) {
             case 'gcm':
                 $cipherOptions['Tag'] = $this->getTagFromCiphertextStream(
@@ -161,7 +161,7 @@ trait DecryptionTrait
                     $cipherOptions['Tag'],
                     $cipherOptions['Aad'] = isset($cipherOptions['Aad'])
                         ? $cipherOptions['Aad']
-                        : null,
+                        : '',
                     $cipherOptions['TagLength'] ?: null,
                     $cipherOptions['KeySize']
                 );

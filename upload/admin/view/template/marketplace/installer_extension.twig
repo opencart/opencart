@@ -2,32 +2,38 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-left">{% if sort == 'name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
-        <td class="text-left">{% if sort == 'version' %}<a href="{{ sort_version }}" class="{{ order|lower }}">{{ column_version }}</a>{% else %}<a href="{{ sort_version }}">{{ column_version }}</a>{% endif %}</td>
-        <td class="text-left">{% if sort == 'date_added' %}<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>{% else %}<a href="{{ sort_date_added }}">{{ column_date_added }}</a>{% endif %}</td>
-        <td class="text-right">{{ column_action }}</td>
+        <th>{{ column_name }}</th>
+        <th>{{ column_version }}</th>
+        <th class="text-center">{{ column_status }}</th>
+        <th>{{ column_date_added }}</th>
+        <th class="text-end" style="min-width: 105px;">{{ column_action }}</th>
       </tr>
     </thead>
     <tbody>
       {% if extensions %}
         {% for extension in extensions %}
-          <tr>
-            <td class="text-left">
+          <tr{% if not extension.status %} class="table-disabled"{% endif %}>
+            <td>
               {% if extension.link %}
                 <a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a>
               {% else %}
                 {{ extension.name }}
-              {% endif %}
-            </td>
-            <td class="text-left align-text-top">{{ extension.version }}</td>
-            <td class="text-left align-text-top">{{ extension.date_added }}</td>
-            <td class="text-right align-text-top">{% if not extension.status %}
-                <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
-                <a href="{{ extension.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
-              {% else %}
-                <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fas fa-minus-circle"></i></a>
-                <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" disabled><i class="far fa-trash-alt"></i></button>
               {% endif %}</td>
+            <td>{{ extension.version }}</td>
+            <td class="text-center">{% if extension.status %}
+                <span class="badge bg-success">{{ text_enabled }}</span>
+              {% else %}
+                <span class="badge bg-danger">{{ text_disabled }}</span>
+              {% endif %}</td>
+            <td>{{ extension.date_added }}</td>
+            <td class="text-end text-nowrap">{% if not extension.status %}
+                <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
+                <a href="{{ extension.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
+              {% else %}
+                <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fa-solid fa-minus-circle"></i></a>
+                <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" disabled><i class="fa-regular fa-trash-can"></i></button>
+              {% endif %}
+              <button type="button" data-bs-toggle="modal" data-bs-target="#extension-install-{{ extension.extension_install_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button></td>
           </tr>
         {% endfor %}
       {% else %}
@@ -39,6 +45,29 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
 </div>
+{% for extension in extensions %}
+  <div id="extension-install-{{ extension.extension_install_id }}" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">{{ entry_name }}</label> <input type="text" value="{{ extension.name }}" class="form-control" readonly/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_description }}</label> <textarea rows="5" class="form-control" readonly>{{ extension.description }}</textarea>
+          </div>
+          <div>
+            <label class="form-label">{{ entry_code }}</label> <input type="text" value="{{ extension.code }}" class="form-control" readonly/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}

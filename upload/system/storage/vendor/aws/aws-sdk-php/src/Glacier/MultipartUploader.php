@@ -163,8 +163,8 @@ class MultipartUploader extends AbstractUploader
         // calculates the linear and tree hashes as the data is read.
         if ($seekable) {
             // Case 1: Stream is seekable, can make stream from new handle.
-            $body = Psr7\try_fopen($this->source->getMetadata('uri'), 'r');
-            $body = $this->limitPartStream(Psr7\stream_for($body));
+            $body = Psr7\Utils::tryFopen($this->source->getMetadata('uri'), 'r');
+            $body = $this->limitPartStream(Psr7\Utils::streamFor($body));
             // Create another stream decorated with hashing streams and read
             // through it, so we can get the hash values for the part.
             $decoratedBody = $this->decorateWithHashes($body, $data);
@@ -175,8 +175,8 @@ class MultipartUploader extends AbstractUploader
             // Case 2: Stream is not seekable, must store part in temp stream.
             $source = $this->limitPartStream($this->source);
             $source = $this->decorateWithHashes($source, $data);
-            $body = Psr7\stream_for();
-            Psr7\copy_to_stream($source, $body);
+            $body = Psr7\Utils::streamFor();
+            Psr7\Utils::copyToStream($source, $body);
         }
 
         // Do not create a part if the body size is zero.

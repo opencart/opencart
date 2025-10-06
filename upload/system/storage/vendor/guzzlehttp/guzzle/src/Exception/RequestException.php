@@ -2,10 +2,11 @@
 
 namespace GuzzleHttp\Exception;
 
+use GuzzleHttp\BodySummarizer;
+use GuzzleHttp\BodySummarizerInterface;
 use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
 
 /**
  * HTTP Request exception
@@ -30,8 +31,8 @@ class RequestException extends TransferException implements RequestExceptionInte
     public function __construct(
         string $message,
         RequestInterface $request,
-        ResponseInterface $response = null,
-        \Throwable $previous = null,
+        ?ResponseInterface $response = null,
+        ?\Throwable $previous = null,
         array $handlerContext = []
     ) {
         // Set the code of the exception if the response is set and not future.
@@ -47,24 +48,24 @@ class RequestException extends TransferException implements RequestExceptionInte
      */
     public static function wrapException(RequestInterface $request, \Throwable $e): RequestException
     {
-        return $e instanceof RequestException
-            ? $e
-            : new RequestException($e->getMessage(), $request, null, $e);
+        return $e instanceof RequestException ? $e : new RequestException($e->getMessage(), $request, null, $e);
     }
 
     /**
      * Factory method to create a new exception with a normalized error message
      *
-     * @param RequestInterface  $request  Request
-     * @param ResponseInterface $response Response received
-     * @param \Throwable        $previous Previous exception
-     * @param array             $ctx      Optional handler context.
+     * @param RequestInterface             $request        Request sent
+     * @param ResponseInterface            $response       Response received
+     * @param \Throwable|null              $previous       Previous exception
+     * @param array                        $handlerContext Optional handler context
+     * @param BodySummarizerInterface|null $bodySummarizer Optional body summarizer
      */
     public static function create(
         RequestInterface $request,
-        ResponseInterface $response = null,
-        \Throwable $previous = null,
-        array $ctx = []
+        ?ResponseInterface $response = null,
+        ?\Throwable $previous = null,
+        array $handlerContext = [],
+        ?BodySummarizerInterface $bodySummarizer = null
     ): self {
         if (!$response) {
             return new self(
@@ -72,7 +73,7 @@ class RequestException extends TransferException implements RequestExceptionInte
                 $request,
                 null,
                 $previous,
-                $ctx
+                $handlerContext
             );
         }
 
@@ -88,8 +89,7 @@ class RequestException extends TransferException implements RequestExceptionInte
             $className = __CLASS__;
         }
 
-        $uri = $request->getUri();
-        $uri = static::obfuscateUri($uri);
+        $uri = \GuzzleHttp\Psr7\Utils::redactUserInfo($request->getUri());
 
         // Client Error: `GET /` resulted in a `404 Not Found` response:
         // <html> ... (truncated)
@@ -97,32 +97,18 @@ class RequestException extends TransferException implements RequestExceptionInte
             '%s: `%s %s` resulted in a `%s %s` response',
             $label,
             $request->getMethod(),
-            $uri,
+            $uri->__toString(),
             $response->getStatusCode(),
             $response->getReasonPhrase()
         );
 
-        $summary = \GuzzleHttp\Psr7\get_message_body_summary($response);
+        $summary = ($bodySummarizer ?? new BodySummarizer())->summarize($response);
 
         if ($summary !== null) {
             $message .= ":\n{$summary}\n";
         }
 
-        return new $className($message, $request, $response, $previous, $ctx);
-    }
-
-    /**
-     * Obfuscates URI if there is a username and a password present
-     */
-    private static function obfuscateUri(UriInterface $uri): UriInterface
-    {
-        $userInfo = $uri->getUserInfo();
-
-        if (false !== ($pos = \strpos($userInfo, ':'))) {
-            return $uri->withUserInfo(\substr($userInfo, 0, $pos), '***');
-        }
-
-        return $uri;
+        return new $className($message, $request, $response, $previous, $handlerContext);
     }
 
     /**

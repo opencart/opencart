@@ -5,30 +5,54 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Graham Campbell",
+            "email": "hello@gjcampbell.co.uk",
+            "homepage": "https://github.com/GrahamCampbell"
+        },
+        {
             "name": "Michael Dowling",
             "email": "mtdowling@gmail.com",
             "homepage": "https://github.com/mtdowling"
+        },
+        {
+            "name": "Tobias Nyholm",
+            "email": "tobias.nyholm@gmail.com",
+            "homepage": "https://github.com/Nyholm"
+        },
+        {
+            "name": "Tobias Schultze",
+            "email": "webmaster@tubo-world.de",
+            "homepage": "https://github.com/Tobion"
         }
     ],
     "require": {
-        "php": ">=5.5.0"
+        "php": "^7.2.5 || ^8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.0"
+        "bamarni/composer-bin-plugin": "^1.8.2",
+        "phpunit/phpunit": "^8.5.39 || ^9.6.20"
     },
     "autoload": {
         "psr-4": {
             "GuzzleHttp\\Promise\\": "src/"
-        },
-        "files": ["src/functions_include.php"]
+        }
     },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-ci": "vendor/bin/phpunit --coverage-text"
+    "autoload-dev": {
+        "psr-4": {
+            "GuzzleHttp\\Promise\\Tests\\": "tests/"
+        }
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "1.4-dev"
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        },
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }

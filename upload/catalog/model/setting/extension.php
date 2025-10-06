@@ -1,20 +1,76 @@
 <?php
-namespace Opencart\Application\Model\Setting;
+namespace Opencart\Catalog\Model\Setting;
+/**
+ * Class Extension
+ *
+ * Can be called using $this->load->model('setting/extension');
+ *
+ * @package Opencart\Catalog\Model\Setting
+ */
 class Extension extends \Opencart\System\Engine\Model {
-	public function getExtensions() {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
+	/**
+	 * Get Extensions
+	 *
+	 * Get the record of the extension records in the database.
+	 *
+	 * @return array<int, array<string, mixed>> extension records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $extensions = $this->model_setting_extension->getExtensions();
+	 */
+	public function getExtensions(): array {
+		$query = $this->db->query("SELECT DISTINCT `extension` FROM `" . DB_PREFIX . "extension`");
 
 		return $query->rows;
 	}
 
-	public function getExtensionsByType($type) {
+	/**
+	 * Get Extensions By Type
+	 *
+	 * @param string $type
+	 *
+	 * @return array<int, array<string, mixed>>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $extensions = $this->model_setting_extension->getExtensionsByType($type);
+	 */
+	public function getExtensionsByType(string $type): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "'");
 
 		return $query->rows;
 	}
 
-	public function getExtensionByCode($code) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($code) . "'");
+	/**
+	 * Get Extension By Code
+	 *
+	 * @param string $type
+	 * @param string $code
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/extension');
+	 *
+	 * $extension_info = $this->model_setting_extension->getExtensionByCode($type, $code);
+	 */
+	public function getExtensionByCode(string $type, string $code): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
+	/*
+	 * Get Installs
+	 */
+	public function getInstalls(): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install`");
 
 		return $query->rows;
 	}

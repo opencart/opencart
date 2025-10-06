@@ -1,125 +1,88 @@
 <?php
-namespace Opencart\Application\Controller\Catalog;
+namespace Opencart\Admin\Controller\Catalog;
+/**
+ * Class Option
+ *
+ * Can be loaded using $this->load->controller('catalog/option');
+ *
+ * @package Opencart\Admin\Controller\Catalog
+ */
 class Option extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('catalog/option');
+		$url = '';
 
-		$this->getList();
-	}
-
-	public function add() {
-		$this->load->language('catalog/option');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/option');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_option->addOption($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getForm();
-	}
-
-	public function edit() {
-		$this->load->language('catalog/option');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/option');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_option->editOption($this->request->get['option_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getForm();
-	}
-
-	public function delete() {
-		$this->load->language('catalog/option');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/option');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $option_id) {
-				$this->model_catalog_option->deleteOption($option_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
-	}
-
-	protected function getList() {
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('catalog/option.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/option.delete', 'user_token=' . $this->session->data['user_token']);
+
+		$data['list'] = $this->load->controller('catalog/option.getList');
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('catalog/option', $data));
+	}
+
+	/**
+	 * List
+	 *
+	 * @return void
+	 */
+	public function list(): void {
+		$this->load->language('catalog/option');
+
+		$this->response->setOutput($this->load->controller('catalog/option.getList'));
+	}
+
+	/**
+	 * Get List
+	 *
+	 * @return string
+	 */
+	public function getList(): string {
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'od.name';
 		}
 
 		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
+			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
@@ -144,61 +107,24 @@ class Option extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
+		$data['action'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['add'] = $this->url->link('catalog/option|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/option|delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
+		// Options
 		$data['options'] = [];
 
 		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$option_total = $this->model_catalog_option->getTotalOptions();
+		$this->load->model('catalog/option');
 
 		$results = $this->model_catalog_option->getOptions($filter_data);
 
 		foreach ($results as $result) {
-			$data['options'][] = [
-				'option_id'  => $result['option_id'],
-				'name'       => $result['name'],
-				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('catalog/option|edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)
-			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
+			$data['options'][] = ['edit' => $this->url->link('catalog/option.form', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)] + $result;
 		}
 
 		$url = '';
@@ -209,12 +135,9 @@ class Option extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['sort_name'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url);
+		// Sorts
+		$data['sort_name'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url);
 
 		$url = '';
 
@@ -226,45 +149,38 @@ class Option extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Options
+		$option_total = $this->model_catalog_option->getTotalOptions();
+
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $option_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'limit' => $this->config->get('config_pagination_admin'),
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
+			}
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($option_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($option_total - $this->config->get('config_pagination'))) ? $option_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $option_total, ceil($option_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($option_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($option_total - $this->config->get('config_pagination_admin'))) ? $option_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $option_total, ceil($option_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('catalog/option_list', $data));
+		return $this->load->view('catalog/option_list', $data);
 	}
 
-	protected function getForm() {
+	/**
+	 * Form
+	 *
+	 * @return void
+	 */
+	public function form(): void {
+		$this->load->language('catalog/option');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = [];
-		}
-
-		if (isset($this->error['option_value'])) {
-			$data['error_option_value'] = $this->error['option_value'];
-		} else {
-			$data['error_option_value'] = [];
-		}
 
 		$url = '';
 
@@ -292,62 +208,64 @@ class Option extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['option_id'])) {
-			$data['action'] = $this->url->link('catalog/option|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('catalog/option.save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		// Option
+		if (isset($this->request->get['option_id'])) {
+			$this->load->model('catalog/option');
+
+			$option_info = $this->model_catalog_option->getOption((int)$this->request->get['option_id']);
+		}
+
+		if (!empty($option_info)) {
+			$data['option_id'] = $option_info['option_id'];
 		} else {
-			$data['action'] = $this->url->link('catalog/option|edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id'] . $url);
+			$data['option_id'] = 0;
 		}
 
-		$data['cancel'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['option_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
-		}
-
-		$data['user_token'] = $this->session->data['user_token'];
-
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['option_description'])) {
-			$data['option_description'] = $this->request->post['option_description'];
-		} elseif (!empty($option_info)) {
-			$data['option_description'] = $this->model_catalog_option->getDescriptions($this->request->get['option_id']);
+		if (!empty($option_info)) {
+			$data['option_description'] = $this->model_catalog_option->getDescriptions($option_info['option_id']);
 		} else {
 			$data['option_description'] = [];
 		}
 
-		if (isset($this->request->post['type'])) {
-			$data['type'] = $this->request->post['type'];
-		} elseif (!empty($option_info)) {
+		if (!empty($option_info)) {
 			$data['type'] = $option_info['type'];
 		} else {
 			$data['type'] = '';
 		}
 
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($option_info)) {
+		if (!empty($option_info)) {
+			$data['validation'] = $option_info['validation'];
+		} else {
+			$data['validation'] = '';
+		}
+
+		if (!empty($option_info)) {
 			$data['sort_order'] = $option_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
 		}
 
-		if (isset($this->request->post['option_value'])) {
-			$option_values = $this->request->post['option_value'];
-		} elseif (!empty($option_info)) {
-			$option_values = $this->model_catalog_option->getValueDescriptions($this->request->get['option_id']);
+		if (!empty($option_info)) {
+			$option_values = $this->model_catalog_option->getValueDescriptions($option_info['option_id']);
 		} else {
 			$option_values = [];
 		}
 
+		// Image
 		$this->load->model('tool/image');
 
 		$data['option_values'] = [];
 
 		foreach ($option_values as $option_value) {
-			if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
+			if ($option_value['image'] && is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image = $option_value['image'];
 				$thumb = $option_value['image'];
 			} else {
@@ -359,12 +277,14 @@ class Option extends \Opencart\System\Engine\Controller {
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
 				'image'                    => $image,
-				'thumb'                    => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
+				'thumb'                    => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
 				'sort_order'               => $option_value['sort_order']
 			];
 		}
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -373,92 +293,162 @@ class Option extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/option_form', $data));
 	}
 
-	protected function validateForm() {
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
+		$this->load->language('catalog/option');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'catalog/option')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['option_description'] as $language_id => $value) {
-			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 128)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
+		$required = [
+			'option_id'          => 0,
+			'type'               => '',
+			'sort_order'         => 0,
+			'option_description' => [],
+			'option_value'       => []
+		];
+
+		$post_info = $this->request->post + $required;
+
+		foreach ($post_info['option_description'] as $language_id => $value) {
+			if (!oc_validate_length($value['name'], 1, 128)) {
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
-		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox') && !isset($this->request->post['option_value'])) {
-			$this->error['warning'] = $this->language->get('error_type');
+		if (($post_info['type'] == 'select' || $post_info['type'] == 'radio' || $post_info['type'] == 'checkbox') && !isset($post_info['option_value'])) {
+			$json['error']['warning'] = $this->language->get('error_type');
 		}
 
-		if (isset($this->request->post['option_value'])) {
-			if (isset($this->request->get['option_id'])) {
+		if (isset($post_info['option_value'])) {
+			if (isset($post_info['option_id'])) {
+				// Product
 				$this->load->model('catalog/product');
 
 				$option_value_data = [];
 
-				foreach ($this->request->post['option_value'] as $option_value) {
+				foreach ($post_info['option_value'] as $option_value) {
 					if ($option_value['option_value_id']) {
 						$option_value_data[] = $option_value['option_value_id'];
 					}
 				}
 
-				$product_option_values = $this->model_catalog_product->getOptionValuesByOptionId($this->request->get['option_id']);
+				$product_option_values = $this->model_catalog_product->getOptionValuesByOptionId($post_info['option_id']);
 
 				foreach ($product_option_values as $product_option_value) {
 					if (!in_array($product_option_value['option_value_id'], $option_value_data)) {
-						$this->error['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalProductsByOptionValueId($product_option_value['option_value_id']));
+						$json['error']['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalOptionValuesByOptionValueId($product_option_value['option_value_id']));
 					}
 				}
 			}
 		}
 
-		if (isset($this->request->post['option_value'])) {
-			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
+		if (isset($post_info['option_value'])) {
+			foreach ($post_info['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
-					if ((utf8_strlen(trim($option_value_description['name'])) < 1) || (utf8_strlen($option_value_description['name']) > 128)) {
-						$this->error['option_value'][$option_value_id][$language_id] = $this->language->get('error_option_value');
+					if (!oc_validate_length($option_value_description['name'], 1, 128)) {
+						$json['error']['option_value_' . $option_value_id . '_' . $language_id] = $this->language->get('error_option_value');
 					}
 				}
 			}
 		}
 
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
+			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			// Option
+			$this->load->model('catalog/option');
+
+			if (!$post_info['option_id']) {
+				$json['option_id'] = $this->model_catalog_option->addOption($post_info);
+			} else {
+				$this->model_catalog_option->editOption($post_info['option_id'], $post_info);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'catalog/option')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+	/**
+	 * Delete
+	 *
+	 * @return void
+	 */
+	public function delete(): void {
+		$this->load->language('catalog/option');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = (array)$this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
+		if (!$this->user->hasPermission('modify', 'catalog/option')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Product
 		$this->load->model('catalog/product');
 
-		foreach ($this->request->post['selected'] as $option_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByOptionId($option_id);
+		// Total Options
+		foreach ($selected as $option_id) {
+			$product_total = $this->model_catalog_product->getTotalOptionsByOptionId($option_id);
 
 			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			// Option
+			$this->load->model('catalog/option');
+
+			foreach ($selected as $option_id) {
+				$this->model_catalog_option->deleteOption($option_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	public function autocomplete() {
+	/**
+	 * Autocomplete
+	 *
+	 * @return void
+	 */
+	public function autocomplete(): void {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->language('catalog/option');
 
+			// Option
 			$this->load->model('catalog/option');
 
+			// Image
 			$this->load->model('tool/image');
 
 			$filter_data = [
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
-				'limit'       => 5
+				'limit'       => $this->config->get('config_autocomplete_limit')
 			];
 
 			$options = $this->model_catalog_option->getOptions($filter_data);
@@ -470,16 +460,16 @@ class Option extends \Opencart\System\Engine\Controller {
 					$option_values = $this->model_catalog_option->getValues($option['option_id']);
 
 					foreach ($option_values as $option_value) {
-						if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
-							$image = $this->model_tool_image->resize(html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'), 50, 50);
+						if ($option_value['image'] && is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
+							$image = $option_value['image'];
 						} else {
-							$image = $this->model_tool_image->resize('no_image.png', 50, 50);
+							$image = 'no_image.png';
 						}
 
 						$option_value_data[] = [
 							'option_value_id' => $option_value['option_value_id'],
 							'name'            => strip_tags(html_entity_decode($option_value['name'], ENT_QUOTES, 'UTF-8')),
-							'image'           => $image
+							'image'           => $this->model_tool_image->resize($image, 50, 50)
 						];
 					}
 

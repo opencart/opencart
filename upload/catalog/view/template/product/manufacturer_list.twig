@@ -28,9 +28,7 @@
         {% endfor %}
       {% else %}
         <p>{{ text_no_results }}</p>
-        <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-        </div>
+        <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       {% endif %}
       {{ content_bottom }}</div>
     {{ column_right }}</div>

@@ -2,20 +2,20 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <td class="text-left">{{ column_date_added }}</td>
-        <td class="text-left">{{ column_comment }}</td>
-        <td class="text-left">{{ column_status }}</td>
-        <td class="text-left">{{ column_notify }}</td>
+        <th>{{ column_date_added }}</th>
+        <th>{{ column_comment }}</th>
+        <th>{{ column_status }}</th>
+        <th>{{ column_notify }}</th>
       </tr>
     </thead>
     <tbody>
       {% if histories %}
         {% for history in histories %}
           <tr>
-            <td class="text-left">{{ history.date_added }}</td>
-            <td class="text-left">{{ history.comment }}</td>
-            <td class="text-left">{{ history.status }}</td>
-            <td class="text-left">{{ history.notify }}</td>
+            <td>{{ history.date_added }}</td>
+            <td>{{ history.comment }}</td>
+            <td>{{ history.order_status }}</td>
+            <td>{{ history.notify }}</td>
           </tr>
         {% endfor %}
       {% else %}
@@ -27,6 +27,6 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

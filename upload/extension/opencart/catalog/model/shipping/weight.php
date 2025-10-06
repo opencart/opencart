@@ -1,20 +1,37 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Shipping;
+namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
+/**
+ * Class Weight
+ *
+ * Can be called from $this->load->model('extension/opencart/shipping/weight');
+ *
+ * @package Opencart\Catalog\Model\Extension\Opencart\Shipping
+ */
 class Weight extends \Opencart\System\Engine\Model {
-	public function getQuote($address) {
+	/**
+	 * Get Quote
+	 *
+	 * @param array<string, mixed> $address array of data
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getQuote(array $address): array {
 		$this->load->language('extension/opencart/shipping/weight');
 
 		$quote_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "geo_zone` ORDER BY `name`");
+		// Geo Zone
+		$this->load->model('localisation/geo_zone');
+
+		$results = $this->model_localisation_geo_zone->getGeoZones();
 
 		$weight = $this->cart->getWeight();
 
-		foreach ($query->rows as $result) {
+		foreach ($results as $result) {
 			if ($this->config->get('shipping_weight_' . $result['geo_zone_id'] . '_status')) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$result['geo_zone_id'] . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+				$results = $this->model_localisation_geo_zone->getGeoZone($result['geo_zone_id'], $address['country_id'], $address['zone_id']);
 
-				if ($query->num_rows) {
+				if ($results) {
 					$status = true;
 				} else {
 					$status = false;
@@ -35,7 +52,6 @@ class Weight extends \Opencart\System\Engine\Model {
 						if (isset($data[1])) {
 							$cost = $data[1];
 						}
-
 						break;
 					}
 				}
@@ -43,10 +59,10 @@ class Weight extends \Opencart\System\Engine\Model {
 				if ((string)$cost != '') {
 					$quote_data['weight_' . $result['geo_zone_id']] = [
 						'code'         => 'weight.weight_' . $result['geo_zone_id'],
-						'title'        => $result['name'] . '  (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')',
+						'name'         => $result['name'] . ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')',
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('shipping_weight_tax_class_id'),
-						'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('shipping_weight_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
+						'text'         => $this->tax->calculate((float)$cost, $this->config->get('shipping_weight_tax_class_id'), $this->config->get('config_tax'))
 					];
 				}
 			}
@@ -57,7 +73,7 @@ class Weight extends \Opencart\System\Engine\Model {
 		if ($quote_data) {
 			$method_data = [
 				'code'       => 'weight',
-				'title'      => $this->language->get('text_title'),
+				'name'       => $this->language->get('heading_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_weight_sort_order'),
 				'error'      => false

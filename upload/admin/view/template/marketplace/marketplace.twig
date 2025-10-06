@@ -1,0 +1,142 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        {% if signature %}
+          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
+        {% else %}
+          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i></button>
+        {% endif %}
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa-solid fa-triangle-exclamation"></i> {{ error_warning }}</div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-puzzle-piece"></i> {{ text_list }}</div>
+      <div class="card-body">
+        <form id="form-filter">
+          <div class="card bg-light">
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" id="input-search" class="form-control"/>
+                <select name="filter_category" id="input-category" class="form-select">
+                  {% for category in categories %}
+                    <option value="{{ category.value }}"{% if category.value == filter_category %} selected{% endif %}>{{ category.text }}</option>
+                  {% endfor %}
+                </select>
+                <button type="submit" id="button-filter" data-bs-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary"><i class="fa-solid fa-filter"></i></button>
+              </div>
+              <input type="hidden" name="filter_rating" value="{{ filter_rating }}"/>
+              <input type="hidden" name="filter_partner" value="{{ filter_partner }}"/>
+            </div>
+          </div>
+          <br/>
+          <div class="row mb-4">
+            <div class="col-sm-auto me-sm-auto mb-2 mb-lg-0">
+              <div id="filter-license" class="btn-group">
+                {% set license_row = 0 %}
+                {% for license in licenses %}
+                  <input type="radio" name="filter_license" value="{{ license.value }}" id="input-license-{{ license_row }}" class="btn-check"{% if license.value == filter_license %} checked{% endif %}>
+                  <label class="btn btn-outline-secondary" for="input-license-{{ license_row }}">{{ license.text }}</label>
+                  {% set license_row = license_row + 1 %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-5 col-sm-auto">
+              <div class="input-group float-end">
+                <div class="input-group-text"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+                <select name="sort" id="input-sort" class="form-select">
+                  {% for sorts in sorts %}
+                    <option value="{{ sorts.value }}"{% if sorts.value == sort %} selected{% endif %}>{{ sorts.text }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div id="list">{{ list }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#list').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#list').load(this.href);
+});
+
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
+
+    let url = $(this).serialize();
+
+    console.log(url);
+
+    window.history.pushState({}, null, 'index.php?route=marketplace/marketplace&user_token={{ user_token }}&' + url);
+
+    $.ajax({
+        url: 'index.php?route=marketplace/marketplace.list&user_token={{ user_token }}&' + url,
+        dataType: 'html',
+        beforeSend: function() {
+            $('#button-filter').button('loading');
+            $('#form-filter .form-control, #form-filter .form-select').prop('disabled', true);
+            $('#filter-license .btn').addClass('disabled');
+
+        },
+        complete: function() {
+            $('#button-filter').button('reset');
+            $('#form-filter .form-control, #form-filter .form-select').prop('disabled', false);
+            $('#filter-license .btn').removeClass('disabled');
+        },
+        success: function(html) {
+            $('#list').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#filter-license input').on('change', function(e) {
+    $('#form-filter').trigger('submit');
+});
+
+$('#input-sort').on('change', function(e) {
+    $('#form-filter').trigger('submit');
+});
+
+$('#button-api').on('click', function(e) {
+    $('#modal-api').remove();
+
+    $.ajax({
+        url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
+        dataType: 'html',
+        beforeSend: function() {
+            $('#button-api').button('loading');
+        },
+        complete: function() {
+            $('#button-api').button('reset');
+        },
+        success: function(html) {
+            $('body').append(html);
+
+            $('#modal-api').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
+{{ footer }}

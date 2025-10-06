@@ -305,7 +305,7 @@ class TreeCompiler
                 ->write('%s = [];', $merged)
                 ->write('foreach ($value as %s) {', $val)
                     ->indent()
-                    ->write('if (is_array(%s) && isset(%s[0])) {', $val, $val)
+                    ->write('if (is_array(%s) && array_key_exists(0, %s)) {', $val, $val)
                         ->indent()
                         ->write('%s = array_merge(%s, %s);', $merged, $merged, $val)
                         ->outdent()

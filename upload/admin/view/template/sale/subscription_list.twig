@@ -1,0 +1,40 @@
+<form id="form-subscription" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');" class="form-check-input"/></th>
+          <th class="text-end"><a href="{{ sort_subscription }}"{% if sort == 's.subscription_id' %} class="{{ order|lower }}"{% endif %}>{{ column_subscription_id }}</a></th>
+          <th class="text-end"><a href="{{ sort_order }}"{% if sort == 's.order_id' %} class="{{ order|lower }}"{% endif %}>{{ column_order_id }}</a></th>
+          <th><a href="{{ sort_customer }}"{% if sort == 'customer' %} class="{{ order|lower }}"{% endif %}>{{ column_customer }}</a></th>
+          <th><a href="{{ sort_status }}"{% if sort == 's.status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
+          <th class="d-none d-lg-table-cell"><a href="{{ sort_date_added }}"{% if sort == 's.date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if subscriptions %}
+          {% for subscription in subscriptions %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ subscription.subscription_id }}" class="form-check-input"/></td>
+              <td class="text-end">{{ subscription.subscription_id }}</td>
+              <td class="text-end">{% if subscription.order_id %}<a href="{{ subscription.order }}" target="_blank">{{ subscription.order_id }}</a>{% endif %}</td>
+              <td>{{ subscription.customer }}</td>
+              <td>{{ subscription.subscription_status }}</td>
+              <td class="d-none d-lg-table-cell">{{ subscription.date_added }}</td>
+              <td class="text-end"><a href="{{ subscription.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

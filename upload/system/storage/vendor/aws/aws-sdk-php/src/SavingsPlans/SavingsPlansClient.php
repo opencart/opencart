@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS Savings Plans** service.
  * @method \Aws\Result createSavingsPlan(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createSavingsPlanAsync(array $args = [])
+ * @method \Aws\Result deleteQueuedSavingsPlan(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteQueuedSavingsPlanAsync(array $args = [])
  * @method \Aws\Result describeSavingsPlanRates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSavingsPlanRatesAsync(array $args = [])
  * @method \Aws\Result describeSavingsPlans(array $args = [])
@@ -17,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeSavingsPlansOfferingsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result returnSavingsPlan(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise returnSavingsPlanAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

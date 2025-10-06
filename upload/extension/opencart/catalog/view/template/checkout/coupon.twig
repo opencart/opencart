@@ -1,0 +1,19 @@
+<div class="accordion-item">
+  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-coupon">{{ heading_title }}</button></h2>
+  <div id="collapse-coupon" class="accordion-collapse collapse" data-bs-parent="#accordion">
+    <div class="accordion-body">
+      <form id="form-coupon" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
+        <div class="row mb-3">
+          <label for="input-coupon" class="col-md-4 col-form-label">{{ entry_coupon }}</label>
+          <div class="col-md-8">
+            <input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control"/>
+          </div>
+        </div>
+      </form>
+      <div class="text-end">
+        <button type="submit" form="form-coupon" formaction="{{ save }}" class="btn btn-primary">{{ button_coupon }}</button>
+        <button type="submit" form="form-coupon" formaction="{{ remove }}" class="btn btn-danger">{{ button_remove }}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,47 +1,66 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
+/**
+ * Class Latest
+ *
+ * @package Opencart\Catalog\Controller\Extension\Opencart\Module
+ */
 class Latest extends \Opencart\System\Engine\Controller {
-	public function index($setting) {
+	/**
+	 * Index
+	 *
+	 * @param array<string, mixed> $setting array of filters
+	 *
+	 * @return string
+	 */
+	public function index(array $setting): string {
 		$this->load->language('extension/opencart/module/latest');
 
-		$this->load->model('catalog/product');
-		$this->load->model('tool/image');
+		$data['axis'] = $setting['axis'];
 
 		$data['products'] = [];
 
-		$results = $this->model_catalog_product->getLatest($setting['limit']);
+		// Extension
+		$this->load->model('extension/opencart/module/latest');
+
+		// Image
+		$this->load->model('tool/image');
+
+		$results = $this->model_extension_opencart_module_latest->getLatest($setting['limit']);
 
 		if ($results) {
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $setting['width'], $setting['height']);
+					$image = $result['image'];
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+					$image = 'placeholder.png';
 				}
 
+				$thumb = $this->model_tool_image->resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$price = $this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
 				} else {
 					$price = false;
 				}
 
 				if ((float)$result['special']) {
-					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$special = $this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax'));
 				} else {
 					$special = false;
 				}
 
 				if ($this->config->get('config_tax')) {
-					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
+					$tax = (float)$result['special'] ? $result['special'] : $result['price'];
 				} else {
 					$tax = false;
 				}
 
 				$product_data = [
 					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
+					'thumb'       => $thumb,
 					'name'        => $result['name'],
-					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
+					'description' => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
@@ -54,6 +73,8 @@ class Latest extends \Opencart\System\Engine\Controller {
 			}
 
 			return $this->load->view('extension/opencart/module/latest', $data);
+		} else {
+			return '';
 		}
 	}
 }

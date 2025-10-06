@@ -107,7 +107,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
         $source,
         array $config = []
     ) {
-        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
+        $this->appendUserAgent($client, 'feat/s3-encrypt/' . self::CRYPTO_VERSION);
         $this->client = $client;
         $config['params'] = [];
         if (!empty($config['bucket'])) {
@@ -147,7 +147,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
             // Defer encryption work until promise is executed
             $envelope = new MetadataEnvelope();
 
-            list($this->source, $params) = Promise\promise_for($this->encrypt(
+            list($this->source, $params) = Promise\Create::promiseFor($this->encrypt(
                 $this->source,
                 $this->config['@cipheroptions'] ?: [],
                 $this->provider,

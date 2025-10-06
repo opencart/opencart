@@ -1,0 +1,241 @@
+:root {
+    // Gray Scale
+    --gray: #7a8288;
+    --dark-gray: color(var(--gray) blend(#000 40%));
+    --darker-gray: color(var(--gray) blend(#000 60%));
+    --darkest-gray: color(var(--gray) blend(#000 80%));
+    --light-gray: color(var(--gray) blend(#fff 50%));
+    --lighter-gray: color(var(--gray) blend(#fff 70%));
+    --lightest-gray: color(var(--gray) blend(#fff 90%));
+
+    // Type Scale
+    --type-size-1: 2.441rem; // ~39.056px
+    --type-size-2: 1.953rem; // ~31.248px
+    --type-size-3: 1.563rem; // ~25.008px
+    --type-size-4: 1.25rem; // ~20px
+    --type-size-5: 1rem; // ~16px
+    --type-size-6: 0.75rem; // ~12px
+
+    --color-primary: #82becd;
+    --color-secondary: #3f4657;
+    --color-text: #222;
+
+    --color-info: #00b8d4;
+    --color-warning: #ff9100;
+    --color-danger: #f50057;
+}
+
+:root {
+    --link-color: var(--color-primary);
+    --brand-color: var(--color-primary);
+    --brand-background: var(--color-secondary);
+
+    --body-background: #fff;
+
+    // Sidebar
+    --sidebar-border-color: #e7e7e9;
+    --sidebar-background: #f7f7f7;
+
+    // Sidebar links
+    --sidebar-link-color: var(--color-secondary);
+    --sidebar-link-active-background: #c5c5cb;
+    --sidebar-link-hover-background: var(--sidebar-link-active-background);
+    --sidebar-link-arrow-color: var(--color-secondary);
+    --sidebar-link-secondary-color: var(--color-text);
+
+    // Sidebar Checkbox
+    --checkbox-background: var(--lighter-gray);
+    --checkbox-hover-background: #ccc;
+    --checkbox-checked-background: var(--color-secondary);
+    --checkbox-checked-hover-background: var(--color-primary);
+    --checkbox-tick-color: #fff;
+    --checkbox-disabled-background: var(--light-gray);
+    --checkbox-disabled-tick-color: var(--gray);
+
+    // Sidebar search field
+    --search-field-color: #555;
+    --search-field-border-color: var(--lighter-gray);
+    --search-field-background: #fff;
+    --search-field-hover-border-color: var(--color-primary);
+
+    // Sidebar hamburger
+    --sidebar-collapsible--hamburger-color: var(--color-primary);
+    --sidebar-collapsible--hamburger-hover-color: var(--color-secondary);
+    --sidebar-collapsible--hamburger-hover-background: var(--color-primary);
+
+    // Homepage
+    --homepage-navbar-background: var(--color-secondary);
+
+    --homepage-hero-background: var(--color-primary);
+    --homepage-hero-color: var(--color-secondary);
+    --homepage-bullet-color: var(--color-primary);
+
+    --homepage-footer-color: var(--color-primary);
+    --homepage-footer-background: var(--color-secondary);
+    --homepage-body-background: #fff;
+
+    // Homepage Hero Buttons
+    --hero-button-block-background: var(--sidebar-link-active-background);
+    --hero-button-primary-border-color: var(--color-secondary);
+    --hero-button-primary-color: var(--sidebar-background);
+    --hero-buttom-primary-background: var(--color-secondary);
+    --hero-button-secondary-border-color: var(--color-secondary);
+    --hero-button-secondary-color: var(--color-secondary);
+    --hero-button-secondary-background: var(--sidebar-link-active-background);
+
+    --code-tag-color: var(--color-secondary);
+    --code-tag-background-color: var(--lightest-gray);
+    --code-tag-border-color: var(--light-gray);
+    --code-tag-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+    --code-tag-border-radius: 4px;
+
+    --blockquote-border-color: var(--color-secondary);
+
+    --hr-color: var(--lighter-gray);
+
+    --pager-background-color: var(--body-background);
+    --pager-border-color: var(--lighter-gray);
+    --pager-hover-background-color: #eee;
+
+    --toc--border-color: var(--lightest-gray);
+    --toc--inner-border-color: var(--lighter-gray);
+
+    --page-header-separator-color: #eee;
+    --page-header-details-color: var(--gray);
+
+    --table-border: var(--light-gray);
+    --table-background: #fff;
+    --table-background-odd: var(--lightest-gray);
+    --table-header-background: var(--lighter-gray);
+
+    --admonition-border-radius: 4px;
+    --admonition-border-color: #9e9e9e;
+    --admonition-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+    --admonition-bg-color: color-mod(
+        var(--admonition-border-color) lightness(98%)
+    );
+    --admonition-title-bg-color: #efefef;
+
+    --admonition-info-border-color: var(--color-info);
+    --admonition-info-background: color-mod(var(--color-info) lightness(95%));
+    --admonition-info-title-background: color-mod(
+        var(--color-info) lightness(85%)
+    );
+
+    --admonition-warning-border-color: var(--color-warning);
+    --admonition-warning-background: color-mod(
+        var(--color-warning) lightness(95%)
+    );
+    --admonition-warning-title-background: color-mod(
+        var(--color-warning) lightness(85%)
+    );
+
+    --admonition-danger-border-color: var(--color-danger);
+    --admonition-danger-background: color-mod(
+        var(--color-danger) lightness(95%)
+    );
+    --admonition-danger-title-background: color-mod(
+        var(--color-danger) lightness(85%)
+    );
+
+    --details-bg-color: #efefef;
+    --details-border-radius: 0.5rem;
+    --details-padding: 0.6rem;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.dark {
+    --color-text: #fff;
+    --body-background: #222;
+
+    --sidebar-background: #000;
+    --sidebar-border-color: var(--dark-gray);
+
+    --sidebar-link-color: var(--color-primary);
+    --sidebar-link-active-background: var(--dark-gray);
+    --sidebar-link-hover-background: var(--dark-gray);
+    --sidebar-link-arrow-color: var(--color-text);
+    --sidebar-link-secondary-color: var(--color-text);
+
+    --code-tag-border-color: var(--dark-gray);
+    --code-tag-background-color: var(--darker-gray);
+
+    --pager-background-color: var(--body-background);
+    --pager-border-color: var(--dark-gray);
+    --pager-hover-background-color: var(--darker-gray);
+
+    --toc--border-color: var(--dark-gray);
+    --toc--inner-border-color: var(--darker-gray);
+
+    --page-header-separator-color: var(--dark-gray);
+    --page-header-details-color: var(--light-gray);
+
+    --hr-color: var(--dark-gray);
+
+    --table-border: var(--darker-gray);
+    --table-background: var(--body-background);
+    --table-background-odd: var(--darkest-gray);
+    --table-header-background: var(--dark-gray);
+
+    // Homepage
+    --homepage-navbar-background: var(--color-secondary);
+
+    --homepage-hero-background: #333;
+    --homepage-hero-color: var(--color-primary);
+    --homepage-bullet-color: var(--color-primary);
+
+    --homepage-footer-color: var(--color-primary);
+    --homepage-footer-background: var(--color-secondary);
+    --homepage-body-background: #333;
+
+    // Homepage Hero Buttons
+    --hero-button-block-background: var(--color-secondary);
+    --hero-button-primary-border-color: var(--color-primary);
+    --hero-button-primary-color: var(--color-primary);
+    --hero-buttom-primary-background: var(--color-secondary);
+    --hero-button-secondary-border-color: var(--color-secondary);
+    --hero-button-secondary-color: var(--color-primary);
+    --hero-button-secondary-background: var(--color-secondary);
+
+    // Sidebar search field
+    --search-field-color: #fff;
+    --search-field-border-color: var(--dark-gray);
+    --search-field-background: #555;
+
+    --admonition-bg-color: color-mod(
+        var(--admonition-border-color) lightness(5%)
+    );
+    --admonition-title-bg-color: color-mod(
+        var(--admonition-border-color) lightness(10%)
+    );
+
+    --admonition-info-border-color: var(--color-info);
+    --admonition-info-background: color-mod(var(--color-info) lightness(5%));
+    --admonition-info-title-background: color-mod(
+        var(--color-info) lightness(10%)
+    );
+
+    --admonition-warning-border-color: var(--color-warning);
+    --admonition-warning-background: color-mod(
+        var(--color-warning) lightness(5%)
+    );
+    --admonition-warning-title-background: color-mod(
+        var(--color-warning) lightness(10%)
+    );
+
+    --admonition-danger-border-color: var(--color-danger);
+    --admonition-danger-background: color-mod(
+        var(--color-danger) lightness(5%)
+    );
+    --admonition-danger-title-background: color-mod(
+        var(--color-danger) lightness(10%)
+    );
+
+    --details-bg-color: #1a1a1a;
+}
+
+/*
+ * Breakpoints
+ * ===================================================================== */
+@custom-media --viewport-small (width < 850px);
+@custom-media --viewport-large (width >= 850px);

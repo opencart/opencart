@@ -4,6 +4,7 @@ $_['heading_title']     = 'Reviews';
 
 // Text
 $_['text_success']      = 'Success: You have modified reviews!';
+$_['text_next']         = 'Success: You have modified %s to %s of %s product ratings!';
 $_['text_list']         = 'Review List';
 $_['text_add']          = 'Add Review';
 $_['text_edit']         = 'Edit Review';
@@ -24,9 +25,14 @@ $_['entry_rating']      = 'Rating';
 $_['entry_status']      = 'Status';
 $_['entry_text']        = 'Text';
 $_['entry_date_added']  = 'Date Added';
+$_['entry_date_from']   = 'Date From';
+$_['entry_date_to']     = 'Date To';
 
 // Help
 $_['help_product']      = '(Autocomplete)';
+
+// Button
+$_['button_rating']     = 'Sync Product Ratings';
 
 // Error
 $_['error_warning']     = 'Warning: Please check the form carefully for errors!';

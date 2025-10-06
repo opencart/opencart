@@ -2,6 +2,7 @@
 namespace Aws;
 
 use Aws\Api\Parser\Exception\ParserException;
+use Aws\Exception\AwsException;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -47,7 +48,7 @@ class WrappedHttpHandler
         callable $httpHandler,
         callable $parser,
         callable $errorParser,
-        $exceptionClass = 'Aws\Exception\AwsException',
+        $exceptionClass = AwsException::class,
         $collectStats = false
     ) {
         $this->httpHandler = $httpHandler;
@@ -84,7 +85,7 @@ class WrappedHttpHandler
                 . ' receiver to Aws\WrappedHttpHandler is not supported.');
         }
 
-        return Promise\promise_for($fn($request, $options))
+        return Promise\Create::promiseFor($fn($request, $options))
             ->then(
                 function (
                     ResponseInterface $res

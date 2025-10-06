@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace GuzzleHttp\Promise;
 
 /**
@@ -8,17 +11,19 @@ namespace GuzzleHttp\Promise;
  * maintains a constant stack size. You can use the task queue asynchronously
  * by calling the `run()` function of the global task queue in an event loop.
  *
- *     GuzzleHttp\Promise\queue()->run();
+ *     GuzzleHttp\Promise\Utils::queue()->run();
+ *
+ * @final
  */
 class TaskQueue implements TaskQueueInterface
 {
     private $enableShutdown = true;
     private $queue = [];
 
-    public function __construct($withShutdown = true)
+    public function __construct(bool $withShutdown = true)
     {
         if ($withShutdown) {
-            register_shutdown_function(function () {
+            register_shutdown_function(function (): void {
                 if ($this->enableShutdown) {
                     // Only run the tasks if an E_ERROR didn't occur.
                     $err = error_get_last();
@@ -30,20 +35,20 @@ class TaskQueue implements TaskQueueInterface
         }
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return !$this->queue;
     }
 
-    public function add(callable $task)
+    public function add(callable $task): void
     {
         $this->queue[] = $task;
     }
 
-    public function run()
+    public function run(): void
     {
-        /** @var callable $task */
         while ($task = array_shift($this->queue)) {
+            /** @var callable $task */
             $task();
         }
     }
@@ -59,7 +64,7 @@ class TaskQueue implements TaskQueueInterface
      *
      * Note: This shutdown will occur before any destructors are triggered.
      */
-    public function disableShutdown()
+    public function disableShutdown(): void
     {
         $this->enableShutdown = false;
     }

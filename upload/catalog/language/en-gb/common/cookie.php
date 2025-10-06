@@ -1,7 +1,8 @@
 <?php
 // Text
-$_['text_cookie']  = 'This website uses cookies for more information <a href="%s" class="alert-link agree">click here</a>.';
-//We use cookies to improve our site and your experience. By continuing to browse our site you accept our cookie policy Find out more
+$_['text_success']    = 'Thank you for letting us know your choice!';
+$_['text_cookie']     = 'This website uses cookies. For more information <a href="%s" class="alert-link modal-link">click here</a>.';
 
-// Button
-$_['button_close'] = 'Close';
+// Buttons
+$_['button_agree']    = 'Yes, that\'s fine!';
+$_['button_disagree'] = 'No Thanks!';

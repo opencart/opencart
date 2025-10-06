@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="text-end">{{ column_order_id }}</th>
+        <th>{{ column_status }}</th>
+        <th class="text-end">{{ column_total }}</th>
+        <th>{{ column_date_added }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if orders %}
+        {% for order in orders %}
+          <tr>
+            <td class="text-end"><a href="{{ order.view }}" target="_blank">{{ order.order_id }}</a></td>
+            <td>{{ order.order_status }}</td>
+            <td class="text-end"><x-currency code="{{ order.currency_code }}" amount="{{ order.total }}" value="{{ order.currency_value }}"></x-currency></td>
+            <td>{{ order.date_added }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

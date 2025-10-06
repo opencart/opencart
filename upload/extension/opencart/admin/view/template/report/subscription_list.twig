@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-start">{{ column_date_start }}</th>
+        <th class="text-start">{{ column_date_end }}</th>
+        <th class="text-end">{{ column_subscriptions }}</th>
+        <th class="text-end">{{ column_products }}</th>
+        <th class="text-end">{{ column_tax }}</th>
+        <th class="text-end">{{ column_total }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if subscriptions %}
+        {% for subscription in subscriptions %}
+          <tr>
+            <td class="text-start">{{ subscription.date_start }}</td>
+            <td class="text-start">{{ subscription.date_end }}</td>
+            <td class="text-end">{{ subscription.subscriptions }}</td>
+            <td class="text-end">{{ subscription.products }}</td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ subscription.tax }}"></x-currency></td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ subscription.total }}"></x-currency></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

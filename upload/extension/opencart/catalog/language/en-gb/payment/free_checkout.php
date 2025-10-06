@@ -1,3 +1,3 @@
 <?php
-// Text
-$_['text_title'] = 'Free Checkout';
+// Heading
+$_['heading_title'] = 'Free Checkout';

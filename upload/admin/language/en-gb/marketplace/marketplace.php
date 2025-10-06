@@ -40,28 +40,30 @@ $_['text_comment']       = 'Comments';
 $_['text_download']      = 'Downloading';
 $_['text_install']       = 'Installing';
 $_['text_comment_add']   = 'Leave your comment';
-$_['text_write']         = 'Write your comment here..';
+$_['text_write']         = 'Write your comment here.';
 $_['text_purchase']      = 'Please confirm who you are!';
 $_['text_pin']           = 'Please enter your 4 digit PIN number. This PIN number is to protect your account.';
-$_['text_secure']        = 'Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.';
-$_['text_name']          = 'Download Name';
+$_['text_secure']        = 'Do not give your PIN to anyone (including developers). If you require assistance, please send an email to the extension seller in regards to the specific extension package.';
+$_['text_name']          = 'Extension Name';
 $_['text_available']     = 'Available Installs';
 $_['text_action']        = 'Action';
 $_['text_install']       = 'Install';
 $_['text_uninstall']     = 'Uninstall';
 $_['text_delete']        = 'Delete';
+$_['text_more']          = 'see more replies...';
+$_['text_refresh']       = 'refresh';
 
 // Entry
 $_['entry_pin']          = 'PIN';
 
-// Tab
+// Tabs
 $_['tab_description']    = 'Description';
 $_['tab_documentation']  = 'Documentation';
 $_['tab_download']       = 'Download';
 $_['tab_comment']        = 'Comment';
 
-// Button
-$_['button_opencart']    = 'Marketplace API';
+// Buttons
+$_['button_api']         = 'Marketplace API';
 $_['button_purchase']    = 'Purchase';
 $_['button_view_all']    = 'View all extensions';
 $_['button_support']     = 'Get Support';
@@ -71,6 +73,6 @@ $_['button_forgot_pin']  = 'Forgot PIN?';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';
-$_['error_opencart']     = 'Warning: You must enter your OpenCart API information before you can make any purchases!';
-$_['error_purchase']     = 'Extension could not be purchased!';
-$_['error_download']     = 'Extension could not be downloaded!';
+$_['error_api']          = 'Warning: You must enter your OpenCart API information by clicking the <i class="fa-solid fa-triangle-exclamation"></i> before you can download extensions or make any purchases!';
+$_['error_purchase']     = 'The extension could not be purchased!';
+$_['error_download']     = 'The extension could not be downloaded!';

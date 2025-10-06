@@ -1,0 +1,36 @@
+{% if banner %}
+  <div class="text-center">{{ banner }}</div>
+  <br/>
+{% endif %}
+{% if extensions %}
+  <fieldset id="recommended">
+    <legend>{{ text_recommended }}</legend>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>{{ column_name }}</th>
+            <th class="text-end">{{ column_action }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for extension in extensions %}
+            <tr>
+              <td><a href="{{ extension.href }}">{{ extension.name }}</a></td>
+              <td class="text-end">
+                <div class="dropdown">
+                  <div class="btn-group">
+                    <button type="button" value="{{ extension.download }}" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"{% if not extension.download %} disabled{% endif %}><i class="fa-solid fa-download"></i></button>
+                    <button type="button" data-bs-toggle="dropdown" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"><i class="fa-solid fa-caret-down"></i></button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                      <a href="{{ extension.install }}" class="dropdown-item{% if not extension.install %} disabled{% endif %}"><i class="fa-solid fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="{{ extension.delete }}" class="dropdown-item{% if not extension.delete %} disabled{% endif %}"><i class="fa-regular fa-trash-can fa-fw"></i> {{ text_delete }}</a>
+                    </div>
+                  </div>
+                </div></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </fieldset>
+{% endif %}

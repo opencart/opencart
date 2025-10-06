@@ -1,39 +1,57 @@
 <?php
 /**
  * @package		OpenCart
+ *
  * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
-*/
-
-/**
-* Language class
-*/
+ *
+ * @see		https://www.opencart.com
+ */
 namespace Opencart\System\Library;
+/**
+ * Class Language
+ */
 class Language {
-	protected $code;
-	protected $directory;
-	protected $path = [];
-	protected $data = [];
+	/**
+	 * @var string
+	 */
+	protected string $code;
+	/**
+	 * @var string
+	 */
+	protected string $directory;
+	/**
+	 * @var array<string, string>
+	 */
+	protected array $path = [];
+	/**
+	 * @var array<string, string>
+	 */
+	protected array $data = [];
+	/**
+	 * @var array<string, array<string, array<string, mixed>>>
+	 */
+	protected array $cache = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param    string $code
-	 *
+	 * @param string $code
 	 */
-	public function __construct($code) {
+	public function __construct(string $code) {
 		$this->code = $code;
 	}
 
 	/**
-	 * addPath
+	 * Add Path
 	 *
-	 * @param    string $namespace
-	 * @param    string $directory
+	 * @param string $namespace
+	 * @param string $directory
+	 *
+	 * @return void
 	 */
-	public function addPath($namespace, $directory = '') {
+	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
 			$this->directory = $namespace;
 		} else {
@@ -42,68 +60,121 @@ class Language {
 	}
 
 	/**
-     * Get language tex string
-     *
-     * @param	string	$key
-	 * 
-	 * @return	string
-     */
-	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : $key);
+	 * Get
+	 *
+	 * Get language text string
+	 *
+	 * @link https://www.php.net/sprintf
+	 *
+	 * @param string $key
+	 */
+	public function get(string $key): string {
+		if (!isset($this->data[$key])) {
+			return $key;
+		}
+
+		$args = func_get_args();
+
+		if (count($args) == 1) {
+			return $this->data[$key];
+		}
+
+		array_shift($args);
+
+		return call_user_func_array('sprintf', [$this->data[$key]] + $args);
 	}
 
 	/**
-     *  Set language text string
-     *
-     * @param	string	$key
-	 * @param	string	$value
-     */	
-	public function set($key, $value) {
+	 * Set
+	 *
+	 * Set language text string
+	 *
+	 * @param string $key 
+	 * @param string $value
+	 *
+	 * @return void
+	 */
+	public function set(string $key, string $value): void {
 		$this->data[$key] = $value;
 	}
-	
+
 	/**
-     * All
-     *
-	 * @return	array
-     */
-	public function all() {
-		return $this->data;
-	}
-	
-	/**
-     * Load
-     *
-     * @param	string	$filename
-	 * @param	string	$code 		Language code
-	 * 
-	 * @return	array
-     */
-	public function load($filename, $prefix = '') {
-		//$this->data = [];
-
-		$file = $this->directory . $this->code . '/' . $filename . '.php';
-
-		$namespace = '';
-
-		$parts = explode('/', $filename);
-
-		foreach ($parts as $part) {
-			if (!$namespace) {
-				$namespace .= $part;
-			} else {
-				$namespace .= '/' . $part;
-			}
-
-			if (isset($this->path[$namespace])) {
-				$file = $this->path[$namespace] . $this->code . substr($filename, strlen($namespace)) . '.php';
-			}
+	 * All
+	 *
+	 * @param string $prefix
+	 *
+	 * @return array<string, string>
+	 */
+	public function all(string $prefix = ''): array {
+		if (!$prefix) {
+			return $this->data;
 		}
 
 		$_ = [];
 
-		if (is_file($file)) {
-			require($file);
+		$length = strlen($prefix);
+
+		foreach ($this->data as $key => $value) {
+			if (substr($key, 0, $length) == $prefix) {
+				$_[substr($key, $length + 1)] = $value;
+			}
+		}
+
+		return $_;
+	}
+
+	/**
+	 * Clear
+	 *
+	 * @return void
+	 */
+	public function clear(): void {
+		$this->data = [];
+	}
+
+	/**
+	 * Load
+	 *
+	 * @param string $filename
+	 * @param string $prefix
+	 * @param string $code     Language code
+	 *
+	 * @return array<string, string>
+	 */
+	public function load(string $filename, string $prefix = '', string $code = ''): array {
+		if (!$code) {
+			$code = $this->code;
+		}
+
+		if (!isset($this->cache[$code][$filename])) {
+			$_ = [];
+
+			// Load selected language file to overwrite the default language keys
+			$file = $this->directory . $code . '/' . $filename . '.php';
+
+			$namespace = '';
+
+			$parts = explode('/', $filename);
+
+			foreach ($parts as $part) {
+				if (!$namespace) {
+					$namespace .= $part;
+				} else {
+					$namespace .= '/' . $part;
+				}
+
+				if (isset($this->path[$namespace])) {
+					$file = $this->path[$namespace] . $code . substr($filename, strlen($namespace)) . '.php';
+				}
+			}
+
+			if (is_file($file)) {
+				require($file);
+			}
+
+			$this->cache[$code][$filename] = $_;
+		} else {
+			$_ = $this->cache[$code][$filename];
 		}
 
 		if ($prefix) {

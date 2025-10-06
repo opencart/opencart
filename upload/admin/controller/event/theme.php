@@ -1,13 +1,35 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Admin\Controller\Event;
+/**
+ * Class Theme
+ *
+ * @package Opencart\Admin\Controller\Event
+ */
 class Theme extends \Opencart\System\Engine\Controller {
-	public function index(&$route, &$args, &$code) {
-		if (substr($filename, 0, 19) == 'extension/opencart/') {
-			$filename = substr($filename, 19);
-		}
+	/**
+	 * Index
+	 *
+	 * Adds task to generate new theme list
+	 *
+	 * model/design/theme/addTheme/after
+	 * model/design/theme/editTheme/after
+	 * model/design/theme/deleteTheme/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
+	public function index(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'theme',
+			'action' => 'task/admin/theme',
+			'args'   => []
+		];
 
-		if (substr($route, 0, strpos('/')) == 'extension') {
-			//file_get_contents(EXTENSIONDIR_TEMPLATE . )
-		}
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
 	}
 }

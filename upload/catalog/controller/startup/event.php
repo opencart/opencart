@@ -1,14 +1,34 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Catalog\Controller\Startup;
+/**
+ * Class Event
+ *
+ * @package Opencart\Catalog\Controller\Startup
+ */
 class Event extends \Opencart\System\Engine\Controller {
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		// Add events from the DB
 		$this->load->model('setting/event');
-		
+
 		$results = $this->model_setting_event->getEvents();
-		
+
 		foreach ($results as $result) {
-			$this->event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new \Opencart\System\Engine\Action($result['action']), $result['sort_order']);
+			$part = explode('/', $result['trigger']);
+
+			if ($part[0] == 'catalog') {
+				array_shift($part);
+
+				$this->event->register(implode('/', $part), new \Opencart\System\Engine\Action($result['action']), $result['sort_order']);
+			}
+
+			if ($part[0] == 'system') {
+				$this->event->register($result['trigger'], new \Opencart\System\Engine\Action($result['action']), $result['sort_order']);
+			}
 		}
 	}
 }

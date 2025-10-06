@@ -67,7 +67,7 @@ class Arn implements ArnInterface
                 . ' array as an argument.');
         }
 
-        self::validate($this->data);
+        static::validate($this->data);
     }
 
     public function __toString()
@@ -150,5 +150,39 @@ class Arn implements ArnInterface
                 . " Individual service ARNs may include additional delimiters"
                 . " to further qualify resources.");
         }
+    }
+
+    protected static function validateAccountId($data, $arnName)
+    {
+        if (!self::isValidHostLabel($data['account_id'])) {
+            throw new InvalidArnException("The 5th component of a {$arnName}"
+                . " is required, represents the account ID, and"
+                . " must be a valid host label.");
+        }
+    }
+
+    protected static function validateRegion($data, $arnName)
+    {
+        if (empty($data['region'])) {
+            throw new InvalidArnException("The 4th component of a {$arnName}"
+                . " represents the region and must not be empty.");
+        }
+    }
+
+    /**
+     * Validates whether a string component is a valid host label
+     *
+     * @param $string
+     * @return bool
+     */
+    protected static function isValidHostLabel($string)
+    {
+        if (empty($string) || strlen($string) > 63) {
+            return false;
+        }
+        if ($value = preg_match("/^[a-zA-Z0-9-]+$/", $string)) {
+            return true;
+        }
+        return false;
     }
 }

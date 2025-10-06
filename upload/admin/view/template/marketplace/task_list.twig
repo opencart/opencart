@@ -1,0 +1,85 @@
+<form id="form-task" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th>{{ column_code }}</th>
+          <th>{{ column_action }}</th>
+          <th class="text-center">{{ column_status }}</th>
+          <th>{{ column_date_added }}</th>
+          <th>{{ column_date_modified }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if tasks %}
+          {% for task in tasks %}
+            <tr{% if not task.status %} class="table-disabled"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ task.task_id }}" class="form-check-input"/></td>
+              <td>{{ task.code }}</td>
+              <td>{{ task.action }}</td>
+              <td class="text-center">{% if task.status == 'pending' %}
+                  <span class="badge bg-secondary">{{ text_pending }}</span>
+                {% elseif task.status == 'processing' %}
+                  <span class="badge bg-primary">{{ text_processing }}</span>
+                {% elseif task.status == 'paused' %}
+                  <span class="badge bg-warning">{{ text_paused }}</span>
+                {% elseif task.status == 'complete' %}
+                  <span class="badge bg-success">{{ text_complete }}</span>
+                {% elseif task.status == 'failed' %}
+                  <span class="badge bg-danger">{{ text_failed }}</span>
+                {% endif %}</td>
+              <td>{{ task.date_added }}</td>
+              <td>{{ task.date_modified }}</td>
+              <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-task-{{ task.task_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>
+{% for task in tasks %}
+  <div id="modal-task-{{ task.task_id }}" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fa-solid fa-info-circle"></i> {{ text_info }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="input-action-{{ task.task_id }}" class="form-label">{{ entry_action }}</label> <input type="text" value="{{ task.action }}" id="input-action-{{ task.task_id }}" class="form-control" readonly/>
+          </div>
+          <div class="mb-3">
+            <label for="input-args-{{ task.task_id }}" class="form-label">{{ entry_args }}</label> <textarea rows="5" id="input-args-{{ task.task_id }}" class="form-control" readonly>{{ task.args }}</textarea>
+          </div>
+          <div>
+            <label for="input-response-{{ task.task_id }}" class="form-label">{{ entry_response }}</label> <textarea rows="5" id="input-response-{{ task.task_id }}" class="form-control" readonly>
+                {{ response }}
+
+              {% for response in task.response %}
+
+                {% if response %}
+
+                {% else %}
+
+                {% endif %}
+
+              {% endfor %}
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}

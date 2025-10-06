@@ -1,28 +1,20 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Dashboard;
+namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
+/**
+ * Class Customer
+ *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
+ */
 class Customer extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	/**
+	 * Index
+	 *
+	 * @return void
+	 */
+	public function index(): void {
 		$this->load->language('extension/opencart/dashboard/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('dashboard_customer', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,33 +33,19 @@ class Customer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/dashboard/customer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/dashboard/customer', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/dashboard/customer.save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
-
-		if (isset($this->request->post['dashboard_customer_width'])) {
-			$data['dashboard_customer_width'] = $this->request->post['dashboard_customer_width'];
-		} else {
-			$data['dashboard_customer_width'] = $this->config->get('dashboard_customer_width');
-		}
+		$data['dashboard_customer_width'] = $this->config->get('dashboard_customer_width');
 
 		$data['columns'] = [];
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-				
-		if (isset($this->request->post['dashboard_customer_status'])) {
-			$data['dashboard_customer_status'] = $this->request->post['dashboard_customer_status'];
-		} else {
-			$data['dashboard_customer_status'] = $this->config->get('dashboard_customer_status');
-		}
 
-		if (isset($this->request->post['dashboard_customer_sort_order'])) {
-			$data['dashboard_customer_sort_order'] = $this->request->post['dashboard_customer_sort_order'];
-		} else {
-			$data['dashboard_customer_sort_order'] = $this->config->get('dashboard_customer_sort_order');
-		}
+		$data['dashboard_customer_status'] = $this->config->get('dashboard_customer_status');
+		$data['dashboard_customer_sort_order'] = $this->config->get('dashboard_customer_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -76,26 +54,48 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/dashboard/customer_form', $data));
 	}
 
-	protected function validate() {
+	/**
+	 * Save
+	 *
+	 * @return void
+	 */
+	public function save(): void {
+		$this->load->language('extension/opencart/dashboard/customer');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/customer')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			// Setting
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('dashboard_customer', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
-		
-	public function dashboard() {
+
+	/**
+	 * Dashboard
+	 *
+	 * @return string
+	 */
+	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/customer');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		// Total Orders
+		// Total Customers
 		$this->load->model('customer/customer');
 
 		$today = $this->model_customer_customer->getTotalCustomers(['filter_date_added' => date('Y-m-d', strtotime('-1 day'))]);
-
 		$yesterday = $this->model_customer_customer->getTotalCustomers(['filter_date_added' => date('Y-m-d', strtotime('-2 day'))]);
-
 		$difference = $today - $yesterday;
 
 		if ($difference && $today) {
@@ -104,6 +104,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['percentage'] = 0;
 		}
 
+		// Total Customers
 		$customer_total = $this->model_customer_customer->getTotalCustomers();
 
 		if ($customer_total > 1000000000000) {

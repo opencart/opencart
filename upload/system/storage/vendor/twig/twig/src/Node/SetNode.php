@@ -11,6 +11,7 @@
 
 namespace Twig\Node;
 
+use Twig\Attribute\YieldReady;
 use Twig\Compiler;
 use Twig\Node\Expression\ConstantExpression;
 
@@ -19,26 +20,35 @@ use Twig\Node\Expression\ConstantExpression;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
+#[YieldReady]
 class SetNode extends Node implements NodeCaptureInterface
 {
-    public function __construct(bool $capture, Node $names, Node $values, int $lineno, string $tag = null)
+    public function __construct(bool $capture, Node $names, Node $values, int $lineno)
     {
-        parent::__construct(['names' => $names, 'values' => $values], ['capture' => $capture, 'safe' => false], $lineno, $tag);
-
         /*
          * Optimizes the node when capture is used for a large block of text.
          *
          * {% set foo %}foo{% endset %} is compiled to $context['foo'] = new Twig\Markup("foo");
          */
-        if ($this->getAttribute('capture')) {
-            $this->setAttribute('safe', true);
-
-            $values = $this->getNode('values');
-            if ($values instanceof TextNode) {
-                $this->setNode('values', new ConstantExpression($values->getAttribute('data'), $values->getTemplateLine()));
-                $this->setAttribute('capture', false);
+        $safe = false;
+        if ($capture) {
+            $safe = true;
+            // Node::class === get_class($values) should be removed in Twig 4.0
+            if (($values instanceof Nodes || Node::class === \get_class($values)) && !\count($values)) {
+                $values = new ConstantExpression('', $values->getTemplateLine());
+                $capture = false;
+            } elseif ($values instanceof TextNode) {
+                $values = new ConstantExpression($values->getAttribute('data'), $values->getTemplateLine());
+                $capture = false;
+            } elseif ($values instanceof PrintNode && $values->getNode('expr') instanceof ConstantExpression) {
+                $values = $values->getNode('expr');
+                $capture = false;
+            } else {
+                $values = new CaptureNode($values, $values->getTemplateLine());
             }
         }
+
+        parent::__construct(['names' => $names, 'values' => $values], ['capture' => $capture, 'safe' => $safe], $lineno);
     }
 
     public function compile(Compiler $compiler): void
@@ -46,7 +56,7 @@ class SetNode extends Node implements NodeCaptureInterface
         $compiler->addDebugInfo($this);
 
         if (\count($this->getNode('names')) > 1) {
-            $compiler->write('list(');
+            $compiler->write('[');
             foreach ($this->getNode('names') as $idx => $node) {
                 if ($idx) {
                     $compiler->raw(', ');
@@ -54,29 +64,15 @@ class SetNode extends Node implements NodeCaptureInterface
 
                 $compiler->subcompile($node);
             }
-            $compiler->raw(')');
+            $compiler->raw(']');
         } else {
-            if ($this->getAttribute('capture')) {
-                if ($compiler->getEnvironment()->isDebug()) {
-                    $compiler->write("ob_start();\n");
-                } else {
-                    $compiler->write("ob_start(function () { return ''; });\n");
-                }
-                $compiler
-                    ->subcompile($this->getNode('values'))
-                ;
-            }
-
             $compiler->subcompile($this->getNode('names'), false);
-
-            if ($this->getAttribute('capture')) {
-                $compiler->raw(" = ('' === \$tmp = ob_get_clean()) ? '' : new Markup(\$tmp, \$this->env->getCharset())");
-            }
         }
+        $compiler->raw(' = ');
 
-        if (!$this->getAttribute('capture')) {
-            $compiler->raw(' = ');
-
+        if ($this->getAttribute('capture')) {
+            $compiler->subcompile($this->getNode('values'));
+        } else {
             if (\count($this->getNode('names')) > 1) {
                 $compiler->write('[');
                 foreach ($this->getNode('values') as $idx => $value) {
@@ -89,17 +85,31 @@ class SetNode extends Node implements NodeCaptureInterface
                 $compiler->raw(']');
             } else {
                 if ($this->getAttribute('safe')) {
-                    $compiler
-                        ->raw("('' === \$tmp = ")
-                        ->subcompile($this->getNode('values'))
-                        ->raw(") ? '' : new Markup(\$tmp, \$this->env->getCharset())")
-                    ;
+                    if ($this->getNode('values') instanceof ConstantExpression) {
+                        if ('' === $this->getNode('values')->getAttribute('value')) {
+                            $compiler->raw('""');
+                        } else {
+                            $compiler
+                                ->raw('new Markup(')
+                                ->subcompile($this->getNode('values'))
+                                ->raw(', $this->env->getCharset())')
+                            ;
+                        }
+                    } else {
+                        $compiler
+                            ->raw("('' === \$tmp = ")
+                            ->subcompile($this->getNode('values'))
+                            ->raw(") ? '' : new Markup(\$tmp, \$this->env->getCharset())")
+                        ;
+                    }
                 } else {
                     $compiler->subcompile($this->getNode('values'));
                 }
             }
+
+            $compiler->raw(';');
         }
 
-        $compiler->raw(";\n");
+        $compiler->raw("\n");
     }
 }

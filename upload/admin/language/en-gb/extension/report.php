@@ -14,3 +14,4 @@ $_['column_action']     = 'Action';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify reports!';
+$_['error_extension']   = 'Warning: Extension does not exist!';

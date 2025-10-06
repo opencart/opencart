@@ -1,35 +1,76 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Catalog\Controller\Event;
+/**
+ * Class Language
+ *
+ * @package Opencart\Catalog\Controller\Event
+ */
 class Language extends \Opencart\System\Engine\Controller {
-	public function index(&$route, &$args) {
-		//if () {
-
-		//}
-
-		$this->language_old = $this->language;
-
-		/*
+	/**
+	 * Index
+	 *
+	 * Dump all the language vars into the template.
+	 *
+	 * Trigger
+	 *
+	 * view/ * /before
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 *
+	 * @return void
+	 */
+	public function template(string &$route, array &$args): void {
 		foreach ($this->language->all() as $key => $value) {
 			if (!isset($args[$key])) {
 				$args[$key] = $value;
 			}
 		}
-		*/
 	}
-	
-	// 1. Before controller load store all current loaded language data
-	public function before(&$route, &$output) {
-		$this->language->set('backup', $this->language->all());
+
+	/**
+	 * Before
+	 *
+	 * 1. Before controller load store all current loaded language data
+	 *
+	 * Trigger
+	 *
+	 * controller/ * /before
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 *
+	 * @return void
+	 */
+	public function before(string &$route, array &$args): void {
+		$data = $this->language->all();
+
+		if ($data) {
+			$this->language->set('backup', json_encode($data));
+		}
 	}
-	
-	// 2. After controller load restore old language data
-	public function after(&$route, &$args, &$output) {
-		$this->language= $this->language_old;
 
+	/**
+	 * After
+	 *
+	 * 2. After controller load restore old language data
+	 *
+	 * Trigger
+	 *
+	 * controller/ * /after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
+	public function after(string &$route, array &$args, &$output): void {
+		$data = json_decode($this->language->get('backup'), true);
 
-		$data = $this->language->get('backup');
-		
 		if (is_array($data)) {
+			$this->language->clear();
+
 			foreach ($data as $key => $value) {
 				$this->language->set($key, $value);
 			}

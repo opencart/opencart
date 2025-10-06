@@ -5,10 +5,14 @@ $_['heading_title']          = 'Configuration';
 // Text
 $_['text_step_3']            = 'Enter your database and administration details';
 $_['text_db_connection']     = '1. Please enter your database connection details.';
+$_['text_db_advanced']       = 'Advanced DB Settings';
 $_['text_db_administration'] = '2. Please enter a username and password for the administration.';
 $_['text_mysqli']            = 'MySQLi';
 $_['text_pdo']               = 'mPDO';
-$_['text_pgsql']             = 'PostgreSQL';
+$_['text_help']              = 'Information about setting up a databases on different platforms:';
+$_['text_cpanel']            = 'CPanel DB Setup';
+$_['text_plesk']             = 'Plesk DB Setup';
+$_['text_db_ssl']            = 'Certificate inputs should be added as a single line like: "MIIDrzCCApegAwIBAgIQ....=="';
 
 // Entry
 $_['entry_db_driver']        = 'DB Driver';
@@ -18,6 +22,10 @@ $_['entry_db_password']      = 'Password';
 $_['entry_db_database']      = 'Database';
 $_['entry_db_port']          = 'Port';
 $_['entry_db_prefix']        = 'Prefix';
+$_['entry_db_advanced']      = 'Advanced';
+$_['entry_db_ssl_key']       = 'SSL Key';
+$_['entry_db_ssl_cert']      = 'SSL Cert';
+$_['entry_db_ssl_ca']        = 'SSL CA';
 $_['entry_username']         = 'Username';
 $_['entry_password']         = 'Password';
 $_['entry_email']            = 'E-Mail';

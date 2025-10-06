@@ -2,8 +2,18 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-event').submit() : false;"><i class="fas fa-trash-alt"></i></button>
+      <div class="float-end">
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
+          <ul class="dropdown-menu">
+            <li><button type="submit" form="form-event" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
+            <li><button type="submit" form="form-event" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><button type="submit" form="form-event" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
+          </ul>
+        </div>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -14,158 +24,55 @@
     </div>
   </div>
   <div class="container-fluid">
-    {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-    {% endif %}
-    {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-    {% endif %}
-    <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_event }}</div>
-    <div class="card">
-      <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
-      <div class="card-body">
-        <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-event">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
-                  <td class="text-left">{% if sort == 'code' %}<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>{% else %}<a href="{{ sort_code }}">{{ column_code }}</a>{% endif %}</td>
-                  <td class="text-left">{% if sort == 'status' %}<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>{% else %}<a href="{{ sort_status }}">{{ column_status }}</a>{% endif %}</td>
-                  <td class="text-right">{% if sort == 'sort_order' %}<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>{% else %}<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>{% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
-                </tr>
-              </thead>
-              <tbody>
-                {% if events %}
-                  {% for event in events %}
-                    <tr>
-                      <td class="text-center">{% if event.event_id in selected %}
-                          <input type="checkbox" name="selected[]" value="{{ event.event_id }}" checked="checked"/>
-                        {% else %}
-                          <input type="checkbox" name="selected[]" value="{{ event.event_id }}"/>
-                        {% endif %}</td>
-                      <td class="text-left">{{ event.code }}</td>
-                      <td class="text-left">{{ event.status }}</td>
-                      <td class="text-right">{{ event.sort_order }}</td>
-                      <td class="text-right"><button type="button" data-trigger="{{ event.trigger }}" data-action="{{ event.action }}" class="btn btn-info"><i class="fas fa-info-circle"></i></button>
-                        {% if not event.enabled %}
-                          <button type="button" value="{{ event.event_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                        {% else %}
-                          <button type="button" value="{{ event.event_id }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                        {% endif %}
-                      </td>
-                    </tr>
-                  {% endfor %}
-                {% else %}
-                  <tr>
-                    <td class="text-center" colspan="5">{{ text_no_results }}</td>
-                  </tr>
-                {% endif %}
-              </tbody>
-            </table>
+    <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_event }}</div>
+    <div class="row">
+      <div id="filter-task" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <form id="form-filter">
+              <div class="mb-3">
+                <label for="input-code" class="form-label">{{ entry_code }}</label> <input type="text" name="filter_code" value="{{ filter_code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+              </div>
+              <div class="mb-3">
+                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                  <option value=""></option>
+                  <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                  <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
+                </select>
+              </div>
+              <div class="text-end">
+                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+              </div>
+            </form>
           </div>
-        </form>
-        <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+      <div class="col col-lg-9 col-md-12">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#form-event').on('click', '.btn-success', function() {
-	var element = this;
+$('#list').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
 
-	$.ajax({
-		url: 'index.php?route=marketplace/event|enable&user_token={{ user_token }}&event_id=' + $(element).val(),
-		dataType: 'json',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
-
-			if (json['error']) {
-				$('.alert-info').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-
-			if (json['success']) {
-				$('.alert-info').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+    $('#list').load(this.href);
 });
 
-$('#form-event').on('click', '.btn-danger', function() {
-	var element = this;
+$('#form-filter').on('submit', function(e) {
+    e.preventDefault();
 
-	$.ajax({
-		url: 'index.php?route=marketplace/event|disable&user_token={{ user_token }}&event_id=' + $(element).val(),
-		dataType: 'json',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
+    let url = $(this).serialize();
 
-			if (json['error']) {
-				$('.alert-info').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
+    window.history.pushState({}, null, 'index.php?route=marketplace/event&user_token={{ user_token }}&' + url);
 
-			if (json['success']) {
-				$('.alert-info').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('#form-event').on('click', '.btn-info', function() {
-	$('#modal-event').remove();
-
-	html  = '<div id="modal-event" class="modal">';
-	html += '  <div class="modal-dialog">';
-	html += '    <div class="modal-content">';
-	html += '      <div class="modal-header">';
-	html += '        <h5 class="modal-title">{{ text_info }}</h5>';
-	html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-	html += '      </div>';
-	html += '      <div class="modal-body">';
-	html += '        <div class="form-group">';
-	html += '          <label for="input-trigger" class="col-form-label">{{ text_trigger }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-trigger') + '</textarea>';
-	html += '        </div>';
-	html += '        <div class="form-group">';
-	html += '          <label for="input-trigger" class="col-form-label">{{ text_action }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-action') + '</textarea>';
-	html += '        </div>';
-	html += '      </div>';
-	html += '    </div>';
-	html += '  </div>';
-	html += '</div>';
-
-	$('body').append(html);
-
-	$('#modal-event').modal('show');
+    $('#list').load('index.php?route=marketplace/event.list&user_token={{ user_token }}&' + url);
 });
 //--></script>
 {{ footer }}

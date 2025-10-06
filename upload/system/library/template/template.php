@@ -1,16 +1,26 @@
 <?php
 namespace Opencart\System\Library\Template;
+/**
+ * Class Template
+ *
+ * @package Opencart\System\Library\Template
+ */
 class Template {
-	protected $directory;
-	protected $path = [];
+	protected string $directory = '';
+	/**
+	 * @var array<string, string>
+	 */
+	protected array $path = [];
 
 	/**
-	 * addPath
+	 * Add Path
 	 *
-	 * @param    string $namespace
-	 * @param    string $directory
+	 * @param string $namespace
+	 * @param string $directory
+	 *
+	 * @return void
 	 */
-	public function addPath($namespace, $directory = '') {
+	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
 			$this->directory = $namespace;
 		} else {
@@ -21,12 +31,13 @@ class Template {
 	/**
 	 * Render
 	 *
-	 * @param	string	$filename
-	 * @param	string	$code
+	 * @param string               $filename
+	 * @param array<string, mixed> $data
+	 * @param string               $code
 	 *
-	 * @return	array
+	 * @return string
 	 */
-	public function render($filename, $data = [], $code = '') {
+	public function render(string $filename, array $data = [], string $code = ''): string {
 		if (!$code) {
 			$file = $this->directory . $filename . '.tpl';
 
@@ -42,15 +53,15 @@ class Template {
 				}
 
 				if (isset($this->path[$namespace])) {
-					$file = $this->path[$namespace] . substr($filename, strlen($namespace)) . '.tpl';
+					$file = $this->path[$namespace] . substr($filename, strlen($namespace) + 1) . '.tpl';
 				}
 			}
 
-			if (isset($file) && is_file($file)) {
-				$code = file_get_contents($file);
-			} else {
-				error_log('Error: Could not load template ' . $filename . '!');
+			if (!is_file($file)) {
+				throw new \Exception('Error: Could not load template ' . $filename . '!');
 			}
+
+			$code = file_get_contents($file);
 		}
 
 		if ($code) {
@@ -58,13 +69,23 @@ class Template {
 
 			extract($data);
 
-			include($this->compile($filename . '.tpl', $code));
+			include($this->compile($filename, $code));
 
 			return ob_get_clean();
+		} else {
+			return '';
 		}
 	}
 
-	protected function compile($filename, $code) {
+	/**
+	 * Compile
+	 *
+	 * @param string $filename
+	 * @param string $code
+	 *
+	 * @return string
+	 */
+	protected function compile(string $filename, string $code): string {
 		$file = DIR_CACHE . 'template/' . hash('md5', $filename . $code) . '.php';
 
 		if (!is_file($file)) {

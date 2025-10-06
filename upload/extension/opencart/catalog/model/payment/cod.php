@@ -1,30 +1,56 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Payment;
+namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
+/**
+ * Class COD
+ *
+ * Can be called from $this->load->model('extension/opencart/payment/cod');
+ *
+ * @package Opencart\Catalog\Model\Extension\Opencart\Payment
+ */
 class COD extends \Opencart\System\Engine\Model {
-	public function getMethod($address, $total) {
-		$this->load->language('extension/payment/cod');
+	/**
+	 * Get Methods
+	 *
+	 * @param array<string, mixed> $address array of data
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function getMethods(array $address = []): array {
+		$this->load->language('extension/opencart/payment/cod');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_cod_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
-
-		if ($this->config->get('payment_cod_total') > 0 && $this->config->get('payment_cod_total') > $total) {
+		if ($this->cart->hasSubscription()) {
 			$status = false;
 		} elseif (!$this->cart->hasShipping()) {
 			$status = false;
+		} elseif (!$this->config->get('config_checkout_payment_address')) {
+			$status = true;
 		} elseif (!$this->config->get('payment_cod_geo_zone_id')) {
 			$status = true;
-		} elseif ($query->num_rows) {
-			$status = true;
 		} else {
-			$status = false;
+			// Geo Zone
+			$this->load->model('localisation/geo_zone');
+
+			$results = $this->model_localisation_geo_zone->getGeoZone((int)$this->config->get('payment_cod_geo_zone_id'), (int)$address['country_id'], (int)$address['zone_id']);
+
+			if ($results) {
+				$status = true;
+			} else {
+				$status = false;
+			}
 		}
 
 		$method_data = [];
 
 		if ($status) {
+			$option_data['cod'] = [
+				'code' => 'cod.cod',
+				'name' => $this->language->get('heading_title')
+			];
+
 			$method_data = [
 				'code'       => 'cod',
-				'title'      => $this->language->get('text_title'),
-				'terms'      => '',
+				'name'       => $this->language->get('heading_title'),
+				'option'     => $option_data,
 				'sort_order' => $this->config->get('payment_cod_sort_order')
 			];
 		}

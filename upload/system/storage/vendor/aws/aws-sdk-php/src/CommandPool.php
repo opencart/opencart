@@ -1,6 +1,7 @@
 <?php
 namespace Aws;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Promise\EachPromise;
 
@@ -72,9 +73,9 @@ class CommandPool implements PromisorInterface
     }
 
     /**
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function promise()
+    public function promise(): PromiseInterface
     {
         return $this->each->promise();
     }

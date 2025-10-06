@@ -12,6 +12,7 @@ $_['text_info']            = 'CRON Information';
 $_['text_minute']          = 'Minute';
 $_['text_hour']            = 'Hour';
 $_['text_day']             = 'Day';
+$_['text_week']            = 'Week';
 $_['text_month']           = 'Month';
 
 // Column

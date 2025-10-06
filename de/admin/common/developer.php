@@ -20,9 +20,5 @@ $_['column_action']          = 'Aktionen';
 // Entry
 $_['entry_cache']            = 'Zwischenspeicher';
 
-// Buttons
-$_['button_on']              = 'An';
-$_['button_off']             = 'Aus';
-
 // Error
 $_['error_permission']       = 'Achtung: Sie sind nicht berechtigt, Entwicklereinstellungen zu ändern!';

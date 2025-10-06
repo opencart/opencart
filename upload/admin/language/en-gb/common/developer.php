@@ -20,9 +20,5 @@ $_['column_action']          = 'Action';
 // Entry
 $_['entry_cache']            = 'Cache';
 
-// Buttons
-$_['button_on']              = 'On';
-$_['button_off']             = 'Off';
-
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify developer settings!';

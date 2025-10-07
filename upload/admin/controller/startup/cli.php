@@ -9,7 +9,7 @@ namespace Opencart\Admin\Controller\Startup;
  *
  * Usage:
  *
- * php cli_install.php start
+ * php index.php start
  *
  * @example:
  *

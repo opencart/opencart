@@ -9,11 +9,11 @@ namespace Opencart\Admin\Controller\Startup;
  *
  * Usage:
  *
- * php cli_install.php start
+ * php index.php start
  *
  * @example:
  *
- * php c://xampp/htdocs/opencart-master/upload/install/cli_install.php start
+ * php c://xampp/htdocs/opencart-master/upload/admin/index.php start
  */
 class Task extends \Opencart\System\Engine\Controller {
 	/**
@@ -22,13 +22,7 @@ class Task extends \Opencart\System\Engine\Controller {
 	 * @return \Opencart\System\Engine\Action|null
 	 */
 	public function index() {
-
-
-
-
-
-
-		return null;
+		register_shutdown_function([$this, 'trigger']);
 	}
 
 	public function start() {

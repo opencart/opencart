@@ -371,11 +371,7 @@ class ControllerAffiliateRegister extends Controller {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
-		if (!empty($this->request->post['confirm']) && !empty($this->request->post['password'])) {
-			if ($this->request->post['confirm'] != $this->request->post['password']) {
-				$this->error['confirm'] = $this->language->get('error_confirm');
-			}
-		} else {
+		if ($this->request->post['confirm'] !== $this->request->post['password']) {
 			$this->error['confirm'] = $this->language->get('error_confirm');
 		}
 		

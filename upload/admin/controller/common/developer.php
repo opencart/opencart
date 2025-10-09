@@ -16,38 +16,9 @@ class Developer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/developer');
 
-		$data['developer_sass'] = $this->config->get('developer_sass');
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('common/developer', $data));
-	}
-
-	/**
-	 * Edit
-	 *
-	 * @return void
-	 */
-	public function edit(): void {
-		$this->load->language('common/developer');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Setting
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->editSetting('developer', $this->request->post, 0);
-
-			$json['success'] = $this->language->get('text_developer_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	/**
@@ -113,11 +84,13 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Sass
+	 * SASS Catalog
+	 *
+	 * Generate catalog SASS file.
 	 *
 	 * @return void
 	 */
-	public function sass(): void {
+	public function sass_catalog(): void {
 		$this->load->language('common/developer');
 
 		$json = [];
@@ -126,27 +99,85 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$file = DIR_CATALOG . 'view/stylesheet/stylesheet.scss';
+
+		if (!is_file($file)) {
+			$json['error'] = $this->language->get('error_stylesheet');
+		}
+
 		if (!$json) {
-			// Before we delete we need to make sure there is a sass file to regenerate the css
-			$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
+			$filename = basename($file, '.scss');
+			$directory = dirname($file) . '/';
 
-			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/scss/bootstrap.scss')) {
+			$stylesheet = $directory . $filename . '.css';
+
+			if (is_file($stylesheet)) {
 				unlink($file);
 			}
 
-			$file = substr(DIR_CATALOG . 'view/stylesheet/scss/bootstrap.scss', 0, -20) . '/bootstrap.css';
+			$scss = new \ScssPhp\ScssPhp\Compiler();
+			$scss->setImportPaths($directory);
 
-			if (is_file($file)) {
+			$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
+
+			$handle = fopen($stylesheet, 'w');
+
+			fwrite($handle, $output);
+
+			fclose($handle);
+
+			$json['success'] = $this->language->get('text_sass_catalog_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * SASS Admin
+	 *
+	 * Generate admin SASS file.
+	 *
+	 * @return void
+	 */
+	public function sass_admin(): void {
+		$this->load->language('common/developer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/developer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Before we delete we need to make sure there is a sass file to regenerate the css
+		$file = DIR_APPLICATION . 'view/stylesheet/stylesheet.scss';
+
+		if (!is_file($file)) {
+			$json['error'] = $this->language->get('error_stylesheet');
+		}
+
+		if (!$json) {
+			$filename = basename($file, '.scss');
+			$directory = dirname($file) . '/';
+
+			$stylesheet = $directory . $filename . '.css';
+
+			if (is_file($stylesheet)) {
 				unlink($file);
 			}
 
-			$file = substr(DIR_CATALOG . 'view/stylesheet/stylesheet.scss', 0, -16) . '/stylesheet.css';
+			$scss = new \ScssPhp\ScssPhp\Compiler();
+			$scss->setImportPaths($directory);
 
-			if (is_file($file)) {
-				unlink($file);
-			}
+			$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
 
-			$json['success'] = $this->language->get('text_sass_success');
+			$handle = fopen($stylesheet, 'w');
+
+			fwrite($handle, $output);
+
+			fclose($handle);
+
+			$json['success'] = $this->language->get('text_sass_admin_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

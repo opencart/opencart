@@ -6,33 +6,32 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
+        <div id="alert-modal"></div>
         <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>{{ column_component }}</th>
-              <th class="w-25">{{ entry_cache }}</th>
-              <th class="text-end" style="width: 1px;">{{ column_action }}</th>
-            </tr>
-          </thead>
           <tbody>
             <tr>
-              <td>{{ text_cache }}</td>
-              <td></td>
+              <td>{{ text_cache }}<br/>
+                <span class="fw-light">{{ help_cache }}</span></td>
               <td class="text-end"><button type="button" value="cache" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
             </tr>
             <tr>
-              <td>{{ text_theme }}</td>
-              <td></td>
+              <td>{{ text_theme }}<br/>
+                <span class="fw-light">{{ help_theme }}</span></td>
               <td class="text-end"><button type="button" value="theme" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
             </tr>
             <tr>
-              <td>{{ text_sass }}</td>
-              <td><x-switch name="developer_sass" value="1" checked="{{ developer_sass }}" input-id="input-developer-sass" input-class="form-switch form-switch-lg"></x-switch></td>
-              <td class="text-end"><button type="button" value="sass" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+              <td>{{ text_sass_catalog }}<br/>
+                <span class="fw-light">{{ help_sass_catalog }}</span></td>
+              <td class="text-end"><button type="button" value="sass_catalog" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
             </tr>
             <tr>
-              <td>{{ text_vendor }}</td>
-              <td></td>
+              <td>{{ text_sass_admin }}<br/>
+                <span class="fw-light">{{ help_sass_admin }}</span></td>
+              <td class="text-end"><button type="button" value="sass_admin" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+            </tr>
+            <tr>
+              <td>{{ text_vendor }}<br/>
+                <span class="fw-light">{{ help_vendor }}</span></td>
               <td class="text-end"><button type="button" value="vendor" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
             </tr>
           </tbody>
@@ -42,35 +41,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'developer_sass\']').on('change', function() {
-    $.ajax({
-        url: 'index.php?route=common/developer.edit&user_token={{ user_token }}',
-        type: 'post',
-        data: $('input[name=\'developer_sass\']:checked'),
-        dataType: 'json',
-        beforeSend: function() {
-            $('input[name=\'developer_sass\']').prop('disabled', true);
-        },
-        complete: function() {
-            $('input[name=\'developer_sass\']').prop('disabled', false);
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
 $('#modal-developer table button').on('click', function() {
     var element = this;
 
@@ -87,11 +57,11 @@ $('#modal-developer table button').on('click', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert-modal').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert-modal').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

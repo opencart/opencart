@@ -3,11 +3,13 @@
 $_['heading_title']             = 'Developer Options';
 
 // Text
+$_['text_html_success']         = 'Success: You have cleared the HTML cache!';
 $_['text_cache_success']        = 'Success: You have cleared the cache!';
 $_['text_theme_success']        = 'Success: You have cleared the theme cache!';
 $_['text_sass_catalog_success'] = 'Success: You have modified the catalog SASS!';
 $_['text_sass_admin_success']   = 'Success: You have modified the admin SASS!';
 $_['text_vendor_success']       = 'Success: You have modified the vendor cache!';
+$_['text_html']                 = 'HTML';
 $_['text_cache']                = 'Cache';
 $_['text_theme']                = 'Theme';
 $_['text_sass_catalog']         = 'Catalog SASS';
@@ -15,6 +17,7 @@ $_['text_sass_admin']           = 'Admin SASS';
 $_['text_vendor']               = 'Vendor';
 
 // Help
+$_['help_html']                 = 'Clears all stored HTML data files.';
 $_['help_cache']                = 'Clears all stored cache data files.';
 $_['help_theme']                = 'Clears all stored theme data files.';
 $_['help_sass_catalog']         = 'Rebuilds the stored catalog SASS files.';

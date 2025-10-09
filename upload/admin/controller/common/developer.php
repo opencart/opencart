@@ -112,7 +112,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$stylesheet = $directory . $filename . '.css';
 
 			if (is_file($stylesheet)) {
-				unlink($file);
+				unlink($stylesheet);
 			}
 
 			$scss = new \ScssPhp\ScssPhp\Compiler();
@@ -163,7 +163,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$stylesheet = $directory . $filename . '.css';
 
 			if (is_file($stylesheet)) {
-				unlink($file);
+				unlink($stylesheet);
 			}
 
 			$scss = new \ScssPhp\ScssPhp\Compiler();

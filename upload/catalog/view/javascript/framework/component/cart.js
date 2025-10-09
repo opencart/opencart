@@ -44,14 +44,13 @@ class XCart extends WebComponent {
             //{% endif %}
 
             //{% if product.reward %}
-            html += '          <li>small> - {{ text_points }}: {{ product.reward }}</small></li>';
+            html += '          <li><small> - {{ text_points }}: {{ product.reward }}</small></li>';
             //{% endif %}
 
-            html += '        </ul></td>';
-            html += '        <td class="text-end text-nowrap">x {{ product.quantity }}</td>';
-            html += '        <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>';
-            html += '        <td class="text-end"><form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#cart"><input type="hidden" name="key" value="{{ product.cart_id }}"><button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button></form>';
-            html += '      </td>';
+            html += '       </ul></td>';
+            html += '     <td class="text-end text-nowrap">x {{ product.quantity }}</td>';
+            html += '     <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>';
+            html += '     <td class="text-end"><form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#cart"><input type="hidden" name="key" value="{{ product.cart_id }}"><button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button></form></td>';
             html += '   </tr>';
 
             //{% endfor %}

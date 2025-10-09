@@ -50,4 +50,8 @@ class Cli extends \Opencart\System\Engine\Controller {
 
 		return null;
 	}
+
+	public function usage() {
+
+	}
 }

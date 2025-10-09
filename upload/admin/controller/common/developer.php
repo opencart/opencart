@@ -22,6 +22,34 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * HTML
+	 *
+	 * @return void
+	 */
+	public function html(): void {
+		$this->load->language('common/developer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/developer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$files = oc_directory_read(DIR_OPENCART . 'shop/', true);
+
+			foreach ($files as $file) {
+				oc_file_delete($file);
+			}
+
+			$json['success'] = $this->language->get('text_html_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
 	 * Cache
 	 *
 	 * @return void

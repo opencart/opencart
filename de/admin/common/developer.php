@@ -1,24 +1,25 @@
 <?php
 // Heading
-$_['heading_title']          = 'Entwickleroptionen';
+$_['heading_title']             = 'Entwickleroptionen';
 
 // Text
-$_['text_developer_success'] = 'Erfolg: Sie haben die Entwicklereinstellungen geändert!';
-$_['text_cache_success']     = 'Erfolg: Sie haben den Cache geleert!';
-$_['text_theme_success']     = 'Erfolg: Sie haben den Theme-Cache geleert!';
-$_['text_sass_success']      = 'Erfolg: Sie haben den SASS-Cache geleert!';
-$_['text_vendor_success']    = 'Erfolg: Sie haben den Anbieter-Cache geleert!';
-$_['text_theme']             = 'Thema';
-$_['text_sass']              = 'SASS';
-$_['text_cache']             = 'Zwischenspeicher';
-$_['text_vendor']            = 'Verkäufer';
+$_['text_cache_success']        = 'Erfolg: Sie haben den Cache geleert!';
+$_['text_theme_success']        = 'Erfolg: Sie haben den Theme-Cache geleert!';
+$_['text_sass_catalog_success'] = 'Success: You have modified the catalog SASS!';
+$_['text_sass_admin_success']   = 'Success: You have modified the admin SASS!';
+$_['text_vendor_success']       = 'Success: You have modified the vendor cache!';
+$_['text_cache']                = 'Zwischenspeicher';
+$_['text_theme']                = 'Thema';
+$_['text_sass_catalog']         = 'Catalog SASS';
+$_['text_sass_admin']           = 'Admin SASS';
+$_['text_vendor']               = 'Verkäufer';
 
-// Column
-$_['column_component']       = 'Komponente';
-$_['column_action']          = 'Aktionen';
-
-// Entry
-$_['entry_cache']            = 'Zwischenspeicher';
+// Help
+$_['help_cache']                = 'Clears all stored cache data files.';
+$_['help_theme']                = 'Clears all stored theme data files.';
+$_['help_sass_catalog']         = 'Rebuilds the stored catalog SASS files.';
+$_['help_sass_admin']           = 'Rebuilds the stored admin SASS files.';
+$_['help_vendor']               = 'Rebuilds the included vendor file.';
 
 // Error
-$_['error_permission']       = 'Achtung: Sie sind nicht berechtigt, Entwicklereinstellungen zu ändern!';
+$_['error_permission']          = 'Achtung: Sie sind nicht berechtigt, Entwicklereinstellungen zu ändern!';

@@ -14,9 +14,6 @@
 /upload/catalog/view/html/*
 !/upload/catalog/view/html/index.html
 
-# CSS Files
-/upload/catalog/view/stylesheet/stylesheet.css
-
 # Catalog HTML Files
 /upload/shop/*
 

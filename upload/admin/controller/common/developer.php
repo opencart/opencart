@@ -36,10 +36,10 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = oc_directory_read(DIR_OPENCART . 'shop/', true);
+			$files = oc_directory_read(DIR_OPENCART . 'shop/');
 
 			foreach ($files as $file) {
-				oc_file_delete($file);
+				oc_directory_delete($file);
 			}
 
 			$json['success'] = $this->language->get('text_html_success');

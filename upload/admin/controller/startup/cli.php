@@ -37,7 +37,7 @@ class Cli extends \Opencart\System\Engine\Controller {
 
 			switch ($command) {
 				case 'start':
-					return new \Opencart\System\Engine\Action('startup/task.start', $argv);
+					return new \Opencart\System\Engine\Action('marketplace/task.cli', $argv);
 
 					break;
 				case 'usage':

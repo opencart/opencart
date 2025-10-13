@@ -52,16 +52,15 @@ class Curl {
 	 *
 	 * @return array<string, mixed>
 	 */
-	public function send(string $route, array $data = []): array {
-		// Make remote call
-		$url  = $this->url . 'index.php?route=' . $route;
-
+	public function send(string $url, array $data = []): array {
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL, $url);
+
 		foreach ($this->option as $key => $value) {
 			curl_setopt($curl, $key, $value);
 		}
+
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
 		$response = curl_exec($curl);

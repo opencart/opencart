@@ -168,9 +168,9 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $task_total,
-			'page'  => $page,
-			'limit' => $this->config->get('config_pagination_admin'),
+			'total'    => $task_total,
+			'page'     => $page,
+			'limit'    => $this->config->get('config_pagination_admin'),
 			'callback' => function(int $page): string {
 				return $this->url->link('marketplace/task.list', 'user_token=' . $this->session->data['user_token'] . ($page ? '&page=' . $page : ''));
 			}
@@ -179,6 +179,76 @@ class Task extends \Opencart\System\Engine\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($task_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($task_total - $this->config->get('config_pagination_admin'))) ? $task_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $task_total, ceil($task_total / $this->config->get('config_pagination_admin')));
 
 		return $this->load->view('marketplace/task_list', $data);
+	}
+
+	/**
+	 * Command Line
+	 *
+	 * Called from
+	 *
+	 * @return void
+	 */
+	public function cli() {
+		$this->load->model('setting/task');
+
+		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
+
+		if ($task_total) {
+			//return;
+		}
+
+		$filter_data = [
+			'filter_status' => 'pending',
+			'start'         => 0,
+			'limit'         => 1
+		];
+
+		$results = $this->model_setting_task->getTasks($filter_data);
+
+		while ($results) {
+			$task = array_shift($results);
+
+			$this->model_setting_task->editStatus($task['task_id'], 'processing');
+
+			try {
+				$output = $this->load->controller($task['action'], $task['args']);
+			} catch (\Exception $e) {
+				$output = $e;
+			}
+
+			if ($output instanceof \Exception) {
+				$output = ['error' => $output->getMessage() . ' in ' . $output->getFile() . ' on line ' . $output->getLine()];
+			}
+
+			// If task does not exist
+			if (isset($output['error'])) {
+				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output);
+			}
+
+			if (isset($output['success'])) {
+				$this->model_setting_task->editStatus($task['task_id'], 'complete', $output);
+
+				$this->model_setting_task->deleteTask($task['task_id']);
+
+				$next = $this->model_setting_task->getTasks($filter_data);
+
+				if ($next) {
+					array_push($results, $next[0]);
+				}
+			}
+
+			$this->log->write($output);
+
+			if (stream_isatty(STDOUT)) {
+
+
+
+
+				fwrite(STDOUT, $output['success'] . "\n");
+			}
+
+			sleep(1);
+		}
 	}
 
 	/**
@@ -201,17 +271,17 @@ class Task extends \Opencart\System\Engine\Controller {
 			$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
 			//if (!$task_total) {
-
 			//}
 
-			$output = shell_exec('ps aux | grep php');
+			//$output = shell_exec('ps aux | grep php');
 
-			echo $output;
+			//echo $output;
 
 			if (strtoupper(substr(php_uname(), 0, 3)) == 'WIN') {
 				pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
 			} else {
-				exec('php ' . DIR_APPLICATION . 'index.php start > /dev/null 2>&1 &');
+				//  > /dev/null 2>&1 &
+				shell_exec('php ' . DIR_APPLICATION . 'index.php start');
 			}
 
 			$json['success'] = $this->language->get('text_success');

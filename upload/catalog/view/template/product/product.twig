@@ -5,10 +5,12 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  <div class="row">{{ column_left }}
+  <div class="row">
+    {{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
       <div class="row mb-3">
+
         {% if thumb or images %}
           <div class="col-sm">
             <div class="image magnific-popup">
@@ -25,6 +27,7 @@
             </div>
           </div>
         {% endif %}
+
         <div class="col-sm">
           <h1>{{ heading_title }}</h1>
           <ul class="list-unstyled mb-1">
@@ -243,6 +246,7 @@
         {% endif %}
       </ul>
       <div class="tab-content">
+
         <div id="tab-description" class="tab-pane fade show active mb-4">{{ description }}
           {% if tags %}
             <p>{{ text_tags }}
@@ -252,6 +256,7 @@
             </p>
           {% endif %}
         </div>
+
         {% if attribute_groups %}
           <div id="tab-specification" class="tab-pane fade">
             <div class="table-responsive">

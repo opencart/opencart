@@ -84,6 +84,7 @@ export class WebComponent extends HTMLElement {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    import('./component/cart.js');
     import('./component/currency.js');
     import('./component/country.js');
     import('./component/switch.js');

@@ -117,7 +117,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function banner(array $args = []): array {
+	public function info(array $args = []): array {
 		$this->load->language('task/catalog/banner');
 
 		$this->load->model('setting/store');
@@ -145,7 +145,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$banner_info['status']) {
-			return [];
+			return ['success' => sprintf($this->language->get('error_skip'), $store_info['name'], $language_info['name'], $banner_info['name'])];
 		}
 
 		$base = DIR_CATALOG . 'view/data/';

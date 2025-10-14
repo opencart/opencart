@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_task']       = 'Generating order status task list!';
-$_['text_list']       = 'Generating %s order status list!';
+$_['text_list']       = 'Generating %s order status data!';
 $_['text_clear']      = 'Order Status data cleared!';
 
 // Error

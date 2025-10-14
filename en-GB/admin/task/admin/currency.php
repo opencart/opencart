@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_task']       = 'Generating currency task list!';
-$_['text_list']       = 'Generating %s currency list!';
+$_['text_list']       = 'Generating %s currency data!';
 $_['text_refresh']    = 'Fetching %s latest currency values!';
 $_['text_clear']      = 'Currency data cleared!';
 

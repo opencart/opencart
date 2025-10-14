@@ -234,7 +234,7 @@ class Task extends \Opencart\System\Engine\Model {
 	/*
 	 * Add History
 	 *
-	 * @param int    $task_id   primary key of the task record
+	 * @param int    $code
 	 * @param string $comment
 	 * @param bool   $status
 	 *
@@ -249,7 +249,6 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the task history records in the database.
 	 *
-	 * @param int $task_id primary key of the task record
 	 * @param int $start
 	 * @param int $limit
 	 *
@@ -280,15 +279,13 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the total number of total return history records in the database.
 	 *
-	 * @param int $task_id primary key of the return record
-	 *
 	 * @return int total number of history records that have task ID
 	 *
 	 * @example
 	 *
 	 * $this->load->model('setting/task');
 	 *
-	 * $history_total = $this->model_setting_task->getTotalHistories($task_id);
+	 * $history_total = $this->model_setting_task->getTotalHistories();
 	 */
 	public function getTotalHistories(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task_history`");

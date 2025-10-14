@@ -7345,6 +7345,10 @@ function oc_db_schema() {
 				'type' => 'text'
 			],
 			[
+				'name' => 'response',
+				'type' => 'text'
+			],
+			[
 				'name' => 'status',
 				'type' => 'enum(\'pending\',\'processing\',\'paused\',\'complete\',\'failed\')'
 			],
@@ -7359,40 +7363,6 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'task_id'
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'task_history',
-		'field' => [
-			[
-				'name'           => 'task_history_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'code',
-				'type' => 'varchar(32)'
-			],
-			[
-				'name' => 'comment',
-				'type' => 'text'
-			],
-			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'task_history_id'
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',

@@ -61,6 +61,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			echo 'h';
+
 			if ($parts) {
 				$this->request->get['route'] = $this->config->get('action_error');
 			}

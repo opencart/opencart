@@ -17,6 +17,7 @@ $_['text_failed']          = 'Failed';
 // Column
 $_['column_code']          = 'Task Code';
 $_['column_status']        = 'Status';
+$_['column_comment']       = 'Comment';
 $_['column_date_added']    = 'Date Added';
 $_['column_date_modified'] = 'Last Run';
 $_['column_action']        = 'Action';
@@ -26,7 +27,6 @@ $_['entry_code']           = 'Task Code';
 $_['entry_status']         = 'Status';
 $_['entry_action']         = 'Action';
 $_['entry_args']           = 'Args';
-$_['entry_response']       = 'Response';
 
 // Button
 $_['button_run']           = 'Run Tasks';

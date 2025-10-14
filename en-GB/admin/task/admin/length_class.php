@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_task']       = 'Generating length class task list!';
-$_['text_list']       = 'Generating %s length class list!';
+$_['text_list']       = 'Generating %s length class data!';
 $_['text_clear']      = 'Length Class data cleared!';
 
 // Error

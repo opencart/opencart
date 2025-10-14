@@ -183,10 +183,7 @@ class Task extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		foreach ($query->rows as $result) {
-			$task_data[] = [
-				'args'     => $result['args'] ? json_decode($result['args'], true) : [],
-				'response' => $result['response'] ? json_decode($result['response'], true) : [],
-			] + $result;
+			$task_data[] = ['args' => $result['args'] ? json_decode($result['args'], true) : []] + $result;
 		}
 
 		return $task_data;
@@ -230,6 +227,71 @@ class Task extends \Opencart\System\Engine\Model {
 		}
 
 		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
+	/*
+	 * Add History
+	 *
+	 * @param int    $task_id   primary key of the task record
+	 * @param string $comment
+	 * @param bool   $status
+	 *
+	 * @return void
+	 */
+	public function addHistory(string $code, string $comment = '', bool $status = false): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "task_history` SET `code` = '" . $this->db->escape($code) . "', `comment` = '" . $this->db->escape($comment) . "', `status` = '" . (bool)$status . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * Get Histories
+	 *
+	 * Get the record of the task history records in the database.
+	 *
+	 * @param int $task_id primary key of the task record
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return array<int, array<string, mixed>> history records that have task ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/task');
+	 *
+	 * $results = $this->model_setting_task->getHistories($return_id, $start, $limit);
+	 */
+	public function getHistories(int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "task_history` ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
+	}
+
+	/**
+	 * Get Total Histories
+	 *
+	 * Get the total number of total return history records in the database.
+	 *
+	 * @param int $task_id primary key of the return record
+	 *
+	 * @return int total number of history records that have task ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('setting/task');
+	 *
+	 * $history_total = $this->model_setting_task->getTotalHistories($task_id);
+	 */
+	public function getTotalHistories(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task_history`");
 
 		return (int)$query->row['total'];
 	}

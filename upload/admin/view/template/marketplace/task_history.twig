@@ -2,23 +2,24 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
+        <th>{{ column_code }}</th>
         <th>{{ column_comment }}</th>
         <th class="text-center">{{ column_status }}</th>
         <th>{{ column_date_added }}</th>
       </tr>
     </thead>
     <tbody>
-      {% if tasks %}
-        {% for task in tasks %}
+      {% if histories %}
+        {% for history in histories %}
           <tr>
-            <td>{{ task.comment }}</td>
-            <td class="text-center">{% if task.status %}
-                <span class="badge bg-success">{{ text_success }}</span>
+            <td>{{ history.code }}</td>
+            <td>{{ history.comment }}</td>
+            <td class="text-center">{% if history.status %}
+                <span class="badge bg-success">{{ text_complete }}</span>
               {% else %}
                 <span class="badge bg-danger">{{ text_failed }}</span>
               {% endif %}</td>
-            <td>{{ task.date_added }}</td>
-            <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-task-{{ task.task_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button></td>
+            <td>{{ history.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}

@@ -215,7 +215,7 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$results = $this->model_setting_task->getHistories($task_id, ($page - 1) * $limit, $limit);
+		$results = $this->model_setting_task->getHistories(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$data['histories'][] = [
@@ -225,7 +225,7 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		// Total Histories
-		$history_total = $this->model_setting_task->getTotalHistories($task_id);
+		$history_total = $this->model_setting_task->getTotalHistories();
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
@@ -240,6 +240,42 @@ class Task extends \Opencart\System\Engine\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));
 
 		return $this->load->view('marketplace/task_history', $data);
+	}
+
+	/**
+	 * Start
+	 *
+	 * @return void
+	 */
+	public function start() {
+		$this->load->language('marketplace/task');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('setting/task');
+
+		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
+
+		//if (!$task_total) {
+		//}
+
+		if (!$json) {
+			if (strtoupper(substr(php_uname(), 0, 3)) == 'WIN') {
+				pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
+			} else {
+				// > /dev/null 2>&1 &
+				shell_exec('php ' . DIR_APPLICATION . 'index.php start');
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	/**
@@ -284,10 +320,14 @@ class Task extends \Opencart\System\Engine\Controller {
 			// If task does not exist
 			if (isset($output['error'])) {
 				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output);
+
+				$this->model_setting_task->addHistory($task['code'], $output['error'], false);
 			}
 
 			if (isset($output['success'])) {
 				$this->model_setting_task->editStatus($task['task_id'], 'complete', $output);
+
+				$this->model_setting_task->addHistory($task['code'], $output['success'], true);
 
 				$this->model_setting_task->deleteTask($task['task_id']);
 
@@ -298,57 +338,8 @@ class Task extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$this->log->write($output);
-
-			if (stream_isatty(STDOUT)) {
-				foreach ($results as $result) {
-					fwrite(STDOUT, $output['success'] . "\n");
-
-				}
-
-
-
-
-			}
-
 			sleep(1);
 		}
-	}
-
-	/**
-	 * Start
-	 *
-	 * @return void
-	 */
-	public function start() {
-		$this->load->language('marketplace/task');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/task');
-
-			$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
-
-			//if (!$task_total) {
-			//}
-
-			if (strtoupper(substr(php_uname(), 0, 3)) == 'WIN') {
-				pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
-			} else {
-				// > /dev/null 2>&1 &
-				shell_exec('php ' . DIR_APPLICATION . 'index.php start');
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

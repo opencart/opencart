@@ -7374,8 +7374,8 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'task_id',
-				'type' => 'int(11)'
+				'name' => 'code',
+				'type' => 'varchar(32)'
 			],
 			[
 				'name' => 'comment',

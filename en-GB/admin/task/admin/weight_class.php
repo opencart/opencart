@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_task']       = 'Generating weight class task list!';
-$_['text_list']       = 'Generating %s weight class list!';
+$_['text_list']       = 'Generating %s weight class data!';
 $_['text_clear']      = 'Weight Class data cleared!';
 
 // Error

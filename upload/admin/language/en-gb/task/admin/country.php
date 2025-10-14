@@ -1,8 +1,8 @@
 <?php
 // Text
 $_['text_task']         = 'Generating country task list!';
-$_['text_list']         = 'Generating %s country list!';
-$_['text_info']         = 'Generating %s %s country information!';
+$_['text_list']         = 'Generating %s country data!';
+$_['text_info']         = 'Generating %s %s country data!';
 $_['text_clear']        = 'Country data cleared!';
 
 // Error

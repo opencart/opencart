@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_task']       = 'Generating subscription status task list!';
-$_['text_list']       = 'Generating %s subscription status list!';
+$_['text_list']       = 'Generating %s subscription status data!';
 $_['text_clear']      = 'Subscription Status data cleared!';
 
 // Error

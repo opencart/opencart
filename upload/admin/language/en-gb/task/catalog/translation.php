@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_task']       = 'Generating translation task list!';
-$_['text_write']      = 'Generating %s %s %s translation file!';
+$_['text_write']      = 'Generating %s %s %s translation data!';
 $_['text_clear']      = 'Translation data cleared!';
 
 // Error

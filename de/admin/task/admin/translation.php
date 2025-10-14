@@ -1,8 +1,8 @@
 <?php
 // Text
 $_['text_task']       = 'Generating translation task list!';
-$_['text_list']       = 'Generating %s translation list!';
-$_['text_clear']      = 'Translation information cleared!';
+$_['text_list']       = 'Generating %s translation data!';
+$_['text_clear']      = 'Translation data cleared!';
 
 // Error
 $_['error_required']  = 'Error: %s required!';

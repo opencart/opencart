@@ -5,6 +5,6 @@ $_['text_list']       = 'Generating %s subscription list!';
 $_['text_info']       = 'Generating %s %s subscription information!';
 
 // Error
-$_['error_language']  = 'Achtung: Sprache konnte nicht gefunden werden!';
-$_['error_directory'] = 'Warning: Directory %s does not exist or is not writable!';
-$_['error_file']      = 'Warning: File %s could not be written!';
+$_['error_language']  = 'Error: Language could not be found!';
+$_['error_directory'] = 'Error: Directory %s does not exist or is not writable!';
+$_['error_file']      = 'Error: File %s could not be written!';

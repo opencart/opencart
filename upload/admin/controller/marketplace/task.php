@@ -201,11 +201,9 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (strtoupper(substr(php_uname(), 0, 3)) == 'WIN') {
-				//pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
-				pclose(popen('php ' . DIR_APPLICATION . 'index.php start', 'r'));
+				pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
 			} else {
-				// > /dev/null 2>&1 &
-				shell_exec('php ' . DIR_APPLICATION . 'index.php start');
+				shell_exec('php ' . DIR_APPLICATION . 'index.php start > /dev/null 2>&1 &');
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -254,8 +252,6 @@ class Task extends \Opencart\System\Engine\Controller {
 				$output = ['error' => $output->getMessage() . ' in ' . $output->getFile() . ' on line ' . $output->getLine()];
 			}
 
-
-
 			// If task does not exist
 			if (isset($output['error'])) {
 				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output['error']);
@@ -265,12 +261,12 @@ class Task extends \Opencart\System\Engine\Controller {
 				$this->model_setting_task->editStatus($task['task_id'], 'complete', $output['success']);
 
 				$this->model_setting_task->deleteTask($task['task_id']);
+			}
 
-				$next = $this->model_setting_task->getTasks($filter_data);
+			$next = $this->model_setting_task->getTasks($filter_data);
 
-				if ($next) {
-					array_push($results, $next[0]);
-				}
+			if ($next) {
+				array_push($results, $next[0]);
 			}
 
 			sleep(1);

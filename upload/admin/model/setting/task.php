@@ -45,7 +45,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_setting_task->editStatus($task_id, $status);
 	 */
-	public function editStatus(int $task_id, string $status, array $response = []): void {
+	public function editStatus(int $task_id, string $status, string $response = ''): void {
 		$allowed = [
 			'pending',
 			'processing',
@@ -58,7 +58,7 @@ class Task extends \Opencart\System\Engine\Model {
 			$status = 'failed';
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `response` = '" . $this->db->escape(json_encode($response)) . "', `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "task` SET `response` = '" . $this->db->escape($response) . "', `status` = '" . $this->db->escape($status) . "', `date_modified` = NOW() WHERE `task_id` = '" . (int)$task_id . "'");
 	}
 
 	/**
@@ -227,68 +227,6 @@ class Task extends \Opencart\System\Engine\Model {
 		}
 
 		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
-	}
-
-	/*
-	 * Add History
-	 *
-	 * @param int    $code
-	 * @param string $comment
-	 * @param bool   $status
-	 *
-	 * @return void
-	 */
-	public function addHistory(string $code, string $comment = '', bool $status = false): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "task_history` SET `code` = '" . $this->db->escape($code) . "', `comment` = '" . $this->db->escape($comment) . "', `status` = '" . (bool)$status . "', `date_added` = NOW()");
-	}
-
-	/**
-	 * Get Histories
-	 *
-	 * Get the record of the task history records in the database.
-	 *
-	 * @param int $start
-	 * @param int $limit
-	 *
-	 * @return array<int, array<string, mixed>> history records that have task ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('setting/task');
-	 *
-	 * $results = $this->model_setting_task->getHistories($return_id, $start, $limit);
-	 */
-	public function getHistories(int $start = 0, int $limit = 10): array {
-		if ($start < 0) {
-			$start = 0;
-		}
-
-		if ($limit < 1) {
-			$limit = 10;
-		}
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "task_history` ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
-
-		return $query->rows;
-	}
-
-	/**
-	 * Get Total Histories
-	 *
-	 * Get the total number of total return history records in the database.
-	 *
-	 * @return int total number of history records that have task ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('setting/task');
-	 *
-	 * $history_total = $this->model_setting_task->getTotalHistories();
-	 */
-	public function getTotalHistories(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task_history`");
 
 		return (int)$query->row['total'];
 	}

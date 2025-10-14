@@ -38,7 +38,7 @@ class Cli extends \Opencart\System\Engine\Controller {
 			switch ($command) {
 				case 'start':
 					if (stream_isatty(STDOUT)) {
-						fwrite(STDOUT, 'Started processing task list!' . "\n");
+						fwrite(STDOUT, $this->language->get('text_start') . "\n");
 					}
 
 					return new \Opencart\System\Engine\Action('marketplace/task.cli', $argv);

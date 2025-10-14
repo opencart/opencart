@@ -76,7 +76,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$return_reason_data = [];
 
-		$this->load->model('catalog /review');
+		$this->load->model('catalog/review');
 
 		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
 

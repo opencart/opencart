@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_task']       = 'Generating store task list!';
-$_['text_list']       = 'Generating %s store list!';
+$_['text_list']       = 'Generating %s store data!';
 $_['text_clear']      = 'Store data cleared!';
 
 // Error

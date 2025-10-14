@@ -7366,10 +7366,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'task_log',
+		'name'  => 'task_history',
 		'field' => [
 			[
-				'name'           => 'task_log_id',
+				'name'           => 'task_history_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
 			],
@@ -7378,7 +7378,7 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'output',
+				'name' => 'comment',
 				'type' => 'text'
 			],
 			[
@@ -7392,7 +7392,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'task_log_id'
+			'task_history_id'
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',

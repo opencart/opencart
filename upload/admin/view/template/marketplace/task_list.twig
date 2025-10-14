@@ -58,25 +58,12 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="input-action-{{ task.task_id }}" class="form-label">{{ entry_action }}</label> <input type="text" value="{{ task.action }}" id="input-action-{{ task.task_id }}" class="form-control" readonly/>
+            <label for="input-action-{{ task.task_id }}" class="form-label">{{ entry_action }}</label>
+            <input type="text" value="{{ task.action }}" id="input-action-{{ task.task_id }}" class="form-control" readonly/>
           </div>
           <div class="mb-3">
-            <label for="input-args-{{ task.task_id }}" class="form-label">{{ entry_args }}</label> <textarea rows="5" id="input-args-{{ task.task_id }}" class="form-control" readonly>{{ task.args }}</textarea>
-          </div>
-          <div>
-            <label for="input-response-{{ task.task_id }}" class="form-label">{{ entry_response }}</label> <textarea rows="5" id="input-response-{{ task.task_id }}" class="form-control" readonly>
-                {{ response }}
-
-              {% for response in task.response %}
-
-                {% if response %}
-
-                {% else %}
-
-                {% endif %}
-
-              {% endfor %}
-            </textarea>
+            <label for="input-args-{{ task.task_id }}" class="form-label">{{ entry_args }}</label>
+            <textarea rows="5" id="input-args-{{ task.task_id }}" class="form-control" readonly>{{ task.args }}</textarea>
           </div>
         </div>
       </div>

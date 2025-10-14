@@ -63,7 +63,18 @@
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
           <div class="card-body">
-            <div id="list">{{ list }}</div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+              <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="tab-general" class="tab-pane active">
+                <div id="list">{{ list }}</div>
+              </div>
+              <div id="tab-history" class="tab-pane">
+                <div id="history">{{ history }}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -75,6 +86,12 @@ $('#list').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
     $('#list').load(this.href);
+});
+
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
 });
 
 $('#form-filter').on('submit', function(e) {

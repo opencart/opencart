@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{{ column_comment }}</th>
+        <th class="text-center">{{ column_status }}</th>
+        <th>{{ column_date_added }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if tasks %}
+        {% for task in tasks %}
+          <tr>
+            <td>{{ task.comment }}</td>
+            <td class="text-center">{% if task.status %}
+                <span class="badge bg-success">{{ text_success }}</span>
+              {% else %}
+                <span class="badge bg-danger">{{ text_failed }}</span>
+              {% endif %}</td>
+            <td>{{ task.date_added }}</td>
+            <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-task-{{ task.task_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="3">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

@@ -3,8 +3,8 @@
     <tr>
       <th>{{ column_date_added }}</th>
       <th>{{ column_comment }}</th>
-      <th>{{ column_status }}</th>
-      <th>{{ column_notify }}</th>
+      <th class="text-center">{{ column_status }}</th>
+      <th class="text-center">{{ column_notify }}</th>
     </tr>
   </thead>
   <tbody>
@@ -13,8 +13,12 @@
         <tr>
           <td>{{ history.date_added }}</td>
           <td>{{ history.comment }}</td>
-          <td>{{ history.return_status }}</td>
-          <td>{{ history.notify }}</td>
+          <td class="text-center">{{ history.return_status }}</td>
+          <td class="text-center">{% if history.notify %}
+              <span class="badge bg-success">{{ text_yes }}</span>
+            {% else %}
+              <span class="badge bg-danger">{{ text_no }}</span>
+            {% endif %}</td>
         </tr>
       {% endfor %}
     {% else %}

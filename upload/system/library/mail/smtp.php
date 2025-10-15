@@ -144,17 +144,6 @@ class Smtp {
 	}
 
 	/**
-	 * Set Parameter
-	 *
-	 * @param string $parameter
-	 *
-	 * @return void
-	 */
-	public function setParameter(string $parameter): void {
-		$this->parameter = $parameter;
-	}
-
-	/**
 	 * Send
 	 *
 	 * @return bool
@@ -174,6 +163,10 @@ class Smtp {
 
 		if (empty($this->subject)) {
 			throw new \Exception('Error: E-Mail subject required!');
+		}
+
+		if (empty($this->message)) {
+			throw new \Exception('Error: E-Mail message required!');
 		}
 
 		if (empty($this->smtp_hostname)) {
@@ -198,6 +191,12 @@ class Smtp {
 
 		$servername = parse_url(HTTP_SERVER, PHP_URL_HOST);
 
+		if (!is_array($this->to)) {
+			$to = $this->to;
+		} else {
+			$to = implode(',', $this->to);
+		}
+
 		$boundary = '----=_NextPart_' . md5((string)time());
 
 		$header  = 'MIME-Version: 1.0' . PHP_EOL;
@@ -216,9 +215,6 @@ class Smtp {
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
 		$header .= 'X-Mailer: PHP/' . PHP_VERSION . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
-
-
-
 
 		if (substr($this->smtp_hostname, 0, 3) == 'tls') {
 			$hostname = substr($this->smtp_hostname, 6);
@@ -297,23 +293,21 @@ class Smtp {
 
 		$this->handleReply($handle, 250, 'Error: MAIL FROM not accepted from server!');
 
-		if (!is_array($this->to)) {
-			fwrite($handle, 'RCPT TO: <' . $this->to . '>' . "\r\n");
+		$recipients = [];
 
-			$reply = $this->handleReply($handle, false, 'RCPT TO [!array]');
+		if (is_array($this->to)) {
+			$recipients = $this->to;
+		} else {
+			$recipients[] = $this->to;
+		}
+
+		foreach ($recipients as $recipient) {
+			fwrite($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
+
+			$reply = $this->handleReply($handle, false, 'RCPT TO [array]');
 
 			if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
 				throw new \Exception('Error: RCPT TO not accepted from server!');
-			}
-		} else {
-			foreach ($this->to as $recipient) {
-				fwrite($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
-
-				$reply = $this->handleReply($handle, false, 'RCPT TO [array]');
-
-				if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
-					throw new \Exception('Error: RCPT TO not accepted from server!');
-				}
 			}
 		}
 
@@ -343,10 +337,11 @@ class Smtp {
 		fclose($handle);
 
 		return true;
-
 	}
 
 	/**
+	 * Handle Reply
+	 *
 	 * @param resource     $handle
 	 * @param false|int    $status_code
 	 * @param false|string $error_text

@@ -113,17 +113,6 @@ class Mail {
 	}
 
 	/**
-	 * Set Parameter
-	 *
-	 * @param string $parameter
-	 *
-	 * @return void
-	 */
-	public function setParameter(string $parameter): void {
-		$this->parameter = $parameter;
-	}
-
-	/**
 	 * Send
 	 *
 	 * @return bool
@@ -145,13 +134,23 @@ class Mail {
 			throw new \Exception('Error: E-Mail subject required!');
 		}
 
+		if (empty($this->message)) {
+			throw new \Exception('Error: E-Mail message required!');
+		}
+
+		if (!is_array($this->to)) {
+			$to = $this->to;
+		} else {
+			$to = implode(',', $this->to);
+		}
+
 		$boundary = '----=_NextPart_' . md5((string)time());
 
 		$header  = 'MIME-Version: 1.0' . PHP_EOL;
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 
-		if (empty($this->option['reply_to'])) {
+		if (empty($this->reply_to)) {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 		} else {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
@@ -164,9 +163,9 @@ class Mail {
 		ini_set('sendmail_from', $this->from);
 
 		if (!empty($this->parameter)) {
-			return mail($this->to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $this->message, $header, $this->parameter);
+			return mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $this->message, $header, $this->parameter);
 		} else {
-			return mail($this->to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $this->message, $header);
+			return mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $this->message, $header);
 		}
 	}
 }

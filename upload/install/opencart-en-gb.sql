@@ -3189,6 +3189,19 @@ VALUES (0, 1, 'language', 'en-gb', 'en-gb', -2),
 -----------------------------------------------------------
 
 --
+-- Dumping data for table `oc_seo_regex`
+--
+
+INSERT INTO `oc_seo_regex` (`seo_regex_id`, `key`, `match`, `replace`, `keyword`, `value`, `sort_order`)
+VALUES ('1', 'page', '/^(\\d+)$/', 'page-$1', '/^page-(\\d+)$/', '$1', '10'),
+       ('2', 'limit', '/^(\\d+)$/', 'limit-$1', '/^limit-(\\d+)$/', '$1', '11'),
+       ('3', 'filter', '/^(\\d+)$/', 'filter-$1', '/^filter-(\\d+)$/', '$1', '0'),
+       ('4', 'filter', '^/(\\d+),(\\d+)$/', 'filter-$1-$2', '/^filter-(\\d+)-(\\d+)$/', '$1,$2', '0'),
+       ('5', 'customer_token', '/^(\\s+)$/', 'customer-token-$1', '/^customer-token-(\\s+)$/', '$1', '0');
+
+-----------------------------------------------------------
+
+--
 -- Dumping data for table `oc_statistics`
 --
 

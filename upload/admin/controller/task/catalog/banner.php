@@ -145,7 +145,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$banner_info['status']) {
-			return ['success' => sprintf($this->language->get('error_skip'), $store_info['name'], $language_info['name'], $banner_info['name'])];
+			return ['success' => sprintf($this->language->get('text_skip'), $store_info['name'], $language_info['name'], $banner_info['name'])];
 		}
 
 		$base = DIR_CATALOG . 'view/data/';

@@ -46,10 +46,6 @@ class Mail {
 	 * @return void
 	 */
 	public function setTo(string|array $to): void {
-		if (is_array($to)) {
-			$to = implode(',', $to);
-		}
-
 		$this->adaptor->setTo($to);
 	}
 
@@ -142,7 +138,7 @@ class Mail {
 
 		$message = '--' . $boundary . PHP_EOL;
 
-		if (empty($this->option['html'])) {
+		if (empty($this->html)) {
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
 			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
 			$message .= chunk_split(base64_encode($this->text)) . PHP_EOL;

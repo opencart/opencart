@@ -1,5 +1,7 @@
 <?php
 /**
+ * Class SMTP
+ *
  * Basic SMTP mail class
  */
 namespace Opencart\System\Library\Mail;
@@ -8,18 +10,61 @@ namespace Opencart\System\Library\Mail;
  */
 class Smtp {
 	/**
-	 * @var array<string, mixed>
+	 * @var string
 	 */
-	protected array $option = [];
+	protected string $to = '';
 	/**
-	 * @var array<string, false|int>
+	 * @var string
 	 */
-	protected array $default = [
-		'smtp_port'    => 25,
-		'smtp_timeout' => 5,
-		'max_attempts' => 3,
-		'verp'         => false
-	];
+	protected string $from = '';
+	/**
+	 * @var string
+	 */
+	protected string $sender = '';
+	/**
+	 * @var string
+	 */
+	protected string $reply_to = '';
+	/**
+	 * @var string
+	 */
+	protected string $subject = '';
+	/**
+	 * @var string
+	 */
+	protected string $message = '';
+	/**
+	 * @var string
+	 */
+	protected string $parameter = '';
+	/**
+	 * @var string
+	 */
+	protected string $smtp_hostname = '';
+	/**
+	 * @var string
+	 */
+	protected string $smtp_username = '';
+	/**
+	 * @var string
+	 */
+	protected string $smtp_password = '';
+	/**
+	 * @var string
+	 */
+	protected int $smtp_port = 25;
+	/**
+	 * @var string
+	 */
+	protected int $smtp_timeout = 5;
+	/**
+	 * @var string
+	 */
+	protected int $max_attempts = 3;
+	/**
+	 * @var string
+	 */
+	protected bool $verp = false;
 
 	/**
 	 * Constructor
@@ -27,13 +72,86 @@ class Smtp {
 	 * @param array<string, mixed> $option
 	 */
 	public function __construct(array $option = []) {
-		foreach ($this->default as $key => $value) {
-			if (!isset($option[$key])) {
-				$option[$key] = $value;
-			}
+		foreach ($option as $key => $value) {
+			$this->{$key} = $value;
 		}
+	}
 
-		$this->option = $option;
+	/**
+	 * Set To
+	 *
+	 * @param array<string>|string $to
+	 *
+	 * @return void
+	 */
+	public function setTo($to): void {
+		$this->to = $to;
+	}
+
+	/**
+	 * Set From
+	 *
+	 * @param string $from
+	 *
+	 * @return void
+	 */
+	public function setFrom(string $from): void {
+		$this->from = $from;
+	}
+
+	/**
+	 * Set Sender
+	 *
+	 * @param string $sender
+	 *
+	 * @return void
+	 */
+	public function setSender(string $sender): void {
+		$this->sender = $sender;
+	}
+
+	/**
+	 * Set Reply To
+	 *
+	 * @param string $reply_to
+	 *
+	 * @return void
+	 */
+	public function setReplyTo(string $reply_to): void {
+		$this->reply_to = $reply_to;
+	}
+
+	/**
+	 * Set Subject
+	 *
+	 * @param string $subject
+	 *
+	 * @return void
+	 */
+	public function setSubject(string $subject): void {
+		$this->subject = $subject;
+	}
+
+	/**
+	 * Set Message
+	 *
+	 * @param string $message
+	 *
+	 * @return void
+	 */
+	public function setMessage(string $message): void {
+		$this->message = $message;
+	}
+
+	/**
+	 * Set Parameter
+	 *
+	 * @param string $parameter
+	 *
+	 * @return void
+	 */
+	public function setParameter(string $parameter): void {
+		$this->parameter = $parameter;
 	}
 
 	/**
@@ -42,114 +160,80 @@ class Smtp {
 	 * @return bool
 	 */
 	public function send(): bool {
-		if (empty($this->option['smtp_hostname'])) {
+		if (empty($this->to)) {
+			throw new \Exception('Error: E-Mail to required!');
+		}
+
+		if (empty($this->from)) {
+			throw new \Exception('Error: E-Mail from required!');
+		}
+
+		if (empty($this->sender)) {
+			throw new \Exception('Error: E-Mail sender required!');
+		}
+
+		if (empty($this->subject)) {
+			throw new \Exception('Error: E-Mail subject required!');
+		}
+
+		if (empty($this->smtp_hostname)) {
 			throw new \Exception('Error: SMTP hostname required!');
 		}
 
-		if (empty($this->option['smtp_username'])) {
+		if (empty($this->smtp_username)) {
 			throw new \Exception('Error: SMTP username required!');
 		}
 
-		if (empty($this->option['smtp_password'])) {
+		if (empty($this->smtp_password)) {
 			throw new \Exception('Error: SMTP password required!');
 		}
 
-		if (empty($this->option['smtp_port'])) {
+		if (empty($this->smtp_port)) {
 			throw new \Exception('Error: SMTP port required!');
 		}
 
-		if (empty($this->option['smtp_timeout'])) {
+		if (empty($this->smtp_timeout)) {
 			throw new \Exception('Error: SMTP timeout required!');
-		}
-
-		if (is_array($this->option['to'])) {
-			$to = implode(',', $this->option['to']);
-		} else {
-			$to = $this->option['to'];
 		}
 
 		$servername = parse_url(HTTP_SERVER, PHP_URL_HOST);
 
 		$boundary = '----=_NextPart_' . md5((string)time());
 
-		$header = 'MIME-Version: 1.0' . PHP_EOL;
-		$header .= 'To: <' . $to . '>' . PHP_EOL;
-		$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->option['subject']) . '?=' . PHP_EOL;
+		$header  = 'MIME-Version: 1.0' . PHP_EOL;
+		$header .= 'To: <' . $this->to . '>' . PHP_EOL;
+		$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . PHP_EOL;
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
-		$header .= 'From: =?UTF-8?B?' . base64_encode($this->option['sender']) . '?= <' . $this->option['from'] . '>' . PHP_EOL;
+		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 
-		if (empty($this->option['reply_to'])) {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->option['sender']) . '?= <' . $this->option['from'] . '>' . PHP_EOL;
+		if (empty($this->reply_to)) {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->option['reply_to']) . '?= <' . $this->option['reply_to'] . '>' . PHP_EOL;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
 		}
 
-		$header .= 'Message-ID: <' . base_convert(str_replace(['.', ' '], '', microtime()), 10, 36) . '.' . base_convert(bin2hex(openssl_random_pseudo_bytes(8)), 16, 36) . substr($this->option['from'], strrpos($this->option['from'], '@')) . '>' . PHP_EOL;
-		$header .= 'Return-Path: ' . $this->option['from'] . PHP_EOL;
+		$header .= 'Message-ID: <' . base_convert(str_replace(['.', ' '], '', microtime()), 10, 36) . '.' . base_convert(bin2hex(openssl_random_pseudo_bytes(8)), 16, 36) . substr($this->from, strrpos($this->from, '@')) . '>' . PHP_EOL;
+		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
 		$header .= 'X-Mailer: PHP/' . PHP_VERSION . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
-		$message = '--' . $boundary . PHP_EOL;
 
-		if (empty($this->option['html'])) {
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
-			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
-			$message .= chunk_split(base64_encode($this->option['text'])) . PHP_EOL;
+
+
+		if (substr($this->smtp_hostname, 0, 3) == 'tls') {
+			$hostname = substr($this->smtp_hostname, 6);
 		} else {
-			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . PHP_EOL . PHP_EOL;
-			$message .= '--' . $boundary . '_alt' . PHP_EOL;
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
-			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
-
-			if (!empty($this->option['text'])) {
-				$message .= chunk_split(base64_encode($this->option['text'])) . PHP_EOL;
-			} else {
-				$message .= chunk_split(base64_encode(strip_tags($this->option['html']))) . PHP_EOL;
-			}
-
-			$message .= '--' . $boundary . '_alt' . PHP_EOL;
-			$message .= 'Content-Type: text/html; charset="utf-8"' . PHP_EOL;
-			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
-			$message .= chunk_split(base64_encode($this->option['html'])) . PHP_EOL;
-			$message .= '--' . $boundary . '_alt--' . PHP_EOL;
+			$hostname = $this->smtp_hostname;
 		}
 
-		if (!empty($this->option['attachments'])) {
-			foreach ($this->option['attachments'] as $attachment) {
-				if (is_file($attachment)) {
-					$handle = fopen($attachment, 'r');
-
-					$content = fread($handle, filesize($attachment));
-
-					fclose($handle);
-
-					$message .= '--' . $boundary . PHP_EOL;
-					$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . PHP_EOL;
-					$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
-					$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . PHP_EOL;
-					$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . PHP_EOL;
-					$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . PHP_EOL . PHP_EOL;
-					$message .= chunk_split(base64_encode($content));
-				}
-			}
-		}
-
-		$message .= '--' . $boundary . '--' . PHP_EOL;
-
-		if (substr($this->option['smtp_hostname'], 0, 3) == 'tls') {
-			$hostname = substr($this->option['smtp_hostname'], 6);
-		} else {
-			$hostname = $this->option['smtp_hostname'];
-		}
-
-		$handle = fsockopen($hostname, $this->option['smtp_port'], $errno, $errstr, $this->option['smtp_timeout']);
+		$handle = fsockopen($hostname, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);
 
 		if (!$handle) {
 			throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
 		}
 
 		if (substr(PHP_OS, 0, 3) != 'WIN') {
-			stream_set_timeout($handle, $this->option['smtp_timeout'], 0);
+			stream_set_timeout($handle, $this->smtp_timeout, 0);
 		}
 
 		while ($line = fgets($handle, 515)) {
@@ -179,7 +263,7 @@ class Smtp {
 			throw new \Exception('Error: ' . $reply);
 		}
 
-		if (substr($this->option['smtp_hostname'], 0, 3) == 'tls') {
+		if (substr($this->smtp_hostname, 0, 3) == 'tls') {
 			fwrite($handle, 'STARTTLS' . "\r\n");
 
 			$this->handleReply($handle, 220, 'Error: STARTTLS not accepted from server!');
@@ -197,24 +281,24 @@ class Smtp {
 
 		$this->handleReply($handle, 334, 'Error: AUTH LOGIN not accepted from server!');
 
-		fwrite($handle, base64_encode($this->option['smtp_username']) . "\r\n");
+		fwrite($handle, base64_encode($this->smtp_username) . "\r\n");
 
 		$this->handleReply($handle, 334, 'Error: Username not accepted from server!');
 
-		fwrite($handle, base64_encode($this->option['smtp_password']) . "\r\n");
+		fwrite($handle, base64_encode($this->smtp_password) . "\r\n");
 
 		$this->handleReply($handle, 235, 'Error: Password not accepted from server!');
 
-		if ($this->option['verp']) {
-			fwrite($handle, 'MAIL FROM: <' . $this->option['from'] . '>XVERP' . "\r\n");
+		if ($this->verp) {
+			fwrite($handle, 'MAIL FROM: <' . $this->from . '>XVERP' . "\r\n");
 		} else {
-			fwrite($handle, 'MAIL FROM: <' . $this->option['from'] . '>' . "\r\n");
+			fwrite($handle, 'MAIL FROM: <' . $this->from . '>' . "\r\n");
 		}
 
 		$this->handleReply($handle, 250, 'Error: MAIL FROM not accepted from server!');
 
-		if (!is_array($this->option['to'])) {
-			fwrite($handle, 'RCPT TO: <' . $this->option['to'] . '>' . "\r\n");
+		if (!is_array($this->to)) {
+			fwrite($handle, 'RCPT TO: <' . $this->to . '>' . "\r\n");
 
 			$reply = $this->handleReply($handle, false, 'RCPT TO [!array]');
 
@@ -222,7 +306,7 @@ class Smtp {
 				throw new \Exception('Error: RCPT TO not accepted from server!');
 			}
 		} else {
-			foreach ($this->option['to'] as $recipient) {
+			foreach ($this->to as $recipient) {
 				fwrite($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
 
 				$reply = $this->handleReply($handle, false, 'RCPT TO [array]');
@@ -238,7 +322,7 @@ class Smtp {
 		$this->handleReply($handle, 354, 'Error: DATA not accepted from server!');
 
 		// According to rfc 821 we should not send more than 1000 including the CRLF
-		$message = str_replace("\r\n", "\n", $header . $message);
+		$message = str_replace("\r\n", "\n", $header . $this->message);
 		$message = str_replace("\r", "\n", $message);
 
 		$lines = explode("\n", $message);
@@ -282,7 +366,7 @@ class Smtp {
 		}
 
 		// Handle slowish server responses (generally due to policy servers)
-		if (!$line && empty($reply) && $counter < $this->option['max_attempts']) {
+		if (!$line && empty($reply) && $counter < $this->max_attempts) {
 			sleep(1);
 
 			$counter++;

@@ -18,7 +18,15 @@ class Mail extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_engine')];
 		}
 
-		if (empty($args['to']) || !oc_validate_email($args['to'])) {
+		$email = trim($args['to']);
+
+		if (!empty($args['to']) || !oc_validate_email($args['to'])) {
+			if (is_array()) {
+
+			} else {
+
+			}
+		} else {
 			return ['error' => $this->language->get('error_to')];
 		}
 
@@ -41,13 +49,7 @@ class Mail extends \Opencart\System\Engine\Controller {
 		if (empty($args['content'])) {
 			return ['error' => $this->language->get('error_content')];
 		}
-
-		$email = trim($args['to']);
-
-		if (!oc_validate_email($email)) {
-			return [];
-		}
-
+		
 		$mail_option = [
 			'parameter'     => $this->config->get('config_mail_parameter'),
 			'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),

@@ -7,9 +7,33 @@ namespace Opencart\System\Library\Mail;
  */
 class Mail {
 	/**
-	 * @var array<string, mixed>
+	 * @var string
 	 */
-	protected array $option = [];
+	protected string $to = '';
+	/**
+	 * @var string
+	 */
+	protected string $from = '';
+	/**
+	 * @var string
+	 */
+	protected string $sender = '';
+	/**
+	 * @var string
+	 */
+	protected string $reply_to = '';
+	/**
+	 * @var string
+	 */
+	protected string $subject = '';
+	/**
+	 * @var string
+	 */
+	protected string $message = '';
+	/**
+	 * @var string
+	 */
+	protected string $parameter = '';
 
 	/**
 	 * Constructor
@@ -17,7 +41,86 @@ class Mail {
 	 * @param array<string, mixed> $option
 	 */
 	public function __construct(array $option = []) {
-		$this->option = $option;
+		foreach ($option as $key => $value) {
+			$this->{$key} = $value;
+		}
+	}
+
+	/**
+	 * Set To
+	 *
+	 * @param array<string>|string $to
+	 *
+	 * @return void
+	 */
+	public function setTo($to): void {
+		$this->to = $to;
+	}
+
+	/**
+	 * Set From
+	 *
+	 * @param string $from
+	 *
+	 * @return void
+	 */
+	public function setFrom(string $from): void {
+		$this->from = $from;
+	}
+
+	/**
+	 * Set Sender
+	 *
+	 * @param string $sender
+	 *
+	 * @return void
+	 */
+	public function setSender(string $sender): void {
+		$this->sender = $sender;
+	}
+
+	/**
+	 * Set Reply To
+	 *
+	 * @param string $reply_to
+	 *
+	 * @return void
+	 */
+	public function setReplyTo(string $reply_to): void {
+		$this->reply_to = $reply_to;
+	}
+
+	/**
+	 * Set Subject
+	 *
+	 * @param string $subject
+	 *
+	 * @return void
+	 */
+	public function setSubject(string $subject): void {
+		$this->subject = $subject;
+	}
+
+	/**
+	 * Set Message
+	 *
+	 * @param string $message
+	 *
+	 * @return void
+	 */
+	public function setMessage(string $message): void {
+		$this->message = $message;
+	}
+
+	/**
+	 * Set Parameter
+	 *
+	 * @param string $parameter
+	 *
+	 * @return void
+	 */
+	public function setParameter(string $parameter): void {
+		$this->parameter = $parameter;
 	}
 
 	/**
@@ -26,87 +129,44 @@ class Mail {
 	 * @return bool
 	 */
 	public function send(): bool {
-		if (is_array($this->option['to'])) {
-			$to = implode(',', $this->option['to']);
-		} else {
-			$to = $this->option['to'];
+		if (empty($this->to)) {
+			throw new \Exception('Error: E-Mail to required!');
 		}
 
-		if (version_compare(PHP_VERSION, '8.0', '>=')) {
-			$eol = "\r\n";
-		} else {
-			$eol = PHP_EOL;
+		if (empty($this->from)) {
+			throw new \Exception('Error: E-Mail from required!');
+		}
+
+		if (empty($this->sender)) {
+			throw new \Exception('Error: E-Mail sender required!');
+		}
+
+		if (empty($this->subject)) {
+			throw new \Exception('Error: E-Mail subject required!');
 		}
 
 		$boundary = '----=_NextPart_' . md5((string)time());
 
-		$header  = 'MIME-Version: 1.0' . $eol;
-		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $eol;
-		$header .= 'From: =?UTF-8?B?' . base64_encode($this->option['sender']) . '?= <' . $this->option['from'] . '>' . $eol;
+		$header  = 'MIME-Version: 1.0' . PHP_EOL;
+		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
+		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 
 		if (empty($this->option['reply_to'])) {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->option['sender']) . '?= <' . $this->option['from'] . '>' . $eol;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->option['reply_to']) . '?= <' . $this->option['reply_to'] . '>' . $eol;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
 		}
 
-		$header .= 'Return-Path: ' . $this->option['from'] . $eol;
-		$header .= 'X-Mailer: PHP/' . PHP_VERSION . $eol;
-		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . $eol . $eol;
+		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
+		$header .= 'X-Mailer: PHP/' . PHP_VERSION . PHP_EOL;
+		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
-		$message = '--' . $boundary . $eol;
+		ini_set('sendmail_from', $this->from);
 
-		if (empty($this->option['html'])) {
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol;
-			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-			$message .= chunk_split(base64_encode($this->option['text'])) . $eol;
+		if (!empty($this->parameter)) {
+			return mail($this->to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $this->message, $header, $this->parameter);
 		} else {
-			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . $eol . $eol;
-			$message .= '--' . $boundary . '_alt' . $eol;
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol;
-			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-
-			if (!empty($this->option['text'])) {
-				$message .= chunk_split(base64_encode($this->option['text'])) . $eol;
-			} else {
-				$message .= chunk_split(base64_encode(strip_tags($this->option['html']))) . $eol;
-			}
-
-			$message .= '--' . $boundary . '_alt' . $eol;
-			$message .= 'Content-Type: text/html; charset="utf-8"' . $eol;
-			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-			$message .= chunk_split(base64_encode($this->option['html'])) . $eol;
-			$message .= '--' . $boundary . '_alt--' . $eol;
-		}
-
-		if (!empty($this->option['attachments'])) {
-			foreach ($this->option['attachments'] as $attachment) {
-				if (is_file($attachment)) {
-					$handle = fopen($attachment, 'r');
-
-					$content = fread($handle, filesize($attachment));
-
-					fclose($handle);
-
-					$message .= '--' . $boundary . $eol;
-					$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . $eol;
-					$message .= 'Content-Transfer-Encoding: base64' . $eol;
-					$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . $eol;
-					$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . $eol;
-					$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . $eol . $eol;
-					$message .= chunk_split(base64_encode($content));
-				}
-			}
-		}
-
-		$message .= '--' . $boundary . '--' . $eol;
-
-		ini_set('sendmail_from', $this->option['from']);
-
-		if (!empty($this->option['parameter'])) {
-			return mail($to, '=?UTF-8?B?' . base64_encode($this->option['subject']) . '?=', $message, $header, $this->option['parameter']);
-		} else {
-			return mail($to, '=?UTF-8?B?' . base64_encode($this->option['subject']) . '?=', $message, $header);
+			return mail($this->to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $this->message, $header);
 		}
 	}
 }

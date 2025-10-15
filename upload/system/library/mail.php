@@ -19,8 +19,6 @@ class Mail {
 	 * @var array<string, mixed>
 	 */
 	private object $adaptor;
-	private string $text = '';
-	private string $html = '';
 
 	/**
 	 * Constructor

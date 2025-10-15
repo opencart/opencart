@@ -8,6 +8,7 @@ $_['text_list']                = 'Kundenliste';
 $_['text_add']                 = 'Kunden hinzufügen';
 $_['text_edit']                = 'Kunden bearbeiten';
 $_['text_store']               = 'Online-Shop (Store)';
+$_['text_general']             = 'Allgemein';
 $_['text_customer']            = 'Kundendetails';
 $_['text_password']            = 'Passwort';
 $_['text_other']               = 'Andere';

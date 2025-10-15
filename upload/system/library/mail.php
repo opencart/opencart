@@ -101,7 +101,7 @@ class Mail {
 	 * @return void
 	 */
 	public function setText(string $text): void {
-		$this->text = $text;
+		$this->adaptor->setText($text);
 	}
 
 	/**
@@ -112,7 +112,7 @@ class Mail {
 	 * @return void
 	 */
 	public function setHtml(string $html): void {
-		$this->html = $html;
+		$this->adaptor->setHtml($html);
 	}
 
 	/**
@@ -132,59 +132,6 @@ class Mail {
 	 * @return bool
 	 */
 	public function send(): bool {
-		if (empty($this->text) && empty($this->html)) {
-			throw new \Exception('Error: E-Mail message required!');
-		}
-
-		$message = '--' . $boundary . PHP_EOL;
-
-		if (empty($this->html)) {
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
-			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
-			$message .= chunk_split(base64_encode($this->text)) . PHP_EOL;
-		} else {
-			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . PHP_EOL . PHP_EOL;
-			$message .= '--' . $boundary . '_alt' . PHP_EOL;
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
-			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
-
-			if (!empty($this->text)) {
-				$message .= chunk_split(base64_encode($this->text)) . PHP_EOL;
-			} else {
-				$message .= chunk_split(base64_encode(strip_tags($this->html))) . PHP_EOL;
-			}
-
-			$message .= '--' . $boundary . '_alt' . PHP_EOL;
-			$message .= 'Content-Type: text/html; charset="utf-8"' . PHP_EOL;
-			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
-			$message .= chunk_split(base64_encode($this->html)) . PHP_EOL;
-			$message .= '--' . $boundary . '_alt--' . PHP_EOL;
-		}
-
-		if (!empty($this->attachments)) {
-			foreach ($this->attachments as $attachment) {
-				if (is_file($attachment)) {
-					$handle = fopen($attachment, 'r');
-
-					$content = fread($handle, filesize($attachment));
-
-					fclose($handle);
-
-					$message .= '--' . $boundary . PHP_EOL;
-					$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . PHP_EOL;
-					$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
-					$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . PHP_EOL;
-					$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . PHP_EOL;
-					$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . PHP_EOL . PHP_EOL;
-					$message .= chunk_split(base64_encode($content));
-				}
-			}
-		}
-
-		$message .= '--' . $boundary . '--' . PHP_EOL;
-
-		$this->adaptor->setMessage($message);
-
 		return $this->adaptor->send();
 	}
 }

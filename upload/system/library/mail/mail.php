@@ -29,7 +29,11 @@ class Mail {
 	/**
 	 * @var string
 	 */
-	protected string $message = '';
+	protected string $html = '';
+	/**
+	 * @var string
+	 */
+	protected string $text = '';
 	/**
 	 * @var string
 	 */
@@ -102,14 +106,25 @@ class Mail {
 	}
 
 	/**
-	 * Set Message
+	 * Set Text
 	 *
-	 * @param string $message
+	 * @param string $text
 	 *
 	 * @return void
 	 */
-	public function setMessage(string $message): void {
-		$this->message = $message;
+	public function setText(string $text): void {
+		$this->text = $text;
+	}
+
+	/**
+	 * Set Html
+	 *
+	 * @param string $html
+	 *
+	 * @return void
+	 */
+	public function setHtml(string $html): void {
+		$this->html = $html;
 	}
 
 	/**
@@ -134,7 +149,7 @@ class Mail {
 			throw new \Exception('Error: E-Mail subject required!');
 		}
 
-		if (empty($this->message)) {
+		if (empty($this->text) && empty($this->html)) {
 			throw new \Exception('Error: E-Mail message required!');
 		}
 
@@ -160,12 +175,60 @@ class Mail {
 		$header .= 'X-Mailer: PHP/' . PHP_VERSION . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
+		$message = '--' . $boundary . PHP_EOL;
+
+		if (empty($this->html)) {
+			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
+
+			$message .= chunk_split(base64_encode($this->text)) . PHP_EOL;
+		} else {
+			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . PHP_EOL . PHP_EOL;
+			$message .= '--' . $boundary . '_alt' . PHP_EOL;
+			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
+
+			if (!empty($this->text)) {
+				$message .= chunk_split(base64_encode($this->text)) . PHP_EOL;
+			} else {
+				$message .= chunk_split(base64_encode(strip_tags($this->html))) . PHP_EOL;
+			}
+
+			$message .= '--' . $boundary . '_alt' . PHP_EOL;
+			$message .= 'Content-Type: text/html; charset="utf-8"' . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
+			$message .= chunk_split(base64_encode($this->html)) . PHP_EOL;
+			$message .= '--' . $boundary . '_alt--' . PHP_EOL;
+		}
+
+		if (!empty($this->attachments)) {
+			foreach ($this->attachments as $attachment) {
+				if (is_file($attachment)) {
+					$handle = fopen($attachment, 'r');
+
+					$content = fread($handle, filesize($attachment));
+
+					fclose($handle);
+
+					$message .= '--' . $boundary . PHP_EOL;
+					$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . PHP_EOL;
+					$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
+					$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . PHP_EOL;
+					$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . PHP_EOL;
+					$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . PHP_EOL . PHP_EOL;
+					$message .= chunk_split(base64_encode($content));
+				}
+			}
+		}
+
+		$message .= '--' . $boundary . '--' . PHP_EOL;
+
 		ini_set('sendmail_from', $this->from);
 
 		if (!empty($this->parameter)) {
-			return mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $this->message, $header, $this->parameter);
+			return mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header, $this->parameter);
 		} else {
-			return mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $this->message, $header);
+			return mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
 		}
 	}
 }

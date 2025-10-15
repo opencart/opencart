@@ -174,7 +174,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$country_info['status']) {
-			return ['success' => sprintf($this->language->get('error_skip'), $store_info['name'], $language_info['name'], $country_info['name'])];
+			return ['success' => sprintf($this->language->get('text_skip'), $store_info['name'], $language_info['name'], $country_info['name'])];
 		}
 
 		$description_info = $this->model_localisation_country->getDescription((int)$country_info['country_id'], $language_info['language_id']);
@@ -186,7 +186,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$stores = $this->model_localisation_country->getStores((int)$country_info['country_id']);
 
 		if (!in_array($store_info['store_id'], $stores)) {
-			return ['success' => sprintf($this->language->get('error_skip'), $store_info['name'], $language_info['name'], $country_info['name'])];
+			return ['success' => sprintf($this->language->get('text_skip'), $store_info['name'], $language_info['name'], $country_info['name'])];
 		}
 
 		$filter_data = [

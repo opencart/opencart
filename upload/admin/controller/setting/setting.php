@@ -290,7 +290,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_affiliate_approval'] = $this->config->get('config_affiliate_approval');
 		$data['config_affiliate_auto'] = (bool)$this->config->get('config_affiliate_auto');
 		$data['config_affiliate_commission'] = (float)$this->config->get('config_affiliate_commission');
-		$data['config_affiliate_expire'] = $this->config->get('config_affiliate_expire');
 
 		// Affiliate terms
 		$data['config_affiliate_id'] = $this->config->get('config_affiliate_id');

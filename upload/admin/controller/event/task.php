@@ -36,8 +36,8 @@ class Task extends \Opencart\System\Engine\Controller {
 		echo $read;
 
 		pclose($handle);
-		*/
 
-		//shell_exec('php ' . DIR_APPLICATION . 'index.php start 2>&1 &');
+		shell_exec('php ' . DIR_APPLICATION . 'index.php start 2>&1 &');
+		*/
 	}
 }

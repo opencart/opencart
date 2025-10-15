@@ -272,13 +272,6 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 				'serialized' => 0
 			];
 
-			$missing[] = [
-				'key'        => 'config_affiliate_expire',
-				'value'      => 3600000000,
-				'code'       => 'config',
-				'serialized' => 0
-			];
-
 			// Subscriptions
 			$missing[] = [
 				'key'        => 'config_subscription_status_id',

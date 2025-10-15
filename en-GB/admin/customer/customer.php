@@ -8,6 +8,7 @@ $_['text_list']                = 'Customer List';
 $_['text_add']                 = 'Add Customer';
 $_['text_edit']                = 'Edit Customer';
 $_['text_store']               = 'Store';
+$_['text_general']             = 'General';
 $_['text_customer']            = 'Customer Details';
 $_['text_password']            = 'Password';
 $_['text_other']               = 'Other';

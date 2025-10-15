@@ -29,11 +29,11 @@ class Mail {
 	/**
 	 * @var string
 	 */
-	protected string $html = '';
+	protected string $text = '';
 	/**
 	 * @var string
 	 */
-	protected string $text = '';
+	protected string $html = '';
 	/**
 	 * @var string
 	 */
@@ -161,6 +161,7 @@ class Mail {
 
 		$boundary = '----=_NextPart_' . md5((string)time());
 
+		// Header
 		$header  = 'MIME-Version: 1.0' . PHP_EOL;
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
@@ -175,6 +176,7 @@ class Mail {
 		$header .= 'X-Mailer: PHP/' . PHP_VERSION . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
+		// Message
 		$message = '--' . $boundary . PHP_EOL;
 
 		if (empty($this->html)) {

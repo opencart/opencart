@@ -18,16 +18,22 @@ class Mail extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_engine')];
 		}
 
-		$email = trim($args['to']);
-
-		if (!empty($args['to']) || !oc_validate_email($args['to'])) {
-			if (is_array()) {
-
-			} else {
-
-			}
-		} else {
+		if (empty($args['to'])) {
 			return ['error' => $this->language->get('error_to')];
+		}
+
+		$recipients = [];
+
+		if (!is_array($args['to'])) {
+			$recipients[] = $args['to'];
+		} else {
+			$recipients = $args['to'];
+		}
+
+		foreach ($recipients as $recipient) {
+			if (!oc_validate_email(trim($recipient))) {
+				return ['error' => $this->language->get('error_to')];
+			}
 		}
 
 		if (empty($args['from']) || !oc_validate_email($args['from'])) {
@@ -60,7 +66,7 @@ class Mail extends \Opencart\System\Engine\Controller {
 		];
 
 		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-		$mail->setTo($email);
+		$mail->setTo($args['to']);
 		$mail->setFrom($args['from']);
 		$mail->setSender($args['sender']);
 		

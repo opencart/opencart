@@ -29,11 +29,11 @@ class Smtp {
 	/**
 	 * @var string
 	 */
-	protected string $html = '';
+	protected string $text = '';
 	/**
 	 * @var string
 	 */
-	protected string $text = '';
+	protected string $html = '';
 	/**
 	 * @var string
 	 */
@@ -211,6 +211,7 @@ class Smtp {
 
 		$boundary = '----=_NextPart_' . md5((string)time());
 
+		// Header
 		$header  = 'MIME-Version: 1.0' . PHP_EOL;
 		$header .= 'To: <' . $this->to . '>' . PHP_EOL;
 		$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . PHP_EOL;
@@ -228,6 +229,7 @@ class Smtp {
 		$header .= 'X-Mailer: PHP/' . PHP_VERSION . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
+		// Message
 		$message = '--' . $boundary . PHP_EOL;
 
 		if (empty($this->html)) {
@@ -355,10 +357,10 @@ class Smtp {
 
 		$recipients = [];
 
-		if (is_array($this->to)) {
-			$recipients = $this->to;
-		} else {
+		if (!is_array($this->to)) {
 			$recipients[] = $this->to;
+		} else {
+			$recipients = $this->to;
 		}
 
 		foreach ($recipients as $recipient) {

@@ -134,6 +134,16 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$data['events'] = $this->model_setting_event->getEvents($filter_data);
 
+		$url = '';
+
+		if (isset($this->request->get['filter_code'])) {
+			$url .= '&filter_code=' . $this->request->get['filter_code'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
 		// Total Events
 		$event_total = $this->model_setting_event->getTotalEvents($filter_data);
 
@@ -142,8 +152,8 @@ class Event extends \Opencart\System\Engine\Controller {
 			'total' => $event_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'callback' => function(int $page): string {
-				return $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . ($page ? '&page=' . $page : ''));
+			'callback' => function(int $page) use ($url): string {
+				return $this->url->link('marketplace/event.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
 			}
 		]);
 

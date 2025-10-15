@@ -247,15 +247,15 @@ class Country extends \Opencart\System\Engine\Model {
 		$sql .= " WHERE `cd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+			$sql .= " AND LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_iso_code_2'])) {
-			$sql .= " LCASE(`c`.`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
+			$sql .= " AND LCASE(`c`.`iso_code_2`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_2']) . '%') . "'";
 		}
 
 		if (!empty($data['filter_iso_code_3'])) {
-			$sql .= " LCASE(`c`.`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
+			$sql .= " AND LCASE(`c`.`iso_code_3`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_iso_code_3']) . '%') . "'";
 		}
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {

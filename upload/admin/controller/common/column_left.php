@@ -170,45 +170,41 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 
 			// Stats
-			if ($this->user->hasPermission('access', 'report/statistics')) {
-				$this->load->model('sale/order');
+			$this->load->model('sale/order');
 
-				$order_total = (float)$this->model_sale_order->getTotalOrders();
+			$order_total = (float)$this->model_sale_order->getTotalOrders();
 
-				$this->load->model('report/statistics');
+			$this->load->model('report/statistics');
 
-				$complete_total = (float)$this->model_report_statistics->getValue('order_complete');
+			$complete_total = (float)$this->model_report_statistics->getValue('order_complete');
 
-				if ($complete_total && $order_total) {
-					$data['complete_status'] = round(($complete_total / $order_total) * 100);
-				} else {
-					$data['complete_status'] = 0;
-				}
-
-				$processing_total = (float)$this->model_report_statistics->getValue('order_processing');
-
-				if ($processing_total && $order_total) {
-					$data['processing_status'] = round(($processing_total / $order_total) * 100);
-				} else {
-					$data['processing_status'] = 0;
-				}
-
-				$other_total = (float)$this->model_report_statistics->getValue('order_other');
-
-				if ($other_total && $order_total) {
-					$data['other_status'] = round(($other_total / $order_total) * 100);
-				} else {
-					$data['other_status'] = 0;
-				}
-
-				$data['statistics_status'] = true;
+			if ($complete_total && $order_total) {
+				$data['complete_status'] = round(($complete_total / $order_total) * 100);
 			} else {
-				$data['statistics_status'] = false;
+				$data['complete_status'] = 0;
 			}
 
-			return $this->load->view('common/column_left', $data);
+			$processing_total = (float)$this->model_report_statistics->getValue('order_processing');
+
+			if ($processing_total && $order_total) {
+				$data['processing_status'] = round(($processing_total / $order_total) * 100);
+			} else {
+				$data['processing_status'] = 0;
+			}
+
+			$other_total = (float)$this->model_report_statistics->getValue('order_other');
+
+			if ($other_total && $order_total) {
+				$data['other_status'] = round(($other_total / $order_total) * 100);
+			} else {
+				$data['other_status'] = 0;
+			}
+
+			$data['statistics_status'] = true;
 		} else {
-			return '';
+			$data['statistics_status'] = false;
 		}
+
+		return $this->load->view('common/column_left', $data);
 	}
 }

@@ -11,6 +11,9 @@
   {% if keywords %}
     <meta name="keywords" content="{{ keywords }}"/>
   {% endif %}
+  {% for meta in metas %}
+    <meta{% for attr, value in meta %} {{ attr|e('html_attr') }}="{{ value|e('html') }}"{% endfor %}>
+  {% endfor %}
   <link href="{{ stylesheet }}" type="text/css" rel="stylesheet"/>
   <script src="{{ jquery }}" type="text/javascript"></script>
   <script src="catalog/view/javascript/common.js" type="text/javascript"></script>

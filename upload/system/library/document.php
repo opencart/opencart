@@ -38,9 +38,9 @@ class Document {
 	 */
 	private array $scripts = [];
 	/**
-	 * @var array<string, string>
+	 * @var array<int, array<string, string>> Meta tags with their attributes
 	 */
-	private array $meta = [];
+	private array $metas = [];
 
 	/**
 	 * Set Title
@@ -180,20 +180,32 @@ class Document {
 	/**
 	 * Add Meta
 	 *
-	 * @param string $meta
+	 * Adds a meta tag with specified attributes to the document.
+	 *
+	 * @param array<string, string> $attributes Associative array of meta tag attributes
+	 *                                          Common attributes:
+	 *                                          - 'name' => 'description' (for standard meta tags)
+	 *                                          - 'property' => 'og:title' (for Open Graph)
+	 *                                          - 'content' => 'The content value'
+	 *                                          - 'media' => '(prefers-color-scheme: dark)' (for conditional meta tags)
 	 *
 	 * @return void
+	 *
+	 * @example
+	 * $this->document->addMeta(['name' => 'description', 'content' => 'Page description']);
+	 * $this->document->addMeta(['property' => 'og:title', 'content' => 'Page Title']);
+	 * $this->document->addMeta(['name' => 'theme-color', 'content' => '#000', 'media' => '(prefers-color-scheme: dark)']);
 	 */
-	public function addMeta(string $meta): void {
-		$this->meta[$meta] = $meta;
+	public function addMeta(array $attributes): void {
+		$this->metas[] = $attributes;
 	}
 
 	/**
-	 * Get Meta
+	 * Get Metas
 	 *
-	 * @return array<string, string>
+	 * @return array<int, array<string, string>>
 	 */
-	public function getMeta() {
-		return $this->meta;
+	public function getMetas(): array {
+		return $this->metas;
 	}
 }

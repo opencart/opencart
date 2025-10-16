@@ -70,7 +70,8 @@ class ModelUpgrade1002 extends Model {
 		}
 
 		if (!in_array('category_id', $primary_data) || !in_array('parent_id', $primary_data)) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "category` DROP PRIMARY KEY, ADD PRIMARY KEY(`category_id`, `parent_id`)");
+//			$this->db->query("ALTER TABLE `" . DB_PREFIX . "category` DROP PRIMARY KEY, ADD PRIMARY KEY(`category_id`, `parent_id`)");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "category` DROP PRIMARY KEY, ADD PRIMARY KEY(`category_id`)");
 		}
 
 		// category

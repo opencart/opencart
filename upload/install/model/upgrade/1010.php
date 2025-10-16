@@ -582,7 +582,7 @@ class ModelUpgrade1010 extends Model {
 			if (!empty($user_group_permission) && is_array($user_group_permission)) {
 				$new_user_group_permission = $user_group_permission;
 				foreach ($user_group_permission as $type=>$permission) {
-					if (($type=='access') || ($type=='modifiy')) {
+					if (($type=='access') || ($type=='modify')) {
 						if (!empty($permission) && is_array($permission)) {
 							foreach ($permission as $key=>$val) {
 								if (strpos($val,$name)===false) {
@@ -593,7 +593,7 @@ class ModelUpgrade1010 extends Model {
 						}
 					}
 				}
-				if (empty($new_user_group_permission)) {
+				if (empty($new_user_group_permission['access']) && empty($new_user_group_permission['modify'])) {
 					$this->db->query("UPDATE `".DB_PREFIX."user_group` SET `permission`='' WHERE user_group_id='".(int)$user_group_id."';");
 				} else {
 					$json_user_group_permission = json_encode($new_user_group_permission);

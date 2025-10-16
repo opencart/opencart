@@ -46,4 +46,4 @@ $_['error_directory']        = 'Installationsverzeichnis %s konnte nicht gefunde
 $_['error_directory_exists'] = 'Pfad %s existiert bereits!';
 $_['error_unzip']            = 'Zip-Datei konnte nicht geöffnet werden!';
 $_['error_upload']           = 'Datei konnte nicht hochgeladen werden!';
-$_['error_unknown']          = 'An unknown error occurred!';
+$_['error_unknown']          = 'Ein unbekannter Fehler ist aufgetreten!';

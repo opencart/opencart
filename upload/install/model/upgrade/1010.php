@@ -604,7 +604,7 @@ class ModelUpgrade1010 extends Model {
 		$this->db->query("DELETE FROM `".DB_PREFIX."extension` WHERE `code` LIKE '%".$this->db->escape($name)."%';");
 	}
 
-    private function fixColumnsForGoogleShopping():void {
+    private function fixColumnsForGoogleShopping(): void {
 		$has_auto_increment = $this->db->query("SHOW COLUMNS FROM `".DB_PREFIX."googleshopping_product` WHERE Field='product_advertise_google_id' AND Extra LIKE '%auto_increment%';")->num_rows > 0;
 
 		if (!$has_auto_increment) {

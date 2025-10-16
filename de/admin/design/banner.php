@@ -25,4 +25,4 @@ $_['entry_sort_order'] = 'Sortierreihenfolge';
 $_['error_permission'] = 'Achtung: Sie haben keine Berechtigung, Banner zu ändern!';
 $_['error_name']       = 'Der Bannername muss zwischen 3 und 64 Zeichen lang sein!';
 $_['error_title']      = 'Der Bannertitel muss zwischen 2 und 64 Zeichen lang sein!';
-$_['error_link']       = 'Link must be a valid URL!';
+$_['error_link']       = 'Der Link muss eine gültige URL sein!';

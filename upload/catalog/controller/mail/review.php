@@ -52,7 +52,11 @@ class Review extends \Opencart\System\Engine\Controller {
 		$tos = explode(',', (string)$this->config->get('config_mail_alert_email'));
 
 		foreach ($tos as $to) {
-			$emails[] = trim($to);
+			$to = trim($to);
+
+			if (oc_validate_email($to)) {
+				$emails[] = $to;
+			}
 		}
 
 		$this->load->model('setting/task');

@@ -153,6 +153,12 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
 		if (isset($this->request->get['name'])) {
 			$name = preg_replace('/[^a-zA-Z0-9_\-]/', '', basename(html_entity_decode(trim($this->request->get['name']), ENT_QUOTES, 'UTF-8')));
 		} else {
@@ -160,15 +166,9 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['path'])) {
-			$path = preg_replace('/[^a-zA-Z0-9_\:\/\.\-]/', '', html_entity_decode(trim($this->request->get['path']), ENT_QUOTES, 'UTF-8'));
+			$path = preg_replace('/[^a-zA-Z0-9_\:\/\.]/', '', html_entity_decode(trim($this->request->get['path']), ENT_QUOTES, 'UTF-8'));
 		} else {
 			$path = '';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
 		}
 
 		if (!$this->user->hasPermission('modify', 'common/security')) {
@@ -181,17 +181,13 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// Check current storage path exists
 			if (!is_dir($base_old)) {
-				$json['error'] = $this->language->get('error_storage_exists_old');
-			}
-
-			if ($page == 1 && is_dir($base_new)) {
-				$json['error'] = $this->language->get('error_storage_exists_new');
+				$json['error'] = $this->language->get('error_storage');
 			}
 
 			// Check the chosen directory is not in the public webspace C:/xampp/htdocs
-			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../')) . '/';
+			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 
-			if ((substr($root, 0, strlen($path)) != $path) || ($root == $base_new)) {
+			if ((substr($base_new, 0, strlen($root)) != $path) || ($root == $base_new)) {
 				$json['error'] = $this->language->get('error_storage_root');
 			}
 

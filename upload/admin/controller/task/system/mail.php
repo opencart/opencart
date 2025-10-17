@@ -31,7 +31,7 @@ class Mail extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($recipients as $recipient) {
-			if (!oc_validate_email(trim($recipient))) {
+			if (!oc_validate_email($recipient)) {
 				return ['error' => $this->language->get('error_to')];
 			}
 		}
@@ -66,7 +66,7 @@ class Mail extends \Opencart\System\Engine\Controller {
 		];
 
 		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
-		$mail->setTo($args['to']);
+		$mail->setTo($recipients);
 		$mail->setFrom($args['from']);
 		$mail->setSender($args['sender']);
 		

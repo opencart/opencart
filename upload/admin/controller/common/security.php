@@ -153,12 +153,6 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
 		if (isset($this->request->get['name'])) {
 			$name = preg_replace('/[^a-zA-Z0-9_\-]/', '', basename(html_entity_decode(trim($this->request->get['name']), ENT_QUOTES, 'UTF-8')));
 		} else {
@@ -173,6 +167,12 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'common/security')) {
 			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
 		}
 
 		if (!$json) {

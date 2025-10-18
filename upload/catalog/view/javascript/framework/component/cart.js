@@ -12,27 +12,18 @@ class XCart extends WebComponent {
             let data = sessionStorage.getItem('cart');
 
             if (data !== undefined) {
-                let response = fetch('index.php?route=common/cart');
+                let response = await fetch('index.php?route=common/cart.json');
 
-                response.then(this.event.onloaded);
+                let json = response.json();
+
+               // response.then(this.event.onloaded);
             }
         },
         onloaded: (json) => {
-
-        },
-        render: (json) => {
-            this.template('', );
+            console.log(json.json());
 
 
-            let html = '';
 
-            this.element.innerHTML = html;
-        },
-        onchange: (e) => {
-            this.value = e.target.value;
-        },
-        changeValue: (e) => {
-            this.value = e.detail.value_new;
         }
     };
 }

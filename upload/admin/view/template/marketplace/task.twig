@@ -85,6 +85,18 @@ $('#form-filter').on('submit', function(e) {
     $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + url);
 });
 
+
+
+this.timer = setTimeout(function(object) {
+
+
+    object.source($(object).val(), $.proxy(object.response, object));
+
+}, 150, this);
+
+
+
+
 $('#button-start').on('click', function(e) {
     $.ajax({
         url: 'index.php?route=marketplace/task.start&user_token={{ user_token }}',

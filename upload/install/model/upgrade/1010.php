@@ -393,6 +393,7 @@ class ModelUpgrade1010 extends Model {
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-fa-IR.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-fi-FI.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-fr-FR.js');
+		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-gl-ES.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-he-IL.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-hr-HR.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-hu-HU.js');

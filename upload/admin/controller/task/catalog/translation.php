@@ -38,7 +38,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$routes = [];
 
-				$directory = DIR_CATALOG . 'language/' . $language['code'] . '/';
+				$directory = DIR_OPENCART . 'static/language/' . $language['code'] . '/';
 
 				$files = oc_directory_read($directory, true, '/.+\.php$/');
 
@@ -197,7 +197,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$directories = oc_directory_read(DIR_OPENCART . 'static/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
+				$directories = oc_directory_read(DIR_OPENCART . 'static/language/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
 
 				foreach ($directories as $directory) {
 					oc_directory_delete($directory);

@@ -163,7 +163,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$directories = oc_directory_read(DIR_APPLICATION . 'static/' . $language['code'] . '/language/', false);
+			$directories = oc_directory_read(DIR_APPLICATION . 'static/language/' . $language['code'] . '/', false);
 
 			foreach ($directories as $directory) {
 				oc_directory_delete($directory);

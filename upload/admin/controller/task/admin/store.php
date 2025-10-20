@@ -27,7 +27,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$base = DIR_CATALOG . 'static/data/';
+			$base = DIR_OPENCART . 'static/data/';
 			$directory = $language['code'] . '/setting/';
 			$filename = 'store.json';
 

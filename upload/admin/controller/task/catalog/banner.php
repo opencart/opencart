@@ -148,7 +148,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['success' => sprintf($this->language->get('text_skip'), $store_info['name'], $language_info['name'], $banner_info['name'])];
 		}
 
-		$base = DIR_CATALOG . 'view/static/';
+		$base = DIR_OPENCART . 'static/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/design/';
 		$filename = 'banner-' . $args['banner_id'] . '.json';
 
@@ -156,7 +156,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($banner_info + ['banner_image' => $this->model_design_banner->getImageDescription($banner_info['banner_id'], $language_info['language_id'])]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($banner_info + ['banner_image' => $this->model_design_banner->getImages($banner_info['banner_id'], $language_info['language_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -185,7 +185,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$files = oc_directory_read(DIR_CATALOG . 'view/static/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/design/', false, '/banner\-.+\.json$/');
+				$files = oc_directory_read(DIR_OPENCART . 'static/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/design/', false, '/banner\-.+\.json$/');
 
 				foreach ($files as $file) {
 					unlink($file);

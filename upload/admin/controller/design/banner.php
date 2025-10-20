@@ -235,38 +235,33 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
-		// Languages
+		// Image
+		$this->load->model('tool/image');
+
+		$data['banner_images'] = [];
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		// Image
-		$this->load->model('tool/image');
+		foreach ($data['languages'] as $language) {
+			$banner_images = $this->model_design_banner->getImages($this->request->get['banner_id'], $language['language_id']);
 
-		if (!empty($banner_info)) {
-			$banner_images = $this->model_design_banner->getImages($this->request->get['banner_id']);
-		} else {
-			$banner_images = [];
-		}
-
-		$data['banner_images'] = [];
-
-		foreach ($banner_images as $language_id => $banner_image) {
-			foreach ($banner_image as $value) {
-				if ($value['image'] && is_file(DIR_IMAGE . html_entity_decode($value['image'], ENT_QUOTES, 'UTF-8'))) {
-					$image = $value['image'];
-					$thumb = $value['image'];
+			foreach ($banner_images as $banner_image) {
+				if ($banner_image['image'] && is_file(DIR_IMAGE . html_entity_decode($banner_image['image'], ENT_QUOTES, 'UTF-8'))) {
+					$image = $banner_image['image'];
+					$thumb = $banner_image['image'];
 				} else {
 					$image = '';
 					$thumb = 'no_image.png';
 				}
 
-				$data['banner_images'][$language_id][] = [
-					'title'      => $value['title'],
-					'link'       => $value['link'],
+				$data['banner_images'][$banner_image['language_id']][] = [
+					'title'      => $banner_image['title'],
+					'link'       => $banner_image['link'],
 					'image'      => $image,
 					'thumb'      => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
-					'sort_order' => $value['sort_order']
+					'sort_order' => $banner_image['sort_order']
 				];
 			}
 		}

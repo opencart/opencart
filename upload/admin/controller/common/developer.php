@@ -127,7 +127,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$file = DIR_OPENCART . 'static/html/stylesheet/stylesheet.scss';
+		$file = DIR_CATALOG . 'view/stylesheet/stylesheet.scss';
 
 		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_stylesheet');

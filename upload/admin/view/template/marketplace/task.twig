@@ -90,12 +90,6 @@ var test = function() {
 
     $.ajax({
         url: 'index.php?route=marketplace/task.start&user_token={{ user_token }}',
-        beforeSend: function() {
-            $('#button-start').button('loading');
-        },
-        complete: function() {
-            $('#button-start').button('reset');
-        },
         success: function(json) {
             console.log(json);
 

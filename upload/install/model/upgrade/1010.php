@@ -134,6 +134,7 @@ class ModelUpgrade1010 extends Model {
 			'twig/twig/.travis.yml',
 			'twig/twig/drupal_test.sh',
 			'zoujingli/wechat-developer/MIT-LICENSE.txt',
+			'zoujingli/wechat-developer/WeChat/Contracts/Prpcrypt.php',
 			'zoujingli/wechat-developer/.gitignore',
 			'zoujingli/wechat-php-sdk/.gitignore',
 			'scss.inc.php'

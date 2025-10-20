@@ -110,8 +110,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $countries);
 
-		$base = DIR_OPENCART . 'shop/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/localisation/';
+		$base = DIR_OPENCART . 'static/data/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
 		$filename = 'country.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
@@ -199,8 +199,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$zones = $this->model_localisation_zone->getZones($filter_data);
 
-		$base = DIR_OPENCART . 'shop/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/localisation/';
+		$base = DIR_OPENCART . 'static/data/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
 		$filename = 'country-' . $args['country_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
@@ -236,8 +236,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$base = DIR_OPENCART . 'shop/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/localisation/';
+				$base = DIR_OPENCART . 'static/data/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
 
 				$file = $base . $directory . 'country.json';
 

@@ -2,16 +2,16 @@ import Registry from './library/registry.js';
 import Storage from './library/storage.js';
 import Template from './library/template.js';
 import Language from './library/language.js';
-import Config from './library/config.js';
 
 const registry = new Registry();
 
+const base = new URL(document.querySelector('base').href);
+
 let language = document.querySelector('html').lang.toLowerCase();
 
-registry.set('storage', new Storage('./view/data/' + language + '/'));
-registry.set('template', new Template());
-registry.set('Language', new Language());
-registry.set('config', new Config());
+registry.set('storage', new Storage('./view/data/' + base.host + '/' + language + '/'));
+registry.set('template', new Template('./view/data/' + base.host + '/' + language + '/'));
+registry.set('Language', new Language('./view/language/' + base.host + '/' + language + '/'));
 
 export class WebComponent extends HTMLElement {
     registry = {};
@@ -38,10 +38,6 @@ export class WebComponent extends HTMLElement {
 
     get language() {
         return this.registry.get('language');
-    }
-
-    get config() {
-        return this.registry.get('config');
     }
 
     connectedCallback() {

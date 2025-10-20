@@ -269,7 +269,7 @@ class Task extends \Opencart\System\Engine\Controller {
 				array_push($results, $next[0]);
 			}
 
-			sleep(1);
+			usleep(2000);
 		}
 	}
 

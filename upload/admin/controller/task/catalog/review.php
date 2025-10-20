@@ -84,7 +84,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		}
 
-		$base = DIR_APPLICATION . 'view/data/';
+		$base = DIR_APPLICATION . 'view/static/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
 		$filename = 'return_reason.json';
 
@@ -121,7 +121,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/review.json';
+				$file = DIR_CATALOG . 'view/static/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/review.json';
 
 				if (is_file($file)) {
 					unlink($file);

@@ -143,7 +143,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'filter_route'       => $args['route'],
 			'filter_store_id'    => $store_info['store_id'],
 			'filter_language_id' => $language_info['language_id']
-
 		];
 
 		// Overrides

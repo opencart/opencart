@@ -65,7 +65,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$return_reasons = $this->model_localisation_return_reason->getReturnReasons(['filter_language_id' => $language_info['language_id']]);
 
-		$base = DIR_APPLICATION . 'view/data/';
+		$base = DIR_APPLICATION . 'static/data/';
 		$directory = $language_info['code'] . '/localisation/';
 		$filename = 'return_reason.json';
 
@@ -97,7 +97,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/return_reason.json';
+			$file = DIR_APPLICATION . 'static/data/' . $language['code'] . '/localisation/return_reason.json';
 
 			if (is_file($file)) {
 				unlink($file);

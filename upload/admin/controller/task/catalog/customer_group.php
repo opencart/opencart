@@ -192,7 +192,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$base = DIR_OPENCART . 'static/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/customer/';
-		$filename = 'customer_group-' . $customer_group_info['country_id'] . '.json';
+		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -227,7 +227,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/customer/customer_group.json';
+				$file = DIR_CATALOG . 'view/static/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/customer/customer_group.json';
 
 				if (is_file($file)) {
 					unlink($file);

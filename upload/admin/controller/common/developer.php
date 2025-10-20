@@ -36,7 +36,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = oc_directory_read(DIR_OPENCART . 'shop/');
+			$files = oc_directory_read(DIR_OPENCART . 'static/html/');
 
 			foreach ($files as $file) {
 				oc_directory_delete($file);
@@ -127,7 +127,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$file = DIR_CATALOG . 'view/stylesheet/stylesheet.scss';
+		$file = DIR_OPENCART . 'static/html/stylesheet/stylesheet.scss';
 
 		if (!is_file($file)) {
 			$json['error'] = $this->language->get('error_stylesheet');

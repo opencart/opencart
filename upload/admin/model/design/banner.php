@@ -316,7 +316,8 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $banner_image_data;
 	}
 
-	public function getImagesBy(int $banner_id, int $language_id): array {
+
+	public function getImagesBylanguageId(int $banner_id, int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "' AND `language_id` = '" . (int)$language_id . "' ORDER BY `sort_order` ASC");
 
 		return $query->rows;

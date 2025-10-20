@@ -91,7 +91,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $countries);
 
-		$base = DIR_APPLICATION . 'view/data/';
+		$base = DIR_APPLICATION . 'static/data/';
 		$directory = $language_info['code'] . '/localisation/';
 		$filename = 'country.json';
 
@@ -160,7 +160,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$zones = $this->model_localisation_zone->getZones($filter_data);
 
-		$base = DIR_APPLICATION . 'view/data/';
+		$base = DIR_APPLICATION . 'static/data/';
 		$directory = $language_info['code'] . '/localisation/';
 		$filename = 'country-' . $country_info['country_id'] . '.json';
 
@@ -192,7 +192,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$base = DIR_APPLICATION . 'view/data/';
+			$base = DIR_APPLICATION . 'static/data/';
 			$directory = $language['code'] . '/localisation/';
 
 			$file = $base . $directory . 'country.json';

@@ -27,7 +27,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$base = DIR_CATALOG . 'view/data/';
+			$base = DIR_CATALOG . 'static/data/';
 			$directory = $language['code'] . '/setting/';
 			$filename = 'store.json';
 
@@ -60,7 +60,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/setting/setting.json';
+			$file = DIR_APPLICATION . 'static/data/' . $language['code'] . '/setting/setting.json';
 
 			if (is_file($file)) {
 				unlink($file);

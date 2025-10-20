@@ -9,7 +9,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate the translation list.
+	 * Generate translation list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -160,8 +160,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$pos = strrpos($args['route'], '/');
 
-		$base = DIR_OPENCART . 'static/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/language/'  .  substr($args['route'], 0, $pos) . '/';
+		$base = DIR_OPENCART . 'static/language/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/'  .  substr($args['route'], 0, $pos) . '/';
 		$filename = substr($args['route'], $pos + 1) . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {

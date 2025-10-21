@@ -3,9 +3,9 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class SASS
  *
- * Can be loaded using $this->load->controller('common/developer');
+ * Can be loaded using $this->load->controller('task/catalog/sass');
  *
- * @package Opencart\Admin\Controller\Common
+ * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Sass extends \Opencart\System\Engine\Controller {
 	/**
@@ -18,7 +18,8 @@ class Sass extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/sass');
 
-		$file = DIR_OPENCART . 'static/stylesheet/stylesheet.scss';
+		// Before we delete we need to make sure there is a sass file to regenerate the css
+		$file = DIR_OPENCART . 'view/stylesheet/stylesheet.scss';
 
 		if (!is_file($file)) {
 			return ['error' => $this->language->get('error_file')];
@@ -27,7 +28,7 @@ class Sass extends \Opencart\System\Engine\Controller {
 		$filename = basename($file, '.scss');
 		$directory = dirname($file) . '/';
 
-		$stylesheet = $directory . $filename . '.css';
+		$stylesheet = DIR_OPENCART . 'static/stylesheet/' . $filename . '.css';
 
 		if (is_file($stylesheet)) {
 			unlink($stylesheet);

@@ -18,8 +18,18 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/subscription_status');
 
+		// Clear old data
+		$task_data = [
+			'code'   => 'subscription_status',
+			'action' => 'task/admin/subscription_status.clear',
+			'args'   => []
+		];
+
 		$this->load->model('setting/task');
 
+		$this->model_setting_task->addTask($task_data);
+
+		// Generate new data
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
@@ -33,6 +43,7 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
+
 		return ['success' => $this->language->get('text_task')];
 	}
 

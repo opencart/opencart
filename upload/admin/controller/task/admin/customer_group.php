@@ -18,8 +18,18 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
+		// Clear old data
+		$task_data = [
+			'code'   => 'customer_group',
+			'action' => 'task/admin/customer_group.clear',
+			'args'   => []
+		];
+
 		$this->load->model('setting/task');
 
+		$this->model_setting_task->addTask($task_data);
+
+		// Generate new data
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
@@ -184,9 +194,18 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'static/data/' . $language['code'] . '/customer/customer_group.json';
+			$base = DIR_APPLICATION . 'static/data/';
+			$directory = $language['code'] . '/customer/';
+
+			$file = $base . $directory . 'customer_group.json';
 
 			if (is_file($file)) {
+				unlink($file);
+			}
+
+			$files = oc_directory_read($base . $directory, false, '/customer_group-\d+\.json$/');
+
+			foreach ($files as $file) {
 				unlink($file);
 			}
 		}

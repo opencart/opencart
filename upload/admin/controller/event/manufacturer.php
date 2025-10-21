@@ -21,14 +21,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'manufacturer',
-			'action' => 'task/catalog/manufacturer',
-			'args'   => []
-		];
+		$files = oc_directory_read(DIR_OPENCART . 'static/html/');
 
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
+		foreach ($files as $file) {
+			oc_directory_delete($file);
+		}
 	}
 }

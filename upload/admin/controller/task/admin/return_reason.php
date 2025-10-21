@@ -18,8 +18,18 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/return_reason');
 
+		// Clear old data
+		$task_data = [
+			'code'   => 'return_reason',
+			'action' => 'task/admin/return_reason.clear',
+			'args'   => []
+		];
+
 		$this->load->model('setting/task');
 
+		$this->model_setting_task->addTask($task_data);
+
+		// Generate new data
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();

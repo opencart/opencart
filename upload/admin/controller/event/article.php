@@ -21,6 +21,11 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-		oc_directory_delete(DIR_OPENCART . 'shop/cms/');
+		$files = oc_directory_read(DIR_OPENCART . 'static/html/');
+
+		foreach ($files as $file) {
+			oc_directory_delete($file);
+		}
+
 	}
 }

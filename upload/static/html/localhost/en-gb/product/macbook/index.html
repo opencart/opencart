@@ -30,7 +30,7 @@
                         </ul>
     </div>
     <input type="hidden" name="code" value=""/>
-    <input type="hidden" name="redirect" value="http://localhost/opencart-master/upload/en-gb/product/macbook/"/>
+    <input type="hidden" name="redirect" value="http://localhost/opencart-master/upload/en-gb/product/macbook/?quantity=1"/>
   </form>
 </li>
               <li class="list-inline-item"></li>
@@ -358,7 +358,7 @@ $('#form-review').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=product/review.write&language=en-gb&review_token=a67d5dd2099f208ca3ad11bba2524dd8&product_id=43',
+        url: 'index.php?route=product/review.write&language=en-gb&review_token=02ad485b276b7f1abc65da8d25d0d8ca&product_id=43',
         type: 'post',
         data: $('#form-review').serialize(),
         dataType: 'json',

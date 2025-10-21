@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class SASS
  *
- * Can be loaded using $this->load->controller('common/developer');
+ * Can be loaded using $this->load->controller('task/admin/sass');
  *
  * @package Opencart\Admin\Controller\Common
  */
@@ -19,7 +19,7 @@ class Sass extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/admin/sass');
 
 		// Before we delete we need to make sure there is a sass file to regenerate the css
-		$file = DIR_APPLICATION . 'view/stylesheet/stylesheet.scss';
+		$file = DIR_APPLICATION . 'static/stylesheet/stylesheet.scss';
 
 		if (!is_file($file)) {
 			return ['error' => $this->language->get('error_file')];

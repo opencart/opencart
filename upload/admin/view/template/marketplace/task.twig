@@ -87,28 +87,30 @@ $('#form-filter').on('submit', function(e) {
 });
 
 $('#button-refresh').on('click', function(e) {
-    var element = this;
-
     $.ajax({
         url: $('#form-task').attr('data-oc-load'),
-        dataType: 'json',
+        dataType: 'html',
         beforeSend: function() {
-            $(element).button('loading');
+            $('#button-refresh').button('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $('#button-refresh').button('reset');
         },
         success: function(html) {
             $('#list').html(html);
+
+            setTimeout(() => {
+                $('#button-refresh').trigger('click');
+            }, 3000);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
-    }).done(() => {
-        setTimeout(() => {
-            $('#button-refresh').trigger('click');
-        }, 3000);
     });
+});
+
+$(document).ready(function() {
+    $('#button-refresh').trigger('click');
 });
 
 $('#button-start').on('click', function(e) {

@@ -182,7 +182,41 @@
 
 <div id="common-home" class="container">
   <div class="row">
-    <div id="content" class="col"><h3>Featured</h3>
+    <div id="content" class="col"><div id="carousel-banner-0" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carousel-banner-0" data-bs-slide-to="0" class="active"></button>
+                      <button type="button" data-bs-target="#carousel-banner-0" data-bs-slide-to="1"></button>
+                  </div>
+    <div class="carousel-inner">
+              <div class="carousel-item active">
+        <div class="row justify-content-center">
+                      <div class="col-12 text-center">
+                              <img src="http://localhost/opencart-master/upload/image/catalog/demo/banners/iPhone6.jpg" alt="iPhone 6" class="img-fluid"/>
+                          </div>
+                  </div>
+      </div>
+                <div class="carousel-item">
+        <div class="row justify-content-center">
+                      <div class="col-12 text-center">
+                              <img src="http://localhost/opencart-master/upload/image/catalog/demo/banners/MacBookAir.jpg" alt="MacBookAir" class="img-fluid"/>
+                          </div>
+                  </div>
+      </div>
+            </div>
+      <button type="button" class="carousel-control-prev" data-bs-target="#carousel-banner-0" data-bs-slide="prev"><span class="fa-solid fa-chevron-left"></span></button>
+    <button type="button" class="carousel-control-next" data-bs-target="#carousel-banner-0" data-bs-slide="next"><span class="fa-solid fa-chevron-right"></span></button>
+  </div>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+    new bootstrap.Carousel(document.querySelector('#carousel-banner-0'), {
+        ride: 'carousel',
+        interval: 5000,
+        wrap: true
+    });
+});
+//--></script>
+
+<h3>Featured</h3>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
       <div class="col mb-3"><div class="product-thumb">
   <div class="image"><a href="http://localhost/opencart-master/upload/en-gb/product/macbook/"><img src="http://localhost/opencart-master/upload/image/cache/catalog/demo/macbook_1-500x500.jpg" alt="MacBook" title="MacBook" class="img-fluid"/></a></div>
@@ -251,11 +285,11 @@
 </div></div>
   </div>
 
-<div id="carousel-banner-0" class="carousel slide" data-bs-ride="carousel">
+<div id="carousel-banner-1" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carousel-banner-0" data-bs-slide-to="0" class="active"></button>
-                      <button type="button" data-bs-target="#carousel-banner-0" data-bs-slide-to="1"></button>
-                      <button type="button" data-bs-target="#carousel-banner-0" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#carousel-banner-1" data-bs-slide-to="0" class="active"></button>
+                      <button type="button" data-bs-target="#carousel-banner-1" data-bs-slide-to="1"></button>
+                      <button type="button" data-bs-target="#carousel-banner-1" data-bs-slide-to="2"></button>
                   </div>
     <div class="carousel-inner">
               <div class="carousel-item active">
@@ -304,12 +338,12 @@
                   </div>
       </div>
             </div>
-      <button type="button" class="carousel-control-prev" data-bs-target="#carousel-banner-0" data-bs-slide="prev"><span class="fa-solid fa-chevron-left"></span></button>
-    <button type="button" class="carousel-control-next" data-bs-target="#carousel-banner-0" data-bs-slide="next"><span class="fa-solid fa-chevron-right"></span></button>
+      <button type="button" class="carousel-control-prev" data-bs-target="#carousel-banner-1" data-bs-slide="prev"><span class="fa-solid fa-chevron-left"></span></button>
+    <button type="button" class="carousel-control-next" data-bs-target="#carousel-banner-1" data-bs-slide="next"><span class="fa-solid fa-chevron-right"></span></button>
   </div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-    new bootstrap.Carousel(document.querySelector('#carousel-banner-0'), {
+    new bootstrap.Carousel(document.querySelector('#carousel-banner-1'), {
         ride: 'carousel',
         interval: 5000,
         wrap: true

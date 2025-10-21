@@ -4,6 +4,7 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-task').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fa-solid fa-sync"></i></button>
         <button type="button" id="button-start" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-success"><i class="fa-solid fa-play"></i></button>
         <button type="button" id="button-pause" data-bs-toggle="tooltip" title="{{ button_pause }}" class="btn btn-warning"><i class="fa-solid fa-pause"></i></button>
         <button type="button" id="button-clear" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa-solid fa-eraser"></i></button>
@@ -85,35 +86,30 @@ $('#form-filter').on('submit', function(e) {
     $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + url);
 });
 
-var test = function() {
-    console.log('hi');
+$('#button-refresh').on('click', function(e) {
+    var element = this;
 
     $.ajax({
-        url: 'index.php?route=marketplace/task.start&user_token={{ user_token }}',
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + $('#form-filter').serialize());
-            }
+        url: $('#form-task').attr('data-oc-load'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $('#list').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
+    }).done(() => {
+        setTimeout(() => {
+            $('#button-refresh').trigger('click');
+        }, 3000);
     });
-
-    $('#list').load($('#form-task').attr('data-oc-load'));
-}
-
-var timer = setTimeout(test, 3000);
+});
 
 $('#button-start').on('click', function(e) {
     $.ajax({
@@ -137,7 +133,7 @@ $('#button-start').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + $('#form-filter').serialize());
+                $('#list').load($('#form-task').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -168,7 +164,7 @@ $('#button-pause').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + $('#form-filter').serialize());
+                $('#list').load($('#form-task').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -199,7 +195,7 @@ $('#button-clear').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#list').load('index.php?route=marketplace/task.list&user_token={{ user_token }}&' + $('#form-filter').serialize());
+                $('#list').load($('#form-task').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

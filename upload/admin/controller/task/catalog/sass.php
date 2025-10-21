@@ -13,7 +13,7 @@ class Sass extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate admin SASS file.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/sass');

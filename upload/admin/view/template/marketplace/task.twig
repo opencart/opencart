@@ -99,7 +99,7 @@ $('#button-refresh').on('click', function(e) {
         success: function(html) {
             $('#list').html(html);
 
-            setTimeout(() => {
+            window.setTimeout(() => {
                 $('#button-refresh').trigger('click');
             }, 3000);
         },

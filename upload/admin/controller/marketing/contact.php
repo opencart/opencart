@@ -16,8 +16,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
-		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
+		$this->document->addScript('static/javascript/ckeditor/ckeditor.js');
+		$this->document->addScript('static/javascript/ckeditor/adapters/jquery.js');
 
 		$data['breadcrumbs'] = [];
 

@@ -20,6 +20,8 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
+		$limit = 10;
+
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
@@ -30,16 +32,26 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$task_data = [
-					'code'   => 'review',
-					'action' => 'task/catalog/review.list',
-					'args'   => [
-						'store_id'    => $store['store_id'],
-						'language_id' => $language['language_id']
-					]
-				];
+				$product_total = $this->model_catalog_product->getTotalProducts();
 
-				$this->model_setting_task->addTask($task_data);
+				$page_total = ceil($product_total / $limit);
+
+				for ($i = 1; $i <= $page_total; $i++) {
+					$start = $i * $limit;
+
+					$task_data = [
+						'code'   => 'review',
+						'action' => 'task/catalog/review.list',
+						'args'   => [
+							'store_id'    => $store['store_id'],
+							'language_id' => $language['language_id'],
+							'start'       => $start,
+							'limit'       => $limit
+						]
+					];
+
+					$this->model_setting_task->addTask($task_data);
+				}
 			}
 		}
 
@@ -78,7 +90,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/review');
 
-		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
+		$return_reasons = $this->model_catalog_review->getReviews();
 
 		foreach ($return_reasons as $return_reason) {
 

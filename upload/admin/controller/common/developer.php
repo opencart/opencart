@@ -130,29 +130,19 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$file = DIR_CATALOG . 'view/stylesheet/stylesheet.scss';
 
 		if (!is_file($file)) {
-			$json['error'] = $this->language->get('error_stylesheet');
+			$json['error'] = $this->language->get('error_file');
 		}
 
 		if (!$json) {
-			$filename = basename($file, '.scss');
-			$directory = dirname($file) . '/';
+			$task_data = [
+				'code'   => 'sass',
+				'action' => 'task/catalog/sass',
+				'args'   => []
+			];
 
-			$stylesheet = $directory . $filename . '.css';
+			$this->load->model('setting/task');
 
-			if (is_file($stylesheet)) {
-				unlink($stylesheet);
-			}
-
-			$scss = new \ScssPhp\ScssPhp\Compiler();
-			$scss->setImportPaths($directory);
-
-			$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
-
-			$handle = fopen($stylesheet, 'w');
-
-			fwrite($handle, $output);
-
-			fclose($handle);
+			$this->model_setting_task->addTask($task_data);
 
 			$json['success'] = $this->language->get('text_sass_catalog_success');
 		}
@@ -181,29 +171,19 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$file = DIR_APPLICATION . 'view/stylesheet/stylesheet.scss';
 
 		if (!is_file($file)) {
-			$json['error'] = $this->language->get('error_stylesheet');
+			$json['error'] = $this->language->get('error_file');
 		}
 
 		if (!$json) {
-			$filename = basename($file, '.scss');
-			$directory = dirname($file) . '/';
+			$task_data = [
+				'code'   => 'sass',
+				'action' => 'task/admin/sass',
+				'args'   => []
+			];
 
-			$stylesheet = $directory . $filename . '.css';
+			$this->load->model('setting/task');
 
-			if (is_file($stylesheet)) {
-				unlink($stylesheet);
-			}
-
-			$scss = new \ScssPhp\ScssPhp\Compiler();
-			$scss->setImportPaths($directory);
-
-			$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
-
-			$handle = fopen($stylesheet, 'w');
-
-			fwrite($handle, $output);
-
-			fclose($handle);
+			$this->model_setting_task->addTask($task_data);
 
 			$json['success'] = $this->language->get('text_sass_admin_success');
 		}

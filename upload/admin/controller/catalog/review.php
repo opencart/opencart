@@ -541,7 +541,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$task_data = [
 				'code'   => 'review',
-				'action' => 'task/catalog/review.rating',
+				'action' => 'task/report/rating',
 				'args'   => []
 			];
 

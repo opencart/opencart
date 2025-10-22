@@ -12,6 +12,8 @@ class XCart extends WebComponent {
 
             this.innerHTML = html;
 
+            this.element = this.querySelector('.dropdown-menu');
+
             let data = sessionStorage.getItem('cart');
 
             if (data !== undefined) {
@@ -28,8 +30,6 @@ class XCart extends WebComponent {
             }
         },
         render: (json) => {
-            console.log(test);
-
             let language = this.language('cart');
 
             let html = '';
@@ -42,29 +42,29 @@ class XCart extends WebComponent {
                     html += '    <td class="text-center w-25">';
 
                     if (json['products'][i]['thumb']) {
-                        html += '    <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>';
+                        html += '    <a href="' + json['products'][i]['href'] + '"><img src="' + json['products'][i]['thumb'] + '" alt="' + json['products'][i]['name'] + '" title="' + json['products'][i]['name'] + '" class="img-thumbnail"/></a>';
                     }
 
                     html += '    </td>';
-                    html += '    <td><a href="{{ product.href }}">{{product.name}}</a>';
+                    html += '    <td><a href="' + json['products'][i]['href'] + '">' + json['products'][i]['name'] + '</a>';
                     html += '      <ul class="list-unstyled mb-0">';
-                    html += '        <li><small> - {{text_model}}: {{product.model}}</small></li>';
+                    html += '        <li><small> - {{ text_model }}: ' + json['products'][i]['model'] + '</small></li>';
 
                     for (let j in json['products'][i]['option']) {
-                        html += '  <li><small> - {{option.name}}: {{option.value}}</small></li>';
+                        html += '  <li><small> - {{ option.name }}: {{ option.value }}</small></li>';
                     }
 
                     if (json['subscription']) {
-                        html += '  <li><small> - {{text_subscription}}: {{product.subscription}}</small></li>';
+                        html += '  <li><small> - {{ text_subscription }}: ' + json['products'][i]['subscription'] + '</small></li>';
                     }
 
                     if (json['reward']) {
-                        html += '  <li><small> - {{text_points}}: {{product.reward}}</small></li>';
+                        html += '  <li><small> - {{ text_points }}: ' + json['products'][i]['reward'] + '</small></li>';
                     }
 
                     html += '    </ul></td>';
-                    html += '    <td class="text-end text-nowrap">x {{ product.quantity }}</td>';
-                    html += '    <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>';
+                    html += '    <td class="text-end text-nowrap">x ' + json['products'][i]['quantity'] + '</td>';
+                    html += '    <td class="text-end"><x-currency code="{{ currency }}" amount="' + json['products'][i]['total'] + '"></x-currency></td>';
                     html += '    <td class="text-end"><form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#cart">';
                     html += '      <input type="hidden" name="key" value="{{ product.cart_id }}"/>';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>';
@@ -78,8 +78,8 @@ class XCart extends WebComponent {
 
                 for (let i in json['totals']) {
                     html += '  <tr>';
-                    html += '    <td class="text-end"><strong>{{ total.title }}</strong></td>';
-                    html += '    <td class="text-end"><x-currency code="{{ currency }}" amount="{{ total.value }}"></x-currency></td>';
+                    html += '    <td class="text-end"><strong>' + json['totals'][i]['title'] + '</strong></td>';
+                    html += '    <td class="text-end"><x-currency code="{{ currency }}" amount="' + json['totals'][i]['value'] + '"></x-currency></td>';
                     html += '  </tr>';
                 }
 
@@ -89,6 +89,8 @@ class XCart extends WebComponent {
             } else {
                 html += '<li class="text-center p-4">{{ text_no_results }}</li>';
             }
+
+            this.element.innerHTML = html;
         }
     };
 }

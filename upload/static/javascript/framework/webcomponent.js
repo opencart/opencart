@@ -9,9 +9,9 @@ const base = new URL(document.querySelector('base').href);
 
 let language = document.querySelector('html').lang.toLowerCase();
 
-registry.set('storage', new Storage('./catalog/view/data/' + base.host + '/' + language + '/'));
-registry.set('template', new Template('./catalog/view/data/' + base.host + '/' + language + '/'));
-registry.set('Language', new Language('./catalog/view/language/' + base.host + '/' + language + '/'));
+registry.set('storage', new Storage('./static/data/' + base.host + '/' + language + '/'));
+registry.set('template', new Template('./static/data/' + base.host + '/' + language + '/'));
+registry.set('Language', new Language('./static/language/' + base.host + '/' + language + '/'));
 
 export class WebComponent extends HTMLElement {
     registry = {};

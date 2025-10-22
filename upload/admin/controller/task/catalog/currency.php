@@ -18,7 +18,16 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
+		// Clear old data
+		$task_data = [
+			'code'   => 'currency',
+			'action' => 'task/catalog/currency.clear',
+			'args'   => []
+		];
+
 		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
 
 		$this->load->model('setting/store');
 
@@ -32,7 +41,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'currency',
-					'action' => 'task/admin/currency.list',
+					'action' => 'task/catalog/currency.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']

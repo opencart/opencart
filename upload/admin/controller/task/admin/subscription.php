@@ -76,7 +76,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-
 		// Currency
 		$this->load->model('localisation/currency');
 

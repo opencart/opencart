@@ -17,7 +17,7 @@ class XCart extends WebComponent {
             if (data !== undefined) {
                 let response = this.event.fetch('index.php?route=common/cart.json');
 
-                response.then(this.event.onloaded);
+                response.then(this.event.render);
             }
         },
         fetch: async (url) => {
@@ -27,14 +27,64 @@ class XCart extends WebComponent {
                 return response.json();
             }
         },
-        onloaded: (test) => {
+        render: (json) => {
             console.log(test);
 
             let language = this.language('cart');
 
-            this.template('cart', test);
+            let html = '';
 
+            if (json['products']) {
+                html += '<li><table class="table table-striped mb-2">';
 
+                for (let i in json['products']) {
+                    html += '  <tr>';
+                    html += '    <td class="text-center w-25">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>';
+                    html += '    <td><a href="{{ product.href }}">{{product.name}}</a>';
+                    html += '      <ul class="list-unstyled mb-0">';
+                    html += '      <li><small> - {{text_model}}: {{product.model}}</small></li>';
+
+                    for (let j in json['products'][i]['option']) {
+                        html += '  <li><small> - {{option.name}}: {{option.value}}</small></li>';
+                    }
+
+                    if (json['subscription']) {
+                        html += '  <li><small> - {{text_subscription}}: {{product.subscription}}</small></li>';
+                    }
+
+                    if (json['reward']) {
+                        html += '  <li><small> - {{text_points}}: {{product.reward}}</small></li>';
+                    }
+
+                    html += '    </ul></td>';
+                    html += '    <td class="text-end text-nowrap">x {{product.quantity}}</td>';
+                    html += '    <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>';
+                    html += '    <td class="text-end"><form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#cart">';
+                    html += '      <input type="hidden" name="key" value="{{ product.cart_id }}"/>';
+                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" className="btn btn-danger"><i className="fa-solid fa-circle-xmark"></i></button>';
+                    html += '    </form></td>';
+                    html += '  </tr>';
+                }
+
+                html += '</table>';
+                html += '<div>';
+                html += '  <table class="table table-sm table-bordered mb-2">';
+
+                for (let i in json['totals']) {
+                    html += '  <tr>';
+                    html += '    <td class="text-end"><strong>{{ total.title }}</strong></td>';
+                    html += '    <td class="text-end"><x-currency code="{{ currency }}" amount="{{ total.value }}"></x-currency></td>';
+                    html += '  </tr>';
+                }
+
+                html += '  </table>';
+
+                html += '  <p class="text-end"><a href="{{ cart }}"><strong><i className="fa-solid fa-cart-shopping"></i> {{text_cart}}</strong></a>&nbsp;&nbsp;&nbsp;<a href="{{ checkout }}"><strong><i className="fa-solid fa-share"></i> {{text_checkout}}</strong></a></p>';
+                html += '</div></li>';
+
+            } else {
+                html += '<li class="text-center p-4">{{text_no_results}}</li>';
+            }
         }
     };
 }

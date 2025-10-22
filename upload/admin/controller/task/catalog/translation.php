@@ -9,7 +9,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate translation list.
+	 * Generate translation task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -18,6 +18,18 @@ class Translation extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/translation');
 
+		// Clear old data
+		$task_data = [
+			'code'   => 'translation',
+			'action' => 'task/catalog/translation.clear',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		// Generate new data
 		$ignore = [
 			'api',
 			'mail',
@@ -87,7 +99,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_task')];
 	}
 
-	/*
+	/**
 	 * Write
 	 *
 	 * Write JSON translation file.

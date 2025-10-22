@@ -30,7 +30,7 @@ class XCart extends WebComponent {
             }
         },
         render: (json) => {
-            let language = this.language('cart');
+            //let language = this.language('cart');
 
             let html = '';
 
@@ -51,22 +51,22 @@ class XCart extends WebComponent {
                     html += '        <li><small> - {{ text_model }}: ' + json['products'][i]['model'] + '</small></li>';
 
                     for (let j in json['products'][i]['option']) {
-                        html += '  <li><small> - {{ option.name }}: {{ option.value }}</small></li>';
+                        html += '  <li><small> - ' + json['products'][i]['option'][j]['name'] + ': ' + json['products'][i]['option'][j]['value'] + '</small></li>';
                     }
 
-                    if (json['subscription']) {
+                    if (json['products'][i]['subscription']) {
                         html += '  <li><small> - {{ text_subscription }}: ' + json['products'][i]['subscription'] + '</small></li>';
                     }
 
-                    if (json['reward']) {
+                    if (json['products'][i]['reward']) {
                         html += '  <li><small> - {{ text_points }}: ' + json['products'][i]['reward'] + '</small></li>';
                     }
 
                     html += '    </ul></td>';
                     html += '    <td class="text-end text-nowrap">x ' + json['products'][i]['quantity'] + '</td>';
                     html += '    <td class="text-end"><x-currency code="{{ currency }}" amount="' + json['products'][i]['total'] + '"></x-currency></td>';
-                    html += '    <td class="text-end"><form action="{{ remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#cart">';
-                    html += '      <input type="hidden" name="key" value="{{ product.cart_id }}"/>';
+                    html += '    <td class="text-end"><form action="{{ remove }}" method="post" data-oc-target="#cart">';
+                    html += '      <input type="hidden" name="key" value="' + json['products'][i]['cart_id'] + '"/>';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>';
                     html += '    </form></td>';
                     html += '  </tr>';

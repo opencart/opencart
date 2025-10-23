@@ -377,9 +377,9 @@ class ModelUpgrade1010 extends Model {
 		$this->removeByNameFromDB('ups');
 		$this->removeByName($dir_opencart,'citylink');
 		$this->removeByNameFromDB('citylink');
-		$this->removeByName($dir_opencart,'maxmind');
 
 		// remove some other obsolete core files
+		$this->deleteEntry($dir_opencart.'/admin/view/image/payment/paypal/icon-message.svg');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/jquery/owl-carousel');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/jquery/jquery-2.1.1.min.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/jquery/jquery-2.1.1.min.map');
@@ -424,6 +424,7 @@ class ModelUpgrade1010 extends Model {
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-vi-VN.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-zh-CN.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-zh-TW.js');
+		$this->deleteEntry($dir_opencart.'/admin/view/template/extension/payment/paypal/message.twig');
 		$this->deleteEntry($dir_opencart.'/catalog/controller/information/tracking.php');
 		$this->deleteEntries($dir_opencart.'/catalog/language/*/information/tracking.php');
 		$this->deleteEntry($dir_opencart.'/catalog/view/javascript/jquery/owl-carousel');

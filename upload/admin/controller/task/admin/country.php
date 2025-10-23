@@ -18,8 +18,18 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/country');
 
+		// Clear old data
+		$task_data = [
+			'code'   => 'country',
+			'action' => 'task/admin/country.clear',
+			'args'   => []
+		];
+
 		$this->load->model('setting/task');
 
+		$this->model_setting_task->addTask($task_data);
+
+		// Generate new data
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
@@ -65,6 +75,8 @@ class Country extends \Opencart\System\Engine\Controller {
 			'filter_language_id' => $language_info['language_id'],
 			'sort_order'         => 'ASC'
 		];
+
+		$this->load->model('setting/task');
 
 		$this->load->model('localisation/country');
 
@@ -201,7 +213,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				unlink($file);
 			}
 
-			$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
+			$files = oc_directory_read($base . $directory, false, '/country-\d+\.json$/');
 
 			foreach ($files as $file) {
 				unlink($file);

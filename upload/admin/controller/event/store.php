@@ -11,9 +11,9 @@ class Store extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new store list
      *
-	 * model/localisation/store/addStore
-	 * model/localisation/store/editStore
-	 * model/localisation/store/deleteStore
+	 * model/setting/store/addStore
+	 * model/setting/store/editStore
+	 * model/setting/store/deleteStore
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

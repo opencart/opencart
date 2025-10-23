@@ -18,8 +18,18 @@ class Information extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/information');
 
+		// Clear old data
+		$task_data = [
+			'code'   => 'information',
+			'action' => 'task/admin/information.clear',
+			'args'   => []
+		];
+
 		$this->load->model('setting/task');
 
+		$this->model_setting_task->addTask($task_data);
+
+		// Generate new data
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
@@ -32,7 +42,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'information',
-					'action' => 'task/catalog/information.list',
+					'action' => 'task/admin/information.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
 						'language_id' => $language['language_id']
@@ -69,8 +79,6 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('setting/task');
-
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
@@ -87,6 +95,8 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		$this->load->model('setting/task');
+
 		$filter_data = [
 			'filter_store_id'    => $store_info['store_id'],
 			'filter_language_id' => $language_info['language_id'],
@@ -99,8 +109,8 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($informations as $information) {
 			$task_data = [
-				'code'   => 'ssr',
-				'action' => 'task/catalog/ssr',
+				'code'   => 'information',
+				'action' => 'task/catalog/information',
 				'args'   => [
 					'route'          => 'product/manufacturer',
 					'information_id' => $information['information_id'],
@@ -120,7 +130,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $informations);
 
-		$base = DIR_OPENCART . 'shop/';
+		$base = DIR_OPENCART . 'static/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/catalog/';
 		$filename = 'information.json';
 
@@ -157,7 +167,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_OPENCART . 'shop/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/catalog/information.json';
+				$file = DIR_OPENCART . 'static/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/catalog/information.json';
 
 				if (is_file($file)) {
 					unlink($file);

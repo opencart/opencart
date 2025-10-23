@@ -3,10 +3,10 @@
 $_['heading_title']          = 'Attributes';
 
 // Text
-$_['text_success']           = 'Success: You have modified attributes!';
-$_['text_list']              = 'Attribute List';
-$_['text_add']               = 'Add Attribute';
-$_['text_edit']              = 'Edit Attribute';
+$_['text_success']           = 'Modify';
+$_['text_list']              = 'listing';
+$_['text_add']               = 'Attribute';
+$_['text_edit']              = 'Attribute';
 
 // Column
 $_['column_name']            = 'Attribute Name';

@@ -349,6 +349,9 @@ class ModelUpgrade1010 extends Model {
 		$this->db->query("UPDATE `".DB_PREFIX."zone` SET `name`='‘Ajmān' WHERE `name`='''Ajman';");
 		$this->db->query("UPDATE `".DB_PREFIX."zone` SET `name`='Ash Shāriqah' WHERE `name`='Ash Shariqah';");
 		$this->db->query("UPDATE `".DB_PREFIX."zone` SET `name`='Ra’s al Khaymah' WHERE `name`='R''as al Khaymah';");
+		$sql  = "UPDATE `".DB_PREFIX."setting` SET `value`=SUBSTRING(`value`,7) ";
+		$sql .= "WHERE `key`='config_theme' AND `value` LIKE 'theme_%';";
+		$this->db->query($sql);
 
 		// fixes for Google Shopping DB tables
 		$this->fixColumnsForGoogleShopping();

@@ -205,6 +205,92 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
+	 * Index
+	 *
+	 * @return array<string, mixed>
+	 */
+	public function json(): void {
+		$this->load->language('common/cart');
+
+		// Display prices
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			$price_status = true;
+		} else {
+			$price_status = false;
+		}
+
+		// Image
+		$this->load->model('tool/image');
+
+		// Products
+		$json['products'] = [];
+
+		$this->load->model('checkout/cart');
+
+		$products = $this->model_checkout_cart->getProducts();
+
+		foreach ($products as $product) {
+			if ($product['option']) {
+				foreach ($product['option'] as $key => $option) {
+					if ($option['type'] != 'file') {
+						$value = $option['value'];
+					} else {
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}
+					}
+
+					$product['option'][$key]['value'] = (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value);
+				}
+			}
+
+			$subscription = '';
+
+			if ($product['subscription']) {
+				if ($product['subscription']['duration']) {
+					$subscription .= sprintf($this->language->get('text_subscription_duration'), $this->session->data['currency'], $price_status ?? $product['subscription']['price'], $product['subscription']['cycle'], $product['subscription']['frequency'], $product['subscription']['duration']);
+				} else {
+					$subscription .= sprintf($this->language->get('text_subscription_cancel'), $this->session->data['currency'], $price_status ?? $product['subscription']['price'], $product['subscription']['cycle'], $product['subscription']['frequency']);
+				}
+			}
+
+			$json['products'][] = [
+					'thumb'        => $this->model_tool_image->resize($product['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')),
+					'subscription' => $subscription,
+					'price'        => $price_status ? $product['price'] : '',
+					'total'        => $price_status ? $product['total'] : '',
+					'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
+				] + $product;
+		}
+
+		$totals = [];
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
+
+		if ($price_status) {
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+		}
+
+		// Totals
+		$json['totals'] = $totals;
+
+		$json['list'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
+		$json['remove'] = $this->url->link('common/cart.remove', 'language=' . $this->config->get('config_language'));
+
+		$json['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+		$json['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+
+		$json['currency'] = $this->session->data['currency'];
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
 	 * Add
 	 *
 	 * @return void

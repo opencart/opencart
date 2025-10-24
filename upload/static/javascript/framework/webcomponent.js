@@ -1,7 +1,7 @@
 import Registry from './library/registry.js';
 import Storage from './library/storage.js';
-import Template from './library/template.js';
 import Language from './library/language.js';
+import Template from './library/template.js';
 
 const registry = new Registry();
 
@@ -10,8 +10,8 @@ const base = new URL(document.querySelector('base').href);
 let language = document.querySelector('html').lang.toLowerCase();
 
 registry.set('storage', new Storage('./static/data/' + base.host + '/' + language + '/'));
-registry.set('template', new Template('./static/data/' + base.host + '/' + language + '/'));
-registry.set('Language', new Language('./static/language/' + base.host + '/' + language + '/'));
+registry.set('language', new Language('./static/language/' + base.host + '/' + language + '/'));
+registry.set('template', new Template('./static/template/' + base.host + '/'));
 
 export class WebComponent extends HTMLElement {
     registry = {};

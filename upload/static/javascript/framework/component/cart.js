@@ -1,26 +1,24 @@
 import { WebComponent } from './../webcomponent.js';
 
 class XCart extends WebComponent {
+    element = HTMLInputElement;
+    data = [];
+
     event = {
         connected: async () => {
-            let html = '';
+            let language = this.language.fetch('common/cart');
 
-            html += '<div class="dropdown d-grid">';
-            html += '  <button type="button" data-bs-toggle="dropdown" class="btn btn-lg btn-dark d-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items }}</button>';
-            html += '  <ul class="dropdown-menu dropdown-menu-end p-2"></ul>';
-            html += '</div>';
-
-            this.innerHTML = html;
+            language.then(this.event.language);
 
             this.element = this.querySelector('.dropdown-menu');
 
-            let data = sessionStorage.getItem('cart');
+           // let data = sessionStorage.getItem('cart');
 
-            if (data !== undefined) {
-                let response = this.event.fetch('index.php?route=common/cart.json');
+            //if (data !== undefined) {
+            //    let response = this.event.fetch('index.php?route=checkout/cart.json');
 
-                response.then(this.event.render);
-            }
+            //    response.then(this.event.render);
+            //}
         },
         fetch: async (url) => {
             let response = await fetch(url);
@@ -29,12 +27,36 @@ class XCart extends WebComponent {
                 return response.json();
             }
         },
+        language: (json) => {
+            this.data.language = json;
+
+            let html = '';
+
+            html += '<div class="dropdown d-grid">';
+            html += '  <button type="button" data-bs-toggle="dropdown" class="btn btn-lg btn-dark d-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> ' + this.data.language['text_items'] + '</button>';
+            html += '  <ul class="dropdown-menu dropdown-menu-end p-2"></ul>';
+            html += '</div>';
+
+            this.innerHTML = html;
+
+            let response = this.event.fetch('index.php?route=checkout/cart.json');
+
+            response.then(this.event.render);
+
+            //console.log(this.data);
+        },
+        dfredf: () => {
+
+        },
         render: (json) => {
-            //let language = this.language('cart');
+            //console.log(this.storage);
+            //console.log(this.data);
 
             let html = '';
 
             if (json['products']) {
+                console.log(json);
+
                 html += '<li><table class="table table-striped mb-2">';
 
                 for (let i in json['products']) {

@@ -6,18 +6,6 @@ export default class Language {
         this.path = path;
     }
 
-    get(key) {
-        return this.data[key];
-    }
-
-    set(key, value) {
-        this.data[key] = value;
-    }
-
-    all() {
-        return this.data;
-    }
-
     async fetch(filename) {
         let key = filename.replaceAll('/', '.');
 

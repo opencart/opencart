@@ -50,7 +50,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			foreach ($languages as $language) {
 				$routes = [];
 
-				$directory = DIR_OPENCART . 'static/language/' . $language['code'] . '/';
+				$directory = DIR_CATALOG . 'language/' . $language['code'] . '/';
 
 				$files = oc_directory_read($directory, true, '/.+\.php$/');
 

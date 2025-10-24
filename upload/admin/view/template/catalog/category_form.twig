@@ -46,6 +46,9 @@
                       <div class="row mb-3">
                         <label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
                         <div class="col-sm-10">
+                          <x-ckeditor editor-name="classic" language=""></x-ckeditor>
+
+
                           <textarea name="category_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ category_description[language.language_id] ? category_description[language.language_id].description }}</textarea>
                         </div>
                       </div>
@@ -204,68 +207,5 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
-    language: '{{ ckeditor }}'
-});
-
-$('#input-parent').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                json.unshift({
-                    'category_id': '0',
-                    'name': '{{ text_none }}'
-                });
-
-                response($.map(json, function(item) {
-                    return {
-                        value: item['category_id'],
-                        label: item['name']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('#input-parent').val(decodeHTMLEntities(item['label']));
-        $('#input-parent-id').val(item['value']);
-    }
-});
-
-$('#input-filter').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=catalog/filter.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['filter_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('#input-filter').val('');
-
-        $('#category-filter-' + item['value']).remove();
-
-        html = '<tr id="category-filter-' + item['value'] + '">';
-        html += '  <td>' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
-        html += '</tr>';
-
-        $('#category-filter tbody').append(html);
-    }
-});
-
-$('#category-filter').on('click', '.btn', function() {
-    $(this).parent().parent().remove();
-});
-//--></script>
+<script src="static/javascript/category.js" type="text/javascript"></script>
 {{ footer }}

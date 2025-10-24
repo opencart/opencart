@@ -26,7 +26,6 @@
         </fieldset>
         <fieldset>
           <legend id="action">{{ text_action }}</legend>
-
           <div class="mb-3">
             <div class="form-check">
               <input type="radio" name="action" value="export" id="input-export" checked class="form-check-input"/> <label for="input-export" class="form-check-label"><strong>{{ text_export }}</strong></label>
@@ -35,7 +34,6 @@
               <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label for="input-remove" class="form-check-label"><strong>{{ text_remove }}</strong></label>
             </div>
           </div>
-
           <div id="collapse-remove" class="alert alert-warning collapse">
             <p><i class="fa-solid fa-triangle-exclamation"></i> {{ text_warning }}</p>
             <ul>
@@ -57,13 +55,5 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-<script type="text/javascript"><!--
-$('input[name=\'action\']').on('change', function() {
-    if (this.value == 'remove') {
-        $('#collapse-remove').slideDown();
-    } else {
-        $('#collapse-remove').slideUp();
-    }
-});
-//--></script>
+<script src="static/javascript/gdpr.js" type="text/javascript"></script>
 {{ footer }}

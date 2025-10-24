@@ -459,7 +459,11 @@ class ModelUpgrade1010 extends Model {
 			return @unlink($file);
 		}
 
-		foreach (@scandir($dir) as $item) {
+		$items = @scandir($dir);
+		if (!is_array($items)) {
+			return true;
+		}
+		foreach ($items as $item) {
 			if ($item == '.' || $item == '..') {
 				continue;
 			}
@@ -564,7 +568,11 @@ class ModelUpgrade1010 extends Model {
 		}
 
 		$dir = $entry;
-		foreach (@scandir($dir) as $item) {
+		$items = @scandir($dir);
+		if (!is_array($items)) {
+			return true;
+		}
+		foreach ($items as $item) {
 			if ($item == '.' || $item == '..') {
 				continue;
 			}

@@ -9,7 +9,7 @@ class Mail {
 	/**
 	 * @var string
 	 */
-	protected string $to = '';
+	protected string|array $to = '';
 	/**
 	 * @var string
 	 */
@@ -57,7 +57,7 @@ class Mail {
 	 *
 	 * @return void
 	 */
-	public function setTo($to): void {
+	public function setTo(string|array $to): void {
 		$this->to = $to;
 	}
 

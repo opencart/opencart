@@ -78,7 +78,7 @@ export class WebComponent extends HTMLElement {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    import('./component/ckeditor.js');
+    //import('./component/ckeditor.js');
     import('./component/currency.js');
     import('./component/country.js');
     import('./component/datetime.js');

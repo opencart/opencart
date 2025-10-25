@@ -8,7 +8,11 @@ class XCkeditor extends WebComponent {
     event = {
         connected: async () => {
             this.editor = null
-                <textarea name="category_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ category_description[language.language_id] ? category_description[language.language_id].description }}</textarea>
+             //   <textarea name="category_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ category_description[language.language_id] ? category_description[language.language_id].description }}</textarea>
+
+
+            // <x-ckeditor editor-name="classic" language=""></x-ckeditor>
+
             let editor = document.createElement('div');
 
             CustomEditor.create(editor, {

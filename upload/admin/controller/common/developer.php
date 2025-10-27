@@ -36,7 +36,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = oc_directory_read(DIR_OPENCART . 'view/html/');
+			$files = oc_directory_read(DIR_CATALOG . 'view/html/');
 
 			foreach ($files as $file) {
 				oc_directory_delete($file);

@@ -16,7 +16,7 @@
   <link href="{{ icons }}" rel="stylesheet" type="text/css"/>
   <link href="{{ stylesheet }}" rel="stylesheet" type="text/css"/>
   <script src="{{ jquery }}" type="text/javascript"></script>
-  <script type="text/javascript" src="static/javascript/common.js"></script>
+  <script type="text/javascript" src="view/javascript/common.js"></script>
   {% for style in styles %}
     <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}"/>
   {% endfor %}
@@ -34,7 +34,7 @@
 <div id="container">
   <header id="header" class="navbar navbar-expand navbar-light bg-light">
     <div class="container-fluid">
-      <a href="{{ home }}" class="navbar-brand d-none d-lg-block"><img src="static/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
+      <a href="{{ home }}" class="navbar-brand d-none d-lg-block"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
       {% if logged %}
         <button type="button" id="button-menu" class="btn btn-link d-inline-block d-lg-none"><i class="fa-solid fa-bars"></i></button>
         <ul class="nav navbar-nav">

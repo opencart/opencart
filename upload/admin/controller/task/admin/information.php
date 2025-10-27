@@ -130,7 +130,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $informations);
 
-		$base = DIR_OPENCART . 'static/data/';
+		$base = DIR_OPENCART . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/data/catalog/';
 		$filename = 'information.json';
 
@@ -167,7 +167,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_OPENCART . 'static/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/catalog/information.json';
+				$file = DIR_OPENCART . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/data/catalog/information.json';
 
 				if (is_file($file)) {
 					unlink($file);

@@ -75,7 +75,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 
 		$stock_statuses = $this->model_localisation_stock_status->getStockStatuses(['filter_language_id' => $language_info['language_id']]);
 
-		$base = DIR_APPLICATION . 'static/data/';
+		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
 		$filename = 'stock_status.json';
 
@@ -107,7 +107,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'static/data/' . $language['code'] . '/localisation/stock_status.json';
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/stock_status.json';
 
 			if (is_file($file)) {
 				unlink($file);

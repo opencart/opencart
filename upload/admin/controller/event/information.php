@@ -31,7 +31,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		$files = oc_directory_read(DIR_OPENCART . 'static/html/');
+		$files = oc_directory_read(DIR_OPENCART . 'view/html/');
 
 		foreach ($files as $file) {
 			oc_directory_delete($file);

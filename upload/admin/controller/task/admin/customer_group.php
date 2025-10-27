@@ -91,7 +91,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		$base = DIR_APPLICATION . 'static/data/';
+		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/customer/';
 		$filename = 'customer_group.json';
 
@@ -162,7 +162,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
-		$base = DIR_APPLICATION . 'static/data/';
+		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/customer/';
 		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
@@ -194,7 +194,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$base = DIR_APPLICATION . 'static/data/';
+			$base = DIR_APPLICATION . 'view/data/';
 			$directory = $language['code'] . '/customer/';
 
 			$file = $base . $directory . 'customer_group.json';

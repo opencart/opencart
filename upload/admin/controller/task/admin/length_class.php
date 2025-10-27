@@ -75,7 +75,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 
 		$length_classes = $this->model_localisation_length_class->getLengthClasses(['filter_language_id' => $language_info['language_id']]);
 
-		$base = DIR_APPLICATION . 'static/data/';
+		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
 		$filename = 'length_class.json';
 
@@ -107,7 +107,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'static/data/' . $language['code'] . '/localisation/length_class.json';
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/length_class.json';
 
 			if (is_file($file)) {
 				unlink($file);

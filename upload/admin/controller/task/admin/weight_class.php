@@ -75,7 +75,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		$weight_classes = $this->model_localisation_weight_class->getWeightClasses(['filter_language_id' => $language_info['language_id']]);
 
-		$base = DIR_APPLICATION . 'static/data/';
+		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
 		$filename = 'weight_class.json';
 
@@ -107,7 +107,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'static/data/' . $language['code'] . '/localisation/weight_class.json';
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/weight_class.json';
 
 			if (is_file($file)) {
 				unlink($file);

@@ -98,7 +98,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$currencies = $this->model_localisation_currency->getCurrencies();
 
-		$base = DIR_OPENCART . 'static/data/';
+		$base = DIR_OPENCART . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
 		$filename = 'currency.json';
 
@@ -135,7 +135,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_OPENCART . 'static/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/currency.json';
+				$file = DIR_OPENCART . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/currency.json';
 
 				if (is_file($file)) {
 					unlink($file);

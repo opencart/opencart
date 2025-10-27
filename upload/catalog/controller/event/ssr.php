@@ -41,7 +41,7 @@ class Ssr extends \Opencart\System\Engine\Controller {
 		$output = $this->response->getOutput();
 
 		// Create the directory and file names.
-		$base = DIR_OPENCART . 'static/html/';
+		$base = DIR_OPENCART . 'catalog/view/html/';
 		$directory = parse_url($this->config->get('config_url'), PHP_URL_HOST) . '/' . $this->request->get['_route_'];
 		$filename = 'index.html';
 

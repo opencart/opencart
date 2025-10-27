@@ -3,4 +3,4 @@
 $_['text_success'] = 'Success: You have modified the admin SASS!';
 
 // Error
-$_['error_file']   = 'Error: File could not be found!';
+$_['error_file']   = 'Error: SASS File %s could not be found!';

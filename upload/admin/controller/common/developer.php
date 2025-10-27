@@ -127,10 +127,10 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$file = DIR_CATALOG . 'view/stylesheet/stylesheet.scss';
+		$file = DIR_CATALOG . 'view/sass/stylesheet.scss';
 
 		if (!is_file($file)) {
-			$json['error'] = $this->language->get('error_file');
+			$json['error'] = sprintf($this->language->get('error_file'), $file);
 		}
 
 		if (!$json) {
@@ -168,10 +168,10 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Before we delete we need to make sure there is a sass file to regenerate the css
-		$file = DIR_APPLICATION . 'view/stylesheet/stylesheet.scss';
+		$file = DIR_APPLICATION . 'view/sass/stylesheet.scss';
 
 		if (!is_file($file)) {
-			$json['error'] = $this->language->get('error_file');
+			$json['error'] = sprintf($this->language->get('error_file'), $file);
 		}
 
 		if (!$json) {

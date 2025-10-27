@@ -19,16 +19,16 @@ class Sass extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/sass');
 
 		// Before we delete we need to make sure there is a sass file to regenerate the css
-		$file = DIR_CATALOG . 'view/stylesheet/stylesheet.scss';
+		$file = DIR_CATALOG . 'view/sass/stylesheet.scss';
 
 		if (!is_file($file)) {
-			return ['error' => $this->language->get('error_file')];
+			return ['error' => sprintf($this->language->get('error_file'), $file)];
 		}
 
 		$filename = basename($file, '.scss');
 		$directory = dirname($file) . '/';
 
-		$stylesheet = DIR_OPENCART . 'view/stylesheet/' . $filename . '.css';
+		$stylesheet = DIR_CATALOG . 'view/stylesheet/' . $filename . '.css';
 
 		if (is_file($stylesheet)) {
 			unlink($stylesheet);

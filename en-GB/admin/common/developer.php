@@ -26,4 +26,4 @@ $_['help_vendor']               = 'Rebuilds the included vendor file.';
 
 // Error
 $_['error_permission']          = 'Warning: You do not have permission to modify developer settings!';
-$_['error_file']                = 'Error: File %s could not be found!';
+$_['error_file']                = 'Error: SASS File %s could not be found!';

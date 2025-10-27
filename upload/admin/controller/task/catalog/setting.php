@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
- * Class Currency
+ * Class Setting
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class Currency extends \Opencart\System\Engine\Controller {
+class Setting extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -28,6 +28,12 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+
+
+
+
+
+
 
 		$this->load->model('setting/store');
 

@@ -133,7 +133,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_OPENCART . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/review.json';
+				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/review.json';
 
 				if (is_file($file)) {
 					unlink($file);

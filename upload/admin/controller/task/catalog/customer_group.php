@@ -108,7 +108,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		$base = DIR_OPENCART . 'view/data/';
+		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/customer/';
 		$filename = 'customer_group.json';
 
@@ -190,7 +190,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
-		$base = DIR_OPENCART . 'view/data/';
+		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/customer/';
 		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
@@ -227,7 +227,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_OPENCART . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/customer/customer_group.json';
+				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/customer/customer_group.json';
 
 				if (is_file($file)) {
 					unlink($file);

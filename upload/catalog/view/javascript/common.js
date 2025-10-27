@@ -412,6 +412,15 @@ $(document).ready(function() {
         $('#form-currency').submit();
     });
 
+
+    // Local Storage
+    if (localStorage.getItem('currency') !== undefined) {
+
+    } else {
+        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
+        $('#button-grid').addClass('active');
+    }
+
     // Language
     $('#form-language .dropdown-item').on('click', function(e) {
         e.preventDefault();

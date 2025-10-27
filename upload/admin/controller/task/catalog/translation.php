@@ -172,7 +172,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$pos = strrpos($args['route'], '/');
 
-		$base = DIR_OPENCART . 'view/language/';
+		$base = DIR_CATALOG . 'view/language/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/'  .  substr($args['route'], 0, $pos) . '/';
 		$filename = substr($args['route'], $pos + 1) . '.json';
 
@@ -209,7 +209,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$directories = oc_directory_read(DIR_OPENCART . 'view/language/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
+				$directories = oc_directory_read(DIR_CATALOG . 'view/language/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/language/', false);
 
 				foreach ($directories as $directory) {
 					oc_directory_delete($directory);

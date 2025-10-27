@@ -119,4 +119,3 @@ class XCurrency extends WebComponent {
 }
 
 customElements.define('x-currency', XCurrency);
-

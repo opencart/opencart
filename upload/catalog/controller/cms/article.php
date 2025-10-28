@@ -39,6 +39,8 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->document->setDescription($article_info['meta_description']);
 		$this->document->setKeywords($article_info['meta_keyword']);
 
+		$this->document->addScript('catalog/view/javascript/comment.js');
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [

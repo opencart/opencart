@@ -88,6 +88,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$this->document->addScript('catalog/view/javascript/topic.js');
+
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['description'] = '';

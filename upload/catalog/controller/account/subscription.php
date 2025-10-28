@@ -161,6 +161,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$this->document->setTitle($heading_title);
 
+			$this->document->addScript('catalog/view/javascript/subscription.js');
+
 			$data['heading_title'] = $heading_title;
 
 			$url = '';

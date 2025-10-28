@@ -138,6 +138,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->document->setTitle($heading_title);
 
+			$this->document->addScript('catalog/view/javascript/order.js');
+
 			$url = '';
 
 			if (isset($this->request->get['page'])) {

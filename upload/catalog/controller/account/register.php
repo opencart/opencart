@@ -20,6 +20,8 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$this->document->addScript('catalog/view/javascript/register.js');
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -48,7 +50,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		// Create form token
 		$this->session->data['register_token'] = oc_token(26);
 
-		$data['register'] = $this->url->link('account/register.register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
+		$data['save'] = $this->url->link('account/register.save', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
 
 		$this->session->data['upload_token'] = oc_token(32);
 
@@ -123,7 +125,7 @@ class Register extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function register(): void {
+	public function save(): void {
 		$this->load->language('account/register');
 
 		$json = [];

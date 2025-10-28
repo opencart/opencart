@@ -120,6 +120,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if ($return_info) {
 			$this->document->setTitle($this->language->get('text_return'));
 
+			$this->document->addScript('catalog/view/javascript/return.js');
+
 			$data['breadcrumbs'] = [];
 
 			$data['breadcrumbs'][] = [

@@ -16,6 +16,8 @@ class Review extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('product/review');
 
+		$this->document->addScript('catalog/view/javascript/review.js');
+
 		if (isset($this->request->get['product_id'])) {
 			$data['product_id'] = (int)$this->request->get['product_id'];
 		} else {

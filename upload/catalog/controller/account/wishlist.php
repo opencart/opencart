@@ -22,6 +22,8 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$this->document->addScript('catalog/view/javascript/wishlist.js');
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [

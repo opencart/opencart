@@ -254,15 +254,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['sort_status'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.status' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.sort_order' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Manufacturers
 		$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();

@@ -306,39 +306,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['sort_status'] = $this->url->link('sale/subscription.list', 'user_token=' . $this->session->data['user_token'] . '&sort=subscription_status' . $url);
 		$data['sort_date_added'] = $this->url->link('sale/subscription.list', 'user_token=' . $this->session->data['user_token'] . '&sort=s.date_added' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_subscription_id'])) {
-			$url .= '&filter_subscription_id=' . $this->request->get['filter_subscription_id'];
-		}
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Subscriptions
 		$subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
@@ -996,9 +970,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'total' => $subscription_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page) use ($subscription_id): string {
-				return $this->url->link('sale/subscription.history', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('sale/subscription.history', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($subscription_total - $limit)) ? $subscription_total : ((($page - 1) * $limit) + $limit), $subscription_total, ceil($subscription_total / $limit));
@@ -1116,9 +1088,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page) use ($subscription_id): string {
-				return $this->url->link('sale/subscription.order', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('sale/subscription.order', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
@@ -1176,9 +1146,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'total' => $subscription_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page) use ($subscription_id): string {
-				return $this->url->link('sale/subscription.log', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('sale/subscription.log', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($subscription_total - $limit)) ? $subscription_total : ((($page - 1) * $limit) + $limit), $subscription_total, ceil($subscription_total / $limit));

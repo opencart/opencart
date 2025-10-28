@@ -439,35 +439,13 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		}
 
 		// Pagination
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_search'])) {
-			$url .= '&filter_search=' . $this->request->get['filter_search'];
-		}
-
-		if (isset($this->request->get['filter_category'])) {
-			$url .= '&filter_category=' . $this->request->get['filter_category'];
-		}
-
-		if (isset($this->request->get['filter_license'])) {
-			$url .= '&filter_license=' . $this->request->get['filter_license'];
-		}
-
-		if (isset($this->request->get['filter_rating'])) {
-			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
-		}
-
-		if (isset($this->request->get['filter_member_type'])) {
-			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
-		}
-
-		if (isset($this->request->get['filter_member'])) {
-			$url .= '&filter_member=' . $this->request->get['filter_member'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
@@ -1084,9 +1062,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			'total' => $comment_total,
 			'page'  => $page,
 			'limit' => 20,
-			'callback' => function(int $page) use ($extension_id): string {
-				return $this->url->link('marketplace/marketplace.comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('marketplace/marketplace.comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=' . $page)
 		]);
 
 		$data['refresh'] = $this->url->link('marketplace/marketplace.comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=' . $page);

@@ -147,15 +147,13 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$data['sort_sort_order'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sp.sort_order' . $url);
 		$data['sort_status'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sp.status' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Subscription Plans
 		$subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();

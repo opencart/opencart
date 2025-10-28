@@ -506,59 +506,13 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['sort_order'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.sort_order' . $url);
 		$data['sort_status'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=p.status' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_model'])) {
-			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_category_id'])) {
-			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
-		}
-
-		if (isset($this->request->get['filter_manufacturer_id'])) {
-			$url .= '&filter_manufacturer_id=' . $this->request->get['filter_manufacturer_id'];
-		}
-
-		if (isset($this->request->get['filter_price_from'])) {
-			$url .= '&filter_price_from=' . $this->request->get['filter_price_from'];
-		}
-
-		if (isset($this->request->get['filter_price_to'])) {
-			$url .= '&filter_price_to=' . $this->request->get['filter_price_to'];
-		}
-
-		if (isset($this->request->get['filter_quantity_from'])) {
-			$url .= '&filter_quantity_from=' . $this->request->get['filter_quantity_from'];
-		}
-
-		if (isset($this->request->get['filter_quantity_to'])) {
-			$url .= '&filter_quantity_to=' . $this->request->get['filter_quantity_to'];
-		}
-
-		if (isset($this->request->get['filter_store_id'])) {
-			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
-		}
-
-		if (isset($this->request->get['filter_language_id'])) {
-			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Products
 		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
@@ -1601,9 +1555,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'total' => $report_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page) use ($product_id): string {
-				return $this->url->link('catalog/product.report', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_id . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('catalog/product.report', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_id . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));

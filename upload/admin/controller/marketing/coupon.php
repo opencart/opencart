@@ -146,15 +146,13 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$data['sort_date_start'] = $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_start' . $url);
 		$data['sort_date_end'] = $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_end' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Coupons
 		$coupon_total = $this->model_marketing_coupon->getTotalCoupons();
@@ -573,9 +571,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page) use ($coupon_id): string {
-				return $this->url->link('marketing/coupon.history', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $coupon_id . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('marketing/coupon.history', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $coupon_id . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));

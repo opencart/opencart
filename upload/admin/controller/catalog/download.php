@@ -142,15 +142,13 @@ class Download extends \Opencart\System\Engine\Controller {
 		$data['sort_name'] = $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . '&sort=dd.name' . $url);
 		$data['sort_date_added'] = $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . '&sort=d.date_added' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Downloads
 		$download_total = $this->model_catalog_download->getTotalDownloads();
@@ -460,9 +458,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			'total' => $report_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page) use ($download_id): string {
-				return $this->url->link('catalog/download.report', 'user_token=' . $this->session->data['user_token'] .  '&download_id=' . $download_id . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('catalog/download.report', 'user_token=' . $this->session->data['user_token'] .  '&download_id=' . $download_id . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));

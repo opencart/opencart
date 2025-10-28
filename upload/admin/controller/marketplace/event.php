@@ -134,15 +134,13 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$data['events'] = $this->model_setting_event->getEvents($filter_data);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Events
 		$event_total = $this->model_setting_event->getTotalEvents($filter_data);

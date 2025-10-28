@@ -402,47 +402,13 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['sort_balance'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ca.balance' . $url);
 		$data['sort_date_added'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ca.date_added' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
-		}
-
-		if (isset($this->request->get['filter_payment_method'])) {
-			$url .= '&filter_payment_method=' . $this->request->get['filter_payment_method'];
-		}
-
-		if (isset($this->request->get['filter_commission'])) {
-			$url .= '&filter_commission=' . $this->request->get['filter_commission'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Affiliates
 		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
@@ -1127,9 +1093,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'total' => $report_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page) use ($customer_id): string {
-				return $this->url->link('marketing/affiliate.report', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('marketing/affiliate.report', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));

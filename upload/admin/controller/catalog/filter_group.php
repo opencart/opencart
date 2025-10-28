@@ -143,15 +143,13 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		$data['sort_name'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=fgd.name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=fg.sort_order' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Filter Groups
 		$filter_group_total = $this->model_catalog_filter_group->getTotalFilterGroups();

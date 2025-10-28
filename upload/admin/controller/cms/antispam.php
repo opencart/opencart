@@ -159,19 +159,13 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		// Sort
 		$data['sort_keyword'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . '&sort=keyword' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_keyword'])) {
-			$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Anti-Spams
 		$antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);

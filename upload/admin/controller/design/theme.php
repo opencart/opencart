@@ -168,15 +168,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 		// Total Themes
 		$theme_total = $this->model_design_theme->getTotalThemes();
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_store_id'])) {
-			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [

@@ -144,15 +144,13 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$data['sort_unit'] = $this->url->link('localisation/weight_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=unit' . $url);
 		$data['sort_value'] = $this->url->link('localisation/weight_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Weight Classes
 		$weight_class_total = $this->model_localisation_weight_class->getTotalWeightClasses();

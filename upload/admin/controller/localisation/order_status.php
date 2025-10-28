@@ -142,15 +142,13 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		// Sort
 		$data['sort_name'] = $this->url->link('localisation/order_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Order Statuses
 		$order_status_total = $this->model_localisation_order_status->getTotalOrderStatuses();

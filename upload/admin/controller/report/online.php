@@ -121,15 +121,13 @@ class Online extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Total Online
 		$customer_total = $this->model_report_online->getTotalOnline($filter_data);

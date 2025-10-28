@@ -580,12 +580,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$events[] = [
-				'code'    => 'ssr_compare',
-				'trigger' => 'catalog/controller/product/compare/after',
-				'action'  => 'event/ssr'
-			];
-
-			$events[] = [
 				'code'    => 'ssr_manufacturer',
 				'trigger' => 'catalog/controller/product/manufacturer/after',
 				'action'  => 'event/ssr'
@@ -606,12 +600,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			$events[] = [
 				'code'    => 'ssr_search',
 				'trigger' => 'catalog/controller/product/search/after',
-				'action'  => 'event/ssr'
-			];
-
-			$events[] = [
-				'code'    => 'ssr_contact',
-				'trigger' => 'catalog/controller/information/contact/after',
 				'action'  => 'event/ssr'
 			];
 

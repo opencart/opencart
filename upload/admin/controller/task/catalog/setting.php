@@ -66,7 +66,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate JSON currency list file.
+	 * Generate JSON setting list file.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -75,27 +75,30 @@ class Setting extends \Opencart\System\Engine\Controller {
 	public function setting(array $args = []): array {
 		$this->load->language('task/catalog/setting');
 
-		$this->load->model('setting/setting');
+		$required = [
+			'store_id',
+			'language_id'
+		];
 
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info) {
-			return ['error' => $this->language->get('error_language')];
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
 		}
 
-		$this->load->model('localisation/currency');
+		$this->load->model('setting/setting');
 
-		$currencies = $this->model_localisation_currency->getCurrencies();
+		$settings = $this->model_setting_setting->getSettings(0);
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
+		$directory = parse_url(HTTP_CATALOG, PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
 		$filename = 'currency.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($currencies))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($settings))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

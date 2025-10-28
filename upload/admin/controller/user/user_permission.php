@@ -165,6 +165,8 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$this->load->language('user/user_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->document->addScript('assets/ckeditor/user.js');
 
 		$data['text_form'] = !isset($this->request->get['user_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 

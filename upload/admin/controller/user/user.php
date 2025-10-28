@@ -16,6 +16,8 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$this->document->addScript('assets/ckeditor/user.js');
+
 		if (isset($this->request->get['filter_username'])) {
 			$filter_username = (string)$this->request->get['filter_username'];
 		} else {
@@ -265,6 +267,8 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->load->language('user/user');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->document->addScript('assets/ckeditor/user.js');
 
 		$data['text_form'] = !isset($this->request->get['user_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 

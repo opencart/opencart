@@ -21,8 +21,6 @@ $('#button-refresh').on('click', function() {
 
             $('#security').html(html);
 
-            console.log($('#modal-security .accordion-item').length);
-
             if ($('#modal-security .accordion-item').length > 0) {
                 $('#modal-security').modal('show');
 

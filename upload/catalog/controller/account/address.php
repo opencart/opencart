@@ -22,6 +22,8 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$this->document->addScript('catalog/view/javascript/address.js');
+
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))

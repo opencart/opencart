@@ -1,3 +1,5 @@
+const language = localStorage.getItem('language');
+
 $('#address').on('click', '.btn-danger', function(e) {
     e.preventDefault();
 
@@ -24,7 +26,7 @@ $('#address').on('click', '.btn-danger', function(e) {
             if (json['success']) {
                 $('#alert').append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#address').load('index.php?route=account/address.list&language={{ language }}&customer_token={{ customer_token }}');
+                $('#address').load('index.php?route=account/address.list&language=' + language + '&customer_token={{ customer_token }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

@@ -36,6 +36,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$this->document->addScript('catalog/view/javascript/authorize.js');
+
 		$data['action'] = $this->url->link('account/authorize.save', 'language=' . $this->config->get('config_language'));
 
 		if (!$token_info) {
@@ -232,6 +234,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->document->addScript('catalog/view/javascript/authorize.js');
 
 		$data['language'] = $this->config->get('config_language');
 

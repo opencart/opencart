@@ -158,8 +158,8 @@ class Document {
 	 *
 	 * @return void
 	 */
-	public function addScript(string $href, string $position = 'header'): void {
-		$this->scripts[$position][$href] = ['href' => $href];
+	public function addScript(string $href): void {
+		$this->scripts[$href] = $href;
 	}
 
 	/**
@@ -169,12 +169,8 @@ class Document {
 	 *
 	 * @return array<string, array<string, string>>
 	 */
-	public function getScripts(string $position = 'header'): array {
-		if (isset($this->scripts[$position])) {
-			return $this->scripts[$position];
-		} else {
-			return [];
-		}
+	public function getScripts(): array {
+		return $this->scripts;
 	}
 
 	/**

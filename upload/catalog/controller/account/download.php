@@ -93,9 +93,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			'total' => $download_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page): string {
-				return $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($download_total - $limit)) ? $download_total : ((($page - 1) * $limit) + $limit), $download_total, ceil($download_total / $limit));

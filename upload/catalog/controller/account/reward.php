@@ -76,9 +76,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			'total' => $reward_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page): string {
-				return $this->url->link('account/reward', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('account/reward', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($reward_total - $limit)) ? $reward_total : ((($page - 1) * $limit) + $limit), $reward_total, ceil($reward_total / $limit));

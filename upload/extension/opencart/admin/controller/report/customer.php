@@ -180,17 +180,19 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$remove = [
 			'route',
-			'user_token'
+			'user_token',
+			'code',
+			'page'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/customer.report', 'user_token=' . $this->session->data['user_token'] . '&code=customer' . $url . '&page=' . $page)
+			'url'   => $this->url->link('extension/opencart/report/customer.report', 'user_token=' . $this->session->data['user_token'] . '&code=customer' . $url . '&page=%d')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_total - $this->config->get('config_pagination'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_total, ceil($customer_total / $this->config->get('config_pagination')));

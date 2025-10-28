@@ -21,7 +21,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -91,7 +91,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('customer/custom_field.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -159,7 +159,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -180,7 +180,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Custom Fields
 		$custom_field_total = $this->model_customer_custom_field->getTotalCustomFields();
@@ -215,10 +215,11 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$remove = [
 			'route',
-			'user_token'
+			'user_token',
+			'custom_field_id'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

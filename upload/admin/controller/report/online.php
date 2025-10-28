@@ -21,7 +21,7 @@ class Online extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -120,7 +120,7 @@ class Online extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Online
 		$customer_total = $this->model_report_online->getTotalOnline($filter_data);

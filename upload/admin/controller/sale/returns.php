@@ -69,7 +69,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -199,7 +199,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -239,7 +239,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -262,7 +262,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Returns
 		$return_total = $this->model_sale_returns->getTotalReturns($filter_data);
@@ -303,10 +303,11 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$remove = [
 			'route',
-			'user_token'
+			'user_token',
+			'return_id'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

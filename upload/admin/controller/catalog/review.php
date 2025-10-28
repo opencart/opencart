@@ -53,7 +53,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -159,7 +159,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -198,7 +198,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -219,7 +219,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Reviews
 		$review_total = $this->model_catalog_review->getTotalReviews($filter_data);
@@ -260,10 +260,11 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$remove = [
 			'route',
-			'user_token'
+			'user_token',
+			'review_id'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

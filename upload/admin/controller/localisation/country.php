@@ -57,7 +57,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -180,7 +180,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -218,7 +218,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -238,7 +238,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Countries
 		$country_total = $this->model_localisation_country->getTotalCountries($filter_data);
@@ -273,10 +273,11 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$remove = [
 			'route',
-			'user_token'
+			'user_token',
+			'country_id'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

@@ -69,7 +69,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -418,7 +418,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
@@ -501,7 +501,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				'user_token'
 			];
 
-			$url = array_diff_key($this->request->get, array_flip($remove));
+			$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 			$data['back'] = $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url);
 

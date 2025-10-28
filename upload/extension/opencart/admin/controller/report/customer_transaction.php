@@ -157,10 +157,12 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 
 		$remove = [
 			'route',
-			'user_token'
+			'user_token',
+			'code',
+			'page'
 		];
 
-		$url = array_diff_key($this->request->get, array_flip($remove));
+		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [

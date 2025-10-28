@@ -125,7 +125,14 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$data['user_groups'][] = ['edit' => $this->url->link('user/user_permission.form', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)] + $result;
 		}
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'sort',
+			'order'
+		];
+
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -175,19 +182,12 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['user_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		$data['breadcrumbs'] = [];
 

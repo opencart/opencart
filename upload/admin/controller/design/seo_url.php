@@ -264,27 +264,14 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'sort',
+			'order'
+		];
 
-		if (isset($this->request->get['filter_keyword'])) {
-			$url .= '&filter_keyword=' . urlencode(html_entity_decode((string)$this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_key'])) {
-			$url .= '&filter_key=' . urlencode(html_entity_decode((string)$this->request->get['filter_key'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_value'])) {
-			$url .= '&filter_value=' . urlencode(html_entity_decode((string)$this->request->get['filter_value'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_store_id'])) {
-			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
-		}
-
-		if (isset($this->request->get['filter_language_id'])) {
-			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -337,39 +324,12 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['seo_url_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token'
+		];
 
-		if (isset($this->request->get['filter_keyword'])) {
-			$url .= '&filter_keyword=' . urlencode(html_entity_decode((string)$this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_key'])) {
-			$url .= '&filter_key=' . urlencode(html_entity_decode((string)$this->request->get['filter_key'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_value'])) {
-			$url .= '&filter_value=' . urlencode(html_entity_decode((string)$this->request->get['filter_value'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_store_id'])) {
-			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
-		}
-
-		if (isset($this->request->get['filter_language_id'])) {
-			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . (string)$this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . (string)$this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . (int)$this->request->get['page'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		$data['breadcrumbs'] = [];
 

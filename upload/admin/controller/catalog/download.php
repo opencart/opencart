@@ -130,7 +130,14 @@ class Download extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'sort',
+			'order'
+		];
+
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -186,19 +193,12 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		$data['breadcrumbs'] = [];
 

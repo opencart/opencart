@@ -267,31 +267,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'sort',
+			'order'
+		];
 
-		if (isset($this->request->get['filter_subscription_id'])) {
-			$url .= '&filter_subscription_id=' . $this->request->get['filter_subscription_id'];
-		}
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_subscription_status_id'])) {
-			$url .= '&filter_subscription_status_id=' . $this->request->get['filter_subscription_status_id'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -351,43 +334,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !$subscription_id ? $this->language->get('text_add') : sprintf($this->language->get('text_edit'), $subscription_id);
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token'
+		];
 
-		if (isset($this->request->get['filter_subscription_id'])) {
-			$url .= '&filter_subscription_id=' . $this->request->get['filter_subscription_id'];
-		}
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_subscription_status_id'])) {
-			$url .= '&filter_subscription_status_id=' . $this->request->get['filter_subscription_status_id'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		$data['breadcrumbs'] = [];
 

@@ -131,13 +131,14 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token',
+			'sort',
+			'order'
+		];
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Sorts
 		$data['sort_name'] = $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
@@ -185,19 +186,12 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['coupon_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token'
+		];
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		$data['breadcrumbs'] = [];
 

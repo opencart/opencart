@@ -91,9 +91,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page) use ($url): string {
-				return $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']  . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']  . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));

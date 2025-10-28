@@ -102,9 +102,7 @@ class SeoRegex extends \Opencart\System\Engine\Controller {
 			'total' => $seo_regex_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'callback' => function(int $page) use ($url): string {
-				return $this->url->link('design/seo_regex.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('design/seo_regex.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($seo_regex_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($seo_regex_total - $this->config->get('config_pagination_admin'))) ? $seo_regex_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $seo_regex_total, ceil($seo_regex_total / $this->config->get('config_pagination_admin')));

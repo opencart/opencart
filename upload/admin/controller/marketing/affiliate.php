@@ -452,9 +452,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'total' => $affiliate_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'callback' => function(int $page) use ($url): string {
-				return $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($affiliate_total - $limit)) ? $affiliate_total : ((($page - 1) * $limit) + $limit), $affiliate_total, ceil($affiliate_total / $limit));

@@ -184,9 +184,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			'total' => $viewed_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'callback' => function(int $page) use ($url): string {
-				return $this->url->link('extension/opencart/report/product_viewed.list', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed' . $url . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('extension/opencart/report/product_viewed.list', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed' . $url . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($viewed_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($viewed_total - $this->config->get('config_pagination'))) ? $viewed_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $viewed_total, ceil($viewed_total / $this->config->get('config_pagination')));

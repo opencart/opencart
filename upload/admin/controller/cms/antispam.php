@@ -180,9 +180,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			'total' => $antispam_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'callback' => function(int $page) use ($url): string {
-				return $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($antispam_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($antispam_total - $this->config->get('config_pagination_admin'))) ? $antispam_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $antispam_total, ceil($antispam_total / $this->config->get('config_pagination_admin')));

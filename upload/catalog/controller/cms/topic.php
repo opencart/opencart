@@ -228,9 +228,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'total' => $article_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'callback' => function(int $page) use ($url): string {
-				return $this->url->link('cms/topic', 'language=' . $this->config->get('config_language') . $url . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('cms/topic', 'language=' . $this->config->get('config_language') . $url . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($article_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($article_total - $limit)) ? $article_total : ((($page - 1) * $limit) + $limit), $article_total, ceil($article_total / $limit));

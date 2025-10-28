@@ -164,9 +164,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'total' => $coupon_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'callback' => function(int $page) use ($url): string {
-				return $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('marketing/coupon.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($coupon_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($coupon_total - $this->config->get('config_pagination_admin'))) ? $coupon_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $coupon_total, ceil($coupon_total / $this->config->get('config_pagination_admin')));

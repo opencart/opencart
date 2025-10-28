@@ -160,9 +160,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			'total' => $download_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'callback' => function(int $page) use ($url): string {
-				return $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . $url . ($page ? '&page=' . $page : ''));
-			}
+			'url'   => $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($download_total - $this->config->get('config_pagination_admin'))) ? $download_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $download_total, ceil($download_total / $this->config->get('config_pagination_admin')));

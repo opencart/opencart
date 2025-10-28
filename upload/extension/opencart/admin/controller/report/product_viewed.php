@@ -173,11 +173,12 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$url = '';
+		$remove = [
+			'route',
+			'user_token'
+		];
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = array_diff_key($this->request->get, array_flip($remove));
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [

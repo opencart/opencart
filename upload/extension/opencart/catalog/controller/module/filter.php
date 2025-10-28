@@ -28,19 +28,12 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if ($category_info) {
 			$this->load->language('extension/opencart/module/filter');
 
-			$url = '';
+			$remove = [
+				'route',
+				'user_token'
+			];
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
+			$url = array_diff_key($this->request->get, array_flip($remove));
 
 			$data['action'] = str_replace('&amp;', '&', $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . $url));
 

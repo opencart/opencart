@@ -1,0 +1,219 @@
+$('#modal-image').on('click', '#button-parent', function(e) {
+    e.preventDefault();
+
+    $('#modal-image .modal-body').load($(this).attr('href'));
+});
+
+$('#modal-image').on('click', '#button-refresh', function(e) {
+    e.preventDefault();
+
+    $('#modal-image .modal-body').load($(this).attr('href'));
+});
+
+$('#modal-image').on('keydown', '#input-search', function(e) {
+    if (e.which == 13) {
+        $('#button-search').trigger('click');
+    }
+});
+
+$('#modal-image').on('click', '#button-search', function(e) {
+    var url = 'index.php?route=common/filemanager.list&user_token={{ user_token }}';
+
+    var directory = $('#input-directory').val();
+
+    if (directory) {
+        url += '&directory=' + encodeURIComponent(directory);
+    }
+
+    var filter_name = $('#input-search').val();
+
+    if (filter_name) {
+        url += '&filter_name=' + encodeURIComponent(filter_name);
+    }
+
+    {% if thumb %}
+    url += '&thumb={{ thumb|escape('js') }}';
+    {% endif %}
+
+    {% if target %}
+    url += '&target={{ target|escape('js') }}';
+    {% endif %}
+
+    {% if ckeditor %}
+    url += '&ckeditor={{ ckeditor|escape('js') }}';
+    {% endif %}
+
+    $('#modal-image .modal-body').load(url);
+});
+
+$('#modal-image').on('click', '#button-upload', function() {
+    $('#form-upload').remove();
+
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple"/></form>');
+
+    $('#form-upload input[name=\'file[]\']').trigger('click');
+
+    $('#form-upload input[name=\'file[]\']').on('change', function() {
+        for (i = 0; i < this.files.length; i++) {
+            if ((this.files[0].size / 1024) > {{ config_file_max_size }}) {
+                $(this).val('');
+
+                alert('{{ error_upload_size }}');
+            }
+        }
+    });
+
+    if (typeof timer != 'undefined') {
+        clearInterval(timer);
+    }
+
+    timer = setInterval(function() {
+        if ($('#form-upload input[name=\'file[]\']').val() !== '') {
+            clearInterval(timer);
+
+            var url = 'index.php?route=common/filemanager.upload&user_token={{ user_token }}';
+
+            var directory = $('#input-directory').val();
+
+            if (directory) {
+                url += '&directory=' + encodeURIComponent(directory);
+            }
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                data: new FormData($('#form-upload')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#button-upload').button('loading');
+                },
+                complete: function() {
+                    $('#button-upload').button('reset');
+                },
+                success: function(json) {
+                    console.log(json);
+
+                    if (json['error']) {
+                        alert(json['error']);
+                    }
+
+                    if (json['success']) {
+                        alert(json['success']);
+
+                        $('#button-refresh').trigger('click');
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }, 500);
+});
+
+$('#modal-image').on('click', '#button-folder', function() {
+    $('#modal-folder').slideToggle();
+});
+
+$('#modal-image').on('click', '#button-create', function() {
+    var url = 'index.php?route=common/filemanager.folder&user_token={{ user_token }}';
+
+    var directory = $('#input-directory').val();
+
+    if (directory) {
+        url += '&directory=' + encodeURIComponent(directory);
+    }
+
+    $.ajax({
+        url: url,
+        type: 'post',
+        dataType: 'json',
+        data: 'folder=' + encodeURIComponent($('#input-folder').val()),
+        beforeSend: function() {
+            $('#button-create').button('loading');
+        },
+        complete: function() {
+            $('#button-create').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            if (json['error']) {
+                alert(json['error']);
+            }
+
+            if (json['success']) {
+                alert(json['success']);
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#modal-image').on('click', '#button-delete', function(e) {
+    if (confirm('{{ text_confirm }}')) {
+        $.ajax({
+            url: 'index.php?route=common/filemanager.delete&user_token={{ user_token }}',
+            type: 'post',
+            dataType: 'json',
+            data: $('input[name^=\'path\']:checked'),
+            beforeSend: function() {
+                $('#button-delete').button('loading');
+            },
+            complete: function() {
+                $('#button-delete').button('reset');
+            },
+            success: function(json) {
+                console.log(json);
+
+                if (json['error']) {
+                    alert(json['error']);
+                }
+
+                if (json['success']) {
+                    alert(json['success']);
+
+                    $('#button-refresh').trigger('click');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+});
+
+$('#modal-image').on('click', 'a.directory', function(e) {
+    e.preventDefault();
+
+    $('#modal-image .modal-body').load($(this).attr('href'));
+});
+
+$('#modal-image').on('click', 'a.thumbnail', function(e) {
+    e.preventDefault();
+
+    {% if thumb %}
+    $('{{ thumb|escape('js') }}').attr('src', $(this).find('img').attr('src'));
+
+    $('{{ target|escape('js') }}').val('catalog/' + $(this).parent().parent().find('input').val());
+    {% endif %}
+
+    {% if ckeditor %}
+    CKEDITOR.instances['{{ ckeditor|escape('js') }}'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title=""/>');
+    {% endif %}
+
+    $('#modal-image').modal('hide');
+});
+
+$('#modal-image').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#modal-image .modal-body').load($(this).attr('href'));
+});

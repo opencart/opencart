@@ -194,7 +194,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Topics
-		$topic_total = $this->model_cms_topic->getTotalTopics();
+		$topic_total = $this->model_cms_topic->getTotalTopics($filter_data);
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [

@@ -21,7 +21,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -89,7 +89,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -108,7 +108,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		$results = $this->model_design_layout->getLayouts($filter_data);
 
 		foreach ($results as $result) {
-			$data['layouts'][] = ['edit' => $this->url->link('design/layout.form', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . '&' . $url)] + $result;
+			$data['layouts'][] = ['edit' => $this->url->link('design/layout.form', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url)] + $result;
 		}
 
 		$remove = [
@@ -118,7 +118,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -135,7 +135,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Layouts
 		$layout_total = $this->model_design_layout->getTotalLayouts();
@@ -174,7 +174,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'layout_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

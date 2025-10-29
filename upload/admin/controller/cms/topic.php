@@ -39,7 +39,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -141,7 +141,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -162,7 +162,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_topic->getTopics($filter_data);
 
 		foreach ($results as $result) {
-			$data['topics'][] = ['edit' => $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . '&' . $url)] + $result;
+			$data['topics'][] = ['edit' => $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . $url)] + $result;
 		}
 
 		$remove = [
@@ -172,7 +172,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -191,7 +191,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Topics
 		$topic_total = $this->model_cms_topic->getTotalTopics();
@@ -233,7 +233,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			'topic_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

@@ -21,7 +21,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -77,7 +77,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('localisation/address_format.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -138,7 +138,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 			'address_format_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

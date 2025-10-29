@@ -23,7 +23,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -94,7 +94,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -127,7 +127,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -146,7 +146,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Subscription Plans
 		$subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
@@ -185,7 +185,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			'subscription_plan_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

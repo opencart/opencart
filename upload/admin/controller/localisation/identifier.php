@@ -21,7 +21,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -77,7 +77,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('localisation/identifier.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -94,7 +94,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_identifier->getIdentifiers($filter_data);
 
 		foreach ($results as $result) {
-			$data['identifiers'][] = ['edit' => $this->url->link('localisation/identifier.form', 'user_token=' . $this->session->data['user_token'] . '&identifier_id=' . $result['identifier_id'] . '&' . $url)] + $result;
+			$data['identifiers'][] = ['edit' => $this->url->link('localisation/identifier.form', 'user_token=' . $this->session->data['user_token'] . '&identifier_id=' . $result['identifier_id'] . $url)] + $result;
 		}
 
 
@@ -131,7 +131,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			'identifier_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

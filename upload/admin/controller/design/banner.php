@@ -21,7 +21,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -91,7 +91,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('design/banner.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -110,7 +110,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$results = $this->model_design_banner->getBanners($filter_data);
 
 		foreach ($results as $result) {
-			$data['banners'][] = ['edit' => $this->url->link('design/banner.form', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $result['banner_id'] . '&' . $url)] + $result;
+			$data['banners'][] = ['edit' => $this->url->link('design/banner.form', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $result['banner_id'] . $url)] + $result;
 		}
 
 		$remove = [
@@ -120,7 +120,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -137,7 +137,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Banners
 		$banner_total = $this->model_design_banner->getTotalBanners();
@@ -176,7 +176,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'banner_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

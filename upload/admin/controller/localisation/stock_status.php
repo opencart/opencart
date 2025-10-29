@@ -21,7 +21,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -89,7 +89,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -108,7 +108,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_stock_status->getStockStatuses($filter_data);
 
 		foreach ($results as $result) {
-			$data['stock_statuses'][] = ['edit' => $this->url->link('localisation/stock_status.form', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . '&' . $url)] + $result;
+			$data['stock_statuses'][] = ['edit' => $this->url->link('localisation/stock_status.form', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . $url)] + $result;
 		}
 
 		$remove = [
@@ -118,7 +118,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -135,7 +135,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Stock Statuses
 		$stock_status_total = $this->model_localisation_stock_status->getTotalStockStatuses();
@@ -174,7 +174,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			'stock_status_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

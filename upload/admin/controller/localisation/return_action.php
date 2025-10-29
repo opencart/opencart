@@ -21,7 +21,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -89,7 +89,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('localisation/return_action.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -108,7 +108,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_return_action->getReturnActions($filter_data);
 
 		foreach ($results as $result) {
-			$data['return_actions'][] = ['edit' => $this->url->link('localisation/return_action.form', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . '&' . $url)] + $result;
+			$data['return_actions'][] = ['edit' => $this->url->link('localisation/return_action.form', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . $url)] + $result;
 		}
 
 		$remove = [
@@ -118,7 +118,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -135,7 +135,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Return Actions
 		$return_action_total = $this->model_localisation_return_action->getTotalReturnActions();
@@ -174,7 +174,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			'return_action_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

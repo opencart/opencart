@@ -27,7 +27,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -103,7 +103,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -123,7 +123,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		$results = $this->model_cms_antispam->getAntispams($filter_data);
 
 		foreach ($results as $result) {
-			$data['antispams'][] = ['edit' => $this->url->link('cms/antispam.form', 'user_token=' . $this->session->data['user_token'] . '&antispam_id=' . $result['antispam_id'] . '&' . $url)] + $result;
+			$data['antispams'][] = ['edit' => $this->url->link('cms/antispam.form', 'user_token=' . $this->session->data['user_token'] . '&antispam_id=' . $result['antispam_id'] . $url)] + $result;
 		}
 
 		$remove = [
@@ -133,7 +133,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -150,7 +150,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Anti-Spams
 		$antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);
@@ -188,7 +188,7 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			'antispam_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

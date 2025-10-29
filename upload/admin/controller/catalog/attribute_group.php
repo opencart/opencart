@@ -23,7 +23,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -91,7 +91,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -110,7 +110,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_attribute_group->getAttributeGroups($filter_data);
 
 		foreach ($results as $result) {
-			$data['attribute_groups'][] = ['edit' => $this->url->link('catalog/attribute_group.form', 'user_token=' . $this->session->data['user_token'] . '&attribute_group_id=' . $result['attribute_group_id'] . '&' . $url)] + $result;
+			$data['attribute_groups'][] = ['edit' => $this->url->link('catalog/attribute_group.form', 'user_token=' . $this->session->data['user_token'] . '&attribute_group_id=' . $result['attribute_group_id'] . $url)] + $result;
 		}
 
 		$remove = [
@@ -120,7 +120,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -138,7 +138,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Attribute Groups
 		$attribute_group_total = $this->model_catalog_attribute_group->getTotalAttributeGroups();
@@ -177,7 +177,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			'attribute_group_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

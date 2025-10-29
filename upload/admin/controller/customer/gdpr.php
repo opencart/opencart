@@ -105,7 +105,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('customer/gdpr.list', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
@@ -153,7 +153,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total GDPRs
 		$gdpr_total = $this->model_customer_gdpr->getTotalGdprs($filter_data);

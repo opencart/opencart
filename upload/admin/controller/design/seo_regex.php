@@ -21,7 +21,7 @@ class SeoRegex extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -77,7 +77,7 @@ class SeoRegex extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('design/seo_regex.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -94,7 +94,7 @@ class SeoRegex extends \Opencart\System\Engine\Controller {
 		$results = $this->model_design_seo_regex->getSeoRegexes($filter_data);
 
 		foreach ($results as $result) {
-			$data['seo_regexs'][] = ['edit' => $this->url->link('design/seo_regex.form', 'user_token=' . $this->session->data['user_token'] . '&seo_regex_id=' . $result['seo_regex_id'] . '&' . $url)] + $result;
+			$data['seo_regexs'][] = ['edit' => $this->url->link('design/seo_regex.form', 'user_token=' . $this->session->data['user_token'] . '&seo_regex_id=' . $result['seo_regex_id'] . $url)] + $result;
 		}
 
 		$seo_regex_total = $this->model_design_seo_regex->getTotalSeoRegexes();
@@ -130,7 +130,7 @@ class SeoRegex extends \Opencart\System\Engine\Controller {
 			'seo_regex_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

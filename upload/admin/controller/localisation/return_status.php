@@ -21,7 +21,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 
@@ -89,7 +89,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			'user_token'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['action'] = $this->url->link('localisation/return_status.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -108,7 +108,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_return_status->getReturnStatuses($filter_data);
 
 		foreach ($results as $result) {
-			$data['return_statuses'][] = ['edit' => $this->url->link('localisation/return_status.form', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $result['return_status_id'] . '&' . $url)] + $result;
+			$data['return_statuses'][] = ['edit' => $this->url->link('localisation/return_status.form', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $result['return_status_id'] . $url)] + $result;
 		}
 
 		// Default
@@ -121,7 +121,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -138,7 +138,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			'page'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Return Statuses
 		$return_status_total = $this->model_localisation_return_status->getTotalReturnStatuses();
@@ -177,7 +177,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			'return_status_id'
 		];
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['breadcrumbs'] = [];
 

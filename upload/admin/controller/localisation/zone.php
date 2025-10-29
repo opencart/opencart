@@ -175,15 +175,15 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$data['zones'] = [];
 
 		$filter_data = [
-			'filter_name'       => $filter_name,
-			'filter_country_id' => $filter_country_id,
-			'filter_code'       => $filter_code,
+			'filter_name'        => $filter_name,
+			'filter_country_id'  => $filter_country_id,
+			'filter_code'        => $filter_code,
 			'filter_language_id' => $filter_language_id,
-			'filter_status'     => $filter_status,
-			'sort'              => $sort,
-			'order'             => $order,
-			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'             => $this->config->get('config_pagination_admin')
+			'filter_status'      => $filter_status,
+			'sort'               => $sort,
+			'order'              => $order,
+			'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'              => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('localisation/zone');

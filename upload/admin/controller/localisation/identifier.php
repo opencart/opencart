@@ -97,7 +97,6 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			$data['identifiers'][] = ['edit' => $this->url->link('localisation/identifier.form', 'user_token=' . $this->session->data['user_token'] . '&identifier_id=' . $result['identifier_id'] . $url)] + $result;
 		}
 
-
 		// Total Identifiers
 		$identifier_total = $this->model_localisation_identifier->getTotalIdentifiers();
 

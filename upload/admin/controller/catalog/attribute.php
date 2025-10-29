@@ -129,12 +129,13 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		}
 
 		// Sorts
-		$data['sort_name'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ad.name&' . $url);
-		$data['sort_attribute_group'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=attribute_group&' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.sort_order&' . $url);
+		$data['sort_name'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ad.name' . $url);
+		$data['sort_attribute_group'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=attribute_group' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.sort_order' . $url);
 
 		$remove = [
 			'route',
+			'user_token',
 			'page'
 		];
 

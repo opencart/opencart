@@ -224,7 +224,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Manufacturers
-		$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
+		$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers($filter_data);
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [

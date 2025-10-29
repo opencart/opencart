@@ -214,7 +214,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Articles
-		$article_total = $this->model_cms_article->getTotalArticles();
+		$article_total = $this->model_cms_article->getTotalArticles($filter_data);
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
@@ -242,8 +242,8 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
-		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
+		$this->document->addScript('assets/ckeditor/ckeditor.js');
+		$this->document->addScript('assets/ckeditor/adapters/jquery.js');
 
 		$data['text_form'] = !isset($this->request->get['article_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 

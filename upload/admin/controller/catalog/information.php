@@ -197,7 +197,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Information
-		$information_total = $this->model_catalog_information->getTotalInformations();
+		$information_total = $this->model_catalog_information->getTotalInformations($filter_data);
 
 		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [

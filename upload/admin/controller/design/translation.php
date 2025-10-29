@@ -169,6 +169,14 @@ class Translation extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
+		$remove = [
+			'route',
+			'user_token',
+			'page'
+		];
+
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+
 		// Total Translations
 		$translation_total = $this->model_design_translation->getTotalTranslations();
 

@@ -1293,11 +1293,9 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['reports'][] = [
-				'ip'         => $result['ip'],
 				'store'      => $store,
-				'country'    => $result['country'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
-			];
+			] + $result;
 		}
 
 		// Total Reports

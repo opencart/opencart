@@ -1,9 +1,9 @@
 <footer id="footer">{{ text_footer }}<br/>{{ text_version }}</footer></div>
-<script src="{{ jquery }}" type="text/javascript"></script>
-<script src="{{ bootstrap }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ jquery }}"></script>
+<script type="text/javascript" src="{{ bootstrap }}"></script>
 <script type="text/javascript" src="view/javascript/common.js"></script>
 {% for script in scripts %}
-  <script src="{{ script.href }}" type="text/javascript"></script>
+  <script type="text/javascript" src="{{ script.href }}"></script>
 {% endfor %}
-<script src="../assets/webcomponent/webcomponent.js" type="module"></script>
+<script type="module" src="../assets/webcomponent/webcomponent.js"></script>
 </body></html>

@@ -232,11 +232,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$store_data = [];
 
 			foreach ($stores as $store) {
-				$store_data[] = [
-					'store_id' => $store['store_id'],
-					'name'     => $store['name'],
-					'href'     => $this->url->link('customer/customer.login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $store['store_id'])
-				];
+				$store_data[] = ['href' => $this->url->link('customer/customer.login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $store['store_id'])] + $store;
 			}
 
 			$data['customers'][] = [

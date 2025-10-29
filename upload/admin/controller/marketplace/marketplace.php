@@ -424,7 +424,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			'total' => $extension_total,
 			'page'  => $page,
 			'limit' => 12,
-			'url'   => $this->url->link('marketplace/marketplace.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
+			'url'   => $this->url->link('marketplace/marketplace.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=%d')
 		]);
 
 		return $this->load->view('marketplace/marketplace_list', $data);
@@ -1016,7 +1016,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			'total' => $comment_total,
 			'page'  => $page,
 			'limit' => 20,
-			'url'   => $this->url->link('marketplace/marketplace.comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=' . $page)
+			'url'   => $this->url->link('marketplace/marketplace.comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=%d')
 		]);
 
 		$data['refresh'] = $this->url->link('marketplace/marketplace.comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=' . $page);

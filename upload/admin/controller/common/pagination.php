@@ -43,10 +43,10 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			$limit = 10;
 		}
 
-		if (isset($setting['callback']) && is_callable($setting['callback'])) {
-			$callback = $setting['callback'];
+		if (isset($setting['url'])) {
+			$url = str_replace('{page}', '%d', (string)$setting['url']);
 		} else {
-			return '';
+			$url = '';
 		}
 
 		$num_links = 8;
@@ -61,12 +61,12 @@ class Pagination extends \Opencart\System\Engine\Controller {
 		$data['page'] = $page;
 
 		if ($page > 1) {
-			$data['first'] = $callback(0);
+			$data['first'] = sprintf($url, 0);
 
 			if ($page - 1 === 1) {
-				$data['prev'] = $callback(0);
+				$data['prev'] = sprintf($url, 0);
 			} else {
-				$data['prev'] = $callback($page - 1);
+				$data['prev'] = sprintf($url, $page - 1);
 			}
 		} else {
 			$data['first'] = '';
@@ -97,14 +97,14 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			for ($i = $start; $i <= $end; $i++) {
 				$data['links'][] = [
 					'page' => $i,
-					'href' => $callback($i)
+					'href' => sprintf($url, $i)
 				];
 			}
 		}
 
 		if ($num_pages > $page) {
-			$data['next'] = $callback($page + 1);
-			$data['last'] = $callback($num_pages);
+			$data['next'] = sprintf($url, $page + 1);
+			$data['last'] = sprintf($url, $num_pages);
 		} else {
 			$data['next'] = '';
 			$data['last'] = '';

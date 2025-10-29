@@ -110,7 +110,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_filter_group->getFilterGroups($filter_data);
 
 		foreach ($results as $result) {
-			$data['filter_groups'][] = ['edit' => $this->url->link('catalog/filter_group.form', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $result['filter_group_id'] . $url)] + $result;
+			$data['filter_groups'][] = ['edit' => $this->url->link('catalog/filter_group.form', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $result['filter_group_id'] . '&' . $url)] + $result;
 		}
 
 		$remove = [
@@ -148,7 +148,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			'total' => $filter_group_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
+			'url'   => $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=%d')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($filter_group_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($filter_group_total - $this->config->get('config_pagination_admin'))) ? $filter_group_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $filter_group_total, ceil($filter_group_total / $this->config->get('config_pagination_admin')));

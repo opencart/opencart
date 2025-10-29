@@ -94,7 +94,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_identifier->getIdentifiers($filter_data);
 
 		foreach ($results as $result) {
-			$data['identifiers'][] = ['edit' => $this->url->link('localisation/identifier.form', 'user_token=' . $this->session->data['user_token'] . '&identifier_id=' . $result['identifier_id'] . $url)] + $result;
+			$data['identifiers'][] = ['edit' => $this->url->link('localisation/identifier.form', 'user_token=' . $this->session->data['user_token'] . '&identifier_id=' . $result['identifier_id'] . '&' . $url)] + $result;
 		}
 
 
@@ -105,7 +105,7 @@ class Identifier extends \Opencart\System\Engine\Controller {
 			'total' => $identifier_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/identifier.list', 'user_token=' . $this->session->data['user_token'] . '&page=' . $page)
+			'url'   => $this->url->link('localisation/identifier.list', 'user_token=' . $this->session->data['user_token'] . '&page=%d')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($identifier_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($identifier_total - $this->config->get('config_pagination_admin'))) ? $identifier_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $identifier_total, ceil($identifier_total / $this->config->get('config_pagination_admin')));

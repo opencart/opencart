@@ -167,7 +167,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 			'total' => $theme_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('design/theme.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
+			'url'   => $this->url->link('design/theme.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=%d')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($theme_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($theme_total - $this->config->get('config_pagination_admin'))) ? $theme_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $theme_total, ceil($theme_total / $this->config->get('config_pagination_admin')));

@@ -108,7 +108,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_tax_class->getTaxClasses($filter_data);
 
 		foreach ($results as $result) {
-			$data['tax_classes'][] = ['edit' => $this->url->link('localisation/tax_class.form', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $result['tax_class_id'] . $url)] + $result;
+			$data['tax_classes'][] = ['edit' => $this->url->link('localisation/tax_class.form', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $result['tax_class_id'] . '&' . $url)] + $result;
 		}
 
 		$remove = [
@@ -145,7 +145,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			'total' => $tax_class_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/tax_class.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
+			'url'   => $this->url->link('localisation/tax_class.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=%d')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($tax_class_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($tax_class_total - $this->config->get('config_pagination_admin'))) ? $tax_class_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $tax_class_total, ceil($tax_class_total / $this->config->get('config_pagination_admin')));

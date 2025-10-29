@@ -75,7 +75,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'total' => $return_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page=' . $page)
+			'url'   => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page=%d')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($return_total - $limit)) ? $return_total : ((($page - 1) * $limit) + $limit), $return_total, ceil($return_total / $limit));
@@ -198,6 +198,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/returns');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->document->addScript('catalog/view/javascript/return.js');
 
 		$data['breadcrumbs'] = [];
 

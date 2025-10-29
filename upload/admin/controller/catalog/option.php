@@ -110,7 +110,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_option->getOptions($filter_data);
 
 		foreach ($results as $result) {
-			$data['options'][] = ['edit' => $this->url->link('catalog/option.form', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)] + $result;
+			$data['options'][] = ['edit' => $this->url->link('catalog/option.form', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . '&' . $url)] + $result;
 		}
 
 		$remove = [
@@ -148,7 +148,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			'total' => $option_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
+			'url'   => $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=%d')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($option_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($option_total - $this->config->get('config_pagination_admin'))) ? $option_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $option_total, ceil($option_total / $this->config->get('config_pagination_admin')));

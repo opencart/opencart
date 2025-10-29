@@ -108,10 +108,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_order_status->getOrderStatuses($filter_data);
 
 		foreach ($results as $result) {
-			$data['order_statuses'][] = [
-				'name' => $result['name'],
-				'edit' => $this->url->link('localisation/order_status.form', 'user_token=' . $this->session->data['user_token'] . '&order_status_id=' . $result['order_status_id'] . $url)
-			] + $result;
+			$data['order_statuses'][] = ['edit' => $this->url->link('localisation/order_status.form', 'user_token=' . $this->session->data['user_token'] . '&order_status_id=' . $result['order_status_id'] . '&' . $url)] + $result;
 		}
 
 		// Default

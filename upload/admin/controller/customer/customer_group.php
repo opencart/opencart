@@ -108,10 +108,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$results = $this->model_customer_customer_group->getCustomerGroups($filter_data);
 
 		foreach ($results as $result) {
-			$data['customer_groups'][] = [
-				'name' => $result['name'],
-				'edit' => $this->url->link('customer/customer_group.form', 'user_token=' . $this->session->data['user_token'] . '&customer_group_id=' . $result['customer_group_id'] . $url)
-			] + $result;
+			$data['customer_groups'][] = ['edit' => $this->url->link('customer/customer_group.form', 'user_token=' . $this->session->data['user_token'] . '&customer_group_id=' . $result['customer_group_id'] . '&' . $url)] + $result;
 		}
 
 		// Default

@@ -108,7 +108,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_return_action->getReturnActions($filter_data);
 
 		foreach ($results as $result) {
-			$data['return_actions'][] = ['edit' => $this->url->link('localisation/return_action.form', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . $url)] + $result;
+			$data['return_actions'][] = ['edit' => $this->url->link('localisation/return_action.form', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . '&' . $url)] + $result;
 		}
 
 		$remove = [
@@ -145,7 +145,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			'total' => $return_action_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/return_action.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . $page)
+			'url'   => $this->url->link('localisation/return_action.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=%d')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_action_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_action_total - $this->config->get('config_pagination_admin'))) ? $return_action_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_action_total, ceil($return_action_total / $this->config->get('config_pagination_admin')));

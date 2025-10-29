@@ -99,7 +99,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 			'total' => $startup_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . '&page=' . $page)
+			'url'   => $this->url->link('marketplace/startup.list', 'user_token=' . $this->session->data['user_token'] . '&page=%d')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($startup_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($startup_total - $this->config->get('config_pagination_admin'))) ? $startup_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $startup_total, ceil($startup_total / $this->config->get('config_pagination_admin')));

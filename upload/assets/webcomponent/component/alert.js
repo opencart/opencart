@@ -3,25 +3,25 @@ import { WebComponent } from './../webcomponent.js';
 class XAlert extends WebComponent {
     event = {
         connected: async () => {
-            this.data.type = this.dataset.type;
-            this.data.message = this.innerHTML;
+            let icon = '';
+            let type = this.getAttribute('type');
 
-            switch (this.dataset.type) {
+            switch (type) {
                 case 'success':
-                    this.data.icon = 'fa-circle-check';
+                    icon = 'fa-circle-check';
                     break;
                 case 'danger':
-                    this.data.icon = 'fa-circle-exclamation';
+                    icon = 'fa-circle-exclamation';
                     break;
                 case 'warning':
-                    this.data.icon = 'fa-circle-info';
+                    icon = 'fa-circle-info';
                     break;
                 case 'info':
-                    this.data.icon = 'fa-circle-info';
+                    icon = 'fa-circle-info';
                     break;
             }
 
-            this.shadow.innerHTML = await this.template.render('alert.html', this.data);
+            this.innerHTML = '<div class="alert ' + type + '"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</div>';
 
             // Get the alert element
             let alert = this.shadow.querySelector('.alert');

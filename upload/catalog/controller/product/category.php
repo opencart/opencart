@@ -71,6 +71,8 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->document->setDescription($category_info['meta_description']);
 		$this->document->setKeywords($category_info['meta_keyword']);
 
+		$this->document->addScript('view/javascript/catalog/category.js');
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -78,19 +80,13 @@ class Category extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		];
 
-		$url = '';
+		$allowed = [
+			'sort',
+			'order',
+			'limit'
+		];
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
 
 		$path = '';
 
@@ -111,31 +107,16 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$url = '';
+		$allowed = [
+			'path',
+			'filter',
+			'sort',
+			'order',
+			'page',
+			'limit'
+		];
 
-		if (isset($this->request->get['path'])) {
-			$url .= '&path=' . $this->request->get['path'];
-		}
-
-		if (isset($this->request->get['filter'])) {
-			$url .= '&filter=' . $this->request->get['filter'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
 
 		// Set the last category breadcrumb
 		$data['breadcrumbs'][] = [
@@ -159,23 +140,15 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
 		$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 
-		$url = '';
+		$allowed = [
+			'filter',
+			'sort',
+			'order',
+			'page',
+			'limit'
+		];
 
-		if (isset($this->request->get['filter'])) {
-			$url .= '&filter=' . $this->request->get['filter'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
 
 		// Categories
 		$data['categories'] = [];
@@ -197,27 +170,15 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$url = '';
+		$allowed = [
+			'filter',
+			'sort',
+			'order',
+			'page',
+			'limit'
+		];
 
-		if (isset($this->request->get['filter'])) {
-			$url .= '&filter=' . $this->request->get['filter'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
 
 		// Product
 		$data['products'] = [];
@@ -278,19 +239,13 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['products'][] = $this->load->controller('product/thumb', $product_data);
 		}
 
-		$url = '';
+		$allowed = [
+			'path',
+			'filter',
+			'limit'
+		];
 
-		if (isset($this->request->get['path'])) {
-			$url .= '&path=' . $this->request->get['path'];
-		}
-
-		if (isset($this->request->get['filter'])) {
-			$url .= '&filter=' . $this->request->get['filter'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
 
 		$data['sorts'] = [];
 
@@ -350,23 +305,14 @@ class Category extends \Opencart\System\Engine\Controller {
 			'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=model&order=desc' . $url)
 		];
 
-		$url = '';
+		$allowed = [
+			'path',
+			'filter',
+			'sort',
+			'order'
+		];
 
-		if (isset($this->request->get['path'])) {
-			$url .= '&path=' . $this->request->get['path'];
-		}
-
-		if (isset($this->request->get['filter'])) {
-			$url .= '&filter=' . $this->request->get['filter'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
 
 		$data['limits'] = [];
 
@@ -378,7 +324,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['limits'][] = [
 				'text'  => $value,
 				'value' => $value,
-				'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . $url . '&limit=' . $value)
+				'href'  => $this->url->link('product/category', $url . '&limit=' . $value)
 			];
 		}
 

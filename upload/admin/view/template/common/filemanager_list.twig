@@ -54,5 +54,5 @@
 
 </div>
 {% if pagination %}
-  <div class="modal-footer">{{ pagination }}</div>
+  <div class="modal-footer"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
 {% endif %}

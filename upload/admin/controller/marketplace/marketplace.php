@@ -420,12 +420,10 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $extension_total,
-			'page'  => $page,
-			'limit' => 12,
-			'url'   => $this->url->link('marketplace/marketplace.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		]);
+		$data['total'] = $extension_total;
+		$data['page'] = $page;
+		$data['limit'] = 12;
+		$data['pagination'] = $this->url->link('marketing/marketplace.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
 
 		return $this->load->view('marketplace/marketplace_list', $data);
 	}
@@ -1012,12 +1010,10 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$comment_total = $json['comment_total'];
 
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $comment_total,
-			'page'  => $page,
-			'limit' => 20,
-			'url'   => $this->url->link('marketplace/marketplace.comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page={page}')
-		]);
+		$data['total'] = $comment_total;
+		$data['page'] = $page;
+		$data['limit'] = 20;
+		$data['pagination'] = $this->url->link('marketing/marketplace.comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page={page}');
 
 		$data['refresh'] = $this->url->link('marketplace/marketplace.comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=' . $page);
 

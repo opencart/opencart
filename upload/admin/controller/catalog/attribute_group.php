@@ -147,7 +147,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$data['total'] = $attribute_group_total;
 		$data['page'] = $page;
 		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=%d');
+		$data['pagination'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($attribute_group_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($attribute_group_total - $this->config->get('config_pagination_admin'))) ? $attribute_group_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $attribute_group_total, ceil($attribute_group_total / $this->config->get('config_pagination_admin')));
 

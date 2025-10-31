@@ -149,12 +149,10 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$weight_class_total = $this->model_localisation_weight_class->getTotalWeightClasses();
 
 		// Pagination
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $weight_class_total,
-			'page'  => $page,
-			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/weight_class.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page=%d')
-		]);
+		$data['total'] = $weight_class_total;
+		$data['page'] = $page;
+		$data['limit'] = $this->config->get('config_pagination_admin');
+		$data['pagination'] = $this->url->link('localisation/weight_class.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($weight_class_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($weight_class_total - $this->config->get('config_pagination_admin'))) ? $weight_class_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $weight_class_total, ceil($weight_class_total / $this->config->get('config_pagination_admin')));
 

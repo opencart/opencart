@@ -13,15 +13,15 @@
   {% endif %}
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
-  <link href="{{ stylesheet }}" rel="stylesheet" type="text/css"/>
+  <link href="view/stylesheet/stylesheet.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="../assets/jquery/jquery-3.7.1.min.js"></script>
+  <script type="text/javascript" src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="view/javascript/common.js"></script>
   {% for style in styles %}
     <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}"/>
   {% endfor %}
   {% for link in links %}
     <link href="{{ link.href }}" rel="{{ link.rel }}"/>
-  {% endfor %}
-  {% for script in scripts %}
-    <script type="text/javascript" src="{{ script.href }}"></script>
   {% endfor %}
 </head>
 <body>
@@ -49,8 +49,7 @@
             </div>
           </li>
           <li id="nav-language" class="nav-item dropdown">{{ language }}</li>
-          <li id="nav-profile" class="nav-item dropdown">
-            <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ firstname }} {{ lastname }}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{{ firstname }} {{ lastname }} <i class="fa-solid fa-caret-down fa-fw"></i></span></a>
+          <li id="nav-profile" class="nav-item dropdown"><a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ firstname }} {{ lastname }}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{{ firstname }} {{ lastname }} <i class="fa-solid fa-caret-down fa-fw"></i></span></a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a href="{{ profile }}" class="dropdown-item"><i class="fa-solid fa-user-circle fa-fw"></i> {{ text_profile }}</a></li>
               <li>

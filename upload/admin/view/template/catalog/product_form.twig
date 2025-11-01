@@ -164,8 +164,7 @@
                         {% for identifier in identifiers %}
                           <option value="{{ identifier.identifier_id }}">{{ identifier.code }}</option>
                         {% endfor %}
-                      </select>
-                      <input type="text" value="" placeholder="{{ entry_product_code }}" id="input-value" class="form-control w-75"/>
+                      </select> <input type="text" value="" placeholder="{{ entry_product_code }}" id="input-value" class="form-control w-75"/>
                       <button type="button" id="button-code" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button>
                     </div>
                     <div class="input-group">
@@ -391,7 +390,9 @@
                         {% endfor %}
                       </select>
                       {% if master_id %}
-                        <div class="input-group-text"><x-switch name="override[weight_class_id]" value="1" checked="{{ override.weight_class_id }}" input-class="form-switch" data-oc-target="#input-weight-class"></x-switch></div>
+                        <div class="input-group-text">
+                          <x-switch name="override[weight_class_id]" value="1" checked="{{ override.weight_class_id }}" input-class="form-switch" data-oc-target="#input-weight-class"></x-switch>
+                        </div>
                       {% endif %}
                     </div>
                   </div>
@@ -502,8 +503,7 @@
                     <div id="product-store" class="form-control" style="height: 150px; overflow: auto;">
                       {% for store in stores %}
                         <div class="form-check">
-                          <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" v id="input-store-{{ store.store_id }}" class="form-check-input"{% if store.store_id in product_store %} checked{% endif %}/>
-                          <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
+                          <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" v id="input-store-{{ store.store_id }}" class="form-check-input"{% if store.store_id in product_store %} checked{% endif %}/> <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
                         </div>
                       {% endfor %}
                     </div>
@@ -577,7 +577,8 @@
                     <tr>
                       <th>{{ entry_attribute }}</th>
                       <th>{{ entry_text }}</th>
-                      <th>{% if master_id %}<x-switch name="override[product_attribute]" value="1" checked="{{ override.product_attribute }}" input-class="form-switch float-end" data-oc-target="#product-attribute"></x-switch>{% endif %}</th>
+                      <th>{% if master_id %}
+                          <x-switch name="override[product_attribute]" value="1" checked="{{ override.product_attribute }}" input-class="form-switch float-end" data-oc-target="#product-attribute"></x-switch>{% endif %}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -585,8 +586,7 @@
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row-{{ attribute_row }}">
                         <td>
-                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
-                          <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
+                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/> <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
                           <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul>
                         </td>
                         <td>{% for language in languages %}
@@ -626,8 +626,7 @@
                         <div class="col-11">
 
                           <div class="mb-3">
-                            <label for="input-required-{{ option_row }}" class="form-label">{{ entry_required }}</label>
-                            <select name="product_option[{{ option_row }}][required]" id="input-required-{{ option_row }}" class="form-select">
+                            <label for="input-required-{{ option_row }}" class="form-label">{{ entry_required }}</label> <select name="product_option[{{ option_row }}][required]" id="input-required-{{ option_row }}" class="form-select">
                               <option value="1"{% if product_option.required %} selected{% endif %}>{{ text_enabled }}</option>
                               <option value="0"{% if not product_option.required %} selected{% endif %}>{{ text_disabled }}</option>
                             </select>
@@ -696,16 +695,14 @@
                                         {% endif %}
                                         <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" value="{{ product_option_value.subtract }}"/></td>
                                       <td class="text-end">
-                                        {{ product_option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ product_option_value.price }}"></x-currency>
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/>
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/>
+                                        {{ product_option_value.price_prefix }}
+                                        <x-currency code="{{ currency }}" amount="{{ product_option_value.price }}"></x-currency>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" value="{{ product_option_value.price_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}"/>
                                       </td>
                                       <td class="text-end">{{ product_option_value.points_prefix }}{{ product_option_value.points }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/>
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
                                       <td class="text-end">{{ product_option_value.weight_prefix }}{{ product_option_value.weight }}
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/>
-                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
+                                        <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
                                       <td class="text-end">
                                         <button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button>
                                         <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
@@ -768,7 +765,8 @@
                               {% for option_value in option.product_option_value %}
                                 <option value="{{ option_value.product_option_value_id }}"{% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %} selected{% endif %}>{{ option_value.name }}
                                   {% if option_value.price %}
-                                    ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>
+                                    ({{ option_value.price_prefix }}
+                                    <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>
                                   {% endif %}</option>
                               {% endfor %}
                             </select>
@@ -794,7 +792,8 @@
                                       <img src="{{ option_value.image }}" alt="{{ option_value.name }}" class="img-thumbnail"/>{% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}
-                                      ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
+                                      ({{ option_value.price_prefix }}
+                                      <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
                                     {% endif %}</label>
                                 </div>
                               {% endfor %}
@@ -822,7 +821,8 @@
                                     {% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}
-                                      ({{ option_value.price_prefix }}<x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
+                                      ({{ option_value.price_prefix }}
+                                      <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
                                     {% endif %}</label>
                                 </div>
                               {% endfor %}
@@ -941,7 +941,8 @@
                       <th>{{ entry_customer_group }}</th>
                       <th>{{ entry_trial_price }}</th>
                       <th>{{ entry_price }}</th>
-                      <th>{% if master_id %}<x-switch name="override[product_subscription]" value="1" checked="{{ override.product_subscription }}" input-class="form-switch float-end" data-oc-target="#product-subscription"></x-switch>{% endif %}</th>
+                      <th>{% if master_id %}
+                          <x-switch name="override[product_subscription]" value="1" checked="{{ override.product_subscription }}" input-class="form-switch float-end" data-oc-target="#product-subscription"></x-switch>{% endif %}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -987,7 +988,8 @@
                       <th class="text-end">{{ entry_special }}</th>
                       <th>{{ entry_date_start }}</th>
                       <th>{{ entry_date_end }}</th>
-                      <th class="text-end">{% if master_id %}<x-switch name="override[product_discount]" value="1" checked="{{ override.product_discount }}" input-class="form-switch float-end" data-oc-target="#product-discount"></x-switch>{% endif %}</th>
+                      <th class="text-end">{% if master_id %}
+                          <x-switch name="override[product_discount]" value="1" checked="{{ override.product_discount }}" input-class="form-switch float-end" data-oc-target="#product-discount"></x-switch>{% endif %}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1007,7 +1009,9 @@
                             <option value="S"{% if product_discount.type == 'S' %} selected{% endif %}>{{ text_subtract }}</option>
                             <option value="P"{% if product_discount.type == 'P' %} selected{% endif %}>{{ text_percentage }}</option>
                           </select></td>
-                        <td><x-switch name="product_discount[{{ discount_row }}][special]" value="1" checked="{{ product_discount.special }}" input-class="form-switch form-switch-lg"></x-switch></td>
+                        <td>
+                          <x-switch name="product_discount[{{ discount_row }}][special]" value="1" checked="{{ product_discount.special }}" input-class="form-switch form-switch-lg"></x-switch>
+                        </td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
@@ -1026,7 +1030,8 @@
             </div>
             <div id="tab-image" class="tab-pane">
               <fieldset>
-                <legend>{{ text_image }}{% if master_id %} <x-switch name="override[image]" value="1" checked="{{ override.image }}" input-class="form-switch float-end" data-oc-target="#image"></x-switch>{% endif %}</legend>
+                <legend>{{ text_image }}{% if master_id %}
+                  <x-switch name="override[image]" value="1" checked="{{ override.image }}" input-class="form-switch float-end" data-oc-target="#image"></x-switch>{% endif %}</legend>
                 <div id="image" class="border rounded d-block" style="max-width: 300px;">
                   <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                   <div class="d-grid">
@@ -1043,7 +1048,8 @@
                       <tr>
                         <th>{{ entry_image }}</th>
                         <th>{{ entry_sort_order }}</th>
-                        <th class="text-end">{% if master_id %}<x-switch name="override[product_image]" value="1" checked="{{ override.product_image }}" input-class="form-switch" data-oc-target="#product-image"></x-switch>{% endif %}</th>
+                        <th class="text-end">{% if master_id %}
+                            <x-switch name="override[product_image]" value="1" checked="{{ override.product_image }}" input-class="form-switch" data-oc-target="#product-image"></x-switch>{% endif %}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1085,7 +1091,9 @@
                     <div class="input-group">
                       <input type="text" name="points" value="{{ points }}" placeholder="{{ entry_points }}" id="input-points" class="form-control"/>
                       {% if master_id %}
-                        <div class="input-group-text"><x-switch name="override[points]" value="1" checked="{{ override.points }}" input-class="form-switch" data-oc-target="#input-points"></x-switch></div>
+                        <div class="input-group-text">
+                          <x-switch name="override[points]" value="1" checked="{{ override.points }}" input-class="form-switch" data-oc-target="#input-points"></x-switch>
+                        </div>
                       {% endif %}
                     </div>
                     <div class="form-text">{{ help_points }}</div>
@@ -1099,7 +1107,8 @@
                     <thead>
                       <tr>
                         <th>{{ entry_customer_group }}</th>
-                        <th class="text-end">{{ entry_reward }}&nbsp;&nbsp;{% if master_id %}<x-switch name="override[product_reward]" value="1" checked="{{ override.product_reward }}" input-class="form-switch float-end" data-oc-target="#product-reward"></x-switch>{% endif %}</th>
+                        <th class="text-end">{{ entry_reward }}&nbsp;&nbsp;{% if master_id %}
+                          <x-switch name="override[product_reward]" value="1" checked="{{ override.product_reward }}" input-class="form-switch float-end" data-oc-target="#product-reward"></x-switch>{% endif %}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1183,5 +1192,21 @@
     </div>
   </div>
 </div>
+<template id="template-attribute">
+  <tr id="attribute-row-{{ attribute_row }}">
+    <td>
+      <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="off"/>
+      <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="" id="input-attribute-id-{{ attribute_row }}"/>
+      <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul>
+    </td>
+    <td>{% for language in languages %}
+        <div class="input-group">
+          <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+          <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" id="input-text-{{ attribute_row }}-{{ language.language_id }}" class="form-control"></textarea>
+        </div>
+      {% endfor %}</td>
+    <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+  </tr>
+</template>
 <script type="text/javascript" src="view/javascript/product.js"></script>
 {{ footer }}

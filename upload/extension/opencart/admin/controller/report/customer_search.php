@@ -200,12 +200,10 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Pagination
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $search_total,
-			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/customer_search.list', 'user_token=' . $this->session->data['user_token'] . '&code=customer_search' . $url . '&page=' . $page)
-		]);
+		$data['total'] = $search_total;
+		$data['page'] = $page;
+		$data['limit'] = $this->config->get('config_pagination_admin');
+		$data['pagination'] = $this->url->link('extension/opencart/report/customer_search.list', 'user_token=' . $this->session->data['user_token'] . '&code=customer_search' . $url . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($search_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($search_total - $this->config->get('config_pagination'))) ? $search_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $search_total, ceil($search_total / $this->config->get('config_pagination')));
 

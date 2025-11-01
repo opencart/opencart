@@ -284,14 +284,10 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		$report_total = $this->model_extension_opencart_module_bestseller->getTotalReports();
 
 		// Pagination
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $report_total,
-			'page'  => $page,
-			'limit' => $limit,
-			'callback' => function(int $page): string {
-				return $this->url->link('extension/opencart/module/bestseller.report', 'user_token=' . $this->session->data['user_token'] . ($page ? '&page=' . $page : ''));
-			}
-		]);
+		$data['total'] = $report_total;
+		$data['page'] = $page;
+		$data['limit'] = $limit;
+		$data['pagination'] = $this->url->link('extension/opencart/module/bestseller.report', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));
 

@@ -40,16 +40,6 @@ $(document).ready(function() {
         $('.tooltip').remove();
     });
 
-    $(document).on('click', '[data-bs-toggle=\'pagination\'] a', function(e) {
-        e.preventDefault();
-
-        var element = this;
-
-        //[data-bs-target='pagination']
-
-        $(this.target).load(this.href);
-    });
-
     // Alert Fade
     $('#alert').observe(function() {
         window.setTimeout(function() {

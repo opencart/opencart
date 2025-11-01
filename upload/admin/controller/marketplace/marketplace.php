@@ -423,7 +423,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$data['total'] = $extension_total;
 		$data['page'] = $page;
 		$data['limit'] = 12;
-		$data['pagination'] = $this->url->link('marketing/marketplace.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+		$data['pagination'] = $this->url->link('marketing/marketplace.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		return $this->load->view('marketplace/marketplace_list', $data);
 	}

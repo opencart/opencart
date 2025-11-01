@@ -52,26 +52,18 @@
               </div>
               <div class="mb-3">
                 <label for="input-price-from" class="form-label">{{ entry_price }}</label>
-                <div class="row">
-                  <div class="col">
-                    <input type="text" name="filter_price_from" value="{{ filter_price_from }}" placeholder="{{ text_from }}" id="input-price-from" class="form-control"/>
-                  </div>
-                  <label class="col-auto col-form-label px-0"><i class="fa-solid fa-minus"></i></label>
-                  <div class="col">
-                    <input type="text" name="filter_price_to" value="{{ filter_price_to }}" placeholder="{{ text_to }}" id="input-price-to" class="form-control"/>
-                  </div>
+                <div class="input-group">
+                  <input type="text" name="filter_price_from" value="{{ filter_price_from }}" placeholder="{{ text_from }}" id="input-price-from" class="form-control"/>
+                  <div class="input-group-text"> - </div>
+                  <input type="text" name="filter_price_to" value="{{ filter_price_to }}" placeholder="{{ text_to }}" id="input-price-to" class="form-control"/>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="input-quantity-from" class="form-label">{{ entry_quantity }}</label>
-                <div class="row">
-                  <div class="col">
-                    <input type="text" name="filter_quantity_from" value="{{ filter_quantity_from }}" placeholder="{{ text_from }}" id="input-quantity-from" class="form-control"/>
-                  </div>
-                  <label class="col-auto col-form-label px-0"><i class="fa-solid fa-minus"></i></label>
-                  <div class="col">
-                    <input type="text" name="filter_quantity_to" value="{{ filter_quantity_to }}" placeholder="{{ text_to }}" id="input-quantity-to" class="form-control"/>
-                  </div>
+                <div class="input-group">
+                  <input type="text" name="filter_quantity_from" value="{{ filter_quantity_from }}" placeholder="{{ text_from }}" id="input-quantity-from" class="form-control"/>
+                  <div class="input-group-text"> - </div>
+                  <input type="text" name="filter_quantity_to" value="{{ filter_quantity_to }}" placeholder="{{ text_to }}" id="input-quantity-to" class="form-control"/>
                 </div>
               </div>
               <div class="mb-3">

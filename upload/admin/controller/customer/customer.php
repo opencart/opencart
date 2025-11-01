@@ -858,7 +858,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['total'] = $payment_total;
 		$data['page'] = $page;
 		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('customer/customer.payment', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->url->link('customer/customer.payment', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($payment_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($payment_total - $limit)) ? $payment_total : ((($page - 1) * $limit) + $limit), $payment_total, ceil($payment_total / $limit));
 
@@ -950,7 +950,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['total'] = $history_total;
 		$data['page'] = $page;
 		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('customer/customer.history', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->url->link('customer/customer.history', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));
 
@@ -1035,9 +1035,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$results = $this->model_customer_customer->getTransactions($customer_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
-			$data['transactions'][] = [
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			] + $result;
+			$data['transactions'][] = ['date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))] + $result;
 		}
 
 		$data['balance'] = $this->model_customer_customer->getTransactionTotal($customer_id);
@@ -1049,7 +1047,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['total'] = $transaction_total;
 		$data['page'] = $page;
 		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('customer/customer.transaction', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->url->link('customer/customer.transaction', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($transaction_total - $limit)) ? $transaction_total : ((($page - 1) * $limit) + $limit), $transaction_total, ceil($transaction_total / $limit));
 

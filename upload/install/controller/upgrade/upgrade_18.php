@@ -608,7 +608,7 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 					],
 					'code'             => 'setting',
 					'type'             => 'link',
-					'route'            => 'setting/setting',
+					'route'            => 'setting/store',
 					'parent'           => 'system',
 					'sort_order'       => 1
 				];

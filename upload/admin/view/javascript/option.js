@@ -1,9 +1,9 @@
 let option_value_row = 0;
 
 $('#button-option-value').on('click', () => {
-    let clone = $('#template-option-value').content.cloneNode(true);
+    let element = $('#template-option-value');
 
-    $('#option-value tbody').html(clone);
+    $('#option-value tbody').append(element[0].content.cloneNode(true));
 });
 
 $('#input-type').on('change', (e) => {

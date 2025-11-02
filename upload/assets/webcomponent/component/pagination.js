@@ -83,7 +83,7 @@ class XPagination extends WebComponent {
                 }
 
                 if (this.prev) {
-                    html += '<li class="page-item"><a href="' + this.prev +'" class="page-link">&lt;</a></li>';
+                    html += '<li class="page-item"><a href="' + this.prev + '" class="page-link">&lt;</a></li>';
                 }
 
                 for (let i in this.links) {

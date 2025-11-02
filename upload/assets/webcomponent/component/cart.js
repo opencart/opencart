@@ -85,7 +85,7 @@ class XCart extends WebComponent {
                     }
 
                     html += '    </ul></td>';
-                    html += '    <td class="text-end text-nowrap">x ' + json['products'][i]['quantity'] + '</td>';
+                    html += '    <td class="text-end text-nowrap">x ' + json['products'][i]['quantity'] + '</td>' ;
                     html += '    <td class="text-end"><x-currency code="{{ currency }}" amount="' + json['products'][i]['total'] + '"></x-currency></td>';
                     html += '    <td class="text-end"><form action="{{ remove }}" method="post" data-oc-target="#cart">';
                     html += '      <input type="hidden" name="key" value="' + json['products'][i]['cart_id'] + '"/>';

@@ -805,20 +805,20 @@ class Product extends \Opencart\System\Engine\Model {
 		$sql = "SELECT *, `p`.`price`, `ps`.`price` as `special`, " . $this->statement['discount'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM (SELECT DISTINCT * FROM `" . DB_PREFIX . "product_discount` WHERE `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` = '1' AND `special` = '1' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) GROUP BY `product_id` ORDER BY `priority` ASC) `ps` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`ps`.`product_id` = `p2s`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p2s`.`product_id` = `p`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()";
 
 		$sort_data = [
-			'pd.name',
-			'p.model',
-			'p.price',
-			'rating',
-			'p.sort_order'
+			'name'        => 'pd.name',
+			'model'       => 'p.model',
+			'sort_order'  => 'p.price',
+			'rating'      => 'rating',
+			'sort_order'  => 'p.sort_order',
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
-				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
-			} elseif ($data['sort'] == 'p.price') {
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			if ($data['sort'] == 'name' || $data['sort'] == 'model') {
+				$sql .= " ORDER BY LCASE(" . $sort_data[$data['sort']] . ")";
+			} elseif ($data['sort'] == 'price') {
 				$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
 			} else {
-				$sql .= " ORDER BY " . $data['sort'];
+				$sql .= " ORDER BY " . $sort_data[$data['sort']];
 			}
 		} else {
 			$sql .= " ORDER BY `p`.`sort_order`";

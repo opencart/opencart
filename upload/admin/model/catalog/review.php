@@ -250,11 +250,11 @@ class Review extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'pd.name',
-			'r.author',
-			'r.rating',
-			'r.status',
-			'r.date_added'
+			'name'       => 'pd.name',
+			'author'     => 'r.author',
+			'rating'     => 'r.rating',
+			'status'     => 'r.status',
+			'date_added' => 'r.date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

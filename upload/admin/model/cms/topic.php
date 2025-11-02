@@ -247,9 +247,9 @@ class Topic extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'td.name',
-			't.status',
-			't.sort_order'
+			'name'       => 'td.name',
+			'status'     => 't.status',
+			'sort_order' => 't.sort_order'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

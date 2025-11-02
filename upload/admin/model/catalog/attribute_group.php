@@ -145,12 +145,12 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "attribute_group` `ag` LEFT JOIN `" . DB_PREFIX . "attribute_group_description` `agd` ON (`ag`.`attribute_group_id` = `agd`.`attribute_group_id`) WHERE `agd`.`language_id` = '" . (int)$language_id . "'";
 
 		$sort_data = [
-			'agd.name',
-			'ag.sort_order'
+			'name'       => 'agd.name',
+			'sort_order' => 'ag.sort_order'
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `agd`.`name`";
 		}

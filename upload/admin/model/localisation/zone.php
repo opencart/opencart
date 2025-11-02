@@ -170,9 +170,9 @@ class Zone extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'cd.name',
-			'zd.name',
-			'z.code'
+			'country' => 'cd.name',
+			'name'    => 'zd.name',
+			'code'    => 'z.code'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

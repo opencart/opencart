@@ -129,8 +129,8 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		// Sorts
-		$data['sort_name'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=fgd.name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=fg.sort_order' . $url);
+		$data['sort_name'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/filter_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
 		$remove = [
 			'route',

@@ -155,12 +155,12 @@ class FilterGroup extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'fgd.name',
-			'fg.sort_order'
+			'name'       => 'fgd.name',
+			'sort_order' => 'fg.sort_order'
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `fgd`.`name`";
 		}

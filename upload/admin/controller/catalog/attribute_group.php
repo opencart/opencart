@@ -129,8 +129,8 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		// Sorts
-		$data['sort_name'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=agd.name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ag.sort_order' . $url);
+		$data['sort_name'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/attribute_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
 		$remove = [
 			'route',

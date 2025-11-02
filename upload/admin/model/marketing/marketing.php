@@ -188,9 +188,9 @@ class Marketing extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'm.name',
-			'm.code',
-			'm.date_added'
+			'name'       => 'm.name',
+			'code'       => 'm.code',
+			'date_added' => 'm.date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

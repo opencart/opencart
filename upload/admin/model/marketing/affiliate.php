@@ -241,11 +241,11 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name',
-			'ca.tracking',
-			'ca.commission',
-			'ca.status',
-			'ca.date_added'
+			'name'       => 'name',
+			'tracking'   => 'ca.tracking',
+			'commission' => 'ca.commission',
+			'balance'    => 'ca.balance',
+			'date_added' => 'ca.date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

@@ -5,11 +5,11 @@
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
           <th class="text-center">{{ column_image }}</th>
-          <th><a href="{{ sort_name }}"{% if sort == 'pd.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
-          <th class="d-none d-lg-table-cell"><a href="{{ sort_model }}"{% if sort == 'p.model' %} class="{{ order|lower }}"{% endif %}>{{ column_model }}</a></th>
-          <th class="text-end"><a href="{{ sort_price }}"{% if sort == 'p.price' %} class="{{ order|lower }}"{% endif %}>{{ column_price }}</a></th>
-          <th class="text-end"><a href="{{ sort_quantity }}"{% if sort == 'p.quantity' %} class="{{ order|lower }}"{% endif %}>{{ column_quantity }}</a></th>
-          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'p.status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
+          <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th class="d-none d-lg-table-cell"><a href="{{ sort_model }}"{% if sort == 'model' %} class="{{ order|lower }}"{% endif %}>{{ column_model }}</a></th>
+          <th class="text-end"><a href="{{ sort_price }}"{% if sort == 'price' %} class="{{ order|lower }}"{% endif %}>{{ column_price }}</a></th>
+          <th class="text-end"><a href="{{ sort_quantity }}"{% if sort == 'quantity' %} class="{{ order|lower }}"{% endif %}>{{ column_quantity }}</a></th>
+          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>

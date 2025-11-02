@@ -163,13 +163,13 @@ class Filter extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'fd.name',
-			'filter_group',
-			'f.sort_order'
+			'name'         => 'fd.name',
+			'filter_group' => 'filter_group',
+			'sort_order'   => 'f.sort_order'
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `filter_group`";
 		}

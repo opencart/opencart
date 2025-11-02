@@ -181,9 +181,9 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		// Sorts
-		$data['sort_name'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=td.name' . $url);
-		$data['sort_status'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=t.status' . $url);
-		$data['sort_sort_order'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=t.sort_order' . $url);
+		$data['sort_name'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_status'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_sort_order'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
 		$remove = [
 			'route',

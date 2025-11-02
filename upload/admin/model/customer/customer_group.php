@@ -158,8 +158,8 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_group` `cg` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`cg`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$language_id . "'";
 
 		$sort_data = [
-			'cgd.name',
-			'cg.sort_order'
+			'name'       => 'cgd.name',
+			'sort_order' => 'cg.sort_order'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

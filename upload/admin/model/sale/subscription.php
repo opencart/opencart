@@ -229,12 +229,12 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			's.subscription_id',
-			's.order_id',
-			's.reference',
-			'customer',
-			's.subscription_status',
-			's.date_added'
+			'subscription_id'     => 's.subscription_id',
+			'order_id'            => 's.order_id',
+			'reference'           => 's.reference',
+			'customer'            => 'customer',
+			'subscription_status' => 's.subscription_status',
+			'date_added'          => 's.date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

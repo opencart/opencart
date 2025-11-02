@@ -258,10 +258,10 @@ class Article extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'ad.name',
-			'a.author',
-			'a.rating',
-			'a.date_added'
+			'name'       => 'ad.name',
+			'author'     => 'a.author',
+			'rating'     => 'a.rating',
+			'date_added' => 'a.date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

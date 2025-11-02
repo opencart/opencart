@@ -213,8 +213,8 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		// Sorts
 		$data['sort_name'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_status'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
-		$data['sort_status'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=c1.status' . $url);
 
 		$remove = [
 			'route',

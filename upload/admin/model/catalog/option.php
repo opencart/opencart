@@ -162,13 +162,13 @@ class Option extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'od.name',
-			'o.type',
-			'o.sort_order'
+			'name'       => 'od.name',
+			'type'       => 'o.type',
+			'sort_order' => 'o.sort_order'
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `od`.`name`";
 		}

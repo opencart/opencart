@@ -185,9 +185,9 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'spd.name',
-			'sp.sort_order',
-			'sp.status'
+			'name'       => 'spd.name',
+			'status'     => 'sp.status',
+			'sort_order' => 'sp.sort_order'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

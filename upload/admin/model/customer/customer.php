@@ -258,12 +258,12 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name',
-			'c.email',
-			'customer_group',
-			'c.status',
-			'c.ip',
-			'c.date_added'
+			'name'           => 'name',
+			'email'          => 'c.email',
+			'customer_group' => 'customer_group',
+			'status'         => 'c.status',
+			'ip'             => 'c.ip',
+			'date_added'     => 'c.date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

@@ -231,11 +231,11 @@ class CustomField extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'cfd.name',
-			'cf.type',
-			'cf.location',
-			'cf.status',
-			'cf.sort_order'
+			'name'       => 'cfd.name',
+			'type'       => 'cf.type',
+			'location'   => 'cf.location',
+			'status'     => 'cf.status',
+			'date_added' => 'cf.date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

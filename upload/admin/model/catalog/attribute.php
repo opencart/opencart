@@ -155,13 +155,13 @@ class Attribute extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'ad.name',
-			'attribute_group',
-			'a.sort_order'
+			'name'            => 'ad.name',
+			'attribute_group' => 'attribute_group',
+			'sort_order'      => 'a.sort_order'
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `attribute_group`, `ad`.`name`";
 		}

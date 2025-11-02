@@ -4,10 +4,10 @@
       <thead>
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
-          <th><a href="{{ sort_name }}"{% if sort == 'tr.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
-          <th class="text-end"><a href="{{ sort_rate }}"{% if sort == 'tr.rate' %} class="{{ order|lower }}"{% endif %}>{{ column_rate }}</a></th>
-          <th><a href="{{ sort_type }}"{% if sort == 'tr.type' %} class="{{ order|lower }}"{% endif %}>{{ column_type }}</a></th>
-          <th><a href="{{ sort_geo_zone }}"{% if sort == 'gz.name' %} class="{{ order|lower }}"{% endif %}>{{ column_geo_zone }}</a></th>
+          <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th class="text-end"><a href="{{ sort_rate }}"{% if sort == 'rate' %} class="{{ order|lower }}"{% endif %}>{{ column_rate }}</a></th>
+          <th><a href="{{ sort_type }}"{% if sort == 'type' %} class="{{ order|lower }}"{% endif %}>{{ column_type }}</a></th>
+          <th><a href="{{ sort_geo_zone }}"{% if sort == 'geo_zone' %} class="{{ order|lower }}"{% endif %}>{{ column_geo_zone }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>

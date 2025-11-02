@@ -261,12 +261,12 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'md.name',
-			'm.sort_order'
+			'name'       => 'md.name',
+			'sort_order' => 'm.sort_order'
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `name`";
 		}

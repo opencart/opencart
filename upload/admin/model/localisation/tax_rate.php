@@ -147,10 +147,10 @@ class TaxRate extends \Opencart\System\Engine\Model {
 		$sql = "SELECT `tr`.`tax_rate_id`, `tr`.`name` AS `name`, `tr`.`rate`, `tr`.`type`, `gz`.`name` AS `geo_zone` FROM `" . DB_PREFIX . "tax_rate` `tr` LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr`.`geo_zone_id` = `gz`.`geo_zone_id`)";
 
 		$sort_data = [
-			'tr.name',
-			'tr.rate',
-			'tr.type',
-			'gz.name'
+			'name'     => 'tr.name',
+			'rate'     => 'tr.rate',
+			'type'     => 'tr.type',
+			'geo_zone' => 'gz.name'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

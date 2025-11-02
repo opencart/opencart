@@ -226,10 +226,10 @@ class User extends \Opencart\System\Engine\Controller {
 		// Sorts
 		$data['sort_username'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
 		$data['sort_name'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_email'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=u.email' . $url);
+		$data['sort_email'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=email' . $url);
 		$data['sort_user_group'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=user_group' . $url);
-		$data['sort_status'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=u.status' . $url);
-		$data['sort_date_added'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=u.date_added' . $url);
+		$data['sort_status'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_date_added'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
 		$remove = [
 			'route',

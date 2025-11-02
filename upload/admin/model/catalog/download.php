@@ -157,12 +157,12 @@ class Download extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'dd.name',
-			'd.date_added'
+			'name'       => 'dd.name',
+			'date_added' => 'd.date_added'
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `dd`.`name`";
 		}

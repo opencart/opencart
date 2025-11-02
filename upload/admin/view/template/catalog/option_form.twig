@@ -124,6 +124,7 @@
 </div>
 <template id="template-option-value">
   <tr id="option-value-row-{{ option_value_row }}">
+
     <td><input type="hidden" name="option_value[{{ option_value_row }}][option_value_id]" value=""/>
       {% for language in languages %}
         <div class="input-group">
@@ -133,6 +134,7 @@
         <div id="error-option-value-{{ option_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
       {% endfor %}
     </td>
+
     <td class="text-center">
       <div class="border rounded d-block" style="max-width: 300px;">
         <img src="{{ placeholder }}" alt="" title="" id="thumb-image-{{ option_value_row }}" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
@@ -143,8 +145,11 @@
         </div>
       </div>
     </td>
+
     <td class="text-end"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+
     <td class="text-end"><button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+
   </tr>
 </template>
 <script type="text/javascript" src="view/javascript/option.js"></script>

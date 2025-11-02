@@ -246,13 +246,13 @@ class Information extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'id.title',
-			'i.sort_order',
-			'i.status'
+			'title'      => 'id.title',
+			'status'     => 'i.status',
+			'sort_order' => 'i.sort_order'
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `id`.`title`";
 		}

@@ -71,7 +71,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'dd.name';
+			$sort = 'name';
 		}
 
 		if (isset($this->request->get['order'])) {

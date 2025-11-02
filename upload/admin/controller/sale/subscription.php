@@ -153,7 +153,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 's.subscription_id';
+			$sort = 'subscription_id';
 		}
 
 		if (isset($this->request->get['order'])) {

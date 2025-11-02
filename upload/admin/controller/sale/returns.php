@@ -179,7 +179,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'r.return_id';
+			$sort = 'return_id';
 		}
 
 		if (isset($this->request->get['order'])) {

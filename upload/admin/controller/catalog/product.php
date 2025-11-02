@@ -260,7 +260,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'pd.name';
+			$sort = 'name';
 		}
 
 		if (isset($this->request->get['order'])) {

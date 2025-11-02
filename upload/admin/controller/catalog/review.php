@@ -145,7 +145,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'r.date_added';
+			$sort = 'date_added';
 		}
 
 		if (isset($this->request->get['page'])) {

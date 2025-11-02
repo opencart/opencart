@@ -225,7 +225,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'o.order_id';
+			$sort = 'order_id';
 		}
 
 		if (isset($this->request->get['order'])) {

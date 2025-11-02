@@ -121,7 +121,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 't.sort_order';
+			$sort = 'sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {

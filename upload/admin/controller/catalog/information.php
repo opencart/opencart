@@ -123,7 +123,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'id.title';
+			$sort = 'title';
 		}
 
 		if (isset($this->request->get['order'])) {

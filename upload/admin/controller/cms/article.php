@@ -134,7 +134,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'a.date_added';
+			$sort = 'date_added';
 		}
 
 		if (isset($this->request->get['order'])) {

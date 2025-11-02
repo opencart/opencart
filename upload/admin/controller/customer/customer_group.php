@@ -69,7 +69,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'cgd.name';
+			$sort = 'name';
 		}
 
 		if (isset($this->request->get['order'])) {

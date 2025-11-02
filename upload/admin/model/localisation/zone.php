@@ -175,8 +175,8 @@ class Zone extends \Opencart\System\Engine\Model {
 			'code'    => 'z.code'
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `cd`.`name` ASC, `zd`.`name`";
 		}

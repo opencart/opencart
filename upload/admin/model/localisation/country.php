@@ -267,13 +267,14 @@ class Country extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name',
-			'iso_code_2',
-			'iso_code_3'
+			'name'       => 'cd.name',
+			'iso_code_2' => 'c.iso_code_2',
+			'iso_code_3' => 'c.iso_code_3',
+			'status'     => 'c.status',
 		];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $sort_data[$data['sort']];
 		} else {
 			$sql .= " ORDER BY `cd`.`name`";
 		}

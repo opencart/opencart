@@ -1,9 +1,3 @@
-$('#list').on('click', 'thead a, .pagination a', function(e) {
-    e.preventDefault();
-
-    $('#list').load(this.href);
-});
-
 $('#form-filter').on('submit', function(e) {
     e.preventDefault();
 

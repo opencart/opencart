@@ -3,16 +3,16 @@ $('#form-filter').on('submit', function(e) {
 
     let url = $(this).serialize();
 
-    window.history.pushState({}, null, 'index.php?route=cms/article&user_token={{ user_token }}&' + url);
+    window.history.pushState({}, null, 'index.php?route=cms/article&user_token=' + url.get('user_token') + '&' + url);
 
-    $('#list').load('index.php?route=cms/article.list&user_token={{ user_token }}&' + url);
+    $('#list').load('index.php?route=cms/article.list&user_token=' + url.get('user_token') + '&' + url);
 });
 
 $('#button-rating').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=cms/article.rating&user_token={{ user_token }}',
+        url: 'index.php?route=cms/article.rating&user_token=' + url.get('user_token'),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -37,4 +37,8 @@ $('#button-rating').on('click', function() {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+});
+
+$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
+    language: '{{ ckeditor }}'
 });

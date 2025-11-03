@@ -71,26 +71,5 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#input-product').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['product_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('#input-product').val(decodeHTMLEntities(item['label']));
-        $('#input-product-id').val(item['value']);
-    }
-});
-//--></script>
+<script type="text/javascript" src="view/javascript/review.js"></script>
 {{ footer }}

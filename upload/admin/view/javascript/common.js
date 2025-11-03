@@ -1,3 +1,9 @@
+const url = new URLSearchParams(document.location.search);
+
+console.log(url.get('route'));
+console.log(url.get('user_token'));
+console.log(url.get('customer_id'));
+
 function getURLVar(key) {
     var value = [];
 
@@ -20,6 +26,14 @@ function getURLVar(key) {
             return '';
         }
     }
+}
+
+function decodeHTMLEntities(html) {
+    var d = document.createElement('div');
+
+    d.innerHTML = html;
+
+    return d.textContent;
 }
 
 $(document).ready(function() {
@@ -98,14 +112,6 @@ $(document).ready(function() {
         }
     }(jQuery);
 });
-
-function decodeHTMLEntities(html) {
-    var d = document.createElement('div');
-
-    d.innerHTML = html;
-
-    return d.textContent;
-}
 
 // Observe
 +function($) {

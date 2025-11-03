@@ -26,7 +26,7 @@ class XZone extends WebComponent {
             this.default = this.innerHTML;
 
             // Create the select element
-            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '">' + this.default + '</select>';
+            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="form-select">' + this.default + '</select>';
 
             this.addEventListener('[value]', this.event.changeValue);
 

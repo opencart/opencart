@@ -42,9 +42,21 @@ class XCountry extends WebComponent {
         connected: async () => {
             this.default = this.innerHTML;
 
-            this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="' + this.getAttribute('input-class') + '"' + (this.hasAttribute('required') ? ' required' : '') + '>' + this.default + '</select>';
+            let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="form-select"';
 
-            this.addEventListener('[value]', this.event.changeValue);
+            if (this.hasAttribute('required')) {
+                html += ' required';
+            }
+
+            if (this.hasAttribute('disabled')) {
+                html += ' disabled';
+            }
+
+            html += '>' + this.default + '</select>';
+
+            this.innerHTML = html;
+
+                this.addEventListener('[value]', this.event.changeValue);
 
             this.element = this.querySelector('select');
 

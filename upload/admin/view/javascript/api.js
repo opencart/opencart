@@ -2,7 +2,7 @@ $('#form-api').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=marketplace/api.save&user_token={{ user_token }}',
+        url: 'index.php?route=marketplace/api.save&user_token=' + url.get('user_token'),
         type: 'post',
         dataType: 'json',
         data: $('#form-api').serialize(),
@@ -39,4 +39,29 @@ $('#form-api').on('submit', function(e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+});
+
+$('#button-generate').on('click', function() {
+    rand = '';
+
+    string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (i = 0; i < 256; i++) {
+        rand += string[Math.floor(Math.random() * (string.length - 1))];
+    }
+
+    $('#input-key').val(rand);
+});
+
+var ip_row = {{ ip_row }};
+
+$('#button-ip').on('click', function() {
+    html = '<tr id="ip-row-' + ip_row + '">';
+    html += '  <td class="text-end"><input type="text" name="api_ip[]" value="" placeholder="{{ entry_ip|escape('js') }}" class="form-control"/></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#ip-row-' + ip_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+
+    $('#ip tbody').append(html);
+
+    ip_row++;
 });

@@ -1,15 +1,9 @@
-$('#list').on('click', 'thead a, .pagination a', function(e) {
-    e.preventDefault();
-
-    $('#list').load(this.href);
-});
-
 $('#form-filter').on('submit', function(e) {
     e.preventDefault();
 
     let url = $(this).serialize();
 
-    window.history.pushState({}, null, 'index.php?route=catalog/category&user_token={{ user_token }}&' + url);
+    window.history.pushState({}, null, 'index.php?route=catalog/category&user_token=' + url.get('user_token') + '&' + url);
 
     $('#list').load('index.php?route=catalog/category.list&user_token={{ user_token }}&' + url);
 });

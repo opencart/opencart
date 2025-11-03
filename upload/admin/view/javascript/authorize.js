@@ -2,7 +2,7 @@ $('#button-send').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=common/authorize.send&user_token={{ user_token }}',
+        url: 'index.php?route=common/authorize.send&user_token=' + url.get('user_token'),
         dataType: 'json',
         beforeSend: function() {
             $('#button-send').button('loading');
@@ -35,7 +35,7 @@ $('#button-reset').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=common/authorize.confirm&user_token={{ user_token }}',
+        url: 'index.php?route=common/authorize.confirm&user_token=' + url.get('user_token'),
         dataType: 'json',
         beforeSend: function() {
             $('#button-reset').button('loading');

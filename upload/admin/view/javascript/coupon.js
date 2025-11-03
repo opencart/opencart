@@ -1,13 +1,10 @@
-$('#list').on('click', 'thead a, .pagination a', function(e) {
-    e.preventDefault();
+const url = new URLSearchParams(document.location.search);
 
-    $('#list').load(this.href);
-});
 
 $('#input-product').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=catalog/product.autocomplete&user_token=' + url.get('user_token') + '&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -41,7 +38,7 @@ $('#coupon-product').on('click', '.btn', function() {
 $('#input-category').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=catalog/category.autocomplete&user_token=' + url.get('user_token') + '&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {

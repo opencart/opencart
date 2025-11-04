@@ -311,17 +311,17 @@ $user_agent[] = 'Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/he
 // Baiduspider
 $user_agent[] = 'Mozilla/5.0 (compatible; Baiduspider-render/2.0; +http://www.baidu.com/search/spider.html)';
 
+$user_agent[] = 'Mozilla/5.0 (Linux; Android 9; ASUS_I005DA Build/PI; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/133.0.6943.122 Mobile';
+
 $patterns = [];
 
-$patterns[] = '^(Mozilla|Mozila)\/[0-9\.]+ \(.+\) AppleWebKit\/[0-9\.\+]+ \(KHTML, like Gecko\)(\sEdgiOS\/[0-9\.]+)?(\sVersion\/[0-9\.]+)?(\s(Chrome|HeadlessChrome)\/[0-9\.]+)?(\sMobile(\/[a-zA-Z0-9]+)?)? Safari\/[0-9\.]+(.)?(\sFE v[0-9\.]+)?(\s(Edg|Edge)\/[0-9\.]+)?(,gzip\(gfe\))?$';
+$patterns[] = '^(Mozilla|Mozila)\/[0-9\.]+ \(.+\) AppleWebKit\/[0-9\.\+]+ \(KHTML, like Gecko\)(\sEdgiOS\/[0-9\.]+)?(\sVersion\/[0-9\.]+)?(\s(Chrome|HeadlessChrome)\/[0-9\.]+)?(\sMobile(\/[a-zA-Z0-9]+)?)?(\sSafari\/[0-9\.]+)?(.)?(\sFE v[0-9\.]+)?(\s(Edg|Edge)\/[0-9\.]+)?(,gzip\(gfe\))?$';
 $patterns[] = '(AppleTV|CriOS|DOOM|Dalvik|Edg|Edge|Firefox|FireKeepers|FxiOS|Instabridge|Kindle|Mohegan Sun|Nintendo|PlayStation|PlexTV|Quark|Resorts|Roku|stylus|Silk|SamsungBrowser|Tropicana_NJ|Xbox)';
 
 //$patterns[] = '^Mozilla\/[0-9\.]+ \(.+\) Gecko\/[0-9\.]+ \/[0-9\.]+$';
 //$patterns[] = '^Mozilla\/[0-9\.]+ \(.+\)$';
 //$patterns[] = '^(Mozilla)\/[0-9\.]+ \(.+\) AppleWebKit\/[0-9\.]+$';
 //$patterns[] = '^Mozilla\/[0-9\.]+ \(.+\) AppleWebKit\/[0-9\.]+ \(KHTML, like Gecko\) Mobile\/[A-Z0-9]+ (Resorts|FireKeepers|Mohegan Sun|Tropicana_NJ)\/[A-Z0-9\.]+$';
-
-
 
 $matches = [];
 

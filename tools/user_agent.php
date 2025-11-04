@@ -238,10 +238,8 @@ $user_agent[] = 'Mozilla/5.0 (Linux; Android 11; AFTKRT Build/RS8101.1849N; wv)P
 $user_agent[] = 'Mozilla/5.0 (Linux; Android 9; AFTGAZL Build/PS7607.3166N; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/102.0.5005.125 Mobile Safari/537.36 FE v1.79.1';
 // Doom Pro 5G
 $user_agent[] = 'Mozilla/5.0 (Linux; Android 14; DOOM PRO 5G Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.158 Safari/537.36 FE v1.87.3';
-
 // Apple TV (2022)
 $user_agent[] = 'AppleTV14,1/16.1';
-
 // Minix NEO X39
 $user_agent[] = 'Mozilla/5.0 (Linux; Android 7.1.2; NEO_X39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Safari/537.36';
 // Amazon Fire TV Stick 4K Max
@@ -251,31 +249,22 @@ $user_agent[] = 'Mozilla/5.0 (Linux; Android 9; AFTR) AppleWebKit/537.36 (KHTML,
 // Google ADT-2
 $user_agent[] = 'Dalvik/2.1.0 (Linux; U; Android 9; ADT-2 Build/PTT5.181126.002)';
 $user_agent[] = 'Dalvik/2.1.0 (Linux; U; Android 9; ADT-2 Build/PTT5.181126.002)';
-
 // Chromecast
 $user_agent[] = 'Mozilla/5.0 (CrKey armv7l 1.5.16041) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.0 Safari/537.36';
-
 // Roku Ultra
 $user_agent[] = 'Roku4640X/DVP-7.70 (297.70E04154A)';
-
 // Minix NEO X5
 $user_agent[] = 'Mozilla/5.0 (Linux; U; Android 4.2.2; he-il; NEO-X5-116A Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30';
-
 // Amazon AFTWMST22
 $user_agent[] = 'Mozilla/5.0 (Linux; Android 9; AFTWMST22 Build/PS7233; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.152 Mobile Safari/537.36';
-
 // Amazon 4K Fire TV
 $user_agent[] = 'Mozilla/5.0 (Linux; Android 5.1; AFTS Build/LMY47O) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/41.99900.2250.0242 Safari/537.36';
-
 // Google Nexus Player
 $user_agent[] = 'Dalvik/2.1.0 (Linux; U; Android 6.0.1; Nexus Player Build/MMB29T)';
-
 // Apple TV 6th Gen 4K
 $user_agent[] = 'AppleTV11,1/11.1';
-
 // Apple TV 5th Gen 4K
 $user_agent[] = 'AppleTV6,2/11.1';
-
 // Apple TV 4th Gen
 $user_agent[] = 'AppleTV5,3/9.1.1';
 
@@ -304,29 +293,82 @@ $user_agent[] = 'Mozilla/5.0 (Nintendo 3DS; U; ; en) Version/1.7412.EU';
 
 // Amazon Kindle 4
 $user_agent[] = 'Mozilla/5.0 (X11; U; Linux armv7l like Android; en-us) AppleWebKit/531.2+ (KHTML, like Gecko) Version/5.0 Safari/533.2+ Kindle/3.0+';
-
 // Amazon Kindle 3
 $user_agent[] = 'Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600x800; rotate)';
-
 // Onyx Note Air 3C
 $user_agent[] = 'Dalvik/2.1.0 (Linux; U; Android 12; NoteAir3C Build/2023-11-15_15-07_3.5_0a296ec2c)';
 
+// Googlebot
+$user_agent[] = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
+$user_agent[] = 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
+
+// Bing bot
+$user_agent[] = 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
+
+// Yahoo! bot
+$user_agent[] = 'Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)';
+
+// Baiduspider
+$user_agent[] = 'Mozilla/5.0 (compatible; Baiduspider-render/2.0; +http://www.baidu.com/search/spider.html)';
 
 $patterns = [];
 
-$patterns[] = '^(Mozilla|Mozila)\/[0-9\.]+ \(.+\) AppleWebKit\/[0-9\.]+ \(KHTML, like Gecko\)(\sEdgiOS\/[0-9\.]+)?(\sVersion\/[0-9\.]+)?(\s(Chrome|HeadlessChrome)\/[0-9\.]+)?(\sQuark\/[0-9\.]+)?(\sMobile(\/[0-9A-Z]+)?)? Safari\/[0-9\.]+(\sEdg\/[0-9\.]+)?(,gzip\(gfe\))?$';
-$patterns[] = '^Mozilla\/[0-9\.]+ \(.+\) Gecko\/[0-9]+ Firefox\/[0-9\.]+$';
-$patterns[] = '^Dalvik\/[0-9\.]+ \(.+\)$';
-$patterns[] = '^Mozilla\/[0-9\.]+ \(.+\)$';
-$patterns[] = '^Mozilla\/[0-9\.]+ \(.+\) AppleWebKit\/[0-9\.]+ \(KHTML, like Gecko\) Mobile\/[A-Z0-9]+ (Resorts|FireKeepers|Mohegan Sun|Tropicana_NJ)\/[A-Z0-9\.]+$';
+$patterns[] = '^(Mozilla|Mozila)\/[0-9\.]+ \(.+\) AppleWebKit\/[0-9\.\+]+ \(KHTML, like Gecko\)(\sEdgiOS\/[0-9\.]+)?(\sVersion\/[0-9\.]+)?(\s(Chrome|HeadlessChrome)\/[0-9\.]+)?(\sMobile(\/[a-zA-Z0-9]+)?)? Safari\/[0-9\.]+(.)?(\sFE v[0-9\.]+)?(\s(Edg|Edge)\/[0-9\.]+)?(,gzip\(gfe\))?$';
+$patterns[] = '(AppleTV|CriOS|DOOM|Dalvik|Edg|Edge|Firefox|FireKeepers|FxiOS|Instabridge|Kindle|Mohegan Sun|Nintendo|PlayStation|PlexTV|Quark|Resorts|Roku|stylus|Silk|SamsungBrowser|Tropicana_NJ|Xbox)';
+
+//$patterns[] = '^Mozilla\/[0-9\.]+ \(.+\) Gecko\/[0-9\.]+ \/[0-9\.]+$';
+//$patterns[] = '^Mozilla\/[0-9\.]+ \(.+\)$';
+//$patterns[] = '^(Mozilla)\/[0-9\.]+ \(.+\) AppleWebKit\/[0-9\.]+$';
+//$patterns[] = '^Mozilla\/[0-9\.]+ \(.+\) AppleWebKit\/[0-9\.]+ \(KHTML, like Gecko\) Mobile\/[A-Z0-9]+ (Resorts|FireKeepers|Mohegan Sun|Tropicana_NJ)\/[A-Z0-9\.]+$';
+
+
+
+$matches = [];
 
 foreach ($user_agent as $agent) {
+	$status = false;
+
 	foreach ($patterns as $pattern) {
-		if (preg_match($pattern, $agent)) {
-			echo $agent . ' '  . "\n";
+		if (preg_match('/' . $pattern . '/', $agent)) {
+			$status = true;
 
 			break;
 		}
 	}
 
+	$matches[] = [
+		'agent'  => $agent,
+		'status' => $status
+	];
 }
+
+//$sort_order = [];
+
+foreach ($matches as $key => $value) {
+	//$sort_order[$key] = $value['agent'];
+}
+
+//array_multisort($sort_order, SORT_ASC, $matches);
+
+$html  = '<table style="width: 100%;">' . "\n";
+$html .= '  <tr>' . "\n";
+$html .= '    <th>Agent</th>' . "\n";
+$html .= '    <th>Status</th>' . "\n";
+$html .= '  </tr>' . "\n";
+
+foreach ($matches as $match) {
+	if ($match['status']) {
+		$color = 'green';
+	} else {
+		$color = 'red';
+	}
+
+	$html .= '<tr>' . "\n";
+	$html .= '  <td style="color: ' . $color . '">' . $match['agent'] . '</td>' . "\n";
+	$html .= '  <td>' . ($match['status'] ? 'true' :  'false') . '</td>' . "\n";
+ 	$html .= '</tr>' . "\n";
+}
+
+$html .= '</table>';
+
+echo $html;

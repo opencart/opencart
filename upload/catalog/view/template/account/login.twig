@@ -28,7 +28,7 @@
         </div>
         <div class="col mb-3">
           <div class="border rounded p-3 d-flex flex-column h-100">
-            <form id="form-login" action="{{ login }}" method="post" data-oc-toggle="ajax">
+            <form id="form-login" action="{{ login }}" method="post">
               <h2>{{ text_returning_customer }}</h2>
               <p><strong>{{ text_i_am_returning_customer }}</strong></p>
               <div class="mb-3">
@@ -44,7 +44,7 @@
                 <input type="hidden" name="redirect" value="{{ redirect }}"/>
               {% endif %}
               <div class="text-end">
-                <button type="submit" class="btn btn-primary">{{ button_login }}</button>
+                <button id="button-login" type="submit" class="btn btn-primary">{{ button_login }}</button>
               </div>
             </form>
           </div>

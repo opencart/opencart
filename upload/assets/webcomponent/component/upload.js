@@ -4,11 +4,22 @@ class XUpload extends WebComponent {
     static observed = ['checked'];
     element = HTMLInputElement;
 
-    get checked() {
+
+    get required() {
         return this.getAttribute('checked') == 1 ? 1 : 0;
     }
 
-    set checked(value) {
+    set required(value) {
+        if (this.checked != value) {
+            this.hasAttribute('required', value);
+        }
+    }
+
+    get readonly() {
+        return this.getAttribute('checked') == 1 ? 1 : 0;
+    }
+
+    set readonly(value) {
         if (this.checked != value) {
             this.setAttribute('checked', value);
         }
@@ -25,13 +36,9 @@ class XUpload extends WebComponent {
 
             html += '<div class="input-group">';
             html += '  <button type="button" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>';
-
             html += '  <input type="text" name="' + this.getAttribute('name') + '" value="' + this.getAttribute('value') + '" id="' + this.getAttribute('input-id') + '" class="form-control" readonly/>';
-
             html += '  <button type="button" disabled class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i></button>';
-
             html += '  <button type="button" disabled class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>';
-
             html += '</div>';
 
 
@@ -49,7 +56,7 @@ class XUpload extends WebComponent {
             // data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}"
             // data-oc-toggle="download"
             // data-oc-toggle="clear"
-// data-oc-target="#' + this.getAttribute('input-id') + '"
+            // data-oc-target="#' + this.getAttribute('input-id') + '"
             // data-oc-target="#' + this.getAttribute('input-id') + '"{
 
 
@@ -70,7 +77,11 @@ class XUpload extends WebComponent {
             }
         },
         onclick: (e) => {
+            if (!$(element).prop('disabled')) {
 
+
+
+            }
         },
         onchange: (e) => {
             this.checked = e.target.checked ? 1 : 0;

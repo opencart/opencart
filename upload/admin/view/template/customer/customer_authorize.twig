@@ -4,6 +4,7 @@
       <tr>
         <th>{{ column_ip }}</th>
         <th>{{ column_user_agent }}</th>
+        <th>{{ column_status }}</th>
         <th>{{ column_date_added }}</th>
         <th>{{ column_date_expire }}</th>
         <th class="text-end">{{ column_action }}</th>
@@ -12,9 +13,14 @@
     <tbody>
       {% if authorizes %}
         {% for authorize in authorizes %}
-          <tr{% if not authorize.status %} class="table-disabled"{% endif %}>
+          <tr>
             <td><a href="https://whatismyipaddress.com/ip/{{ user_login.ip }}" target="_blank">{{ authorize.ip }}</a></td>
             <td>{{ authorize.user_agent }}</td>
+            <td>{% if not authorize.status %}
+                <span class="badge bg-success">{{ text_enabled }}</span>
+              {% else %}
+                <span class="badge bg-danger">{{ text_disabled }}</span>
+              {% endif %}</td>
             <td>{{ authorize.date_added }}</td>
             <td>{{ authorize.date_expire }}</td>
             <td class="text-end text-nowrap"><a href="{{ authorize.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a></td>
@@ -29,6 +35,8 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+  <div class="col-sm-6 text-start">
+    <x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination>
+  </div>
   <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

@@ -179,6 +179,7 @@ $_['advertise_google_countries'] = array(
     'PH' => "Philippines",
     'PL' => "Poland",
     'PT' => "Portugal",
+    'RO' => "Romania",
     'RU' => "Russia",
     'SA' => "Saudi Arabia",
     'SG' => "Singapore",
@@ -332,7 +333,7 @@ $_['advertise_google_languages'] = array(
     'qu' => "Quechua",
     'rm' => "Romansh",
     'rn' => "Rundi",
-    'ro' => "Romanian, Moldavian, Moldovan",
+    'ro' => "Romanian",
     'ru' => "Russian",
     'sa' => "Sanskrit",
     'sc' => "Sardinian",
@@ -690,6 +691,11 @@ $_['advertise_google_targets'] = array(
         'country' => 'PT',
         'languages' => array('pt'),
         'currencies' => array('EUR')
+    ),
+    array(
+        'country' => 'RO',
+        'languages' => array('ro'),
+        'currencies' => array('RON')
     ),
     array(
         'country' => 'RU',

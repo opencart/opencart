@@ -380,6 +380,14 @@ class ModelUpgrade1010 extends Model {
 		$this->removeByNameFromDB('ups');
 		$this->removeByName($dir_opencart,'citylink');
 		$this->removeByNameFromDB('citylink');
+		if (file_exists($dir_opencart.'/admin/controller/extension/payment/squareup.php')) {
+			$contents = file_get_contents($dir_opencart.'/admin/controller/extension/payment/squareup.php');
+			if (strpos($contents,'function connect()')===false) {
+				// no newer squareup from e.g. iSenseLabs installed, remove old squareup
+				$this->removeByName($dir_opencart,'squareup');
+				$this->removeByNameFromDB('squareup');
+			}
+		}
 
 		// remove some other obsolete core files
 		$this->deleteEntry($dir_opencart.'/admin/view/image/payment/paypal/icon-message.svg');
@@ -391,7 +399,7 @@ class ModelUpgrade1010 extends Model {
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-ca-ES.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-cs-CZ.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-da-DK.js');
-		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-de-DE.js');		
+		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-de-DE.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-es-ES.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-es-EU.js');
 		$this->deleteEntry($dir_opencart.'/admin/view/javascript/summernote/lang/summernote-fa-IR.js');
@@ -616,6 +624,12 @@ class ModelUpgrade1010 extends Model {
 			}
 		}
 		$this->db->query("DELETE FROM `".DB_PREFIX."extension` WHERE `code` LIKE '%".$this->db->escape($name)."%';");
+		$this->db->query("DELETE FROM `".DB_PREFIX."setting` WHERE `code` LIKE '%".$this->db->escape($name)."%';");
+		if ($name=='squareup') {
+			$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_transaction`");
+			$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_token`");
+			$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_customer`");
+		}
 	}
 
     private function fixColumnsForGoogleShopping(): void {

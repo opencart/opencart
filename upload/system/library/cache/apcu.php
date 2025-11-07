@@ -103,19 +103,100 @@ class APCu
     }
 
     /**
-     * Delete a single key. Returns true on success.
+     * Deletes cache entries by prefix. Supports wildcard-style deletion,
+     * similar to the file-based cache driver in OpenCart.
      *
-     * @param string $key
-     * @return bool
+     * @param string $key Key or prefix to delete.
+     * @return bool True on success, false on failure.
      */
     public function delete($key)
     {
         if (!$this->active) {
             return false;
         }
-
-        $k = $this->key($key);
-        return (bool)apcu_delete($k);
+    
+        $fullPrefix = $this->key($key);
+    
+        // 1) Preferred method — APCIterator (does not load values into memory).
+        if (class_exists('\APCIterator')) {
+            $pattern = '/^' . preg_quote($fullPrefix, '/') . '/';
+    
+            try {
+                $it = new \APCIterator('user', $pattern, APC_ITER_KEY);
+    
+                $keys = [];
+                foreach ($it as $entry) {
+                    if (is_array($entry) && isset($entry['key'])) {
+                        $keys[] = $entry['key'];
+                    } elseif (is_string($entry)) {
+                        $keys[] = $entry;
+                    }
+                }
+    
+                if (empty($keys)) {
+                    return true;
+                }
+    
+                // Delete in batches to avoid excessive memory usage on large caches.
+                $batchSize = (int)(getenv('APCU_DELETE_BATCH') ?: 1000);
+                for ($i = 0, $n = count($keys); $i < $n; $i += $batchSize) {
+                    $chunk = array_slice($keys, $i, $batchSize);
+                    @apcu_delete($chunk);
+                }
+    
+                return true;
+            } catch (\Throwable $e) {
+                // For debugging: error_log($e->getMessage());
+                return false;
+            }
+        }
+    
+        // 2) Fallback: apcu_cache_info — universal but potentially expensive.
+        if (function_exists('apcu_cache_info')) {
+            try {
+                $info = @apcu_cache_info('user');
+                if ($info === false || !isset($info['cache_list'])) {
+                    // Invalid response — fallback to deleting a single key below.
+                    return (bool) @apcu_delete($fullPrefix);
+                }
+    
+                $keys = [];
+                foreach ($info['cache_list'] as $entry) {
+                    // Different APCu builds may use 'key' or 'info' fields.
+                    if (isset($entry['key'])) {
+                        $k = $entry['key'];
+                    } elseif (isset($entry['info']) && isset($entry['info']['key'])) {
+                        $k = $entry['info']['key'];
+                    } else {
+                        continue;
+                    }
+    
+                    if (strpos($k, $fullPrefix) === 0) {
+                        $keys[] = $k;
+                    }
+                }
+    
+                if (empty($keys)) {
+                    return true;
+                }
+    
+                // Delete in batches to reduce memory load.
+                $batchSize = (int)(getenv('APCU_DELETE_BATCH') ?: 1000);
+                for ($i = 0, $n = count($keys); $i < $n; $i += $batchSize) {
+                    $chunk = array_slice($keys, $i, $batchSize);
+                    @apcu_delete($chunk);
+                }
+    
+                return true;
+            } catch (\Throwable $e) {
+                // For debugging: error_log($e->getMessage());
+                // Fall through to single-key delete below.
+            }
+        }
+    
+        // 3) Last resort — delete the exact key only.
+        // This ensures single-key deletion still works when other methods are unavailable.
+        return (bool) @apcu_delete($fullPrefix);
     }
 
     /**

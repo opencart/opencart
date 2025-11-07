@@ -159,7 +159,7 @@ class Document {
 	 * @return void
 	 */
 	public function addScript(string $href): void {
-		$this->scripts[$href] = $href;
+		$this->scripts[$href] = ['href'  => $href];
 	}
 
 	/**

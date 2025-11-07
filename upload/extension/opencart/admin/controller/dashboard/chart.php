@@ -89,6 +89,10 @@ class Chart extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/chart');
 
+		$this->document->addScript('../assets/jquery/flot/jquery.flot.js');
+		$this->document->addScript('../assets/jquery/flot/jquery.flot.resize.min.js');
+		$this->document->addScript('../extension/opencart/admin/view/javascript/chart.js');
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/dashboard/chart_info', $data);

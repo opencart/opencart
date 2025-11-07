@@ -2,10 +2,10 @@
 namespace Cache;
 
 /**
- * APCu cache implementation based on APCIterator only.
+ * APCu cache implementation based on APCUIterator only.
  *
  * Suitable for PHP 7.4+. The class does not maintain a separate key registry —
- * all bulk operations (listing / clear) are performed via APCIterator,
+ * all bulk operations (listing / clear) are performed via APCUIterator,
  * which saves additional memory and keeps the operational logic at the APCu level.
  */
 class APCu
@@ -46,7 +46,7 @@ class APCu
 
     /**
      * Builds the physical key in APCu.
-     * The prefix is left as the root for APCIterator.
+     * The prefix is left as the root for APCUIterator.
      *
      * @param string $key
      * @return string
@@ -114,16 +114,16 @@ class APCu
         if (!$this->active) {
             return false;
         }
-    
+
         $fullPrefix = $this->key($key);
-    
-        // 1) Preferred method — APCIterator (does not load values into memory).
-        if (class_exists('\APCIterator')) {
+
+        // 1) Preferred method — APCUIterator (does not load values into memory).
+        if (class_exists('\APCUIterator')) {
             $pattern = '/^' . preg_quote($fullPrefix, '/') . '/';
-    
+
             try {
-                $it = new \APCIterator('user', $pattern, APC_ITER_KEY);
-    
+                $it = new \APCUIterator($pattern, APC_ITER_KEY);
+
                 $keys = [];
                 foreach ($it as $entry) {
                     if (is_array($entry) && isset($entry['key'])) {
@@ -132,25 +132,24 @@ class APCu
                         $keys[] = $entry;
                     }
                 }
-    
+
                 if (empty($keys)) {
                     return true;
                 }
-    
+
                 // Delete in batches to avoid excessive memory usage on large caches.
                 $batchSize = (int)(getenv('APCU_DELETE_BATCH') ?: 1000);
                 for ($i = 0, $n = count($keys); $i < $n; $i += $batchSize) {
                     $chunk = array_slice($keys, $i, $batchSize);
                     @apcu_delete($chunk);
                 }
-    
+
                 return true;
             } catch (\Throwable $e) {
-                // For debugging: error_log($e->getMessage());
                 return false;
             }
         }
-    
+
         // 2) Fallback: apcu_cache_info — universal but potentially expensive.
         if (function_exists('apcu_cache_info')) {
             try {
@@ -159,7 +158,7 @@ class APCu
                     // Invalid response — fallback to deleting a single key below.
                     return (bool) @apcu_delete($fullPrefix);
                 }
-    
+
                 $keys = [];
                 foreach ($info['cache_list'] as $entry) {
                     // Different APCu builds may use 'key' or 'info' fields.
@@ -170,41 +169,40 @@ class APCu
                     } else {
                         continue;
                     }
-    
+
                     if (strpos($k, $fullPrefix) === 0) {
                         $keys[] = $k;
                     }
                 }
-    
+
                 if (empty($keys)) {
                     return true;
                 }
-    
+
                 // Delete in batches to reduce memory load.
                 $batchSize = (int)(getenv('APCU_DELETE_BATCH') ?: 1000);
                 for ($i = 0, $n = count($keys); $i < $n; $i += $batchSize) {
                     $chunk = array_slice($keys, $i, $batchSize);
                     @apcu_delete($chunk);
                 }
-    
+
                 return true;
             } catch (\Throwable $e) {
-                // For debugging: error_log($e->getMessage());
                 // Fall through to single-key delete below.
             }
         }
-    
+
         // 3) Last resort — delete the exact key only.
         // This ensures single-key deletion still works when other methods are unavailable.
         return (bool) @apcu_delete($fullPrefix);
     }
 
     /**
-     * Clear all keys with the current prefix using APCIterator.
+     * Clear all keys with the current prefix using APCUIterator.
      * Returns true on execution (even if nothing is found).
      *
      * This method uses APC_ITER_KEY to avoid loading values into memory.
-     * It is also protected by a try/catch block in case APCIterator is missing or fails.
+     * It is also protected by a try/catch block in case APCUIterator is missing or fails.
      *
      * @return bool
      */
@@ -214,19 +212,19 @@ class APCu
             return false;
         }
 
-        // Regular expression for APCIterator: find all keys starting with the prefix
+        // Regular expression for APCUIterator: find all keys starting with the prefix
         $pattern = '/^' . preg_quote($this->prefix, '/') . '/';
 
-        if (!class_exists('\APCIterator')) {
-            // If APCIterator is not available, do nothing, as there is no registry in this implementation.
+        if (!class_exists('\APCUIterator')) {
+            // If APCUIterator is not available, do nothing, as there is no registry in this implementation.
             // This is an intentional design choice: bulk deletion is not safe without an iterator.
-            // In such cases, I recommend using a version with a registry or enabling APCIterator.
+            // In such cases, I recommend using a version with a registry or enabling APCUIterator.
             return false;
         }
 
         try {
             // APC_ITER_KEY — does not load values, only metadata (keys)
-            $it = new \APCIterator('user', $pattern, APC_ITER_KEY);
+            $it = new \APCUIterator($pattern, APC_ITER_KEY);
 
             foreach ($it as $entry) {
                 $k = null;
@@ -243,7 +241,7 @@ class APCu
 
             return true;
         } catch (\Throwable $e) {
-            // In case APCIterator is unexpectedly unavailable or throws an exception.
+            // In case APCUIterator is unexpectedly unavailable or throws an exception.
             // For debugging, you can log it: error_log($e->getMessage());
             return false;
         }
@@ -257,7 +255,7 @@ class APCu
      */
     public function listKeys($patternSuffix = null)
     {
-        if (!$this->active || !class_exists('\APCIterator')) {
+        if (!$this->active || !class_exists('\APCUIterator')) {
             return [];
         }
 
@@ -266,7 +264,7 @@ class APCu
 
         $out = [];
         try {
-            $it = new \APCIterator('user', $pattern, APC_ITER_KEY);
+            $it = new \APCUIterator($pattern, APC_ITER_KEY);
             foreach ($it as $entry) {
                 if (is_array($entry) && isset($entry['key'])) {
                     $out[] = $entry['key'];

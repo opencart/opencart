@@ -56,7 +56,7 @@ class XCountry extends WebComponent {
 
             this.innerHTML = html;
 
-                this.addEventListener('[value]', this.event.changeValue);
+            this.addEventListener('[value]', this.event.changeValue);
 
             this.element = this.querySelector('select');
 

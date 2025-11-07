@@ -85,8 +85,6 @@ class Footer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Hard coding scripts, so they can be replaced via the event's system.
-		$data['jquery'] = './assets/jquery/jquery-3.7.1.min.js';
-		$data['bootstrap'] = './assets/bootstrap/js/bootstrap.bundle.min.js';
 		$data['scripts'] = $this->document->getScripts();
 		$data['cookie'] = $this->load->controller('common/cookie');
 

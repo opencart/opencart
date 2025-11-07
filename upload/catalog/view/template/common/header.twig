@@ -11,9 +11,10 @@
   {% if keywords %}
     <meta name="keywords" content="{{ keywords }}"/>
   {% endif %}
-  <link href="{{ stylesheet }}" type="text/css" rel="stylesheet"/>
-  <script src="{{ jquery }}" type="text/javascript"></script>
-  <script src="{{ bootstrap }}" type="text/javascript"></script>
+  <link href="catalog/view/stylesheet/stylesheet.css" type="text/css" rel="stylesheet"/>
+  {% for style in styles %}
+    <link href="{{ link.href }}" rel="{{ link.rel }}"/>
+  {% endfor %}
   {% if icon %}
     <link rel="icon" href="{{ icon }}" type="image/png">
   {% endif %}

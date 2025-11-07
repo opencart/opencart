@@ -3200,6 +3200,15 @@ VALUES ('1', 'page', '/^(\\d+)$/', 'page-$1', '/^page-(\\d+)$/', '$1', '10'),
 -----------------------------------------------------------
 
 --
+-- Dumping data for table `oc_startup`
+--
+
+INSERT INTO `oc_startup` (`description`, `code`, `action`, `status`, `sort_order`)
+VALUES ('Starts processing tasks when a new task is added.', 'task', 'admin/controller/startup/task', '1', '1');
+
+-----------------------------------------------------------
+
+--
 -- Dumping data for table `oc_statistics`
 --
 

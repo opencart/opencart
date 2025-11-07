@@ -18,6 +18,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$this->document->addScript('catalog/view/javascript/cart.js');
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [

@@ -1,3 +1,43 @@
+const displayNames = new Intl.DisplayNames(['en'], { type: 'currency' });
+
+console.log(displayNames);
+
+// Retrieve currency from local storage
+const currency = localStorage.getItem('currency');
+
+// Check if currency exists
+if (!currency) {
+    console.log('Currency:', currency); // e.g., "USD", "EUR"
+    // Use the currency value as needed
+
+    const currency = sessionStorage.setItem('currency', 'USD');
+
+
+} else {
+    console.log('No currency found in session storage');
+    // Set a default currency or prompt user
+
+
+}
+const currencyData = JSON.parse(sessionStorage.getItem('currency'));
+
+if (currencyData) {
+    console.log('Currency Code:', currencyData.code); // e.g., "USD"
+    console.log('Currency Symbol:', currencyData.symbol); // e.g., "$"
+}
+
+// Store a simple currency string
+sessionStorage.setItem('currency', 'USD');
+
+// Or store a currency object
+const currencyObj = { code: 'USD', symbol: '$' };
+
+
+sessionStorage.setItem('currency', JSON.stringify(currencyObj));
+
+$(document).ready(function() {
+
+});
 function getURLVar(key) {
     var value = [];
 
@@ -403,6 +443,9 @@ var chain = new Chain();
 }(jQuery);
 
 $(document).ready(function() {
+
+    let currency = localStorage.getItem('currency');
+
     // Currency
     $('#form-currency .dropdown-item').on('click', function(e) {
         e.preventDefault();
@@ -413,7 +456,7 @@ $(document).ready(function() {
     });
 
     // Local Storage
-    if (localStorage.getItem('currency') == undefined) {
+    if (currency == undefined) {
 
     }
 

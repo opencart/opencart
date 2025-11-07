@@ -14,9 +14,6 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
   <link href="view/stylesheet/stylesheet.css" rel="stylesheet" type="text/css"/>
-  <script type="text/javascript" src="../assets/jquery/jquery-3.7.1.min.js"></script>
-  <script type="text/javascript" src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="view/javascript/common.js"></script>
   {% for style in styles %}
     <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}"/>
   {% endfor %}

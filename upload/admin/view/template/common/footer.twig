@@ -1,4 +1,8 @@
-<footer id="footer">{{ text_footer }}<br/>{{ text_version }}</footer></div>
+<footer id="footer">{{ text_footer }}<br/>{{ text_version }}</footer>
+</div>
+<script type="text/javascript" src="../assets/jquery/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="view/javascript/common.js"></script>
 {% for script in scripts %}
   <script type="text/javascript" src="{{ script.href }}"></script>
 {% endfor %}

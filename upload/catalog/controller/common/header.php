@@ -22,9 +22,6 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
 
-		// Hard coding css, so they can be replaced via the event's system.
-		$data['stylesheet'] = 'catalog/view/stylesheet/stylesheet.css';
-
 		$data['styles'] = $this->document->getStyles();
 		$data['links'] = $this->document->getLinks();
 

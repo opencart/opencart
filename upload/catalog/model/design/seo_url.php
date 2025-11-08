@@ -22,7 +22,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * $seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword);
 	 */
 	public function getSeoUrlByKeyword(string $keyword): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "seo_url` WHERE (`keyword` = '" . $this->db->escape($keyword) . "' OR `keyword` LIKE '" . $this->db->escape('%/' . $keyword) . "') AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' LIMIT 1");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "seo_url` WHERE `keyword` = '" . $this->db->escape($keyword) . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' LIMIT 1");
 
 		return $query->row;
 	}

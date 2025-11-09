@@ -1,4 +1,4 @@
-import { WebComponent } from './../webcomponent.js';
+import { WebComponent } from './../framework.js';
 
 class XCurrency extends WebComponent {
     static observed = ['code', 'amount', 'value'];
@@ -77,8 +77,10 @@ class XCurrency extends WebComponent {
         format: () => {
             let string = '';
 
-            if (this.symbol_left) {
-               string += this.symbol_left;
+            if (this.currencies[this.code]['symbol_left']) {
+               string += this.currencies[this.code]['symbol_left'];
+            } else {
+
             }
 
             let option = {

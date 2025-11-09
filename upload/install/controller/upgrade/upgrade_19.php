@@ -5,7 +5,7 @@ namespace Opencart\Install\Controller\Upgrade;
  *
  * @package Opencart\Install\Controller\Upgrade
  */
-class Upgrade18 extends \Opencart\System\Engine\Controller {
+class Upgrade19 extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -17,34 +17,11 @@ class Upgrade18 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-			$menu_query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "startup`");
-
-			if (!$menu_query->row['total']) {
-				$results = [];
-
-				// Catalog
 
 
-				$this->load->model('upgrade/upgrade');
 
-				foreach ($results as $result) {
-					$menu_description = $result['menu_description'];
 
-					unset($result['menu_description']);
 
-					$menu_id = $this->model_upgrade_upgrade->addRecord('menu', $result);
-
-					foreach ($menu_description as $key => $value) {
-						$menu_description_data = [
-							'menu_id'     => $menu_id,
-							'language_id' => $key,
-							'name'        => $value['name']
-						];
-
-						$this->model_upgrade_upgrade->addRecord('menu_description', $menu_description_data);
-					}
-				}
-			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

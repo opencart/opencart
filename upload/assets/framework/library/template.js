@@ -1,4 +1,4 @@
-//import './../liquid.browser.umd.js';
+import '../liquid.browser.umd.js';
 
 export default class Template {
     engine = {};

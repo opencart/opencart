@@ -1,30 +1,124 @@
-const displayNames = new Intl.DisplayNames(['en'], { type: 'currency' });
+$(document).ready(async () => {
 
-console.log(displayNames);
+    const loadScript = () => {
+        let script = document.createElement('script');
+
+        script.src = src;
+        script.onload = callback; // Execute callback after script loads
+        script.onerror = () => console.error(`Error loading script: ${src}`);
+
+        document.head.appendChild(script);
+    };
+
+/*
+    const cart =
+
+    let loader = {
+        'setting'    => 'setting',
+        'currencies' => '',
+        'language'
+        'tax',
+        ''
+    }
+
+*/
+
+    //JSON.parse();
+
+
+    let response = await fetch('catalog/view/data/setting/setting.json');
+
+    if (response.status == 200) {
+        //const setting =
+    }
+
+    response.then((e) => {
+        console.log(e);
+
+    });
+
+   // localStorage.setItem('setting', );
+
+
+
+    $.ajax({
+        url: 'catalog/view/data/setting/setting.json',
+        dataType: 'json',
+        success: function (json, textStatus) {
+
+            // Replace any form values that correspond to form names.
+            //for (key in json) {
+                //$(element).find('[name=\'' + key + '\']').val(json[key]);
+           // }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+
+
+
+
+
+    $.ajax({
+        url: 'catalog/view/data/localisation/currency.json',
+        dataType: 'json',
+        success: function (json, textStatus) {
+
+            // Replace any form values that correspond to form names.
+            for (key in json) {
+                $(element).find('[name=\'' + key + '\']').val(json[key]);
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+
 
 // Retrieve currency from local storage
-const currency = localStorage.getItem('currency');
+let json = localStorage.getItem('currency');
 
 // Check if currency exists
-if (!currency) {
-    console.log('Currency:', currency); // e.g., "USD", "EUR"
+if (!json) {
     // Use the currency value as needed
-
-    const currency = sessionStorage.setItem('currency', 'USD');
-
-
+    //const currency = parse(json);
 } else {
+
+
+
+    sessionStorage.setItem('currency', 'USD');
+
     console.log('No currency found in session storage');
     // Set a default currency or prompt user
 
 
 }
-const currencyData = JSON.parse(sessionStorage.getItem('currency'));
 
-if (currencyData) {
-    console.log('Currency Code:', currencyData.code); // e.g., "USD"
-    console.log('Currency Symbol:', currencyData.symbol); // e.g., "$"
+let currency = localStorage.getItem('currency');
+
+// Currency
+$('#form-currency .dropdown-item').on('click', function(e) {
+    e.preventDefault();
+
+    $('#form-currency input[name=\'code\']').val($(this).attr('href'));
+
+    let currencies = [];
+
+    localStorage.setItem('currency');
+
+
+});
+
+// Local Storage
+if (currency == undefined) {
+
 }
+
+
+
 
 // Store a simple currency string
 sessionStorage.setItem('currency', 'USD');
@@ -35,45 +129,7 @@ const currencyObj = { code: 'USD', symbol: '$' };
 
 sessionStorage.setItem('currency', JSON.stringify(currencyObj));
 
-$(document).ready(function() {
 
-});
-function getURLVar(key) {
-    var value = [];
-
-    var query = String(document.location).split('?');
-
-    if (query[1]) {
-        var part = query[1].split('&');
-
-        for (i = 0; i < part.length; i++) {
-            var data = part[i].split('=');
-
-            if (data[0] && data[1]) {
-                value[data[0]] = data[1];
-            }
-        }
-
-        if (value[key]) {
-            return value[key];
-        } else {
-            return '';
-        }
-    }
-}
-
-// Observe
-+function($) {
-    $.fn.observe = function(callback) {
-        observer = new MutationObserver(callback);
-
-        observer.observe($(this)[0], {
-            characterData: false,
-            childList: true,
-            attributes: false
-        });
-    };
-}(jQuery);
 
 $(document).ready(function() {
     // Tooltip
@@ -94,6 +150,24 @@ $(document).ready(function() {
         $('.tooltip').remove();
     });
 
+
+});
+
+
+$(document).ready(function() {
+    // Observe
+    +function($) {
+        $.fn.observe = function(callback) {
+            observer = new MutationObserver(callback);
+
+            observer.observe($(this)[0], {
+                characterData: false,
+                childList: true,
+                attributes: false
+            });
+        };
+    }(jQuery);
+
     $('#alert').observe(function() {
         window.setTimeout(function() {
             $('#alert .alert-dismissible').fadeTo(3000, 0, function() {
@@ -101,10 +175,11 @@ $(document).ready(function() {
             });
         }, 3000);
     });
-});
 
-// Button
-$(document).ready(function() {
+
+
+
+    // Button
     +function($) {
         $.fn.button = function(state) {
             return this.each(function() {
@@ -444,21 +519,7 @@ var chain = new Chain();
 
 $(document).ready(function() {
 
-    let currency = localStorage.getItem('currency');
 
-    // Currency
-    $('#form-currency .dropdown-item').on('click', function(e) {
-        e.preventDefault();
-
-        $('#form-currency input[name=\'code\']').val($(this).attr('href'));
-
-        $('#form-currency').submit();
-    });
-
-    // Local Storage
-    if (currency == undefined) {
-
-    }
 
     // Language
     $('#form-language .dropdown-item').on('click', function(e) {

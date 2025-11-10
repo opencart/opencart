@@ -166,6 +166,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart/' . VERSION);
 
 		$response = curl_exec($curl);
 
@@ -555,6 +556,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart/' . VERSION);
 
 		$response = curl_exec($curl);
 
@@ -664,6 +666,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			// Extension
 			$this->load->model('setting/extension');
 
 			$data['downloads'] = [];
@@ -699,6 +702,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 	public function extension(): void {
 		$this->load->language('marketplace/marketplace');
 
+		// Extension
 		if (isset($this->request->get['extension_id'])) {
 			$extension_id = (int)$this->request->get['extension_id'];
 		} else {
@@ -816,6 +820,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart/' . VERSION);
 
 			$response = curl_exec($curl);
 
@@ -905,6 +910,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart/' . VERSION);
 
 			$response = curl_exec($curl);
 
@@ -928,6 +934,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 					fclose($handle);
 
+					// Extension
 					$extension_data = [
 						'extension_id'          => $extension_id,
 						'extension_download_id' => $extension_download_id,
@@ -1019,6 +1026,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 			curl_setopt($curl, CURLOPT_POST, 1);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, ['comment' => $this->request->post['comment']]);
+			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart/' . VERSION);
 
 			$response = curl_exec($curl);
 
@@ -1074,6 +1082,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart/' . VERSION);
 
 		$response = curl_exec($curl);
 
@@ -1159,6 +1168,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart/' . VERSION);
 
 		$response = curl_exec($curl);
 

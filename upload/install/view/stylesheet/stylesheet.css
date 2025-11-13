@@ -148,6 +148,13 @@ footer a {
     padding: 8px 14px 8px 14px;
 }
 
+.alert > .close {
+	position: relative;
+	top: -2px;
+	right: 0px;
+	color: inherit;
+}
+
 /* Transitions */
 .transition {
     -webkit-transition: all 0.3s ease-out;
@@ -379,4 +386,18 @@ a.button, input.button {
 
 .terms p, .terms ul, .terms ol {
     color: #000000;
+}
+
+/* newsletter */
+#mc_embed_signup {
+    background:#fff; false;
+    clear:left; 
+    font:14px Helvetica,Arial,sans-serif; 
+    width:auto;
+}
+
+@media (min-width: 992px) {
+    .pull-right-md {
+        float: right;
+    }
 }

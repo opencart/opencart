@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="core-modules">{{ promotion }}</div>
-  <div class="modules"><a href="https://www.opencart.com/index.php?route=marketplace/extension&utm_source=opencart_install&utm_medium=store_link&utm_campaign=opencart_install" target="_BLANK" class="btn btn-default">{{ text_extension }}</a></div>
+  <div class="modules"><a href="https://www.opencart.com/index.php?route=marketplace/extension&amp;utm_source=opencart_install&amp;utm_medium=store_link&amp;utm_campaign=opencart_install" target="_BLANK" class="btn btn-default">{{ text_extension }}</a></div>
   <div class="mailing">
     <div class="row">
       <div class="col-sm-12"><i class="fa fa-envelope-o fa-5x"></i>
@@ -38,7 +38,7 @@
           <br/>
           <small>{{ text_mail_description }}</small>
         </h3>
-        <a href="http://newsletter.opencart.com/h/r/B660EBBE4980C85C" target="_BLANK" class="btn btn-secondary">{{ button_mail }}</a>
+        <button type="button" class="btn btn-secondary subscribe pull-right-md">{{ button_mail }}</button>
       </div>
     </div>
   </div>
@@ -65,4 +65,44 @@
     </div>
   </div>
 </div>
+
+<div id="modal-newsletter" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Sign up to our newsletter</h4>
+      </div>
+      <div class="modal-body">
+        <div id="mc_embed_shell">
+          <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+          <div id="mc_embed_signup">
+            <form action="https://opencart.us2.list-manage.com/subscribe/post?u=7682b9d9bc273d548837cfa79&amp;id=88ee7f5931&amp;f_id=00a853e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+              <div id="mc_embed_signup_scroll"><h2>Subscribe</h2>
+                <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+                <div class="mc-field-group"><label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div>
+                <div id="mce-responses" class="clearfalse">
+                  <div class="response" id="mce-error-response" style="display: none;"></div>
+                  <div class="response" id="mce-success-response" style="display: none;"></div>
+                </div>
+                <div aria-hidden="true" style="position: absolute; left: -5000px;"><input type="text" name="b_7682b9d9bc273d548837cfa79_88ee7f5931" tabindex="-1" value=""></div>
+                <div class="clear"><input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe"></div>
+             </div>
+           </form>
+          </div>
+        </div>    
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript"><!--
+$(document).ready(function() {
+    $('#modal-newsletter').hide();
+    $('.subscribe').on('click', function() {
+        $('#modal-newsletter').modal('show');
+    });
+});
+//--></script>
+
 {{ footer }}

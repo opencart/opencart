@@ -10,13 +10,19 @@ namespace Cache;
  */
 class APCu
 {
-    /** @var int ttl in seconds */
+    /**
+     * @var int ttl in seconds
+     */
     private $expire;
-
-    /** @var bool whether the cache is available */
+    
+    /**
+     * @var bool whether the cache is available
+     */
     private $active = false;
-
-    /** @var string key prefix */
+    
+    /**
+     * @var string key prefix
+     */
     private $prefix;
 
     /**
@@ -66,7 +72,7 @@ class APCu
      * We use the $success flag to distinguish these cases.
      *
      * @param string $key
-     * @return mixed|false
+     * @return false|mixed
      */
     public function get($key)
     {

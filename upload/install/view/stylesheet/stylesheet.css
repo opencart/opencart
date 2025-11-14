@@ -173,7 +173,7 @@ a.button, input.button {
     color: #FFF;
     font-size: 13px;
     border: 1px solid #78883C;
-    background: url('../image/button.png') repeat-x;
+    /*background: url('../image/button.png') repeat-x;*/
     text-shadow: 0px -1px #7A8A3D;
     -webkit-border-radius: 5px 5px 5px 5px;
     -moz-border-radius: 5px 5px 5px 5px;

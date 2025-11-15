@@ -1,4 +1,4 @@
-import { WebComponent } from './../webcomponent.js';
+import { WebComponent } from './../library/webcomponent.js';
 
 class XZone extends WebComponent {
     static observed = ['value'];

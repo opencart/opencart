@@ -1,19 +1,19 @@
 export default class Registry {
     data = [];
 
-    get (key) {
+    get(key) {
         return this.data[key];
     }
 
-    set (key, value) {
+    set(key, value) {
         this.data[key] = value;
     }
 
-    has (key) {
+    has(key) {
         return this.data[key] !== undefined;
     }
 
-    remove (key) {
+    remove(key) {
         delete this.data[key];
     }
 }

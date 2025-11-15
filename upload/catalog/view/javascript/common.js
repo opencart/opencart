@@ -1,15 +1,5 @@
 $(document).ready(async () => {
 
-    const loadScript = () => {
-        let script = document.createElement('script');
-
-        script.src = src;
-        script.onload = callback; // Execute callback after script loads
-        script.onerror = () => console.error(`Error loading script: ${src}`);
-
-        document.head.appendChild(script);
-    };
-
 /*
     const cart =
 
@@ -20,22 +10,6 @@ $(document).ready(async () => {
         'tax',
         ''
     }
-
-*/
-
-    //JSON.parse();
-
-
-    let response = await fetch('catalog/view/data/setting/setting.json');
-
-    if (response.status == 200) {
-        //const setting =
-    }
-
-    response.then((e) => {
-        console.log(e);
-
-    });
 
    // localStorage.setItem('setting', );
 
@@ -74,6 +48,9 @@ $(document).ready(async () => {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+
+
+ */
 });
 
 

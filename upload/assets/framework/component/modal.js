@@ -1,4 +1,4 @@
-import { WebComponent } from './../webcomponent.js';
+import { WebComponent } from './../library/webcomponent.js';
 
 class XModal extends WebComponent {
     data = {

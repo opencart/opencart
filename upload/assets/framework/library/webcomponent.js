@@ -1,4 +1,6 @@
-export default class WebComponent extends HTMLElement {
+import registry from './registry.js';
+
+export class WebComponent extends HTMLElement {
     registry = {};
     event = {
         connected: null,

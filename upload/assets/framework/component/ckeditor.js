@@ -1,4 +1,4 @@
-import { WebComponent } from './../webcomponent.js';
+import { WebComponent } from './../library/webcomponent.js';
 import CustomEditor from './../../ckeditor/ckeditor.js';
 
 class XCkeditor extends WebComponent {

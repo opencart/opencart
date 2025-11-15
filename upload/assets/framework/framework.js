@@ -1,31 +1,43 @@
 import Registry from './library/registry.js';
+import Loader from './library/loader.js';
 import Storage from './library/storage.js';
 import Language from './library/language.js';
 import Template from './library/template.js';
-import WebComponent from './library/webcomponent.js';
-import Cart from './library/cart.js';
-import Currency from './library/cart.js';
-import Tax from './library/tax.js';
 
-const registry = new Registry();
-
+// Base
 const base = new URL(document.querySelector('base').href);
 
-let language = document.querySelector('html').lang.toLowerCase();
+// lang
+let code = document.querySelector('html').lang.toLowerCase();
 
-registry.set('storage', new Storage('./catalog/view/data/' + base.host + '/' + language + '/'));
-registry.set('language', new Language('./catalog/view/language/' + base.host + '/' + language + '/'));
+const registry = new Registry();
+const loader = new Loader(registry);
+
+registry.set('load', loader);
+registry.set('storage', new Storage('./catalog/view/data/' + base.host + '/' + code + '/'));
+registry.set('language', new Language('./catalog/view/language/' + base.host + '/' + code + '/'));
 registry.set('template', new Template('./catalog/view/template/' + base.host + '/'));
 
-// Currency
-registry.set('currency', new Currency(registry));
+//loader.library('cart');
+//loader.library('tax');
+await loader.library('currency');
 
+console.log(registry);
 
+console.log(registry.get('currency').format(1.00, 'USD'));
+
+/*
 // Web Components
 document.addEventListener('DOMContentLoaded', () => {
-    import('./component/currency.js');
+    import('./component/alert.js');
+    import('./component/autocomplete.js');
+    import('./component/ckeditor.js');
     import('./component/country.js');
+    import('./component/currency.js');
+    import('./component/modal.js');
     import('./component/pagination.js');
     import('./component/switch.js');
+    import('./component/upload.js');
     import('./component/zone.js');
 });
+*/

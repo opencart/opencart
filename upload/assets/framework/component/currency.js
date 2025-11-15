@@ -1,7 +1,8 @@
-import { WebComponent } from './../framework.js';
+import { WebComponent } from './../library/webcomponent.js';
 
 class XCurrency extends WebComponent {
     static observed = ['code', 'amount', 'value'];
+    currency = []
     currencies = [];
 
     get code() {
@@ -62,6 +63,8 @@ class XCurrency extends WebComponent {
 
     event = {
         connected: async () => {
+            this.currency = this.registry.get('currency');
+
             this.addEventListener('[code]', this.event.format);
             this.addEventListener('[amount]', this.event.format);
             this.addEventListener('[value]', this.event.format);
@@ -75,47 +78,7 @@ class XCurrency extends WebComponent {
             this.currencies = currencies;
         },
         format: () => {
-            let string = '';
-
-            if (this.currencies[this.code]['symbol_left']) {
-               string += this.currencies[this.code]['symbol_left'];
-            } else {
-
-            }
-
-            let option = {
-                style: 'currency',
-                currency: this.code,
-                currencyDisplay: 'symbol',
-                currencySign: 'standard',
-                minimumIntegerDigits: 1,
-                minimumFractionDigits: this.decimal_place,
-            };
-
-            let formater = new Intl.NumberFormat(document.querySelector('html').lang, option);
-
-            let part = formater.formatToParts(this.amount * this.value);
-
-            let allowed = [
-                'minusSign',
-                'integer',
-                'group',
-                'decimal',
-                'fraction',
-                'literal'
-            ];
-
-            for (let i = 0; i < part.length; i++) {
-                if (allowed.includes(part[i].type)) {
-                    string += part[i].value;
-                }
-            }
-
-            if (this.symbol_right) {
-                string += this.symbol_right;
-            }
-
-            this.innerHTML = string;
+            this.innerHTML = this.currency.format(this.value, this.code);
         }
     };
 }

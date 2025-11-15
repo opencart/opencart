@@ -1,100 +1,41 @@
-import { registry } from './../framework.js';
-
 class Currency {
-    currencies = [];
+    static currencies = [];
 
-    get code() {
-        return this.getAttribute('code');
+    constructor(currencies) {
+        this.currencies = currencies;
     }
 
-    set code(code) {
-        this.setAttribute('code', code);
-    }
-
-    get amount() {
-        return parseFloat(this.getAttribute('amount'));
-    }
-
-    set amount(amount) {
-        this.setAttribute('amount', amount);
-    }
-
-    get symbol_left() {
-        if (this.currencies[this.code]) {
-            return this.currencies[this.code]['symbol_left'];
-        } else {
-            return '';
-        }
-    }
-
-    get symbol_right() {
-        if (this.currencies[this.code]) {
-            return this.currencies[this.code]['symbol_right'];
-        } else {
-            return '';
-        }
-    }
-
-    get decimal_place() {
-        if (this.currencies[this.code]) {
-            return this.currencies[this.code]['decimal_place'];
-        } else {
-            return 2;
-        }
-    }
-
-    get value() {
-        if (this.hasAttribute('value')) {
-            return parseFloat(this.getAttribute('value')).toFixed(this.decimal_place);
-        }
-
-        if (this.currencies[this.code]) {
-            return this.currencies[this.code]['value'];
-        } else {
-            return 1.00000;
-        }
-    }
-
-    set value(value) {
-        this.setAttribute('value', value);
-    }
-
-    constructor(registry) {
-        this.storage = registry.get('storage');
-
-        let response = this.storage.fetch('localisation/currency');
-
-        this.currencies = response.then((currencies) => {
-            return currencies;
-        });
-    }
-
-    format = (number, currency, value = 0, format = true) => {
-        if (this.currencies[currency] == undefined) {
+    format(number, code, value = 0, format = true) {
+        if (this.currencies[code] == undefined) {
             return number;
         }
 
-        let symbol_left = this.currencies[this.code]['symbol_left'];
-        let symbol_right = this.currencies[this.code]['symbol_right'];
-        let decimal_place = this.currencies[this.code]['decimal_place'];
+        value = parseFloat(value ? value : this.currencies[code].value);
 
+        let symbol_left = this.currencies[code].symbol_left;
+        let symbol_right = this.currencies[code].symbol_right;
+        let decimal_place = this.currencies[code].decimal_place;
+
+        let amount = parseFloat(number).toFixed(decimal_place);
 
         let option = {
             style: 'currency',
-            currency: this.code,
+            currency: code,
             currencyDisplay: 'symbol',
             currencySign: 'standard',
             minimumIntegerDigits: 1,
-            minimumFractionDigits: this.decimal_place,
+            minimumFractionDigits: decimal_place,
         };
 
         let string = '';
 
-        string += this.currencies[this.code]['symbol_left'];
+        if (symbol_left) {
+            string += symbol_left;
+        }
 
         let formater = new Intl.NumberFormat(document.querySelector('html').lang, option);
 
-        let part = formater.formatToParts(this.amount * this.value);
+        let part = formater.formatToParts(amount * value);
 
         let allowed = [
             'minusSign',
@@ -111,46 +52,44 @@ class Currency {
             }
         }
 
-        if (this.symbol_right) {
-            string += this.symbol_right;
+        if (symbol_right) {
+            string += symbol_right;
         }
 
-        this.innerHTML = string;
-
-
+        return string;
     }
 
-    event = {
-        connected: async () => {
-            this.addEventListener('[code]', this.event.format);
-            this.addEventListener('[amount]', this.event.format);
-            this.addEventListener('[value]', this.event.format);
+    convert(value, from, to) {
+        let from_value = 1;
+        let to_value = 1;
 
-            let response = this.storage.fetch('localisation/currency');
-
-            response.then(this.event.onloaded);
-            response.then(this.event.format);
-        },
-        onloaded: (currencies) => {
-            this.currencies = currencies;
-        },
-        format: () => {
-            let string = '';
-
-            if (this.symbol_left) {
-                string += this.symbol_left;
-            }
-
-            let option = {
-                style: 'currency',
-                currency: this.code,
-                currencyDisplay: 'symbol',
-                currencySign: 'standard',
-                minimumIntegerDigits: 1,
-                minimumFractionDigits: this.decimal_place,
-            };
-
-            let formater = new Intl.NumberFormat(document.querySelector('html').lang, option);
+        if (this.currencies[from] !== undefined) {
+            from_value = this.currencies[from].value;
         }
-    };
+
+        if (this.currencies[to] !== undefined) {
+            to = this.currencies[to].value;
+        }
+
+        return value * (to_value / from_value);
+    }
 }
+
+const test = {
+    currencies: [],
+    onload: async (registry) => {
+
+       console.log(test);
+
+        let response = registry.get('storage').fetch('localisation/currency');
+
+        test.currencies = await response.then((json) => {
+            return json;
+        });
+    },
+    factory: (registry) => {
+        return new Currency(test.currencies);
+    }
+};
+
+export default test;

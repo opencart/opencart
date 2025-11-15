@@ -16,7 +16,7 @@ export default class Storage {
         let response = await fetch(this.path + filename + '.json');
 
         if (response.status == 200) {
-            let json = response.json();
+            let json = await response.json();
 
             this.data[key] = json;
 

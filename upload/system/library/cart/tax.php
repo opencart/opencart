@@ -198,6 +198,8 @@ class Tax {
 
 		if (isset($this->tax_rates[$tax_class_id])) {
 			foreach ($this->tax_rates[$tax_class_id] as $tax_rate) {
+
+
 				if (isset($tax_rate_data[$tax_rate['tax_rate_id']])) {
 					$amount = $tax_rate_data[$tax_rate['tax_rate_id']]['amount'];
 				} else {

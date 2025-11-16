@@ -23,22 +23,16 @@ export default class Loader {
             return this.registry.get(key);
         }
 
-        let response = import('./' + key + '.js');
+        let response = await import('./' + key + '.js');
 
-        let object = await response.then((object) => {
-            return object.default;
-        });
+        if (response.getInstance !== undefined) {
+            let object = await response.getInstance(this.registry);
 
-        if (object.onload !== undefined) {
-            await object.onload(this.registry);
-        }
+            this.registry.set(key, object);
 
-        if (object.factory !== undefined) {
-            let test = object.factory(this.registry);
-
-            this.registry.set(key, test);
-
-            return test;
+            return object;
+        } else {
+            console.log('Error: No factory method to return class');
         }
 
         return null;

@@ -12,6 +12,8 @@ export class WebComponent extends HTMLElement {
     constructor() {
         super();
 
+        console.log(this)
+
         this.registry = registry;
     }
 

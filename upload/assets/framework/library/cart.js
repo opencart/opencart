@@ -1,3 +1,9 @@
+export const getInstance = (async (registry) => {
+    let currencies = await registry.get('storage').fetch('localisation/currency');
+
+    return new Cart(currencies);
+});
+
 export default class Cart {
     path = '';
     data = [];
@@ -18,12 +24,11 @@ export default class Cart {
         response.then(this.onloaded);
     }
 
-    add = () => {
+    add() {
 
     }
 
-    remove = () => {
+    remove() {
 
     }
-
 }

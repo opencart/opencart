@@ -26,18 +26,20 @@ console.log(registry);
 
 console.log(registry.get('currency').format(1.00, 'USD'));
 
-/*
+console.log(customElements);
+
+export { registry };
+
 // Web Components
 document.addEventListener('DOMContentLoaded', () => {
     import('./component/alert.js');
-    import('./component/autocomplete.js');
-    import('./component/ckeditor.js');
+    //import('./component/autocomplete.js');
+    //import('./component/ckeditor.js');
     import('./component/country.js');
     import('./component/currency.js');
-    import('./component/modal.js');
+    //import('./component/modal.js');
     import('./component/pagination.js');
     import('./component/switch.js');
     import('./component/upload.js');
     import('./component/zone.js');
 });
-*/

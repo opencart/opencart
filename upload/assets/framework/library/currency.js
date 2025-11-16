@@ -1,3 +1,9 @@
+export const getInstance = (async (registry) => {
+    let currencies = await registry.get('storage').fetch('localisation/currency');
+
+    return new Currency(currencies);
+});
+
 class Currency {
     static currencies = [];
 
@@ -74,22 +80,3 @@ class Currency {
         return value * (to_value / from_value);
     }
 }
-
-const test = {
-    currencies: [],
-    onload: async (registry) => {
-
-       console.log(test);
-
-        let response = registry.get('storage').fetch('localisation/currency');
-
-        test.currencies = await response.then((json) => {
-            return json;
-        });
-    },
-    factory: (registry) => {
-        return new Currency(test.currencies);
-    }
-};
-
-export default test;

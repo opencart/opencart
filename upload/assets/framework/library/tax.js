@@ -1,3 +1,9 @@
+export const getInstance = (async (registry) => {
+    let tax_classes = await registry.get('storage').fetch('localisation/tax_class');
+
+    return new Tax(tax_classes);
+});
+
 export default class Tax {
     data = [];
 

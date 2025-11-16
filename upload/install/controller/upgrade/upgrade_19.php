@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
- * Class Upgrade18
+ * Class Upgrade19
  *
  * @package Opencart\Install\Controller\Upgrade
  */
@@ -17,10 +17,6 @@ class Upgrade19 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-
-
-
-
 
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());

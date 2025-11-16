@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
- * Class Upgrade16
+ * Class Upgrade17
  *
  * @package Opencart\Install\Controller\Upgrade
  */

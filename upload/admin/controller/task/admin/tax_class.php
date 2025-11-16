@@ -16,12 +16,12 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/admin/order_status');
+		$this->load->language('task/admin/tax_class');
 
 		// Clear old data
 		$task_data = [
-			'code'   => 'order_status',
-			'action' => 'task/admin/order_status.clear',
+			'code'   => 'tax_class',
+			'action' => 'task/admin/tax_class.clear',
 			'args'   => []
 		];
 
@@ -36,8 +36,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		foreach ($languages as $language) {
 			$task_data = [
-				'code'   => 'order_status',
-				'action' => 'task/admin/order_status.list',
+				'code'   => 'tax_class',
+				'action' => 'task/admin/tax_class.list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 
@@ -57,7 +57,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
-		$this->load->language('task/admin/order_status');
+		$this->load->language('task/admin/tax_class');
 
 		if (!array_key_exists('language_id', $args)) {
 			return ['error' => $this->language->get('error_language')];
@@ -71,23 +71,104 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$this->load->model('localisation/order_status');
+		$this->load->model('setting/task');
 
-		$order_statuses = $this->model_localisation_order_status->getOrderStatuses(['filter_language_id' => $language_info['language_id']]);
+		$this->load->model('localisation/tax_class');
+
+		$tax_classes = $this->model_localisation_tax_class->getTaxClasses();
+
+		foreach ($tax_classes as $tax_class) {
+			$task_data = [
+				'code'   => 'tax_class',
+				'action' => 'task/admin/tax_class.list',
+				'args'   => [
+					'tax_class_id' => $tax_class['tax_class_id'],
+					'language_id'  => $language_info['language_id']
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/localisation/';
-		$filename = 'order_status.json';
+		$filename = 'tax_class.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($order_statuses))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($tax_classes))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+	}
+
+
+	/**
+	 * Info
+	 *
+	 * Generate JSON customer group information file.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
+	public function info(array $args = []): array {
+		$this->load->language('task/admin/tax_class');
+
+		$required = [
+			'tax_class_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
+
+		// Language
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
+		}
+
+		$this->load->model('localisation/tax_class');
+
+		$tax_class_info = $this->model_localisation_tax_class->getTaxClass((int)$args['tax_class_id']);
+
+		if (!$tax_class_info) {
+			return ['error' => $this->language->get('error_tax_class')];
+		}
+
+		$filter_data = [
+			'filter_customer_group_id' => $customer_group_info['customer_group_id'],
+			'filter_language_id'       => $language_info['language_id'],
+			'filter_Status'            => true
+		];
+
+		$this->load->model('customer/custom_field');
+
+		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
+
+		$base = DIR_APPLICATION . 'view/data/';
+		$directory = $language_info['code'] . '/customer/';
+		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
+
+		if (!oc_directory_create($base . $directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_info + $description_info + ['custom_field' => $custom_fields]))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $customer_group_info['name'])];
 	}
 
 	/**
@@ -107,7 +188,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/order_status.json';
+			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/tax_class.json';
 
 			if (is_file($file)) {
 				unlink($file);

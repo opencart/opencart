@@ -105,7 +105,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
 
-
 	/**
 	 * Info
 	 *
@@ -147,24 +146,22 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		}
 
 		$filter_data = [
-			'filter_customer_group_id' => $customer_group_info['customer_group_id'],
+			'filter_customer_group_id' => $tax_class_info['tax_class_id'],
 			'filter_language_id'       => $language_info['language_id'],
 			'filter_Status'            => true
 		];
 
-		$this->load->model('customer/custom_field');
-
-		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
+		$tax_rules = $this->model_localisation_tax_class->getTaxRules($filter_data);
 
 		$base = DIR_APPLICATION . 'view/data/';
 		$directory = $language_info['code'] . '/customer/';
-		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
+		$filename = 'tax_class-' . $tax_class_info['tax_class_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_info + $description_info + ['custom_field' => $custom_fields]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_info + $description_info + ['tax_rate' => $tax_rates]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

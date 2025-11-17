@@ -1,6 +1,8 @@
 import Registry from './library/registry.js';
 import Loader from './library/loader.js';
 import Storage from './library/storage.js';
+import Session from './library/session.js';
+import Local from './library/local.js';
 import Language from './library/language.js';
 import Template from './library/template.js';
 

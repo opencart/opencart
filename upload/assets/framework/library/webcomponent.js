@@ -1,4 +1,4 @@
-import registry from './registry.js';
+import registry from './framework.js';
 
 export class WebComponent extends HTMLElement {
     registry = {};

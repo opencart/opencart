@@ -1,4 +1,5 @@
-export default class Registry {
+class Registry {
+    static #instance = null;
     data = [];
 
     get(key) {
@@ -16,4 +17,16 @@ export default class Registry {
     remove(key) {
         delete this.data[key];
     }
+
+    static getInstance() {
+        if (!this.#instance) {
+            this.#instance = new Registry();
+        }
+
+        return this.#instance;
+    }
 }
+
+const registry = Registry.getInstance();
+
+export { registry };

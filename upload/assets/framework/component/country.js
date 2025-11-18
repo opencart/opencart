@@ -1,6 +1,6 @@
 import { WebComponent } from './../library/webcomponent.js';
 
-class XCountry extends WebComponent {
+export default class XCountry extends WebComponent {
     static observed = ['value', 'postcode'];
     default = HTMLInputElement;
     element = HTMLInputElement;
@@ -101,5 +101,3 @@ class XCountry extends WebComponent {
         }
     };
 }
-
-customElements.define('x-country', XCountry);

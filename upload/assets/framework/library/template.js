@@ -1,6 +1,7 @@
 import '../liquid.browser.umd.js';
 
-export default class Template {
+class Template {
+    static #instance = null;
     engine = {};
 
     constructor() {
@@ -13,4 +14,16 @@ export default class Template {
     async render(path, data) {
         return this.engine.renderFile('./template/' + path, data);
     }
+
+    static getInstance() {
+        if (!Template.#instance) {
+            Template.#instance = new Template();
+        }
+
+        return Template.#instance;
+    }
 }
+
+const template = Template.getInstance();
+
+export { template };

@@ -1,6 +1,6 @@
 import { WebComponent } from './../library/webcomponent.js';
 
-class XSwitch extends WebComponent {
+export default class XSwitch extends WebComponent {
     static observed = ['checked'];
     element = HTMLInputElement;
 
@@ -43,5 +43,3 @@ class XSwitch extends WebComponent {
         }
     };
 }
-
-customElements.define('x-switch', XSwitch);

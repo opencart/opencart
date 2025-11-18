@@ -1,4 +1,6 @@
-export default class local {
+class Local {
+    static #instance = null;
+
     get(key) {
         return localStorage.getItem(key);
     }
@@ -16,6 +18,18 @@ export default class local {
     }
 
     clear() {
-        Storage.clear();
+        localStorage.clear();
+    }
+
+    static getInstance() {
+        if (!Local.#instance) {
+            Local.#instance = new Local();
+        }
+
+        return Local.#instance;
     }
 }
+
+const local = Local.getInstance();
+
+export { local };

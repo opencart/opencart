@@ -1,6 +1,4 @@
-import { WebComponent } from './../library/webcomponent.js';
-
-class XUpload extends WebComponent {
+export default class XUpload extends WebComponent {
     static observed = ['checked'];
     element = HTMLInputElement;
 
@@ -91,8 +89,6 @@ class XUpload extends WebComponent {
         }
     };
 }
-
-customElements.define('x-switch', XSwitch);
 
 
 

@@ -1,6 +1,6 @@
 import { WebComponent } from './../library/webcomponent.js';
 
-class XZone extends WebComponent {
+export default class XZone extends WebComponent {
     static observed = ['value'];
     default = HTMLInputElement;
     element = HTMLInputElement;
@@ -85,5 +85,3 @@ class XZone extends WebComponent {
         }
     };
 }
-
-customElements.define('x-zone', XZone);

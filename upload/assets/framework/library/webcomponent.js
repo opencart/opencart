@@ -1,7 +1,9 @@
-import registry from './framework.js';
+import { registry } from './../framework.js';
+
+console.log(registry);
 
 export class WebComponent extends HTMLElement {
-    registry = {};
+    static registry = {};
     event = {
         connected: null,
         disconnected: null,
@@ -9,12 +11,17 @@ export class WebComponent extends HTMLElement {
         changed: null
     };
 
-    constructor() {
+    constructor(registry) {
         super();
 
-        console.log(this)
+        console.log(this);
+        console.log(registry);
 
-        this.registry = registry;
+       // if (!) {
+            this.registry = registry;
+        //} else {
+
+        //}
     }
 
     get storage() {

@@ -1,17 +1,35 @@
-export default class Session {
+class Session {
+    static #instance = null;
+
     get(key) {
-        return Storage.getItem(key);
+        return sessionStorage.getItem(key);
     }
 
     set(key, value) {
-        Storage.setItem(key, value);
+        sessionStorage.setItem(key, value);
     }
 
     has(key) {
-        return Storage.getItem(key) !== null;
+        return sessionStorage.getItem(key) !== null;
     }
 
     remove(key) {
-        Storage.removeItem(key);
+        sessionStorage.removeItem(key);
+    }
+
+    clear() {
+        sessionStorage.clear();
+    }
+
+    static getInstance() {
+        if (!Session.#instance) {
+            Session.#instance = new Session();
+        }
+
+        return Session.#instance;
     }
 }
+
+const session = Session.getInstance();
+
+export { session };

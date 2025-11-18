@@ -1,6 +1,6 @@
 import { WebComponent } from './../library/webcomponent.js';
 
-class XCurrency extends WebComponent {
+export default class XCurrency extends WebComponent {
     static observed = ['code', 'amount', 'value'];
     currency = []
     currencies = [];
@@ -82,5 +82,3 @@ class XCurrency extends WebComponent {
         }
     };
 }
-
-customElements.define('x-currency', XCurrency);

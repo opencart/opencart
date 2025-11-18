@@ -1,6 +1,4 @@
-import { WebComponent } from './../library/webcomponent.js';
-
-class XCart extends WebComponent {
+export default class XCart extends WebComponent {
     element = HTMLInputElement;
     data = [];
 
@@ -116,5 +114,3 @@ class XCart extends WebComponent {
         }
     };
 }
-
-customElements.define('x-cart', XCart);

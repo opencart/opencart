@@ -1,4 +1,5 @@
-export default class Storage {
+class Storage {
+    static #instance = null;
     path = '';
     data = [];
 
@@ -27,4 +28,16 @@ export default class Storage {
             return [];
         }
     }
+
+    static getInstance() {
+        if (!Storage.#instance) {
+            Storage.#instance = new Storage();
+        }
+
+        return Storage.#instance;
+    }
 }
+
+const storage = Storage.getInstance();
+
+export { storage };

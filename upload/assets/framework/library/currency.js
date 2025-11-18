@@ -1,10 +1,5 @@
-export const getInstance = (async (registry) => {
-    let currencies = await registry.get('storage').fetch('localisation/currency');
-
-    return new Currency(currencies);
-});
-
 class Currency {
+    static #instance = null;
     static currencies = [];
 
     constructor(currencies) {
@@ -79,4 +74,18 @@ class Currency {
 
         return value * (to_value / from_value);
     }
+
+    static async getInstance(registry) {
+        let currencies = await registry.get('storage').fetch('localisation/currency');
+
+        if (!this.#instance) {
+            this.#instance = new Currency(currencies);
+        }
+
+        return this.#instance;
+    }
 }
+
+const currency = await Currency.getInstance(registry);
+
+export { currency };

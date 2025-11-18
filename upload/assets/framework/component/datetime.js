@@ -1,6 +1,6 @@
 import { WebComponent } from './../library/webcomponent.js';
 
-class XCurrency extends WebComponent {
+class XDatetime extends WebComponent {
     static observed = ['format', 'value'];
 
     get format() {

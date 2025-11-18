@@ -1,6 +1,6 @@
 import { WebComponent } from './../library/webcomponent.js';
 
-class XPagination extends WebComponent {
+export default class XPagination extends WebComponent {
     href = '';
     target = '';
     limit = 10;
@@ -128,5 +128,3 @@ class XPagination extends WebComponent {
         }
     };
 }
-
-customElements.define('x-pagination', XPagination);

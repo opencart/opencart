@@ -1,6 +1,6 @@
 import { WebComponent } from './../library/webcomponent.js';
 
-class XAlert extends WebComponent {
+export default class XAlert extends WebComponent {
     event = {
         connected: async () => {
             let icon = '';
@@ -47,5 +47,3 @@ class XAlert extends WebComponent {
         }
     }
 }
-
-customElements.define('x-alert', XAlert);

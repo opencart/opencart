@@ -1,4 +1,5 @@
-export default class Language {
+class Language {
+    static #instance = null;
     path = '';
     data = [];
 
@@ -16,7 +17,7 @@ export default class Language {
         let response = await fetch(this.path + filename + '.json');
 
         if (response.status == 200) {
-            let json = response.json();
+            let json = await response.json();
 
             this.data[key] = json;
 
@@ -27,4 +28,22 @@ export default class Language {
             return [];
         }
     }
+
+    static getInstance() {
+        if (!Language.#instance) {
+            // Base
+            const base = new URL(document.querySelector('base').href);
+
+            // lang
+            let code = document.querySelector('html').lang.toLowerCase();
+
+            Language.#instance = new Language('./catalog/view/language/' + base.host + '/' + code + '/');
+        }
+
+        return Language.#instance;
+    }
 }
+
+const language = Language.getInstance();
+
+export { language };

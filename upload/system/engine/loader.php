@@ -71,6 +71,9 @@ class Loader {
 		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', str_replace('|', '.', $route));
 
 		$trigger = $route;
+		
+		// Trigger the pre events
+		$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
 		$pos = strrpos($route, '.');
 
@@ -84,39 +87,36 @@ class Loader {
 
 		// Stop any magical methods being called
 		if (substr($method, 0, 2) == '__') {
-			return new \Exception('Error: Calls to magic methods are not allowed!');
-		}
-
-		// Create a new key to store the model object
-		$key = 'fallback_controller_' . str_replace('/', '_', $controller);
-
-		if (!$this->registry->has($key)) {
-			$object = $this->factory->controller($controller);
+			$output = new \Exception('Error: Calls to magic methods are not allowed!');
 		} else {
-			$object = $this->registry->get($key);
-		}
+			// Create a new key to store the model object
+			$key = 'fallback_controller_' . str_replace('/', '_', $controller);
 
-		if ($object instanceof \Opencart\System\Engine\Controller) {
-			$this->registry->set($key, $object);
-		} else {
+			if (!$this->registry->has($key)) {
+				$object = $this->factory->controller($controller);
+			} else {
+				$object = $this->registry->get($key);
+			}
+
 			// If action cannot be executed, we return an error object.
-			return new \Exception('Error: Could not load controller ' . $controller . '!');
+			if (!$object instanceof \Opencart\System\Engine\Controller) {
+				$output = new \Exception('Error: Could not load controller ' . $controller . '!');
+			} else {
+				$this->registry->set($key, $object);
+				
+				$callable = [$object, $method];
+
+				// If action cannot be executed, we return an action error object.
+				if (!is_callable($callable)) {
+					$output = new \Exception('Error: Could not call controller ' . $route . '!');
+				} else {
+					$output = $callable(...$args);
+				}
+			}
 		}
 
-		$callable = [$object, $method];
-
-		if (is_callable($callable)) {
-			// Trigger the pre events
-			$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
-
-			$output = $callable(...$args);
-
-			// Trigger the post events
-			$this->event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
-		} else {
-			// If action cannot be executed, we return an action error object.
-			return new \Exception('Error: Could not call controller ' . $route . '!');
-		}
+		// Trigger the post events
+		$this->event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 
 		return $output;
 	}

@@ -39,7 +39,7 @@ class Api
     }
 
     /**
-     * The standard error message from guzzle is quite poor in informations,
+     * The standard error message from guzzle is quite poor in information,
      * this will give little bit more sense to it and return it.
      *
      * @return \Exception

@@ -46,6 +46,10 @@ class Language extends \Opencart\System\Engine\Controller {
 		$data = $this->language->all();
 
 		if ($data) {
+			if (array_key_exists('backup', $data)) {
+				unset($data['backup']);
+			}
+
 			$this->language->set('backup', json_encode($data));
 		}
 	}

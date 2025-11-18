@@ -72,6 +72,9 @@ class Loader {
 
 		$trigger = $route;
 
+		// Trigger the pre events
+		$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+
 		$pos = strrpos($route, '.');
 
 		if ($pos !== false) {
@@ -106,9 +109,6 @@ class Loader {
 		$callable = [$object, $method];
 
 		if (is_callable($callable)) {
-			// Trigger the pre events
-			$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
-
 			$output = $callable(...$args);
 
 			// Trigger the post events

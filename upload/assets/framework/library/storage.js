@@ -1,5 +1,5 @@
-class Storage {
-    static #instance = null;
+export default class Storage {
+    static instance = null;
     path = '';
     data = [];
 
@@ -29,15 +29,11 @@ class Storage {
         }
     }
 
-    static getInstance() {
-        if (!Storage.#instance) {
-            Storage.#instance = new Storage();
+    static getInstance(registry) {
+        if (!this.instance) {
+            this.instance = new Storage(registry.config.get('storage_path'));
         }
 
-        return Storage.#instance;
+        return this.instance;
     }
 }
-
-const storage = Storage.getInstance();
-
-export { storage };

@@ -1,8 +1,8 @@
 import { WebComponent } from './../library/webcomponent.js';
 
-export default class XCurrency extends WebComponent {
+class XCurrency extends WebComponent {
     static observed = ['code', 'amount', 'value'];
-    currency = []
+    currency = null;
     currencies = [];
 
     get code() {
@@ -63,7 +63,7 @@ export default class XCurrency extends WebComponent {
 
     event = {
         connected: async () => {
-            this.currency = this.registry.get('currency');
+            this.currency = this.registry.currency;
 
             this.addEventListener('[code]', this.event.format);
             this.addEventListener('[amount]', this.event.format);
@@ -82,3 +82,5 @@ export default class XCurrency extends WebComponent {
         }
     };
 }
+
+customElements.define('x-currency', XCurrency);

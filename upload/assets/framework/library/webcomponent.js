@@ -1,9 +1,7 @@
-import { registry } from './../framework.js';
-
-console.log(registry);
+import { registry } from './../library/registry.js';
 
 export class WebComponent extends HTMLElement {
-    static registry = {};
+    static registry = null;
     event = {
         connected: null,
         disconnected: null,
@@ -11,29 +9,22 @@ export class WebComponent extends HTMLElement {
         changed: null
     };
 
-    constructor(registry) {
+    constructor() {
         super();
 
-        console.log(this);
-        console.log(registry);
-
-       // if (!) {
-            this.registry = registry;
-        //} else {
-
-        //}
+        this.registry = registry;
     }
 
     get storage() {
-        return this.registry.get('storage');
+        return this.registry.storage;
     }
 
     get template() {
-        return this.registry.get('template');
+        return this.registry.template;
     }
 
     get language() {
-        return this.registry.get('language');
+        return this.registry.language;
     }
 
     connectedCallback() {

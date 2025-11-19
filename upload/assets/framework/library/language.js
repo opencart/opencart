@@ -1,5 +1,5 @@
-class Language {
-    static #instance = null;
+export default class Language {
+    static instance = null;
     path = '';
     data = [];
 
@@ -29,21 +29,11 @@ class Language {
         }
     }
 
-    static getInstance() {
-        if (!Language.#instance) {
-            // Base
-            const base = new URL(document.querySelector('base').href);
-
-            // lang
-            let code = document.querySelector('html').lang.toLowerCase();
-
-            Language.#instance = new Language('./catalog/view/language/' + base.host + '/' + code + '/');
+    static getInstance(registry) {
+        if (!this.instance) {
+            this.instance = new Language(registry.config.get('language_path'));
         }
 
-        return Language.#instance;
+        return this.instance;
     }
 }
-
-const language = Language.getInstance();
-
-export { language };

@@ -1,4 +1,4 @@
-export default class XUpload extends WebComponent {
+class XUpload extends WebComponent {
     static observed = ['checked'];
     element = HTMLInputElement;
 
@@ -90,7 +90,7 @@ export default class XUpload extends WebComponent {
     };
 }
 
-
+customElements.define('x-upload', XUpload);
 
 // Upload
 $(document).on('click', '[data-oc-toggle=\'upload\']', function() {

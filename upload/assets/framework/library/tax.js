@@ -1,15 +1,9 @@
-export const tax = (async (registry) => {
-
-    let tax_classes = await registry.get('storage').fetch('localisation/tax_class');
-
-    return new Tax(tax_classes);
-});
-
 export default class Tax {
+
     data = [];
 
     constructor(registry) {
-        this.storage = registry.get('storage');
+        this.storage = registry.storage;
     }
 
     calculate(value = 0.00, tax_class_id = 0, calculate = true) {
@@ -73,6 +67,16 @@ export default class Tax {
     }
 
     clear() {
-        data = [];
+        this.data = [];
+    }
+
+    static async getInstance(registry) {
+        if (!this.instance) {
+            let tax_classes = await registry.storage.fetch('localisation/tax_class');
+
+            this.instance = new Tax(tax_classes);
+        }
+
+        return this.instance;
     }
 }

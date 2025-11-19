@@ -1,12 +1,12 @@
-class Session {
-    static #instance = null;
+export default class Session {
+    static instance = null;
 
     get(key) {
-        return sessionStorage.getItem(key);
+        return JSON.parse(sessionStorage.getItem(key));
     }
 
     set(key, value) {
-        sessionStorage.setItem(key, value);
+        sessionStorage.setItem(key, JSON.stringify(value));
     }
 
     has(key) {
@@ -22,14 +22,10 @@ class Session {
     }
 
     static getInstance() {
-        if (!Session.#instance) {
-            Session.#instance = new Session();
+        if (!this.instance) {
+            this.instance = new Session();
         }
 
-        return Session.#instance;
+        return this.instance;
     }
 }
-
-const session = Session.getInstance();
-
-export { session };

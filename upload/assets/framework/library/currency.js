@@ -1,5 +1,5 @@
-class Currency {
-    static #instance = null;
+export default class Currency {
+    static instance = null;
     static currencies = [];
 
     constructor(currencies) {
@@ -25,7 +25,7 @@ class Currency {
             currencyDisplay: 'symbol',
             currencySign: 'standard',
             minimumIntegerDigits: 1,
-            minimumFractionDigits: decimal_place,
+            minimumFractionDigits: decimal_place
         };
 
         let string = '';
@@ -76,16 +76,12 @@ class Currency {
     }
 
     static async getInstance(registry) {
-        let currencies = await registry.get('storage').fetch('localisation/currency');
+        if (!this.instance) {
+            let currencies = await registry.storage.fetch('localisation/currency');
 
-        if (!this.#instance) {
-            this.#instance = new Currency(currencies);
+            this.instance = new Currency(currencies);
         }
 
-        return this.#instance;
+        return this.instance;
     }
 }
-
-const currency = await Currency.getInstance(registry);
-
-export { currency };

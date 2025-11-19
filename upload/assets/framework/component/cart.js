@@ -114,3 +114,4 @@ export default class XCart extends WebComponent {
         }
     };
 }
+

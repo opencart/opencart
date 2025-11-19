@@ -1,7 +1,7 @@
 import '../liquid.browser.umd.js';
 
-class Template {
-    static #instance = null;
+export default class Template {
+    static instance = null;
     engine = {};
 
     constructor() {
@@ -15,15 +15,11 @@ class Template {
         return this.engine.renderFile('./template/' + path, data);
     }
 
-    static getInstance() {
-        if (!Template.#instance) {
-            Template.#instance = new Template();
+    static getInstance(registry) {
+        if (!this.instance) {
+            this.instance = new Template(registry.config.get('template_path'));
         }
 
-        return Template.#instance;
+        return this.instance;
     }
 }
-
-const template = Template.getInstance();
-
-export { template };

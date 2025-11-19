@@ -1,5 +1,7 @@
+import { registry } from './registry.js';
+
 export class Loader {
-    static #instance = null;
+    static instance = null;
     registry = null;
     data = [];
 
@@ -7,56 +9,41 @@ export class Loader {
         this.registry = registry;
     }
 
-    storage(path) {
-        return this.registry.get('storage').fetch(path);
+    async storage(path) {
+        return await this.registry.storage.fetch(path);
     }
 
-    language(path) {
-        return this.registry.get('language').fetch(path);
+    async language(path) {
+        return await this.registry.language.fetch(path);
     }
 
-    template(path, data) {
-        return this.registry.get('template').render(path, data);
+    async template(path, data) {
+        return await this.registry.template.render(path, data);
     }
 
     async library(key) {
-        console.log(key);
-        console.log(this.registry);
-
-
-        //if (this.registry.has(key)) {
-         //   return this.registry.get(key);
-       // }
+        if (this.registry[key] !== undefined) {
+            return;
+        }
 
         let response = await import('./' + key + '.js');
 
-        console.log(response);
-
-
-
-        if (response.getInstance !== undefined) {
-            let object = await response.getInstance(this.registry);
-
-
-            this.registry.set(key, object);
-
-            return object;
+        if (response.default.getInstance !== undefined) {
+            this.registry[key] = await response.default.getInstance(this.registry);
         } else {
-            console.log('Error: No factory method to return class');
+            console.log('Error: Library ' + key + ' does not exist!');
         }
-
-        return null;
     }
 
-    static getInstance() {
-        if (!this.#instance) {
-            this.#instance = new Loader('dfdf');
+    static getInstance(registry) {
+        if (!this.instance) {
+            this.instance = new Loader(registry);
         }
 
-        return this.#instance;
+        return this.instance;
     }
 }
 
-const loader = Loader.getInstance();
+const loader = Loader.getInstance(registry);
 
-export { loader };
+export { loader, registry };

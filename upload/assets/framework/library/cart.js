@@ -1,34 +1,30 @@
-export const getInstance = (async (registry) => {
-    let currencies = await registry.get('storage').fetch('localisation/currency');
-
-    return new Cart(currencies);
-});
-
 export default class Cart {
-    path = '';
     data = [];
 
     constructor(registry) {
-        this.storage = registry.get('storage');
-        this.language = registry.get('language');
-        this.tax = registry.get('tax');
+        this.config = registry.config;
+        this.language = registry.language;
+        this.tax = registry.tax;
+        this.session = registry.session;
 
-        //$this->config = $registry->get('config');
-        //$this->customer = $registry->get('customer');
-        //$this->session = $registry->get('session');
-        //$this->tax = $registry->get('tax');
-        //$this->weight = $registry->get('weight');
+        this.customer = this.session.get('customer');
 
-        let response = this.storage.fetch('localisation/currency');
-
-        response.then(this.onloaded);
+        this.data = this.session.get('cart');
     }
 
-    add() {
-
+    add(item) {
+        this.data = item;
     }
 
     remove() {
+        return this.data
+    }
 
+    static async getInstance(registry) {
+        if (!this.instance) {
+            this.instance = new Cart(registry);
+        }
+
+        return this.instance;
     }
 }

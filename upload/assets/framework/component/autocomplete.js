@@ -1,0 +1,1 @@
+customElements.define('x-autocomplete', XAutocomplete);

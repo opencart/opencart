@@ -1,12 +1,12 @@
 <footer id="footer">{{ text_footer }}
   <br/>{{ text_version }}</footer>
 </div>
-<script type="text/javascript" src="../assets/jquery/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="view/javascript/common.js"></script>
+<script src="./view/javascript/framework.js" type="module"></script>
+<script src="../assets/jquery/jquery-3.7.1.min.js" type="text/javascript"></script>
+<script src="../assets/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="view/javascript/common.js" type="text/javascript"></script>
 {% for script in scripts %}
-  <script type="text/javascript" src="{{ script.href }}"></script>
+  <script src="{{ script.href }}" type="text/javascript"></script>
 {% endfor %}
-<script type="module" src="../assets/framework/framework.js"></script>
 </body>
 </html>

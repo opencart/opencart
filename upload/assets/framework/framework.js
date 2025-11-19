@@ -23,7 +23,6 @@ await loader.library('tax');
 await loader.library('currency');
 
 // Web Components
-import('./component/currency.js');
 import('./component/alert.js');
 //import('./component/autocomplete.js');
 //import('./component/ckeditor.js');
@@ -34,9 +33,5 @@ import('./component/pagination.js');
 import('./component/switch.js');
 //import './component/upload.js';
 import('./component/zone.js');
-
-console.log(registry);
-
-console.log(registry.currency.format(1.00, 'USD'));
 
 export { registry };

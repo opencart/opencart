@@ -15,6 +15,10 @@ class Store extends \Opencart\System\Engine\Controller {
 	 * model/setting/store/editStore
 	 * model/setting/store/deleteStore
 	 *
+     * model/setting/store/addStore
+	 * model/setting/store/editStore
+	 * model/setting/store/deleteStore
+	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
 	 * @param mixed             $output
@@ -22,6 +26,11 @@ class Store extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
+
+
+
+
+
 		$task_data = [
 			'code'   => 'store',
 			'action' => 'task/admin/store',

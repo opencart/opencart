@@ -144,7 +144,7 @@ make up profiles="adminer redis memcached"
 
 ```bash
 # Lint PHP syntax (all PHP versions)
-find upload -name "*.php" ! -path 'upload/system/storage/vendor/*' -exec php -l {} +
+find upload -type f -name "*.php" ! -path 'upload/system/storage/vendor/*' -exec php -l -n {} +
 
 # Install dependencies
 composer install

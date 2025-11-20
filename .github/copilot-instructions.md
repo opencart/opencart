@@ -225,9 +225,9 @@ class Product extends \Opencart\System\Engine\Controller {
 ```
 
 **Controller return types**:
-- `void` or `null` - Normal execution (output already set)
-- `Action` - Redirect to another controller
-- `Exception` - Framework catches and routes to error controller
+- `void` or `null` - Normal execution (output already set via `$this->response->setOutput()`)
+- `Action` - Return a new Action object to redirect execution to another controller
+- Controllers can also return Exception objects (not throw them) which the framework converts to error actions
 
 ### Model Patterns
 

@@ -309,10 +309,10 @@ extension/opencart/              # Extension code (e.g., 'opencart', 'myextensio
 ### Module-specific guidance
 
 - Follow the [Developing Modules guide](https://docs.opencart.com/en-gb/developer/module/) when structuring admin/catalog directories; each module keeps `controller/`, `model/`, `language/`, `view/` under `admin/` and `catalog/`.
-- Admin controllers live in `admin/controller/extension/module/` and automatically appear on **Extensions → Modules** when their filenames match the module route (e.g., `my_module.php` for route `extension/module/my_module`).
+- Admin controllers live in `extension/{code}/admin/controller/module/` and automatically appear on **Extensions → Modules** when their filenames match the module route (e.g., `account.php` for route `module/account`).
 - Implement `install()`/`uninstall()` methods on the admin controller to seed/clean extra DB tables or settings; the installer/uninstaller links trigger those methods.
-- Views are `.twig` templates under `admin/view/template/extension/module/` (or `module/` in legacy modules); language keys loaded in the controller become `$data['text_*']` for the template.
-- Front-end controllers go under `catalog/controller/extension/module/` and receive `$settings` when invoked from layouts; their view templates live inside `catalog/view/theme/<theme>/template/extension/module/` so reuse core helpers/models (e.g., `catalog/model/catalog/product`) instead of duplicating SQL.
+- Views are `.twig` templates under `extension/{code}/admin/view/template/module/`; language keys loaded in the controller become `$data['text_*']` for the template.
+- Front-end controllers go under `extension/{code}/catalog/controller/module/` and receive `$settings` when invoked from layouts; their view templates live inside `extension/{code}/catalog/view/template/module/` so reuse core helpers/models (e.g., `catalog/model/catalog/product`) instead of duplicating SQL.
 - Use `$this->config->get('module_my_module_status')` and the `$settings` array passed to `index()` to honor stored options; persist admin form submissions with `model_setting_setting->editSetting()` instead of manual SQL.
 - Give each controller an `index()` accessible via `/admin/index.php?route=extension/module/my_module&user_token=...`; respond with `$this->response->setOutput($this->load->view(...))` and keep `$this->language->get('text_*')` for UI text.
 

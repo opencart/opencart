@@ -36,11 +36,11 @@ If you are not sure about your issue, it is always best to ask the community on 
 
 ## How to contribute
 
-Fork the repository, edit and [submit a pull request](https://github.com/opencart/opencart/wiki/Creating-a-pull-request).
+Read the full [CONTRIBUTING guide](CONTRIBUTING.md) for environment setup, coding standards, and pull-request expectations.
 
-Please be very clear on your commit messages and pull request, empty pull request messages may be rejected without reason.
+Fork the repository, make your changes, and [submit a pull request](https://github.com/opencart/opencart/wiki/Creating-a-pull-request). Please be explicit in commit and PR descriptions—empty or unclear messages may be rejected.
 
-Your code standards should match the [OpenCart coding standards](https://github.com/opencart/opencart/wiki/Coding-standards). We use an automated code scanner to check for most basic mistakes - if the test fails your pull request will be rejected.
+Your code must follow the [OpenCart coding standards](https://github.com/opencart/opencart/wiki/Coding-standards). Our automated scanners (syntax lint, PHPStan, php-cs-fixer) must pass before a PR can be merged.
 
 ## Local Development with Docker
 

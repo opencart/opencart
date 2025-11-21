@@ -1,9 +1,9 @@
 export default class Tax {
+    static instance = null;
+    static tax_classes = [];
 
-    data = [];
-
-    constructor(registry) {
-        this.storage = registry.storage;
+    constructor(tax_classes) {
+        this.tax_classes = tax_classes;
     }
 
     calculate(value = 0.00, tax_class_id = 0, calculate = true) {
@@ -37,11 +37,11 @@ export default class Tax {
     getRates(value, tax_class_id) {
         let tax_rate_data = [];
 
-        if (this.data[tax_class_id] == undefined) {
+        if (this.tax_classes[tax_class_id] == undefined) {
             return [];
         }
 
-        for (let [i, tax_rate] in this.data[tax_class_id].entries()) {
+        for (let [i, tax_rate] in this.tax_classes[tax_class_id].entries()) {
             let amount = 0;
 
             if (tax_rate_data[tax_rate.tax_rate_id]) {

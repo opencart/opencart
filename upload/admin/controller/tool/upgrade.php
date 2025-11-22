@@ -53,8 +53,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-		curl_close($curl);
-
 		if ($status == 200) {
 			$response_info = json_decode($response, true);
 		} else {
@@ -136,8 +134,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			if ($status != 200) {
 				$json['error'] = $this->language->get('error_download');
 			}
-
-			curl_close($curl);
 		}
 
 		if (!$json) {

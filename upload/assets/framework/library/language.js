@@ -1,3 +1,5 @@
+import { registry } from './registry.js';
+
 export default class Language {
     static instance = null;
     path = '';
@@ -37,3 +39,5 @@ export default class Language {
         return this.instance;
     }
 }
+
+registry.language = Language.getInstance(registry);

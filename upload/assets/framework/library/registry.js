@@ -1,4 +1,4 @@
-class Registry {
+export class Registry {
     static instance = null;
 
     static getInstance() {

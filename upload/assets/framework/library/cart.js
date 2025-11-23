@@ -1,3 +1,5 @@
+import { registry } from './registry.js';
+
 export default class Cart {
     data = [];
 
@@ -28,3 +30,5 @@ export default class Cart {
         return this.instance;
     }
 }
+
+registry.cart = Cart.getInstance(registry);

@@ -1,3 +1,5 @@
+import { registry } from './registry.js';
+
 export default class Db {
     static instance = null;
     db = null;
@@ -40,6 +42,14 @@ export default class Db {
 
     }
 
+    addTable() {
+
+    }
+
+    deleteTable () {
+
+    }
+
     get() {
 
     }
@@ -52,3 +62,5 @@ export default class Db {
         return this.instance;
     }
 }
+
+registry.db = await Db.getInstance();

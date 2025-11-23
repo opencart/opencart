@@ -1,8 +1,100 @@
+import { registry } from './../../../assets/framework/framework.js';
+
+// Library
+import './library/config.js';
+
+// Base
+registry.config.set('base', new URL(document.querySelector('base').href));
+
+// lang
+registry.config.set('language', document.querySelector('html').lang.toLowerCase());
+
+
+registry.config.set('storage_path', './catalog/view/data/' + base.host + '/');
+registry.config.set('language_path', './catalog/view/language/' + base.host + '/' + code + '/');
+registry.config.set('template_path', './catalog/view/template/' + base.host + '/');
+
+// Library
+import './library/storage.js';
+import './library/language.js';
+import './library/template.js';
+import './library/url.js';
+import './library/session.js';
+import './library/local.js';
+import './library/cart.js';
+import './library/tax.js';
+import './library/currency.js';
+
+
+console.log(registry.url.query.get('route'));
+
+// Web Components
+import('./component/alert.js');
+//import('./component/autocomplete.js');
+//import('./component/ckeditor.js');
+import('./component/country.js');
+import('./component/currency.js');
+//import './component/modal.js';
+import('./component/pagination.js');
+import('./component/switch.js');
+//import './component/upload.js';
+import('./component/zone.js');
+
+// Currency
+registry.local.get('currency');
+
+
+
+const currency = async () => {
+    let form = document.getElementById('form-currency');
+
+    console.log(form);
+
+    let elements = form.querySelectorAll('a');
+
+    elements.forEach((element) => {
+
+    });
+
+    currency.addEventListener('click', async (e) => {
+        let element = this;
+
+        let code = $(element).attr('href');
+
+        registry.local.set('currency', code);
+    });
+
+    const currencies = await registry.storage.fetch('localisation/currency');
+
+};
+
+currency();
+
+// Language
+let form_language = document.getElementById('form-language');
+
+const language = form.querySelectorAll('a');
+
+document.addEventListener('DOMContentLoaded', async (e) => {
+    let element = this;
+
+    registry.local.set('language', code);
+
+    language.addEventListener('click', async (e) => {
+        let element = this;
+
+        let code = $(element).attr('href');
+
+        registry.local.set('currency', code);
+    });
+
+});
+
+
+
+
 $(document).ready(async () => {
-
-/*
-    const cart =
-
+    /*
     let loader = {
         'setting'    => 'setting',
         'currencies' => '',
@@ -10,10 +102,6 @@ $(document).ready(async () => {
         'tax',
         ''
     }
-
-   // localStorage.setItem('setting', );
-
-
 
     $.ajax({
         url: 'catalog/view/data/setting/setting.json',
@@ -23,90 +111,14 @@ $(document).ready(async () => {
             // Replace any form values that correspond to form names.
             //for (key in json) {
                 //$(element).find('[name=\'' + key + '\']').val(json[key]);
-           // }
+            //}
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-
-
-
-
-
-    $.ajax({
-        url: 'catalog/view/data/localisation/currency.json',
-        dataType: 'json',
-        success: function (json, textStatus) {
-
-            // Replace any form values that correspond to form names.
-            for (key in json) {
-                $(element).find('[name=\'' + key + '\']').val(json[key]);
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-
-
- */
+    */
 });
-
-
-
-// Retrieve currency from local storage
-let json = localStorage.getItem('currency');
-
-// Check if currency exists
-if (!json) {
-    // Use the currency value as needed
-    //const currency = parse(json);
-} else {
-
-
-
-    sessionStorage.setItem('currency', 'USD');
-
-    console.log('No currency found in session storage');
-    // Set a default currency or prompt user
-
-
-}
-
-let currency = localStorage.getItem('currency');
-
-// Currency
-$('#form-currency .dropdown-item').on('click', function(e) {
-    e.preventDefault();
-
-    $('#form-currency input[name=\'code\']').val($(this).attr('href'));
-
-    let currencies = [];
-
-    localStorage.setItem('currency');
-
-
-});
-
-// Local Storage
-if (currency == undefined) {
-
-}
-
-
-
-
-// Store a simple currency string
-sessionStorage.setItem('currency', 'USD');
-
-// Or store a currency object
-const currencyObj = { code: 'USD', symbol: '$' };
-
-
-sessionStorage.setItem('currency', JSON.stringify(currencyObj));
-
-
 
 $(document).ready(function() {
     // Tooltip
@@ -130,7 +142,6 @@ $(document).ready(function() {
 
 });
 
-
 $(document).ready(function() {
     // Observe
     +function($) {
@@ -152,9 +163,6 @@ $(document).ready(function() {
             });
         }, 3000);
     });
-
-
-
 
     // Button
     +function($) {
@@ -497,16 +505,6 @@ var chain = new Chain();
 $(document).ready(function() {
 
 
-
-    // Language
-    $('#form-language .dropdown-item').on('click', function(e) {
-        e.preventDefault();
-
-        $('#form-language input[name=\'code\']').val($(this).attr('href'));
-
-        $('#form-language').submit();
-    });
-
     // Product List
     $('#button-list').on('click', function() {
         var element = this;
@@ -560,30 +558,4 @@ $(document).ready(function() {
         });
     });
 
-    // Cookie Policy
-    $('#cookie button').on('click', function() {
-        var element = this;
-
-        $.ajax({
-            url: $(this).val(),
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function() {
-                $(element).button('loading');
-            },
-            complete: function() {
-                $(element).button('reset');
-            },
-            success: function(json) {
-                if (json['success']) {
-                    $('#cookie').fadeOut(400, function() {
-                        $('#cookie').remove();
-                    });
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
 });

@@ -1,3 +1,5 @@
+import { registry } from './registry.js';
+
 export default class Tax {
     static instance = null;
     static tax_classes = [];
@@ -80,3 +82,5 @@ export default class Tax {
         return this.instance;
     }
 }
+
+registry.tax = Tax.getInstance(registry);

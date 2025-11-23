@@ -1,3 +1,5 @@
+import { registry } from './registry.js';
+
 export default class Currency {
     static instance = null;
     static currencies = [];
@@ -85,3 +87,5 @@ export default class Currency {
         return this.instance;
     }
 }
+
+registry.currency = await Currency.getInstance(registry);

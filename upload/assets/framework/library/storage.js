@@ -1,3 +1,5 @@
+import { registry } from './registry.js';
+
 export default class Storage {
     static instance = null;
     path = '';
@@ -37,3 +39,5 @@ export default class Storage {
         return this.instance;
     }
 }
+
+registry.storage = Storage.getInstance(registry);

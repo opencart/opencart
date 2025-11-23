@@ -1,3 +1,5 @@
+import { registry } from './registry.js';
+
 export default class Config {
     static instance = null;
     data = [];
@@ -38,3 +40,5 @@ export default class Config {
         return this.instance;
     }
 }
+
+registry.config = Config.getInstance();

@@ -43,9 +43,6 @@ export default class XCart extends WebComponent {
 
             //console.log(this.data);
         },
-        dfredf: () => {
-
-        },
         render: (json) => {
             //console.log(this.storage);
             //console.log(this.data);

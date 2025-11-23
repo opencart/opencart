@@ -1,4 +1,7 @@
+import { registry } from './../../../assets/framework/framework.js';
+
 $('#form-login').on('submit', function(e) {
+
     e.preventDefault();
 
     var element = this;
@@ -26,14 +29,12 @@ $('#form-login').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-               sessionStorage.setItem('customer', json['customer'].toJSON());
-
-               $('#address').load('index.php?route=account/address.list&language=' + language + '&customer_token={{ customer_token }}');
+               session.set('customer_token', json['customer_token']);
             }
 
 
             if (json['redirect']) {
-                location = json['redirect'];
+                //location = json['redirect'];
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

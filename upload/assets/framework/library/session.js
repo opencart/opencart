@@ -1,3 +1,5 @@
+import { registry } from './registry.js';
+
 export default class Session {
     static instance = null;
 
@@ -29,3 +31,5 @@ export default class Session {
         return this.instance;
     }
 }
+
+registry.session = Session.getInstance();

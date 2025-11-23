@@ -1,32 +1,10 @@
-const url = new URLSearchParams(document.location.search);
+import { registry } from './../../../assets/framework/framework.js';
 
-console.log(url.get('route'));
-console.log(url.get('user_token'));
-console.log(url.get('customer_id'));
+registry.config.set('storage_path', './view/data/' + base.host + '/');
+registry.config.set('language_path', './view/language/' + base.host + '/' + code + '/');
+registry.config.set('template_path', './view/template/' + base.host + '/');
 
-function getURLVar(key) {
-    var value = [];
-
-    var query = String(document.location).split('?');
-
-    if (query[1]) {
-        var part = query[1].split('&');
-
-        for (i = 0; i < part.length; i++) {
-            var data = part[i].split('=');
-
-            if (data[0] && data[1]) {
-                value[data[0]] = data[1];
-            }
-        }
-
-        if (value[key]) {
-            return value[key];
-        } else {
-            return '';
-        }
-    }
-}
+console.log(registry.currency.format(1.00, 'USD'));
 
 function decodeHTMLEntities(html) {
     var d = document.createElement('div');

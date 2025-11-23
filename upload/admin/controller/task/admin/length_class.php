@@ -29,20 +29,14 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		// Generate new data
-		$this->load->model('localisation/language');
+		// Create new data
+		$task_data = [
+			'code'   => 'length_class',
+			'action' => 'task/admin/length_class.list',
+			'args'   => []
+		];
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($languages as $language) {
-			$task_data = [
-				'code'   => 'length_class',
-				'action' => 'task/admin/length_class.list',
-				'args'   => ['language_id' => $language['language_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
+		$this->model_setting_task->addTask($task_data);
 
 		return ['success' => $this->language->get('text_task')];
 	}
@@ -59,35 +53,28 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/length_class');
 
-		if (!array_key_exists('language_id', $args)) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
-
-		if (!$language_info) {
-			return ['error' => $this->language->get('error_language')];
-		}
+		$length_class_data = [];
 
 		$this->load->model('localisation/length_class');
 
-		$length_classes = $this->model_localisation_length_class->getLengthClasses(['filter_language_id' => $language_info['language_id']]);
+		$length_classes = $this->model_localisation_length_class->getLengthClasses();
 
-		$base = DIR_APPLICATION . 'view/data/';
-		$directory = $language_info['code'] . '/localisation/';
+		foreach ($length_classes as $length_class) {
+			$length_class_data[] = $length_class + ['description' => $this->model_localisation_length_class->getDescriptions($length_class['length_class_id'])];
+		}
+
+		$directory = DIR_APPLICATION . 'view/data/localisation/';
 		$filename = 'length_class.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($length_classes))) {
+		if (!file_put_contents($directory . $filename, json_encode($length_class_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 	/**
@@ -102,16 +89,10 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/length_class');
 
-		$this->load->model('localisation/language');
+		$file = DIR_APPLICATION . 'view/data/localisation/length_class.json';
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/length_class.json';
-
-			if (is_file($file)) {
-				unlink($file);
-			}
+		if (is_file($file)) {
+			unlink($file);
 		}
 
 		return ['success' => $this->language->get('text_clear')];

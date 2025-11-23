@@ -1,3 +1,4 @@
+import { registry } from './registry.js';
 import '../liquid.browser.umd.js';
 
 export default class Template {
@@ -23,3 +24,5 @@ export default class Template {
         return this.instance;
     }
 }
+
+registry.template = Template.getInstance(registry);

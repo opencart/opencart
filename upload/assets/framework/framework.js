@@ -1,26 +1,24 @@
+import { registry } from './library/registry.js';
+
 // Library
-import { registry, loader } from './library/loader.js';
+import './library/config.js';
 
 // Base
-const base = new URL(document.querySelector('base').href);
+registry.config.set('base', new URL(document.querySelector('base').href));
 
 // lang
-let code = document.querySelector('html').lang.toLowerCase();
+registry.config.set('language', document.querySelector('html').lang.toLowerCase());
 
-await loader.library('config');
-
-registry.config.set('storage_path', './catalog/view/data/' + base.host + '/' + code + '/');
-registry.config.set('language_path', './catalog/view/language/' + base.host + '/' + code + '/');
-registry.config.set('template_path', './catalog/view/template/' + base.host + '/');
-
-await loader.library('storage');
-await loader.library('language');
-await loader.library('template');
-await loader.library('session');
-await loader.library('local');
-await loader.library('cart');
-await loader.library('tax');
-await loader.library('currency');
+// Library
+import './library/storage.js';
+import './library/language.js';
+import './library/template.js';
+import './library/url.js';
+import './library/session.js';
+import './library/local.js';
+import './library/cart.js';
+import './library/tax.js';
+import './library/currency.js';
 
 // Web Components
 import('./component/alert.js');

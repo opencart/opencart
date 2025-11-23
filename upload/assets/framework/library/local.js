@@ -1,3 +1,5 @@
+import { registry } from './registry.js';
+
 export default class Local {
     static instance = null;
 
@@ -29,3 +31,5 @@ export default class Local {
         return this.instance;
     }
 }
+
+registry.local = Local.getInstance();

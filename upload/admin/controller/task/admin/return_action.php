@@ -29,20 +29,14 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		// Generate new data
-		$this->load->model('localisation/language');
+		// Create new data
+		$task_data = [
+			'code'   => 'return_action',
+			'action' => 'task/admin/return_action.list',
+			'args'   => []
+		];
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($languages as $language) {
-			$task_data = [
-				'code'   => 'return_action',
-				'action' => 'task/admin/return_action.list',
-				'args'   => ['language_id' => $language['language_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
+		$this->model_setting_task->addTask($task_data);
 
 		return ['success' => $this->language->get('text_task')];
 	}
@@ -59,35 +53,28 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/return_action');
 
-		if (!array_key_exists('language_id', $args)) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
-
-		if (!$language_info) {
-			return ['error' => $this->language->get('error_language')];
-		}
+		$return_action_data = [];
 
 		$this->load->model('localisation/return_action');
 
-		$return_actions = $this->model_localisation_return_action->getReturnActions(['filter_language_id' => $language_info['language_id']]);
+		$return_actions = $this->model_localisation_return_action->getReturnActions();
 
-		$base = DIR_APPLICATION . 'view/data/';
-		$directory = $language_info['code'] . '/localisation/';
+		foreach ($return_actions as $return_action) {
+			$return_action_data[] = $return_action + ['description' => $this->model_localisation_return_action->getDescriptions($return_action['return_action_id'])];
+		}
+
+		$directory = DIR_APPLICATION . 'view/data/localisation/';
 		$filename = 'return_action.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($return_actions))) {
+		if (!file_put_contents($directory . $filename, json_encode($return_action_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 	/**
@@ -102,16 +89,10 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/return_action');
 
-		$this->load->model('localisation/language');
+		$file = DIR_APPLICATION . 'view/data/localisation/return_action.json';
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/return_action.json';
-
-			if (is_file($file)) {
-				unlink($file);
-			}
+		if (is_file($file)) {
+			unlink($file);
 		}
 
 		return ['success' => $this->language->get('text_clear')];

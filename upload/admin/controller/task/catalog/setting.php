@@ -127,12 +127,15 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$config = [];
 
-		$config['storage_path'] = '';
-		$config['language_path'] = '';
-		$config['template_path'] = '';
-
 		$config['name'] = $store_info['name'];
 		$config['store_url'] = '';
+
+		// Hostname
+		$hostname = parse_url($store_info['url'], PHP_URL_HOST);
+
+		$config['storage_path'] = 'catalog/view/data/' . $hostname  . '/' . $language_info['code']  . '/';
+		$config['language_path'] = 'catalog/view/language/' . $hostname  . '/' . $language_info['code']  . '/';
+		$config['template_path'] = 'catalog/view/template/';
 
 		$config['theme'] = $setting_info['config_theme'];
 
@@ -143,33 +146,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$config['currency'] = (int)$currency_info['code'];
 
 		$config['pagination'] = (int)$setting_info['config_pagination'];
+
+		$config['customer_group_id'] = (int)$setting_info['config_customer_group_id'];
+
 		$config['tax'] = (int)$setting_info['config_tax'];
-
-
-
-		$capture = [
-			'store_id',
-			'config_name',
-			'config_logo',
-			'config_icon',
-			'config_theme',
-			'config_country_id',
-			'config_zone_id',
-			'config_timezone',
-			'config_length_class_id',
-			'config_weight_class_id',
-
-			'config_language_catalog',
-			'config_currency',
-			'config_pagination',
-
-			'config_tax',
-
-			'config_tax_default',
-			'config_tax_customer',
-
-			'config_customer_group_id'
-		];
+		$config['tax_default'] = $setting_info['config_tax_default'];
+		$config['tax_customer'] = $setting_info['config_tax_customer'];
 
 		$base = DIR_CATALOG . 'view/data/';
 
@@ -180,7 +162,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		if (!file_put_contents($base . $filename, json_encode($setting_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $filename)];
 		}
-
 
 		return ['success' => sprintf($this->language->get('text_list'), $setting_info['name'])];
 	}

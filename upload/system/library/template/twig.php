@@ -34,7 +34,7 @@ final class Twig {
 
 			return $twig->render($filename . '.twig', $this->data);
 		} catch (\Exception $e) {
-			trigger_error('Error: Could not load template ' . $filename . '! ' . $e->getMessage() );
+			trigger_error('Error: Could not load template ' . $filename . '! ' . $e->getMessage());
 			exit();
 		}	
 	}	

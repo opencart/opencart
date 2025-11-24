@@ -168,7 +168,7 @@ class ModelUpgrade1010 extends Model {
 			$sql .= "  `roas` INT(11) NOT NULL DEFAULT '0',";
 			$sql .= "  PRIMARY KEY (`advertise_google_target_id`),";
 			$sql .= "  KEY `store_id` (`store_id`)";
-			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 			$this->db->query( $sql );
 		}
 		$query = $this->db->query("SHOW TABLES LIKE '".DB_PREFIX."googleshopping_category';");
@@ -179,7 +179,7 @@ class ModelUpgrade1010 extends Model {
 			$sql .= "  `category_id` int(11) NOT NULL,";
 			$sql .= "  PRIMARY KEY (`google_product_category`,`store_id`),";
 			$sql .= "  KEY `category_id_store_id` (`category_id`,`store_id`)";
-			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 			$this->db->query( $sql );
 		}
 		$this->db->query("ALTER TABLE `".DB_PREFIX."event` MODIFY `sort_order` int(3) NOT NULL DEFAULT '0';");
@@ -256,7 +256,7 @@ class ModelUpgrade1010 extends Model {
 			$sql .= "  `is_modified` tinyint(1) NOT NULL DEFAULT '0',";
 			$sql .= "  PRIMARY KEY (`product_advertise_google_id`),";
 			$sql .= "  UNIQUE KEY `product_id_store_id` (`product_id`,`store_id`)";
-			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 			$this->db->query( $sql );
 		}
 		$query = $this->db->query("SHOW TABLES LIKE '".DB_PREFIX."googleshopping_product_status';");
@@ -270,7 +270,7 @@ class ModelUpgrade1010 extends Model {
 			$sql .= "  `item_level_issues` text NOT NULL,";
 			$sql .= "  `google_expiration_date` int(11) NOT NULL DEFAULT '0',";
 			$sql .= "  PRIMARY KEY (`product_id`,`store_id`,`product_variation_id`)";
-			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 			$this->db->query( $sql );
 		}
 		$query = $this->db->query("SHOW TABLES LIKE '".DB_PREFIX."googleshopping_product_target';");
@@ -280,7 +280,7 @@ class ModelUpgrade1010 extends Model {
 			$sql .= "  `store_id` int(11) NOT NULL DEFAULT '0',";
 			$sql .= "  `advertise_google_target_id` int(11) UNSIGNED NOT NULL,";
 			$sql .= "  PRIMARY KEY (`product_id`,`advertise_google_target_id`)";
-			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 			$this->db->query( $sql );
 		}
 		$query = $this->db->query("SHOW TABLES LIKE '".DB_PREFIX."session';");
@@ -290,7 +290,7 @@ class ModelUpgrade1010 extends Model {
 			$sql .= "  `data` text NOT NULL,";
 			$sql .= "  `expire` datetime NOT NULL,";
 			$sql .= "  PRIMARY KEY (`session_id`)";
-			$sql .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$sql .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 			$this->db->query( $sql );
 		}
 		$this->db->query("UPDATE `".DB_PREFIX."setting` SET `code`='total_voucher' WHERE `code`='voucher';");
@@ -454,6 +454,9 @@ class ModelUpgrade1010 extends Model {
 		$this->deleteEntry($dir_opencart.'/system/library/db/postgre.php');
 		$this->deleteEntry($dir_opencart.'/system/library/template/Twig');
 		$this->deleteEntry($dir_opencart.'/system/vendor');
+
+		// upgrade to character set to utf8mb4 and collation to utf8mb4_unicode_ci
+		$this->upgradeCharacterSetAndCollation();
 	}
 
 	private function removeByName(string $dir,string $name): bool {
@@ -706,4 +709,171 @@ class ModelUpgrade1010 extends Model {
 		return (substr( $haystack, strlen($haystack)-strlen($needle), strlen($needle) ) == $needle);
 	}
 
+	private function startsWith( string $haystack, string $needle ): bool {
+		if (strlen( $haystack ) < strlen( $needle )) {
+			return false;
+		}
+		return (substr( $haystack, 0, strlen($needle) ) == $needle);
+	}
+
+	private function upgradeCharacterSetAndCollation(): void {
+		// List of standard OpenCart DB tables
+		$tables = array(
+			DB_PREFIX.'address',
+			DB_PREFIX.'googleshopping_target',
+			DB_PREFIX.'api',
+			DB_PREFIX.'api_ip',
+			DB_PREFIX.'api_session',
+			DB_PREFIX.'attribute',
+			DB_PREFIX.'attribute_description',
+			DB_PREFIX.'attribute_group',
+			DB_PREFIX.'attribute_group_description',
+			DB_PREFIX.'banner',
+			DB_PREFIX.'banner_image',
+			DB_PREFIX.'cart',
+			DB_PREFIX.'category',
+			DB_PREFIX.'category_description',
+			DB_PREFIX.'category_filter',
+			DB_PREFIX.'category_path',
+			DB_PREFIX.'googleshopping_category',
+			DB_PREFIX.'category_to_layout',
+			DB_PREFIX.'category_to_store',
+			DB_PREFIX.'country',
+			DB_PREFIX.'coupon',
+			DB_PREFIX.'coupon_category',
+			DB_PREFIX.'coupon_history',
+			DB_PREFIX.'coupon_product',
+			DB_PREFIX.'currency',
+			DB_PREFIX.'customer',
+			DB_PREFIX.'customer_activity',
+			DB_PREFIX.'customer_affiliate',
+			DB_PREFIX.'customer_approval',
+			DB_PREFIX.'customer_group',
+			DB_PREFIX.'customer_group_description',
+			DB_PREFIX.'customer_history',
+			DB_PREFIX.'customer_login',
+			DB_PREFIX.'customer_ip',
+			DB_PREFIX.'customer_online',
+			DB_PREFIX.'customer_reward',
+			DB_PREFIX.'customer_transaction',
+			DB_PREFIX.'customer_search',
+			DB_PREFIX.'customer_wishlist',
+			DB_PREFIX.'custom_field',
+			DB_PREFIX.'custom_field_customer_group',
+			DB_PREFIX.'custom_field_description',
+			DB_PREFIX.'custom_field_value',
+			DB_PREFIX.'custom_field_value_description',
+			DB_PREFIX.'download',
+			DB_PREFIX.'download_description',
+			DB_PREFIX.'event',
+			DB_PREFIX.'extension',
+			DB_PREFIX.'extension_install',
+			DB_PREFIX.'extension_path',
+			DB_PREFIX.'filter',
+			DB_PREFIX.'filter_description',
+			DB_PREFIX.'filter_group',
+			DB_PREFIX.'filter_group_description',
+			DB_PREFIX.'geo_zone',
+			DB_PREFIX.'information',
+			DB_PREFIX.'information_description',
+			DB_PREFIX.'information_to_layout',
+			DB_PREFIX.'information_to_store',
+			DB_PREFIX.'language',
+			DB_PREFIX.'layout',
+			DB_PREFIX.'layout_module',
+			DB_PREFIX.'layout_route',
+			DB_PREFIX.'length_class',
+			DB_PREFIX.'length_class_description',
+			DB_PREFIX.'location',
+			DB_PREFIX.'manufacturer',
+			DB_PREFIX.'manufacturer_to_store',
+			DB_PREFIX.'marketing',
+			DB_PREFIX.'modification',
+			DB_PREFIX.'module',
+			DB_PREFIX.'option',
+			DB_PREFIX.'option_description',
+			DB_PREFIX.'option_value',
+			DB_PREFIX.'option_value_description',
+			DB_PREFIX.'order',
+			DB_PREFIX.'order_history',
+			DB_PREFIX.'order_option',
+			DB_PREFIX.'order_product',
+			DB_PREFIX.'order_recurring',
+			DB_PREFIX.'order_recurring_transaction',
+			DB_PREFIX.'order_status',
+			DB_PREFIX.'order_total',
+			DB_PREFIX.'order_voucher',
+			DB_PREFIX.'product',
+			DB_PREFIX.'googleshopping_product',
+			DB_PREFIX.'googleshopping_product_status',
+			DB_PREFIX.'googleshopping_product_target',
+			DB_PREFIX.'product_attribute',
+			DB_PREFIX.'product_description',
+			DB_PREFIX.'product_discount',
+			DB_PREFIX.'product_filter',
+			DB_PREFIX.'product_image',
+			DB_PREFIX.'product_option',
+			DB_PREFIX.'product_option_value',
+			DB_PREFIX.'product_recurring',
+			DB_PREFIX.'product_related',
+			DB_PREFIX.'product_reward',
+			DB_PREFIX.'product_special',
+			DB_PREFIX.'product_to_category',
+			DB_PREFIX.'product_to_download',
+			DB_PREFIX.'product_to_layout',
+			DB_PREFIX.'product_to_store',
+			DB_PREFIX.'recurring',
+			DB_PREFIX.'recurring_description',
+			DB_PREFIX.'return',
+			DB_PREFIX.'return_action',
+			DB_PREFIX.'return_history',
+			DB_PREFIX.'return_reason',
+			DB_PREFIX.'return_status',
+			DB_PREFIX.'review',
+			DB_PREFIX.'statistics',
+			DB_PREFIX.'session',
+			DB_PREFIX.'setting',
+			DB_PREFIX.'stock_status',
+			DB_PREFIX.'store',
+			DB_PREFIX.'tax_class',
+			DB_PREFIX.'tax_rate',
+			DB_PREFIX.'tax_rate_to_customer_group',
+			DB_PREFIX.'tax_rule',
+			DB_PREFIX.'theme',
+			DB_PREFIX.'translation',
+			DB_PREFIX.'upload',
+			DB_PREFIX.'seo_url',
+			DB_PREFIX.'user',
+			DB_PREFIX.'user_group',
+			DB_PREFIX.'voucher',
+			DB_PREFIX.'voucher_history',
+			DB_PREFIX.'voucher_theme',
+			DB_PREFIX.'voucher_theme_description',
+			DB_PREFIX.'weight_class',
+			DB_PREFIX.'weight_class_description',
+			DB_PREFIX.'zone',
+			DB_PREFIX.'zone_to_geo_zone'
+		);
+
+		// Change the default character set and collation for the database
+		$this->db->query("ALTER DATABASE `".DB_DATABASE."` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;");
+
+		// Get the old collations from existing DB tables
+		$query = $this->db->query("SHOW TABLE STATUS FROM `".DB_DATABASE."` WHERE `Name` LIKE '".DB_PREFIX."%';");
+		$old_collations = array();
+		foreach ($query->rows as $row) {
+			$old_collations[$row['Name']] = $row['Collation'];
+		}
+
+		// Convert standard OpenCart DB tables to new character set and collation
+		foreach ($tables as $table) {
+			if (array_key_exists($table,$old_collations)) {
+				$old_collation = $old_collations[$table];
+				if (!$this->startsWith($old_collation,'utf8mb4_')) {
+					// convert table to character set 'utf8mb4' and collation 'utf8mb4_unicode_ci'
+					$this->db->query("ALTER TABLE `$table` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+				}
+			}
+		}
+	}
 }

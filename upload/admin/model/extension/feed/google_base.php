@@ -6,7 +6,7 @@ class ModelExtensionFeedGoogleBase extends Model {
 				`google_base_category_id` INT(11) NOT NULL AUTO_INCREMENT,
 				`name` varchar(255) NOT NULL,
 				PRIMARY KEY (`google_base_category_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		");
 
 		$this->db->query("
@@ -14,7 +14,7 @@ class ModelExtensionFeedGoogleBase extends Model {
 				`google_base_category_id` INT(11) NOT NULL,
 				`category_id` INT(11) NOT NULL,
 				PRIMARY KEY (`google_base_category_id`, `category_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		");
 	}
 

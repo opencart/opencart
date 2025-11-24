@@ -107,7 +107,7 @@ class ModelExtensionPaymentCardinity extends Model {
                 `payment_id` VARCHAR(255),
                 `payment_status` VARCHAR(255),
                 PRIMARY KEY (`cardinity_order_id`)
-                ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             ");
 
             $this->db->query("
@@ -116,7 +116,7 @@ class ModelExtensionPaymentCardinity extends Model {
                 `session_id` VARCHAR(255) NOT NULL,
                 `session_data` LONGTEXT,
                 PRIMARY KEY (`cardinity_session_id`)
-                ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             ");
         } catch (Exception $e){
             $this->log("Could not create session tables".$e->getMessage());

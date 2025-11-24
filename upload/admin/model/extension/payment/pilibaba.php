@@ -9,7 +9,7 @@ class ModelExtensionPaymentPilibaba extends Model {
 			`tracking` VARCHAR(50) NOT NULL DEFAULT '',
 			`date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 			PRIMARY KEY (`pilibaba_order_id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 	}
 
 	public function uninstall() {

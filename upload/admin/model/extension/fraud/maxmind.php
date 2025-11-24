@@ -57,7 +57,7 @@ class ModelExtensionFraudMaxMind extends Model {
 			  `error` text NOT NULL,
 			  `date_added` datetime NOT NULL,
 			  PRIMARY KEY (`order_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		");		
 	}
 

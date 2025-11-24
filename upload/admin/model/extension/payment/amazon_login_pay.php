@@ -18,7 +18,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 				`total` DECIMAL( 10, 2 ) NOT NULL,
 				KEY `amazon_order_reference_id` (`amazon_order_reference_id`),
 				PRIMARY KEY `amazon_login_pay_order_id` (`amazon_login_pay_order_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		");
 
 		$this->db->query("
@@ -33,7 +33,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 			  `status` ENUM('Open', 'Pending', 'Completed', 'Suspended', 'Declined', 'Closed', 'Canceled') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`amazon_login_pay_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			");
 	}
 

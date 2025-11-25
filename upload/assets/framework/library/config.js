@@ -1,5 +1,11 @@
-export class Config {
+class Config {
+    static instance = null;
+    path = '';
     data = [];
+
+    setPath(path) {
+        this.path = path;
+    }
 
     get(key) {
         return this.data[key];
@@ -28,4 +34,16 @@ export class Config {
             console.log('Could not load config file ' + filename + '.json');
         }
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Config();
+        }
+
+        return this.instance;
+    }
 }
+
+const config = Config.getInstance();
+
+export { config };

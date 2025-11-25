@@ -1,74 +1,29 @@
-import { registry } from './../../../assets/framework/framework.js';
+import { config, local, storage } from './../../../assets/framework/framework.js';
 
-console.log(registry);
+console.log(config);
 
 // Base
-registry.config.set('base', new URL(document.querySelector('base').href));
+config.set('base', new URL(document.querySelector('base').href));
 
 // lang
-registry.config.set('language', document.querySelector('html').lang.toLowerCase());
+config.set('language', document.querySelector('html').lang.toLowerCase());
 
-registry.config.set('storage_path', './catalog/view/data/' + registry.config.get('base') + '/');
-registry.config.set('language_path', './catalog/view/language/' + registry.config.get('base') + '/' + registry.config.get('language') + '/');
-registry.config.set('template_path', './catalog/view/template/' + registry.config.get('base') + '/');
 
-// Currency
-registry.local.get('currency');
+console.log(storage);
 
-const currency = async () => {
-    let form = document.getElementById('form-currency');
+// Set directories
+config.setPath('./catalog/view/data/' + config.get('base') + '/config/');
+storage.setPath('./catalog/view/data/' + config.get('base') + '/');
+language.setPath('./catalog/view/language/' + config.get('base') + '/' + config.get('language') + '/');
+template.setPath('./catalog/view/template/' + config.get('base') + '/');
 
-    console.log(form);
 
-    let elements = form.querySelectorAll('a');
 
-    elements.forEach((element) => {
 
-    });
+//storage.fetch();
 
-    currency.addEventListener('click', async (e) => {
-        let element = this;
-
-        let code = $(element).attr('href');
-
-        registry.local.set('currency', code);
-    });
-
-    const currencies = await registry.storage.fetch('localisation/currency');
-
-};
-
-currency();
-
-// Language
-let form_language = document.getElementById('form-language');
-
-const language = form.querySelectorAll('a');
-
-document.addEventListener('DOMContentLoaded', async (e) => {
-    let element = this;
-
-    registry.local.set('language', code);
-
-    language.addEventListener('click', async (e) => {
-        let element = this;
-
-        let code = $(element).attr('href');
-
-        registry.local.set('currency', code);
-    });
-
-});
 /*
 $(document).ready(async () => {
-
-let loader = {
-    'setting'    => 'setting',
-    'currencies' => '',
-    'language'
-    'tax',
-    ''
-}
 
 $.ajax({
     url: 'catalog/view/data/setting/setting.json',
@@ -84,7 +39,6 @@ $.ajax({
         console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
     }
 });
-
 });
 
 $(document).ready(function() {
@@ -334,40 +288,6 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
         }, 500);
     }
 });
-
-// Chain ajax calls.
-class Chain {
-    constructor() {
-        this.start = false;
-        this.data = [];
-    }
-
-    attach(call) {
-        this.data.push(call);
-
-        if (!this.start) {
-            this.execute();
-        }
-    }
-
-    execute() {
-        if (this.data.length) {
-            this.start = true;
-
-            var call = this.data.shift();
-
-            var jqxhr = call();
-
-            jqxhr.done(function() {
-                chain.execute();
-            });
-        } else {
-            this.start = false;
-        }
-    }
-}
-
-var chain = new Chain();
 
 // Autocomplete
 +function($) {

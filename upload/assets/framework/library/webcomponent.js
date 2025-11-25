@@ -1,4 +1,4 @@
-import { registry } from './../library/registry.js';
+import { registry } from './../framework.js';
 
 export class WebComponent extends HTMLElement {
     static registry = null;

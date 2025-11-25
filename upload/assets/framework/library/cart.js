@@ -1,4 +1,7 @@
-export class Cart {
+import { registry } from './registry.js';
+
+class Cart {
+    static instance = null;
     config = null;
     language = null;
     tax = null;
@@ -7,14 +10,14 @@ export class Cart {
     data = [];
 
     constructor(registry) {
-        this.config = registry.config;
+        //this.config = registry.config;
         this.language = registry.language;
         this.tax = registry.tax;
         this.session = registry.session;
 
-        this.customer = this.session.get('customer');
+        //this.customer = this.session.get('customer');
 
-        this.data = this.session.get('cart');
+        //this.data = this.session.get('cart');
     }
 
     add(item) {
@@ -24,4 +27,16 @@ export class Cart {
     remove() {
         return this.data;
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Cart(registry);
+        }
+
+        return this.instance;
+    }
 }
+
+const cart = Cart.getInstance(registry);
+
+export { cart };

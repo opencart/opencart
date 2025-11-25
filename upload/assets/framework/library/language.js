@@ -1,8 +1,9 @@
-export class Language {
+class Language {
+    static instance = null;
     path = '';
     data = [];
 
-    constructor(path) {
+    setPath(path) {
         this.path = path;
     }
 
@@ -27,4 +28,16 @@ export class Language {
             return [];
         }
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Language();
+        }
+
+        return this.instance;
+    }
 }
+
+const language = Language.getInstance();
+
+export { language };

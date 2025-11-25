@@ -1,8 +1,9 @@
-export class Storage {
+class Storage {
+    static instance = null;
     path = '';
     data = [];
 
-    constructor(path) {
+    setPath(path) {
         this.path = path;
     }
 
@@ -27,4 +28,16 @@ export class Storage {
             return [];
         }
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Storage();
+        }
+
+        return this.instance;
+    }
 }
+
+const storage = Storage.getInstance();
+
+export { storage };

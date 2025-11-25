@@ -1,4 +1,4 @@
-export class Session {
+class Session {
     get(key) {
         return JSON.parse(sessionStorage.getItem(key));
     }
@@ -18,4 +18,16 @@ export class Session {
     clear() {
         sessionStorage.clear();
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Session();
+        }
+
+        return this.instance;
+    }
 }
+
+const session = Session.getInstance();
+
+export { session };

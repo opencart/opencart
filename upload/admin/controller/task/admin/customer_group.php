@@ -54,11 +54,15 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
+		$customer_group_data = [];
+
 		$this->load->model('customer/customer_group');
 
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
 		foreach ($customer_groups as $customer_group) {
+			$customer_group_data[] = $customer_group + ['description' => $this->model_localisation_country->getDesciptions($customer_group['customer_group_id'])];
+
 			$task_data = [
 				'code'   => 'customer_group',
 				'action' => 'task/admin/customer_group.info',
@@ -75,7 +79,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($customer_groups))) {
+		if (!file_put_contents($directory . $filename, json_encode($customer_group_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

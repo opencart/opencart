@@ -1,7 +1,4 @@
-import { registry } from './registry.js';
-
-export default class Currency {
-    static instance = null;
+export class Currency {
     static currencies = [];
 
     constructor(currencies) {
@@ -76,16 +73,4 @@ export default class Currency {
 
         return value * (to_value / from_value);
     }
-
-    static async getInstance(registry) {
-        if (!this.instance) {
-            let currencies = await registry.storage.fetch('localisation/currency');
-
-            this.instance = new Currency(currencies);
-        }
-
-        return this.instance;
-    }
 }
-
-registry.currency = await Currency.getInstance(registry);

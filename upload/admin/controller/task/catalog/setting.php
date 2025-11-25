@@ -128,7 +128,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$config = [];
 
 		$config['name'] = $store_info['name'];
-		$config['store_url'] = '';
+		$config['store_url'] = $store_info['url'];
 
 		// Hostname
 		$hostname = parse_url($store_info['url'], PHP_URL_HOST);

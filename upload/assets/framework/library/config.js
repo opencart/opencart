@@ -1,7 +1,4 @@
-import { registry } from './registry.js';
-
-export default class Config {
-    static instance = null;
+export class Config {
     data = [];
 
     get(key) {
@@ -31,14 +28,4 @@ export default class Config {
             console.log('Could not load config file ' + filename + '.json');
         }
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Config();
-        }
-
-        return this.instance;
-    }
 }
-
-registry.config = Config.getInstance();

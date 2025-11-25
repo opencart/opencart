@@ -1,7 +1,4 @@
-import { registry } from './registry.js';
-
-export default class Storage {
-    static instance = null;
+export class Storage {
     path = '';
     data = [];
 
@@ -30,14 +27,4 @@ export default class Storage {
             return [];
         }
     }
-
-    static getInstance(registry) {
-        if (!this.instance) {
-            this.instance = new Storage(registry.config.get('storage_path'));
-        }
-
-        return this.instance;
-    }
 }
-
-registry.storage = Storage.getInstance(registry);

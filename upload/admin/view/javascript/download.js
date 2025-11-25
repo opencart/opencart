@@ -1,9 +1,3 @@
-$('#report').on('click', '.pagination a', function(e) {
-    e.preventDefault();
-
-    $('#report').load(this.href);
-});
-
 $('#button-upload').on('click', function() {
     var element = this;
 

@@ -29,20 +29,14 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		// Generate new data
-		$this->load->model('localisation/language');
+		// Create new data
+		$task_data = [
+			'code'   => 'tax_class',
+			'action' => 'task/admin/tax_class.list',
+			'args'   => []
+		];
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($languages as $language) {
-			$task_data = [
-				'code'   => 'tax_class',
-				'action' => 'task/admin/tax_class.list',
-				'args'   => ['language_id' => $language['language_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
+		$this->model_setting_task->addTask($task_data);
 
 		return ['success' => $this->language->get('text_task')];
 	}
@@ -59,18 +53,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/tax_class');
 
-		if (!array_key_exists('language_id', $args)) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
-
-		if (!$language_info) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
 		$this->load->model('setting/task');
 
 		$this->load->model('localisation/tax_class');
@@ -81,28 +63,24 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$task_data = [
 				'code'   => 'tax_class',
 				'action' => 'task/admin/tax_class.list',
-				'args'   => [
-					'tax_class_id' => $tax_class['tax_class_id'],
-					'language_id'  => $language_info['language_id']
-				]
+				'args'   => ['tax_class_id' => $tax_class['tax_class_id']]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		$base = DIR_APPLICATION . 'view/data/';
-		$directory = $language_info['code'] . '/localisation/';
+		$directory = DIR_APPLICATION . 'view/data/localisation/';
 		$filename = 'tax_class.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($tax_classes))) {
+		if (!file_put_contents($directory . $filename, json_encode($tax_classes))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 	/**

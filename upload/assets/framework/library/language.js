@@ -1,7 +1,4 @@
-import { registry } from './registry.js';
-
-export default class Language {
-    static instance = null;
+export class Language {
     path = '';
     data = [];
 
@@ -30,14 +27,4 @@ export default class Language {
             return [];
         }
     }
-
-    static getInstance(registry) {
-        if (!this.instance) {
-            this.instance = new Language(registry.config.get('language_path'));
-        }
-
-        return this.instance;
-    }
 }
-
-registry.language = Language.getInstance(registry);

@@ -29,6 +29,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
+		// Create new data
 		$task_data = [
 			'code'   => 'information',
 			'action' => 'task/admin/information.list',

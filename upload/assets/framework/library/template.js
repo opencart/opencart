@@ -1,8 +1,6 @@
-import { registry } from './registry.js';
 import '../liquid.browser.umd.js';
 
-export default class Template {
-    static instance = null;
+export class Template {
     engine = {};
 
     constructor() {
@@ -15,14 +13,4 @@ export default class Template {
     async render(path, data) {
         return this.engine.renderFile('./template/' + path, data);
     }
-
-    static getInstance(registry) {
-        if (!this.instance) {
-            this.instance = new Template(registry.config.get('template_path'));
-        }
-
-        return this.instance;
-    }
 }
-
-registry.template = Template.getInstance(registry);

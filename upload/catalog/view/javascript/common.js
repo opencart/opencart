@@ -1,7 +1,6 @@
 import { registry } from './../../../assets/framework/framework.js';
 
-// Library
-import './library/config.js';
+console.log(registry);
 
 // Base
 registry.config.set('base', new URL(document.querySelector('base').href));
@@ -9,41 +8,12 @@ registry.config.set('base', new URL(document.querySelector('base').href));
 // lang
 registry.config.set('language', document.querySelector('html').lang.toLowerCase());
 
-
-registry.config.set('storage_path', './catalog/view/data/' + base.host + '/');
-registry.config.set('language_path', './catalog/view/language/' + base.host + '/' + code + '/');
-registry.config.set('template_path', './catalog/view/template/' + base.host + '/');
-
-// Library
-import './library/storage.js';
-import './library/language.js';
-import './library/template.js';
-import './library/url.js';
-import './library/session.js';
-import './library/local.js';
-import './library/cart.js';
-import './library/tax.js';
-import './library/currency.js';
-
-
-console.log(registry.url.query.get('route'));
-
-// Web Components
-import('./component/alert.js');
-//import('./component/autocomplete.js');
-//import('./component/ckeditor.js');
-import('./component/country.js');
-import('./component/currency.js');
-//import './component/modal.js';
-import('./component/pagination.js');
-import('./component/switch.js');
-//import './component/upload.js';
-import('./component/zone.js');
+registry.config.set('storage_path', './catalog/view/data/' + registry.config.get('base') + '/');
+registry.config.set('language_path', './catalog/view/language/' + registry.config.get('base') + '/' + registry.config.get('language') + '/');
+registry.config.set('template_path', './catalog/view/template/' + registry.config.get('base') + '/');
 
 // Currency
 registry.local.get('currency');
-
-
 
 const currency = async () => {
     let form = document.getElementById('form-currency');
@@ -89,35 +59,32 @@ document.addEventListener('DOMContentLoaded', async (e) => {
     });
 
 });
-
-
-
-
+/*
 $(document).ready(async () => {
-    /*
-    let loader = {
-        'setting'    => 'setting',
-        'currencies' => '',
-        'language'
-        'tax',
-        ''
+
+let loader = {
+    'setting'    => 'setting',
+    'currencies' => '',
+    'language'
+    'tax',
+    ''
+}
+
+$.ajax({
+    url: 'catalog/view/data/setting/setting.json',
+    dataType: 'json',
+    success: function (json, textStatus) {
+
+        // Replace any form values that correspond to form names.
+        //for (key in json) {
+            //$(element).find('[name=\'' + key + '\']').val(json[key]);
+        //}
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
     }
+});
 
-    $.ajax({
-        url: 'catalog/view/data/setting/setting.json',
-        dataType: 'json',
-        success: function (json, textStatus) {
-
-            // Replace any form values that correspond to form names.
-            //for (key in json) {
-                //$(element).find('[name=\'' + key + '\']').val(json[key]);
-            //}
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-    */
 });
 
 $(document).ready(function() {
@@ -138,8 +105,6 @@ $(document).ready(function() {
     $(document).on('click', 'button', function() {
         $('.tooltip').remove();
     });
-
-
 });
 
 $(document).ready(function() {
@@ -539,7 +504,7 @@ $(document).ready(function() {
         $('#button-grid').addClass('active');
     }
 
-    /* Agree to Terms */
+
     $('body').on('click', '.modal-link', function(e) {
         e.preventDefault();
 
@@ -559,3 +524,4 @@ $(document).ready(function() {
     });
 
 });
+*/

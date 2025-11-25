@@ -1,8 +1,4 @@
-import { registry } from './registry.js';
-
-export default class Local {
-    static instance = null;
-
+export class Local {
     get(key) {
         return localStorage.getItem(key);
     }
@@ -22,14 +18,4 @@ export default class Local {
     clear() {
         localStorage.clear();
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Local();
-        }
-
-        return this.instance;
-    }
 }
-
-registry.local = Local.getInstance();

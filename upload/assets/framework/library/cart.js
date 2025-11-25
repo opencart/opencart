@@ -1,6 +1,9 @@
-import { registry } from './registry.js';
-
-export default class Cart {
+export class Cart {
+    config = null;
+    language = null;
+    tax = null;
+    session = null;
+    customer = null;
     data = [];
 
     constructor(registry) {
@@ -19,16 +22,6 @@ export default class Cart {
     }
 
     remove() {
-        return this.data
-    }
-
-    static async getInstance(registry) {
-        if (!this.instance) {
-            this.instance = new Cart(registry);
-        }
-
-        return this.instance;
+        return this.data;
     }
 }
-
-registry.cart = Cart.getInstance(registry);

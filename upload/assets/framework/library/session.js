@@ -1,8 +1,4 @@
-import { registry } from './registry.js';
-
-export default class Session {
-    static instance = null;
-
+export class Session {
     get(key) {
         return JSON.parse(sessionStorage.getItem(key));
     }
@@ -22,14 +18,4 @@ export default class Session {
     clear() {
         sessionStorage.clear();
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Session();
-        }
-
-        return this.instance;
-    }
 }
-
-registry.session = Session.getInstance();

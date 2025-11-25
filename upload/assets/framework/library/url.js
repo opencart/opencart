@@ -1,7 +1,4 @@
-import { registry } from './registry.js';
-
-export default class Url {
-    static instance = null;
+export class Url {
     hostname = '';
     path = '';
     query = '';
@@ -11,14 +8,4 @@ export default class Url {
         this.path = document.location.pathname;
         this.query = document.location.search ? new URLSearchParams(document.location.search) : [];
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Url();
-        }
-
-        return this.instance;
-    }
 }
-
-registry.url = Url.getInstance();

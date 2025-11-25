@@ -1,7 +1,4 @@
-import { registry } from './registry.js';
-
-export default class Db {
-    static instance = null;
+export class Db {
     db = null;
     data = [];
     event  = {
@@ -15,7 +12,7 @@ export default class Db {
 
             var tx = db.transaction('opencart', 'readwrite');
 
-            var store = tx.objectStore('MyObjectStore');
+            var store = tx.objectStore('opencart');
 
             var index = store.index('NameIndex');
 
@@ -38,7 +35,7 @@ export default class Db {
     };
 
     constructor() {
-        this.event.connect();
+        //this.event.connect();
 
     }
 
@@ -53,14 +50,4 @@ export default class Db {
     get() {
 
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Db();
-        }
-
-        return this.instance;
-    }
 }
-
-registry.db = await Db.getInstance();

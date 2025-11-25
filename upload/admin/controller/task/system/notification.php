@@ -25,9 +25,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 			$response = curl_exec($curl);
 
 			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-			curl_close($curl);
-
+			
 			// Notification
 			if ($status == 200) {
 				$notification = json_decode($response, true);

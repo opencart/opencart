@@ -18,8 +18,6 @@ class ControllerInstallPromotion extends Controller {
 			$response = '';
 		}
 
-		curl_close($curl);
-
 		return $response;
 	}
 }

@@ -18,16 +18,4 @@ export class Local {
     clear() {
         localStorage.clear();
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Local();
-        }
-
-        return this.instance;
-    }
 }
-
-const local = Local.getInstance();
-
-export { local };

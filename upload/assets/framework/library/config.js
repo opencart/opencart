@@ -1,14 +1,13 @@
-class Config {
-    static instance = null;
+export class Config {
     path = '';
     data = [];
 
-    setPath(path) {
+    constructor(path) {
         this.path = path;
     }
 
     get(key) {
-        return this.data[key];
+        return key in this.data ? this.data[key] : null;
     }
 
     set(key, value) {
@@ -16,34 +15,26 @@ class Config {
     }
 
     has(key) {
-        return this.data[key] !== undefined;
+        return key in this.data;
     }
 
     remove(key) {
-        delete this.data[key];
+        if (key in this.data) delete this.data[key];
     }
 
     async load(filename) {
-        let response = await fetch(this.path + filename + '.json');
+        let key = filename.replaceAll('/', '.');
 
-        if (response.status == 200) {
-            let json = await response.json();
+        if (!key in this.data) {
+            let response = await fetch(this.path + filename + '.json');
 
-            this.data = [...this.data, ...json];
-        } else {
-            console.log('Could not load config file ' + filename + '.json');
+            if (response.status == 200) {
+                let json = await response.json();
+
+                this.data = [...this.data, ...json];
+            } else {
+                console.log('Could not load config file ' + filename + '.json');
+            }
         }
-    }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Config();
-        }
-
-        return this.instance;
     }
 }
-
-const config = Config.getInstance();
-
-export { config };

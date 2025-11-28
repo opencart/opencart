@@ -1,39 +1,75 @@
-export const factory = {
-    config: async (registry) => {
-        return new Config();
-    },
-    storage: (registry) => {
-        return new Storage();
-    },
-    language: (registry) => {
-        return new Language();
-    },
-    template: (registry) => {
-        return new Template();
-    },
-    url: () => {
-        return new Url();
-    },
-    session: async () => {
-        return new Session();
-    },
-    local: () => {
-        return new Local();
-    },
-    db: () => {
-        return new Db();
-    },
-    cart: async (registry) => {
-        return new Cart(registry);
-    },
-    tax: async (registry) => {
-        let tax_classes = await registry.get('storage').fetch('localisation/tax_class');
+import { Config } from './config.js';
+import { Storage } from './storage.js';
+import { Language } from './language.js';
+import { Template } from './template.js';
+import { Url } from './url.js';
+import { Session } from './session.js';
+import { Local } from './local.js';
+import { Db } from './db.js';
+import { Cart } from './cart.js';
+import { Tax } from './tax.js';
+import { Currency } from './currency.js';
 
-        return new Tax(tax_classes);
-    },
-    currency: async (registry) => {
-        let currencies = await registry.get('storage').fetch('localisation/currency');
+class Factory {
+    static instance;
+    data = {
+        config: async (path) => {
+            return new Config(path);
+        },
+        storage: (path) => {
+            return new Storage(path);
+        },
+        language: (path) => {
+            return new Language(path);
+        },
+        template: (path) => {
+            return new Url();
+        },
+        session: () => {
+            return new Session();
+        },
+        local: () => {
+            return new Local();
+        },
+        db: () => {
+            return new Db();
+        },
+        cart: async (registry) => {
+            return new Cart(registry);
+        },
+        tax: (tax_classes) => {
+            return new Tax(tax_classes);
+        },
+        currency: (currencies) => {
+            return new Currency(currencies);
+        }
+    };
 
-        return new Currency(currencies);
+    get(key) {
+        return key in this.data ? this.data[key] : null;
     }
-};
+
+    set(key, value) {
+        this.data[key] = value;
+    }
+
+    has(key) {
+        return key in this.data;
+    }
+
+    remove(key) {
+        if (key in this.data) delete this.data[key];
+    }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Factory();
+        }
+
+        return this.instance;
+    }
+}
+
+const factory = Factory.getInstance();
+
+export { factory };

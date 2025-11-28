@@ -1,39 +1,36 @@
 import { factory } from './factory.js';
 
-export class Registry {
+class Registry {
     static instance = null;
-    factory = {};
     data = {};
 
-    constructor(factory) {
-        this.factory = factory;
-    }
-
-    async get(key) {
-        if (this.data[key] == undefined && this.factory !== undefined) {
-            this.data[key] = await this.factory[key](this);
-        }
-
-        return this.data[key];
+    get(key) {
+        return key in this.data ? this.data[key] : null;
     }
 
     set(key, value) {
         this.data[key] = value;
     }
 
+    has(key) {
+        return key in this.data;
+    }
+
     remove(key) {
-        delete this.data[key];
+        if (key in this.data) delete this.data[key];
     }
 
     static getInstance() {
         if (!this.instance) {
-            this.instance = new Registry(factory);
+            this.instance = new Registry();
         }
 
         return this.instance;
     }
 }
 
-const registry = Registry.getInstance(factory);
+const registry = Registry.getInstance();
+
+registry.set('factory', factory);
 
 export { registry };

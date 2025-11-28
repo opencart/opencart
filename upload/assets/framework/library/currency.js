@@ -1,4 +1,4 @@
-class Currency {
+export class Currency {
     static currencies = [];
 
     constructor(currencies) {
@@ -73,16 +73,4 @@ class Currency {
 
         return value * (to_value / from_value);
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Currency();
-        }
-
-        return this.instance;
-    }
 }
-
-const currency = Currency.getInstance();
-
-export { currency };

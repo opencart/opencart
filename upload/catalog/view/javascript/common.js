@@ -1,51 +1,15 @@
-import { config, local, storage } from './../../../assets/framework/framework.js';
-
-console.log(config);
-
-// Base
-config.set('base', new URL(document.querySelector('base').href));
-
-// lang
-config.set('language', document.querySelector('html').lang.toLowerCase());
+import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './setting.js';
 
 
-console.log(storage);
-
-// Set directories
-config.setPath('./catalog/view/data/' + config.get('base') + '/config/');
-storage.setPath('./catalog/view/data/' + config.get('base') + '/');
-language.setPath('./catalog/view/language/' + config.get('base') + '/' + config.get('language') + '/');
-template.setPath('./catalog/view/template/' + config.get('base') + '/');
+let response =  await storage.fetch('localisation/currency');
 
 
-
-
-//storage.fetch();
-
-/*
-$(document).ready(async () => {
-
-$.ajax({
-    url: 'catalog/view/data/setting/setting.json',
-    dataType: 'json',
-    success: function (json, textStatus) {
-
-        // Replace any form values that correspond to form names.
-        //for (key in json) {
-            //$(element).find('[name=\'' + key + '\']').val(json[key]);
-        //}
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-    }
-});
-});
 
 $(document).ready(function() {
     // Tooltip
-    var oc_tooltip = function() {
+    let oc_tooltip = function() {
         // Get tooltip instance
-        tooltip = bootstrap.Tooltip.getInstance(this);
+        let tooltip = bootstrap.Tooltip.getInstance(this);
 
         if (!tooltip) {
             // Apply to current element
@@ -194,7 +158,7 @@ $(document).on('submit', 'form', function (e) {
                         $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
-                    for (key in json['error']) {
+                    for (let key in json['error']) {
                         $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
@@ -388,8 +352,6 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
 }(jQuery);
 
 $(document).ready(function() {
-
-
     // Product List
     $('#button-list').on('click', function() {
         var element = this;
@@ -444,4 +406,4 @@ $(document).ready(function() {
     });
 
 });
-*/
+

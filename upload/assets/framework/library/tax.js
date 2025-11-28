@@ -1,6 +1,4 @@
-import { registry } from './registry.js';
-
-class Tax {
+export class Tax {
     static tax_classes = [];
 
     constructor(tax_classes) {
@@ -70,18 +68,4 @@ class Tax {
     clear() {
         this.data = [];
     }
-
-    static async getInstance(registry) {
-        if (!this.instance) {
-            let tax_classes = await registry.get('storage').fetch('localisation/tax_class');
-
-            this.instance = new Tax();
-        }
-
-        return this.instance;
-    }
 }
-
-const tax = await Tax.getInstance(registry);
-
-export { tax };

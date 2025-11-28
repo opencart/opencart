@@ -1,16 +1,15 @@
-class Storage {
-    static instance = null;
+export class Storage {
     path = '';
     data = [];
 
-    setPath(path) {
+    constructor(path) {
         this.path = path;
     }
 
     async fetch(filename) {
         let key = filename.replaceAll('/', '.');
 
-        if (this.data[key] !== undefined) {
+        if (key in this.data) {
             return this.data[key];
         }
 
@@ -28,16 +27,4 @@ class Storage {
             return [];
         }
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Storage();
-        }
-
-        return this.instance;
-    }
 }
-
-const storage = Storage.getInstance();
-
-export { storage };

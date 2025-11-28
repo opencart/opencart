@@ -1,16 +1,15 @@
-class Language {
-    static instance = null;
+export class Language {
     path = '';
     data = [];
 
-    setPath(path) {
+    constructor(path) {
         this.path = path;
     }
 
     async fetch(filename) {
         let key = filename.replaceAll('/', '.');
 
-        if (this.data[key] !== undefined) {
+        if (key in this.data) {
             return this.data[key];
         }
 
@@ -28,16 +27,4 @@ class Language {
             return [];
         }
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Language();
-        }
-
-        return this.instance;
-    }
 }
-
-const language = Language.getInstance();
-
-export { language };

@@ -1,7 +1,4 @@
-import { registry } from './registry.js';
-
-class Cart {
-    static instance = null;
+export class Cart {
     config = null;
     language = null;
     tax = null;
@@ -27,16 +24,4 @@ class Cart {
     remove() {
         return this.data;
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Cart(registry);
-        }
-
-        return this.instance;
-    }
 }
-
-const cart = Cart.getInstance(registry);
-
-export { cart };

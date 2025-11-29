@@ -10,35 +10,34 @@ export class Loader {
         this.factory = this.registry.get('factory');
     }
 
-    async config(path) {
-        return await this.registry.get('config').fetch(path);
+    get config() {
+        return this.registry.get('config');
     }
 
-    async storage(path) {
-        return await this.registry.get('storage').fetch(path);
+    get storage() {
+        return this.registry.get('storage');
     }
 
-    async language(path) {
-        return await this.registry.get('language').fetch(path);
+    get language() {
+        return this.registry.get('language');
     }
 
-    async template(path, data) {
-        return await this.registry.get('template').render(path, data);
+    get template() {
+        return this.registry.get('template');
     }
 
     async library(key, args = {}) {
         if (this.registry.has(key)) {
-            return;
+            return this.registry.get(key);
         }
 
-        if (this.registry.get('factory').has(key)) {
-            let object = { registry: this.registry, ...args };
+        if (this.factory.has(key)) {
+            let factory = this.factory.get(key).bind(this);
 
-            console.log(key);
-            console.log(object);
-
-            this.registry.set(key, await this.registry.get('factory').get(key, object));
+            this.registry.set(key, await factory(args));
         }
+
+        return this.registry.get('language');
     }
 
     static getInstance(registry) {

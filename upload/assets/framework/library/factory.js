@@ -13,49 +13,44 @@ import { Currency } from './currency.js';
 class Factory {
     static instance;
     data = {
-        config: async (args) => {
-            //console.log(args);
-
+        async config(args) {
             return new Config(args.path);
         },
-        storage: (args) => {
-            //console.log(args);
+        async storage(args) {
             return new Storage(args.path);
         },
-        language: (args) => {
-            //console.log(args);
+        async language(args) {
             return new Language(args.path);
         },
-        template: (args) => {
-            //console.log(args);
+        async template(args) {
             return new Template(args.path);
         },
-        session: () => {
+        session(args) {
             return new Session();
         },
-        local: () => {
+        local(args) {
             return new Local();
         },
-        db: () => {
+        db(args) {
             return new Db();
         },
-        cart: async (registry) => {
+        async cart(registry) {
             return new Cart(registry);
         },
-        tax: async (args) => {
-            let tax_classes = await args.registry.storage.fetch('localisation/tax_class');
+        async tax(args) {
+            let tax_classes = await this.registry.get('storage').fetch('localisation/tax_class');
 
             return new Tax(tax_classes);
         },
-        currency: async (args) => {
-            let currencies = await args.registry.storage.fetch('localisation/currency');
+        async currency(args) {
+            let currencies = await this.registry.get('storage').fetch('localisation/currency');
 
             return new Currency(currencies);
         }
     };
 
-    get(key, args) {
-        return key in this.data ? this.data[key](args) : null;
+    get(key) {
+        return key in this.data ? this.data[key] : null;
     }
 
     set(key, value) {

@@ -2,7 +2,6 @@ import { WebComponent } from './../library/webcomponent.js';
 
 class XCurrency extends WebComponent {
     static observed = ['code', 'amount', 'value'];
-    currency = null;
     currencies = [];
 
     get code() {
@@ -63,8 +62,6 @@ class XCurrency extends WebComponent {
 
     event = {
         connected: async () => {
-            this.currency = this.registry.currency;
-
             this.addEventListener('[code]', this.event.format);
             this.addEventListener('[amount]', this.event.format);
             this.addEventListener('[value]', this.event.format);

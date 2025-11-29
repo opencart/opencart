@@ -7,42 +7,34 @@ const base = new URL(document.querySelector('base').href);
 const lang = document.querySelector('html').lang.toLowerCase();
 
 // Config
-await loader.library('config', {
-    path: './catalog/view/data/' + base.host + '/config/'
-});
+loader.library('config', { path: './catalog/view/data/' + base.host + '/config/' });
 
 // Storage
-await loader.library('storage', {
-    path: './catalog/view/data/' + base.host + '/' + lang + '/'
-});
+loader.library('storage', { path: './catalog/view/data/' + base.host + '/' + lang + '/' });
 
 // Language
-await loader.library('language', {
-    path: './catalog/view/language/' + base.host + '/' + lang + '/'
-});
+loader.library('language', { path: './catalog/view/language/' + base.host + '/' + lang + '/' });
 
 // Template
-await loader.library('template', {
-    path: './catalog/view/template/' + base.host + '/template/'
-});
+loader.library('template', { path: './catalog/view/template/' + base.host + '/template/' });
 
 // URL
-await loader.library('url');
+loader.library('url');
 
 // Session
-await loader.library('session');
+loader.library('session');
 
 // Local
-await loader.library('local');
+loader.library('local');
 
 // DB
-await loader.library('db');
+loader.library('db');
 
 // Cart
 await loader.library('cart');
 
 // Tax
-await loader.library('tax');
+loader.library('tax');
 
 // Currency
 await loader.library('currency');

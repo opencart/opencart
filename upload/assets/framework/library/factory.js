@@ -23,7 +23,7 @@ class Factory {
             return new Language(path);
         },
         template: (path) => {
-            return new Url();
+            return new Template(path);
         },
         session: () => {
             return new Session();

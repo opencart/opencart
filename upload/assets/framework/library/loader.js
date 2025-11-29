@@ -20,9 +20,9 @@ export class Loader {
         return await this.registry.get('template').render(path, data);
     }
 
-    async library(key, callback) {
+    async library(key, callback = {}) {
         if (this.registry.has(key)) {
-            return this.registry.get(key);
+            return;
         }
 
         if (this.registry.get('factory').has(key)) {

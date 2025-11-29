@@ -42,17 +42,17 @@ await loader.library('local');
 await loader.library('db');
 
 // Cart
-await loader.library('cart', registry);
+await loader.library('cart');
 
 // Tax
-const tax_class = async (registry) => {
+let tax_class = async (registry) => {
     let tax_classes = await registry.storage.fetch('localisation/tax_class');
 };
 
 await loader.library('tax', tax_class.bind(registry));
 
 // Currency
-const currencies = async () => {
+let currencies = async () => {
     let currencies = await registry.storage.fetch('localisation/currency');
 };
 

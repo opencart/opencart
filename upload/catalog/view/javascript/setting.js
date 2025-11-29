@@ -6,26 +6,23 @@ const base = new URL(document.querySelector('base').href);
 // lang
 const lang = document.querySelector('html').lang.toLowerCase();
 
-console.log(base.host);
-console.log(lang);
-
 // Config
-await loader.library('config', () => {
+await loader.library('config', {
     path: './catalog/view/data/' + base.host + '/config/'
 });
 
 // Storage
-await loader.library('storage', () => {
+await loader.library('storage', {
     path: './catalog/view/data/' + base.host + '/' + lang + '/'
 });
 
 // Language
-await loader.library('language', () => {
+await loader.library('language', {
     path: './catalog/view/language/' + base.host + '/' + lang + '/'
 });
 
 // Template
-await loader.library('template', () => {
+await loader.library('template', {
     path: './catalog/view/template/' + base.host + '/template/'
 });
 
@@ -45,18 +42,10 @@ await loader.library('db');
 await loader.library('cart');
 
 // Tax
-let tax_class = async (registry) => {
-    let tax_classes = await registry.storage.fetch('localisation/tax_class');
-};
-
-await loader.library('tax', tax_class.bind(registry));
+await loader.library('tax');
 
 // Currency
-let currencies = async () => {
-    let currencies = await registry.storage.fetch('localisation/currency');
-};
-
-await loader.library('currency', currencies.bind(registry));
+await loader.library('currency');
 
 const config = registry.get('config');
 const storage = registry.get('storage');
@@ -71,5 +60,3 @@ const tax = registry.get('tax');
 const currency = registry.get('currency');
 
 export { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency }
-
-

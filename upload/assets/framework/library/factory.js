@@ -13,17 +13,22 @@ import { Currency } from './currency.js';
 class Factory {
     static instance;
     data = {
-        config: async (path) => {
-            return new Config(path);
+        config: async (args) => {
+            //console.log(args);
+
+            return new Config(args.path);
         },
-        storage: (path) => {
-            return new Storage(path);
+        storage: (args) => {
+            //console.log(args);
+            return new Storage(args.path);
         },
-        language: (path) => {
-            return new Language(path);
+        language: (args) => {
+            //console.log(args);
+            return new Language(args.path);
         },
-        template: (path) => {
-            return new Template(path);
+        template: (args) => {
+            //console.log(args);
+            return new Template(args.path);
         },
         session: () => {
             return new Session();
@@ -37,16 +42,20 @@ class Factory {
         cart: async (registry) => {
             return new Cart(registry);
         },
-        tax: (tax_classes) => {
+        tax: async (args) => {
+            let tax_classes = await args.registry.storage.fetch('localisation/tax_class');
+
             return new Tax(tax_classes);
         },
-        currency: (currencies) => {
+        currency: async (args) => {
+            let currencies = await args.registry.storage.fetch('localisation/currency');
+
             return new Currency(currencies);
         }
     };
 
-    get(key) {
-        return key in this.data ? this.data[key] : null;
+    get(key, args) {
+        return key in this.data ? this.data[key](args) : null;
     }
 
     set(key, value) {

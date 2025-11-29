@@ -1,4 +1,5 @@
 import { registry } from './registry.js';
+import { factory } from './factory.js';
 
 export class Loader {
     static instance;
@@ -6,6 +7,11 @@ export class Loader {
 
     constructor(registry) {
         this.registry = registry;
+        this.factory = this.registry.get('factory');
+    }
+
+    async config(path) {
+        return await this.registry.get('config').fetch(path);
     }
 
     async storage(path) {
@@ -20,13 +26,18 @@ export class Loader {
         return await this.registry.get('template').render(path, data);
     }
 
-    async library(key, callback = {}) {
+    async library(key, args = {}) {
         if (this.registry.has(key)) {
             return;
         }
 
         if (this.registry.get('factory').has(key)) {
-            this.registry.data[key] = await this.registry.get('factory').get(key)(this.registry);
+            let object = { registry: this.registry, ...args };
+
+            console.log(key);
+            console.log(object);
+
+            this.registry.set(key, await this.registry.get('factory').get(key, object));
         }
     }
 
@@ -38,6 +49,9 @@ export class Loader {
         return this.instance;
     }
 }
+
+// Set the factory object so it can be used by the loader
+registry.set('factory', factory);
 
 let loader = Loader.getInstance(registry);
 

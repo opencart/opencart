@@ -1,9 +1,10 @@
 import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './setting.js';
 
+console.log(storage);
 
-let response =  await storage.fetch('localisation/currency');
+let response =  storage.fetch('localisation/currency');
 
-
+console.log(response);
 
 $(document).ready(function() {
     // Tooltip

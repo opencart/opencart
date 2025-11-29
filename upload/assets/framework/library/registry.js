@@ -1,5 +1,3 @@
-import { factory } from './factory.js';
-
 class Registry {
     static instance = null;
     data = {};
@@ -20,6 +18,10 @@ class Registry {
         if (key in this.data) delete this.data[key];
     }
 
+    all() {
+        return this.data;
+    }
+
     static getInstance() {
         if (!this.instance) {
             this.instance = new Registry();
@@ -30,7 +32,5 @@ class Registry {
 }
 
 const registry = Registry.getInstance();
-
-registry.set('factory', factory);
 
 export { registry };

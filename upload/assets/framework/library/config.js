@@ -22,19 +22,23 @@ export class Config {
         if (key in this.data) delete this.data[key];
     }
 
+    all() {
+        return this.data;
+    }
+
     async load(filename) {
         let key = filename.replaceAll('/', '.');
 
-        if (!key in this.data) {
-            let response = await fetch(this.path + filename + '.json');
+        console.log(this.path + filename);
 
-            if (response.status == 200) {
-                let json = await response.json();
+        let response = await fetch(this.path + filename + '.json');
 
-                this.data = [...this.data, ...json];
-            } else {
-                console.log('Could not load config file ' + filename + '.json');
-            }
+        if (response.status == 200) {
+            let json = await response.json();
+
+            this.data = [...this.data, ...json];
+        } else {
+            console.log('Could not load config file ' + filename + '.json');
         }
     }
 }

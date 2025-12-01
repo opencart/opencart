@@ -1,5 +1,39 @@
-import { registry } from './../../../assets/framework/framework.js';
+import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './opencart.js';
 
+let form = document.getElementById('form-login');
+
+form.addEventListener('submit', ((e) => {
+    e.preventDefault();
+
+    console.log(e);
+
+    let login = api.send({
+        url: element.getAttribute('action'),
+        method: 'post',
+        data: new FormData(form),
+        beforeSend: () => {
+
+        },
+        afterSend: () => {
+
+        },
+        success: (json) => {
+            if (json.error) {
+                $('#alert').append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                session.set('customer_token', json['customer_token']);
+            }
+        },
+        error: () => {
+
+        }
+    });
+}));
+/*
 $('#form-login').on('submit', function(e) {
 
     e.preventDefault();
@@ -42,3 +76,4 @@ $('#form-login').on('submit', function(e) {
         }
     });
 });
+*/

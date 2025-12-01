@@ -1,9 +1,35 @@
-import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './setting.js';
+import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './opencart.js';
+/*
+let currencies = await storage.fetch('localisation/currency');
 
-let response = await storage.fetch('localisation/currency');
+let app = {};
 
-console.log(response);
+await app.load.library('config', { path: '' });
+await app.config.fetch();
+await app.storage.fetch();
+await app.language.fetch();
+await app.template.fetch();
 
+app.url.query('route');
+app.url.query('token');
+
+await app.api.send({
+    url: 'index.php?route=common/home',
+    method: 'post',
+    beforeSend: () => {
+
+    },
+    afterSend: () => {
+
+    },
+    success: () => {
+
+    },
+    error: () => {
+
+    }
+});
+*/
 $(document).ready(function() {
     // Tooltip
     let oc_tooltip = function() {

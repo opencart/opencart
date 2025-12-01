@@ -1,10 +1,6 @@
-import { registry } from './../../../assets/framework/framework.js';
+import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './opencart.js';
 
-registry.config.set('storage_path', './view/data/' + base.host + '/');
-registry.config.set('language_path', './view/language/' + base.host + '/' + code + '/');
-registry.config.set('template_path', './view/template/' + base.host + '/');
-
-console.log(registry.currency.format(1.00, 'USD'));
+console.log(currency.format(1.00, 'USD'));
 
 function decodeHTMLEntities(html) {
     var d = document.createElement('div');

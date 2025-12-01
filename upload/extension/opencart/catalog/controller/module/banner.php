@@ -16,6 +16,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 	public function index(array $setting): string {
 		static $module = 0;
 
+		//$this->document->addScript('extension/opencart/catalog/view/javascript/banner.js');
+
 		// Banner
 		$this->load->model('design/banner');
 

@@ -22,7 +22,7 @@
               <td>{{ subscription.customer }}</td>
               <td>{{ subscription.subscription_status }}</td>
               <td class="d-none d-lg-table-cell">{{ subscription.date_added }}</td>
-              <td class="text-end"><a href="{{ subscription.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a></td>
+              <td class="text-end"><a href="{{ subscription.view }}" title="{{ button_view }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

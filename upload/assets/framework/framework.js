@@ -8,6 +8,7 @@ import('./component/alert.js');
 //import('./component/ckeditor.js');
 import('./component/country.js');
 import('./component/currency.js');
+import('./component/datetime.js');
 //import './component/modal.js';
 import('./component/pagination.js');
 import('./component/switch.js');

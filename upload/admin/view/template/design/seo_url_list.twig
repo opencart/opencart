@@ -24,7 +24,7 @@
               <td>{{ seo_url.sort_order }}</td>
               <td class="d-none d-lg-table-cell">{{ seo_url.store }}</td>
               <td class="text-center d-none d-lg-table-cell"><img src="{{ seo_url.image }}" alt="{{ seo_url.language }}" title="{{ seo_url.language }}"></td>
-              <td class="text-end"><a href="{{ seo_url.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end"><a href="{{ seo_url.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

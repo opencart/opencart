@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-upload').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="submit" form="form-upload" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+        <button type="button" title="{{ button_filter }}" onclick="$('#filter-upload').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa-solid fa-filter"></i></button>
+        <button type="submit" form="form-upload" formaction="{{ delete }}" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -35,7 +35,7 @@
               </div>
               <div class="text-end">
                 <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
-                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                <button type="reset" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
           </div>

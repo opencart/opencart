@@ -26,7 +26,7 @@
                   <span class="badge bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
               <td class="text-end">{{ article.date_added }}</td>
-              <td class="text-end text-nowrap"><a href="{{ article.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end text-nowrap"><a href="{{ article.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

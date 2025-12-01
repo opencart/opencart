@@ -37,7 +37,7 @@ export class Loader {
             this.registry.set(key, await factory(args));
         }
 
-        return this.registry.get('language');
+        return this.registry.get(key);
     }
 
     static getInstance(registry) {

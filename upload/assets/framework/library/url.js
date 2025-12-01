@@ -1,11 +1,23 @@
 export class Url {
-    hostname = '';
-    path = '';
-    query = '';
+
 
     constructor() {
-        this.hostname = document.location.hostname;
-        this.path = document.location.pathname;
-        this.query = document.location.search ? new URLSearchParams(document.location.search) : [];
+        let location = document.location.search;
+
+
+        let test = new URLSearchParams(location.search);
+
+        console.log(test);
+
+
+        this.host;
+        this.hostname;
+        this.path;
+        this.query = new URLSearchParams(document.location.search);
+        this.port;
+    }
+
+    query() {
+        return this.query;
     }
 }

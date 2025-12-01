@@ -35,5 +35,5 @@ class XDatetime extends WebComponent {
     };
 }
 
-customElements.define('x-currency', XCurrency);
+customElements.define('x-datetime', XDatetime);
 

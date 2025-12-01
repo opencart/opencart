@@ -3,11 +3,11 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-task').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fa-solid fa-sync"></i></button>
-        <button type="button" id="button-start" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-success"><i class="fa-solid fa-play"></i></button>
-        <button type="button" id="button-pause" data-bs-toggle="tooltip" title="{{ button_pause }}" class="btn btn-warning"><i class="fa-solid fa-pause"></i></button>
-        <button type="button" id="button-clear" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa-solid fa-eraser"></i></button>
+        <button type="button" title="{{ button_filter }}" onclick="$('#filter-task').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <button type="button" id="button-refresh" title="{{ button_refresh }}" class="btn btn-light"><i class="fa-solid fa-sync"></i></button>
+        <button type="button" id="button-start" title="{{ button_run }}" class="btn btn-success"><i class="fa-solid fa-play"></i></button>
+        <button type="button" id="button-pause" title="{{ button_pause }}" class="btn btn-warning"><i class="fa-solid fa-pause"></i></button>
+        <button type="button" id="button-clear" title="{{ button_clear }}" class="btn btn-danger"><i class="fa-solid fa-eraser"></i></button>
         <div class="btn-group">
           <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
           <ul class="dropdown-menu">
@@ -54,7 +54,7 @@
               </div>
               <div class="text-end">
                 <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
-                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                <button type="reset" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
           </div>

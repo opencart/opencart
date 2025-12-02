@@ -4,10 +4,19 @@ import { factory } from './factory.js';
 export class Loader {
     static instance;
     registry = null;
+    factory = null;
 
     constructor(registry) {
         this.registry = registry;
         this.factory = this.registry.get('factory');
+    }
+
+    controller() {
+
+    }
+
+    model() {
+
     }
 
     get config() {
@@ -26,15 +35,15 @@ export class Loader {
         return this.registry.get('template');
     }
 
-    async library(key, args = {}) {
+    async library(key, option = {}) {
         if (this.registry.has(key)) {
             return this.registry.get(key);
         }
 
         if (this.factory.has(key)) {
-            let factory = this.factory.get(key).bind(this);
+            let factory = this.factory.get(key).bind({ registry: this.registry });
 
-            this.registry.set(key, await factory(args));
+            this.registry.set(key, await factory(option));
         }
 
         return this.registry.get(key);

@@ -1,4 +1,16 @@
-const language = localStorage.getItem('language');
+import { session, request } from './opencart.js';
+
+const address = document.getElementById('address');
+
+const buttons = address.querySelectorAll('.btn-danger');
+
+const onclick = (e) => {
+
+}
+
+buttons.addEventListener('click', onclick);
+
+const language = session.get('language');
 
 $('#address').on('click', '.btn-danger', function(e) {
     e.preventDefault();

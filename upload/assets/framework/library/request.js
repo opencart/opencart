@@ -1,12 +1,26 @@
-export class Api {
-    async send(option = {}) {
+export class Request {
+    option = {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: option.data
+    };
 
-
+    async fetch(option) {
         if (!option.method) {
             option.method = 'get';
         }
 
-        var enctype = $(button).attr('formenctype') || $(form).attr('enctype') || 'application/x-www-form-urlencoded';
+        if (!option.headers) {
+            option.headers = {
+                'Content-Type': 'application/json'
+            };
+        }
+
+        //if () {
+        //     option.data
+        //}
 
 
         let response = await fetch(option.url, {
@@ -14,7 +28,7 @@ export class Api {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(option.data.toJSON())
+            body: option.data
         });
 
         if (response.status !== 200) {

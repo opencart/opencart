@@ -49,10 +49,10 @@ const currency = registry.get('currency');
 const db = registry.get('db');
 const language = registry.get('language');
 const local = registry.get('local');
-const session = registry.get('session');\
+const session = registry.get('session');
 const storage = registry.get('storage');
 const tax = registry.get('tax');
 const template = registry.get('template');
 const url = registry.get('url');
 
-export { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency }
+export { registry, factory, loader, config, storage, language, template, url, session, local, db, cart, tax, currency }

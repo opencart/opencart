@@ -15,6 +15,10 @@ export class WebComponent extends HTMLElement {
         this.registry = registry;
     }
 
+    get load() {
+        return this.registry.get('load');
+    }
+
     get config() {
         return this.registry.get('config');
     }

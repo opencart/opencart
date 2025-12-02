@@ -1,4 +1,4 @@
-import { Api } from './api.js';
+import { Request } from './request.js';
 import { Cart } from './cart.js';
 import { Config } from './config.js';
 import { Currency } from './currency.js';
@@ -14,16 +14,16 @@ import { Url } from './url.js';
 class Factory {
     static instance;
     data = {
-        api() {
-            return new Api();
+        api(option) {
+            return new Request(option);
         },
-        async cart(registry) {
-            return new Cart(registry);
+        async cart() {
+            return new Cart(this.registry);
         },
-        config(args) {
-            return new Config(args.path);
+        config(option) {
+            return new Config(option.path);
         },
-        async currency(args) {
+        async currency() {
             let currencies = await this.registry.get('storage').fetch('localisation/currency');
 
             return new Currency(currencies);
@@ -31,8 +31,8 @@ class Factory {
         db() {
             return new Db();
         },
-        language(args) {
-            return new Language(args.path);
+        language(option) {
+            return new Language(option.path);
         },
         local() {
             return new Local();
@@ -40,16 +40,16 @@ class Factory {
         session() {
             return new Session();
         },
-        storage(args) {
-            return new Storage(args.path);
+        storage(option) {
+            return new Storage(option.path);
         },
-        async tax(args) {
+        async tax() {
             let tax_classes = await this.registry.get('storage').fetch('localisation/tax_class');
 
             return new Tax(tax_classes);
         },
-        template(args) {
-            return new Template(args.path);
+        template(option) {
+            return new Template(option.path);
         },
         url() {
             return new Url();

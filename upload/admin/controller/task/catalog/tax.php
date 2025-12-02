@@ -5,7 +5,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class TaxClass extends \Opencart\System\Engine\Controller {
+class Tax extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *

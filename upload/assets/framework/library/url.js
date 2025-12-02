@@ -1,8 +1,6 @@
 export class Url {
-
-
     constructor() {
-        let location = document.location.search;
+        let location = document.location;
 
 
         let test = new URLSearchParams(location.search);
@@ -17,7 +15,7 @@ export class Url {
         this.port;
     }
 
-    query() {
+    query(key, value) {
         return this.query;
     }
 }

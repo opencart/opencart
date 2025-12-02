@@ -1,17 +1,34 @@
-import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './opencart.js';
-/*
-let currencies = await storage.fetch('localisation/currency');
+import { registry, factory, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './opencart.js';
 
 let app = {};
 
-await app.load.library('config', { path: '' });
-await app.config.fetch();
-await app.storage.fetch();
-await app.language.fetch();
-await app.template.fetch();
+await app.load('config', { path: './catalog/view/data/' + base.host + '/config/' });
+await app.load('storage', { path: './catalog/view/data/' + base.host + '/' });
 
-app.url.query('route');
-app.url.query('token');
+await app.config('startup');
+await app.storage('startup');
+await app.language('startup');
+await app.template('startup');
+
+await app.url.query('route');
+await app.url.query('token');
+
+let api = await app.request.fetch({
+    url: 'index.php?route=common/home',
+    method: 'post',
+    beforeSend: () => {
+
+    },
+    afterSend: () => {
+
+    },
+    success: () => {
+
+    },
+    error: () => {
+
+    }
+});
 
 await app.api.send({
     url: 'index.php?route=common/home',
@@ -29,7 +46,7 @@ await app.api.send({
 
     }
 });
-*/
+
 $(document).ready(function() {
     // Tooltip
     let oc_tooltip = function() {
@@ -74,6 +91,10 @@ $(document).ready(function() {
 
     // Button
     +function($) {
+
+
+
+
         $.fn.button = function(state) {
             return this.each(function() {
                 let element = this;

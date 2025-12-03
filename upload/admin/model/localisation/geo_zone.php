@@ -263,6 +263,23 @@ class GeoZone extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 	}
 
+	/*
+	 * Get Zone
+	 *
+	 * @param int $geo_zone_id primary key of the geo zone record
+	 *
+	 * @return array<int, array<string, mixed>> geo zone records that have geo zone ID
+	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
+	 * $results = $this->model_localisation_geo_zone->getZone($zone_to_geo_zone_id);
+	 */
+	public function getZone($zone_to_geo_zone_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `zone_to_geo_zone_id` = '" . (int)$zone_to_geo_zone_id . "'");
+
+		return $query->row;
+	}
+
 	/**
 	 * Get Zones
 	 *
@@ -286,6 +303,27 @@ class GeoZone extends \Opencart\System\Engine\Model {
 		}
 
 		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
+	/**
+	 * Get Zones
+	 *
+	 * Get the record of the zone to geo zone records in the database.
+	 *
+	 * @param int $geo_zone_id primary key of the geo zone record
+	 *
+	 * @return array<int, array<string, mixed>> geo zone records that have geo zone ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/geo_zone');
+	 *
+	 * $results = $this->model_localisation_geo_zone->getGeoZones($geo_zone_id);
+	 */
+	public function getZonesByCountryId(int $country_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		return $query->rows;
 	}

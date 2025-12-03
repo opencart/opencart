@@ -182,6 +182,15 @@ class TaxRate extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/*
+	 * Get Tax Rates By Geo Zone ID
+	 */
+	public function getTaxRatesByGeoZoneId(int $geo_zone_id): array {
+		$query = $this->db->query("SELECT `tr`.`tax_rate_id`, `tr`.`name` AS `name`, `tr`.`rate`, `tr`.`type`, `gz`.`name` AS `geo_zone` FROM `" . DB_PREFIX . "tax_rate` `tr` LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr`.`geo_zone_id` = `gz`.`geo_zone_id`) WHERE `tr`.`geo_zone_id` = '" . (int)$geo_zone_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 * Get Total Tax Rates
 	 *

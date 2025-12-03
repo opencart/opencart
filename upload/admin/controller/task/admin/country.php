@@ -32,7 +32,8 @@ class Country extends \Opencart\System\Engine\Controller {
 		// Create new data
 		$task_data = [
 			'code'   => 'country',
-			'action' => 'task/admin/country.list'
+			'action' => 'task/admin/country.list',
+			'args'   => []
 		];
 
 		$this->model_setting_task->addTask($task_data);

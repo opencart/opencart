@@ -11,28 +11,30 @@ export class Loader {
         this.factory = this.registry.get('factory');
     }
 
-    controller() {
+    controller(path) {
 
     }
 
-    model() {
+    model(path) {
 
     }
 
-    get config() {
-        return this.registry.get('config');
+    config(path) {
+        this.registry.get('config').load(path);
+
+        return this.registry.get('config').getAll();
     }
 
-    get storage() {
-        return this.registry.get('storage');
+    storage(path) {
+        return this.registry.get('storage').fetch(path);
     }
 
-    get language() {
-        return this.registry.get('language');
+    language(path) {
+        return this.registry.get('language').fetch(path);
     }
 
-    get template() {
-        return this.registry.get('template');
+    template() {
+        return this.registry.get('template').fetch(path, data);
     }
 
     async library(key, option = {}) {

@@ -56,7 +56,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		// Tax Class
 		$this->load->model('localisation/tax_class');
 
-		$tax_class_info = $this->model_localisation_tax_class->getTaxClass((int)$args['store_id']);
+		$tax_class_info = $this->model_localisation_tax_class->getTaxClass((int)$args['tax_class_id']);
 
 		if (!$tax_class_info) {
 			return ['error' => $this->language->get('error_tax_class')];
@@ -88,10 +88,12 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/tax_class');
 
-		$file = DIR_CATALOG . 'view/data/localisation/tax_class.json';
+		$files = oc_directory_read( DIR_CATALOG . 'view/data/localisation/', false, '/tax_class\-.+\.json$/');
 
-		if (is_file($file)) {
-			unlink($file);
+		foreach ($files as $file) {
+			if (is_file($file)) {
+				unlink($file);
+			}
 		}
 
 		return ['success' => $this->language->get('text_clear')];

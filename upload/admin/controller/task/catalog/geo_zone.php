@@ -49,41 +49,37 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/geo_zone');
 
-		if (!array_key_exists('geo_zone_id', $args)) {
+		if (!array_key_exists('zone_to_geo_zone_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Store
+		// Geo Zone
 		$this->load->model('localisation/geo_zone');
 
-		$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($args['geo_zone_id']);
+		$zone_info = $this->model_localisation_geo_zone->getZone((int)$args['zone_to_geo_zone_id']);
 
-		if (!$geo_zone_info) {
-			return ['error' => $this->language->get('error_store')];
+		if (!$zone_info) {
+			return ['error' => $this->language->get('error_zone')];
 		}
 
-		// Custom Fields
+		$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($zone_info['geo_zone_id']);
 
-		$this->load->model('localisation/tax_rate');
+		if (!$geo_zone_info) {
+			return ['error' => $this->language->get('error_geo_zone')];
+		}
 
-		$custom_fields = $this->model_localisation_tax_rate->getZones($filter_data);
+		$directory = DIR_CATALOG . 'view/data/localisation/';
+		$filename = 'geo_zone-' . $zone_info['country_id'] . '-' . $zone_info['zone_id'] . '.json';
 
-
-
-
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/customer/';
-		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
-
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_info + $description_info + ['custom_field' => $custom_fields]))) {
+		if (!file_put_contents($directory . $filename, json_encode($zone_info + $geo_zone_info))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $language_info['name'], $customer_group_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $geo_zone_info['name'])];
 	}
 
 	/**
@@ -98,22 +94,10 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/tax_class');
 
-		$this->load->model('setting/store');
+		$file = DIR_CATALOG . 'view/data/localisation/tax_class.json';
 
-		$stores = $this->model_setting_store->getStores();
-
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/tax_class.json';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
-			}
+		if (is_file($file)) {
+			unlink($file);
 		}
 
 		return ['success' => $this->language->get('text_clear')];

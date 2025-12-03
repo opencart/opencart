@@ -216,7 +216,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		// Countries
 		if (!empty($geo_zone_info)) {
-			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZonesByGeoZoneId($geo_zone_info['geo_zone_id']);
+			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZones($geo_zone_info['geo_zone_id']);
 		} else {
 			$data['zone_to_geo_zones'] = [];
 		}

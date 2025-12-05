@@ -195,6 +195,8 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone((int)$this->request->get['geo_zone_id']);
 		}
+		$this->load->model('localisation/tax_class');
+		print_r($this->model_localisation_tax_class->getTaxRulesByGeoZoneId($geo_zone_info['geo_zone_id']));
 
 		if (!empty($geo_zone_info)) {
 			$data['geo_zone_id'] = $geo_zone_info['geo_zone_id'];

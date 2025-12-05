@@ -201,9 +201,15 @@ class Country extends \Opencart\System\Engine\Controller {
 		$zones = $this->model_localisation_zone->getZones($filter_data);
 
 		// Geo Zones
+		$geo_zone_data = [];
+
 		$this->load->model('localisation/geo_zone');
 
 		$geo_zones = $this->model_localisation_geo_zone->getZonesByCountryId($country_info['country_id']);
+
+		foreach ($geo_zones as $geo_zone) {
+			$geo_zone_data[$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
+		}
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
@@ -213,7 +219,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zones] + ['geo_zone' => $geo_zones]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zones] + ['geo_zone' => $geo_zone_data]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -246,7 +252,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
 
 				$file = $base . $directory . 'country.json';
-DSXCDFVD>>
+
 				if (is_file($file)) {
 					unlink($file);
 				}

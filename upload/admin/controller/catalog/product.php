@@ -96,12 +96,24 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'filter_name',
+			'filter_model',
+			'filter_category_id',
+			'filter_manufacturer_id',
+			'filter_price_from',
+			'filter_price_to',
+			'filter_quantity_from',
+			'filter_quantity_to',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 
@@ -277,7 +289,9 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$remove = [
 			'route',
-			'user_token'
+			'user_token',
+			'product_id',
+			'master_id'
 		];
 
 		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));

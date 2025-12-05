@@ -108,7 +108,8 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 
 		$remove = [
 			'route',
-			'user_token'
+			'user_token',
+			'customer_approval_id'
 		];
 
 		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));

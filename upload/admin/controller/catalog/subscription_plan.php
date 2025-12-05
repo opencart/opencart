@@ -18,12 +18,13 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 
@@ -91,7 +92,8 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$remove = [
 			'route',
-			'user_token'
+			'user_token',
+			'subscription_plan_id'
 		];
 
 		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));

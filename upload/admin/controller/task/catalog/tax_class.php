@@ -62,7 +62,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_tax_class')];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/customer/';
+		$directory = DIR_CATALOG . 'view/data/localisation/';
 		$filename = 'tax_class-' . $tax_class_info['tax_class_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {

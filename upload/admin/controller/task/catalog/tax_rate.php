@@ -20,7 +20,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		// Geo Zones
 		$this->load->model('localisation/geo_zone');
 
 		$geo_zones = $this->model_localisation_geo_zone->getGeoZones();
@@ -62,9 +61,19 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_geo_zone')];
 		}
 
+		$tax_rate_data = [];
+
 		$this->load->model('localisation/tax_rate');
 
 		$tax_rates = $this->model_localisation_tax_rate->getTaxRatesByGeoZoneId($geo_zone_info['geo_zone_id']);
+
+		foreach ($tax_rates as $tax_rate) {
+			$customer_groups = $this->model_localisation_tax_rate->getCustomerGroups($tax_rate['tax_rate_id']);
+
+			foreach ($customer_groups as $customer_group_id) {
+				$tax_rate_data[$tax_rate['tax_class_id']][$customer_group_id][] = $tax_rate;
+			}
+		}
 
 		$directory = DIR_CATALOG . 'view/data/localisation/';
 		$filename = 'tax_rate-' . $geo_zone_info['geo_zone_id'] . '.json';

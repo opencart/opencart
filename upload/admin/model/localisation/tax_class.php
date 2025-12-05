@@ -266,6 +266,20 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/*
+	 * Get Tax Rates By Geo Zone ID
+	 */
+	public function getTaxRulesByGeoZoneId(int $geo_zone_id): array {
+		$query = $this->db->query("SELECT `tr1`.`tax_rate_id`, `tr1`.`tax_class_id`, `tr2`.`name` AS `name`, `tr2`.`rate`, `tr2`.`type`, `tr1`.`priority`, `gz`.`name` AS `geo_zone` 
+
+FROM `" . DB_PREFIX . "tax_rule` `tr1`
+LEFT JOIN `" . DB_PREFIX . "tax_rate` `tr2` ON (`tr1`.`tax_rate_id` = `tr2`.`tax_rate_id`) 
+LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr2`.`geo_zone_id` = `gz`.`geo_zone_id`) 
+WHERE `tr2`.`geo_zone_id` = '" . (int)$geo_zone_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 * Get Total Tax Rules By Tax Rate ID
 	 *

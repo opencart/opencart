@@ -30,12 +30,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$filter_status = '';
 		}
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'filter_store_id',
+			'filter_status',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

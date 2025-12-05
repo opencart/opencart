@@ -157,13 +157,17 @@ class Category extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'category_id'
+		$allowed = [
+			'filter_name',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -202,14 +206,14 @@ class Category extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_name',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -222,13 +226,16 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['sort_status'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/category.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_name',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Categories
 		$category_total = $this->model_catalog_category->getTotalCategories($filter_data);
@@ -262,13 +269,17 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['category_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'category_id'
+		$allowed = [
+			'filter_name',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

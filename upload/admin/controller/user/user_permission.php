@@ -85,12 +85,13 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('user/user_permission.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -112,14 +113,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$data['user_groups'][] = ['edit' => $this->url->link('user/user_permission.form', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '';
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';

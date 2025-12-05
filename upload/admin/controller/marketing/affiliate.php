@@ -64,12 +64,19 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'filter_name',
+			'filter_tracking',
+			'filter_payment_method',
+			'filter_commission',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_status',
+			'page',
+			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 
@@ -238,12 +245,21 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$limit = $this->config->get('config_pagination');
 		}
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'filter_name',
+			'filter_tracking',
+			'filter_payment_method',
+			'filter_commission',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_status',
+			'sort',
+			'order',
+			'page',
+			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url);
 

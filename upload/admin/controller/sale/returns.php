@@ -64,12 +64,13 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 
@@ -194,12 +195,22 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'filter_return_id',
+			'filter_order_id',
+			'filter_customer',
+			'filter_product',
+			'filter_model',
+			'filter_return_status_id',
+			'filter_date_from',
+			'filter_date_to',
+			'sort',
+			'order',
+			'page',
+			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . $url);
 

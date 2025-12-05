@@ -52,12 +52,19 @@ class Country extends \Opencart\System\Engine\Controller {
 			$filter_status = '';
 		}
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'filter_name',
+			'filter_iso_code_2',
+			'filter_iso_code_3',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 
@@ -212,14 +219,17 @@ class Country extends \Opencart\System\Engine\Controller {
 		// Default
 		$data['country_id'] = $this->config->get('config_country_id');
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+
+		$allowed = [
+			'filter_name',
+			'filter_iso_code_2',
+			'filter_iso_code_3',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';

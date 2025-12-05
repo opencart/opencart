@@ -200,14 +200,14 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_name',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';

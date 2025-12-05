@@ -87,13 +87,13 @@ class Download extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'download_id'
+		$allowed = [
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -118,14 +118,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '';
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -137,13 +130,12 @@ class Download extends \Opencart\System\Engine\Controller {
 		$data['sort_name'] = $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_date_added'] = $this->url->link('catalog/download.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Downloads
 		$download_total = $this->model_catalog_download->getTotalDownloads($filter_data);
@@ -179,13 +171,13 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 
-		$remove = [
-			'route',
-			'user_token',
-			'download_id'
+		$allowed = [
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

@@ -46,12 +46,13 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$filter_language_id = 0;
 		}
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 
@@ -160,13 +161,18 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'seo_url_id'
+		$allowed = [
+			'filter_keyword',
+			'filter_key',
+			'filter_value',
+			'filter_store_id',
+			'filter_language_id',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -211,14 +217,18 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
+		$allowed = [
+			'filter_keyword',
+			'filter_key',
+			'filter_value',
+			'filter_store_id',
+			'filter_language_id',
 			'sort',
-			'order'
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';

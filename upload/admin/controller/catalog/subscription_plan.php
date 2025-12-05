@@ -90,13 +90,13 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'subscription_plan_id'
+		$allowed = [
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . $url);
 

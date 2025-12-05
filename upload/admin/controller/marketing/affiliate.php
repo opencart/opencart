@@ -65,7 +65,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$allowed = [
-			'filter_name',
+			'filter_customer',
 			'filter_tracking',
 			'filter_payment_method',
 			'filter_commission',
@@ -293,14 +293,18 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_name',
+			'filter_tracking',
+			'filter_payment_method',
+			'filter_commission',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_status',
+			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -315,13 +319,20 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['sort_balance'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=balance' . $url);
 		$data['sort_date_added'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_name',
+			'filter_tracking',
+			'filter_payment_method',
+			'filter_commission',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_status',
+			'sort',
+			'order',
+			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Affiliates
 		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
@@ -359,13 +370,21 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
-		$remove = [
-			'route',
-			'user_token',
-			'customer_id'
+		$allowed = [
+			'filter_name',
+			'filter_tracking',
+			'filter_payment_method',
+			'filter_commission',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_status',
+			'sort',
+			'order',
+			'page',
+			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

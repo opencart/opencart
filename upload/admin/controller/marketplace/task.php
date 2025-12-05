@@ -29,6 +29,8 @@ class Task extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$allowed = [
+			'filter_code',
+			'filter_status',
 			'page'
 		];
 
@@ -119,12 +121,13 @@ class Task extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'filter_code',
+			'filter_status',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('marketplace/task.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -145,13 +148,12 @@ class Task extends \Opencart\System\Engine\Controller {
 			$data['tasks'][] = ['args' => json_encode($result['args'])] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_code',
+			'filter_status'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Tasks
 		$task_total = $this->model_setting_task->getTotalTasks($filter_data);

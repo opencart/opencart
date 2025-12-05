@@ -55,8 +55,11 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		$allowed = [
-			'sort',
-			'order',
+			'filter_name',
+			'filter_email',
+			'filter_user_group_id',
+			'filter_status',
+			'filter_ip',
 			'page'
 		];
 
@@ -155,18 +158,6 @@ class User extends \Opencart\System\Engine\Controller {
 			$filter_ip = '';
 		}
 
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'username';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -180,8 +171,6 @@ class User extends \Opencart\System\Engine\Controller {
 			'filter_user_group_id',
 			'filter_status',
 			'filter_ip',
-			'sort',
-			'order',
 			'page'
 		];
 
@@ -199,8 +188,6 @@ class User extends \Opencart\System\Engine\Controller {
 			'filter_user_group_id' => $filter_user_group_id,
 			'filter_status'        => $filter_status,
 			'filter_ip'            => $filter_ip,
-			'sort'                 => $sort,
-			'order'                => $order,
 			'start'                => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'                => $this->config->get('config_pagination_admin')
 		];
@@ -210,42 +197,8 @@ class User extends \Opencart\System\Engine\Controller {
 		$results = $this->model_user_user->getUsers($filter_data);
 
 		foreach ($results as $result) {
-			$data['users'][] = [
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('user/user.form', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)
-			] + $result;
+			$data['users'][] = ['edit' => $this->url->link('user/user.form', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)] + $result;
 		}
-
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sorts
-		$data['sort_username'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
-		$data['sort_name'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_email'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=email' . $url);
-		$data['sort_user_group'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=user_group' . $url);
-		$data['sort_status'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
-		$data['sort_date_added'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
-
-		$remove = [
-			'route',
-			'user_token',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		// Total Users
 		$user_total = $this->model_user_user->getTotalUsers();
@@ -257,9 +210,6 @@ class User extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($user_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($user_total - $this->config->get('config_pagination_admin'))) ? $user_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $user_total, ceil($user_total / $this->config->get('config_pagination_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		return $this->load->view('user/user_list', $data);
 	}
@@ -278,13 +228,16 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['user_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'user_id'
+		$allowed = [
+			'filter_name',
+			'filter_email',
+			'filter_user_group_id',
+			'filter_status',
+			'filter_ip',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

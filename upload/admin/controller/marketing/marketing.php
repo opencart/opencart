@@ -41,12 +41,11 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$allowed = [
-			'filter_name'      => $filter_name,
-			'filter_code'      => $filter_code,
-			'filter_date_from' => $filter_date_from,
-			'filter_date_to'   => $filter_date_to,
-			'sort',
-			'order',
+			'filter_name',
+			'filter_code',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_date_to',
 			'page'
 		];
 
@@ -124,18 +123,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$filter_date_to = '';
 		}
 
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -143,12 +130,11 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		}
 
 		$allowed = [
-			'filter_name'      => $filter_name,
-			'filter_code'      => $filter_code,
-			'filter_date_from' => $filter_date_from,
-			'filter_date_to'   => $filter_date_to,
-			'sort',
-			'order',
+			'filter_name',
+			'filter_code',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_date_to',
 			'page'
 		];
 
@@ -164,8 +150,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			'filter_code'      => $filter_code,
 			'filter_date_from' => $filter_date_from,
 			'filter_date_to'   => $filter_date_to,
-			'sort'             => $sort,
-			'order'            => $order,
 			'start'            => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'            => $this->config->get('config_pagination_admin')
 		];
@@ -175,39 +159,18 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$results = $this->model_marketing_marketing->getMarketings($filter_data);
 
 		foreach ($results as $result) {
-			$data['marketings'][] = [
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('marketing/marketing.form', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'] . $url)
-			] + $result;
+			$data['marketings'][] = ['edit'       => $this->url->link('marketing/marketing.form', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'] . $url)] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_name',
+			'filter_code',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_date_to'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sorts
-		$data['sort_name'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_code'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
-		$data['sort_date_added'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
-
-		$remove = [
-			'route',
-			'user_token',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$marketing_total = $this->model_marketing_marketing->getTotalMarketings($filter_data);
 
@@ -218,9 +181,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->url->link('marketing/marketing.history', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($marketing_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($marketing_total - $this->config->get('config_pagination_admin'))) ? $marketing_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $marketing_total, ceil($marketing_total / $this->config->get('config_pagination_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		return $this->load->view('marketing/marketing_list', $data);
 	}
@@ -237,13 +197,16 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['marketing_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'marketing_id'
+		$allowed = [
+			'filter_name',
+			'filter_code',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_date_to',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

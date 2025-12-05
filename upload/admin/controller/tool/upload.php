@@ -17,8 +17,9 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$allowed = [
-			'sort',
-			'order',
+			'filter_name',
+			'filter_date_from',
+			'filter_date_to',
 			'page'
 		];
 
@@ -85,18 +86,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$filter_date_to = '';
 		}
 
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'date_added';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'DESC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -107,8 +96,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 			'filter_name',
 			'filter_date_from',
 			'filter_date_to',
-			'sort',
-			'order',
 			'page'
 		];
 
@@ -123,8 +110,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 			'filter_name'      => $filter_name,
 			'filter_date_from' => $filter_date_from,
 			'filter_date_to'   => $filter_date_to,
-			'sort'             => $sort,
-			'order'            => $order,
 			'start'            => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'            => $this->config->get('config_pagination_admin')
 		];
@@ -134,39 +119,16 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$results = $this->model_tool_upload->getUploads($filter_data);
 
 		foreach ($results as $result) {
-			$data['uploads'][] = [
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'download'   => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $result['code'] . $url)
-			] + $result;
+			$data['uploads'][] = ['download'   => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $result['code'] . $url)] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_name',
+			'filter_date_from',
+			'filter_date_to'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sorts
-		$data['sort_name'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_code'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
-		$data['sort_date_added'] = $this->url->link('tool/upload.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
-
-		$remove = [
-			'route',
-			'user_token',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Uploads
 		$upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
@@ -182,9 +144,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$data['filter_name'] = $filter_name;
 		$data['filter_date_from'] = $filter_date_from;
 		$data['filter_date_to'] = $filter_date_to;
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		return $this->load->view('tool/upload_list', $data);
 	}

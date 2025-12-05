@@ -47,6 +47,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		$allowed = [
+			'filter_keyword',
+			'filter_key',
+			'filter_value',
+			'filter_store_id',
+			'filter_language_id',
 			'sort',
 			'order',
 			'page'
@@ -222,10 +227,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			'filter_key',
 			'filter_value',
 			'filter_store_id',
-			'filter_language_id',
-			'sort',
-			'order',
-			'page'
+			'filter_language_id'
 		];
 
 		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
@@ -243,13 +245,17 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$data['sort_store'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=store_id' . $url);
 		$data['sort_language'] = $this->url->link('design/seo_url.list', 'user_token=' . $this->session->data['user_token'] . '&sort=language_id' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_keyword',
+			'filter_key',
+			'filter_value',
+			'filter_store_id',
+			'filter_language_id',
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$seo_url_total = $this->model_design_seo_url->getTotalSeoUrls($filter_data);
 
@@ -279,13 +285,18 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['seo_url_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'seo_url_id'
+		$allowed = [
+			'filter_keyword',
+			'filter_key',
+			'filter_value',
+			'filter_store_id',
+			'filter_language_id',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

@@ -161,13 +161,16 @@ class Comment extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_keyword',
+			'filter_article',
+			'filter_customer',
+			'filter_status',
+			'filter_date_from',
+			'filter_date_to'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Comments
 		$comment_total = $this->model_cms_article->getTotalComments($filter_data);

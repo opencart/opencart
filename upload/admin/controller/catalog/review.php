@@ -203,14 +203,21 @@ class Review extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_name',
+			'filter_model' ,
+			'filter_category_id',
+			'filter_manufacturer_id',
+			'filter_price_from',
+			'filter_price_to',
+			'filter_quantity_from',
+			'filter_quantity_to',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -225,13 +232,23 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['sort_date_added'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 		$data['sort_status'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_name',
+			'filter_model' ,
+			'filter_category_id',
+			'filter_manufacturer_id',
+			'filter_price_from',
+			'filter_price_to',
+			'filter_quantity_from',
+			'filter_quantity_to',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Reviews
 		$review_total = $this->model_catalog_review->getTotalReviews($filter_data);
@@ -268,13 +285,18 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['review_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'review_id'
+		$allowed = [
+			'filter_product',
+			'filter_author' ,
+			'filter_status',
+			'filter_date_from',
+			'filter_date_to',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

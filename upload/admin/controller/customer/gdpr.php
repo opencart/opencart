@@ -152,12 +152,15 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'filter_email',
+			'filter_action',
+			'filter_status',
+			'filter_date_from',
+			'filter_date_to'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total GDPRs
 		$gdpr_total = $this->model_customer_gdpr->getTotalGdprs($filter_data);

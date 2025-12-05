@@ -109,12 +109,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$remove = [
-			'route',
-			'user_token'
+		$allowed = [
+			'filter_store_id',
+			'filter_status',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('design/theme.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -155,13 +156,17 @@ class Theme extends \Opencart\System\Engine\Controller {
 		// Total Themes
 		$theme_total = $this->model_design_theme->getTotalThemes();
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_keyword',
+			'filter_key',
+			'filter_value',
+			'filter_store_id',
+			'filter_language_id'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+
+		$seo_url_total = $this->model_design_seo_url->getTotalSeoUrls($filter_data);
 
 		// Pagination
 		$data['total'] = $theme_total;
@@ -186,13 +191,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['theme_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'theme_id'
+		$allowed = [
+			'filter_store_id',
+			'filter_status',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

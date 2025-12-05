@@ -261,14 +261,17 @@ class Customer extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_name',
+			'filter_email',
+			'filter_customer_group_id',
+			'filter_status',
+			'filter_ip',
+			'filter_date_from',
+			'filter_date_to'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -283,13 +286,19 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['sort_status'] = $this->url->link('customer/customer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 		$data['sort_date_added'] = $this->url->link('customer/customer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_name',
+			'filter_email',
+			'filter_customer_group_id',
+			'filter_status',
+			'filter_ip',
+			'filter_date_from',
+			'filter_date_to',
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Customers
 		$customer_total = $this->model_customer_customer->getTotalCustomers($filter_data);
@@ -327,13 +336,20 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
-		$remove = [
-			'route',
-			'user_token',
-			'customer_id'
+		$allowed = [
+			'filter_name',
+			'filter_email',
+			'filter_customer_group_id',
+			'filter_status',
+			'filter_ip',
+			'filter_date_from',
+			'filter_date_to',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

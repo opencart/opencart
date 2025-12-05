@@ -17,8 +17,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$allowed = [
-			'sort',
-			'order',
 			'page'
 		];
 
@@ -88,8 +86,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		$allowed = [
-			'sort',
-			'order',
+
 			'page'
 		];
 
@@ -101,8 +98,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		$data['languages'] = [];
 
 		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
@@ -134,11 +129,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		// Sorts
-		$data['sort_name'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_code'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
-		$data['sort_status'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
-		$data['sort_sort_order'] = $this->url->link('localisation/language.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
-
 		$remove = [
 			'route',
 			'user_token',

@@ -364,14 +364,21 @@ class Product extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_name',
+			'filter_model' ,
+			'filter_category_id',
+			'filter_manufacturer_id',
+			'filter_price_from',
+			'filter_price_to',
+			'filter_quantity_from',
+			'filter_quantity_to',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -387,13 +394,23 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['sort_order'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 		$data['sort_status'] = $this->url->link('catalog/product.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_name',
+			'filter_model' ,
+			'filter_category_id',
+			'filter_manufacturer_id',
+			'filter_price_from',
+			'filter_price_to',
+			'filter_quantity_from',
+			'filter_quantity_to',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Products
 		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
@@ -445,14 +462,24 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['text_variant'] = '';
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'product_id',
-			'master_id'
+		$allowed = [
+			'filter_name',
+			'filter_model' ,
+			'filter_category_id',
+			'filter_manufacturer_id',
+			'filter_price_from',
+			'filter_price_to',
+			'filter_quantity_from',
+			'filter_quantity_to',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 
@@ -465,13 +492,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
-
-		$remove = [
-			'route',
-			'user_token'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
 
 		$data['save'] = $this->url->link('catalog/product.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url);

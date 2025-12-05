@@ -182,13 +182,19 @@ class Country extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'country_id'
+		$allowed = [
+			'filter_name',
+			'filter_iso_code_2',
+			'filter_iso_code_3',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['action'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -219,7 +225,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		// Default
 		$data['country_id'] = $this->config->get('config_country_id');
 
-
 		$allowed = [
 			'filter_name',
 			'filter_iso_code_2',
@@ -243,13 +248,18 @@ class Country extends \Opencart\System\Engine\Controller {
 		$data['sort_iso_code_3'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
 		$data['sort_status'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_name',
+			'filter_iso_code_2',
+			'filter_iso_code_3',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Countries
 		$country_total = $this->model_localisation_country->getTotalCountries($filter_data);
@@ -280,13 +290,19 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['country_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'country_id'
+		$allowed = [
+			'filter_name',
+			'filter_iso_code_2',
+			'filter_iso_code_3',
+			'filter_store_id',
+			'filter_language_id',
+			'filter_status',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

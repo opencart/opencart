@@ -4,11 +4,11 @@
       <thead>
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
-          <th><a href="{{ sort_title }}"{% if sort == 'title' %} class="{{ order|lower }}"{% endif %}>{{ column_title }}</a></th>
-          <th><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></th>
-          <th class="text-end"><a href="{{ sort_value }}"{% if sort == 'value' %} class="{{ order|lower }}"{% endif %}>{{ column_value }}</a></th>
-          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
-          <th class="d-none d-lg-table-cell"><a href="{{ sort_date_modified }}"{% if sort == 'date_modified' %} class="{{ order|lower }}"{% endif %}>{{ column_date_modified }}</a></th>
+          <th>{{ column_title }}</th>
+          <th>{{ column_code }}</th>
+          <th class="text-end">{{ column_value }}</th>
+          <th class="text-center">{{ column_status }}</th>
+          <th class="d-none d-lg-table-cell">{{ column_date_modified }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>

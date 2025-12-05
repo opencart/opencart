@@ -16,13 +16,11 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -67,31 +65,17 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -99,8 +83,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$data['return_reasons'] = [];
 
 		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
@@ -113,32 +95,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$data['return_reasons'][] = ['edit' => $this->url->link('localisation/return_reason.form', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $result['return_reason_id'] . $url)] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sort
-		$data['sort_name'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-
-		$remove = [
-			'route',
-			'user_token',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
 		// Total Return Reasons
 		$return_reason_total = $this->model_localisation_return_reason->getTotalReturnReasons();
 
@@ -149,9 +105,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_reason_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_reason_total - $this->config->get('config_pagination_admin'))) ? $return_reason_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_reason_total, ceil($return_reason_total / $this->config->get('config_pagination_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		return $this->load->view('localisation/return_reason_list', $data);
 	}
@@ -168,13 +121,11 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['return_reason_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'return_reason_id'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 

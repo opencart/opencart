@@ -19,7 +19,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
-			$url .= 'page=' . $this->request->get['page'];
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['breadcrumbs'] = [];
@@ -78,7 +78,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
-			$url .= 'page=' . $this->request->get['page'];
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['action'] = $this->url->link('marketplace/cron.list', 'user_token=' . $this->session->data['user_token'] . $url);

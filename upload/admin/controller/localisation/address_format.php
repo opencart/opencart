@@ -19,7 +19,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
-			$url .= 'page=' . $this->request->get['page'];
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['breadcrumbs'] = [];
@@ -74,7 +74,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
-			$url .= 'page=' . $this->request->get['page'];
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['action'] = $this->url->link('localisation/address_format.list', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -131,7 +131,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
-			$url .= 'page=' . $this->request->get['page'];
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['breadcrumbs'] = [];

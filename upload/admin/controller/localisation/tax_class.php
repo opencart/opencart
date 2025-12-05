@@ -113,14 +113,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$data['tax_classes'][] = ['edit' => $this->url->link('localisation/tax_class.form', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $result['tax_class_id'] . $url)] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '';
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -131,13 +124,12 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		// Sort
 		$data['sort_title'] = $this->url->link('localisation/tax_class.list', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Tax Classes
 		$tax_class_total = $this->model_localisation_tax_class->getTotalTaxClasses();
@@ -168,13 +160,13 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['tax_class_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'tax_class_id'
+		$allowed = [
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

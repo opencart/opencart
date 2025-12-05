@@ -16,13 +16,11 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -67,31 +65,17 @@ class Location extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('localisation/location.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -99,8 +83,6 @@ class Location extends \Opencart\System\Engine\Controller {
 		$data['locations'] = [];
 
 		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
@@ -113,33 +95,6 @@ class Location extends \Opencart\System\Engine\Controller {
 			$data['locations'][] = ['edit' => $this->url->link('localisation/location.form', 'user_token=' . $this->session->data['user_token'] . '&location_id=' . $result['location_id'] . $url)] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sorts
-		$data['sort_name'] = $this->url->link('localisation/location.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_address'] = $this->url->link('localisation/location.list', 'user_token=' . $this->session->data['user_token'] . '&sort=address' . $url);
-
-		$remove = [
-			'route',
-			'user_token',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
 		// Total Locations
 		$location_total = $this->model_localisation_location->getTotalLocations();
 
@@ -150,9 +105,6 @@ class Location extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->url->link('localisation/location.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($location_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($location_total - $this->config->get('config_pagination_admin'))) ? $location_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $location_total, ceil($location_total / $this->config->get('config_pagination_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		return $this->load->view('localisation/location_list', $data);
 	}
@@ -169,13 +121,11 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['location_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'location_id'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 

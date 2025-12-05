@@ -116,32 +116,6 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		// Default
 		$data['subscription_status_id'] = $this->config->get('config_subscription_status_id');
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sort
-		$data['sort_name'] = $this->url->link('localisation/subscription_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-
-		$remove = [
-			'route',
-			'user_token',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
 		// Total Subscription Statuses
 		$subscription_status_total = $this->model_localisation_subscription_status->getTotalSubscriptionStatuses();
 
@@ -171,13 +145,11 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['subscription_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'subscription_status_id'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 

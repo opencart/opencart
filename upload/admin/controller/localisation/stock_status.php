@@ -113,32 +113,6 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$data['stock_statuses'][] = ['edit' => $this->url->link('localisation/stock_status.form', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . $url)] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sort
-		$data['sort_name'] = $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-
-		$remove = [
-			'route',
-			'user_token',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
 		// Total Stock Statuses
 		$stock_status_total = $this->model_localisation_stock_status->getTotalStockStatuses();
 
@@ -146,7 +120,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$data['total'] = $stock_status_total;
 		$data['page'] = $page;
 		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($stock_status_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($stock_status_total - $this->config->get('config_pagination_admin'))) ? $stock_status_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $stock_status_total, ceil($stock_status_total / $this->config->get('config_pagination_admin')));
 
@@ -168,13 +142,11 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['stock_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'stock_status_id'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 

@@ -67,18 +67,6 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -116,32 +104,6 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		// Default
 		$data['return_status_id'] = $this->config->get('config_return_status_id');
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sort
-		$data['sort_name'] = $this->url->link('localisation/return_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-
-		$remove = [
-			'route',
-			'user_token',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
-
 		// Total Return Statuses
 		$return_status_total = $this->model_localisation_return_status->getTotalReturnStatuses();
 
@@ -171,13 +133,11 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['return_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$remove = [
-			'route',
-			'user_token',
-			'return_status_id'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 

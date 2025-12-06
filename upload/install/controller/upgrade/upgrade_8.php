@@ -657,38 +657,38 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			$events[] = [
 				'code'    => 'tax_class_add',
 				'trigger' => 'admin/model/localisation/tax_class.addTaxClass/after',
-				'action'  => 'event/tax_class'
+				'action'  => 'event/tax'
 			];
 
 			$events[] = [
 				'code'    => 'tax_class_edit',
 				'trigger' => 'admin/model/localisation/tax_class.editTaxClass/after',
-				'action'  => 'event/tax_class'
+				'action'  => 'event/tax'
 			];
 
 			$events[] = [
 				'code'    => 'tax_class_delete',
 				'trigger' => 'admin/model/localisation/tax_class.deleteTaxClass/after',
-				'action'  => 'event/tax_class'
+				'action'  => 'event/tax'
 			];
 
 			// Tax Rate
 			$events[] = [
 				'code'    => 'tax_rate_add',
 				'trigger' => 'admin/model/localisation/tax_rate.addTaxRate/after',
-				'action'  => 'event/tax_rate'
+				'action'  => 'event/tax'
 			];
 
 			$events[] = [
 				'code'    => 'tax_rate_edit',
 				'trigger' => 'admin/model/localisation/tax_rate.editTaxRate/after',
-				'action'  => 'event/tax_rate'
+				'action'  => 'event/tax'
 			];
 
 			$events[] = [
 				'code'    => 'tax_rate_delete',
 				'trigger' => 'admin/model/localisation/tax_rate.deleteTaxRate/after',
-				'action'  => 'event/tax_rate'
+				'action'  => 'event/tax'
 			];
 
 			// Theme

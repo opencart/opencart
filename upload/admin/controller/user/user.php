@@ -55,6 +55,7 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		$allowed = [
+			'filter_username',
 			'filter_name',
 			'filter_email',
 			'filter_user_group_id',
@@ -229,6 +230,7 @@ class User extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['user_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$allowed = [
+			'filter_username',
 			'filter_name',
 			'filter_email',
 			'filter_user_group_id',

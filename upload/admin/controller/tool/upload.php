@@ -18,6 +18,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		$allowed = [
 			'filter_name',
+			'filter_code',
 			'filter_date_from',
 			'filter_date_to',
 			'page'
@@ -74,6 +75,12 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$filter_name = '';
 		}
 
+		if (isset($this->request->get['filter_code'])) {
+			$filter_code = $this->request->get['filter_code'];
+		} else {
+			$filter_code = '';
+		}
+
 		if (isset($this->request->get['filter_date_from'])) {
 			$filter_date_from = $this->request->get['filter_date_from'];
 		} else {
@@ -94,6 +101,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		$allowed = [
 			'filter_name',
+			'filter_code',
 			'filter_date_from',
 			'filter_date_to',
 			'page'
@@ -108,6 +116,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		$filter_data = [
 			'filter_name'      => $filter_name,
+			'filter_code'      => $filter_code,
 			'filter_date_from' => $filter_date_from,
 			'filter_date_to'   => $filter_date_to,
 			'start'            => ($page - 1) * $this->config->get('config_pagination_admin'),

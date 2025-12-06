@@ -11,12 +11,41 @@ export class Loader {
         this.factory = this.registry.get('factory');
     }
 
-    async controller(path) {
-        return await this.factory.get('controller').bind({ registry: this.registry });
+    async controller(path, args) {
+        let pos = path.indexOf('.');
+
+        if (pos == -1) {
+            let key = 'controller_' + path.replaceAll('/', '_');
+            let method = 'index';
+        } else {
+            let key = 'controller_' + path.substring(0, pos).replaceAll('/', '_');
+            let method = path.substring(pos);
+
+            path.substring(pos);
+
+        }
+
+        if (!this.registry.has(key)) {
+            let factory = await this.factory.get('controller').bind({ registry: this.registry });
+
+            let iniono = this.registry.set(key, factory(path));
+        }
+
+        return this.registry.get(key).method();
     }
 
     async model(path) {
-        return await this.factory.get('model').bind({ registry: this.registry });
+        let key = 'model_' + path.replaceAll('/', '_');
+
+        if (this.registry.has(key)) {
+            return this.registry.get(key);
+        }
+
+        let factory = this.factory.get('model').bind({ registry: this.registry });
+
+        this.registry.set(key, await factory(path));
+
+        return this.registry.get(key);
     }
 
     config(path) {

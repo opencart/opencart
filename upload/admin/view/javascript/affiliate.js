@@ -1,17 +1,19 @@
+import { registry, factory, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './opencart.js';
+
 $('#form-filter').on('submit', function(e) {
     e.preventDefault();
 
     let url = $(this).serialize();
 
-    window.history.pushState({}, null, 'index.php?route=marketing/affiliate&user_token=' + url.get('user_token') + '&' + url);
+    window.history.pushState({}, null, 'index.php?route=marketing/affiliate&user_token=' + session.get('user_token') + '&' + url);
 
-    $('#list').load('index.php?route=marketing/affiliate.list&user_token=' + url.get('user_token') + '&' + url);
+    $('#list').load('index.php?route=marketing/affiliate.list&user_token=' + session.get('user_token') + '&' + url);
 });
 
 $('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer.autocomplete&user_token=' + url.get('user_token') + '&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=customer/customer.autocomplete&user_token=' + session.get('user_token') + '&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -34,7 +36,7 @@ $('#button-calculate').on('click', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=marketing/affiliate.calculate&user_token=' + url.get('user_token'),
+        url: 'index.php?route=marketing/affiliate.calculate&user_token=' + session.get('user_token'),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -114,7 +116,7 @@ $('#button-calculate').on('click', function(e) {
 $('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer.autocomplete&user_token=' + url.get('user_token') + '&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=customer/customer.autocomplete&user_token=' + session.get('user_token') + '&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function(json) {
                 response($.map(json, function(item) {
@@ -139,7 +141,7 @@ $('#input-customer').autocomplete({
 
 $('#input-customer-group').on('change', function() {
     $.ajax({
-        url: 'index.php?route=customer/customer.customfield&user_token=' + url.get('user_token') + '&customer_group_id=' + this.value,
+        url: 'index.php?route=customer/customer.customfield&user_token=' + session.get('user_token') + '&customer_group_id=' + this.value,
         dataType: 'json',
         success: function(json) {
             $('.custom-field').hide();

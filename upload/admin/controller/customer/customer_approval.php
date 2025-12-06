@@ -113,7 +113,6 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			'filter_type',
 			'filter_date_from',
 			'filter_date_to',
-			'sort',
 			'page'
 		];
 

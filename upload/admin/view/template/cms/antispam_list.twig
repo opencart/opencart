@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
-          <th><a href="{{ sort_keyword }}"{% if sort == 'keyword' %} class="{{ order|lower }}"{% endif %}>{{ column_keyword }}</a></th>
+          <th>{{ column_keyword }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>

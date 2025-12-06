@@ -16,13 +16,11 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -67,31 +65,17 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('customer/customer_group.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -99,8 +83,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$data['customer_groups'] = [];
 
 		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
@@ -116,25 +98,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		// Default
 		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 
-		$url = '';
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sorts
-		$data['sort_name'] = $this->url->link('customer/customer_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_sort_order'] = $this->url->link('customer/customer_group.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
-
-		$allowed = [
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
-
 		// Total Customer Groups
 		$customer_group_total = $this->model_customer_customer_group->getTotalCustomerGroups();
 
@@ -142,12 +105,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$data['total'] = $customer_group_total;
 		$data['page'] = $page;
 		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('customer/customer_group.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->url->link('customer/customer_group.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_group_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($customer_group_total - $this->config->get('config_pagination_admin'))) ? $customer_group_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $customer_group_total, ceil($customer_group_total / $this->config->get('config_pagination_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		return $this->load->view('customer/customer_group_list', $data);
 	}
@@ -164,13 +124,11 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['customer_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 

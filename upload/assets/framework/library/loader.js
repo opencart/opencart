@@ -11,18 +11,18 @@ export class Loader {
         this.factory = this.registry.get('factory');
     }
 
-    controller(path) {
-
+    async controller(path) {
+        return await this.factory.get('controller').bind({ registry: this.registry });
     }
 
-    model(path) {
-
+    async model(path) {
+        return await this.factory.get('model').bind({ registry: this.registry });
     }
 
     config(path) {
         this.registry.get('config').load(path);
 
-        return this.registry.get('config').getAll();
+        return this.registry.get('config').all();
     }
 
     storage(path) {
@@ -37,7 +37,7 @@ export class Loader {
         return this.registry.get('template').fetch(path, data);
     }
 
-    async library(key, option = {}) {
+    async library(key, config = {}) {
         if (this.registry.has(key)) {
             return this.registry.get(key);
         }
@@ -45,7 +45,7 @@ export class Loader {
         if (this.factory.has(key)) {
             let factory = this.factory.get(key).bind({ registry: this.registry });
 
-            this.registry.set(key, await factory(option));
+            this.registry.set(key, await factory(config));
         }
 
         return this.registry.get(key);

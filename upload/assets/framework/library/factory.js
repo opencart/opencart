@@ -14,14 +14,18 @@ import { Url } from './url.js';
 class Factory {
     static instance;
     data = {
-        api(option) {
-            return new Request(option);
+        api(config) {
+            return new Request(config);
         },
         async cart() {
             return new Cart(this.registry);
         },
-        config(option) {
-            return new Config(option.path);
+        config(config) {
+            return new Config(config.path);
+        },
+        async controller(config) {
+            let controller = import(config.path);
+
         },
         async currency() {
             let currencies = await this.registry.get('storage').fetch('localisation/currency');
@@ -31,25 +35,28 @@ class Factory {
         db() {
             return new Db();
         },
-        language(option) {
-            return new Language(option.path);
+        language(config) {
+            return new Language(config.path);
         },
         local() {
             return new Local();
         },
+        model(config) {
+
+        },
         session() {
             return new Session();
         },
-        storage(option) {
-            return new Storage(option.path);
+        storage(config) {
+            return new Storage(config.path);
         },
         async tax() {
             let tax_classes = await this.registry.get('storage').fetch('localisation/tax_class');
 
             return new Tax(tax_classes);
         },
-        template(option) {
-            return new Template(option.path);
+        template(config) {
+            return new Template(config.path);
         },
         url() {
             return new Url();

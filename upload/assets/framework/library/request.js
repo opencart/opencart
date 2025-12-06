@@ -7,13 +7,13 @@ export class Request {
         body: option.data
     };
 
-    async fetch(option) {
-        if (!option.method) {
-            option.method = 'get';
+    async fetch(config) {
+        if (!config.method) {
+            config.method = 'get';
         }
 
-        if (!option.headers) {
-            option.headers = {
+        if (!config.headers) {
+            config.headers = {
                 'Content-Type': 'application/json'
             };
         }
@@ -22,13 +22,12 @@ export class Request {
         //     option.data
         //}
 
-
-        let response = await fetch(option.url, {
-            method: option.method,
+        let response = await fetch(config.url, {
+            method: config.method,
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: option.data
+            body: config.data
         });
 
         if (response.status !== 200) {

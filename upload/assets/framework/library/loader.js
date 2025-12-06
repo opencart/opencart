@@ -11,7 +11,7 @@ export class Loader {
         this.factory = this.registry.get('factory');
     }
 
-    async controller(path, args) {
+    async controller(path, ...args) {
         let pos = path.indexOf('.');
 
         if (pos == -1) {
@@ -20,18 +20,15 @@ export class Loader {
         } else {
             let key = 'controller_' + path.substring(0, pos).replaceAll('/', '_');
             let method = path.substring(pos);
-
-            path.substring(pos);
-
         }
 
         if (!this.registry.has(key)) {
             let factory = await this.factory.get('controller').bind({ registry: this.registry });
 
-            let iniono = this.registry.set(key, factory(path));
+            this.registry.set(key, factory(pos !== -1 ? path : path.substring(0, pos)));
         }
 
-        return this.registry.get(key).method();
+        return this.registry.get(key).method.apply(args);
     }
 
     async model(path) {

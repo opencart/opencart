@@ -309,39 +309,18 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$url .= '&time=' . $time;
 		$url .= '&signature=' . rawurlencode($signature);
 
-		if (isset($this->request->get['filter_search'])) {
-			$url .= '&filter_search=' . urlencode($this->request->get['filter_search']);
-		}
+		$allowed = [
+			'filter_search',
+			'filter_category',
+			'filter_license',
+			'filter_rating',
+			'filter_member_type',
+			'filter_member',
+			'sort',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_category'])) {
-			$url .= '&filter_category=' . $this->request->get['filter_category'];
-		}
-
-		if (isset($this->request->get['filter_license'])) {
-			$url .= '&filter_license=' . $this->request->get['filter_license'];
-		}
-
-		if (isset($this->request->get['filter_rating'])) {
-			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
-		}
-
-		if (isset($this->request->get['filter_member_type'])) {
-			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
-		}
-
-		if (isset($this->request->get['filter_member'])) {
-			$url .= '&filter_member=' . urlencode($this->request->get['filter_member']);
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/marketplace' . $url);
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/marketplace' . $url . '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed))));
 
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
@@ -365,19 +344,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$extension_total = 0;
 		}
 
-		$allowed = [
-			'filter_search',
-			'filter_category',
-			'filter_license',
-			'filter_rating',
-			'filter_member_type',
-			'filter_member',
-			'sort',
-			'page'
-		];
-
 		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
-
 
 		$data['promotions'] = [];
 

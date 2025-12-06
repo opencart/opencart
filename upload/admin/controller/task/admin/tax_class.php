@@ -62,7 +62,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		foreach ($tax_classes as $tax_class) {
 			$task_data = [
 				'code'   => 'tax_class',
-				'action' => 'task/admin/tax_class.list',
+				'action' => 'task/admin/tax_class.info',
 				'args'   => ['tax_class_id' => $tax_class['tax_class_id']]
 			];
 

@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>{{ column_date_added }}</th>
+        <th>{{ column_comment }}</th>
+        <th class="text-center">{{ column_status }}</th>
+        <th class="text-center">{{ column_notify }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if histories %}
+        {% for history in histories %}
+          <tr>
+            <td>{{ history.date_added }}</td>
+            <td>{{ history.comment }}</td>
+            <td class="text-center">{{ history.order_status }}</td>
+            <td class="text-center">{% if history.notify %}
+                <span class="badge bg-success">{{ text_yes }}</span>
+              {% else %}
+                <span class="badge bg-danger">{{ text_no }}</span>
+              {% endif %}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

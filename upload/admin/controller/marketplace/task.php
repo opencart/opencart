@@ -73,6 +73,7 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['list'] = $this->getList();
+		$data['history'] = $this->getHistory();
 
 		$data['filter_code'] = $filter_code;
 		$data['filter_status'] = $filter_status;
@@ -405,4 +406,6 @@ class Task extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+
 }

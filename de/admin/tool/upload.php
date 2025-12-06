@@ -15,13 +15,13 @@ $_['column_action']      = 'Aktionen';
 
 // Entry
 $_['entry_name']         = 'Name hochladen';
-$_['entry_filename']     = 'Dateiname';
+$_['entry_code']         = 'Code';
 $_['entry_date_from']    = 'Stammen aus';
 $_['entry_date_to']      = 'Datum bis';
 
 // Error
 $_['error_permission']   = 'Achtung: Sie sind nicht berechtigt, Uploads zu ändern!';
-$_['error_not_found']    = 'Fehler: Datei %s konnte nicht gefunden werden!';
+$_['error_not_found']    = 'Error: Could not find file %s!';
 $_['error_headers_sent'] = 'Fehler: Header bereits versendet!';
 $_['error_upload']       = 'Datei konnte nicht hochgeladen werden!';
 $_['error_filename']     = 'Der Dateiname muss zwischen 3 und 128 Zeichen lang sein!';

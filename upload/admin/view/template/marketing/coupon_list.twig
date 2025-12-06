@@ -4,12 +4,12 @@
       <thead>
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
-          <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
-          <th><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></th>
-          <th class="text-end"><a href="{{ sort_discount }}"{% if sort == 'discount' %} class="{{ order|lower }}"{% endif %}>{{ column_discount }}</a></th>
-          <th class="d-none d-lg-table-cell"><a href="{{ sort_date_start }}"{% if sort == 'date_start' %} class="{{ order|lower }}"{% endif %}>{{ column_date_start }}</a></th>
-          <th class="d-none d-lg-table-cell"><a href="{{ sort_date_end }}"{% if sort == 'date_end' %} class="{{ order|lower }}"{% endif %}>{{ column_date_end }}</a></th>
-          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
+          <th>{{ column_name }}</th>
+          <th>{{ column_code }}</th>
+          <th class="text-end">{{ column_discount }}</th>
+          <th class="d-none d-lg-table-cell">{{ column_date_start }}</th>
+          <th class="d-none d-lg-table-cell">{{ column_date_end }}</th>
+          <th class="text-center">{{ column_status }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>

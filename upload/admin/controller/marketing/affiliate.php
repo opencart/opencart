@@ -221,18 +221,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$filter_status = '';
 		}
 
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -253,8 +241,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'filter_date_from',
 			'filter_date_to',
 			'filter_status',
-			'sort',
-			'order',
 			'page',
 			'limit'
 		];
@@ -274,8 +260,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'filter_date_from'      => $filter_date_from,
 			'filter_date_to'        => $filter_date_to,
 			'filter_status'         => $filter_status,
-			'sort'                  => $sort,
-			'order'                 => $order,
 			'start'                 => ($page - 1) * $limit,
 			'limit'                 => $limit
 		];
@@ -306,34 +290,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sorts
-		$data['sort_name'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_tracking'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=tracking' . $url);
-		$data['sort_commission'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=commission' . $url);
-		$data['sort_balance'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=balance' . $url);
-		$data['sort_date_added'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
-
-		$allowed = [
-			'filter_name',
-			'filter_tracking',
-			'filter_payment_method',
-			'filter_commission',
-			'filter_date_from',
-			'filter_date_to',
-			'filter_status',
-			'sort',
-			'order',
-			'limit'
-		];
-
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
-
 		// Total Affiliates
 		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
 
@@ -344,10 +300,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($affiliate_total - $limit)) ? $affiliate_total : ((($page - 1) * $limit) + $limit), $affiliate_total, ceil($affiliate_total / $limit));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
-		$data['limit'] = $limit;
 
 		$data['currency'] = $this->config->get('config_currency');
 
@@ -378,8 +330,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'filter_date_from',
 			'filter_date_to',
 			'filter_status',
-			'sort',
-			'order',
 			'page',
 			'limit'
 		];

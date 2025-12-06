@@ -24,8 +24,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$allowed = [
 			'filter_keyword',
-			'sort',
-			'order',
 			'page'
 		];
 
@@ -82,18 +80,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$filter_keyword = '';
 		}
 
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'keyword';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -102,8 +88,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$allowed = [
 			'filter_keyword',
-			'sort',
-			'order',
 			'page'
 		];
 
@@ -116,8 +100,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$filter_data = [
 			'filter_keyword' => $filter_keyword,
-			'sort'           => $sort,
-			'order'          => $order,
 			'start'          => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'          => $this->config->get('config_pagination_admin')
 		];
@@ -136,23 +118,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$url = '&filter_keyword' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 		}
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		// Sort
-		$data['sort_keyword'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . '&sort=keyword' . $url);
-
-		$allowed = [
-			'filter_keyword',
-			'sort',
-			'order'
-		];
-
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
-
 		// Total Anti-Spams
 		$antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);
 
@@ -162,9 +127,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($antispam_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($antispam_total - $this->config->get('config_pagination_admin'))) ? $antispam_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $antispam_total, ceil($antispam_total / $this->config->get('config_pagination_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		return $this->load->view('cms/antispam_list', $data);
 	}
@@ -183,8 +145,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$allowed = [
 			'filter_keyword',
-			'sort',
-			'order',
 			'page'
 		];
 

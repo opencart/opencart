@@ -157,16 +157,11 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$theme_total = $this->model_design_theme->getTotalThemes();
 
 		$allowed = [
-			'filter_keyword',
-			'filter_key',
-			'filter_value',
 			'filter_store_id',
-			'filter_language_id'
+			'filter_status'
 		];
 
 		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
-
-		$seo_url_total = $this->model_design_seo_url->getTotalSeoUrls($filter_data);
 
 		// Pagination
 		$data['total'] = $theme_total;

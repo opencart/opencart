@@ -109,8 +109,6 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_status_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($order_status_total - $this->config->get('config_pagination_admin'))) ? $order_status_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $order_status_total, ceil($order_status_total / $this->config->get('config_pagination_admin')));
 
-		$data['sort'] = $sort;
-		$data['order'] = $order;
 
 		return $this->load->view('localisation/order_status_list', $data);
 	}

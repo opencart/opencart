@@ -106,9 +106,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($tax_class_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($tax_class_total - $this->config->get('config_pagination_admin'))) ? $tax_class_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $tax_class_total, ceil($tax_class_total / $this->config->get('config_pagination_admin')));
 
-		$data['sort'] = $sort;
-		$data['order'] = $order;
-
 		return $this->load->view('localisation/tax_class_list', $data);
 	}
 

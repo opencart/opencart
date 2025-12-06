@@ -230,4 +230,57 @@ class Task extends \Opencart\System\Engine\Model {
 
 		return (int)$query->row['total'];
 	}
+
+	/**
+	 * Get Histories
+	 *
+	 * Get the record of the return history records in the database.
+	 *
+	 * @param int $return_id primary key of the return record
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return array<int, array<string, mixed>> history records that have return ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
+	 *
+	 * $results = $this->model_sale_returns->getHistories($return_id, $start, $limit);
+	 */
+	public function getHistories(int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "task_history` ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
+	}
+
+	/**
+	 * Get Total Histories
+	 *
+	 * Get the total number of total return history records in the database.
+	 *
+	 * @param int $return_id primary key of the return record
+	 *
+	 * @return int total number of history records that have return ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('sale/subscription');
+	 *
+	 * $history_total = $this->model_sale_returns->getTotalHistories($return_id);
+	 */
+	public function getTotalHistories(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task_history`");
+
+		return (int)$query->row['total'];
+	}
+
 }

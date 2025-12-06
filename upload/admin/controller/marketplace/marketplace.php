@@ -65,8 +65,13 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$allowed = [
+			'filter_search',
+			'filter_category',
+			'filter_license',
+			'filter_rating',
+			'filter_member_type',
+			'filter_member',
 			'sort',
-			'order',
 			'page'
 		];
 
@@ -360,39 +365,19 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$extension_total = 0;
 		}
 
-		$url = '';
+		$allowed = [
+			'filter_search',
+			'filter_category',
+			'filter_license',
+			'filter_rating',
+			'filter_member_type',
+			'filter_member',
+			'sort',
+			'page'
+		];
 
-		if (isset($this->request->get['filter_search'])) {
-			$url .= '&filter_search=' . $this->request->get['filter_search'];
-		}
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
-		if (isset($this->request->get['filter_category'])) {
-			$url .= '&filter_category=' . $this->request->get['filter_category'];
-		}
-
-		if (isset($this->request->get['filter_license'])) {
-			$url .= '&filter_license=' . $this->request->get['filter_license'];
-		}
-
-		if (isset($this->request->get['filter_rating'])) {
-			$url .= '&filter_rating=' . $this->request->get['filter_rating'];
-		}
-
-		if (isset($this->request->get['filter_member_type'])) {
-			$url .= '&filter_member_type=' . $this->request->get['filter_member_type'];
-		}
-
-		if (isset($this->request->get['filter_member'])) {
-			$url .= '&filter_member=' . $this->request->get['filter_member'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
 
 		$data['promotions'] = [];
 
@@ -411,13 +396,17 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		}
 
 		// Pagination
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_search',
+			'filter_category',
+			'filter_license',
+			'filter_rating',
+			'filter_member_type',
+			'filter_member',
+			'sort'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['total'] = $extension_total;
 		$data['page'] = $page;
@@ -491,12 +480,18 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				$data['error_warning'] = '';
 			}
 
-			$remove = [
-				'route',
-				'user_token'
+			$allowed = [
+				'filter_search',
+				'filter_category',
+				'filter_license',
+				'filter_rating',
+				'filter_member_type',
+				'filter_member',
+				'sort',
+				'page'
 			];
 
-			$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+			$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 			$data['back'] = $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url);
 

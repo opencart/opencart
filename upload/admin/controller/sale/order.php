@@ -83,6 +83,17 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$allowed = [
+			'filter_order_id',
+			'filter_customer_id',
+			'filter_customer',
+			'filter_store_id',
+			'filter_order_status',
+			'filter_order_status_id',
+			'filter_total',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_date_modified_from',
+			'filter_date_modified_to',
 			'sort',
 			'order',
 			'page'
@@ -255,8 +266,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'filter_date_modified_to',
 			'sort',
 			'order',
-			'page',
-			'limit'
+			'page'
 		];
 
 		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
@@ -305,14 +315,21 @@ class Order extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_order_id',
+			'filter_customer_id',
+			'filter_customer',
+			'filter_store_id',
+			'filter_order_status',
+			'filter_order_status_id',
+			'filter_total',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_date_modified_from',
+			'filter_date_modified_to'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -329,13 +346,23 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['sort_date_added'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 		$data['sort_date_modified'] = $this->url->link('sale/order.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_modified' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_order_id',
+			'filter_customer_id',
+			'filter_customer',
+			'filter_store_id',
+			'filter_order_status',
+			'filter_order_status_id',
+			'filter_total',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_date_modified_from',
+			'filter_date_modified_to',
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Orders
 		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
@@ -379,13 +406,24 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
-		$remove = [
-			'route',
-			'user_token',
-			'order_id'
+		$allowed = [
+			'filter_order_id',
+			'filter_customer_id',
+			'filter_customer',
+			'filter_store_id',
+			'filter_order_status',
+			'filter_order_status_id',
+			'filter_total',
+			'filter_date_from',
+			'filter_date_to',
+			'filter_date_modified_from',
+			'filter_date_modified_to',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

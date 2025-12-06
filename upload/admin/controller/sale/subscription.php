@@ -53,6 +53,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$allowed = [
+			'filter_subscription_id',
+			'filter_order_id',
+			'filter_customer',
+			'filter_subscription_status_id',
+			'filter_date_from',
+			'filter_date_to',
 			'sort',
 			'order',
 			'page'
@@ -213,14 +219,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_subscription_id',
+			'filter_order_id',
+			'filter_customer',
+			'filter_subscription_status_id',
+			'filter_date_from',
+			'filter_date_to'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -235,13 +243,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['sort_status'] = $this->url->link('sale/subscription.list', 'user_token=' . $this->session->data['user_token'] . '&sort=subscription_status' . $url);
 		$data['sort_date_added'] = $this->url->link('sale/subscription.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_subscription_id',
+			'filter_order_id',
+			'filter_customer',
+			'filter_subscription_status_id',
+			'filter_date_from',
+			'filter_date_to',
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Subscriptions
 		$subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
@@ -278,13 +291,19 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !$subscription_id ? $this->language->get('text_add') : sprintf($this->language->get('text_edit'), $subscription_id);
 
-		$remove = [
-			'route',
-			'user_token',
-			'subscription_id'
+		$allowed = [
+			'filter_subscription_id',
+			'filter_order_id',
+			'filter_customer',
+			'filter_subscription_status_id',
+			'filter_date_from',
+			'filter_date_to',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

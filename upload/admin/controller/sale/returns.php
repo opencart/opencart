@@ -65,6 +65,14 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$allowed = [
+			'filter_return_id',
+			'filter_order_id',
+			'filter_customer',
+			'filter_product',
+			'filter_model',
+			'filter_return_status_id',
+			'filter_date_from',
+			'filter_date_to',
 			'sort',
 			'order',
 			'page'
@@ -206,8 +214,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'filter_date_to',
 			'sort',
 			'order',
-			'page',
-			'limit'
+			'page'
 		];
 
 		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
@@ -237,20 +244,21 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$results = $this->model_sale_returns->getReturns($filter_data);
 
 		foreach ($results as $result) {
-			$data['returns'][] = [
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('sale/returns.form', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url)
-			] + $result;
+			$data['returns'][] = ['edit' => $this->url->link('sale/returns.form', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url)] + $result;
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'sort',
-			'order'
+		$allowed = [
+			'filter_return_id',
+			'filter_order_id',
+			'filter_customer',
+			'filter_product',
+			'filter_model',
+			'filter_return_status_id',
+			'filter_date_from',
+			'filter_date_to'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -267,13 +275,20 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['sort_status'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=return_status' . $url);
 		$data['sort_date_added'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
-		$remove = [
-			'route',
-			'user_token',
-			'page'
+		$allowed = [
+			'filter_return_id',
+			'filter_order_id',
+			'filter_customer',
+			'filter_product',
+			'filter_model',
+			'filter_return_status_id',
+			'filter_date_from',
+			'filter_date_to',
+			'sort',
+			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Returns
 		$return_total = $this->model_sale_returns->getTotalReturns($filter_data);
@@ -310,13 +325,21 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !$return_id ? $this->language->get('text_add') : sprintf($this->language->get('text_edit'), $return_id);
 
-		$remove = [
-			'route',
-			'user_token',
-			'return_id'
+		$allowed = [
+			'filter_return_id',
+			'filter_order_id',
+			'filter_customer',
+			'filter_product',
+			'filter_model',
+			'filter_return_status_id',
+			'filter_date_from',
+			'filter_date_to',
+			'sort',
+			'order',
+			'page'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 

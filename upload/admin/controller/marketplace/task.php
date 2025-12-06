@@ -407,5 +407,47 @@ class Task extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * History
+	 *
+	 * @return void
+	 */
+	public function history(): void {
+		$this->load->language('marketplace/task');
 
+		$this->response->setOutput($this->getHistory());
+	}
+
+	/**
+	 * Get History
+	 *
+	 * @return string
+	 */
+	public function getHistory(): string {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'marketplace/task.history') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		// Histories
+		$this->load->model('setting/task');
+
+		$data['histories'] = $this->model_setting_task->getHistories(($page - 1) * $limit, $limit);
+
+		// Total Histories
+		$history_total = $this->model_setting_task->getTotalHistories();
+
+		// Pagination
+		$data['total'] = $history_total;
+		$data['page'] = $page;
+		$data['limit'] = $limit;
+		$data['pagination'] = $this->url->link('marketplace/task.history', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));
+
+		return $this->load->view('marketplace/task_history', $data);
+	}
 }

@@ -19,7 +19,7 @@ export class Request {
         }
 
         //if () {
-        //     option.data
+        //  option.data
         //}
 
         let response = await fetch(config.url, {

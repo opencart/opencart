@@ -23,9 +23,8 @@ class Factory {
         config(config) {
             return new Config(config.path);
         },
-        async controller(config) {
-            let controller = import(config.path);
-
+        async controller(path) {
+            return await import(path);
         },
         async currency() {
             let currencies = await this.registry.get('storage').fetch('localisation/currency');
@@ -41,8 +40,8 @@ class Factory {
         local() {
             return new Local();
         },
-        model(config) {
-
+        async model(config) {
+            return await import(path);
         },
         session() {
             return new Session();

@@ -231,8 +231,12 @@ class Task extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	public function addLog($code, $comment, $status): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "task_log` SET `code` = '" . $this->db->escape($code) . "', `comment` = '" . $this->db->escape($comment) . "', `status` = '" . (bool)$status . "', `date_added` = NOW()");
+	}
+
 	/**
-	 * Get Histories
+	 * Get Logs
 	 *
 	 * Get the record of the return history records in the database.
 	 *
@@ -248,7 +252,7 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * $results = $this->model_sale_returns->getHistories($return_id, $start, $limit);
 	 */
-	public function getHistories(int $start = 0, int $limit = 10): array {
+	public function getLogs(int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -257,13 +261,13 @@ class Task extends \Opencart\System\Engine\Model {
 			$limit = 10;
 		}
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "task_history` ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "task_log` ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}
 
 	/**
-	 * Get Total Histories
+	 * Get Total Logs
 	 *
 	 * Get the total number of total return history records in the database.
 	 *
@@ -277,8 +281,8 @@ class Task extends \Opencart\System\Engine\Model {
 	 *
 	 * $history_total = $this->model_sale_returns->getTotalHistories($return_id);
 	 */
-	public function getTotalHistories(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task_history`");
+	public function getTotalLogs(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "task_log`");
 
 		return (int)$query->row['total'];
 	}

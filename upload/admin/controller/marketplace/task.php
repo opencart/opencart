@@ -73,7 +73,7 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['list'] = $this->getList();
-		$data['history'] = $this->getHistory();
+		$data['log'] = $this->getLog();
 
 		$data['filter_code'] = $filter_code;
 		$data['filter_status'] = $filter_status;
@@ -247,12 +247,16 @@ class Task extends \Opencart\System\Engine\Controller {
 			// If task does not exist
 			if (isset($output['error'])) {
 				$this->model_setting_task->editStatus($task['task_id'], 'failed', $output['error']);
+
+				$this->model_setting_task->addLog($task['code'], $output['error'], false);
 			}
 
 			if (isset($output['success'])) {
 				$this->model_setting_task->editStatus($task['task_id'], 'complete', $output['success']);
 
 				$this->model_setting_task->deleteTask($task['task_id']);
+
+				$this->model_setting_task->addLog($task['code'], $output['success'], true);
 			}
 
 			$next = $this->model_setting_task->getTasks($filter_data);
@@ -412,10 +416,10 @@ class Task extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function history(): void {
+	public function log(): void {
 		$this->load->language('marketplace/task');
 
-		$this->response->setOutput($this->getHistory());
+		$this->response->setOutput($this->getLog());
 	}
 
 	/**
@@ -423,8 +427,8 @@ class Task extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return string
 	 */
-	public function getHistory(): string {
-		if (isset($this->request->get['page']) && $this->request->get['route'] == 'marketplace/task.history') {
+	public function getLog(): string {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'marketplace/task.log') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
@@ -435,19 +439,19 @@ class Task extends \Opencart\System\Engine\Controller {
 		// Histories
 		$this->load->model('setting/task');
 
-		$data['histories'] = $this->model_setting_task->getHistories(($page - 1) * $limit, $limit);
+		$data['logs'] = $this->model_setting_task->getLogs(($page - 1) * $limit, $limit);
 
 		// Total Histories
-		$history_total = $this->model_setting_task->getTotalHistories();
+		$log_total = $this->model_setting_task->getTotalLogs();
 
 		// Pagination
-		$data['total'] = $history_total;
+		$data['total'] = $log_total;
 		$data['page'] = $page;
 		$data['limit'] = $limit;
-		$data['pagination'] = $this->url->link('marketplace/task.history', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+		$data['pagination'] = $this->url->link('marketplace/task.log', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($log_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($log_total - $limit)) ? $log_total : ((($page - 1) * $limit) + $limit), $log_total, ceil($log_total / $limit));
 
-		return $this->load->view('marketplace/task_history', $data);
+		return $this->load->view('marketplace/task_log', $data);
 	}
 }

@@ -7370,6 +7370,40 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'task_log',
+		'field' => [
+			[
+				'name'           => 'task_log_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(32)'
+			],
+			[
+				'name' => 'comment',
+				'type' => 'text'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'task_log_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'tax_class',
 		'field' => [
 			[

@@ -9,17 +9,17 @@
       </tr>
     </thead>
     <tbody>
-      {% if histories %}
-        {% for history in histories %}
+      {% if logs %}
+        {% for log in logs %}
           <tr>
-            <td>{{ history.code }}</td>
-            <td>{{ history.comment }}</td>
-            <td class="text-center">{% if history.status %}
+            <td>{{ log.code }}</td>
+            <td>{{ log.comment }}</td>
+            <td class="text-center">{% if log.status %}
                 <span class="badge bg-success">{{ text_complete }}</span>
               {% else %}
                 <span class="badge bg-danger">{{ text_failed }}</span>
               {% endif %}</td>
-            <td>{{ history.date_added }}</td>
+            <td>{{ log.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}
@@ -32,7 +32,7 @@
 </div>
 <div class="row">
   <div class="col-sm-6 text-start">
-    <x-pagination href="{{ pagination }}" target="#history" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination>
+    <x-pagination href="{{ pagination }}" target="#log" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination>
   </div>
   <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

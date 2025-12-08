@@ -24,7 +24,7 @@ class Tax extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 		// Tax Class
 		//$task_data = [
-		//	'code'   => 'tax_class',
+		//	'code'   => 'tax',
 		//	'action' => 'task/admin/tax_class',
 		//	'args'   => []
 		//];
@@ -34,7 +34,7 @@ class Tax extends \Opencart\System\Engine\Controller {
 		//$this->model_setting_task->addTask($task_data);
 
 		$task_data = [
-			'code'   => 'tax_class',
+			'code'   => 'tax',
 			'action' => 'task/catalog/tax_class',
 			'args'   => []
 		];
@@ -43,7 +43,7 @@ class Tax extends \Opencart\System\Engine\Controller {
 
 		// Tax Rate
 		//$task_data = [
-		//	'code'   => 'tax_rate',
+		//	'code'   => 'tax',
 		//	'action' => 'task/admin/tax_rate',
 		//	'args'   => []
 		//];
@@ -51,7 +51,7 @@ class Tax extends \Opencart\System\Engine\Controller {
 		//$this->model_setting_task->addTask($task_data);
 
 		$task_data = [
-			'code'   => 'tax_rate',
+			'code'   => 'tax',
 			'action' => 'task/catalog/tax_rate',
 			'args'   => []
 		];

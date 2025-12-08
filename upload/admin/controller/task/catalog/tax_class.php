@@ -73,7 +73,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $tax_class_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $tax_class_info['title'])];
 	}
 
 	/**

@@ -71,7 +71,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$customer_groups = $this->model_localisation_tax_rate->getCustomerGroups($tax_rate['tax_rate_id']);
 
 			foreach ($customer_groups as $customer_group_id) {
-				$tax_rate_data[$tax_rate['tax_class_id']][$customer_group_id][] = $tax_rate;
+				$tax_rate_data[] = $tax_rate + ['customer_group_id' => $customer_group_id];
 			}
 		}
 

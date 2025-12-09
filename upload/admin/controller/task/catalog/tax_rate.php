@@ -75,8 +75,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		print_r($tax_rate_data);
-
 		$directory = DIR_CATALOG . 'view/data/localisation/';
 		$filename = 'tax_rate-' . $geo_zone_info['geo_zone_id'] . '.json';
 

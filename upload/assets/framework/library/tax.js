@@ -1,15 +1,22 @@
 export class Tax {
     static tax_classes = [];
-    static tax_rates = [];
 
-    constructor(tax_classes) {
-        this.tax_classes = tax_classes;
+    constructor(registry) {
+        this.storage = registry.get('storage');
+
+        //this.tax_classes = tax_classes;
+
+        this.load(3);
     }
 
     async load(geo_zone_id) {
-        let tax_rates = await this.storage.fetch('localisation/tax_rate=' + geo_zone_id);
+        let tax_rates = await this.storage.fetch('localisation/tax_rate-' + geo_zone_id);
 
-        this.tax_rates = tax_rates;
+        console.log(tax_rates);
+
+        for (let i = 0; i < tax_rates.length; i++) {
+            this.tax_classes[tax_rates[i].tax_class_id][tax_rates[i].customer_group_id][i] = tax_rate;
+        }
     }
 
     calculate(value = 0.00, tax_class_id = 0, calculate = true) {

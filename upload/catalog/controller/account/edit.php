@@ -42,7 +42,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
-		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
+		$data['config_telephone_status'] = $this->config->get('config_telephone_status');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
 		$data['save'] = $this->url->link('account/edit.save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);

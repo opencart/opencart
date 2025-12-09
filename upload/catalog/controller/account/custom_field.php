@@ -13,7 +13,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(): void {
 		// Customer Group
-		if (isset($this->request->get['customer_group_id']) && in_array((int)$this->request->get['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
+		if (isset($this->request->get['customer_group_id']) && in_array((int)$this->request->get['customer_group_id'], (array)$this->config->get('config_customer_group_list'))) {
 			$customer_group_id = (int)$this->request->get['customer_group_id'];
 		} else {
 			$customer_group_id = (int)$this->config->get('config_customer_group_id');

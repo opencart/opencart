@@ -218,7 +218,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
+		$data['config_telephone_status'] = $this->config->get('config_telephone_status');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
 		$this->session->data['return_token'] = oc_token(26);

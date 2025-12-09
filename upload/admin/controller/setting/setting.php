@@ -99,6 +99,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		// Countries
 		$data['config_country_id'] = $this->config->get('config_country_id');
+		$data['config_country_list'] = $this->config->get('config_country_list');
+
 		$data['config_zone_id'] = $this->config->get('config_zone_id');
 		$data['config_timezone'] = $this->config->get('config_timezone');
 
@@ -133,6 +135,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		$data['config_currency'] = $this->config->get('config_currency');
+
+		$data['config_currency_list'] = $this->config->get('config_currency_list');
 
 		$data['currency_engines'] = [];
 
@@ -209,12 +213,15 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		$data['config_customer_group_id'] = $this->config->get('config_customer_group_id');
-		$data['config_customer_group_display'] = (array)$this->config->get('config_customer_group_display');
+		$data['config_customer_group_list'] = (array)$this->config->get('config_customer_group_list');
 		$data['config_customer_price'] = $this->config->get('config_customer_price');
+
 		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
+
 		$data['config_2fa'] = $this->config->get('config_2fa');
 		$data['config_login_attempts'] = $this->config->get('config_login_attempts');
+
 		$data['config_password_uppercase'] = $this->config->get('config_password_uppercase');
 		$data['config_password_lowercase'] = $this->config->get('config_password_lowercase');
 		$data['config_password_number'] = $this->config->get('config_password_number');
@@ -524,7 +531,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['article_description_length'] = $this->language->get('error_article_description_length');
 		}
 
-		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
+		if (!empty($this->request->post['config_customer_group_list']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_list'])) {
 			$json['error']['customer_group_display'] = $this->language->get('error_customer_group_display');
 		}
 

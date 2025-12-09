@@ -25,7 +25,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['config_checkout_payment_address'] = $this->config->get('config_checkout_payment_address');
 		$data['config_checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasSubscription());
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
-		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
+		$data['config_telephone_status'] = $this->config->get('config_telephone_status');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
 		$data['shipping_required'] = $this->cart->hasShipping();
@@ -37,13 +37,13 @@ class Register extends \Opencart\System\Engine\Controller {
 		// Customer Groups
 		$data['customer_groups'] = [];
 
-		if (is_array($this->config->get('config_customer_group_display'))) {
+		if (is_array($this->config->get('config_customer_group_list'))) {
 			$this->load->model('account/customer_group');
 
 			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
 
 			foreach ($customer_groups as $customer_group) {
-				if (in_array($customer_group['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
+				if (in_array($customer_group['customer_group_id'], (array)$this->config->get('config_customer_group_list'))) {
 					$data['customer_groups'][] = $customer_group;
 				}
 			}
@@ -237,7 +237,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
-			if (!$customer_group_info || !in_array($customer_group_id, (array)$this->config->get('config_customer_group_display'))) {
+			if (!$customer_group_info || !in_array($customer_group_id, (array)$this->config->get('config_customer_group_list'))) {
 				$json['error']['warning'] = $this->language->get('error_customer_group');
 			}
 

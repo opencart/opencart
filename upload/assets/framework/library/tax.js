@@ -1,8 +1,15 @@
 export class Tax {
     static tax_classes = [];
+    static tax_rates = [];
 
     constructor(tax_classes) {
         this.tax_classes = tax_classes;
+    }
+
+    async load(geo_zone_id) {
+        let tax_rates = await this.storage.fetch('localisation/tax_rate=' + geo_zone_id);
+
+        this.tax_rates = tax_rates;
     }
 
     calculate(value = 0.00, tax_class_id = 0, calculate = true) {

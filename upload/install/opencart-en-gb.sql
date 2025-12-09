@@ -2917,7 +2917,7 @@ VALUES (0, 'config', 'config_shared', '0', 0),
        (0, 'config', 'config_customer_activity', '0', 0),
        (0, 'config', 'config_customer_search', '0', 0),
        (0, 'config', 'config_customer_group_id', '1', 0),
-       (0, 'config', 'config_customer_group_display', '["
+       (0, 'config', 'config_customer_group_list', '["
 1
 "]', 1),
        (0, 'config', 'config_customer_price', '0', 0),

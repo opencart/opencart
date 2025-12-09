@@ -38,7 +38,7 @@
         <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
         <div id="error-email" class="invalid-feedback"></div>
       </div>
-      {% if config_telephone_display %}
+      {% if config_telephone_status %}
         <div class="col mb-3">
           <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
           <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"{% if config_telephone_required %} required{% endif %}/>

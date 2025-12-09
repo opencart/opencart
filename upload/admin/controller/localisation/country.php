@@ -34,12 +34,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			$filter_iso_code_3 = '';
 		}
 
-		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = (int)$this->request->get['filter_store_id'];
-		} else {
-			$filter_store_id = '';
-		}
-
 		if (isset($this->request->get['filter_language_id'])) {
 			$filter_language_id = $this->request->get['filter_language_id'];
 		} else {
@@ -56,7 +50,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			'filter_name',
 			'filter_iso_code_2',
 			'filter_iso_code_3',
-			'filter_store_id',
 			'filter_language_id',
 			'filter_status',
 			'sort',
@@ -85,11 +78,6 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		// Stores
-		$this->load->model('setting/store');
-
-		$data['stores'] = $this->model_setting_store->getStores();
-
 		// Languages
 		$this->load->model('localisation/language');
 
@@ -98,7 +86,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		$data['filter_name'] = $filter_name;
 		$data['filter_iso_code_2'] = $filter_iso_code_2;
 		$data['filter_iso_code_3'] = $filter_iso_code_3;
-		$data['filter_store_id'] = $filter_store_id;
 		$data['filter_language_id'] = $filter_language_id;
 		$data['filter_status'] = $filter_status;
 
@@ -146,12 +133,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			$filter_iso_code_3 = '';
 		}
 
-		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = $this->request->get['filter_store_id'];
-		} else {
-			$filter_store_id = '';
-		}
-
 		if (isset($this->request->get['filter_language_id'])) {
 			$filter_language_id = $this->request->get['filter_language_id'];
 		} else {
@@ -186,7 +167,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			'filter_name',
 			'filter_iso_code_2',
 			'filter_iso_code_3',
-			'filter_store_id',
 			'filter_language_id',
 			'filter_status',
 			'sort',
@@ -205,7 +185,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			'filter_name'        => $filter_name,
 			'filter_iso_code_2'  => $filter_iso_code_2,
 			'filter_iso_code_3'  => $filter_iso_code_3,
-			'filter_store_id'    => $filter_store_id,
 			'filter_language_id' => $filter_language_id,
 			'filter_status'      => $filter_status,
 			'sort'               => $sort,
@@ -229,7 +208,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			'filter_name',
 			'filter_iso_code_2',
 			'filter_iso_code_3',
-			'filter_store_id',
 			'filter_language_id',
 			'filter_status',
 		];
@@ -252,7 +230,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			'filter_name',
 			'filter_iso_code_2',
 			'filter_iso_code_3',
-			'filter_store_id',
 			'filter_language_id',
 			'filter_status',
 			'sort',
@@ -294,7 +271,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			'filter_name',
 			'filter_iso_code_2',
 			'filter_iso_code_3',
-			'filter_store_id',
 			'filter_language_id',
 			'filter_status',
 			'sort',
@@ -372,17 +348,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			$data['postcode_required'] = 0;
 		}
 
-		// Stores
-		$this->load->model('setting/store');
-
-		$data['stores'] = $this->model_setting_store->getStores();
-
-		if (!empty($country_info)) {
-			$data['country_store'] = $this->model_localisation_country->getStores($country_info['country_id']);
-		} else {
-			$data['country_store'] = [0];
-		}
-
 		if (!empty($country_info)) {
 			$data['status'] = $country_info['status'];
 		} else {
@@ -417,7 +382,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			'iso_code_3'          => '',
 			'address_format_id'   => 0,
 			'postcode_required'   => 0,
-			'country_store'       => [],
 			'status'              => 0
 		];
 
@@ -557,12 +521,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		foreach ($selected as $country_id) {
 			if ($this->config->get('config_country_id') == $country_id) {
 				$json['error'] = $this->language->get('error_default');
-			}
-
-			$store_total = $this->model_setting_store->getTotalStoresByCountryId($country_id);
-
-			if ($store_total) {
-				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
 			// Total Customers

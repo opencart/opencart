@@ -321,6 +321,8 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_currency'] = $this->config->get('config_currency');
 		}
 
+
+
 		// Options
 		if (isset($setting_info['config_product_description_length'])) {
 			$data['config_product_description_length'] = $setting_info['config_product_description_length'];
@@ -387,10 +389,10 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_customer_group_id'] = '';
 		}
 
-		if (isset($setting_info['config_customer_group_display'])) {
-			$data['config_customer_group_display'] = $setting_info['config_customer_group_display'];
+		if (isset($setting_info['config_customer_group_list'])) {
+			$data['config_customer_group_list'] = $setting_info['config_customer_group_list'];
 		} else {
-			$data['config_customer_group_display'] = [];
+			$data['config_customer_group_list'] = [];
 		}
 
 		if (isset($setting_info['config_customer_price'])) {
@@ -564,7 +566,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error']['zone'] = $this->language->get('error_zone');
 		}
 
-		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
+		if (!empty($this->request->post['config_customer_group_list']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_list'])) {
 			$json['error']['customer_group_display'] = $this->language->get('error_customer_group_display');
 		}
 

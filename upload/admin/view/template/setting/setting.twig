@@ -214,7 +214,6 @@
             <div id="tab-local" class="tab-pane">
               <fieldset>
                 <legend>{{ text_region }}</legend>
-
                 <div class="row mb-3">
                   <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
                   <div class="col-sm-10">
@@ -224,7 +223,21 @@
                     <div id="error-country" class="invalid-feedback"></div>
                   </div>
                 </div>
-
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_country_list }}</label>
+                  <div class="col-sm-10">
+                    <div id="input-country-list" class="form-control" style="height: 150px; overflow: auto;">
+                      {% for country in countries %}
+                        <div class="form-check">
+                          <input type="checkbox" name="config_country_list[]" value="{{ country.country_id }}" id="input-country-{{ country.customer_group_id }}" class="form-check-input"{% if country.country_id in config_country_list %} checked{% endif %}/>
+                          <label for="input-country-{{ country.country_id }}" class="form-check-label">{{ country.name }}</label>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="form-text">{{ help_country_list }}</div>
+                    <div id="error-country-list" class="invalid-feedback"></div>
+                  </div>
+                </div>
                 <div class="row mb-3">
                   <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
                   <div class="col-sm-10">
@@ -232,7 +245,6 @@
                     <div id="error-zone" class="invalid-feedback"></div>
                   </div>
                 </div>
-
                 <div class="row mb-3">
                   <label for="input-timezone" class="col-sm-2 col-form-label">{{ entry_timezone }}</label>
                   <div class="col-sm-10">
@@ -609,17 +621,18 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
+                        <label class="col-sm-2 col-form-label">{{ entry_customer_group_list }}</label>
                         <div class="col-sm-10">
-                          <div id="input-customer-group-display" class="form-control" style="height: 150px; overflow: auto;">
+                          <div id="input-customer-group-list" class="form-control" style="height: 150px; overflow: auto;">
                             {% for customer_group in customer_groups %}
                               <div class="form-check">
-                                <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_display %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+                                <input type="checkbox" name="config_customer_group_list[]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_list %} checked{% endif %}/>
+                                <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
                               </div>
                             {% endfor %}
                           </div>
-                          <div class="form-text">{{ help_customer_group_display }}</div>
-                          <div id="error-customer-group-display" class="invalid-feedback"></div>
+                          <div class="form-text">{{ help_customer_group_list }}</div>
+                          <div id="error-customer-group-list" class="invalid-feedback"></div>
                         </div>
                       </div>
                       <div class="row mb-3">
@@ -630,9 +643,9 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label">{{ entry_telephone_display }}</label>
+                        <label class="col-sm-2 col-form-label">{{ entry_telephone_status }}</label>
                         <div class="col-sm-10">
-                          <x-switch name="config_telephone_display" value="1" checked="{{ config_telephone_display }}" input-id="input-telephone-display" input-class="form-switch form-switch-lg"></x-switch>
+                          <x-switch name="config_telephone_status" value="1" checked="{{ config_telephone_status }}" input-id="input-telephone-status" input-class="form-switch form-switch-lg"></x-switch>
                         </div>
                       </div>
                       <div class="row mb-3">

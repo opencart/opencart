@@ -50,9 +50,9 @@ class Factory {
             return new Storage(config.path);
         },
         async tax() {
-            let tax_classes = await this.registry.get('storage').fetch('localisation/tax_class');
+            //let tax_classes = await this.registry.get('storage').fetch('localisation/tax_class');
 
-            return new Tax(tax_classes);
+            return new Tax(this.registry);
         },
         template(config) {
             return new Template(config.path);

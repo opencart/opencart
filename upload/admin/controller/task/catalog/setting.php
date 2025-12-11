@@ -110,7 +110,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Language
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguageByCode($setting_info['language']);
 
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
@@ -119,7 +119,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Currency
 		$this->load->model('localisation/currency');
 
-		$currency_info = $this->model_localisation_currency->getCurrencyByCode((int)$setting_info['currency']);
+		$currency_info = $this->model_localisation_currency->getCurrencyByCode($setting_info['currency']);
 
 		if (!$currency_info) {
 			return ['error' => $this->language->get('error_currency')];
@@ -127,39 +127,101 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$config = [];
 
-		$config['name'] = $store_info['name'];
-		$config['store_url'] = $store_info['url'];
-
 		// Hostname
 		$hostname = parse_url($store_info['url'], PHP_URL_HOST);
 
+		$config['config_path'] = 'catalog/view/data/' . $hostname  . '/' . $language_info['code']  . '/';
 		$config['storage_path'] = 'catalog/view/data/' . $hostname  . '/' . $language_info['code']  . '/';
 		$config['language_path'] = 'catalog/view/language/' . $hostname  . '/' . $language_info['code']  . '/';
 		$config['template_path'] = 'catalog/view/template/';
 
+		// Store URL toi be used
+		$config['store_url'] = $store_info['url'];
+
+		// Meta Information
+		$description = $setting_info['config_description'][$language_info['language_id']];
+
+		$config['meta_title'] = $description['meta_title'];
+		$config['meta_description'] = $description['meta_description'];
+		$config['meta_keyword'] = $description['meta_keyword'];
+
+		// Theme
 		$config['theme'] = $setting_info['config_theme'];
 
+		// Store
+		$config['name'] = $store_info['name'];
+
+		// Country
 		$config['country_id'] = (int)$country_info['country_id'];
+
+		$config['country_list'] = [];
+
+		$countries = $setting_info['config_country_list'];
+
+		foreach ($countries as $country_id) {
+			$country_info = $this->model_localisation_country->getCountry((int)$country_id);
+
+			if (!$country_info || !$country_info['status']) {
+				continue;
+			}
+
+			$description_info = $this->model_localisation_country->getDescription((int)$country_id, $language_info['language_id']);
+
+			if (!$description_info) {
+				continue;
+			}
+
+			unset($description_info['language_id']);
+			
+			$config['country_list'][] = $description_info;
+		}
+
+		// Zone
 		$config['zone_id'] = (int)$zone_info['zone_id'];
 
-		$config['language'] = (int)$language_info['code'];
-		$config['currency'] = (int)$currency_info['code'];
+		// Language
+		$config['language'] = $language_info['code'];
+
+		$config['language_list'] = [];
+
+		$languages = $setting_info['config_language_list'];
+
+		foreach ($languages as $language) {
+			$language_info = $this->model_localisation_language->getLanguageByCode((string)$language);
+
+			if ($language_info) {
+				$config['language_list'][] = $language_info;
+			}
+		}
+
+		// Currency
+		$config['currency'] = $currency_info['code'];
+
+		$currencies = $setting_info['config_currency_list'];
+
+		foreach ($currencies as $currency) {
+			$currency_info = $this->model_localisation_currency->getCurrencyByCode((string)$currency);
+
+			if ($currency_info) {
+				$config['currency_list'][] = $currency_info;
+			}
+		}
 
 		$config['pagination'] = (int)$setting_info['config_pagination'];
 
+		// Customer Group
 		$config['customer_group_id'] = (int)$setting_info['config_customer_group_id'];
 
+		// Tax
 		$config['tax'] = (int)$setting_info['config_tax'];
 		$config['tax_default'] = $setting_info['config_tax_default'];
 		$config['tax_customer'] = $setting_info['config_tax_customer'];
 
 		$base = DIR_CATALOG . 'view/data/';
 
-		$setting_data = $setting_info;
-
 		$filename = parse_url($store_info['url'], PHP_URL_HOST) . '-' . $language_info['code'] . '.json';
 
-		if (!file_put_contents($base . $filename, json_encode($setting_data))) {
+		if (!file_put_contents($base . $filename, json_encode($config))) {
 			return ['error' => sprintf($this->language->get('error_file'), $filename)];
 		}
 
@@ -178,22 +240,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/setting');
 
-		$this->load->model('setting/store');
+		$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '-' . $language['code'] . '.json';
 
-		$stores = $this->model_setting_store->getStores();
-
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '-' . $language['code'] . '.json';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
-			}
+		if (is_file($file)) {
+			unlink($file);
 		}
 
 		return ['success' => $this->language->get('text_clear')];

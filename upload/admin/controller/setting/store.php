@@ -321,8 +321,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_currency'] = $this->config->get('config_currency');
 		}
 
-
-
 		// Options
 		if (isset($setting_info['config_product_description_length'])) {
 			$data['config_product_description_length'] = $setting_info['config_product_description_length'];

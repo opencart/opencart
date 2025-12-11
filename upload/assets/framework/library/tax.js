@@ -1,5 +1,5 @@
 export class Tax {
-    static tax_classes = [];
+    static tax_classes = {};
 
     constructor(registry) {
         this.storage = registry.get('storage');
@@ -14,9 +14,37 @@ export class Tax {
 
         console.log(tax_rates);
 
-        for (let i = 0; i < tax_rates.length; i++) {
-            this.tax_classes[tax_rates[i].tax_class_id][tax_rates[i].customer_group_id][i] = tax_rate;
+        let tax_classes = [];
+
+        for (let i in tax_rates) {
+            console.log(i);
+            console.log(tax_rates[i]);
+
+            let tax_rule_id = tax_rates[i]['tax_rule_id'];
+            let tax_class_id = tax_rates[i]['tax_class_id'];
+            let customer_group_id = tax_rates[i]['customer_group_id'];
+
+            if (tax_classes[tax_class_id] == undefined) {
+                tax_classes[tax_class_id] = [];
+            }
+
+            if (tax_classes[tax_class_id][customer_group_id] == undefined) {
+
+            }
+
+
+            tax_classes[tax_class_id] = [customer_group_id] + [tax_rule_id];
+
+
+            if (tax_classes[tax_class_id][customer_group_id] == undefined) {
+             //   this.tax_classes[tax_class_id][customer_group_id] = [];
+            }
+
+            tax_classes[tax_class_id][customer_group_id][tax_rule_id] = tax_rates[i];
         }
+
+
+        this.tax_classes = tax_classes;
     }
 
     calculate(value = 0.00, tax_class_id = 0, calculate = true) {

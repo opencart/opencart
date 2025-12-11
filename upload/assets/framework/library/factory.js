@@ -1,10 +1,10 @@
-import { Request } from './request.js';
 import { Cart } from './cart.js';
 import { Config } from './config.js';
 import { Currency } from './currency.js';
 import { Db } from './db.js';
 import { Language } from './language.js';
 import { Local } from './local.js';
+import { Request } from './request.js';
 import { Session } from './session.js';
 import { Storage } from './storage.js';
 import { Tax } from './tax.js';
@@ -50,8 +50,6 @@ class Factory {
             return new Storage(config.path);
         },
         async tax() {
-            //let tax_classes = await this.registry.get('storage').fetch('localisation/tax_class');
-
             return new Tax(this.registry);
         },
         template(config) {

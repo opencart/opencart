@@ -97,13 +97,13 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_location'] = (array)$this->config->get('config_location');
 
-		// Countries
+		// Country / Zone
 		$data['config_country_id'] = $this->config->get('config_country_id');
 		$data['config_country_list'] = $this->config->get('config_country_list');
-
 		$data['config_zone_id'] = $this->config->get('config_zone_id');
 		$data['config_timezone'] = $this->config->get('config_timezone');
 
+		// Time
 		$data['timezones'] = [];
 
 		$timestamp = date_create('now');
@@ -127,6 +127,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$data['config_language_catalog'] = $this->config->get('config_language_catalog');
+		$data['config_language_list'] = $this->config->get('config_language_list');
 		$data['config_language_admin'] = $this->config->get('config_language_admin');
 
 		// Currencies
@@ -135,7 +136,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		$data['config_currency'] = $this->config->get('config_currency');
-
 		$data['config_currency_list'] = $this->config->get('config_currency_list');
 
 		$data['currency_engines'] = [];

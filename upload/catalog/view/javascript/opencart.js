@@ -37,18 +37,18 @@ loader.library('db');
 await loader.library('cart');
 
 // Tax
-loader.library('tax');
+await loader.library('tax');
 
 // Currency
 await loader.library('currency');
 
-const api = registry.get('api');
 const cart = registry.get('cart');
 const config = registry.get('config');
 const currency = registry.get('currency');
 const db = registry.get('db');
 const language = registry.get('language');
 const local = registry.get('local');
+const request = registry.get('request');
 const session = registry.get('session');
 const storage = registry.get('storage');
 const tax = registry.get('tax');

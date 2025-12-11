@@ -13,7 +13,7 @@ await app.template('startup');
 await app.url.query('route');
 await app.url.query('token');
 
-let api = await app.request.fetch({
+let api = await request.fetch({
     url: 'index.php?route=common/home',
     method: 'post',
     beforeSend: () => {

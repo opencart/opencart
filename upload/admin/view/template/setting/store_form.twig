@@ -18,6 +18,18 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-store" action="{{ save }}" method="post" data-oc-toggle="ajax">
+
+
+          <div class="row mb-3">
+            <label for="input-url" class="col-sm-2 col-form-label">{{ entry_url }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control" required/>
+              <div class="form-text">{{ help_url }}</div>
+              <div id="error-url" class="invalid-feedback"></div>
+            </div>
+          </div>
+
+
           <div class="tab-content">
             <ul class="nav nav-tabs">
               <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
@@ -25,14 +37,6 @@
               <li class="nav-item"><a href="#tab-option" data-bs-toggle="tab" class="nav-link">{{ tab_option }}</a></li>
             </ul>
             <div id="tab-general" class="tab-pane active">
-              <div class="row mb-3">
-                <label for="input-url" class="col-sm-2 col-form-label">{{ entry_url }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control" required/>
-                  <div class="form-text">{{ help_url }}</div>
-                  <div id="error-url" class="invalid-feedback"></div>
-                </div>
-              </div>
               <div class="accordion" id="accordion-general">
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse-general">{{ text_general }}</button></h2>
@@ -228,6 +232,27 @@
                     <div id="error-country" class="invalid-feedback"></div>
                   </div>
                 </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_country_list }}</label>
+                  <div class="col-sm-10">
+                    <div id="input-country-list" class="form-control" style="height: 150px; overflow: auto;">
+                      <div class="form-check">
+                        <input type="checkbox" id="input-country-all" onclick="$('input[name*=\'config_country_list\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/>
+                        <label for="input-country-all" class="form-check-label">{{ text_all }}</label>
+                      </div>
+                      {% for country in countries %}
+                        <div class="form-check">
+                          <input type="checkbox" name="config_country_list[]" value="{{ country.country_id }}" id="input-country-{{ country.country_id }}" class="form-check-input"{% if country.country_id in config_country_list %} checked{% endif %}/>
+                          <label for="input-country-{{ country.country_id }}" class="form-check-label">{{ country.name }}</label>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="form-text">{{ help_country_list }}</div>
+                    <div id="error-country-list" class="invalid-feedback"></div>
+                  </div>
+                </div>
+
                 <div class="row mb-3">
                   <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
                   <div class="col-sm-10">
@@ -248,6 +273,25 @@
                     </select>
                   </div>
                 </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_language_list }}</label>
+                  <div class="col-sm-10">
+                    <div id="input-language-list" class="form-control" style="height: 150px; overflow: auto;">
+                      <div class="form-check">
+                        <input type="checkbox" id="input-language-all" onclick="$('input[name*=\'config_language_list\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/>
+                        <label for="input-language-all" class="form-check-label">{{ text_all }}</label>
+                      </div>
+                      {% for language in languages %}
+                        <div class="form-check">
+                          <input type="checkbox" name="config_language_list[]" value="{{ language.code }}" id="input-language-{{ language.language_id }}" class="form-check-input"{% if language.code in config_language_list %} checked{% endif %}/>
+                          <label for="input-language-{{ language.language_id }}" class="form-check-label">{{ language.name }}</label>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="form-text">{{ help_language_list }}</div>
+                    <div id="error-language-list" class="invalid-feedback"></div>
+                  </div>
+                </div>
               </fieldset>
               <fieldset>
                 <legend>{{ text_currency }}</legend>
@@ -260,6 +304,25 @@
                       {% endfor %}
                     </select>
                     <div class="form-text">{{ help_currency }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_currency_list }}</label>
+                  <div class="col-sm-10">
+                    <div id="input-currency-list" class="form-control" style="height: 150px; overflow: auto;">
+                      <div class="form-check">
+                        <input type="checkbox" id="input-currency-all" onclick="$('input[name*=\'config_currency_list\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/>
+                        <label for="input-currency-all" class="form-check-label">{{ text_all }}</label>
+                      </div>
+                      {% for currency in currencies %}
+                        <div class="form-check">
+                          <input type="checkbox" name="config_currency_list[]" value="{{ currency.code }}" id="input-currency-{{ currency.currency_id }}" class="form-check-input"{% if currency.code in config_currency_list %} checked{% endif %}/>
+                          <label for="input-currency-{{ currency.currency_id }}" class="form-check-label">{{ currency.title }}</label>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="form-text">{{ help_currency_list }}</div>
+                    <div id="error-currency-list" class="invalid-feedback"></div>
                   </div>
                 </div>
               </fieldset>
@@ -429,12 +492,13 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
+                        <label class="col-sm-2 col-form-label">{{ entry_customer_group_list }}</label>
                         <div class="col-sm-10">
                           <div id="input-customer-group-display" class="form-control" style="height: 150px; overflow: auto;">
                             {% for customer_group in customer_groups %}
                               <div class="form-check">
-                                <input type="checkbox" name="config_customer_group_list[]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_list %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+                                <input type="checkbox" name="config_customer_group_list[]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_list %} checked{% endif %}/>
+                                <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
                               </div>
                             {% endfor %}
                           </div>

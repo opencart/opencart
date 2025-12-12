@@ -7,8 +7,8 @@
           <p>{{ comment.comment }}</p>
           <div class="text-end">
             {% if logged %}
-              <button type="button" value="{{ comment.like }}" data-bs-toggle="tooltip" title="{{ button_like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
-              <button type="button" value="{{ comment.dislike }}" data-bs-toggle="tooltip" title="{{ button_dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
+              <button type="button" value="{{ comment.like }}" title="{{ button_like }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></button>
+              <button type="button" value="{{ comment.dislike }}" title="{{ button_dislike }}" data-oc-toggle="rate" class="btn btn-secondary"><i class="fa fa-thumbs-down"></i></button>
               <button type="button" value="{{ comment.reply_add }}" data-oc-toggle="comment" data-oc-target="#reply-{{ comment.article_comment_id }}" data-oc-trigger="#button-refresh-{{ comment.article_comment_id }}" class="btn btn-secondary">{{ button_reply }}</button>
             {% else %}
               <a href="{{ login }}" class="btn btn-secondary"><i class="fa fa-thumbs-up"></i></a>

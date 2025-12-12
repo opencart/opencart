@@ -130,10 +130,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Hostname
 		$hostname = parse_url($store_info['url'], PHP_URL_HOST);
 
-		$config['config_path'] = 'catalog/view/data/' . $hostname  . '/' . $language_info['code']  . '/';
+		$config['config_path'] = 'catalog/view/config/' . $hostname  . '/' . $language_info['code']  . '/';
 		$config['storage_path'] = 'catalog/view/data/' . $hostname  . '/' . $language_info['code']  . '/';
 		$config['language_path'] = 'catalog/view/language/' . $hostname  . '/' . $language_info['code']  . '/';
-		$config['template_path'] = 'catalog/view/template/';
+		$config['template_path'] = 'catalog/view/template/' . $hostname  . '/';
 
 		// Store URL toi be used
 		$config['store_url'] = $store_info['url'];

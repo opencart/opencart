@@ -18,7 +18,7 @@
               <td>{{ attribute.name }}</td>
               <td>{{ attribute.attribute_group }}</td>
               <td class="text-end">{{ attribute.sort_order }}</td>
-              <td class="text-end"><a href="{{ attribute.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end"><a href="{{ attribute.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

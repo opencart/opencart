@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-product" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+        <button type="submit" form="form-product" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -595,7 +595,7 @@
                               <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" id="input-text-{{ attribute_row }}-{{ language.language_id }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
                             </div>
                           {% endfor %}</td>
-                        <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                        <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set attribute_row = attribute_row + 1 %}
                     {% endfor %}
@@ -603,7 +603,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-end"><button type="button" id="button-attribute" data-bs-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                      <td class="text-end"><button type="button" id="button-attribute" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -704,8 +704,8 @@
                                       <td class="text-end">{{ product_option_value.weight_prefix }}{{ product_option_value.weight }}
                                         <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
                                       <td class="text-end">
-                                        <button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button>
-                                        <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
+                                        <button type="button" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></button>
+                                        <button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>
                                       </td>
                                     </tr>
                                     {% set option_value_row = option_value_row + 1 %}
@@ -714,7 +714,7 @@
                                 <tfoot>
                                   <tr>
                                     <td colspan="6"></td>
-                                    <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_option_value_add }}" data-option-row="{{ option_row }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                                    <td class="text-end"><button type="button" title="{{ button_option_value_add }}" data-option-row="{{ option_row }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                                   </tr>
                                 </tfoot>
                               </table>
@@ -730,7 +730,7 @@
                         </div>
 
                         <div class="col">
-                          <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" title="{{ button_remove }}" onclick="$('#option-row-{{ option_row }}').remove();"><i class="fa-solid fa-minus-circle"></i></button>
+                          <button type="button" class="btn btn-danger" title="{{ button_remove }}" onclick="$('#option-row-{{ option_row }}').remove();"><i class="fa-solid fa-minus-circle"></i></button>
                         </div>
                       </div>
                     </fieldset>
@@ -874,7 +874,7 @@
                             <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" id="button-upload-{{ option.product_option_id }}" data-oc-target="#input-option-{{ option.product_option_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
                             <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                             <button type="button" data-oc-toggle="download" data-oc-target="#input-option-{{ option.product_option_id }}"{% if not variant[option.product_option_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i> {{ button_download }}</button>
-                            <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-option-{{ option.product_option_id }}"{% if not variant[option.product_option_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
+                            <button type="button" data-oc-toggle="clear" title="{{ button_clear }}" data-oc-target="#input-option-{{ option.product_option_id }}"{% if not variant[option.product_option_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
                             <div class="input-group-text">
                               <x-switch name="override[variant][{{ option.product_option_id }}]" value="1" checked="{{ override.variant[option.product_option_id] }}" input-class="form-switch" data-oc-target="#button-option-{{ option.product_option_id }}"></x-switch>
                             </div>
@@ -961,7 +961,7 @@
                           </select></td>
                         <td><input type="text" name="product_subscription[{{ subscription_row }}][trial_price]" value="{{ product_subscription.trial_price }}" placeholder="{{ entry_trial_price }}" class="form-control"/></td>
                         <td><input type="text" name="product_subscription[{{ subscription_row }}][price]" value="{{ product_subscription.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
-                        <td class="text-end"><button type="button" onclick="$('#subscription-row-{{ subscription_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                        <td class="text-end"><button type="button" onclick="$('#subscription-row-{{ subscription_row }}').remove()" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set subscription_row = subscription_row + 1 %}
                     {% endfor %}
@@ -969,7 +969,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="4"></td>
-                      <td class="text-end"><button type="button" id="button-subscription" data-bs-toggle="tooltip" title="{{ button_subscription_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                      <td class="text-end"><button type="button" id="button-subscription" title="{{ button_subscription_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -1014,7 +1014,7 @@
                         </td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/></td>
                         <td><input type="date" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/></td>
-                        <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                        <td class="text-end"><button type="button" onclick="$('#discount-row-{{ discount_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set discount_row = discount_row + 1 %}
                     {% endfor %}
@@ -1022,7 +1022,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="8"></td>
-                      <td class="text-end"><button type="button" id="button-discount" data-bs-toggle="tooltip" title="{{ button_discount_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                      <td class="text-end"><button type="button" id="button-discount" title="{{ button_discount_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -1066,7 +1066,7 @@
                             </div>
                           </td>
                           <td><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-                          <td class="text-end"><button type="button" onclick="$('#product-image-row-{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                          <td class="text-end"><button type="button" onclick="$('#product-image-row-{{ image_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                         </tr>
                         {% set image_row = image_row + 1 %}
                       {% endfor %}
@@ -1074,7 +1074,7 @@
                     <tfoot>
                       <tr>
                         <td colspan="2"></td>
-                        <td class="text-end"><button type="button" id="button-image" data-bs-toggle="tooltip" title="{{ button_image_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                        <td class="text-end"><button type="button" id="button-image" title="{{ button_image_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                       </tr>
                     </tfoot>
                   </table>
@@ -1205,7 +1205,7 @@
           <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" id="input-text-{{ attribute_row }}-{{ language.language_id }}" class="form-control"></textarea>
         </div>
       {% endfor %}</td>
-    <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+    <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
   </tr>
 </template>
 

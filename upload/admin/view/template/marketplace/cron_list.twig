@@ -26,7 +26,7 @@
                   <span class="badge bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
               <td class="d-none d-lg-table-cell">{{ cron.date_modified }}</td>
-              <td class="text-end text-nowrap"><button type="button" value="{{ cron.run }}" data-bs-toggle="tooltip" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
+              <td class="text-end text-nowrap"><button type="button" value="{{ cron.run }}" title="{{ button_run }}" class="btn btn-warning"><i class="fa-solid fa-play"></i></button>
                 {% if cron.description %}
                   <button type="button" data-bs-toggle="modal" data-bs-target="#modal-cron-{{ cron.cron_id }}" class="btn btn-info"><i class="fa-solid fa-info-circle"></i></button>
                 {% else %}

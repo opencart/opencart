@@ -26,11 +26,11 @@
                   {% endif %}</td>
                 <td class="text-end text-nowrap">
                   {% if extension.installed %}
-                    <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
-                    <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
+                    <a href="{{ extension.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
+                    <a href="{{ extension.uninstall }}" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
                   {% else %}
                     <button type="button" class="btn btn-primary disabled"><i class="fa-solid fa-pencil"></i></button>
-                    <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
+                    <a href="{{ extension.install }}" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
                   {% endif %}</td>
               </tr>
             {% else %}
@@ -44,9 +44,9 @@
                   {% endif %}</td>
                 <td class="text-end text-nowrap">
                   {% if not extension.installed %}
-                    <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
+                    <a href="{{ extension.install }}" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
                   {% else %}
-                    <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
+                    <a href="{{ extension.uninstall }}" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
                   {% endif %}</td>
               </tr>
 
@@ -59,8 +59,8 @@
                       <span class="badge bg-danger">{{ text_disabled }}</span>
                     {% endif %}</td>
                   <td class="text-end text-nowrap">
-                    <a href="{{ module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a>
-                    <a href="{{ module.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fa-regular fa-trash-can"></i></a>
+                    <a href="{{ module.edit }}" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a>
+                    <a href="{{ module.delete }}" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fa-regular fa-trash-can"></i></a>
                   </td>
                 </tr>
               {% endfor %}
@@ -69,7 +69,7 @@
 
                 <tr>
                   <td colspan="2"></td>
-                  <td class="text-end"><a href="{{ extension.add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></a></td>
+                  <td class="text-end"><a href="{{ extension.add }}" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></a></td>
                 </tr>
 
               {% endif %}

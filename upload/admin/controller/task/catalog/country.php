@@ -28,7 +28,13 @@ class Country extends \Opencart\System\Engine\Controller {
 			$setting_info = $this->model_setting_setting->getSettings('config', $store['store_id']);
 
 			if ($setting_info) {
-				foreach ((array)$setting_info['config_language_list'] as $language_id) {
+				if ($setting_info['config_language_list']) {
+					$languages = (array)$setting_info['config_language_list'];
+				} else {
+					$languages = [];
+				}
+
+				foreach ($languages as $language_id) {
 					$task_data = [
 						'code'   => 'country',
 						'action' => 'task/catalog/country.list',
@@ -75,6 +81,28 @@ class Country extends \Opencart\System\Engine\Controller {
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];
 		}
+
+		$setting_info = $this->model_setting_setting->getSettings('config', $store_info['store_id']);
+
+		if ($setting_info) {
+			if ($setting_info['config_language_list']) {
+				$languages = (array)$setting_info['config_language_list'];
+			} else {
+				$languages = [];
+			}
+
+			$description_info = $this->model_localisation_country->getDescription((int)$country_id, $language_info['language_id']);
+
+			if (!$description_info) {
+				continue;
+			}
+
+
+
+
+
+
+
 
 		$this->load->model('setting/task');
 

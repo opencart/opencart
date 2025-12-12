@@ -18,7 +18,7 @@
             <td>{% if payment_method.image %}<img src="{{ payment_method.image }}" alt=""/>{% endif %}</td>
             <td>{{ payment_method.type }}</td>
             <td>{{ payment_method.date_expire }}</td>
-            <td class="text-end"><button type="button" value="{{ payment_method.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+            <td class="text-end"><button type="button" value="{{ payment_method.delete }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
           </tr>
         {% endfor %}
       {% else %}

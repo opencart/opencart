@@ -4,9 +4,9 @@
     <div class="container-fluid">
       <div class="float-end">
         {% if signature %}
-          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
+          <button type="button" id="button-api" title="{{ button_api }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
         {% else %}
-          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i></button>
+          <button type="button" id="button-api" title="{{ button_api }}" data-placement="left" class="btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i></button>
         {% endif %}
       </div>
       <h1>{{ heading_title }}</h1>
@@ -34,7 +34,7 @@
                     <option value="{{ category.value }}"{% if category.value == filter_category %} selected{% endif %}>{{ category.text }}</option>
                   {% endfor %}
                 </select>
-                <button type="submit" id="button-filter" data-bs-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary"><i class="fa-solid fa-filter"></i></button>
+                <button type="submit" id="button-filter" title="{{ button_filter }}" class="btn btn-primary"><i class="fa-solid fa-filter"></i></button>
               </div>
               <input type="hidden" name="filter_rating" value="{{ filter_rating }}"/>
               <input type="hidden" name="filter_partner" value="{{ filter_partner }}"/>

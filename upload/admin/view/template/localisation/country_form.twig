@@ -2,8 +2,8 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><button type="submit" form="form-country" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <div class="float-end"><button type="submit" form="form-country" formaction="{{ save }}" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -57,19 +57,6 @@
             <label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
             <div class="col-sm-10">
               <x-switch name="postcode_required" value="1" checked="{{ postcode_required }}" input-id="input-postcode" input-class="form-switch form-switch-lg"></x-switch>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">{{ entry_store }}</label>
-            <div class="col-sm-10">
-              <div class="form-control" style="height: 150px; overflow: auto;">
-                {% for store in stores %}
-                  <div class="form-check">
-                    <input type="checkbox" name="country_store[]" value="{{ store.store_id }}" id="input-store-{{ store.store_id }}" class="form-check-input"{% if store.store_id in country_store %} checked{% endif %}/>
-                    <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
-                  </div>
-                {% endfor %}
-              </div>
             </div>
           </div>
           <div class="row mb-3">

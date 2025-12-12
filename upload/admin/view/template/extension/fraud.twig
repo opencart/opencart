@@ -22,11 +22,11 @@
                 {% endif %}</td>
               <td class="text-end text-nowrap">
               {% if extension.installed %}
-                <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
-                <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
+                <a href="{{ extension.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
+                <a href="{{ extension.uninstall }}" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
               {% else %}
                 <button type="button" class="btn btn-primary disabled"><i class="fa-solid fa-pencil"></i></button>
-                <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
+                <a href="{{ extension.install }}" title="{{ button_install }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></a>
               {% endif %}</td>
             </tr>
           {% endfor %}

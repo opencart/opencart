@@ -1460,6 +1460,7 @@ VALUES ('activity_customer_add', 'Adds new customer entry in the activity log.',
        ('return_status_add', 'Updates return status data when a new return status is added.', 'admin/model/localisation/return_status.addReturnStatus/after', 'event/return_status', 1),
        ('return_status_edit', 'Updates return status data when a return status is edited.', 'admin/model/localisation/return_status.editReturnStatus/after', 'event/return_status', 1),
        ('return_status_delete', 'Updates return status data when a return status is deleted.', 'admin/model/localisation/return_status.deleteReturnStatus/after', 'event/return_status', 1),
+
        ('ssr_home', 'Create a static home page.', 'catalog/controller/common/home/after', 'event/ssr', 1),
        ('ssr_article', 'Create a static article page.', 'catalog/controller/cms/article/after', 'event/ssr', 1),
        ('ssr_topic', 'Create a static topic page.', 'catalog/controller/cms/topic/after', 'event/ssr', 1),

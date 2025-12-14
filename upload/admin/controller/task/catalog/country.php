@@ -96,13 +96,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			if (!$description_info) {
 				continue;
 			}
-
-
-
-
-
-
-
+		}
 
 		$this->load->model('setting/task');
 

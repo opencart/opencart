@@ -14,9 +14,6 @@ class XModal extends WebComponent {
 
             this.data.content = this.innerHTML;
 
-            this.addStylesheet('bootstrap.css');
-            this.addStylesheet('fontawesome.css');
-
             this.shadow.innerHTML = await this.render('modal.html', this.data);
 
             document.body.classList.add('modal-open');

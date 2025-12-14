@@ -33,6 +33,11 @@ loader.library('local');
 // DB
 loader.library('db');
 
+// Autoload
+loader.storage('localisation/country');
+loader.storage('localisation/tax');
+loader.storage('localisation/currency');
+
 // Cart
 await loader.library('cart');
 

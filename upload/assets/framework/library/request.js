@@ -7,7 +7,7 @@ export class Request {
         body: option.data
     };
 
-    async fetch(config) {
+    async post(config) {
         if (!config.method) {
             config.method = 'get';
         }
@@ -35,5 +35,9 @@ export class Request {
         }
 
         return await response.json();
+    }
+
+    async get() {
+
     }
 }

@@ -23,7 +23,7 @@
                 {{ text_disabled }}
               {% endif %}</td>
             <td class="text-end"><x-currency code="{{ currency }}" amount="{{ customer.total }}"></x-currency></td>
-            <td class="text-end"><a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+            <td class="text-end"><a href="{{ customer.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
           </tr>
         {% endfor %}
       {% else %}

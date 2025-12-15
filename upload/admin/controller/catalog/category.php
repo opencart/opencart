@@ -75,9 +75,16 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['list'] = $this->load->controller('catalog/category.getList');
 
 		// Stores
+		$data['stores'] = [];
+
+		$data['stores'][] = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name')
+		];
+
 		$this->load->model('setting/store');
 
-		$data['stores'] = $this->model_setting_store->getStores();
+		$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
 
 		// Languages
 		$this->load->model('localisation/language');
@@ -355,9 +362,16 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
+		$data['stores'] = [];
+
+		$data['stores'][] = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name')
+		];
+
 		$this->load->model('setting/store');
 
-		$data['stores'] = $this->model_setting_store->getStores();
+		$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
 
 		if (!empty($category_info)) {
 			$data['category_store'] = $this->model_catalog_category->getStores($category_info['category_id']);

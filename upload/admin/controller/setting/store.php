@@ -560,9 +560,9 @@ class Store extends \Opencart\System\Engine\Controller {
 		// Total Zones
 		$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$this->request->post['config_country_id']);
 
-		if ($zone_total && !$this->request->post['config_zone_id']) {
-			$json['error']['zone'] = $this->language->get('error_zone');
-		}
+		//if ($zone_total && !$this->request->post['config_zone_id']) {
+		//	$json['error']['zone'] = $this->language->get('error_zone');
+		//}
 
 		if (!empty($this->request->post['config_customer_group_list']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_list'])) {
 			$json['error']['customer_group_display'] = $this->language->get('error_customer_group_display');
@@ -669,6 +669,32 @@ class Store extends \Opencart\System\Engine\Controller {
 
 				$this->model_setting_setting->deleteSetting('config', $store_id);
 			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function rebuild() {
+		$this->load->language('setting/store');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'setting/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Setting
+			$this->load->model('setting/store');
+
+			$this->load->model('setting/setting');
+
+			$this->model_setting_store->deleteStore($store_id);
+
+			$this->model_setting_setting->deleteSetting('config', $store_id);
 
 			$json['success'] = $this->language->get('text_success');
 		}

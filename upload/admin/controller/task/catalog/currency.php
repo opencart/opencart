@@ -29,9 +29,16 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
+		$stores = [];
+
+		$stores[] = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name')
+		];
+
 		$this->load->model('setting/store');
 
-		$stores = $this->model_setting_store->getStores();
+		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
 		$this->load->model('localisation/language');
 
@@ -125,9 +132,16 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
+		$stores = [];
+
+		$stores[] = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name')
+		];
+
 		$this->load->model('setting/store');
 
-		$stores = $this->model_setting_store->getStores();
+		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
 		$this->load->model('localisation/language');
 

@@ -51,15 +51,6 @@ class Store extends \Opencart\System\Engine\Model {
 			$this->model_design_seo_url->addSeoUrl($result['key'], $result['value'], $result['keyword'], $store_id, $result['language_id'], $result['sort_order']);
 		}
 
-		// Populate countries
-		$this->load->model('localisation/country');
-
-		$results = $this->model_localisation_country->getCountries();
-
-		foreach ($results as $result) {
-			$this->model_localisation_country->addStore($result['country_id'], $store_id);
-		}
-
 		$this->cache->delete('store');
 
 		return $store_id;
@@ -212,14 +203,6 @@ class Store extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_setting_store->getStores();
 	 */
 	public function getStores(array $data = []): array {
-		$store_data = [];
-
-		$store_data[] = [
-			'store_id'  => 0,
-			'name'      => $this->config->get('config_name'),
-			'url'       => HTTP_CATALOG
-		];
-
 		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
@@ -236,7 +219,7 @@ class Store extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return array_merge($store_data, $query->rows);
+		return $query->rows;
 	}
 
 	/**

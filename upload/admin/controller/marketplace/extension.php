@@ -29,7 +29,7 @@ class ControllerMarketplaceExtension extends Controller {
 		
 		$data['categories'] = array();
 		
-		$files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php');
 		
 		foreach ($files as $file) {
 			$extension = basename($file, '.php');
@@ -42,7 +42,7 @@ class ControllerMarketplaceExtension extends Controller {
 			$this->load->language('extension/extension/' . $extension, 'extension');
 		
 			if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
-				$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
+				$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php');
 		
 				$data['categories'][] = array(
 					'code' => $extension,

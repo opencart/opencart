@@ -9,13 +9,13 @@ $_['text_add']               = 'Attribute';
 $_['text_edit']              = 'Attribute';
 
 // Column
-$_['column_name']            = 'Attribute Name';
+$_['column_name']            = 'Sergioavila97sbd ';
 $_['column_attribute_group'] = 'Attribute Group';
 $_['column_sort_order']      = 'Sort Order';
 $_['column_action']          = 'Action';
 
 // Entry
-$_['entry_name']             = 'Attribute Name';
+$_['entry_name']             = 'Sergioavila97sbd ';
 $_['entry_attribute_group']  = 'Attribute Group';
 $_['entry_sort_order']       = 'Sort Order';
 

@@ -2,12 +2,6 @@ import { registry } from './registry.js';
 
 export class WebComponent extends HTMLElement {
     static registry = null;
-    event = {
-        connected: null,
-        disconnected: null,
-        adopted: null,
-        changed: null
-    };
 
     constructor() {
         super();
@@ -60,20 +54,23 @@ export class WebComponent extends HTMLElement {
     }
 
     connectedCallback() {
-        if (this.event.connected) {
-            this.event.connected();
+        if (this.connected !== undefined) {
+            this.connected();
         }
     }
 
     disconnectedCallback() {
-        if (this.event.disconnected) {
-            this.event.disconnected();
+        console.log('disconnectedCallback');
+
+
+        if (this.disconnected !== undefined) {
+            this.disconnected();
         }
     }
 
     adoptedCallback() {
-        if (this.event.adopted) {
-            this.event.adopted();
+        if (this.adopted !== undefined) {
+            this.adopted();
         }
     }
 

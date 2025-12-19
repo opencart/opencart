@@ -40,7 +40,7 @@ export class Tax {
              //   this.tax_classes[tax_class_id][customer_group_id] = [];
             }
 
-            tax_classes[tax_class_id][customer_group_id][tax_rule_id] = tax_rates[i];
+           // tax_classes[tax_class_id][customer_group_id][tax_rule_id] = tax_rates[i];
         }
 
 
@@ -108,6 +108,6 @@ export class Tax {
     }
 
     clear() {
-        this.data = [];
+        this.tax_classes = [];
     }
 }

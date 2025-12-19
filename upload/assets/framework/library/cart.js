@@ -21,7 +21,15 @@ export class Cart {
         this.data = item;
     }
 
-    remove() {
+    remove(key) {
         return this.data;
+    }
+
+    getProducts() {
+
+    }
+
+    getTotal() {
+
     }
 }

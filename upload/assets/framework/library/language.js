@@ -1,30 +1,53 @@
 export class Language {
     path = '';
+    loaded = [];
     data = [];
 
     constructor(path) {
         this.path = path;
     }
 
-    async fetch(filename) {
+    get(key) {
+        return key in this.data ? this.data[key] : null;
+    }
+
+    set(key, value) {
+        this.data[key] = value;
+    }
+
+    has(key) {
+        return key in this.data;
+    }
+
+    remove(key) {
+        if (key in this.data) delete this.data[key];
+    }
+
+    all() {
+        return this.data;
+    }
+
+    clear() {
+        this.data = [];
+    }
+
+    async load(filename) {
         let key = filename.replaceAll('/', '.');
 
-        if (key in this.data) {
-            return this.data[key];
+        if (key in this.loaded) {
+            this.data = this.data.concat(this.loaded[key]);
+
+            return;
         }
 
         let response = await fetch(this.path + filename + '.json');
 
         if (response.status == 200) {
-            let json = await response.json();
+            this.loaded[key] = await response.json();
 
-            this.data[key] = json;
-
-            return json;
+            this.data = this.data.concat(this.loaded[key]);
         } else {
-            console.log('Could not load file ' + filename + '.json');
-
-            return [];
+            console.log('Could not load language file ' + filename);
         }
     }
 }

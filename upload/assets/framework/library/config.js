@@ -27,44 +27,27 @@ export class Config {
         return this.data;
     }
 
+    clear() {
+        this.data = [];
+    }
+
     async load(filename) {
         let key = filename.replaceAll('/', '.');
 
-        if (key in this.data) {
-            return this.data[key];
+        if (key in this.loaded) {
+            this.data = this.data.concat(...this.loaded[key]);
+
+            return;
         }
 
         let response = await fetch(this.path + filename + '.json');
 
         if (response.status == 200) {
-            let json = await response.json();
+            this.loaded[key] = await response.json();
 
-
-            this.data[key] = json;
-
-            return json;
+            this.data = this.data.concat(...this.loaded[key]);
         } else {
-            console.log('Could not load config file ' + filename + '.json');
-        }
-    }
-
-    async fetch(filename) {
-        let key = filename.replaceAll('/', '.');
-
-        if (key in this.data) {
-            return this.data[key];
-        }
-
-        let response = await fetch(this.path + filename + '.json');
-
-        if (response.status == 200) {
-            let json = await response.json();
-
-            this.data[key] = json;
-
-            return json;
-        } else {
-            console.log('Could not load config file ' + filename + '.json');
+            console.log('Could not load config file ' + filename);
         }
     }
 }

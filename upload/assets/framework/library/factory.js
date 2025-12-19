@@ -14,17 +14,11 @@ import { Url } from './url.js';
 class Factory {
     static instance;
     data = {
-        api(config) {
-            return new Request(config);
-        },
         async cart() {
             return new Cart(this.registry);
         },
         config(config) {
             return new Config(config.path);
-        },
-        async controller(path) {
-            return await import(path);
         },
         async currency() {
             let currencies = await this.registry.get('storage').fetch('localisation/currency');
@@ -40,8 +34,8 @@ class Factory {
         local() {
             return new Local();
         },
-        async model(config) {
-            return await import(path);
+        request(config) {
+            return new Request(config);
         },
         session() {
             return new Session();

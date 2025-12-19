@@ -1,4 +1,4 @@
-import { WebComponent } from './../library/webcomponent.js';
+import { WebComponent } from '../library/webcomponent.js';
 
 class XCurrency extends WebComponent {
     static observed = ['code', 'amount', 'value'];

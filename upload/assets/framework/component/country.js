@@ -1,4 +1,4 @@
-import { WebComponent } from './../library/webcomponent.js';
+import { WebComponent } from '../library/webcomponent.js';
 
 class XCountry extends WebComponent {
     static observed = ['value', 'postcode'];

@@ -18,7 +18,7 @@ class Factory {
             return new Cart(this.registry);
         },
         config(config) {
-            return new Config(config.path);
+            return new Config();
         },
         async currency() {
             let currencies = await this.registry.get('storage').fetch('localisation/currency');
@@ -28,26 +28,26 @@ class Factory {
         db() {
             return new Db();
         },
-        language(config) {
-            return new Language(config.path);
+        language() {
+            return new Language();
         },
         local() {
             return new Local();
         },
-        request(config) {
-            return new Request(config);
+        request() {
+            return new Request();
         },
         session() {
             return new Session();
         },
         storage(config) {
-            return new Storage(config.path);
+            return new Storage();
         },
         async tax() {
             return new Tax(this.registry);
         },
-        template(config) {
-            return new Template(config.path);
+        template() {
+            return new Template();
         },
         url() {
             return new Url();

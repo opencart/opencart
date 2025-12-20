@@ -40,6 +40,8 @@ export class Loader {
     static getInstance(registry) {
         if (!this.instance) {
             this.instance = new Loader(registry);
+
+
         }
 
         return this.instance;
@@ -50,5 +52,7 @@ export class Loader {
 registry.set('factory', factory);
 
 const loader = Loader.getInstance(registry);
+
+registry.set('loader', loader);
 
 export { loader };

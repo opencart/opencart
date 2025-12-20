@@ -1,0 +1,2 @@
+export { registry, factory, loader, config, storage, language, template, url, session, local, db } from './../../../assets/framework/index.js';
+export { WebComponent } from './../../../assets/framework/library/webcomponent.js';

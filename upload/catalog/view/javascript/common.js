@@ -1,52 +1,6 @@
 import { registry, factory, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './opencart.js';
 
-let app = {};
-
-await app.load('config', { path: './catalog/view/data/' + base.host + '/config/' });
-await app.load('storage', { path: './catalog/view/data/' + base.host + '/' });
-
-await app.config('startup');
-await app.storage('startup');
-await app.language('startup');
-await app.template('startup');
-
-await app.url.query('route');
-await app.url.query('token');
-
-let api = await request.fetch({
-    url: 'index.php?route=common/home',
-    method: 'post',
-    beforeSend: () => {
-
-    },
-    afterSend: () => {
-
-    },
-    success: () => {
-
-    },
-    error: () => {
-
-    }
-});
-
-await app.api.send({
-    url: 'index.php?route=common/home',
-    method: 'post',
-    beforeSend: () => {
-
-    },
-    afterSend: () => {
-
-    },
-    success: () => {
-
-    },
-    error: () => {
-
-    }
-});
-
+/*
 $(document).ready(function() {
     // Tooltip
     let oc_tooltip = function() {
@@ -91,10 +45,6 @@ $(document).ready(function() {
 
     // Button
     +function($) {
-
-
-
-
         $.fn.button = function(state) {
             return this.each(function() {
                 let element = this;
@@ -452,4 +402,4 @@ $(document).ready(function() {
     });
 
 });
-
+*/

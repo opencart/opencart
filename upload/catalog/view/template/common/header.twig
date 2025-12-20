@@ -21,6 +21,12 @@
   {% for link in links %}
     <link href="{{ link.href }}" rel="{{ link.rel }}"/>
   {% endfor %}
+  <script src="./assets/bootstrap/js/bootstrap.bundle.min.js" type="module"></script>
+  <script src="./catalog/view/javascript/opencart.js" type="module"></script>
+  <script src="./catalog/view/javascript/common.js" type="module"></script>
+  {% for script in scripts %}
+    <script href="{{ script.href }}" type="module"/>
+  {% endfor %}
 </head>
 <body>
   <div id="container" class="d-flex flex-column min-vh-100">

@@ -1,13 +1,12 @@
 export class Request {
-    option = {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: option.data
-    };
 
-    async post(config) {
+    async get(config) {
+
+
+    }
+
+    async post(option) {
+        /*
         if (!config.method) {
             config.method = 'get';
         }
@@ -28,13 +27,15 @@ export class Request {
                 'Content-Type': 'application/json'
             },
             body: config.data
-        });
+        }).catch((err) => { });
 
         if (response.status !== 200) {
             throw new Error('HTTP error! status: ' + response.status);
         }
 
         return await response.json();
+
+         */
     }
 
     async get() {

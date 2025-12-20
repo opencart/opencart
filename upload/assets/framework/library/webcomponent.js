@@ -1,4 +1,4 @@
-import { registry } from './registry.js';
+import { registry } from '../index.js';
 
 export class WebComponent extends HTMLElement {
     static registry = null;
@@ -7,51 +7,22 @@ export class WebComponent extends HTMLElement {
         super();
 
         this.registry = registry;
+        this.load = registry.get('loader');
+
+
+
+        console.log('WebComponent');
+        console.log(this.registry);
+
+
+        //for ([key, value] of registry.all().entries()) {
+        //    this[key] = registry.get();
+        //}
     }
 
-    get load() {
-        return this.registry.get('load');
-    }
-
-    get config() {
-        return this.registry.get('config');
-    }
-
-    get storage() {
-        return this.registry.get('storage');
-    }
-
-    get language() {
-        return this.registry.get('language');
-    }
-
-    get template() {
-        return this.registry.get('template');
-    }
-
-    get session() {
-        return this.registry.get('session');
-    }
-
-    get local() {
-        return this.registry.get('local');
-    }
-
-    get db() {
-        return this.registry.get('db');
-    }
-
-    get cart() {
-        return this.registry.get('cart');
-    }
-
-    get tax() {
-        return this.registry.get('tax');
-    }
-
-    get currency() {
-        return this.registry.get('currency');
-    }
+    //get load() {
+    //   return registry.get('loader');
+    //}
 
     connectedCallback() {
         if (this.connected !== undefined) {
@@ -60,9 +31,6 @@ export class WebComponent extends HTMLElement {
     }
 
     disconnectedCallback() {
-        console.log('disconnectedCallback');
-
-
         if (this.disconnected !== undefined) {
             this.disconnected();
         }

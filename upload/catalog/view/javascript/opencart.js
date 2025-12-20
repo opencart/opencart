@@ -1,4 +1,4 @@
-import { registry, factory, loader } from './../../../assets/framework/framework.js';
+import { registry, factory, loader, config, storage, language, template, url, session, local, db } from './index.js';
 
 // Base
 const base = new URL(document.querySelector('base').href);
@@ -7,33 +7,24 @@ const base = new URL(document.querySelector('base').href);
 const lang = document.documentElement.lang.toLowerCase();
 
 // Config
-loader.library('config', { path: './catalog/view/data/' + base.host + '/config/' });
+config.addPath('catalog/view/data/');
+
+//config.load('localhost-' + lang);
+
+config.set('store_url', base);
+config.set('language', lang);
 
 // Storage
-loader.library('storage', { path: './catalog/view/data/' + base.host + '/' + lang + '/' });
+storage.addPath('catalog/view/data/' + base.host + '/' + lang + '/');
 
 // Language
-loader.library('language', { path: './catalog/view/language/' + base.host + '/' + lang + '/' });
+language.addPath('catalog/view/language/' + base.host + '/' + lang + '/');
 
 // Template
-loader.library('template', { path: './catalog/view/template/' + base.host + '/template/' });
-
-// Request
-loader.library('request');
-
-// URL
-loader.library('url');
-
-// Session
-loader.library('session');
-
-// Local
-loader.library('local');
-
-// DB
-loader.library('db');
+template.addPath('catalog/view/template/');
 
 // Autoload
+loader.storage('localisation/language');
 loader.storage('localisation/country');
 loader.storage('localisation/tax');
 loader.storage('localisation/currency');
@@ -48,16 +39,61 @@ await loader.library('tax');
 await loader.library('currency');
 
 const cart = registry.get('cart');
-const config = registry.get('config');
 const currency = registry.get('currency');
-const db = registry.get('db');
-const language = registry.get('language');
-const local = registry.get('local');
-const request = registry.get('request');
-const session = registry.get('session');
-const storage = registry.get('storage');
 const tax = registry.get('tax');
-const template = registry.get('template');
-const url = registry.get('url');
 
-export { registry, factory, loader, config, storage, language, template, url, session, local, db, cart, tax, currency }
+export { registry, factory, loader, config, db, language, local, session, storage, template, url, cart, tax, currency };
+
+document.addEventListener('DOMContentLoaded', () => {
+
+});
+
+// Common
+import('./common/header.js');
+//import('./common/language.js');
+//import('./common/currency.js');
+//import('./common/search.js');
+import('./common/menu.js');
+import('./common/footer.js');
+//import('./common/cart.js');
+//import('./common/cookie.js');
+
+// Home Page
+import('./common/home.js');
+//import('./common/maintenance.js');
+
+// Error
+import('./error/not_found.js');
+
+// Account
+//import('./common/account.js');
+//import('./common/address.js');
+//import('./common/address_info.js');
+
+// Catalog
+//import('./catalog/brand.js');
+//import('./catalog/category.js');
+//import('./catalog/compare.js');
+//import('./catalog/product.js');
+//import('./catalog/product_list.js');
+//import('./catalog/product_info.js');
+//import('./catalog/product_thumb.js');
+//import('./catalog/related.js');
+//import('./catalog/review_list.js');
+//import('./catalog/review_form.js');
+//import('./catalog/search.js');
+//import('./catalog/special.js');
+
+// Checkout
+//import('./checkout/cart.js');
+//import('./checkout/checkout.js');
+
+// CMS
+//import('./cms/article.js');
+//import('./cms/topic.js');
+
+// Information
+//import('./information/contact.js');
+//import('./information/gdpr.js');
+//import('./information/information.js');
+//import('./information/sitemap.js');

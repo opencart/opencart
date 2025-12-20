@@ -24,6 +24,7 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		$data['styles'] = $this->document->getStyles();
 		$data['links'] = $this->document->getLinks();
+		$data['scripts'] = $this->document->getScripts();
 
 		$data['name'] = $this->config->get('config_name');
 

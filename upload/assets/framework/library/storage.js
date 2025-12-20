@@ -1,26 +1,47 @@
 export class Storage {
-    path = '';
-    data = [];
+    directory = '';
+    path = [];
+    loaded = [];
 
-    constructor(path) {
-        this.path = path;
+    addPath(namespace, path = '') {
+        if (!path) {
+            this.directory = namespace;
+        } else {
+            this.path[namespace] = path;
+        }
     }
 
-    async fetch(filename) {
-        let key = filename.replaceAll('/', '.');
+    async fetch(path) {
+        let key = path.replaceAll('/', '.');
 
-        if (key in this.data) {
-            return this.data[key];
+        if (key in this.loaded) {
+            return this.loaded[key];
         }
 
-        let response = await fetch(this.path + filename + '.json');
+        let file = this.directory + path + '.json';
+        let namespace = '';
+        let parts = path.split('/');
+
+        for (let part of parts) {
+            if (!namespace) {
+                namespace += part;
+            } else {
+                namespace += '/' + part;
+            }
+
+            if (this.path[namespace] !== undefined) {
+                file = this.path[namespace] + path.substr(path, namespace.length) + '.json';
+            }
+        }
+
+        const response = await fetch(file);
 
         if (response.status == 200) {
-            this.data[key] = await response.json();
+            this.loaded[key] = await response.json();
 
-            return this.data[key];
+            return this.loaded[key];
         } else {
-            console.log('Could not load file ' + filename + '.json');
+            console.log('Could not load storage file ' + path);
 
             return [];
         }

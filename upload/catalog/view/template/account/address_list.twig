@@ -4,8 +4,16 @@
       {% for address in addresses %}
         <tr>
           <td>{{ address.address }}</td>
+
           <td>{% if address.default %}<strong>{{ text_default }}</strong>{% endif %}</td>
-          <td class="text-end"><a href="{{ address.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-regular fa-solid fa-pencil"></i></a> <a href="{{ address.delete }}" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a></td>
+
+          <td class="text-end">
+
+            <a href="{{ address.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-regular fa-solid fa-pencil"></i></a>
+            <a href="{{ address.delete }}" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
+
+          </td>
+
         </tr>
       {% endfor %}
     </table>

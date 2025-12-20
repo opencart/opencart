@@ -85,7 +85,6 @@ class Footer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Hard coding scripts, so they can be replaced via the event's system.
-		$data['scripts'] = $this->document->getScripts();
 		$data['cookie'] = $this->load->controller('common/cookie');
 
 		return $this->load->view('common/footer', $data);

@@ -7,10 +7,10 @@ export class Cart {
     data = [];
 
     constructor(registry) {
-        //this.config = registry.config;
-        this.language = registry.language;
-        this.tax = registry.tax;
-        this.session = registry.session;
+        this.config = registry.get('config');
+        this.language = registry.get('language');
+        this.tax = registry.get('tax');
+        this.session = registry.get('session');
 
         //this.customer = this.session.get('customer');
 

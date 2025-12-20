@@ -1,10 +1,15 @@
 export class Config {
-    path = '';
+    directory = '';
+    path = [];
     loaded = [];
     data = [];
 
-    constructor(path) {
-        this.path = path;
+    addPath(namespace, path = '') {
+        if (!path) {
+            this.directory = namespace;
+        } else {
+            this.path[namespace] = path;
+        }
     }
 
     get(key) {
@@ -31,23 +36,39 @@ export class Config {
         this.data = [];
     }
 
-    async load(filename) {
-        let key = filename.replaceAll('/', '.');
+    async load(path) {
+        let key = path.replaceAll('/', '.');
 
         if (key in this.loaded) {
-            this.data = this.data.concat(...this.loaded[key]);
+            this.data = this.data.concat(this.loaded[key]);
 
             return;
         }
 
-        let response = await fetch(this.path + filename + '.json');
+        let file = this.directory + path + '.json';
+        let namespace = '';
+        let parts = path.split('/');
+
+        for (let part of parts) {
+            if (!namespace) {
+                namespace += part;
+            } else {
+                namespace += '/' + part;
+            }
+
+            if (this.path[namespace] !== undefined) {
+                file = this.path[namespace] + path.substr(path, namespace.length) + '.json';
+            }
+        }
+
+        let response = await fetch(file);
 
         if (response.status == 200) {
             this.loaded[key] = await response.json();
 
-            this.data = this.data.concat(...this.loaded[key]);
+            this.data = this.data.concat(this.loaded[key]);
         } else {
-            console.log('Could not load config file ' + filename);
+            console.log('Could not load config file ' + path);
         }
     }
 }

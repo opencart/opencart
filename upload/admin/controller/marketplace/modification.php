@@ -177,7 +177,37 @@ class ControllerMarketplaceModification extends Controller {
 						}
 
 						if ($path) {
-							$files = glob($path, GLOB_BRACE);
+							// Fix: GLOB_BRACE is not supported on Alpine/Musl systems.
+							// We need to simulate brace expansion manually.
+							$path_files = array();
+
+							// Check if the path contains braces like {default,mytheme}
+							if (preg_match('/\{([^{}]+)\}/', $path, $matches)) {
+								// Extract parts: "default,mytheme" -> array("default", "mytheme")
+								$permutations = explode(',', $matches[1]);
+
+								foreach ($permutations as $permutation) {
+									// Replace {default,mytheme} with just "default" (and then "mytheme")
+									$expanded_path = str_replace($matches[0], trim($permutation), $path);
+
+									// Standard glob without flags
+									$glob_result = glob($expanded_path);
+
+									if ($glob_result) {
+										$path_files = array_merge($path_files, $glob_result);
+									}
+								}
+							} else {
+								// No braces found, just run standard glob
+								$glob_result = glob($path);
+
+								if ($glob_result) {
+									$path_files = $glob_result;
+								}
+							}
+
+							// Remove duplicates and re-assign to $files variable used in the loop below
+							$files = array_unique($path_files);
 
 							if ($files) {
 								foreach ($files as $file) {
@@ -207,7 +237,6 @@ class ControllerMarketplaceModification extends Controller {
 									} else {
 										// Log
 										$log[] = PHP_EOL . 'FILE: (sub modification) ' . $key;
-									
 									}
 
 									foreach ($operations as $operation) {

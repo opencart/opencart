@@ -157,8 +157,23 @@ class ModelUpgrade1001 extends Model {
 
 		// Update the config.php by adding a DIR_MODIFICATION
 		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
+			
+			// Fix: GLOB_BRACE is not supported on Alpine/Musl.
+			// Since we know exactly which files we need, we define them manually.
+			$files = array();
+			
+			$candidates = array(
+				DIR_OPENCART . 'config.php',
+				DIR_OPENCART . 'admin/config.php'
+			);
 
+			foreach ($candidates as $candidate) {
+				if (is_file($candidate)) {
+					$files[] = $candidate;
+				}
+			}
+
+			// 1. Add DIR_MODIFICATION
 			foreach ($files as $file) {
 				if (!is_writable($file)) {
 					exit(json_encode(array('error' => 'File is read only. Please adjust and try again: ' . $file)));
@@ -171,7 +186,6 @@ class ModelUpgrade1001 extends Model {
 				foreach ($lines as $line) {
 					if (strpos($line, 'DIR_MODIFICATION') !== false) {
 						$upgrade = false;
-
 						break;
 					}
 				}
@@ -193,8 +207,9 @@ class ModelUpgrade1001 extends Model {
 				}
 			}
 
-			// Update the config.php by adding a DIR_UPLOAD
+			// 2. Add DIR_UPLOAD
 			foreach ($files as $file) {
+				// Re-check writability just in case (good practice from original code)
 				if (!is_writable($file)) {
 					exit(json_encode(array('error' => 'File is read only. Please adjust and try again: ' . $file)));
 				}
@@ -206,7 +221,6 @@ class ModelUpgrade1001 extends Model {
 				foreach ($lines as $line) {
 					if (strpos($line, 'DIR_UPLOAD') !== false) {
 						$upgrade = false;
-
 						break;
 					}
 				}
@@ -228,7 +242,7 @@ class ModelUpgrade1001 extends Model {
 				}
 			}
 
-			// Update the config.php to change mysql to mysqli
+			// 3. Change mysql to mysqli
 			foreach ($files as $file) {
 				if (!is_writable($file)) {
 					exit(json_encode(array('error' => 'File is read only. Please adjust and try again: ' . $file)));
@@ -241,7 +255,6 @@ class ModelUpgrade1001 extends Model {
 				foreach ($lines as $line) {
 					if (strpos($line, "'mysql'") !== false) {
 						$upgrade = true;
-
 						break;
 					}
 				}

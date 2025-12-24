@@ -13,7 +13,20 @@ class ModelUpgrade1006 extends Model {
 
 		// Update the config.php by adding a DB_PORT
 		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
+			// Fix: GLOB_BRACE is not supported on Alpine/Musl systems.
+			// Replaced with a manual list of config files to ensure compatibility.
+			$files = array();
+			
+			$candidates = array(
+				DIR_OPENCART . 'config.php',
+				DIR_OPENCART . 'admin/config.php'
+			);
+
+			foreach ($candidates as $candidate) {
+				if (is_file($candidate)) {
+					$files[] = $candidate;
+				}
+			}
 
 			foreach ($files as $file) {
 				$upgrade = true;
@@ -23,7 +36,6 @@ class ModelUpgrade1006 extends Model {
 				foreach ($lines as $line) {
 					if (strpos(strtoupper($line), 'DB_PORT') !== false) {
 						$upgrade = false;
-
 						break;
 					}
 				}
@@ -51,7 +63,19 @@ class ModelUpgrade1006 extends Model {
 
 		// Update the config.php to add /storage/ to paths
 		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
+			// Fix: Same replacement here. Avoid GLOB_BRACE.
+			$files = array();
+			
+			$candidates = array(
+				DIR_OPENCART . 'config.php',
+				DIR_OPENCART . 'admin/config.php'
+			);
+
+			foreach ($candidates as $candidate) {
+				if (is_file($candidate)) {
+					$files[] = $candidate;
+				}
+			}
 
 			foreach ($files as $file) {
 				$upgrade = true;

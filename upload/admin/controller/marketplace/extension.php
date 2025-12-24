@@ -29,26 +29,31 @@ class ControllerMarketplaceExtension extends Controller {
 		
 		$data['categories'] = array();
 		
-		$files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php', GLOB_BRACE);
+		// Fix: Removed GLOB_BRACE as it is not needed for a single extension pattern (*.php)
+		// and it causes issues on Alpine Linux / musl systems.
+		$files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php');
 		
-		foreach ($files as $file) {
-			$extension = basename($file, '.php');
+		if ($files) {
+			foreach ($files as $file) {
+				$extension = basename($file, '.php');
 
-			if ($extension=='promotion') {
-				continue;
-			}
+				if ($extension == 'promotion') {
+					continue;
+				}
 
-			// Compatibility code for old extension folders
-			$this->load->language('extension/extension/' . $extension, 'extension');
-		
-			if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
-				$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
-		
-				$data['categories'][] = array(
-					'code' => $extension,
-					'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($files) .')',
-					'href' => $this->url->link('extension/extension/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
-				);
+				// Compatibility code for old extension folders
+				$this->load->language('extension/extension/' . $extension, 'extension');
+			
+				if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
+					// Fix: Removed GLOB_BRACE for compatibility
+					$extension_files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php');
+			
+					$data['categories'][] = array(
+						'code' => $extension,
+						'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($extension_files ? $extension_files : array()) . ')',
+						'href' => $this->url->link('extension/extension/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
+					);
+				}
 			}
 		}
 

@@ -44,11 +44,18 @@ class ControllerCommonFileManager extends Controller {
 				$directories = array();
 			}
 
-			// Get files
-			$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}', GLOB_BRACE);
+			// Fix: GLOB_BRACE is not supported on some non-GNU systems (e.g. Alpine Linux, Solaris).
+			// We iterate through extensions manually to ensure compatibility.
+			$files = array();
 
-			if (!$files) {
-				$files = array();
+			$extensions = array('jpg', 'jpeg', 'png', 'gif', 'webp', 'JPG', 'JPEG', 'PNG', 'GIF', 'WEBP');
+
+			foreach ($extensions as $extension) {
+				$matches = glob($directory . '/' . $filter_name . '*.' . $extension);
+
+				if ($matches) {
+					$files = array_merge($files, $matches);
+				}
 			}
 		}
 

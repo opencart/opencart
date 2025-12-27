@@ -1,9 +1,9 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
+class CatalogCategory extends WebComponent {
     async connected() {
 
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('catalog-category', CatalogCategory);

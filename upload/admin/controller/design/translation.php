@@ -177,7 +177,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 				'store'    => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
 				'image'    => $image,
 				'language' => $code,
-				'edit'     => $this->url->link('design/translation.form', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
+				'edit'     => $this->url->link('design/translation.form', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'] . $url)
 			] + $result;
 		}
 

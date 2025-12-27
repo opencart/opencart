@@ -1,26 +1,12 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
+class CommonCurrency extends WebComponent {
     async connected() {
-
-    }
-}
-
-customElements.define('x-account', XAccount);
-
-import { WebComponent } from './../../../../assets/framework/library/webcomponent.js';
-
-class XCurrency extends WebComponent {
-    data = [];
-
-    async connected() {
-        this.load.language('common/currency');
-
-        this.load.language('common/currency');
+        await this.load.language('common/currency');
 
         this.innerHtml = this.load.template('common/currency', this.data);
 
-        const currencies = await registry.storage.fetch('localisation/currency');
+        const currencies = await this.storage.fetch('localisation/currency');
 
 
         console.log(form);
@@ -63,4 +49,4 @@ class XCurrency extends WebComponent {
     }
 }
 
-customElements.define('x-currency', XCurrency);
+customElements.define('common-currency', CommonCurrency);

@@ -1,9 +1,12 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
+class XHome extends WebComponent {
     async connected() {
 
+
+
+        this.innerHTML = this.load.template('common/Home', this.language.all());
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('x-home', XHome);

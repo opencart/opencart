@@ -1,4 +1,4 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
 class XAccount extends WebComponent {
     async connected() {

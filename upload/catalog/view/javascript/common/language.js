@@ -1,11 +1,15 @@
-import { WebComponent } from './../../../../assets/framework/library/webcomponent.js';
+import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-class XLanguage extends WebComponent {
+const language = await loader.language('common/language');
+
+// Load Languages
+const languages = await loader.storage('localisation/language');
+
+class CommonLanguage extends WebComponent {
     currency = '';
 
     async connected() {
-        this.load.language('common/language');
-
         let html = '';
 
         html += '<form id="form-language">';
@@ -45,11 +49,7 @@ class XLanguage extends WebComponent {
     }
 }
 
-customElements.define('x-language', XLanguage);
-
-
-
-import { registry } from './library/registry.js';
+customElements.define('common-language', CommonLanguage);
 
 // Language
 let form = document.getElementById('form-language');

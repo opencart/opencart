@@ -18,7 +18,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('view/javascript/dashboard.js');
+		//$this->document->addScript('view/javascript/dashboard.js');
 
 		$data['breadcrumbs'] = [];
 

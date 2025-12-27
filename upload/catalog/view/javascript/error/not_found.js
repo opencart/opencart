@@ -1,9 +1,9 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
-class XError extends WebComponent {
+class ErrorNotFound extends WebComponent {
     async connected() {
 
     }
 }
 
-customElements.define('x-error', XError);
+customElements.define('error-not-found', ErrorNotFound);

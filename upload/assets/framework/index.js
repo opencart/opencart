@@ -3,65 +3,27 @@ import { factory } from './library/factory.js';
 import { loader } from './library/loader.js';
 
 // Config
-await loader.library('config');
-const config = registry.get('config');
+loader.library('config');
 
 // DB
-await loader.library('db');
-const db = registry.get('db');
+loader.library('db');
 
 // Language
-await loader.library('language');
-const language = registry.get('language');
+loader.library('language');
 
 // Local
-await loader.library('local');
-const local = registry.get('local');
+loader.library('local');
 
 // Request
-await loader.library('request');
-const request = registry.get('request');
+loader.library('request');
 
 // Session
-await loader.library('session');
-const session = registry.get('session');
+loader.library('session');
 
 // Storage
-await loader.library('storage');
-const storage = registry.get('storage');
+loader.library('storage');
 
 // Template
-await loader.library('template');
-const template = registry.get('template');
+loader.library('template');
 
-// URL
-await loader.library('url');
-const url = registry.get('url');
-
-export { registry, factory, loader, config, db, language, local, session, storage, template, url };
-
-// Web Components
-import('./component/alert.js');
-//import('./component/autocomplete.js');
-//import('./component/ckeditor.js');
-import('./component/datetime.js');
-//import './component/modal.js';
-import('./component/pagination.js');
-
-// Custom
-//import('./component/currency.js');
-//import('./component/country.js');
-//import('./component/zone.js');
-
-// Input
-//import('./input/checkbox.js');
-//import('./input/ckeditor.js');
-//import('./input/date.js');
-//import('./input/datetime.js');
-//import('./input/file.js');
-//import('./input/radio.js');
-//import('./input/select.js');
-import('./input/switch.js');
-//import('./input/text.js');
-//import('./input/textarea.js');
-//import('./input/time.js');
+export { registry, factory, loader };

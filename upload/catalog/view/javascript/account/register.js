@@ -1,13 +1,19 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-class XRegister extends WebComponent {
+const language = await loader.language('account/register');
+const config = await loader.config('catalog');
+
+console.log(language);
+
+class AccountRegister extends WebComponent {
     async connected() {
-        await this.language.load('account/register');
 
         let data = [];
 
-        data['text_account_already'] = sprintf(this.language.get('text_account_already'), this.url.link('account/login', 'language=' + this.config.get('config_language')));
+        this.data.text_account_already = language.text_account_already.replace('%s', 'route=account/login');
 
+        /*
         data['customer_groups'] = this.config.get('config_customer_group_list');
         data['customer_group_id'] = this.config.get('config_customer_group_id');
 
@@ -35,11 +41,17 @@ class XRegister extends WebComponent {
         } else {
             data['text_agree'] = '';
         }
+*/
+        console.log(data);
 
-        this.innerHtml = this.template.load('account/register', data.concat(this.language.all()));
+        this.render('account/register');
     }
 
-    onRender() {
+    render(html) {
+
+
+
+
         // Attach event to form
         let form = document.getElementById('form-register');
 
@@ -69,7 +81,7 @@ class XRegister extends WebComponent {
     }
 
     async onChange() {
-      //  fetch();
+        //fetch();
 
         ///$this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true)
 
@@ -82,12 +94,11 @@ class XRegister extends WebComponent {
             data['custom_fields'] = [];
         }
 
-
         $('.custom-field').addClass('d-none');
         $('.custom-field').removeClass('required');
 
-        for (i = 0; i < json.length; i++) {
-            custom_field = json[i];
+        for (let i = 0; i < json.length; i++) {
+            let custom_field = json[i];
 
             $('.custom-field-' + custom_field['custom_field_id']).removeClass('d-none');
 
@@ -119,11 +130,11 @@ class XRegister extends WebComponent {
     }
 }
 
-customElements.define('x-register', XRegister);
+customElements.define('account-register', AccountRegister);
 
 
 
-
+/*
 
 $('#input-customer-group').on('change', function() {
     $.ajax({
@@ -150,3 +161,4 @@ $('#input-customer-group').on('change', function() {
 });
 
 $('#input-customer-group').trigger('change');
+*/

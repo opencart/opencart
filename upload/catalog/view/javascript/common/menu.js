@@ -1,13 +1,18 @@
-import { WebComponent } from './../../../../assets/framework/library/webcomponent.js';
+import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-class XMenu extends WebComponent {
+const language = await loader.language('common/menu');
+
+//const categories = await loader.storage('catalog/category');
+
+const categories = [];
+
+class CommonMenu extends WebComponent {
     async connected() {
-        await this.load.language('common/menu');
+        //let categories = await this.load.storage('catalog/category');
 
-        let categories = await this.load.storage('catalog/category');
-
-        this.innerHtml = this.load.template('common/menu', [...this.language.all(), categories]);
+        this.innerHTML = await this.load.template('common/menu', this.language.all());
     }
 }
 
-customElements.define('x-menu', XMenu);
+customElements.define('common-menu', CommonMenu);

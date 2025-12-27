@@ -1,4 +1,4 @@
-import { WebComponent } from '../library/webcomponent.js';
+import { WebComponent } from '../component.js';
 
 class XDatetime extends WebComponent {
     static observed = ['format', 'value'];

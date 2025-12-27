@@ -1,13 +1,20 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
+class InformationGdpr extends WebComponent {
     async connected() {
 
     }
+
+    onChange() {
+        if (this.value == 'remove') {
+            $('#collapse-remove').slideDown();
+        } else {
+            $('#collapse-remove').slideUp();
+        }
+    }
 }
 
-customElements.define('x-account', XAccount);
-
+customElements.define('Information-gdpr', InformationGdpr);
 
 $('input[name=\'action\']').on('change', function() {
 

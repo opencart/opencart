@@ -1,10 +1,10 @@
-<footer id="footer">{{ text_footer }}
-  <br/>{{ text_version }}</footer>
+<footer id="footer">
+  {{ text_footer }}
+  <br/>{{ text_version }}
+</footer>
 </div>
-<script src="../assets/jquery/jquery-3.7.1.min.js" type="module"></script>
 <script src="../assets/bootstrap/js/bootstrap.bundle.min.js" type="module"></script>
-<script src="./view/javascript/opencart.js" type="module"></script>
-<script src="./view/javascript/common.js" type="module"></script>
+<script src="./view/javascript/index.js" type="module"></script>
 {% for script in scripts %}
   <script src="{{ script.href }}" type="module"></script>
 {% endfor %}

@@ -1,4 +1,4 @@
-import { registry, factory, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './opencart.js';
+import { registry, factory, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './index.js';
 
 /*
 $(document).ready(function() {

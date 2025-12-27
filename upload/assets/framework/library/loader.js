@@ -12,7 +12,7 @@ export class Loader {
     }
 
     config(path) {
-        this.registry.get('config').load(path);
+        return this.registry.get('config').fetch(path);
     }
 
     storage(path) {
@@ -20,28 +20,28 @@ export class Loader {
     }
 
     language(path) {
-        this.registry.get('language').load(path);
+        return this.registry.get('language').load(path);
     }
 
-    template(path, data = []) {
+    template(path, data = {}) {
         return this.registry.get('template').render(path, data);
     }
 
-    async library(key, config = {}) {
+    library(key, config = {}) {
         if (this.registry.has(key)) {
-            return;
+            return this.registry.get(key);
         }
 
         if (this.factory.has(key)) {
-            this.registry.set(key, await this.factory.get(key).bind({ registry: this.registry }).apply(config));
+            this.registry.set(key, this.factory.get(key).bind({ registry: this.registry }).apply(config));
         }
+
+        return this.registry.get(key);
     }
 
     static getInstance(registry) {
         if (!this.instance) {
             this.instance = new Loader(registry);
-
-
         }
 
         return this.instance;
@@ -53,6 +53,7 @@ registry.set('factory', factory);
 
 const loader = Loader.getInstance(registry);
 
+// Add loader to the registry
 registry.set('loader', loader);
 
 export { loader };

@@ -8,7 +8,7 @@ export class Template {
     constructor(path) {
         this.engine = new liquidjs.Liquid({
             root: '',
-            extname: '.liquid'
+            extname: '.twig'
         });
     }
 
@@ -21,7 +21,7 @@ export class Template {
     }
 
     async render(path, data = []) {
-        let file = this.directory + path + '.json';
+        let file = this.directory + path + '.twig';
         let namespace = '';
         let parts = path.split('/');
 
@@ -33,7 +33,7 @@ export class Template {
             }
 
             if (this.path[namespace] !== undefined) {
-                file = this.path[namespace] + path.substr(path, namespace.length) + '.json';
+                file = this.path[namespace] + path.substr(path, namespace.length) + '.twig';
             }
         }
 

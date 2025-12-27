@@ -1,12 +1,12 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
+class CmsTopic extends WebComponent {
     async connected() {
 
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('cms-topic', CmsTopic);
 
 $('#button-search').bind('click', function() {
     url = 'index.php?route=cms/topic&language={{ language }}';

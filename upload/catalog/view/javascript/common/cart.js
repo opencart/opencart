@@ -1,6 +1,6 @@
-import { WebComponent } from './../../../../assets/framework/library/webcomponent.js';
+import { WebComponent } from '../component.js';
 
-class XCart extends WebComponent {
+class CommonCart extends WebComponent {
     element = HTMLInputElement;
     data = [];
 

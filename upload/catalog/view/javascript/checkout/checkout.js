@@ -1,4 +1,4 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
 class XCheckout extends WebComponent {
     async connected() {

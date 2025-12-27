@@ -73,15 +73,7 @@ class Language {
 			return $key;
 		}
 
-		$args = func_get_args();
-
-		if (count($args) == 1) {
-			return $this->data[$key];
-		}
-
-		array_shift($args);
-
-		return call_user_func_array('sprintf', [$this->data[$key]] + $args);
+		return $this->data[$key];
 	}
 
 	/**

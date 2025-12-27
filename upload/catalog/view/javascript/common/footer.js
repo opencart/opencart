@@ -1,41 +1,42 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-class XFooter extends WebComponent {
+const language = await loader.language('common/footer');
+const config = await loader.config('catalog');
+const date = new Date();
+
+//const articles = await loader.storage('cms/article-1');
+
+const articles = [];
+
+//const informations = await loader.storage('information/information');
+
+const informations = [];
+
+class CommonFooter extends WebComponent {
+    data = [];
+
     async connected() {
-        console.log('fgfgfg');
-
-        this.innerHtml = 'dfsdfdsfdsfsdf';
-
-        /*
-        let language = await this.language.fetch('common/footer');
-
-        let data = [];
+        language
 
         // Blog
-        let articles = await this.storage.fetch('cms/article');
-
         if (articles.length > 0) {
-            data.blog = true;
+            this.data.blog = true;
         }
 
         // Information Pages
-        data.informations = [];
+        this.data.informations = [];
 
         let i = 0;
-
-        let informations = await this.storage.fetch('information/information');
 
         for (let information of informations) {
             data.informations[i++] = information + [href => information.information_id];
         }
 
+        this.data.powered = language.text_powered.replace('%s', config.config_name).replace('%s', date.getFullYear());
 
-        console.log(data);
-
-        this.innerHtml = this.load.template('common/footer',  [...data, ...language]);
-
-         */
+        this.render('common/footer');
     }
 }
 
-customElements.define('x-footer', XFooter);
+customElements.define('common-footer', CommonFooter);

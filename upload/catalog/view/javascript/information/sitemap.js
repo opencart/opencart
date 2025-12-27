@@ -1,9 +1,12 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
-class XSitemap extends WebComponent {
+class InformationSitemap extends WebComponent {
     async connected() {
 
+
+
+        let response = this.load.template.render('common/header', this.data);
     }
 }
 
-customElements.define('x-sitemap', XAccount);
+customElements.define('information-sitemap', InformationSitemap);

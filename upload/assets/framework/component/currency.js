@@ -1,4 +1,4 @@
-import { WebComponent } from '../library/webcomponent.js';
+import { WebComponent } from '../component.js';
 
 class XCurrency extends WebComponent {
     static observed = ['code', 'amount', 'value'];
@@ -60,24 +60,24 @@ class XCurrency extends WebComponent {
         this.setAttribute('value', value);
     }
 
-    event = {
-        connected: async () => {
-            this.addEventListener('[code]', this.event.format);
-            this.addEventListener('[amount]', this.event.format);
-            this.addEventListener('[value]', this.event.format);
+    async connected() {
+        this.addEventListener('[code]', this.event.format);
+        this.addEventListener('[amount]', this.event.format);
+        this.addEventListener('[value]', this.event.format);
 
-            let response = this.storage.fetch('localisation/currency');
+        let response = this.storage.fetch('localisation/currency');
 
-            response.then(this.event.onloaded);
-            response.then(this.event.format);
-        },
-        onloaded: (currencies) => {
-            this.currencies = currencies;
-        },
-        format: () => {
-            this.innerHTML = this.currency.format(this.value, this.code);
-        }
-    };
+        response.then(this.event.onloaded);
+        response.then(this.event.format);
+    }
+
+    onloaded(currencies) {
+        this.currencies = currencies;
+    }
+
+    format() {
+        this.innerHTML = this.currency.format(this.value, this.code);
+    }
 }
 
 customElements.define('x-currency', XCurrency);

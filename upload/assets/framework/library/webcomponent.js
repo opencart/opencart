@@ -2,27 +2,37 @@ import { registry } from '../index.js';
 
 export class WebComponent extends HTMLElement {
     static registry = null;
+    data = [];
 
     constructor() {
         super();
 
-        this.registry = registry;
+        this.config = registry.get('config');
+        this.db = registry.get('db');
+        this.factory = registry.get('factory');
+        this.language = registry.get('language');
         this.load = registry.get('loader');
-
-
-
-        console.log('WebComponent');
-        console.log(this.registry);
-
-
-        //for ([key, value] of registry.all().entries()) {
-        //    this[key] = registry.get();
-        //}
+        this.local = registry.get('local');
+        this.registry = registry;
+        this.session = registry.get('session');
+        this.storage = registry.get('storage');
+        this.template = registry.get('template');
     }
 
-    //get load() {
-    //   return registry.get('loader');
-    //}
+    async render(path) {
+        // Merge language vars with the data
+        let languages = this.language.all();
+
+        for (let key in languages) {
+            if (this.data[key] == undefined) {
+                this.data[key] = languages[key];
+            }
+        }
+
+        console.log(this.data);
+
+        this.innerHTML = await this.template(path, this.data);
+    }
 
     connectedCallback() {
         if (this.connected !== undefined) {

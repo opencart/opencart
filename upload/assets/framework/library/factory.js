@@ -9,7 +9,6 @@ import { Session } from './session.js';
 import { Storage } from './storage.js';
 import { Tax } from './tax.js';
 import { Template } from './template.js';
-import { Url } from './url.js';
 
 class Factory {
     static instance;
@@ -48,9 +47,6 @@ class Factory {
         },
         template() {
             return new Template();
-        },
-        url() {
-            return new Url();
         }
     };
 

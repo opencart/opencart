@@ -1,7 +1,7 @@
 export class Storage {
     directory = '';
     path = [];
-    loaded = [];
+    data = [];
 
     addPath(namespace, path = '') {
         if (!path) {
@@ -12,10 +12,8 @@ export class Storage {
     }
 
     async fetch(path) {
-        let key = path.replaceAll('/', '.');
-
-        if (key in this.loaded) {
-            return this.loaded[key];
+        if (path in this.data) {
+            return this.data[path];
         }
 
         let file = this.directory + path + '.json';
@@ -34,16 +32,16 @@ export class Storage {
             }
         }
 
-        const response = await fetch(file);
+        let response = await fetch(file);
 
         if (response.status == 200) {
-            this.loaded[key] = await response.json();
+            this.data[path] = await response.json();
 
-            return this.loaded[key];
+            return this.data[path];
         } else {
             console.log('Could not load storage file ' + path);
-
-            return [];
         }
+
+        return {};
     }
 }

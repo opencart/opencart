@@ -89,10 +89,10 @@ class Map extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/map');
 
-		$this->document->addStyle('../assets/jquery/jqvmap/jqvmap.css');
+		//$this->document->addStyle('../assets/jquery/jqvmap/jqvmap.css');
 
-		$this->document->addScript('../assets/jquery/jqvmap/jquery.vmap.js');
-		$this->document->addScript('../assets/jquery/maps/jquery.vmap.world.js');
+		//$this->document->addScript('../assets/jquery/jqvmap/jquery.vmap.js');
+		//$this->document->addScript('../assets/jquery/maps/jquery.vmap.world.js');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

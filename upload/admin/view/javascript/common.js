@@ -1,4 +1,4 @@
-import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './opencart.js';
+import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './index.js';
 
 console.log(currency.format(1.00, 'USD'));
 

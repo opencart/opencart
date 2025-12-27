@@ -143,7 +143,6 @@ class Template extends \Opencart\System\Engine\Controller {
 			$language->addPath('extension/' . $part[1], DIR_EXTENSION . $part[1] . '/admin/language/');
 		}
 
-		$language->load('default');
 		$language->load($args['route']);
 
 		$filter_data = [

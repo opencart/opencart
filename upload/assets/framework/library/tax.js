@@ -2,17 +2,17 @@ export class Tax {
     static tax_classes = {};
 
     constructor(registry) {
-        this.storage = registry.get('storage');
+        //this.storage = registry.get('storage');
 
         //this.tax_classes = tax_classes;
 
-        this.load(3);
+        //this.load(3);
     }
 
     async load(geo_zone_id) {
         let tax_rates = await this.storage.fetch('localisation/tax_rate-' + geo_zone_id);
 
-        console.log(tax_rates);
+        //console.log(tax_rates);
 
         let tax_classes = [];
 

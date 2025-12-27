@@ -1,7 +1,6 @@
 export class Config {
     directory = '';
     path = [];
-    loaded = [];
     data = [];
 
     addPath(namespace, path = '') {
@@ -12,37 +11,9 @@ export class Config {
         }
     }
 
-    get(key) {
-        return key in this.data ? this.data[key] : null;
-    }
-
-    set(key, value) {
-        this.data[key] = value;
-    }
-
-    has(key) {
-        return key in this.data;
-    }
-
-    remove(key) {
-        if (key in this.data) delete this.data[key];
-    }
-
-    all() {
-        return this.data;
-    }
-
-    clear() {
-        this.data = [];
-    }
-
-    async load(path) {
-        let key = path.replaceAll('/', '.');
-
-        if (key in this.loaded) {
-            this.data = this.data.concat(this.loaded[key]);
-
-            return;
+    async fetch(path) {
+        if (path in this.data) {
+            return this.data[path];
         }
 
         let file = this.directory + path + '.json';
@@ -64,11 +35,13 @@ export class Config {
         let response = await fetch(file);
 
         if (response.status == 200) {
-            this.loaded[key] = await response.json();
+            this.data[path] = await response.json();
 
-            this.data = this.data.concat(this.loaded[key]);
+            return this.data[path];
         } else {
             console.log('Could not load config file ' + path);
         }
+
+        return {};
     }
 }

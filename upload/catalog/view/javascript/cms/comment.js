@@ -1,12 +1,12 @@
-import { WebComponent } from '../index.js';
+import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
+class CmsComment extends WebComponent {
     async connected() {
 
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('cms-comment', CmsComment);
 
 $('#comment').on('click', '.pagination a', function(e) {
     e.preventDefault();

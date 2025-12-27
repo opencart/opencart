@@ -32,17 +32,9 @@ export class Language {
         return this.data;
     }
 
-    clear() {
-        this.data = [];
-    }
-
     async load(path) {
-        let key = path.replaceAll('/', '.');
-
-        if (key in this.loaded) {
-            this.data = this.data.concat(this.loaded[key]);
-
-            return;
+        if (path in this.data) {
+            return this.data[path];
         }
 
         let file = this.directory + path + '.json';
@@ -64,11 +56,53 @@ export class Language {
         let response = await fetch(file);
 
         if (response.status == 200) {
-            this.loaded[key] = await response.json();
+            let json = await response.json();
 
-            this.data = this.data.concat(this.loaded[key]);
+            console.log(json);
+
+            this.data[path] = json;
+
+            return this.data[path];
         } else {
             console.log('Could not load language file ' + path);
         }
     }
+
+    /*
+    async fetch(path) {
+        if (path in this.data) {
+            return this.data[path];
+        }
+
+        let file = this.directory + path + '.json';
+        let namespace = '';
+        let parts = path.split('/');
+
+        for (let part of parts) {
+            if (!namespace) {
+                namespace += part;
+            } else {
+                namespace += '/' + part;
+            }
+
+            if (this.path[namespace] !== undefined) {
+                file = this.path[namespace] + path.substr(path, namespace.length) + '.json';
+            }
+        }
+
+        let response = await fetch(file);
+
+        if (response.status == 200) {
+            let json = await response.json();
+
+            console.log(Array.from(json));
+
+            this.data[path] = json;
+
+            return this.data[path];
+        } else {
+            console.log('Could not load language file ' + path);
+        }
+    }
+    */
 }

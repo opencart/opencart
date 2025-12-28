@@ -31,7 +31,7 @@ export class WebComponent extends HTMLElement {
 
         console.log(this.data);
 
-        this.innerHTML = await this.template(path, this.data);
+        this.innerHTML = await this.template.render(path, this.data);
     }
 
     connectedCallback() {

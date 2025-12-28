@@ -33,8 +33,6 @@ class XCheckbox extends WebComponent {
 
         html = '       <div id="error-custom-field-{{ custom_field.custom_field_id }}" className="invalid-feedback"></div>';
 
-
-
         html = '       </div>';
 
         html = '   </div>';

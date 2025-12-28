@@ -47,7 +47,7 @@ class XZone extends WebComponent {
     }
 
     onloaded(country) {
-            this.zones = country['zone'];
+        this.zones = country['zone'];
     }
 
     option() {
@@ -85,7 +85,8 @@ class XZone extends WebComponent {
         } else {
             this.zones = [];
             this.event.option();
-        }    }
+        }
+    }
 }
 
 customElements.define('x-zone', XZone);

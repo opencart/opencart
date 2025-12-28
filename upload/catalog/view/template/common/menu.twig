@@ -7,7 +7,7 @@
         <ul class="nav navbar-nav">
           {% for category in categories %}
             {% if category.children %}
-              {% set total = category.children|length %}
+              {% assign total = category.children|length %}
               {% if total > 20 %}
                 {% set batch = (total / 4)|round(0, 'ceil') %}
                 {% set column = 4 %}

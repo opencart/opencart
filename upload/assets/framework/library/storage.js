@@ -1,19 +1,19 @@
 export class Storage {
     directory = '';
-    path = [];
-    data = [];
+    path = new Map();
+    loaded = new Map();
 
     addPath(namespace, path = '') {
         if (!path) {
             this.directory = namespace;
         } else {
-            this.path[namespace] = path;
+            this.path.set(namespace, path);
         }
     }
 
     async fetch(path) {
-        if (path in this.data) {
-            return this.data[path];
+        if (this.loaded.has(path)) {
+            return this.loaded.get(path);
         }
 
         let file = this.directory + path + '.json';
@@ -27,17 +27,19 @@ export class Storage {
                 namespace += '/' + part;
             }
 
-            if (this.path[namespace] !== undefined) {
-                file = this.path[namespace] + path.substr(path, namespace.length) + '.json';
+            if (this.path.has(namespace)) {
+                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.json';
             }
         }
 
         let response = await fetch(file);
 
         if (response.status == 200) {
-            this.data[path] = await response.json();
+            let data = response.json();
 
-            return this.data[path];
+            this.loaded.set(path, data);
+
+            return this.loaded.get(path);
         } else {
             console.log('Could not load storage file ' + path);
         }

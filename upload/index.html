@@ -9,9 +9,14 @@
   <script src="./catalog/view/javascript/index.js" type="module"></script>
 </head>
 <body>
+<div id="container" class="d-flex flex-column min-vh-100">
+  <div id="alert"></div>
   <common-header></common-header>
-  <common-menu></common-menu>
-  <account-register></account-register>
+  <gcommon-menu></gcommon-menu>
+  <main class="flex-grow-1 mb-4">
+    <account-register></account-register>
+  </main>
   <common-footer></common-footer>
+</div>
 </body>
 </html>

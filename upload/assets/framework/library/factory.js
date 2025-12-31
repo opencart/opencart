@@ -1,3 +1,4 @@
+import { registry } from './registry.js';
 import { Cart } from './cart.js';
 import { Config } from './config.js';
 import { Currency } from './currency.js';
@@ -12,58 +13,58 @@ import { Template } from './template.js';
 
 class Factory {
     static instance;
-    data = {
-        async cart() {
+    data = new Map(Object.entries({
+        cart: async () => {
             return new Cart(this.registry);
         },
-        config(config) {
+        config: (config) => {
             return new Config();
         },
-        async currency() {
+        currency: async () => {
             let currencies = await this.registry.get('storage').fetch('localisation/currency');
 
             return new Currency(currencies);
         },
-        db() {
+        db: () => {
             return new Db();
         },
-        language() {
+        language: () => {
             return new Language();
         },
-        local() {
+        local: () => {
             return new Local();
         },
-        request() {
+        request: () => {
             return new Request();
         },
-        session() {
+        session: () => {
             return new Session();
         },
-        storage(config) {
+        storage: (config) => {
             return new Storage();
         },
-        async tax() {
+        tax: async () => {
             return new Tax(this.registry);
         },
-        template() {
+        template: () => {
             return new Template();
         }
-    };
+    }));
 
     get(key) {
-        return key in this.data ? this.data[key] : null;
+        return this.data.has(key) ? this.data.get(key) : null;
     }
 
     set(key, value) {
-        this.data[key] = value;
+        this.data.set(key, value);
     }
 
     has(key) {
-        return key in this.data;
+        return this.data.has(key);
     }
 
     remove(key) {
-        if (key in this.data) delete this.data[key];
+        if (this.data.has(key)) this.data.delete(key);
     }
 
     static getInstance() {
@@ -76,5 +77,8 @@ class Factory {
 }
 
 const factory = Factory.getInstance();
+
+// Set the factory object so it can be used by the loader
+registry.set('factory', factory);
 
 export { factory };

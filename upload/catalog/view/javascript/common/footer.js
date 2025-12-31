@@ -1,41 +1,31 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-const language = await loader.language('common/footer');
 const config = await loader.config('catalog');
+
+const language = await loader.language('common/footer');
+
 const date = new Date();
 
-//const articles = await loader.storage('cms/article-1');
+const articles = await loader.storage('cms/article-1');
 
-const articles = [];
-
-//const informations = await loader.storage('information/information');
-
-const informations = [];
+const informations = await loader.storage('information/information');
 
 class CommonFooter extends WebComponent {
-    data = [];
-
     async connected() {
-        language
+        let data = {};
 
-        // Blog
-        if (articles.length > 0) {
-            this.data.blog = true;
-        }
+        // Articles
+        data.articles = articles;
 
         // Information Pages
-        this.data.informations = [];
+        data.informations = informations;
 
-        let i = 0;
+        data.config_name = config.config_name;
 
-        for (let information of informations) {
-            data.informations[i++] = information + [href => information.information_id];
-        }
+        data.year = date.getFullYear();
 
-        this.data.powered = language.text_powered.replace('%s', config.config_name).replace('%s', date.getFullYear());
-
-        this.render('common/footer');
+        this.innerHTML = await loader.template('common/footer', { ...data, ...language });
     }
 }
 

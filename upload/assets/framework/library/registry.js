@@ -1,21 +1,21 @@
 class Registry {
     static instance = null;
-    data = {};
+    data = new Map();
 
     get(key) {
-        return key in this.data ? this.data[key] : null;
+        return this.data.has(key) ? this.data.get(key) : null;
     }
 
     set(key, value) {
-        this.data[key] = value;
+        this.data.set(key, value);
     }
 
     has(key) {
-        return key in this.data;
+        return this.data.has(key);
     }
 
     remove(key) {
-        if (key in this.data) delete this.data[key];
+        if (this.data.has(key)) this.data.delete(key);
     }
 
     all() {

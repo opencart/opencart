@@ -1,57 +1,58 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-const language = await loader.language('account/register');
 const config = await loader.config('catalog');
 
-console.log(language);
+const language = await loader.language('account/register');
+
+const session = await loader.library('session');
+
+const customer = session.get('customer');
 
 class AccountRegister extends WebComponent {
     async connected() {
+        let data = {};
 
-        let data = [];
+        data.text_account_already = language.text_account_already.replace('%s', 'route=account/login');
 
-        this.data.text_account_already = language.text_account_already.replace('%s', 'route=account/login');
+        data.customer_groups = config.config_customer_group_list;
+        data.customer_group_id = config.config_customer_group_id;
 
-        /*
-        data['customer_groups'] = this.config.get('config_customer_group_list');
-        data['customer_group_id'] = this.config.get('config_customer_group_id');
+        data.error_upload_size = language.error_upload_size.replace('%s', config.config_file_max_size);
 
-        data['error_upload_size'] = this.language.get('error_upload_size').replace('%s', this.config.get('config_file_max_size'));
+        data.config_telephone_status = config.config_telephone_status;
+        data.config_telephone_required = config.config_telephone_required;
 
-        data['config_telephone_status'] = this.config.get('config_telephone_status');
-        data['config_telephone_required'] = this.config.get('config_telephone_required');
+        let customer_group_id = config.customer_group_id;
+
+        if (session.has('customer')) {
+            customer_group_id = customer.get('customer_group_id');
+        }
+
+        data.custom_fields = {};
 
         // Custom Fields
-        data['custom_fields'] = [];
-
-        let customer_group_info = await this.storage.fetch('customer/customer_group-' + data['customer_group_id']);
+        let customer_group_info = await loader.storage('customer/customer_group-' + customer_group_id);
 
         if (customer_group_info) {
-            data['custom_fields'] = customer_group_info['custom_field'];
-        } else {
-            data['custom_fields'] = [];
+            data.custom_fields = customer_group_info.custom_field;
         }
 
         // Information
-        let information_info = await this.storage.fetch('catalog/information-' + this.config.get('config_account_id'));
+        let information_info = await loader.storage('catalog/information-' + config.config_account_id);
 
         if (information_info) {
-            data['text_agree'] = this.language.get('text_agree').replaceAll('%s', this.url.link('information/information.info', 'language=' . this.config.get('config_language') +  '&information_id=' . this.config.get('config_account_id')), information_info['title']);
+            data.text_agree = language.text_agree
+            .replace('%s', 'information/information.info&information_id=' + config.config_account_id)
+            .replace('%s', information_info.title);
         } else {
-            data['text_agree'] = '';
+            data.text_agree = '';
         }
-*/
-        console.log(data);
 
-        this.render('account/register');
+        //this.innerHTML = await loader.template('account/register', { ...data, ...language });
     }
 
     render(html) {
-
-
-
-
         // Attach event to form
         let form = document.getElementById('form-register');
 
@@ -85,7 +86,6 @@ class AccountRegister extends WebComponent {
 
         ///$this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true)
 
-
         let customer_group_info = await this.storage.fetch('customer/customer_group-' + data['customer_group_id']);
 
         if (customer_group_info) {
@@ -113,7 +113,6 @@ class AccountRegister extends WebComponent {
 
         this.request.fetch({
 
-
         });
     }
 
@@ -132,10 +131,7 @@ class AccountRegister extends WebComponent {
 
 customElements.define('account-register', AccountRegister);
 
-
-
 /*
-
 $('#input-customer-group').on('change', function() {
     $.ajax({
         url: 'index.php?route=account/custom_field&customer_group_id=' + this.value + '&language={{ language }}',

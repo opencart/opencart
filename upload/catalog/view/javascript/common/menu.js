@@ -3,15 +3,15 @@ import { loader } from '../index.js';
 
 const language = await loader.language('common/menu');
 
-//const categories = await loader.storage('catalog/category');
-
-const categories = [];
+const categories = await loader.storage('catalog/category');
 
 class CommonMenu extends WebComponent {
     async connected() {
-        //let categories = await this.load.storage('catalog/category');
+        let data = language;
 
-        this.innerHTML = await this.load.template('common/menu', this.language.all());
+        data.categories = categories;
+
+        this.innerHTML = await loader.template('common/menu', { ...data, ...language });
     }
 }
 

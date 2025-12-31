@@ -1,8 +1,8 @@
 export class Tax {
-    static tax_classes = {};
+    static tax_classes = new Map();
 
     constructor(registry) {
-        //this.storage = registry.get('storage');
+        this.storage = registry.get('storage');
 
         //this.tax_classes = tax_classes;
 

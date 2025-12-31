@@ -2,7 +2,7 @@ import '../liquid.browser.umd.js';
 
 export class Template {
     directory = '';
-    path = [];
+    path = new Map();
     engine = {};
 
     constructor(path) {
@@ -16,11 +16,11 @@ export class Template {
         if (!path) {
             this.directory = namespace;
         } else {
-            this.path[namespace] = path;
+            this.path.set(namespace, path);
         }
     }
 
-    async render(path, data = []) {
+    async render(path, data = {}) {
         let file = this.directory + path + '.twig';
         let namespace = '';
         let parts = path.split('/');
@@ -32,8 +32,8 @@ export class Template {
                 namespace += '/' + part;
             }
 
-            if (this.path[namespace] !== undefined) {
-                file = this.path[namespace] + path.substr(path, namespace.length) + '.twig';
+            if (this.path.has(namespace)) {
+                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.twig';
             }
         }
 

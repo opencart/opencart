@@ -1,12 +1,20 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
+
+// library
+const cart = await loader.library('cart');
+
+// Config
+const config = await loader.config('catalog');
+
+// Language
+const language = await loader.language('common/cart');
 
 class CommonCart extends WebComponent {
     element = HTMLInputElement;
     data = [];
 
     async connected() {
-        let language = this.language.fetch('common/cart');
-
         language.then(this.event.language);
 
         this.element = this.querySelector('.dropdown-menu');

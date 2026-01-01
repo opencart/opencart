@@ -1,12 +1,16 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-const config = await loader.config('catalog');
-
-const language = await loader.language('common/header');
-
+// library
 const session = await loader.library('session');
 
+// Config
+const config = await loader.config('catalog');
+
+// Language
+const language = await loader.language('common/header');
+
+// Customer
 const customer = session.get('customer');
 
 class CommonHeader extends WebComponent {

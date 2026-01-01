@@ -2,7 +2,7 @@ class XAddressList extends WebComponent {
     async connected() {
         await this.load.language('account/address');
 
-        this.innerHtml = await this.load.template('account/address', this.language.all());
+        this.innerHTML = await this.load.template('account/address', this.language.all());
 
         let buttons = this.querySelectorAll('.btn-danger');
 

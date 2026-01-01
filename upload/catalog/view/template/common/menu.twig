@@ -6,25 +6,37 @@
       <div id="navbar-menu" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           {% for category in categories %}
+
             {% if category.children %}
+
               {% assign total = category.children|length %}
+
               {% if total > 20 %}
+
                 {% assign batch = (total / 4)|round(0, 'ceil') %}
                 {% assign column = 4 %}
+
               {% else %}
+
                 {% assign batch = 5 %}
                 {% assign column = (total / 5)|round(0, 'ceil') %}
+
               {% endif %}
+
               <li class="nav-item dropdown"><a href="{{ category.href }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ category.name }}</a>
                 <div class="dropdown-menu dropdown-column-{{ column }}">
                   <div class="dropdown-inner">
+
                     {% for children in category.children|batch(batch) %}
+
                       <ul class="list-unstyled">
                         {% for child in children %}
                           <li><a href="{{ child.href }}" class="dropdown-item">{{ child.name }}</a></li>
                         {% endfor %}
                       </ul>
+
                     {% endfor %}
+
                   </div>
                   <ul class="list-unstyled">
                     <li>
@@ -35,8 +47,11 @@
                 </div>
               </li>
             {% else %}
+
               <li class="nav-item"><a href="{{ category.href }}" class="dropdown-item">{{ category.name }}</a></li>
+
             {% endif %}
+
           {% endfor %}
         </ul>
       </div>

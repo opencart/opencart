@@ -33,22 +33,17 @@ const event = await loader.library('event');
 // Inject default language vars into for every language load.
 event.register(/language\/.+\/after/g, ({ path, output }) => {
     // Load the default language vars
-    let data = language.fetch('default');
+    //let data = language.fetch('default');
 
-    for (let key in data) {
-        if (output[key] == undefined) {
-            output[key] = data[key];
-       }
-    }
+    //for (let key in data) {
+    //    if (output[key] == undefined) {
+    //        output[key] = data[key];
+    //   }
+    //}
 });
 
 // Inject default language vars into for every language load.
 event.register(/template\/.+\/before/g, ({ path, data }) => {
-    console.log('EVENT BEFORE');
-
-    console.log('path');
-    console.log(path);
-
     // Load the default language vars
     //let output = language.fetch('default');
 

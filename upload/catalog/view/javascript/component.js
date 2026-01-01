@@ -2,13 +2,12 @@ export { WebComponent } from '../../../assets/framework/component.js';
 
 // Common
 import('./common/header.js');
-//import('./common/language.js');
-
-//import('./common/currency.js');
-//import('./common/search.js');
+import('./common/language.js');
+import('./common/currency.js');
+import('./common/search.js');
 import('./common/menu.js');
 import('./common/footer.js');
-//import('./common/cart.js');
+import('./common/cart.js');
 //import('./common/cookie.js');
 
 // Home Page

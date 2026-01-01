@@ -1,10 +1,11 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
+
+const language = await loader.language('account/account');
 
 class AccountAccount extends WebComponent {
     async connected() {
-        await this.load.language('account/account');
-
-        this.innerHTML = await this.load.template('account/account', this.language.all());
+        this.innerHTML = await loader.template('account/account', { ...language });
     }
 }
 

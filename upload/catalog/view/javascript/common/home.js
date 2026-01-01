@@ -1,12 +1,11 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-class XHome extends WebComponent {
+class CommonHome extends WebComponent {
     async connected() {
 
-
-
-        this.innerHTML = this.load.template('common/Home', this.language.all());
+        this.innerHTML = loader.template('common/home', { ...data, ...language });
     }
 }
 
-customElements.define('x-home', XHome);
+customElements.define('common-home', CommonHome);

@@ -42,14 +42,12 @@ class AccountRegister extends WebComponent {
         let information_info = await loader.storage('catalog/information-' + config.config_account_id);
 
         if (information_info) {
-            data.text_agree = language.text_agree
-            .replace('%s', 'information/information.info&information_id=' + config.config_account_id)
-            .replace('%s', information_info.title);
+            data.text_agree = language.text_agree.replace('%s', 'information/information.info&information_id=' + config.config_account_id).replace('%s', information_info.title);
         } else {
             data.text_agree = '';
         }
 
-        //this.innerHTML = await loader.template('account/register', { ...data, ...language });
+        this.innerHTML = await loader.template('account/register', { ...data, ...language });
     }
 
     render(html) {

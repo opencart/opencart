@@ -4,7 +4,7 @@ class XAddressInfo extends WebComponent {
     async connected() {
         this.load.language('account/address');
 
-        this.innerHtml = this.load.template('account/address', this.language.all());
+        this.innerHTML = this.load.template('account/address', this.language.all());
     }
 }
 

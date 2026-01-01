@@ -1,16 +1,33 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
+// Language
+const language = await loader.language('common/search');
+
+// URL Params
+const url = URLSearchParams(document.location);
+
 class CommonSearch extends WebComponent {
     async connected() {
-        this.language.load('common/search');
+        let data = {}
 
-        this.render('common/search');
+        data.search = query.get('search');
+
+        let response = loader.template('common/search', { ...data, ...language });
+
+        response.then(this.render);
+        response.then(this.onSubmit);
+        response.then(this.onSubmit);
     }
 
-    onClick() {
+    render(html) {
+        this.innerHTML = html;
+    }
 
-        location = '';
+    onSubmit() {
+
+
+        //location = '';
     }
 }
 

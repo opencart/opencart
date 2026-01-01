@@ -1,51 +1,44 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
+
+// library
+const local = await loader.library('local');
+
+// Config
+const config = await loader.config('catalog');
+
+// Language
+const language = await loader.language('common/currency');
+
+// Storage
+const currencies = await loader.storage('localisation/currency');
 
 class CommonCurrency extends WebComponent {
     async connected() {
-        await this.load.language('common/currency');
+        let response = loader.template('common/currency', { ...language });
 
-        this.innerHtml = this.load.template('common/currency', this.data);
+        response.then(this.render.bind(this));
+        response.then(this.addEvent.bind(this));
+    }
 
-        const currencies = await this.storage.fetch('localisation/currency');
+    render(html) {
+        this.innerHTML = html;
+    }
 
-
-        console.log(form);
+    addEvent() {
+        let form = document.querySelector('#form-currency');
 
         let elements = form.querySelectorAll('a');
 
-        elements.forEach((element) => {
-
-        });
-
-        currency.addEventListener('click', async (e) => {
-            let element = this;
-
-            let code = $(element).attr('href');
-
-            registry.local.set('currency', code);
-        });
+        for (let element of elements) {
+            element.addEventListener('click', this.onClick);
+        }
     }
 
-    render(json) {
-        let html = '';
+    async onClick(e) {
+        let code = this.getAttribute('href');
 
-        html += '<form id="form-language">';
-        html += '  <div class="dropdown">';
-        html += '    <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle"><strong>$</strong> <span class="d-none d-md-inline">Currency</span> <i class="fa-solid fa-caret-down"></i></a>';
-        html += '    <ul class="dropdown-menu">';
-
-        for (let currency of currencies) {
-
-
-
-            html += '      <li><a href="' + currency.code + '" class="dropdown-item">€ ' + currency.title + '</a></li>';
-        }
-
-        html += '     </ul>';
-        html += '  </div>';
-        html += '</form>';
-
-        this.innerHtml = html;
+        local.set('currency', code);
     }
 }
 

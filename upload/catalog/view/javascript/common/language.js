@@ -1,72 +1,45 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
+// library
+const local = await loader.library('local');
+
+// Config
+const config = await loader.config('catalog');
+
+// Language
 const language = await loader.language('common/language');
 
-// Load Languages
+// Storage
 const languages = await loader.storage('localisation/language');
 
 class CommonLanguage extends WebComponent {
-    currency = '';
-
     async connected() {
-        let html = '';
+        let response = loader.template('common/language', { ...language });
 
-        html += '<form id="form-language">';
-        html += '  <div class="dropdown">';
-        html += '    <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle"><img src="{{ image }}" alt="{{ name }}" title="{{ name }}"> <span class="d-none d-md-inline">' + this.language.get('text_language') + '</span> <i class="fa-solid fa-caret-down"></i></a>';
-        html += '    <ul class="dropdown-menu"></ul>';
-        html += '  </div>';
-        html += '</form>';
-
-        this.innerHtml = html;
-
-        let form = this.querySelector('#form-language');
-
-
-        let response = this.load.storage('localisation/language');
-
-        response.then(this.render);
+        response.then(this.render.bind(this));
+        response.then(this.addEvent.bind(this));
     }
 
-    render(languages) {
-        let html = '';
+    render(html) {
+        this.innerHTML = html;
+    }
 
-        html += '<form id="form-language">';
-        html += '  <div class="dropdown">';
-        html += '    <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle"><img src="{{ image }}" alt="{{ name }}" title="{{ name }}"> <span class="d-none d-md-inline">{{ text_language }}</span> <i class="fa-solid fa-caret-down"></i></a>';
-        html += '    <ul class="dropdown-menu">';
+    addEvent() {
+        let form = document.querySelector('#form-language');
 
-        for (let language of languages) {
-            html += '<li><a href="' + language.code + '" class="dropdown-item">' + language.name + '</a></li>';
+        let elements = form.querySelectorAll('a');
+
+        for (let element of elements) {
+            element.addEventListener('click', this.onClick);
         }
+    }
 
-        html += '     </ul>';
-        html += '  </div>';
-        html += '</form>';
+    async onClick(e) {
+        let code = this.getAttribute('href');
 
-        this.innerHtml = html;
+        local.set('language', code);
     }
 }
 
 customElements.define('common-language', CommonLanguage);
-
-// Language
-let form = document.getElementById('form-language');
-
-const language = form.querySelectorAll('a');
-
-document.addEventListener('DOMContentLoaded', async (e) => {
-    let element = this;
-
-    registry.local.set('language', code);
-
-    language.addEventListener('click', async (e) => {
-        let element = this;
-
-        let code = $(element).attr('href');
-
-        registry.local.set('currency', code);
-    });
-
-});

@@ -2,7 +2,7 @@ class XLogin extends WebComponent {
     async connected() {
         this.load.language('common/header');
 
-        this.innerHtml = this.load.template('common/header', data);
+        this.innerHTML = this.load.template('common/header', data);
     }
 
     onRender() {

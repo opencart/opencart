@@ -4,7 +4,7 @@ class XAffiliate extends WebComponent {
     async connected() {
         this.load.language('account/affiliate');
 
-        this.innerHtml = this.load.template('account/address', this.language.all());
+        this.innerHTML = this.load.template('account/address', this.language.all());
     }
 }
 

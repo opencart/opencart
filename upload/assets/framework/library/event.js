@@ -14,7 +14,7 @@ class Event {
 
     /**
      * Register a handler for an event (trigger)
-     * @param {string} eventName - The trigger name, e.g. 'catalog/controller/common/header/before'
+     * @param {string} trigger - The trigger name, e.g. 'catalog/controller/common/header/before'
      * @param {Function} callback - The handler function
      * @param {number} [priority=0] - Higher priority runs first (like sort_order in OpenCart)
      */

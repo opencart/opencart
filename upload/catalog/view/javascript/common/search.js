@@ -4,20 +4,23 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('common/search');
 
-// URL Params
-const url = URLSearchParams(document.location);
+// URL
+const url = new URLSearchParams(document.location.search);
 
 class CommonSearch extends WebComponent {
     async connected() {
         let data = {}
 
-        data.search = query.get('search');
+        if (url.has('search')) {
+            data.search = url.get('search');
+        } else {
+            data.search = '';
+        }
 
         let response = loader.template('common/search', { ...data, ...language });
 
-        response.then(this.render);
-        response.then(this.onSubmit);
-        response.then(this.onSubmit);
+        response.then(this.render.bind(this));
+        response.then(this.onSubmit.bind(this));
     }
 
     render(html) {

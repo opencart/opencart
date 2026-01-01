@@ -1,4 +1,5 @@
-export class Db {
+class Db {
+    static instance = null;
     db = null;
     data = [];
     event  = {
@@ -15,8 +16,6 @@ export class Db {
             var store = tx.objectStore('opencart');
 
             var index = store.index('NameIndex');
-
-
         },
         onconnect: () => {
 
@@ -36,7 +35,6 @@ export class Db {
 
     constructor() {
         //this.event.connect();
-
     }
 
     addTable() {
@@ -50,4 +48,16 @@ export class Db {
     get() {
 
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Db();
+        }
+
+        return this.instance;
+    }
 }
+
+const db = Db.getInstance();
+
+export default db;

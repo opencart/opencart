@@ -1,19 +1,19 @@
-export class Cart {
+import { loader } from './loader.js';
+
+class Cart {
+    static instance = null;
     config = null;
-    language = null;
-    tax = null;
     session = null;
     customer = null;
+    tax = null;
     data = [];
 
-    constructor(registry) {
-        this.config = registry.get('config');
-        this.language = registry.get('language');
-        this.tax = registry.get('tax');
-        this.session = registry.get('session');
+    constructor(loader) {
+        this.config = loader.config('config');
+        this.session = loader.library('session');
+        this.tax = loader.library('tax');
 
         //this.customer = this.session.get('customer');
-
         //this.data = this.session.get('cart');
     }
 
@@ -32,4 +32,16 @@ export class Cart {
     getTotal() {
 
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Cart();
+        }
+
+        return this.instance;
+    }
 }
+
+const cart = Cart.getInstance(loader);
+
+export default cart;

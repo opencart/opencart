@@ -1,4 +1,4 @@
-import { registry, factory, loader } from '../../../assets/framework/index.js';
+import { loader } from '../../../assets/framework/index.js';
 
 // Base
 const base = new URL(document.querySelector('base').href);
@@ -31,17 +31,34 @@ template.addPath('catalog/view/template/');
 const event = await loader.library('event');
 
 // Inject default language vars into for every language load.
-event.register(/language\/.+\/after/g, ({ path, data }) => {
+event.register(/language\/.+\/after/g, ({ path, output }) => {
     // Load the default language vars
-    let output = language.fetch('default');
+    let data = language.fetch('default');
 
-    for (let key in output) {
-        if (data[key] == undefined) {
-            data[key] = output[key];
-        }
+    for (let key in data) {
+        if (output[key] == undefined) {
+            output[key] = data[key];
+       }
     }
 });
 
-export { registry, factory, loader };
+// Inject default language vars into for every language load.
+event.register(/template\/.+\/before/g, ({ path, data }) => {
+    console.log('EVENT BEFORE');
+
+    console.log('path');
+    console.log(path);
+
+    // Load the default language vars
+    //let output = language.fetch('default');
+
+    //for (let key in output) {
+    //    if (data[key] == undefined) {
+    //        data[key] = output[key];
+    //    }
+    //}
+});
+
+export { loader };
 
 import './component.js';

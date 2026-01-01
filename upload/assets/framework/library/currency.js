@@ -1,4 +1,7 @@
-export class Currency {
+import { loader } from './loader.js';
+
+class Currency {
+    static instance = null;
     static currencies = new Map();
 
     constructor(currencies) {
@@ -60,4 +63,16 @@ export class Currency {
 
         return value * (this.currencies.get(to).value / this.currencies.get(from).value);
     }
+
+    static getInstance(loader) {
+        if (!this.instance) {
+            this.instance = new Currency(loader);
+        }
+
+        return this.instance;
+    }
 }
+
+const currency = Currency.getInstance(loader);
+
+export default currency;

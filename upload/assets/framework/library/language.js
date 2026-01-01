@@ -1,4 +1,5 @@
-export class Language {
+class Language {
+    static instance;
     directory = '';
     path = new Map();
     loaded = new Map();
@@ -46,4 +47,16 @@ export class Language {
 
         return {};
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Language();
+        }
+
+        return this.instance;
+    }
 }
+
+const language = Language.getInstance();
+
+export default language;

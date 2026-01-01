@@ -1,6 +1,7 @@
 import '../liquid.browser.umd.js';
 
 export class Template {
+    static instance;
     directory = '';
     path = new Map();
     engine = {};
@@ -39,4 +40,16 @@ export class Template {
 
         return this.engine.renderFile(file, data);
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Template();
+        }
+
+        return this.instance;
+    }
 }
+
+const template = Template.getInstance();
+
+export default template;

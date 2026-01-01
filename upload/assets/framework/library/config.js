@@ -1,4 +1,5 @@
-export class Config {
+class Config {
+    static instance = null;
     directory = '';
     path = new Map();
     loaded = new Map();
@@ -46,4 +47,16 @@ export class Config {
 
         return {};
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Config();
+        }
+
+        return this.instance;
+    }
 }
+
+const config = Config.getInstance();
+
+export default config;

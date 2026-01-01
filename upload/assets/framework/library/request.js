@@ -1,7 +1,5 @@
 export class Request {
-
     async get(config) {
-
 
     }
 
@@ -34,11 +32,14 @@ export class Request {
         }
 
         return await response.json();
-
-         */
+        */
     }
 
     async get() {
 
     }
 }
+
+const request = Request.getInstance();
+
+export default request;

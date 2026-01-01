@@ -1,5 +1,3 @@
-import { registry } from './registry.js';
-
 /**
  * A lightweight Event Dispatcher class that mimics the core behavior — register handlers for event names (triggers),
  * trigger events (passing args by reference where possible), and support sort order/priority.
@@ -13,10 +11,6 @@ import { registry } from './registry.js';
 class Event {
     static instance;
     data = new Map();
-
-    constructor(registry) {
-        this.registry = registry;
-    }
 
     /**
      * Register a handler for an event (trigger)
@@ -41,7 +35,7 @@ class Event {
     /**
      * Trigger an event - calls all registered handlers in priority order
      * Args are passed by reference where possible (objects/arrays are mutable like PHP &)
-     * @param {string} eventName
+     * @param {string} trigger
      * @param {...any} args - Arguments passed to handlers (mutable objects act like references)
      */
     trigger(trigger, args) {
@@ -62,18 +56,15 @@ class Event {
         this.data.delete(trigger);
     }
 
-    static getInstance(registry) {
+    static getInstance() {
         if (!this.instance) {
-            this.instance = new Event(registry);
+            this.instance = new Event();
         }
 
         return this.instance;
     }
 }
 
-const event = Event.getInstance(registry);
+const event = Event.getInstance();
 
-// Set the event object so it can be used by the loader
-registry.set('event', event);
-
-export { event };
+export { event, event as default };

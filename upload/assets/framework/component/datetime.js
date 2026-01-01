@@ -28,7 +28,7 @@ class XDatetime extends WebComponent {
             let date = new Date(Date.parse(this.value));
 
             console.log(date);
-            console.log(new Intl.DateTimeFormat("en-US").format(date));
+            console.log(new Intl.DateTimeFormat('en-US').format(date));
 
             this.innerHTML = string;
         }

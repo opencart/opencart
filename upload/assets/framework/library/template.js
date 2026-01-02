@@ -38,6 +38,9 @@ export class Template {
             }
         }
 
+
+
+
         return this.engine.renderFile(file, data);
     }
 

@@ -7,9 +7,9 @@ const categories = await loader.storage('catalog/category');
 
 class CommonMenu extends WebComponent {
     async connected() {
-        let data = {};
+        let data = { ...Object.fromEntries(language) };
 
-        data.categories = categories;
+        data.categories = categories.entries();
 
         this.innerHTML = await loader.template('common/menu', { ...data, ...language });
     }

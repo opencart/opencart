@@ -12,19 +12,19 @@ const language = await loader.language('account/register');
 
 class AccountRegister extends WebComponent {
     async connected() {
-        let data = {};
+        let data = { ...language };
 
-        data.text_account_already = language.text_account_already.replace('%s', 'route=account/login');
+        data.text_account_already = language.get('text_account_already').replace('%s', 'route=account/login');
 
-        data.customer_groups = config.config_customer_group_list;
-        data.customer_group_id = config.config_customer_group_id;
+        data.customer_groups = config.get('config_customer_group_list');
+        data.customer_group_id = config.get('config_customer_group_id');
 
-        data.error_upload_size = language.error_upload_size.replace('%s', config.config_file_max_size);
+        data.error_upload_size = language.get('error_upload_size').replace('%s', config.get('config_file_max_size'));
 
-        data.config_telephone_status = config.config_telephone_status;
-        data.config_telephone_required = config.config_telephone_required;
+        data.config_telephone_status = config.get('config_telephone_status');
+        data.config_telephone_required = config.get('config_telephone_required');
 
-        data.customer_group_id = config.config_customer_group_id;
+        data.customer_group_id = config.get('config_customer_group_id');
 
         if (session.has('customer')) {
             data.customer_group_id = customer.get('customer_group_id');
@@ -33,22 +33,22 @@ class AccountRegister extends WebComponent {
         data.custom_fields = {};
 
         // Custom Fields
-        let customer_group_info = await loader.storage('customer/customer_group-' + customer_group_id);
+        let customer_group = await loader.storage('customer/customer_group-' + data.customer_group_id);
 
-        if (customer_group_info) {
-            data.custom_fields = customer_group_info.custom_field;
+        if (customer_group) {
+            data.custom_fields = customer_group.get('custom_field');
         }
 
         // Information
-        let information_info = await loader.storage('catalog/information-' + config.config_account_id);
+        let information_info = await loader.storage('catalog/information-' + config.get('config_account_id'));
 
         if (information_info) {
-            data.text_agree = language.text_agree.replace('%s', 'information/information.info&information_id=' + config.config_account_id).replace('%s', information_info.title);
+            data.text_agree = language.get('text_agree').replace('%s', 'information/information.info&information_id=' + config.config_account_id).replace('%s', information_info.title);
         } else {
             data.text_agree = '';
         }
 
-        let response = loader.template('account/register', { ...data, ...language });
+        let response = loader.template('account/register', data);
 
         response.then(this.render);
         response.then(this.addEvent);

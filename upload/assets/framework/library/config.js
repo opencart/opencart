@@ -38,14 +38,14 @@ class Config {
         if (response.status == 200) {
             let object = await response.json();
 
-            this.loaded.set(path, Object.assign(object));
+            this.loaded.set(path, new Map(Object.entries(object)));
 
             return this.loaded.get(path);
         } else {
             console.log('Could not load config file ' + path);
         }
 
-        return {};
+        return new Map();
     }
 
     static getInstance() {

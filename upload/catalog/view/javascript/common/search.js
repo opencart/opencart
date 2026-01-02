@@ -9,7 +9,7 @@ const url = new URLSearchParams(document.location.search);
 
 class CommonSearch extends WebComponent {
     connected() {
-        let data = {}
+        let data = { ...Object.fromEntries(language) };
 
         if (url.has('search')) {
             data.search = url.get('search');
@@ -17,7 +17,7 @@ class CommonSearch extends WebComponent {
             data.search = '';
         }
 
-        let response = loader.template('common/search', { ...data, ...language });
+        let response = loader.template('common/search', data);
 
         response.then(this.render.bind(this));
         response.then(this.onSubmit.bind(this));

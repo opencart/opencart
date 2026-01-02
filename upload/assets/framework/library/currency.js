@@ -7,7 +7,10 @@ class Currency {
     static currencies = {};
 
     async constructor() {
-        this.currencies = new Map(...currencies);
+        this.currencies = new Map(currencies.toArray());
+
+        console.log('hi');
+        console.log(this.currencies);
     }
 
     format(number, code, value = 0, format = true) {

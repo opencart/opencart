@@ -2,7 +2,7 @@ import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // library
-const session = await loader.library('session');
+const customer = await loader.library('customer');
 
 // Config
 const config = await loader.config('catalog');
@@ -10,31 +10,26 @@ const config = await loader.config('catalog');
 // Language
 const language = await loader.language('common/header');
 
-// Customer
-const customer = session.get('customer');
-
 class CommonHeader extends WebComponent {
     async connected() {
-        let data = {};
+        let data = { ...Object.fromEntries(language) };
 
-        if (config.config_logo) {
-            data.logo = config.config_url + 'image/' + config.config_logo;
+        if (config.has('config_logo')) {
+            data.logo = config.get('config_url') + 'image/' + config.get('config_logo');
         } else {
             data.logo = '';
         }
 
-        data.name = config.config_name;
-        data.telephone = config.config_telephone;
+        data.name = config.get('config_name');
+        data.telephone = config.get('config_telephone');
+        data.logged = customer.isLogged();
+        data.wishlist = customer.getWishlist().length;
 
-        if (session.has('customer')) {
-            data.logged = customer.get('customer_id') ? true : false;
-        } else {
-            data.logged = false;
-        }
+        data.text_wishlist = language.get('text_wishlist').replace('%d', customer.getWishlist().length);
 
-        data.text_wishlist = language.text_wishlist.replace('%d', session.has('customer') ? customer.get('wishlist').size : 0);
+        console.log();
 
-        this.innerHTML = await loader.template('common/header', { ...data, ...language });
+        this.innerHTML = await loader.template('common/header', data);
     }
 }
 

@@ -16,19 +16,19 @@ const date = new Date();
 
 class CommonFooter extends WebComponent {
     async connected() {
-        let data = {};
+        let data = { ...Object.fromEntries(language) };
 
         // Articles
-        data.articles = articles;
+        data.articles = articles.values();
 
         // Information Pages
-        data.informations = informations;
+        data.informations = informations.values();
 
-        data.config_name = config.config_name;
+        data.config_name = config.get('config_name');
 
         data.year = date.getFullYear();
 
-        this.innerHTML = await loader.template('common/footer', { ...data, ...language });
+        this.innerHTML = await loader.template('common/footer', data);
     }
 }
 

@@ -14,12 +14,17 @@ const languages = await loader.storage('localisation/language');
 const url = new URLSearchParams(document.location.search);
 
 class CommonLanguage extends WebComponent {
+    language = languages;
+
     connected() {
-        let data = {};
+        let data = { ...Object.fromEntries(language) };
 
-        data.languages = languages;
+        // lang
+        data.code = document.documentElement.lang.toLowerCase();
 
-        let response = loader.template('common/language', { ...data, ...language });
+        data.languages = this.language.values();
+
+        let response = loader.template('common/language', data);
 
         response.then(this.render.bind(this));
         response.then(this.addEvent.bind(this));

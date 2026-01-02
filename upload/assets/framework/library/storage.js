@@ -36,16 +36,16 @@ export class Storage {
         let response = await fetch(file);
 
         if (response.status == 200) {
-            let data = response.json();
+            let data = await response.json();
 
-            this.loaded.set(path, data);
+            this.loaded.set(path, new Map(Object.entries(data)));
 
             return this.loaded.get(path);
         } else {
             console.log('Could not load storage file ' + path);
         }
 
-        return {};
+        return new Map();
     }
 
     static getInstance() {

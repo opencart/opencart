@@ -4,7 +4,7 @@ class Loader {
     static instance;
     data = new Map();
 
-    constructor(registry) {
+    constructor(event) {
         this.event = event;
     }
 

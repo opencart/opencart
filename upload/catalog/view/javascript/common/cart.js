@@ -19,8 +19,6 @@ class CommonCart extends WebComponent {
 
         this.element = this.querySelector('.dropdown-menu');
 
-       // let data = sessionStorage.getItem('cart');
-
         //if (data !== undefined) {
         //    let response = this.event.fetch('index.php?route=checkout/cart.json');
 

@@ -8,7 +8,7 @@ const language = await loader.language('common/search');
 const url = new URLSearchParams(document.location.search);
 
 class CommonSearch extends WebComponent {
-    async connected() {
+    connected() {
         let data = {}
 
         if (url.has('search')) {

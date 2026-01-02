@@ -1,9 +1,6 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-// library
-const local = await loader.library('local');
-
 // Config
 const config = await loader.config('catalog');
 
@@ -13,9 +10,16 @@ const language = await loader.language('common/language');
 // Storage
 const languages = await loader.storage('localisation/language');
 
+// URL
+const url = new URLSearchParams(document.location.search);
+
 class CommonLanguage extends WebComponent {
-    async connected() {
-        let response = loader.template('common/language', { ...language });
+    connected() {
+        let data = {};
+
+        data.languages = languages;
+
+        let response = loader.template('common/language', { ...data, ...language });
 
         response.then(this.render.bind(this));
         response.then(this.addEvent.bind(this));
@@ -38,7 +42,7 @@ class CommonLanguage extends WebComponent {
     async onClick(e) {
         let code = this.getAttribute('href');
 
-        local.set('language', code);
+
     }
 }
 

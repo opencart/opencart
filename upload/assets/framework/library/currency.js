@@ -1,11 +1,13 @@
 import { loader } from './loader.js';
 
+const currencies = await loader.storage('localisation/currencies');
+
 class Currency {
     static instance = null;
-    static currencies = new Map();
+    static currencies = {};
 
-    constructor(currencies) {
-        this.currencies = currencies;
+    async constructor() {
+        this.currencies = new Map(...currencies);
     }
 
     format(number, code, value = 0, format = true) {
@@ -64,15 +66,15 @@ class Currency {
         return value * (this.currencies.get(to).value / this.currencies.get(from).value);
     }
 
-    static getInstance(loader) {
+    static getInstance() {
         if (!this.instance) {
-            this.instance = new Currency(loader);
+            this.instance = new Currency();
         }
 
         return this.instance;
     }
 }
 
-const currency = Currency.getInstance(loader);
+const currency = Currency.getInstance();
 
 export default currency;

@@ -15,7 +15,20 @@ const currencies = await loader.storage('localisation/currency');
 
 class CommonCurrency extends WebComponent {
     async connected() {
-        let response = loader.template('common/currency', { ...language });
+        let data = {};
+
+        // Set Default currency
+        if (local.has('currency')) {
+            data.currency = local.get('currency');
+        } else {
+            data.currency = config.config_currency;
+        }
+
+        data.currencies = currencies;
+
+        console.log(data);
+
+        let response = loader.template('common/currency', { ...data, ...language });
 
         response.then(this.render.bind(this));
         response.then(this.addEvent.bind(this));
@@ -35,7 +48,7 @@ class CommonCurrency extends WebComponent {
         }
     }
 
-    async onClick(e) {
+    onClick(e) {
         let code = this.getAttribute('href');
 
         local.set('currency', code);

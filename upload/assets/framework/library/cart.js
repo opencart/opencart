@@ -1,20 +1,21 @@
 import { loader } from './loader.js';
 
+// library
+const session = await loader.library('session');
+const tax = await loader.library('tax');
+
+// Config
+//this.config = loader.config('catalog');
+
+const data = session.get('cart');
+
 class Cart {
     static instance = null;
-    config = null;
-    session = null;
     customer = null;
-    tax = null;
     data = [];
 
-    constructor(loader) {
-        this.config = loader.config('config');
-        this.session = loader.library('session');
-        this.tax = loader.library('tax');
+    constructor() {
 
-        //this.customer = this.session.get('customer');
-        //this.data = this.session.get('cart');
     }
 
     add(item) {
@@ -42,6 +43,6 @@ class Cart {
     }
 }
 
-const cart = Cart.getInstance(loader);
+const cart = Cart.getInstance();
 
 export default cart;

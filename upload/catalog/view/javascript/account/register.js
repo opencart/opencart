@@ -1,13 +1,14 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-const config = await loader.config('catalog');
-
-const language = await loader.language('account/register');
-
+// library
 const session = await loader.library('session');
 
-const customer = session.get('customer');
+// Config
+const config = await loader.config('catalog');
+
+// Language
+const language = await loader.language('account/register');
 
 class AccountRegister extends WebComponent {
     async connected() {
@@ -23,10 +24,10 @@ class AccountRegister extends WebComponent {
         data.config_telephone_status = config.config_telephone_status;
         data.config_telephone_required = config.config_telephone_required;
 
-        let customer_group_id = config.customer_group_id;
+        data.customer_group_id = config.config_customer_group_id;
 
         if (session.has('customer')) {
-            customer_group_id = customer.get('customer_group_id');
+            data.customer_group_id = customer.get('customer_group_id');
         }
 
         data.custom_fields = {};
@@ -47,10 +48,18 @@ class AccountRegister extends WebComponent {
             data.text_agree = '';
         }
 
-        this.innerHTML = await loader.template('account/register', { ...data, ...language });
+        let response = loader.template('account/register', { ...data, ...language });
+
+        response.then(this.render);
+        response.then(this.addEvent);
+
     }
 
     render(html) {
+        this.innerHTML = html;
+    }
+
+    addEvent() {
         // Attach event to form
         let form = document.getElementById('form-register');
 

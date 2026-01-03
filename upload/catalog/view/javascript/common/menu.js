@@ -9,7 +9,9 @@ class CommonMenu extends WebComponent {
     async connected() {
         let data = { ...Object.fromEntries(language) };
 
-        data.categories = categories.entries();
+        data.categories = { ...Object.fromEntries(categories) };
+
+        console.log(data.categories);
 
         this.innerHTML = await loader.template('common/menu', { ...data, ...language });
     }

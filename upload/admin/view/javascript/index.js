@@ -1,51 +1,31 @@
-import { registry, factory, loader } from './../../../assets/framework/framework.js';
+import { loader } from '../../../assets/framework/index.js';
+
+// Base
+const base = new URL(document.querySelector('base').href);
 
 // lang
 const lang = document.documentElement.lang.toLowerCase();
 
 // Config
-loader.library('config', { path: './view/data/config/' });
+const config = await loader.library('config');
 
-// Storage
-loader.library('storage', { path: './view/data/' + lang + '/' });
+config.addPath('view/data/');
 
 // Language
-loader.library('language', { path: './view/language/' + lang + '/' });
+const language = await loader.library('language');
+
+language.addPath('view/language/' + base.host + '/' + lang + '/');
+
+// Storage
+const storage = await loader.library('storage');
+
+storage.addPath('catalog/view/data/' + base.host + '/' + lang + '/');
 
 // Template
-loader.library('template', { path: './view/template/template/' });
+const template = await loader.library('template');
 
-// URL
-loader.library('url');
+template.addPath('catalog/view/template/');
 
-// Session
-loader.library('session');
+export { loader }
 
-// Local
-loader.library('local');
-
-// DB
-loader.library('db');
-
-// Cart
-await loader.library('cart');
-
-// Tax
-loader.library('tax');
-
-// Currency
-await loader.library('currency');
-
-const config = registry.get('config');
-const storage = registry.get('storage');
-const language = registry.get('language');
-const template = registry.get('template');
-const url = registry.get('url');
-const session = registry.get('session');
-const local = registry.get('local');
-const db = registry.get('db');
-const cart = registry.get('cart');
-const tax = registry.get('tax');
-const currency = registry.get('currency');
-
-export { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency }
+import './component.js';

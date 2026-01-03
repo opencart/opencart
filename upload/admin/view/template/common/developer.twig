@@ -7,40 +7,98 @@
       </div>
       <div class="modal-body">
         <div id="alert-modal"></div>
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td>{{ text_html }}<br/>
-                <span class="fw-light">{{ help_html }}</span></td>
-              <td class="text-end"><button type="button" value="html" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-            </tr>
-            <tr>
-              <td>{{ text_cache }}<br/>
-                <span class="fw-light">{{ help_cache }}</span></td>
-              <td class="text-end"><button type="button" value="cache" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-            </tr>
-            <tr>
-              <td>{{ text_theme }}<br/>
-                <span class="fw-light">{{ help_theme }}</span></td>
-              <td class="text-end"><button type="button" value="theme" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-            </tr>
-            <tr>
-              <td>{{ text_sass_catalog }}<br/>
-                <span class="fw-light">{{ help_sass_catalog }}</span></td>
-              <td class="text-end"><button type="button" value="sass_catalog" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-            </tr>
-            <tr>
-              <td>{{ text_sass_admin }}<br/>
-                <span class="fw-light">{{ help_sass_admin }}</span></td>
-              <td class="text-end"><button type="button" value="sass_admin" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-            </tr>
-            <tr>
-              <td>{{ text_vendor }}<br/>
-                <span class="fw-light">{{ help_vendor }}</span></td>
-              <td class="text-end"><button type="button" value="vendor" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
-            </tr>
-          </tbody>
-        </table>
+
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+          <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab-general" class="tab-pane active">
+
+            <div class="mb-3">
+              <label class="form-label">Stores</label>
+              <select class="form-select">
+                <option>All Stores</option>
+                <option>Default</option>
+              </select>
+            </div>
+
+            <fieldset>
+              <legend>Static Site Rendering</legend>
+              <table class="table table-bordered mt-3">
+                <tr>
+                  <td class="text-center"><input type="checkbox" name="override" value="1" checked=""/></td>
+                  <td>Catalog
+                    <br/>
+                    <span class="fw-light">Generates all products, categories, options</span></td>
+                </tr>
+                <tr>
+                  <td class="text-center"><input type="checkbox" name="override" value="1" checked=""/></td>
+                  <td>Catalog
+                    <br/>
+                    <span class="fw-light">Generates all products, categories, options</span></td>
+                </tr>
+                <tr>
+                  <td class="text-center"><input type="checkbox" name="override" value="1" checked=""/></td>
+                  <td>CMS
+                    <br/>
+                    <span class="fw-light">Generates all topics, articles, comments</span></td>
+                </tr>
+                <tr>
+                  <td class="text-center"><input type="checkbox" name="override" value="1" checked=""/></td>
+                  <td>CMS
+                    <br/>
+                    <span class="fw-light">Generates all topics, articles, comments</span></td>
+                </tr>
+              </table>
+            </fieldset>
+
+
+          </div>
+          <div id="tab-data" class="tab-pane">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td>{{ text_html }}
+                    <br/>
+                    <span class="fw-light">{{ help_html }}</span></td>
+                  <td class="text-end"><button type="button" value="html" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+                </tr>
+                <tr>
+                  <td>{{ text_cache }}
+                    <br/>
+                    <span class="fw-light">{{ help_cache }}</span></td>
+                  <td class="text-end"><button type="button" value="cache" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+                </tr>
+                <tr>
+                  <td>{{ text_theme }}
+                    <br/>
+                    <span class="fw-light">{{ help_theme }}</span></td>
+                  <td class="text-end"><button type="button" value="theme" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+                </tr>
+                <tr>
+                  <td>{{ text_sass_catalog }}
+                    <br/>
+                    <span class="fw-light">{{ help_sass_catalog }}</span></td>
+                  <td class="text-end"><button type="button" value="sass_catalog" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+                </tr>
+                <tr>
+                  <td>{{ text_sass_admin }}
+                    <br/>
+                    <span class="fw-light">{{ help_sass_admin }}</span></td>
+                  <td class="text-end"><button type="button" value="sass_admin" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+                </tr>
+                <tr>
+                  <td>{{ text_vendor }}
+                    <br/>
+                    <span class="fw-light">{{ help_vendor }}</span></td>
+                  <td class="text-end"><button type="button" value="vendor" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

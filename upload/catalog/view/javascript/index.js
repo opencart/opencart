@@ -10,7 +10,6 @@ const lang = document.documentElement.lang.toLowerCase();
 const config = await loader.library('config');
 
 config.addPath('catalog/view/data/');
-//loader.config('localhost-' + lang);
 
 // Language
 const language = await loader.library('language');

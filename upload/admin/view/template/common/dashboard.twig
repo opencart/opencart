@@ -32,4 +32,17 @@
   </div>
   {{ security }}
 </div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', async () => {
+    let response = await fetch('index.php?route=common/developer&user_token={{ user_token }}');
+
+    let html = await response.text();
+
+    document.body.insertAdjacentHTML('beforeend', html);
+
+    let modal = new bootstrap.Modal('#modal-developer');
+
+    modal.show();
+});
+</script>
 {{ footer }}

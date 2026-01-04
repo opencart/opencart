@@ -59,20 +59,16 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
-		$this->load->model('setting/task');
-
 		// Country
 		$this->load->model('localisation/country');
-
-		// Language
-		$this->load->model('localisation/language');
 
 		// Stores
 		$stores = [];
 
 		$stores[] = [
 			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		$this->load->model('setting/store');
@@ -80,64 +76,58 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
-		$country_data = [];
-
 		foreach ($stores as $store) {
-			$key = parse_url($store['url'], PHP_URL_HOST);
-
-			$countries = $this->model_setting_setting->getValue('config_country_list', $store['store_id']);
 			$languages = $this->model_setting_setting->getValue('config_language_list', $store['store_id']);
+			$countries = $this->model_setting_setting->getValue('config_country_list', $store['store_id']);
 
-			foreach ($countries as $country_id) {
-				$country_info = $this->model_localisation_country->getCountry((int)$country_id);
+			foreach ($languages as $language_id) {
+				$language_info = $this->model_localisation_language->getLanguage((int)$language_id);
 
-				if (!$country_info || !$country_info['status']) {
+				if (!$language_info || !$language_info['status']) {
 					continue;
 				}
 
-				foreach ($languages as $language_id) {
-					$language_info = $this->model_localisation_language->getLanguage((int)$language_id);
+				$country_data = [];
 
-					if (!$language_info || !$language_info['status']) {
+				foreach ($countries as $country_id) {
+					$country_info = $this->model_localisation_country->getCountry((int)$country_id);
+
+					if (!$country_info || !$country_info['status']) {
 						continue;
 					}
 
-					$description_info = $this->model_localisation_country->getDescription((int)$country_id, $language_info['language_id']);
+					$description_info = $this->model_localisation_country->getDescription($country_info['country_id'], $language_id);
 
 					if (!$description_info) {
 						continue;
 					}
 
-					$country_data[$key][$language_id][] = $country_info + $description_info;
+					$country_data[] = $country_info + $description_info;
 				}
-			}
-		}
 
-		foreach ($stores as $store_url => $languages) {
-			foreach ($languages as $language_code => $countries) {
 				$sort_order = [];
 
-				foreach ($countries as $key => $value) {
+				foreach ($country_data as $key => $value) {
 					$sort_order[$key] = $value['name'];
 				}
 
-				array_multisort($sort_order, SORT_ASC, $countries);
+				array_multisort($sort_order, SORT_ASC, $country_data);
 
 				$base = DIR_CATALOG . 'view/data/';
-				$directory = $store_url . '/' . $code . '/localisation/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
 				$filename = 'country.json';
 
 				if (!oc_directory_create($base . $directory, 0777)) {
 					return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 				}
 
-				if (!file_put_contents($base . $directory . $filename, json_encode($countries))) {
+				if (!file_put_contents($base . $directory . $filename, json_encode($country_data))) {
 					return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 				}
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'))];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 	/**
@@ -156,12 +146,29 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Country
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
 
 		if (!$country_info || !$country_info['status']) {
-			return ['success' => $this->language->get('text_skip')];
+			return ['success' => $this->language->get('error_country')];
+		}
+
+		// Zones
+		$this->load->model('localisation/zone');
+
+		$zones = $this->model_localisation_zone->getZonesByCountryId($country_info['country_id']);
+
+		// Geo Zones
+		$geo_zone_data = [];
+
+		$this->load->model('localisation/geo_zone');
+
+		$geo_zones = $this->model_localisation_geo_zone->getZonesByCountryId($country_info['country_id']);
+
+		foreach ($geo_zones as $geo_zone) {
+			$geo_zone_data['geo_zone'][$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
 		}
 
 		// Stores
@@ -174,100 +181,66 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('localisation/language');
 
 		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
 		foreach ($stores as $store) {
 			// Setup allowed countries
-			$countries = $this->model_setting_setting->getValue('config_country_list', $store['store_id']);
+			$country_list = $this->model_setting_setting->getValue('config_country_list', $store['store_id']);
 
-			if (!in_array($country_info['country_id'], $countries)) {
+			if (!in_array($country_info['country_id'], $country_list)) {
 				continue;
 			}
 
-
+			// Setup allowed languages
 			$languages = $this->model_setting_setting->getValue('config_language_list', $store['store_id']);
 
+			foreach ($languages as $language_id) {
+				$language_info = $this->model_localisation_language->getLanguage($language_id);
 
+				if (!$language_info || !$language_info['status']) {
+					continue;
+				}
 
+				// Description
+				$country_description = $this->model_localisation_country->getDescription($country_info['country_id'], $language_info['language_id']);
 
-			$this->load->model('setting/store');
+				if (!$country_description) {
+					continue;
+				}
 
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+				$zone_data = [];
 
-			if (!$store_info) {
-				return ['error' => $this->language->get('text_skip')];
+				foreach ($zones as $zone) {
+					if (!$zone['status']) {
+						continue;
+					}
+
+					$zone_description_info = $this->model_localisation_zone->getDescription($zone['zone_id'], $language_info['language_id']);
+
+					if (!$zone_description_info) {
+						continue;
+					}
+
+					$zone_data[] = $zone + $zone_description_info;
+				}
+
+				$base = DIR_CATALOG . 'view/data/';
+				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
+				$filename = 'country-' . $country_info['country_id'] . '.json';
+
+				if (!oc_directory_create($base . $directory, 0777)) {
+					return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+				}
+
+				if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $country_description + ['zone' => $zone_data] + ['geo_zone' => $geo_zone_data]))) {
+					return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+				}
 			}
-
-
-
-
-
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('text_skip')];
 		}
 
-
-
-
-
-
-
-		if (!$country_info['status']) {
-			return ['success' => sprintf($this->language->get('text_skip'), $store_info['name'], $language_info['name'], $country_info['name'])];
-		}
-
-		$description_info = $this->model_localisation_country->getDescription((int)$country_info['country_id'], $language_info['language_id']);
-
-		if (!$description_info) {
-			return ['error' => $this->language->get('error_description')];
-		}
-
-		$stores = $this->model_localisation_country->getStores((int)$country_info['country_id']);
-
-		if (!in_array($store_info['store_id'], $stores)) {
-			return ['success' => sprintf($this->language->get('text_skip'), $store_info['name'], $language_info['name'], $country_info['name'])];
-		}
-
-		$filter_data = [
-			'filter_country_id'  => $country_info['country_id'],
-			'filter_language_id' => $language_info['language_id'],
-			'filter_status'      => 1
-		];
-
-		// Zones
-		$this->load->model('localisation/zone');
-
-		$zones = $this->model_localisation_zone->getZones($filter_data);
-
-		// Geo Zones
-		$geo_zone_data = [];
-
-		$this->load->model('localisation/geo_zone');
-
-		$geo_zones = $this->model_localisation_geo_zone->getZonesByCountryId($country_info['country_id']);
-
-		foreach ($geo_zones as $geo_zone) {
-			$geo_zone_data[$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
-		}
-
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country-' . $args['country_id'] . '.json';
-
-		if (!oc_directory_create($base . $directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-		}
-
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zones] + ['geo_zone' => $geo_zone_data]))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-		}
-
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $country_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $country_info['name'])];
 	}
 
 	/**

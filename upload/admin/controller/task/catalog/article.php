@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
- * Class Country
+ * Class Article
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class Country extends \Opencart\System\Engine\Controller {
+class Article extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
@@ -16,12 +16,11 @@ class Country extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/catalog/country');
+		$this->load->language('task/catalog/article');
 
-		// List
 		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/catalog/country.list',
+			'code'   => 'article',
+			'action' => 'task/catalog/article.list',
 			'args'   => []
 		];
 
@@ -29,19 +28,40 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		// Info
-		$this->load->model('localisation/country');
+		$stores = [];
 
-		$countries = $this->model_localisation_country->getCountries();
+		$stores[] = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name')
+		];
 
-		foreach ($countries as $country) {
-			$task_data = [
-				'code'   => 'country',
-				'action' => 'task/catalog/country.info',
-				'args'   => ['country_id' => $country['country_id']]
-			];
+		$this->load->model('setting/store');
 
-			$this->model_setting_task->addTask($task_data);
+		$stores = array_merge($stores, $this->model_setting_store->getStores());
+
+		foreach ($stores as $store) {
+			$setting_info = $this->model_setting_setting->getSettings('config', $store['store_id']);
+
+			if ($setting_info) {
+				if ($setting_info['config_language_list']) {
+					$languages = (array)$setting_info['config_language_list'];
+				} else {
+					$languages = [];
+				}
+
+				foreach ($languages as $language_id) {
+					$task_data = [
+						'code'   => 'country',
+						'action' => 'task/catalog/country.list',
+						'args'   => [
+							'store_id'    => $store['store_id'],
+							'language_id' => $language_id
+						]
+					];
+
+					$this->model_setting_task->addTask($task_data);
+				}
+			}
 		}
 
 		return ['success' => $this->language->get('text_task')];
@@ -59,85 +79,87 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
-		$this->load->model('setting/task');
+		// Store
+		$this->load->model('setting/store');
 
-		// Country
-		$this->load->model('localisation/country');
+		$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+		if (!$store_info) {
+			return ['error' => $this->language->get('error_store')];
+		}
 
 		// Language
 		$this->load->model('localisation/language');
 
-		// Stores
-		$stores = [];
+		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
 
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
+		}
+
+		$setting_info = $this->model_setting_setting->getSettings('config', $store_info['store_id']);
+
+		if ($setting_info) {
+			if ($setting_info['config_language_list']) {
+				$languages = (array)$setting_info['config_language_list'];
+			} else {
+				$languages = [];
+			}
+
+			$description_info = $this->model_localisation_country->getDescription((int)$country_id, $language_info['language_id']);
+
+			if (!$description_info) {
+				continue;
+			}
+		}
+
+		$this->load->model('setting/task');
+
+		$filter_data = [
+			'filter_store_id'    => $store_info['store_id'],
+			'filter_language_id' => $language_info['language_id'],
+			'status'             => 1
 		];
 
-		$this->load->model('setting/store');
-		$this->load->model('setting/setting');
+		$this->load->model('localisation/country');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$countries = $this->model_localisation_country->getCountries($filter_data);
 
-		$country_data = [];
+		foreach ($countries as $country) {
+			$task_data = [
+				'code'   => 'country',
+				'action' => 'task/catalog/country.info',
+				'args'   => [
+					'country_id'  => $country['country_id'],
+					'store_id'    => $store_info['store_id'],
+					'language_id' => $language_info['language_id']
+				]
+			];
 
-		foreach ($stores as $store) {
-			$key = parse_url($store['url'], PHP_URL_HOST);
-
-			$countries = $this->model_setting_setting->getValue('config_country_list', $store['store_id']);
-			$languages = $this->model_setting_setting->getValue('config_language_list', $store['store_id']);
-
-			foreach ($countries as $country_id) {
-				$country_info = $this->model_localisation_country->getCountry((int)$country_id);
-
-				if (!$country_info || !$country_info['status']) {
-					continue;
-				}
-
-				foreach ($languages as $language_id) {
-					$language_info = $this->model_localisation_language->getLanguage((int)$language_id);
-
-					if (!$language_info || !$language_info['status']) {
-						continue;
-					}
-
-					$description_info = $this->model_localisation_country->getDescription((int)$country_id, $language_info['language_id']);
-
-					if (!$description_info) {
-						continue;
-					}
-
-					$country_data[$key][$language_id][] = $country_info + $description_info;
-				}
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
-		foreach ($stores as $store_url => $languages) {
-			foreach ($languages as $language_code => $countries) {
-				$sort_order = [];
+		$sort_order = [];
 
-				foreach ($countries as $key => $value) {
-					$sort_order[$key] = $value['name'];
-				}
-
-				array_multisort($sort_order, SORT_ASC, $countries);
-
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = $store_url . '/' . $code . '/localisation/';
-				$filename = 'country.json';
-
-				if (!oc_directory_create($base . $directory, 0777)) {
-					return ['error' => sprintf($this->language->get('error_directory'), $directory)];
-				}
-
-				if (!file_put_contents($base . $directory . $filename, json_encode($countries))) {
-					return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-				}
-			}
+		foreach ($countries as $key => $value) {
+			$sort_order[$key] = $value['name'];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'))];
+		array_multisort($sort_order, SORT_ASC, $countries);
+
+		$base = DIR_CATALOG . 'view/data/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
+		$filename = 'country.json';
+
+		if (!oc_directory_create($base . $directory, 0777)) {
+			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		}
+
+		if (!file_put_contents($base . $directory . $filename, json_encode($countries))) {
+			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+		}
+
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['name'])];
 	}
 
 	/**
@@ -152,70 +174,41 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
-		if (!array_key_exists('country_id', $args)) {
-			return ['error' => $this->language->get('error_required')];
+		$required = [
+			'country_id',
+			'store_id',
+			'language_id'
+		];
+
+		foreach ($required as $value) {
+			if (!array_key_exists($value, $args)) {
+				return ['error' => sprintf($this->language->get('error_required'), $value)];
+			}
+		}
+
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+		if (!$store_info) {
+			return ['error' => $this->language->get('error_store')];
+		}
+
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+
+		if (!$language_info) {
+			return ['error' => $this->language->get('error_language')];
 		}
 
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
 
-		if (!$country_info || !$country_info['status']) {
-			return ['success' => $this->language->get('text_skip')];
+		if (!$country_info) {
+			return ['error' => $this->language->get('error_country')];
 		}
-
-		// Stores
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		$this->load->model('setting/store');
-		$this->load->model('setting/setting');
-
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
-
-		foreach ($stores as $store) {
-			// Setup allowed countries
-			$countries = $this->model_setting_setting->getValue('config_country_list', $store['store_id']);
-
-			if (!in_array($country_info['country_id'], $countries)) {
-				continue;
-			}
-
-
-			$languages = $this->model_setting_setting->getValue('config_language_list', $store['store_id']);
-
-
-
-
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-			if (!$store_info) {
-				return ['error' => $this->language->get('text_skip')];
-			}
-
-
-
-
-
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('text_skip')];
-		}
-
-
-
-
-
-
 
 		if (!$country_info['status']) {
 			return ['success' => sprintf($this->language->get('text_skip'), $store_info['name'], $language_info['name'], $country_info['name'])];

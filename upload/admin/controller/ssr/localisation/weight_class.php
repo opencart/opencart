@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Event;
+namespace Opencart\admin\controller\ssr\localisation;
 /**
  * Class Weight Class
  *
@@ -31,17 +31,5 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
-	}
-
-	public function add(string &$route, array &$args, &$output): void {
-
-	}
-
-	public function edit(string &$route, array &$args, &$output): void {
-
-	}
-
-	public function delete(string &$route, array &$args, &$output): void {
-
 	}
 }

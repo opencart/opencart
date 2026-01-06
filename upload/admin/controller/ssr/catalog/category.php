@@ -1,16 +1,16 @@
 <?php
-namespace Opencart\Admin\Controller\Event;
+namespace Opencart\admin\controller\ssr\catalog;
 /**
- * Class Banner
+ * Class Category
  *
  * @package Opencart\Admin\Controller\Event
  */
-class Banner extends \Opencart\System\Engine\Controller {
+class Category extends \Opencart\System\Engine\Controller {
 	public function add(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'banner.add.' . $output,
-			'action' => 'task/catalog/banner',
-			'args'   => ['banner_id' => $output]
+			'code'   => 'category.info.' . $output,
+			'action' => 'task/catalog/category.info',
+			'args'   => ['category_id' => $output]
 		];
 
 		$this->load->model('setting/task');
@@ -20,9 +20,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 	public function edit(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'banner.edit.' . $args[0],
-			'action' => 'task/catalog/banner.info',
-			'args'   => ['banner_id' => $args[0]]
+			'code'   => 'category.info.' . $args[0],
+			'action' => 'task/catalog/category.info',
+			'args'   => ['category_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');
@@ -32,9 +32,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 	public function delete(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'banner.delete.' . $args[0],
-			'action' => 'task/catalog/banner.delete',
-			'args'   => ['banner_id' => $args[0]]
+			'code'   => 'category.delete.' . $args[0],
+			'action' => 'task/catalog/category.delete',
+			'args'   => ['category_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');

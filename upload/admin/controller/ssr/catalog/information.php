@@ -1,12 +1,12 @@
 <?php
-namespace Opencart\Admin\Controller\Event;
+namespace Opencart\admin\controller\ssr\catalog;
 /**
  * Class Information
  *
  * @package Opencart\Admin\Controller\Event
  */
 class Information extends \Opencart\System\Engine\Controller {
-	public function add(string &$route, array &$args, &$output): void {
+	public function addInformation(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'information.add.' . $output,
 			'action' => 'task/catalog/information.info',

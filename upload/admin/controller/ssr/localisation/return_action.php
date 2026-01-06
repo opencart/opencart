@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Event;
+namespace Opencart\admin\controller\ssr\localisation;
 /**
  * Class Return Action
  *

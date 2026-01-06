@@ -1371,52 +1371,68 @@ VALUES ('activity_customer_add', 'Adds new customer entry in the activity log.',
        ('activity_affiliate_edit', 'Adds edit affiliate entry in the activity log.', 'catalog/model/account/affiliate.editAffiliate/after', 'event/activity.editAffiliate', 1),
        ('activity_order_add', 'Adds new order entry in the activity log.', 'catalog/model/checkout/order.addHistory/before', 'event/activity.addHistory', 1),
        ('activity_return_add', 'Adds new return entry in the activity log.', 'catalog/model/account/returns.addReturn/after', 'event/activity.addReturn', 1),
+
        ('article_add', 'Updates article data when a new article is added.', 'admin/model/cms/article.addArticle/after', 'event/article', 1),
        ('article_edit', 'Updates article data when a article is edited.', 'admin/model/cms/article.editArticle/after', 'event/article', 1),
        ('article_delete', 'Updates article data when a article is deleted.', 'admin/model/cms/article.deleteArticle/after', 'event/article', 1),
+
        ('attribute_add', 'Updates attribute data when a new attribute is added.', 'admin/model/catalog/attribute.addAttribute/after', 'event/attribute', 1),
        ('attribute_edit', 'Updates attribute data when a attribute is edited.', 'admin/model/catalog/attribute.editAttribute/after', 'event/attribute', 1),
        ('attribute_delete', 'Updates attribute data when a attribute is deleted.', 'admin/model/catalog/attribute.deleteAttribute/after', 'event/attribute', 1),
+
        ('attribute_group_add', 'Updates attribute group data when a new attribute group is added.', 'admin/model/catalog/attribute_group.addFilterGroup/after', 'event/attribute_group', 1),
        ('attribute_group_edit', 'Updates attribute group data when a attribute group is edited.', 'admin/model/catalog/attribute_group.editFilterGroup/after', 'event/attribute_group', 1),
        ('attribute_group_delete', 'Updates attribute group data when a attribute group is deleted.', 'admin/model/catalog/attribute_group.deleteFilterGroup/after', 'event/attribute_group', 1),
+
        ('banner_add', 'Updates banner data when a new banner is added.', 'admin/model/design/banner.addBanner/after', 'event/banner', 1),
        ('banner_edit', 'Updates banner data when a banner is edited.', 'admin/model/design/banner.editBanner/after', 'event/banner', 1),
        ('banner_delete', 'Updates banner data when a banner is deleted.', 'admin/model/design/banner.deleteBanner/after', 'event/banner', 1),
+
        ('category_add', 'Updates category data when a new category is added.', 'admin/model/catalog/category.addCategory/after', 'event/category', 1),
        ('category_edit', 'Updates category data when a category is edited.', 'admin/model/catalog/category.editCategory/after', 'event/category', 1),
        ('category_delete', 'Updates category data when a category is deleted.', 'admin/model/catalog/category.deleteCategory/after', 'event/category', 1),
+
        ('country_add', 'Updates country data when a new country is added.', 'admin/model/localisation/country.addCountry/after', 'event/country', 1),
        ('country_edit', 'Updates country data when a country is edited.', 'admin/model/localisation/country.editCountry/after', 'event/country', 1),
        ('country_delete', 'Updates country data when a country is deleted.', 'admin/model/localisation/country.deleteCountry/after', 'event/country', 1),
+
        ('currency_add', 'Updates currencies data when a new currency is added.', 'admin/model/localisation/currency.addCurrency/after', 'event/currency', 1),
        ('currency_edit', 'Updates currencies data when a currency is edited.', 'admin/model/localisation/currency.editCurrency/after', 'event/currency', 1),
        ('currency_delete', 'Updates currency data when a currency is deleted.', 'admin/model/localisation/currency.deleteCurrency/after', 'event/currency', 1),
        ('currency_setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency.refresh', 1),
+
        ('custom_field_add', 'Updates custom field data when a new custom field is added.', 'admin/model/customer/custom_field.addCustomField/after', 'event/custom_field', 1),
        ('custom_field_edit', 'Updates custom field data when a custom field is edited.', 'admin/model/customer/custom_field.editCustomField/after', 'event/custom_field', 1),
        ('custom_field_delete', 'Updates custom field data when a custom field is deleted.', 'admin/model/customer/custom_field.deleteCustomField/after', 'event/custom_field', 1),
+
        ('customer_group_add', 'Updates customer group data when a new customer group is added.', 'admin/model/customer/customer_group.addCustomerGroup/after', 'event/customer_group', 1),
        ('customer_group_edit', 'Updates customer group data when a customer group is edited.', 'admin/model/customer/customer_group.editCustomerGroup/after', 'event/customer_group', 1),
        ('customer_group_delete', 'Updates customer group data when a customer group is deleted.', 'admin/model/customer/customer_group.deleteCustomerGroup/after', 'event/customer_group', 1),
+
        ('filter_add', 'Updates filter data when a new filter is added.', 'admin/model/catalog/filter.addFilter/after', 'event/filter', 1),
        ('filter_edit', 'Updates filter data when a filter is edited.', 'admin/model/catalog/filter.editFilter/after', 'event/filter', 1),
        ('filter_delete', 'Updates filter data when a filter is deleted.', 'admin/model/catalog/filter.deleteFilter/after', 'event/filter', 1),
+
        ('filter_group_add', 'Updates filter group data when a new filter group is added.', 'admin/model/catalog/filter_group.addFilterGroup/after', 'event/filter_group', 1),
        ('filter_group_edit', 'Updates filter group data when a filter group is edited.', 'admin/model/catalog/filter_group.editFilterGroup/after', 'event/filter_group', 1),
        ('filter_group_delete', 'Updates filter group data when a filter group is deleted.', 'admin/model/catalog/filter_group.deleteFilterGroup/after', 'event/filter_group', 1),
+
        ('information_add', 'Updates information data when a new information is added.', 'admin/model/catalog/information.addInformation/after', 'event/information', 1),
        ('information_edit', 'Updates information data when a information is edited.', 'admin/model/catalog/information.editInformatione/after', 'event/information', 1),
        ('information_delete', 'Updates information data when a information is deleted.', 'admin/model/catalog/information.deleteInformation/after', 'event/information', 1),
+
        ('language_add', 'Updates language data when a new language is added.', 'admin/model/localisation/language.addLanguage/after', 'event/language', 1),
        ('language_edit', 'Updates language data when a language is edited.', 'admin/model/localisation/language.editLanguage/after', 'event/language', 1),
        ('language_delete', 'Updates language data when a language is deleted.', 'admin/model/localisation/language.deleteLanguage/after', 'event/language', 1),
+
        ('length_class_add', 'Updates length class data when a new length class is added.', 'admin/model/localisation/length_class.addLengthClass/after', 'event/length_class', 1),
        ('length_class_edit', 'Updates length class data when a length class is edited.', 'admin/model/localisation/length_class.editLengthClass/after', 'event/length_class', 1),
        ('length_class_delete', 'Updates length class data when a length class is deleted.', 'admin/model/localisation/length_class.deleteLengthClass/after', 'event/length_class', 1),
+
        ('manufacturer_add', 'Updates manufacturer data when a new manufacturer is added.', 'admin/model/catalog/manufacturer.addManufacturer/after', 'event/manufacturer', 1),
        ('manufacturer_edit', 'Updates manufacturer data when a manufacturer is edited.', 'admin/model/catalog/manufacturer.editManufacturer/after', 'event/manufacturer', 1),
        ('manufacturer_delete', 'Updates manufacturer data when a manufacturer is deleted.', 'admin/model/catalog/manufacturer.deleteManufacturer/after', 'event/manufacturer', 1),
+
        ('mail_customer_add', 'Sends mail to newly registered customers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register', 1),
        ('mail_customer_alert', 'Sends alert mail to store owner when a new customer registers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register.alert', 1),
        ('mail_customer_transaction', 'Sends mail to the customer when their transaction balance is updated.', 'catalog/model/account/customer.addTransaction/after', 'mail/transaction', 1),
@@ -1442,64 +1458,72 @@ VALUES ('activity_customer_add', 'Adds new customer entry in the activity log.',
        ('mail_admin_user_forgotten', 'Sends mail to users who have forgotten their password.', 'admin/model/user/user.addToken/after', 'mail/forgotten', 1),
        ('mail_admin_user_authorize', 'Sends mail login code to users email to authorize login from a new device.', 'admin/controller/common/authorize.send/after', 'mail/authorize', 1),
        ('mail_admin_user_authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'admin/model/user/user.addToken/after', 'mail/authorize.reset', 1),
+
        ('option_add', 'Updates option data when a new option is added.', 'admin/model/catalog/option.addOption/after', 'event/option', 1),
        ('option_edit', 'Updates option data when a option is edited.', 'admin/model/catalog/option.editOption/after', 'event/option', 1),
        ('option_delete', 'Updates option data when a option is deleted.', 'admin/model/catalog/option.deleteOption/after', 'event/option', 1),
+
        ('order_status_add', 'Updates order status data when a new order status is added.', 'admin/model/localisation/order_status.addOrderStatus/after', 'event/order_status', 1),
        ('order_status_edit', 'Updates order status data when a order status is edited.', 'admin/model/localisation/order_status.editOrderStatus/after', 'event/order_status', 1),
        ('order_status_delete', 'Updates order status data when a order status is deleted.', 'admin/model/localisation/order_status.deleteOrderStatus/after', 'event/order_status', 1),
+
        ('product_add', 'Updates product data when a new product is added.', 'admin/model/catalog/product.addProduct/after', 'event/product', 1),
        ('product_edit', 'Updates product data when a product is edited.', 'admin/model/catalog/product.editProduct/after', 'event/product', 1),
        ('product_delete', 'Updates product data when a product is deleted.', 'admin/model/catalog/product.deleteProduct/after', 'event/product', 1),
        ('return_action_add', 'Updates return action data when a new return action is added.', 'admin/model/localisation/return_action.addReturnAction/after', 'event/return_action', 1),
+
        ('return_action_edit', 'Updates return action data when a return action is edited.', 'admin/model/localisation/return_action.editReturnAction/after', 'event/return_action', 1),
        ('return_action_delete', 'Updates return action data when a return action is deleted.', 'admin/model/localisation/return_action.deleteReturnAction/after', 'event/return_action', 1),
+
        ('return_reason_add', 'Updates return reason data when a new return reason is added.', 'admin/model/localisation/return_reason.addReturnReason/after', 'event/return_reason', 1),
        ('return_reason_edit', 'Updates return reason data when a return reason is edited.', 'admin/model/localisation/return_reason.editReturnReason/after', 'event/return_reason', 1),
        ('return_reason_delete', 'Updates return reason data when a return reason is deleted.', 'admin/model/localisation/return_reason.deleteReturnReason/after', 'event/return_reason', 1),
+
        ('return_status_add', 'Updates return status data when a new return status is added.', 'admin/model/localisation/return_status.addReturnStatus/after', 'event/return_status', 1),
        ('return_status_edit', 'Updates return status data when a return status is edited.', 'admin/model/localisation/return_status.editReturnStatus/after', 'event/return_status', 1),
        ('return_status_delete', 'Updates return status data when a return status is deleted.', 'admin/model/localisation/return_status.deleteReturnStatus/after', 'event/return_status', 1),
-       ('ssr_home', 'Create a static home page.', 'catalog/controller/common/home/after', 'event/ssr', 1),
-       ('ssr_article', 'Create a static article page.', 'catalog/controller/cms/article/after', 'event/ssr', 1),
-       ('ssr_topic', 'Create a static topic page.', 'catalog/controller/cms/topic/after', 'event/ssr', 1),
-       ('ssr_category', 'Create a static category page.', 'catalog/controller/product/category/after', 'event/ssr', 1),
-       ('ssr_manufacturer', 'Create a static manufacturer page.', 'catalog/controller/product/manufacturer/after', 'event/ssr', 1),
-       ('ssr_product', 'Create a static product page.', 'catalog/controller/product/product/after', 'event/ssr', 1),
-       ('ssr_special', 'Create a static special page.', 'catalog/controller/product/special/after', 'event/ssr', 1),
-       ('ssr_search', 'Create a static search page.', 'catalog/controller/product/search/after', 'event/ssr', 1),
-       ('ssr_information', 'Create a static information page.', 'catalog/controller/information/information/after', 'event/ssr', 1),
-       ('ssr_sitemap', 'Create a static sitemap page.', 'catalog/controller/information/sitemap/after', 'event/ssr', 1),
+
+       ('setting_edit', 'Updates setting data when a new store is added.', 'admin/model/setting/setting.editSetting/after', 'event/store', 1),
+
        ('statistics_review_add', 'Updates review statistics when a new review is added.', 'catalog/model/catalog/review.addReview/after', 'event/statistics.addReview', 1),
        ('statistics_return_add', 'Updates return statistics when a new return is added.', 'catalog/model/account/returns.addReturn/after', 'event/statistics.addReturn', 1),
        ('statistics_return_delete', 'Updates return statistics when a return is deleted.', 'admin/model/sale/returns.deleteReturn/after', 'event/statistics.deleteReturn', 1),
        ('statistics_order_history', 'Updates order status statistics when a order has been updated.', 'catalog/model/checkout/order.addHistory/before', 'event/statistics.addHistory', 1),
+
        ('stock_status_add', 'Updates stock status data when a new stock status is added.', 'admin/model/localisation/stock_status.addStockStatus/after', 'event/stock_status', 1),
        ('stock_status_edit', 'Updates stock status data when a stock status is edited.', 'admin/model/localisation/stock_status.editStockStatus/after', 'event/stock_status', 1),
        ('stock_status_delete', 'Updates stock status data when a stock status is deleted.', 'admin/model/localisation/stock_status.deleteStockStatus/after', 'event/stock_status', 1),
-       ('setting_edit', 'Updates setting data when a new store is added.', 'admin/model/setting/setting.editSetting/after', 'event/store', 1),
+
        ('store_delete', 'Updates store data when a store is deleted.', 'admin/model/setting/store.deleteStore/after', 'event/store', 1),
+
        ('subscription_status_add', 'Updates subscription status data when a new subscription status is added.', 'admin/model/localisation/subscription_status.addSubscriptionStatus/after', 'event/subscription_status', 1),
-       ('subscription_edit', 'Updates subscription status data when a subscription status is edited.', 'admin/model/localisation/subscription_status.editSubscriptionStatus/after', 'event/subscription_status', 1),
-       ('subscription_delete', 'Updates subscription status data when a subscription status is deleted.', 'admin/model/localisation/subscription_status.deleteSubscriptionStatus/after', 'event/subscription_status', 1),
+       ('subscription_status_edit', 'Updates subscription status data when a subscription status is edited.', 'admin/model/localisation/subscription_status.editSubscriptionStatus/after', 'event/subscription_status', 1),
+       ('subscription_status_delete', 'Updates subscription status data when a subscription status is deleted.', 'admin/model/localisation/subscription_status.deleteSubscriptionStatus/after', 'event/subscription_status', 1),
+
        ('tax_class_add', 'Updates tax class data when a new tax class is added.', 'admin/model/localisation/tax_class.addTaxClass/after', 'event/tax', 1),
        ('tax_class_edit', 'Updates tax class data when a tax class is edited.', 'admin/model/localisation/tax_class.editTaxClass/after', 'event/tax', 1),
        ('tax_class_delete', 'Updates tax class data when a tax class is deleted.', 'admin/model/localisation/tax_class.deleteTaxClass/after', 'event/tax', 1),
+
        ('tax_rate_add', 'Updates tax rate data when a new tax rate is added.', 'admin/model/localisation/tax_rate.addTaxRate/after', 'event/tax', 1),
        ('tax_rate_edit', 'Updates tax rate data when a tax rate is edited.', 'admin/model/localisation/tax_rate.editTaxRate/after', 'event/tax', 1),
        ('tax_rate_delete', 'Updates tax rate data when a tax rate is deleted.', 'admin/model/localisation/tax_rate.deleteTaxRate/after', 'event/tax', 1),
+
        ('theme_add', 'Updates theme data when a new theme is added.', 'admin/model/design/theme.addTheme/after', 'event/theme', 1),
        ('theme_edit', 'Updates theme data when a theme is edited.', 'admin/model/design/theme.editTheme/after', 'event/theme', 1),
        ('theme_delete', 'Updates theme data when a theme is deleted.', 'admin/model/design/theme.deleteTheme/after', 'event/theme', 1),
+
        ('topic_add', 'Updates topic data when a new topic is added.', 'admin/model/cms/topic.addTopic/after', 'event/topic', 1),
        ('topic_edit', 'Updates topic data when a topic is edited.', 'admin/model/cms/topic.editTopic/after', 'event/topic', 1),
        ('topic_delete', 'Updates topic data when a topic is deleted.', 'admin/model/cms/topic.deleteTopic/after', 'event/topic', 1),
+
        ('translation_add', 'Updates translation data when a new translation is added.', 'admin/model/design/translation.addTranslation/after', 'event/translation', 1),
        ('translation_edit', 'Updates translation data when a translation is edited.', 'admin/model/design/translation.editTranslation/after', 'event/translation', 1),
        ('translation_delete', 'Updates translation data when a translation is deleted.', 'admin/model/design/translation.deleteTranslation/after', 'event/translation', 1),
+
        ('weight_class_add', 'Updates weight class data when a new weight class is added.', 'admin/model/localisation/weight_class.addWeightClass/after', 'event/weight_class', 1),
        ('weight_class_edit', 'Updates weight class data when a weight class is edited.', 'admin/model/localisation/weight_class.editWeightClass/after', 'event/weight_class', 1),
        ('weight_class_delete', 'Updates weight class data when a weight class is deleted.', 'admin/model/localisation/weight_class.deleteWeightClass/after', 'event/weight_class', 1),
+
        ('zone_add', 'Updates zone data when a new zone is added.', 'admin/model/localisation/zone.addZone/after', 'event/country', 1),
        ('zone_edit', 'Updates zone data when a zone is edited.', 'admin/model/localisation/zone.editZone/after', 'event/country', 1),
        ('zone_delete', 'Updates zone data when a zone is deleted.', 'admin/model/localisation/zone.deleteZone/after', 'event/country', 1);

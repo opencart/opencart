@@ -40,18 +40,16 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
 		foreach ($stores as $store) {
-			foreach ($languages as $language) {
+			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store['store_id']);
+
+			foreach ($language_ids as $language_id) {
 				$task_data = [
 					'code'   => 'currency',
 					'action' => 'task/catalog/currency.list',
 					'args'   => [
 						'store_id'    => $store['store_id'],
-						'language_id' => $language['language_id']
+						'language_id' => $language_id
 					]
 				];
 
@@ -97,7 +95,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
-		if (!$language_info) {
+		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
 		}
 

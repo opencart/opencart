@@ -42,4 +42,16 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 	}
+
+	public function add(string &$route, array &$args, &$output): void {
+
+	}
+
+	public function edit(string &$route, array &$args, &$output): void {
+
+	}
+
+	public function delete(string &$route, array &$args, &$output): void {
+
+	}
 }

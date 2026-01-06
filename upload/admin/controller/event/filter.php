@@ -27,4 +27,16 @@ class Filter extends \Opencart\System\Engine\Controller {
 			oc_directory_delete($file);
 		}
 	}
+
+	public function add(string &$route, array &$args, &$output): void {
+
+	}
+
+	public function edit(string &$route, array &$args, &$output): void {
+
+	}
+
+	public function delete(string &$route, array &$args, &$output): void {
+
+	}
 }

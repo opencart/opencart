@@ -18,6 +18,35 @@ class Article extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
+		// Clear old data
+		$task_data = [
+			'code'   => 'article',
+			'action' => 'task/catalog/article.clear',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		// List
+		$task_data = [
+			'code'   => 'article',
+			'action' => 'task/catalog/article.list',
+			'args'   => []
+		];
+
+		$this->model_setting_task->addTask($task_data);
+
+
+
+
+
+
+
+
+
+
 		$task_data = [
 			'code'   => 'article',
 			'action' => 'task/catalog/article.list',
@@ -77,6 +106,13 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
+
+
+
+
+
+
+
 		$this->load->language('task/catalog/country');
 
 		// Store
@@ -262,6 +298,14 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $country_info['name'])];
 	}
+
+
+
+
+
+
+
+
 
 	/**
 	 * Clear

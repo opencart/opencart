@@ -6,25 +6,35 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Banner extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * Adds task to generate new banner list
-	 *
-	 * Called using admin/model/design/banner/addBanner/after
-	 * Called using admin/model/design/banner/editBanner/after
-	 * Called using admin/model/design/banner/deleteBanner/after
-	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
-	 *
-	 * @return void
-	 */
-	public function index(string &$route, array &$args, &$output): void {
+	public function add(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'banner',
+			'code'   => 'banner.add.' . $output,
 			'action' => 'task/catalog/banner',
-			'args'   => []
+			'args'   => ['banner_id' => $output]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+	}
+
+	public function edit(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'banner.edit.' . $args[0],
+			'action' => 'task/catalog/banner.info',
+			'args'   => ['banner_id' => $args[0]]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+	}
+
+	public function delete(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'banner.delete.' . $args[0],
+			'action' => 'task/catalog/banner.delete',
+			'args'   => ['banner_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');

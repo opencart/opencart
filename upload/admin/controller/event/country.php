@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Country extends \Opencart\System\Engine\Controller {
 	/**
-	 * Index
+	 * Add
 	 *
 	 * Adds task to generate new country list
 	 *
@@ -24,22 +24,76 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, &$output): void {
+	public function add(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/catalog/country',
-			'args'   => []
+			'code'   => 'country.add.' . $output,
+			'action' => 'task/catalog/country.info',
+			'args'   => ['country_id' => $output]
 		];
 
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 
+		/*
+		// Admin
 		$task_data = [
 			'code'   => 'country',
-			'action' => 'task/admin/country',
+			'action' => 'task/admin/country.list',
 			'args'   => []
 		];
+
+		$this->model_setting_task->addTask($task_data);
+
+		$task_data = [
+			'code'   => 'country',
+			'action' => 'task/admin/country.info',
+			'args'   => ['country_id' => $output]
+		];
+
+		$this->model_setting_task->addTask($task_data);
+		*/
+	}
+
+	public function edit(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'country.edit.' . $args[0],
+			'action' => 'task/catalog/country.info',
+			'args'   => ['country_id' => $args[0]]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		// Admin
+		/*
+		$task_data = [
+			'code'   => 'country',
+			'action' => 'task/admin/country.list',
+			'args'   => []
+		];
+
+		$this->model_setting_task->addTask($task_data);
+
+		$task_data = [
+			'code'   => 'country',
+			'action' => 'task/admin/country.info',
+			'args'   => ['country_id' => $args[0]]
+		];
+
+		$this->model_setting_task->addTask($task_data);
+		*/
+	}
+
+	public function delete(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'country.delete.' . $args[0],
+			'action' => 'task/admin/country.delete',
+			'args'   => ['country_id' => $args[0]]
+		];
+
+		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 	}

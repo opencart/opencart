@@ -24,6 +24,8 @@ class Task extends \Opencart\System\Engine\Model {
 	 * $task_id = $this->model_setting_task->addTask($data);
 	 */
 	public function addTask(array $data): int {
+		$this->deleteTaskByCode($data['code']);
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "task` SET `code` = '" . $this->db->escape($data['code']) . "', `action` = '" . $this->db->escape($data['action']) . "', `args` = '" . $this->db->escape(!empty($data['args']) ? json_encode($data['args']) : '') . "', `status` = 'pending', `date_added` = NOW(), `date_modified` = NOW()");
 
 		return $this->db->getLastId();

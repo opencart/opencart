@@ -21,7 +21,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		// Clear old data
 		$task_data = [
 			'code'   => 'information',
-			'action' => 'task/admin/information.clear',
+			'action' => 'task/catalog/information.clear',
 			'args'   => []
 		];
 
@@ -29,14 +29,29 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		// Create new data
+		// List
 		$task_data = [
 			'code'   => 'information',
-			'action' => 'task/admin/information.list',
+			'action' => 'task/catalog/information.list',
 			'args'   => []
 		];
 
 		$this->model_setting_task->addTask($task_data);
+
+		// Info
+		$this->load->model('catalog/information');
+
+		$informations = $this->model_catalog_information->getInformations();
+
+		foreach ($informations as $information) {
+			$task_data = [
+				'code'   => 'information',
+				'action' => 'task/catalog/information.info',
+				'args'   => ['information_id' => $information['information_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 
 		return ['success' => $this->language->get('text_task')];
 	}
@@ -53,7 +68,31 @@ class Information extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/information');
 
-		$this->load->model('setting/task');
+		$this->load->model('catalog/information');
+
+		$informations = $this->model_catalog_information->getInformations();
+
+		$Stores = $this->model_catalog_information->getStores();
+
+		// Stores
+		$stores = [];
+
+		$stores[] = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		$this->load->model('setting/store');
+
+		$stores = array_merge($stores, $this->model_setting_store->getStores());
+
+		foreach ($stores as $store) {
+			$customer_groups = $this->model_setting_setting->getValue('config_customer_group_list', $store['store_id']);
+
+
+
+
 
 		$information_data = [];
 

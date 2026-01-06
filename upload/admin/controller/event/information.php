@@ -6,35 +6,39 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Information extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * Adds task to generate new information list
-	 *
-	 * Called using admin/model/customer/information/addInformation/after
-	 * Called using admin/model/customer/information/editInformation/after
-	 * Called using admin/model/customer/information/deleteInformation/after
-	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
-	 *
-	 * @return void
-	 */
-	public function index(string &$route, array &$args, &$output): void {
+	public function add(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'information',
-			'action' => 'task/admin/information',
-			'args'   => []
+			'code'   => 'information.add.' . $output,
+			'action' => 'task/catalog/information.info',
+			'args'   => ['information_id' => $output]
 		];
 
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+	}
 
-		$files = oc_directory_read(DIR_OPENCART . 'view/html/');
+	public function edit(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'information.edit.' . $args[0],
+			'action' => 'task/catalog/information.info',
+			'args'   => ['information_id' => $args[0]]
+		];
 
-		foreach ($files as $file) {
-			oc_directory_delete($file);
-		}
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+	}
+
+	public function delete(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'information.delete.' . $args[0],
+			'action' => 'task/catalog/information.delete',
+			'args'   => ['information_id' => $args[0]]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
 	}
 }

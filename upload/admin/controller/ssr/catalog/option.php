@@ -1,44 +1,26 @@
 <?php
-namespace Opencart\admin\controller\ssr\catalog;
+namespace Opencart\Admin\Controller\Ssr\Catalog;
 /**
  * Class Option
  *
  * @package Opencart\Admin\Controller\Event
  */
 class Option extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * Adds task to generate new option list
-	 *
-	 * model/catalog/option/addOption/after
-	 * model/catalog/option/editOption/after
-	 * model/catalog/option/deleteOption/after
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 * @param mixed             $output
-	 *
-	 * @return void
-	 */
-	public function index(string &$route, array &$args, &$output): void {
-		$files = oc_directory_read(DIR_OPENCART . 'view/html/');
+	public function editOption(string &$route, array &$args, &$output): void {
+		$this->load->model('catalog/product');
 
-		foreach ($files as $file) {
-			oc_directory_delete($file);
+		$results = $this->model_catalog_product->getProductsByOptionId($args[0]);
+
+		$this->load->model('setting/task');
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'product.info.' . $result['product_id'],
+				'action' => 'task/catalog/product.info',
+				'args'   => ['product_id' => $result['product_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
 		}
-	}
-
-
-	public function add(string &$route, array &$args, &$output): void {
-
-	}
-
-	public function edit(string &$route, array &$args, &$output): void {
-
-	}
-
-	public function delete(string &$route, array &$args, &$output): void {
-
 	}
 }

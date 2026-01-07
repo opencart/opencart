@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\admin\controller\ssr\catalog;
+namespace Opencart\Admin\Controller\Ssr\Catalog;
 /**
  * Class Product
  *

@@ -32,37 +32,5 @@ class Event extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
-
-		$events = [];
-
-		// Article
-		$events[] = [
-			'code'    => 'article.add',
-			'trigger' => 'admin/model/cms/article.addArticle/after',
-			'action'  => 'event/article.add'
-		];
-
-		$events[] = [
-			'code'    => 'article.edit-12',
-			'trigger' => 'admin/model/cms/article.editArticle/after',
-			'action'  => 'event/article.edit'
-		];
-
-		$events[] = [
-			'code'    => 'article.delete',
-			'trigger' => 'admin/model/cms/article.deleteArticle/after',
-			'action'  => 'event/article.delete'
-		];
-
-		//
-
-
-
-
-		//('country_add', 'Updates country data when a new country is added.', 'admin/model/localisation/country.addCountry/after', 'event/country', 1),
-       //('country_edit', 'Updates country data when a country is edited.', 'admin/model/localisation/country.editCountry/after', 'event/country', 1),
-       //('country_delete', 'Updates country data when a country is deleted.', 'admin/model/localisation/country.deleteCountry/after', 'event/country', 1),
-
-
 	}
 }

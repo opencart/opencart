@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Event;
+namespace Opencart\admin\controller\ssr\setting;
 /**
  * Class Store
  *
@@ -26,11 +26,6 @@ class Store extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(string &$route, array &$args, &$output): void {
-
-
-
-
-
 		$task_data = [
 			'code'   => 'store',
 			'action' => 'task/admin/store',

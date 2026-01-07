@@ -1,22 +1,23 @@
 <?php
-namespace Opencart\Admin\Controller\Event;
+namespace Opencart\admin\controller\ssr\catalog;
 /**
- * Class Product
+ * Class Option
  *
  * @package Opencart\Admin\Controller\Event
  */
-class Product extends \Opencart\System\Engine\Controller {
+class Option extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Adds task to generate new product list
+	 * Adds task to generate new option list
 	 *
-	 * Called using admin/model/catalog/product/addProduct/after
-	 * Called using admin/model/catalog/product/editProduct/after
-	 * Called using admin/model/catalog/product/deleteProduct/after
+	 * model/catalog/option/addOption/after
+	 * model/catalog/option/editOption/after
+	 * model/catalog/option/deleteOption/after
 	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -27,6 +28,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			oc_directory_delete($file);
 		}
 	}
+
 
 	public function add(string &$route, array &$args, &$output): void {
 

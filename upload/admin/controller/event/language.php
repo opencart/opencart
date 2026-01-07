@@ -7,40 +7,6 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Language extends \Opencart\System\Engine\Controller {
 	/**
-	 * Index
-	 *
-	 * Adds task to generate new language list
-	 *
-	 * Called using admin/model/localisation/language/addLanguage/after
-	 * Called using admin/model/localisation/language/editLanguage/after
-	 * Called using admin/model/localisation/language/deleteLanguage/after
-	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
-	 *
-	 * @return void
-	 */
-	public function index(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'language',
-			'action' => 'task/catalog/language',
-			'args'   => []
-		];
-
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'language',
-			'action' => 'task/admin/language',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-	}
-
-	/**
 	 * template
 	 *
 	 * Dump all the language vars into the template.

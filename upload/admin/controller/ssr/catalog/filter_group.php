@@ -1,23 +1,22 @@
 <?php
-namespace Opencart\Admin\Controller\Event;
+namespace Opencart\admin\controller\ssr\catalog;
 /**
- * Class Option
+ * Class Filter Group
  *
  * @package Opencart\Admin\Controller\Event
  */
-class Option extends \Opencart\System\Engine\Controller {
+class FilterGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Adds task to generate new option list
+	 * Adds task to generate new filter group list
 	 *
-	 * model/catalog/option/addOption/after
-	 * model/catalog/option/editOption/after
-	 * model/catalog/option/deleteOption/after
+	 * Called using admin/model/catalog/filter_group/addFilter/after
+	 * Called using admin/model/catalog/filter_group/editFilter/after
+	 * Called using admin/model/catalog/filter_group/catalog/deleteFilter/after
 	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 * @param mixed             $output
+	 * @param string                $route
+	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
@@ -28,7 +27,6 @@ class Option extends \Opencart\System\Engine\Controller {
 			oc_directory_delete($file);
 		}
 	}
-
 
 	public function add(string &$route, array &$args, &$output): void {
 

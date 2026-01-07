@@ -6,15 +6,39 @@ namespace Opencart\admin\controller\ssr\catalog;
  * @package Opencart\Admin\Controller\Event
  */
 class AttributeGroup extends \Opencart\System\Engine\Controller {
-	public function add(string &$route, array &$args, &$output): void {
+	public function editAttributeGroup(string &$route, array &$args, &$output): void {
+		$this->load->model('catalog/product');
 
+		$results = $this->model_catalog_product->getProductsByAttributeGroupId($args[0]);
+
+		$this->load->model('setting/task');
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'product.info.' . $result['product_id'],
+				'action' => 'task/catalog/product.info',
+				'args'   => ['product_id' => $result['product_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 
-	public function edit(string &$route, array &$args, &$output): void {
+	public function deleteAttributeGroup(string &$route, array &$args, &$output): void {
+		$this->load->model('catalog/product');
 
-	}
+		$results = $this->model_catalog_product->getProductsByAttributeId($args[0]);
 
-	public function delete(string &$route, array &$args, &$output): void {
+		$this->load->model('setting/task');
 
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'product.info.' . $result['product_id'],
+				'action' => 'task/catalog/product.info',
+				'args'   => ['product_id' => $result['product_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 }

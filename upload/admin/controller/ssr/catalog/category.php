@@ -6,7 +6,7 @@ namespace Opencart\admin\controller\ssr\catalog;
  * @package Opencart\Admin\Controller\Event
  */
 class Category extends \Opencart\System\Engine\Controller {
-	public function add(string &$route, array &$args, &$output): void {
+	public function addCategory(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'category.info.' . $output,
 			'action' => 'task/catalog/category.info',
@@ -18,7 +18,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function edit(string &$route, array &$args, &$output): void {
+	public function editCategory(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'category.info.' . $args[0],
 			'action' => 'task/catalog/category.info',
@@ -30,7 +30,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function delete(string &$route, array &$args, &$output): void {
+	public function deleteCategory(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'category.delete.' . $args[0],
 			'action' => 'task/catalog/category.delete',

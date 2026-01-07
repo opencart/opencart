@@ -8,7 +8,7 @@ namespace Opencart\admin\controller\ssr\catalog;
 class Information extends \Opencart\System\Engine\Controller {
 	public function addInformation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'information.add.' . $output,
+			'code'   => 'information.info.' . $output,
 			'action' => 'task/catalog/information.info',
 			'args'   => ['information_id' => $output]
 		];
@@ -18,9 +18,9 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function edit(string &$route, array &$args, &$output): void {
+	public function editInformation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'information.edit.' . $args[0],
+			'code'   => 'information.info.' . $args[0],
 			'action' => 'task/catalog/information.info',
 			'args'   => ['information_id' => $args[0]]
 		];
@@ -30,7 +30,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function delete(string &$route, array &$args, &$output): void {
+	public function deleteInformation(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'information.delete.' . $args[0],
 			'action' => 'task/catalog/information.delete',

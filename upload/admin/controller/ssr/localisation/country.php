@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\admin\controller\ssr\localisation;
+namespace Opencart\Admin\Controller\Ssr\Localisation;
 /**
  * Class Country
  *
@@ -24,7 +24,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function add(string &$route, array &$args, &$output): void {
+	public function addCountry(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'country.add.' . $output,
 			'action' => 'task/catalog/country.info',
@@ -55,7 +55,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
-	public function edit(string &$route, array &$args, &$output): void {
+	public function editCountry(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'country.edit.' . $args[0],
 			'action' => 'task/catalog/country.info',
@@ -86,7 +86,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
-	public function delete(string &$route, array &$args, &$output): void {
+	public function deleteCountry(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'country.delete.' . $args[0],
 			'action' => 'task/admin/country.delete',

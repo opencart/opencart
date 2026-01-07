@@ -22,7 +22,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 */
 	public function addTranslation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'translation.info',
+			'code'   => 'translation.info.' . str_replace('/', '.', $args[0]['route']),
 			'action' => 'task/catalog/translation.info',
 			'args'   => ['route' => $args[0]['route']]
 		];
@@ -34,7 +34,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 	public function editTranslation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'translation',
+			'code'   => 'translation.info.' . str_replace('/', '.', $args[0]['route']),
 			'action' => 'task/catalog/translation.info',
 			'args'   => ['route' => $args[0]['route']]
 		];
@@ -45,6 +45,14 @@ class Translation extends \Opencart\System\Engine\Controller {
 	}
 
 	public function deleteTranslation(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'translation.info.' . str_replace('/', '.', $args[0]['route']),
+			'action' => 'task/catalog/translation.info',
+			'args'   => ['route' => $args[0]['route']]
+		];
 
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
 	}
 }

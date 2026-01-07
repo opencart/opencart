@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Ssr\Localisation;
 /**
- * Class Country
+ * Class Zone
  *
  * @package Opencart\Admin\Controller\Event
  */
-class Country extends \Opencart\System\Engine\Controller {
+class Zone extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add
 	 *
@@ -18,14 +18,13 @@ class Country extends \Opencart\System\Engine\Controller {
 	 * Called using admin/model/localisation/zone/addZone
 	 * Called using admin/model/localisation/zone/editZone
 	 * Called using admin/model/localisation/zone/deleteZone
-     *
+	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
-	 * @param array<string, string> $output
 	 *
 	 * @return void
 	 */
-	public function addCountry(string &$route, array &$args, &$output): void {
+	public function addZone(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'country.info.' . $output,
 			'action' => 'task/catalog/country.info',
@@ -56,11 +55,11 @@ class Country extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
-	public function editCountry(string &$route, array &$args, &$output): void {
+	public function editZone(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'country.info.' . $args[0],
 			'action' => 'task/catalog/country.info',
-			'args'   => ['country_id' => $args[0]]
+			'args'   => ['country_id' => $args[1]['country_id']]
 		];
 
 		$this->load->model('setting/task');
@@ -87,7 +86,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
-	public function deleteCountry(string &$route, array &$args, &$output): void {
+	public function deleteZone(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'country.delete.' . $args[0],
 			'action' => 'task/admin/country.delete',
@@ -99,3 +98,4 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 }
+

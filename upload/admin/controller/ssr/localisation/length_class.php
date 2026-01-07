@@ -7,7 +7,7 @@ namespace Opencart\admin\controller\ssr\localisation;
  */
 class LengthClass extends \Opencart\System\Engine\Controller {
 	/**
-	 * Index
+	 * add Length Class
 	 *
 	 * Adds task to generate new length_class list
 	 *
@@ -21,7 +21,31 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, &$output): void {
+	public function addLengthClass(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'length_class',
+			'action' => 'task/admin/length_class',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+	}
+
+	public function editLengthClass(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'length_class',
+			'action' => 'task/admin/length_class',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+	}
+
+	public function deleteLengthClass(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'length_class',
 			'action' => 'task/admin/length_class',

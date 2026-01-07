@@ -6,37 +6,39 @@ namespace Opencart\admin\controller\ssr\cms;
  * @package Opencart\Admin\Controller\Event
  */
 class Topic extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * Adds task to generate new topic list
-	 *
-	 * Called using admin/model/cms/topic/addTopic/after
-	 * Called using admin/model/cms/topic/editTopic/after
-	 * Called using admin/model/cms/topic/deleteTopic/after
-	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
-	 *
-	 * @return void
-	 */
-	public function index(string &$route, array &$args, &$output): void {
-		$files = oc_directory_read(DIR_OPENCART . 'view/html/');
+	public function addTopic(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'topic.info.' . $output,
+			'action' => 'task/catalog/topic.info',
+			'args'   => ['article_id' => $output]
+		];
 
-		foreach ($files as $file) {
-			oc_directory_delete($file);
-		}
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function add(string &$route, array &$args, &$output): void {
+	public function editTopic(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'topic.info.' . $args[0],
+			'action' => 'task/catalog/topic.info',
+			'args'   => ['article_id' => $args[0]]
+		];
 
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function edit(string &$route, array &$args, &$output): void {
+	public function deleteTopic(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'topic.delete.' . $args[0],
+			'action' => 'task/catalog/topic.delete',
+			'args'   => ['article_id' => $args[0]]
+		];
 
-	}
+		$this->load->model('setting/task');
 
-	public function delete(string &$route, array &$args, &$output): void {
-
+		$this->model_setting_task->addTask($task_data);
 	}
 }

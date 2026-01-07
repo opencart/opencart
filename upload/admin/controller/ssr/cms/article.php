@@ -6,7 +6,7 @@ namespace Opencart\admin\controller\ssr\cms;
  * @package Opencart\Admin\Controller\Event
  */
 class Article extends \Opencart\System\Engine\Controller {
-	public function add(string &$route, array &$args, &$output): void {
+	public function addArticle(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'article.info.' . $output,
 			'action' => 'task/catalog/article.info',
@@ -18,7 +18,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function edit(string &$route, array &$args, &$output): void {
+	public function editArticle(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'article.info.' . $args[0],
 			'action' => 'task/catalog/article.info',
@@ -30,7 +30,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function delete(string &$route, array &$args, &$output): void {
+	public function deleteArticle(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'article.delete.' . $args[0],
 			'action' => 'task/catalog/article.delete',

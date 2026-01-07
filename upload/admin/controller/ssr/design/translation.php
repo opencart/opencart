@@ -20,35 +20,31 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, &$output): void {
+	public function addTranslation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'translation',
-			'action' => 'task/catalog/translation',
-			'args'   => []
+			'code'   => 'translation.info',
+			'action' => 'task/catalog/translation.info',
+			'args'   => ['route' => $args[0]['route']]
 		];
 
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+	}
 
+	public function editTranslation(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'translation',
-			'action' => 'task/admin/translation',
-			'args'   => []
+			'action' => 'task/catalog/translation.info',
+			'args'   => ['route' => $args[0]['route']]
 		];
+
+		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function add(string &$route, array &$args, &$output): void {
-
-	}
-
-	public function edit(string &$route, array &$args, &$output): void {
-
-	}
-
-	public function delete(string &$route, array &$args, &$output): void {
+	public function deleteTranslation(string &$route, array &$args, &$output): void {
 
 	}
 }

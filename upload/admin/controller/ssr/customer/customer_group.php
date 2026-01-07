@@ -20,27 +20,19 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function add(string &$route, array &$args, &$output): void {
+	public function addCustomerGroup(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'customer_group_list',
-			'action' => 'task/catalog/customer_group.list',
-			'args'   => []
+			'code'   => 'customer_group.info.' . $output,
+			'action' => 'task/catalog/customer_group.info',
+			'args'   => ['customer_group_id' => $output]
 		];
 
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'customer_group',
-			'action' => 'task/catalog/customer_group.info',
-			'args'   => ['customer_group_id' => $output]
-		];
-
-		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function edit(string &$route, array &$args, &$output): void {
+	public function editCustomerGroup(string &$route, array &$args, &$output): void {
 		// Catalog
 		$task_data = [
 			'code'   => 'customer_group',
@@ -53,7 +45,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		$task_data = [
-			'code'   => 'customer_group',
+			'code'   => 'customer_group.info.' . $args[0],
 			'action' => 'task/catalog/customer_group.info',
 			'args'   => ['customer_group_id' => $args[0]]
 		];
@@ -80,7 +72,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
-	public function delete(string &$route, array &$args, &$output): void {
+	public function deleteCustomerGroup(string &$route, array &$args, &$output): void {
 		// Catalog
 		$task_data = [
 			'code'   => 'customer_group',

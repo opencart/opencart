@@ -32,5 +32,106 @@ class Event extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
+
+		/*
+		 * Event Trigger
+		 *
+		attribute.editAttribute
+		attribute.deleteAttribute
+
+		category.add
+		category.edit
+		category.delete
+
+		filter.edit
+		filter.delete
+
+		information.add
+		information.edit
+		information.delete
+
+		manufacturer.add
+		manufacturer.edit
+		manufacturer.delete
+
+		option.edit
+		option.delete
+
+		product.add
+		product.edit
+		product.delete
+
+		review.add
+		review.edit
+		review.delete
+
+		article.add
+		article.edit
+		article.delete
+
+		topic.add
+		topic.edit
+		topic.delete
+
+		comment
+
+		custom_field.add
+		custom_field.edit
+		custom_field.delete
+
+		customer_group.add
+		customer_group.edit
+		customer_group.delete
+
+		banner.add
+		banner.edit
+		banner.delete
+
+		translation.add
+		translation.edit
+		translation.delete
+
+		country.add
+		country.edit
+		country.delete
+
+		currency.add
+		currency.edit
+		currency.delete
+
+		geo_zone.add
+		geo_zone.edit
+		geo_zone.delete
+
+		language.add
+		language.edit
+		language.delete
+
+		location.add
+		location.edit
+		location.delete
+
+		return_reason.add
+		return_reason.edit
+		return_reason.delete
+
+		tax_class.add
+		tax_class.edit
+		tax_class.delete
+
+		tax_rate.add
+		tax_rate.edit
+		tax_rate.delete
+
+		zone.add
+		zone.edit
+		zone.delete
+
+		setting.delete
+
+		store.add
+		store.edit
+		store.delete
+		*/
 	}
 }

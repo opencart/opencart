@@ -1371,10 +1371,14 @@ VALUES ('activity_customer_add', 'Adds new customer entry in the activity log.',
        ('activity_affiliate_edit', 'Adds edit affiliate entry in the activity log.', 'catalog/model/account/affiliate.editAffiliate/after', 'event/activity.editAffiliate', 1),
        ('activity_order_add', 'Adds new order entry in the activity log.', 'catalog/model/checkout/order.addHistory/before', 'event/activity.addHistory', 1),
        ('activity_return_add', 'Adds new return entry in the activity log.', 'catalog/model/account/returns.addReturn/after', 'event/activity.addReturn', 1),
+
+
        ('currency_add', 'Updates currencies data when a new currency is added.', 'admin/model/localisation/currency.addCurrency/after', 'event/currency', 1),
        ('currency_edit', 'Updates currencies data when a currency is edited.', 'admin/model/localisation/currency.editCurrency/after', 'event/currency', 1),
        ('currency_delete', 'Updates currency data when a currency is deleted.', 'admin/model/localisation/currency.deleteCurrency/after', 'event/currency', 1),
        ('currency_setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),
+
+
        ('mail_customer_add', 'Sends mail to newly registered customers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register', 1),
        ('mail_customer_alert', 'Sends alert mail to store owner when a new customer registers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register.alert', 1),
        ('mail_customer_transaction', 'Sends mail to the customer when their transaction balance is updated.', 'catalog/model/account/customer.addTransaction/after', 'mail/transaction', 1),

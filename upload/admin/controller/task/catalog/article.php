@@ -20,7 +20,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		// Clear old data
 		$task_data = [
-			'code'   => 'article',
+			'code'   => 'article.clear',
 			'action' => 'task/catalog/article.clear',
 			'args'   => []
 		];

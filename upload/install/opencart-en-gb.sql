@@ -2167,7 +2167,7 @@ VALUES (1, 'category', 'link', 'catalog/category', 'catalog', 1),
 INSERT INTO `oc_menu_description` (`menu_id`, `language_id`, `name`)
 VALUES (1, 1, 'Categories'),
        (2, 1, 'Products'),
-       (3, 1, 'Subscription Plan'),
+       (3, 1, 'Subscription Plans'),
        (4, 1, 'Filters'),
        (5, 1, 'Filters'),
        (6, 1, 'Filter Groups'),

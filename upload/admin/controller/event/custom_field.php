@@ -6,22 +6,6 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class CustomField extends \Opencart\System\Engine\Controller {
-	public function index(string &$route, array &$args, &$output): void {
-		$pos = strpos($route, '.');
-
-		if ($pos == false) {
-			return;
-		}
-
-		$method = substr($route, 0, $pos);
-
-		$callable = [$this, $method];
-
-		if (is_callable($callable)) {
-			$callable($route, $args, $output);
-		}
-	}
-
 	/**
 	 * Index
 	 *
@@ -39,6 +23,22 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
+	public function index(string &$route, array &$args, &$output): void {
+		$pos = strpos($route, '.');
+
+		if ($pos == false) {
+			return;
+		}
+
+		$method = substr($route, 0, $pos);
+
+		$callable = [$this, $method];
+
+		if (is_callable($callable)) {
+			$callable($route, $args, $output);
+		}
+	}
+
 	public function addCustomField(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'customer_group',

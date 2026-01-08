@@ -106,12 +106,22 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function deleteCountry(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'country.delete.' . $args[0],
-			'action' => 'task/admin/country.delete',
+			'action' => 'task/catalog/country.delete',
 			'args'   => ['country_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+
+		/*
+		$task_data = [
+			'code'   => 'country.delete.' . $args[0],
+			'action' => 'task/admin/country.delete',
+			'args'   => ['country_id' => $args[0]]
+		];
+
+		$this->model_setting_task->addTask($task_data);
+		*/
 	}
 }

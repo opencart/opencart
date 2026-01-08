@@ -22,8 +22,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-
-
 	/**
 	 * Index
 	 *

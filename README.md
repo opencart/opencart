@@ -1,22 +1,22 @@
 # OpenCart
 
-## Overview
+## Обзор
 
-OpenCart is a free open source ecommerce platform for online merchants. OpenCart provides a professional and reliable foundation to build a successful online store.
+OpenCart - бесплатная платформа электронной коммерции с открытым исходным кодом для онлайн-торговцев. OpenCart предоставляет профессиональную и надежную основу для построения успешного интернет-магазина.
 
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg?style=flat-square)](https://php.net/)
 [![GitHub release](https://img.shields.io/github/v/release/opencart/opencart)](https://github.com/opencart/opencart/releases)
 [![Lint](https://github.com/opencart/opencart/actions/workflows/Lint.yml/badge.svg)](https://github.com/opencart/opencart/actions/workflows/Lint.yml)
 
-## How to install
+## Как установить
 
 Please read the [installation instructions](INSTALL.md) included in the repository or download file.
 
-## How to upgrade from previous versions
+## Как обновиться с предыдущих версий
 
 Please read the [upgrading instructions](UPGRADE.md) included in the repository or download file.
 
-## Reporting a bug
+## Сообщить о проблемах
 
 Read the instructions below before you create a bug report.
 
@@ -29,10 +29,10 @@ Read the instructions below before you create a bug report.
 
 If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](https://forum.opencart.com/viewforum.php?f=201)
 
-**Important!**
+**Важно!**
 
-- If your bug report is not related to the core code (such as a 3rd party module or your server configuration) then the issue will be closed without a reason. You must contact the extension developer, use the forum or find a commercial partner to resolve a 3rd party code issue.
-- If you would like to report a serious security bug please PM an OpenCart moderator/administrator on the forum. Please do not report concept/ideas/unproven security flaws - all security reports are taken seriously but you must include the EXACT details steps to reproduce it. Please DO NOT post security flaws in a public location.
+- Если ваше сообщение об ошибке не связано с основным кодом (например, сторонним модулем или конфигурацией вашего сервера), то проблема будет закрыта без причины. Вы должны связаться с разработчиком расширения, использовать форум или найти коммерческого партнера, чтобы решить проблему стороннего кода.
+- Если вы хотите сообщить о серьезной ошибке безопасности, пожалуйста, обратитесь к модератору/администратору OpenCart на форуме. Пожалуйста, не сообщайте о концепции/идеях/недоказанных недостатках безопасности - все отчеты о безопасности воспринимаются серьезно, но вы должны включить шаги с ТОЧНЫМИ подробностями, чтобы воспроизвести их. Пожалуйста, НЕ сообщайте о недостатках безопасности в общедоступных местах.
 
 ## How to contribute
 

@@ -18,16 +18,16 @@ Please read the [upgrading instructions](UPGRADE.md) included in the repository 
 
 ## Сообщить о проблемах
 
-Read the instructions below before you create a bug report.
+Перед созданием отчета об ошибке ознакомьтесь с приведенными ниже инструкциями.
 
-1. Search the [OpenCart forum](https://forum.opencart.com/viewforum.php?f=201), ask the community if they have seen the bug or know how to fix it.
-2. Check all open and closed issues on the [GitHub bug tracker](https://github.com/opencart/opencart/issues).
-3. If your bug is related to the OpenCart core code then please create a bug report on GitHub.
-4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/CHANGELOG.md)
-5. Use [Google](https://www.google.com) to search for your issue.
-6. Make sure that your bug/issue is not related to your hosting environment.
+1. Найдите [форум OpenCart](https://forum.opencart.com/viewforum.php?f=201), спросите сообщество, видели ли они ошибку или знают, как ее исправить.
+2. Проверьте все открытые и закрытые проблемы на [GitHub bug tracker](https://github.com/opencart/opencart/issues).
+3. Если ваша ошибка связана с основным кодом OpenCart, пожалуйста, создайте отчет об ошибке на GitHub.
+4. ПРОЧИТАЙТЕ [список изменений для главной ветви](https://github.com/opencart/opencart/blob/master/CHANGELOG.md)
+5. Используйте [Google](https://www.google.com) для поиска проблемы.
+6. убедитесь, что ваша ошибка/проблема не связана с вашей средой хостинга.
 
-If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](https://forum.opencart.com/viewforum.php?f=201)
+Если вы не уверены в своей проблеме, всегда лучше спросить сообщество в нашей [ветке форума об ошибках](https://forum.opencart.com/viewforum.php?f=201)
 
 **Важно!**
 

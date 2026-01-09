@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_catalog']           = 'Catalog';
+$_['text_catalog']           = 'Catalogue';
 $_['text_cms']               = 'CMS';
 $_['text_customer']          = 'Customers';
 $_['text_dashboard']         = 'Dashboard';

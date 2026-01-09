@@ -34,11 +34,11 @@ class Attribute extends \Opencart\System\Engine\Model {
 		$attribute_group_id = $this->db->getLastId();
 
 		foreach ($data['attribute_group_description'] as $language_id => $attribute_group_description) {
-			$this->model_catalog_attribute_group->addDescription($attribute_group_id, $language_id, $attribute_group_description);
+			$this->model_catalog_attribute->addDescription($attribute_group_id, $language_id, $attribute_group_description);
 		}
 
 		foreach ($data['attribute'] as $attribute) {
-			$this->model_catalog_attribute_group->addAttribute($attribute_group_id, $attribute);
+			$this->model_catalog_attribute->addAttribute($attribute_group_id, $attribute);
 		}
 
 		return $attribute_group_id;
@@ -74,10 +74,10 @@ class Attribute extends \Opencart\System\Engine\Model {
 			$this->addDescription($attribute_group_id, $language_id, $attribute_group_description);
 		}
 
-		$this->deleteAttributes($attribute_group_id);
+		$this->model_catalog_attribute->deleteAttributes($attribute_group_id);
 
 		foreach ($data['attribute'] as $attribute) {
-			$this->model_catalog_attribute_group->addAttribute($attribute_group_id, $attribute);
+			$this->model_catalog_attribute->addAttribute($attribute_group_id, $attribute);
 		}
 	}
 
@@ -350,8 +350,8 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 * $attribute_id = $this->model_catalog_attribute->addAttribute($attribute_data);
 	 */
-	public function addAttribute(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$data['attribute_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+	public function addAttribute($attribute_group_id, array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$attribute_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$attribute_id = $this->db->getLastId();
 

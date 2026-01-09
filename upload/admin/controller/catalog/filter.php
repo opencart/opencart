@@ -109,10 +109,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/filter');
 
-		$results = $this->model_catalog_filter->getFilters($filter_data);
+		$results = $this->model_catalog_filter->getFilterGroups($filter_data);
 
 		foreach ($results as $result) {
-			$data['filters'][] = ['edit' => $this->url->link('catalog/filter.form', 'user_token=' . $this->session->data['user_token'] . '&filter_id=' . $result['filter_id'] . $url)] + $result;
+			$data['filter_groups'][] = ['edit' => $this->url->link('catalog/filter.form', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $result['filter_group_id'] . $url)] + $result;
 		}
 
 		$url = '';
@@ -124,7 +124,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		// Sorts
-		$data['sort_name'] = $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_filter_group'] = $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
@@ -162,7 +161,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['text_form'] = !isset($this->request->get['filter_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_form'] = !isset($this->request->get['filter_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$allowed = [
 			'sort',
@@ -191,13 +190,13 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_id'])) {
 			$this->load->model('catalog/filter');
 
-			$filter_info = $this->model_catalog_filter->getFilter((int)$this->request->get['filter_id']);
+			$filter_group_info = $this->model_catalog_filter->getFilterGroup((int)$this->request->get['filter_group_id']);
 		}
 
-		if (isset($filter_info)) {
-			$data['filter_id'] = $filter_info['filter_id'];
+		if (isset($filter_group_info)) {
+			$data['filter_group_id'] = $filter_group_info['filter_group_id'];
 		} else {
-			$data['filter_id'] = 0;
+			$data['filter_group_id'] = 0;
 		}
 
 		// Languages
@@ -205,27 +204,23 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (!empty($filter_info)) {
-			$data['filter_description'] = $this->model_catalog_filter->getDescriptions($filter_info['filter_id']);
+		if (!empty($filter_group_info)) {
+			$data['filter_description'] = $this->model_catalog_filter->getDescriptions($filter_group_info['filter_group_id']);
 		} else {
 			$data['filter_description'] = [];
 		}
 
-		if (!empty($filter_info)) {
-			$data['sort_order'] = $filter_info['sort_order'];
+		if (!empty($filter_group_info)) {
+			$data['sort_order'] = $filter_group_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
 		}
 
-		// Filter Groups
-		$this->load->model('catalog/filter_group');
-
-		$data['filter_groups'] = $this->model_catalog_filter_group->getFilterGroups();
-
-		if (!empty($filter_info)) {
-			$data['filter_group_id'] = $filter_info['filter_group_id'];
+		// Filters
+		if (!empty($filter_group_info)) {
+			$data['filters'] = $this->model_catalog_filter->getFilters(['filter_group_id' => $filter_group_info['filter_group_id']]);
 		} else {
-			$data['filter_group_id'] = 0;
+			$data['filters'] = [];
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -250,22 +245,28 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'filter_id'          => 0,
-			'filter_description' => [],
-			'filter_group_id'    => 0,
-			'sort_order'         => 0
+			'filter_group_id'          => 0,
+			'filter_group_description' => [],
+			'filters'                  => [],
+			'sort_order'               => 0
 		];
 
 		$post_info = $this->request->post + $required;
 
-		foreach ($post_info['filter_description'] as $language_id => $value) {
+		foreach ($post_info['filter_group_description'] as $language_id => $value) {
 			if (!oc_validate_length($value['name'], 1, 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
-		if (empty($post_info['filter_group_id'])) {
-			$json['error']['filter_group'] = $this->language->get('error_filter_group');
+		if (isset($post_info['filter'])) {
+			foreach ($post_info['filter'] as $key => $filter) {
+				foreach ($filter['filter_description'] as $language_id => $filter_description) {
+					if (!oc_validate_length($filter_description['name'], 1, 128)) {
+						$json['error']['name_' . $key . '_' . $language_id] = $this->language->get('error_name');
+					}
+				}
+			}
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {

@@ -18,36 +18,64 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-filter" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
-            <div class="col-sm-10">
-              {% for language in languages %}
-                <div class="input-group">
-                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                  <input type="text" name="filter_description[{{ language.language_id }}][name]" value="{{ filter_description[language.language_id] ? filter_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
-                </div>
-                <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
-              {% endfor %}
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="input-filter-group" class="col-sm-2 col-form-label">{{ entry_filter_group }}</label>
-            <div class="col-sm-10">
-              <select name="filter_group_id" id="input-filter-group" class="form-select">
-                {% for filter_group in filter_groups %}
-                  <option value="{{ filter_group.filter_group_id }}"{% if filter_group.filter_group_id == filter_group_id %} selected{% endif %}>{{ filter_group.name }}</option>
+          <fieldset>
+            <legend>{{ text_filter_group }}</legend>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_filter_group }}</label>
+              <div class="col-sm-10">
+                {% for language in languages %}
+                  <div class="input-group">
+                    <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                    <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="{{ filter_group_description[language.language_id] ? filter_group_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
+                  </div>
+                  <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                 {% endfor %}
-              </select>
-              <div id="error-filter-group" class="invalid-feedback"></div>
+              </div>
             </div>
-          </div>
-          <div class="row mb-3">
-            <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
-            <div class="col-sm-10">
-              <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+            <div class="row mb-3">
+              <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+              <div class="col-sm-10">
+                <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              </div>
             </div>
-          </div>
-          <input type="hidden" name="filter_id" value="{{ filter_id }}" id="input-filter-id"/>
+          </fieldset>
+          <fieldset>
+            <legend>{{ text_filter }}</legend>
+            <table id="filter" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th class="required">{{ entry_name }}</th>
+                  <th class="text-end">{{ entry_sort_order }}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% set filter_row = 0 %}
+                {% for filter in filters %}
+                  <tr id="filter-row-{{ filter_row }}">
+                    <td class="text-center"><input type="hidden" name="filter[{{ filter_row }}][filter_id]" value="{{ filter.filter_id }}"/>
+                      {% for language in languages %}
+                        <div class="input-group">
+                          <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                          <input type="text" name="filter[{{ filter_row }}][filter_description][{{ language.language_id }}][name]" value="{{ filter.filter_description[language.language_id] ? filter.filter_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-filter-{{ filter_row }}-{{ language.language_id }}" class="form-control"/>
+                        </div>
+                        <div id="error-filter-{{ filter_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
+                      {% endfor %}</td>
+                    <td class="text-end"><input type="text" name="filter[{{ filter_row }}][sort_order]" value="{{ filter.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+                    <td class="text-end"><button type="button" onclick="$('#filter-row-{{ filter_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                  </tr>
+                  {% set filter_row = filter_row + 1 %}
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2"></td>
+                  <td class="text-end"><button type="button" id="button-filter-add" title="{{ button_filter_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                </tr>
+              </tfoot>
+            </table>
+          </fieldset>
+          <input type="hidden" name="filter_group_id" value="{{ filter_group_id }}" id="input-filter-group-id"/>
         </form>
       </div>
     </div>

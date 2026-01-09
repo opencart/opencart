@@ -4,8 +4,7 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="submit" form="form-attribute" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
-      </div>
+        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -19,41 +18,81 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-attribute" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
-            <div class="col-sm-10">
-              {% for language in languages %}
-                <div class="input-group">
-                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                  <input type="text" name="attribute_description[{{ language.language_id }}][name]" value="{{ attribute_description[language.language_id] ? attribute_description[language.language_id].name }}" id="input-name-{{ language.language_id }}" placeholder="{{ entry_name }}" class="form-control" required/>
-                </div>
-                <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
-              {% endfor %}
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="input-attribute-group" class="col-sm-2 col-form-label">{{ entry_attribute_group }}</label>
-            <div class="col-sm-10">
-              <select name="attribute_group_id" id="input-attribute-group" class="form-select" required>
-                <option value="0"></option>
-                {% for attribute_group in attribute_groups %}
-                  <option value="{{ attribute_group.attribute_group_id }}"{% if attribute_group.attribute_group_id == attribute_group_id %} selected{% endif %}>{{ attribute_group.name }}</option>
+          <fieldset>
+            <legend>{{ text_attribute_group }}</legend>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_attribute_group }}</label>
+              <div class="col-sm-10">
+                {% for language in languages %}
+                  <div class="input-group">
+                    <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                    <input type="text" name="attribute_group_description[{{ language.language_id }}][name]" value="{{ attribute_group_description[language.language_id] ? attribute_group_description[language.language_id].name }}" id="input-name-{{ language.language_id }}" placeholder="{{ entry_attribute_group }}" class="form-control" required/>
+                  </div>
+                  <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                 {% endfor %}
-              </select>
-              <div id="error-attribute-group" class="invalid-feedback"></div>
+              </div>
             </div>
-          </div>
-          <div class="row mb-3">
-            <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
-            <div class="col-sm-10">
-              <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+            <div class="row mb-3">
+              <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+              <div class="col-sm-10">
+                <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              </div>
             </div>
-          </div>
-          <input type="hidden" name="attribute_id" value="{{ attribute_id }}" id="input-attribute-id"/>
-          <input type="hidden" name="user_token" value="{{ user_token }}" id="input-user-token"/>
+          </fieldset>
+          <fieldset>
+            <legend>{{ text_attribute }}</legend>
+            <table id="attribute" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th class="required">{{ entry_name }}</th>
+                  <th class="text-end">{{ entry_sort_order }}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% set attribute_row = 0 %}
+                {% for attribute in attributes %}
+                  <tr id="attribute-row-{{ attribute_row }}">
+                    <td class="text-center"><input type="hidden" name="attribute[{{ attribute_row }}][attribute_id]" value="{{ attribute.attribute_id }}"/>
+                      {% for language in languages %}
+                        <div class="input-group">
+                          <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                          <input type="text" name="attribute[{{ attribute_row }}][attribute_description][{{ language.language_id }}][name]" value="{{ attribute.attribute_description[language.language_id] ? attribute.attribute_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-attribute-{{ attribute_row }}-{{ language.language_id }}" class="form-control"/>
+                        </div>
+                        <div id="error-attribute-{{ attribute_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
+                      {% endfor %}</td>
+                    <td class="text-end"><input type="text" name="attribute[{{ attribute_row }}][sort_order]" value="{{ attribute.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+                    <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                  </tr>
+                  {% set attribute_row = attribute_row + 1 %}
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2"></td>
+                  <td class="text-end"><button type="button" id="button-attribute-add" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                </tr>
+              </tfoot>
+            </table>
+          </fieldset>
+          <input type="hidden" name="attribute_id" value="{{ attribute_id }}" id="input-attribute-id"/> <input type="hidden" name="user_token" value="{{ user_token }}" id="input-user-token"/>
         </form>
       </div>
     </div>
   </div>
 </div>
+<template id="template-attribute" value="{{ attribute_row }}">
+  <tr id="attribute-row-{{ attribute_row }}">
+    <td><input type="hidden" name="attribute[{{ attribute_row }}][attribute_id]" value=""/>
+      {% for language in languages %}
+        <div class="input-group">
+          <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+          <input type="text" name="attribute[{{ attribute_row }}][attribute_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}-{{ language.language_id }}" class="form-control"/>
+        </div>
+        <div id="error-attribute-{{ attribute_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
+      {% endfor %}</td>
+    <td class="text-end"><input type="text" name="attribute[{{ attribute_row }}][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+    <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+  </tr>
+</template>
 {{ footer }}

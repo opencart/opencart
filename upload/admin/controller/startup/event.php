@@ -65,6 +65,8 @@ class Event extends \Opencart\System\Engine\Controller {
 		review.edit
 		review.delete
 
+		// cms
+
 		article.add
 		article.edit
 		article.delete

@@ -278,9 +278,9 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/filter');
 
 			if (!$post_info['filter_id']) {
-				$json['filter_id'] = $this->model_catalog_filter->addFilter($post_info);
+				$json['filter_id'] = $this->model_catalog_filter->addFilterGroup($post_info);
 			} else {
-				$this->model_catalog_filter->editFilter($post_info['filter_id'], $post_info);
+				$this->model_catalog_filter->editFilterGroup($post_info['filter_group_id'], $post_info);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -310,12 +310,24 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// Product
+		$this->load->model('catalog/product');
+
+		foreach ($selected as $filter_group_id) {
+			// Total Attributes
+			$product_total = $this->model_catalog_product->getTotalFiltersByFilterGroupId((int)$filter_group_id);
+
+			if ($product_total) {
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+			}
+		}
+
 		if (!$json) {
 			// Filter
 			$this->load->model('catalog/filter');
 
 			foreach ($selected as $filter_id) {
-				$this->model_catalog_filter->deleteFilter($filter_id);
+				$this->model_catalog_filter->deleteFilterGroup($filter_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

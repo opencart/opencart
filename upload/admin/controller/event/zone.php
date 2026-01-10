@@ -11,10 +11,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new country list
 	 *
-	 * Called using admin/model/localisation/country/addCountry/after
-	 * Called using admin/model/localisation/country/editCountry/after
-	 * Called using admin/model/localisation/country/deleteCountry/after
-	 *
 	 * Called using admin/model/localisation/zone/addZone
 	 * Called using admin/model/localisation/zone/editZone
 	 * Called using admin/model/localisation/zone/deleteZone
@@ -44,7 +40,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$task_data = [
 			'code'   => 'country.info.' . $output,
 			'action' => 'task/catalog/country.info',
-			'args'   => ['country_id' => $output]
+			'args'   => ['country_id' => $args[1]['country_id']]
 		];
 
 		$this->load->model('setting/task');

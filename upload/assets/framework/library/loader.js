@@ -57,7 +57,7 @@ class Loader {
 
         let object = await import('./' + path + '.js');
 
-        this.data.set(path, object.default);
+        this.data.set(path, new object.default());
 
         let output = this.data.get(path);
 

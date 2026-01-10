@@ -1,4 +1,4 @@
-import '../liquid.browser.umd.js';
+import { nunjucks } from '../nunjucks.min.js';
 
 export class Template {
     static instance;
@@ -38,21 +38,8 @@ export class Template {
             }
         }
 
-
-
-
-        return this.engine.renderFile(file, data);
-    }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Template();
-        }
-
-        return this.instance;
+        return nunjucks.render(file, data);
     }
 }
 
-const template = Template.getInstance();
-
-export default template;
+export default Template;

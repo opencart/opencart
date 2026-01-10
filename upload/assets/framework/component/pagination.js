@@ -113,7 +113,7 @@ class XPagination extends WebComponent {
     async onclick(e) {
         e.preventDefault();
 
-        this.event.fetch(e.target.getAttribute('href')).then(this.event.onload);
+        this.fetch(e.target.getAttribute('href')).then(this.onload);
     }
 
     async fetch(url) {

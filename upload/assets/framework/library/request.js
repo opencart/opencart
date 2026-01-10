@@ -40,6 +40,4 @@ export class Request {
     }
 }
 
-const request = Request.getInstance();
-
-export default request;
+export default Request;

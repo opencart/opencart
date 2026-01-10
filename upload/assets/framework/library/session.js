@@ -30,6 +30,4 @@ class Session {
     }
 }
 
-const session = Session.getInstance();
-
-export default session;
+export default Session;

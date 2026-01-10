@@ -10,9 +10,9 @@ import('./component/datetime.js');
 import('./component/pagination.js');
 
 // Custom
-//import('./component/currency.js');
-//import('./component/country.js');
-//import('./component/zone.js');
+import('./component/currency.js');
+import('./component/country.js');
+import('./component/zone.js');
 
 // Input
 //import('./input/checkbox.js');

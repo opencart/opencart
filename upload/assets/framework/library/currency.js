@@ -68,16 +68,6 @@ class Currency {
 
         return value * (this.currencies.get(to).value / this.currencies.get(from).value);
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Currency();
-        }
-
-        return this.instance;
-    }
 }
 
-const currency = Currency.getInstance();
-
-export default currency;
+export default Currency;

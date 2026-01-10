@@ -47,16 +47,6 @@ class Language {
 
         return new Map();
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Language();
-        }
-
-        return this.instance;
-    }
 }
 
-const language = Language.getInstance();
-
-export default language;
+export default Language;

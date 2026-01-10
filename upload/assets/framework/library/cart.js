@@ -33,16 +33,6 @@ class Cart {
     getTotal() {
 
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Cart();
-        }
-
-        return this.instance;
-    }
 }
 
-const cart = Cart.getInstance();
-
-export default cart;
+export default Cart;

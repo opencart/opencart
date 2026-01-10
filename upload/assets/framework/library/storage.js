@@ -47,16 +47,6 @@ export class Storage {
 
         return new Map();
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Storage();
-        }
-
-        return this.instance;
-    }
 }
 
-const storage = Storage.getInstance();
-
-export default storage;
+export default Storage;

@@ -48,16 +48,6 @@ class Db {
     get() {
 
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Db();
-        }
-
-        return this.instance;
-    }
 }
 
-const db = Db.getInstance();
-
-export default db;
+export default Db;

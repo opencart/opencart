@@ -4,7 +4,7 @@ class Tax {
     static instance;
     static tax_classes = new Map();
 
-    constructor(loader) {
+    constructor() {
         this.storage = loader.library('storage');
 
         //this.tax_classes = tax_classes;
@@ -111,16 +111,6 @@ class Tax {
     clear() {
         this.tax_classes = [];
     }
-
-    static getInstance(loader) {
-        if (!this.instance) {
-            this.instance = new Tax(loader);
-        }
-
-        return this.instance;
-    }
 }
 
-const tax = Tax.getInstance(loader);
-
-export default tax;
+export default Tax;

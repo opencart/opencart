@@ -41,49 +41,49 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		category.add
 		category.edit
-		category.delete
+		category.delete before
 
 		filter.edit
 		filter.delete
 
 		information.add
 		information.edit
-		information.delete
+		information.delete before
 
 		manufacturer.add
 		manufacturer.edit
-		manufacturer.delete
+		manufacturer.delete before
 
 		option.edit
-		option.delete
+		option.delete before
 
 		product.add
 		product.edit
-		product.delete
+		product.delete before
 
 		review.add
 		review.edit
-		review.delete
+		review.delete before
 
 		// cms
 
 		article.add
 		article.edit
-		article.delete
+		article.delete before
 
 		topic.add
 		topic.edit
-		topic.delete
+		topic.delete before
 
 		comment
 
 		custom_field.add
 		custom_field.edit
-		custom_field.delete
+		custom_field.delete before
 
 		customer_group.add
 		customer_group.edit
-		customer_group.delete
+		customer_group.delete before
 
 		banner.add
 		banner.edit

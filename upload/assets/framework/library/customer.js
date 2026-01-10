@@ -89,16 +89,6 @@ class Customer {
     isCommenter() {
         return this.data.get('reward_point');
     }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Customer();
-        }
-
-        return this.instance;
-    }
 }
 
-const customer = Customer.getInstance();
-
-export default customer;
+export default Customer;

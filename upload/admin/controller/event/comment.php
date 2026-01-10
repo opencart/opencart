@@ -22,7 +22,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function addReview(string &$route, array &$args, &$output): void {
+	public function addComment(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'comment.list.' . $args['article_id'],
 			'action' => 'task/catalog/review',
@@ -34,7 +34,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function editReview(string &$route, array &$args, &$output): void {
+	public function editComment(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'comment.list.' . $args['article_id'],
 			'action' => 'task/catalog/review',
@@ -46,7 +46,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function deleteReview(string &$route, array &$args, &$output): void {
+	public function deleteComment(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'comment.list.' . $args['article_id'],
 			'action' => 'task/catalog/review',

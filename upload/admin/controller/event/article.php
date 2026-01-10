@@ -6,22 +6,10 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Article extends \Opencart\System\Engine\Controller {
-	public function index(string &$route, array &$args, &$output): void {
-		$pos = strpos($route, '.');
-
-		if ($pos == false) {
-			return;
-		}
-
-		$method = substr($route, 0, $pos);
-
-		$callable = [$this, $method];
-
-		if (is_callable($callable)) {
-			$callable($route, $args, $output);
-		}
-	}
-
+	/*
+	 * add Article
+	 *
+	 */
 	private function addArticle(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'article.info.' . $output,

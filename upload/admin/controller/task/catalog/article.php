@@ -3,13 +3,15 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Article
  *
+ * Generates article JSON data files
+ *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Article extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate country task list.
+	 * Generate all article task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -37,15 +39,6 @@ class Article extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->model_setting_task->addTask($task_data);
-
-
-
-
-
-
-
-
-
 
 		$task_data = [
 			'code'   => 'article',

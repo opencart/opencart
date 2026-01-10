@@ -20,25 +20,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, &$output): void {
-		$pos = strpos($route, '.');
-
-		if ($pos == false) {
-			return;
-		}
-
-		$method = substr($route, 0, $pos);
-
-		$callable = [$this, $method];
-
-		if (is_callable($callable)) {
-			$callable($route, $args, $output);
-		}
-	}
-
 	public function addZone(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'country.info.' . $output,
+			'code'   => 'country.info.' . $args[1]['country_id'],
 			'action' => 'task/catalog/country.info',
 			'args'   => ['country_id' => $args[1]['country_id']]
 		];
@@ -69,7 +53,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 	public function editZone(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'country.info.' . $args[0],
+			'code'   => 'country.info.' . $args[1]['country_id'],
 			'action' => 'task/catalog/country.info',
 			'args'   => ['country_id' => $args[1]['country_id']]
 		];
@@ -98,16 +82,31 @@ class Zone extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
+	/*
+	 * Delete Zone
+	 *
+	 * Trigger
+	 *
+	 * model/localisation/zone.deleteZone
+	 *
+	 * Start processing country info data updated
+	 */
 	public function deleteZone(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'country.delete.' . $args[0],
-			'action' => 'task/admin/country.delete',
-			'args'   => ['country_id' => $args[0]]
-		];
+		$this->load->model('localisation/zone');
 
-		$this->load->model('setting/task');
+		$zone_info = $this->model_localisation_zone->getZone($args[0]);
 
-		$this->model_setting_task->addTask($task_data);
+		if ($zone_info) {
+			$task_data = [
+				'code'   => 'country.info.' . $zone_info['country_id'],
+				'action' => 'task/admin/country.delete',
+				'args'   => ['country_id' => $zone_info['country_id']]
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 }
 

@@ -1396,7 +1396,6 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('mail.admin.user.forgotten', 'Sends mail to users who have forgotten their password.', 'admin/model/user/user.addToken/after', 'mail/forgotten', 1),
        ('mail.admin.user.authorize', 'Sends mail login code to users email to authorize login from a new device.', 'admin/controller/common/authorize.send/after', 'mail/authorize', 1),
        ('mail.admin.user.authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'admin/model/user/user.addToken/after', 'mail/authorize.reset', 1),
-
        ('ssr.article.add', 'Triggers article static site data creation.', 'catalog/model/cms/article.addArticle/after', 'event/article.addArticle', 1),
        ('ssr.article.edit', 'Triggers article static site data creation.', 'catalog/model/cms/article.editArticle/after', 'event/article.editArticle', 1),
        ('ssr.article.delete', 'Triggers article static site data creation.', 'catalog/model/cms/article.deleteArticle/before', 'event/article.deleteArticle', 1),

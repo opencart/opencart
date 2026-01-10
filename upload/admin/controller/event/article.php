@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Article extends \Opencart\System\Engine\Controller {
 	/*
-	 * add Article
+	 *  Add Article
 	 *
 	 */
 	private function addArticle(string &$route, array &$args, &$output): void {
@@ -22,6 +22,10 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/*
+	 *  Edit Article
+	 *
+	 */
 	private function editArticle(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'article.info.' . $args[0],
@@ -34,6 +38,10 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/*
+	 *  Delete Article
+	 *
+	 */
 	private function deleteArticle(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'article.delete.' . $args[0],

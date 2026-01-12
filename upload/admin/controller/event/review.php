@@ -21,7 +21,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	 */
 	public function addReview(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'review.list.' . $args[1]['product_id'],
+			'code'   => 'review.' . $args[1]['product_id'],
 			'action' => 'task/catalog/review',
 			'args'   => ['product_id' => $args[1]['product_id']]
 		];
@@ -46,7 +46,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	 */
 	public function editReview(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'review.list.' . $args[1]['product_id'],
+			'code'   => 'review.' . $args[1]['product_id'],
 			'action' => 'task/catalog/review',
 			'args'   => ['product_id' => $args[1]['product_id']]
 		];
@@ -76,7 +76,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		if ($review_info) {
 			$task_data = [
-				'code'   => 'review.delete.' . $review_info['product_id'],
+				'code'   => 'review.' . $review_info['product_id'],
 				'action' => 'task/catalog/review',
 				'args'   => ['product_id' => $review_info['product_id']]
 			];

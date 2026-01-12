@@ -1,4 +1,4 @@
-class Local {
+export default class Local {
     get(key) {
         return localStorage.getItem(key);
     }
@@ -19,5 +19,3 @@ class Local {
         localStorage.clear();
     }
 }
-
-export default Local;

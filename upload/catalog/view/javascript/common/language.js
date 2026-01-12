@@ -32,6 +32,17 @@ class CommonLanguage extends WebComponent {
 
     render(html) {
         this.innerHTML = html;
+
+        `<form id="form-language">
+  <div class="dropdown"><a href="#" data-bs-toggle="dropdown" class="dropdown-toggle"><img src="{{ image }}" alt="{{ name }}" title="{{ name }}"> <span class="d-none d-md-inline">{{ text_language }}</span> <i class="fa-solid fa-caret-down"></i></a>
+    <ul class="dropdown-menu">
+      {% for language in languages %}
+        <li><a href="{{ language.code }}" class="dropdown-item"><img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</form>`
+
     }
 
     addEvent() {

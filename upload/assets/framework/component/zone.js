@@ -80,8 +80,8 @@ class XZone extends WebComponent {
         if (value != 0) {
             let response = this.storage.fetch('localisation/country-' + value);
 
-            response.then(this.event.onloaded);
-            response.then(this.event.option);
+            response.then(this.onloaded);
+            response.then(this.option);
         } else {
             this.zones = [];
             this.event.option();

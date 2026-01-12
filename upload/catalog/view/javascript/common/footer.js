@@ -16,7 +16,7 @@ const date = new Date();
 
 class CommonFooter extends WebComponent {
     async connected() {
-        let data = { ...Object.fromEntries(language) };
+        let data = { ...language };
 
         // Articles
         data.articles = articles.values();

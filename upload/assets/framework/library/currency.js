@@ -2,7 +2,7 @@ import { loader } from './loader.js';
 
 const currencies = await loader.storage('localisation/currencies');
 
-class Currency {
+export default class Currency {
     static instance = null;
     static currencies = {};
 
@@ -69,5 +69,3 @@ class Currency {
         return value * (this.currencies.get(to).value / this.currencies.get(from).value);
     }
 }
-
-export default Currency;

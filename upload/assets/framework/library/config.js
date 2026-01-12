@@ -1,4 +1,4 @@
-class Config {
+export default class Config {
     static instance = null;
     directory = '';
     path = new Map();
@@ -48,5 +48,3 @@ class Config {
         return new Map();
     }
 }
-
-export default Config;

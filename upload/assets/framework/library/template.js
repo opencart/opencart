@@ -1,6 +1,6 @@
-import { nunjucks } from '../nunjucks.min.js';
+import '../liquid.browser.min.js';
 
-export class Template {
+export default class Template {
     static instance;
     directory = '';
     path = new Map();
@@ -38,8 +38,6 @@ export class Template {
             }
         }
 
-        return nunjucks.render(file, data);
+        return this.engine.renderFile(file, data);
     }
 }
-
-export default Template;

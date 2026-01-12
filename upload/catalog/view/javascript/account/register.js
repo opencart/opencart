@@ -10,23 +10,30 @@ const config = await loader.config('catalog');
 // Language
 const language = await loader.language('account/register');
 
+// Template
+const template = await loader.template('account/register');
+
+let customer = {};
+
+if (session.has('customer')) {
+    customer = session.get('customer');
+}
+
 class AccountRegister extends WebComponent {
     async connected() {
         let data = { ...language };
 
-        data.text_account_already = language.get('text_account_already').replace('%s', 'route=account/login');
-
         data.customer_groups = config.get('config_customer_group_list');
         data.customer_group_id = config.get('config_customer_group_id');
 
-        data.error_upload_size = language.get('error_upload_size').replace('%s', config.get('config_file_max_size'));
+        data.config_file_max_size = config.get('config_file_max_size');
 
         data.config_telephone_status = config.get('config_telephone_status');
         data.config_telephone_required = config.get('config_telephone_required');
 
         data.customer_group_id = config.get('config_customer_group_id');
 
-        if (session.has('customer')) {
+        if (customer) {
             data.customer_group_id = customer.get('customer_group_id');
         }
 
@@ -39,8 +46,17 @@ class AccountRegister extends WebComponent {
             data.custom_fields = customer_group.get('custom_field');
         }
 
+        // If required to agree to terms
+        let account_id = config.get('config_account_id');
+
         // Information
-        let information_info = await loader.storage('catalog/information-' + config.get('config_account_id'));
+        let information_info = {};
+
+        if (account_id) {
+           await loader.storage('catalog/information-' + account_id);
+        }
+
+
 
         if (information_info) {
             data.text_agree = language.get('text_agree').replace('%s', 'information/information.info&information_id=' + config.config_account_id).replace('%s', information_info.title);

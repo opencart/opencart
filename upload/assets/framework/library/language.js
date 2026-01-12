@@ -1,4 +1,4 @@
-class Language {
+export default class Language {
     static instance;
     directory = '';
     path = new Map();
@@ -38,15 +38,13 @@ class Language {
         if (response.status == 200) {
             let object = await response.json();
 
-            this.loaded.set(path, new Map(Object.entries(object)));
+            this.loaded.set(path, object);
 
             return this.loaded.get(path);
         } else {
             console.log('Could not load language file ' + path);
         }
 
-        return new Map();
+        return {};
     }
 }
-
-export default Language;

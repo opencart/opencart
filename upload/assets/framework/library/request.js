@@ -1,4 +1,4 @@
-export class Request {
+export default class Request {
     async get(config) {
 
     }
@@ -39,5 +39,3 @@ export class Request {
 
     }
 }
-
-export default Request;

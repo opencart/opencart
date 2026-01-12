@@ -1,6 +1,6 @@
 import { loader } from './loader.js';
 
-class Tax {
+export default class Tax {
     static instance;
     static tax_classes = new Map();
 
@@ -112,5 +112,3 @@ class Tax {
         this.tax_classes = [];
     }
 }
-
-export default Tax;

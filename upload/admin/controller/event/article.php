@@ -9,6 +9,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	/*
 	 *  Add Article
 	 *
+	 * @Trigger article add before
 	 */
 	private function addArticle(string &$route, array &$args, &$output): void {
 		$task_data = [

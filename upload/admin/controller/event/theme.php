@@ -21,27 +21,35 @@ class Theme extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, &$output): void {
-		$pos = strpos($route, '.');
+	public function addTheme(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'theme.info.' . str_replace('/', '.', $args[0]['route']),
+			'action' => 'task/catalog/theme.info',
+			'args'   => ['route' => $args[0]['route']]
+		];
 
-		if ($pos == false) {
-			return;
-		}
+		$this->load->model('setting/task');
 
-		$method = substr($route, 0, $pos);
-
-		$callable = [$this, $method];
-
-		if (is_callable($callable)) {
-			$callable($route, $args, $output);
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 
-	public function index(string &$route, array &$args, &$output): void {
+	public function editTheme(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'theme',
-			'action' => 'task/admin/theme',
-			'args'   => []
+			'code'   => 'theme.info.' . str_replace('/', '.', $args[0]['route']),
+			'action' => 'task/catalog/theme.info',
+			'args'   => ['route' => $args[0]['route']]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+	}
+
+	public function deleteTheme(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'theme.info.' . str_replace('/', '.', $args[0]['route']),
+			'action' => 'task/catalog/theme.info',
+			'args'   => ['route' => $args[0]['route']]
 		];
 
 		$this->load->model('setting/task');

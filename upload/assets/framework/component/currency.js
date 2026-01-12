@@ -1,7 +1,11 @@
 import { WebComponent } from '../component.js';
 
 class XCurrency extends WebComponent {
-    static observed = ['code', 'amount', 'value'];
+    static observed = [
+        'code',
+        'amount',
+        'value'
+    ];
     currencies = [];
 
     get code() {

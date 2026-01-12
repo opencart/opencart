@@ -1396,79 +1396,107 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('mail.admin.user.forgotten', 'Sends mail to users who have forgotten their password.', 'admin/model/user/user.addToken/after', 'mail/forgotten', 1),
        ('mail.admin.user.authorize', 'Sends mail login code to users email to authorize login from a new device.', 'admin/controller/common/authorize.send/after', 'mail/authorize', 1),
        ('mail.admin.user.authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'admin/model/user/user.addToken/after', 'mail/authorize.reset', 1),
+
        ('ssr.article.add', 'Triggers article static site data creation.', 'catalog/model/cms/article.addArticle/after', 'event/article.addArticle', 1),
        ('ssr.article.edit', 'Triggers article static site data creation.', 'catalog/model/cms/article.editArticle/after', 'event/article.editArticle', 1),
        ('ssr.article.delete', 'Triggers article static site data creation.', 'catalog/model/cms/article.deleteArticle/before', 'event/article.deleteArticle', 1),
+
        ('ssr.attribute.edit', 'Triggers attribute static site data creation.', 'catalog/model/catalog/attribute.editAttribute/after', 'event/attribute.editAttribute', 1),
        ('ssr.attribute.delete', 'Triggers attribute static site data creation.', 'catalog/model/catalog/attribute.deleteAttribute/before', 'event/attribute.deleteAttribute', 1),
+
        ('ssr.banner.add', 'Triggers banner static site data creation.', 'catalog/model/design/banner.addBanner/after', 'event/banner.addBanner', 1),
        ('ssr.banner.edit', 'Triggers banner static site data creation.', 'catalog/model/design/banner.editBanner/after', 'event/banner.editBanner', 1),
        ('ssr.banner.delete', 'Triggers banner static site data creation.', 'catalog/model/design/banner.deleteBanner/before', 'event/banner.deleteBanner', 1),
+
        ('ssr.category.add', 'Triggers category static site data creation.', 'catalog/model/catalog/category.addCategory/after', 'event/category.addCategory', 1),
        ('ssr.category.edit', 'Triggers category static site data creation.', 'catalog/model/catalog/category.editCategory/after', 'event/category.editCategory', 1),
        ('ssr.category.delete', 'Triggers category static site data creation.', 'catalog/model/catalog/category.deleteCategory/before', 'event/category.deleteCategory', 1),
+
        ('ssr.comment.add', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.addComment/after', 'event/comment.addComment', 1),
        ('ssr.comment.edit', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.editComment/after', 'event/comment.editComment', 1),
        ('ssr.comment.delete', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.deleteComment/before', 'event/comment.deleteComment', 1),
+
        ('ssr.country.add', 'Triggers country static site data creation.', 'catalog/model/localisation/country.addCountry/after', 'event/country.addCountry', 1),
        ('ssr.country.edit', 'Triggers country static site data creation.', 'catalog/model/localisation/country.editCountry/after', 'event/country.editCountry', 1),
        ('ssr.country.delete', 'Triggers country static site data creation.', 'catalog/model/localisation/country.deleteCountry/before', 'event/country.deleteCountry', 1),
+
        ('ssr.currency.add', 'Triggers currency static site data creation.', 'admin/model/localisation/currency.addCurrency/after', 'event/currency', 1),
        ('ssr.currency.edit', 'Triggers currency static site data creation.', 'admin/model/localisation/currency.editCurrency/after', 'event/currency', 1),
        ('ssr.currency.delete', 'Triggers currency static site data creation.', 'admin/model/localisation/currency.deleteCurrency/before', 'event/currency', 1),
+
        ('ssr.custom_field.add', 'Triggers custom field static site data creation.', 'catalog/model/customer/custom_field.addCustomField/after', 'event/custom_field.addCustomField', 1),
        ('ssr.custom_field.edit', 'Triggers custom field static site data creation.', 'catalog/model/customer/custom_field.editCustomField/after', 'event/custom_field.editCustomField', 1),
        ('ssr.custom_field.delete', 'Triggers custom field static site data creation.', 'catalog/model/customer/custom_field.deleteCustomField/before', 'event/custom_field.deleteCustomField', 1),
+
        ('ssr.customer_group.add', 'Triggers customer group static site data creation.', 'catalog/model/customer/customer_group.addCustomerGroup/after', 'event/customer_group.addCustomerGroup', 1),
        ('ssr.customer_group.edit', 'Triggers customer group static site data creation.', 'catalog/model/customer/customer_group.editCustomerGroup/after', 'event/customer_group.editCustomerGroup', 1),
        ('ssr.customer_group.delete', 'Triggers customer group static site data creation.', 'catalog/model/customer/customer_group.deleteCustomerGroup/before', 'event/customer_group.deleteCustomerGroup', 1),
+
        ('ssr.filter.edit', 'Triggers filter static site data creation.', 'catalog/model/catalog/filter.editFilter/after', 'event/filter.editFilter', 1),
        ('ssr.filter.delete', 'Triggers filter static site data creation.', 'catalog/model/catalog/filter.deleteFilter/before', 'event/filter.deleteFilter', 1),
+
        ('ssr.geo_zone.add', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.addGeoZone/after', 'event/geo_zone.addGeoZone', 1),
        ('ssr.geo_zone.edit', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.editGeoZone/after', 'event/geo_zone.editGeoZone', 1),
        ('ssr.geo_zone.delete', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.deleteGeoZone/before', 'event/geo_zone.deleteGeoZone', 1),
+
        ('ssr.information.add', 'Triggers information static site data creation.', 'catalog/model/catalog/information.addInformation/after', 'event/information.addInformation', 1),
        ('ssr.information.edit', 'Triggers information static site data creation.', 'catalog/model/catalog/information.editInformation/after', 'event/information.editInformation', 1),
        ('ssr.information.delete', 'Triggers information static site data creation.', 'catalog/model/catalog/information.deleteInformation/before', 'event/information.deleteInformation', 1),
-       ('ssr.language.add', 'Triggers language static site data creation.', 'admin/model/localisation/language.addLanguage/after', 'event/language.addLanguage', 1),
-       ('ssr.language.edit', 'Triggers language static site data creation.', 'admin/model/localisation/language.editLanguage/after', 'event/language.editLanguage', 1),
-       ('ssr.language.delete', 'Triggers language static site data creation.', 'admin/model/localisation/language.deleteLanguage/before', 'event/language.deleteLanguage', 1),
-       ('ssr.location.add', 'Triggers location static site data creation.', 'admin/model/localisation/location.addLocation/after', 'event/location.addLocation', 1),
-       ('ssr.location.edit', 'Triggers location static site data creation.', 'admin/model/localisation/location.editLocation/after', 'event/location.editLocation', 1),
-       ('ssr.location.delete', 'Triggers location static site data creation.', 'admin/model/localisation/location.deleteLocation/before', 'event/location.deleteLocation', 1),
+
+       ('ssr.language.add', 'Triggers language static site data creation.', 'admin/model/localisation/language.addLanguage/after', 'event/language', 1),
+       ('ssr.language.edit', 'Triggers language static site data creation.', 'admin/model/localisation/language.editLanguage/after', 'event/language', 1),
+       ('ssr.language.delete', 'Triggers language static site data creation.', 'admin/model/localisation/language.deleteLanguage/before', 'event/language', 1),
+
+       ('ssr.location.add', 'Triggers location static site data creation.', 'admin/model/localisation/location.addLocation/after', 'event/location', 1),
+       ('ssr.location.edit', 'Triggers location static site data creation.', 'admin/model/localisation/location.editLocation/after', 'event/location', 1),
+       ('ssr.location.delete', 'Triggers location static site data creation.', 'admin/model/localisation/location.deleteLocation/before', 'event/location', 1),
+
        ('ssr.manufacturer.add', 'Triggers manufacturer static site data creation.', 'catalog/model/catalog/manufacturer.addManufacturer/after', 'event/manufacturer.addManufacturer', 1),
        ('ssr.manufacturer.edit', 'Triggers manufacturer static site data creation.', 'catalog/model/catalog/manufacturer.editManufacturer/after', 'event/manufacturer.editManufacturer', 1),
        ('ssr.manufacturer.delete', 'Triggers manufacturer static site data creation.', 'catalog/model/catalog/manufacturer.deleteManufacturer/before', 'event/manufacturer.deleteManufacturer', 1),
+
        ('ssr.option.edit', 'Triggers static option site data creation.', 'catalog/model/catalog/option.editOption/after', 'event/option.editOption', 1),
        ('ssr.option.delete', 'Triggers static option site data creation.', 'catalog/model/catalog/option.deleteOption/before', 'event/option.deleteOption', 1),
+
        ('ssr.product.add', 'Triggers product static site data creation.', 'catalog/model/catalog/product.addProduct/after', 'event/product.addProduct', 1),
        ('ssr.product.edit', 'Triggers product static site data creation.', 'catalog/model/catalog/product.editProduct/after', 'event/product.editProduct', 1),
        ('ssr.product.delete', 'Triggers product static site data creation.', 'catalog/model/catalog/product.deleteProduct/before', 'event/product.deleteProduct', 1),
-       ('ssr.return_reason.add', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.addReturnReason/after', 'event/return_reason.addReturnReason', 1),
-       ('ssr.return_reason.edit', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.editReturnReason/after', 'event/return_reason.editReturnReason', 1),
-       ('ssr.return_reason.delete', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.deleteReturnReason/before', 'event/return_reason.deleteReturnReason', 1),
+
+       ('ssr.return_reason.add', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.addReturnReason/after', 'event/return_reason', 1),
+       ('ssr.return_reason.edit', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.editReturnReason/after', 'event/return_reason', 1),
+       ('ssr.return_reason.delete', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.deleteReturnReason/before', 'event/return_reason', 1),
+
        ('ssr.review.add', 'Triggers review static site data creation.', 'catalog/model/catalog/review.addReview/after', 'event/review.addReview', 1),
        ('ssr.review.edit', 'Triggers review static site data creation.', 'catalog/model/catalog/review.editReview/after', 'event/review.editReview', 1),
        ('ssr.review.delete', 'Triggers review static site data creation.', 'catalog/model/catalog/review.deleteReview/before', 'event/review.deleteReview', 1),
+
        ('ssr.setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),
+       ('ssr.setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),
+
        ('ssr.store.add', 'Triggers store static site data creation.', 'admin/model/setting/store.addStore/after', 'event/store.addStore', 1),
        ('ssr.store.edit', 'Triggers store static site data creation.', 'admin/model/setting/store.editStore/after', 'event/store.editStore', 1),
        ('ssr.store.delete', 'Triggers store static site data creation.', 'admin/model/setting/store.deleteStore/before', 'event/store.deleteStore', 1),
+
        ('ssr.tax_class.add', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.addTaxClass/after', 'event/tax_class.addTaxClass', 1),
        ('ssr.tax_class.edit', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.editTaxClass/after', 'event/tax_class.editTaxClass', 1),
        ('ssr.tax_class.delete', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.deleteTaxClass/before', 'event/tax_class.deleteTaxClass', 1),
+
        ('ssr.tax_rate.add', 'Triggers tax_rate static site data creation.', 'admin/model/localisation/tax_rate.addTaxRate/after', 'event/tax_rate.addTaxRate', 1),
        ('ssr.tax_rate.edit', 'Triggers tax_rate static site data creation.', 'admin/model/localisation/tax_rate.editTaxRate/after', 'event/tax_rate.editTaxRate', 1),
        ('ssr.tax_rate.delete', 'Triggers tax_rate static site data creation.', 'admin/model/localisation/tax_rate.deleteTaxRate/before', 'event/tax_rate.deleteTaxRate', 1),
+
        ('ssr.topic.add', 'Triggers topic static site data creation.', 'catalog/model/cms/topic.addTopic/after', 'event/topic.addTopic', 1),
        ('ssr.topic.edit', 'Triggers topic static site data creation.', 'catalog/model/cms/topic.editTopic/after', 'event/topic.editTopic', 1),
        ('ssr.topic.delete', 'Triggers topic static site data creation.', 'catalog/model/cms/topic.deleteTopic/before', 'event/topic.deleteTopic', 1),
+
        ('ssr.translation.add', 'Triggers translation static site data creation.', 'catalog/model/design/translation.addTranslation/after', 'event/translation.addTranslation', 1),
        ('ssr.translation.edit', 'Triggers translation static site data creation.', 'catalog/model/design/translation.editTranslation/after', 'event/translation.editTranslation', 1),
        ('ssr.translation.delete', 'Triggers translation static site data creation.', 'catalog/model/design/translation.deleteTranslation/before', 'event/translation.deleteTranslation', 1),
+
        ('ssr.zone.add', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.addZone/after', 'event/zone.addZone', 1),
        ('ssr.zone.edit', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.editZone/after', 'event/zone.editZone', 1),
        ('ssr.zone.delete', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.deleteZone/before', 'event/zone.deleteZone', 1),
+
        ('statistics.review.add', 'Updates review statistics when a new review is added.', 'catalog/model/catalog/review.addReview/after', 'event/statistics.addReview', 1),
        ('statistics.return.add', 'Updates return statistics when a new return is added.', 'catalog/model/account/returns.addReturn/after', 'event/statistics.addReturn', 1),
        ('statistics.return.delete', 'Updates return statistics when a return is deleted.', 'admin/model/sale/returns.deleteReturn/after', 'event/statistics.deleteReturn', 1),

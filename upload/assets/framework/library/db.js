@@ -1,4 +1,4 @@
-class Db {
+export default class Db {
     static instance = null;
     db = null;
     data = [];
@@ -49,5 +49,3 @@ class Db {
 
     }
 }
-
-export default Db;

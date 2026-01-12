@@ -1,4 +1,4 @@
-export class Storage {
+export default class Storage {
     static instance = null;
     directory = '';
     path = new Map();
@@ -38,15 +38,13 @@ export class Storage {
         if (response.status == 200) {
             let data = await response.json();
 
-            this.loaded.set(path, new Map(Object.entries(data)));
+            this.loaded.set(path, data);
 
             return this.loaded.get(path);
         } else {
             console.log('Could not load storage file ' + path);
         }
 
-        return new Map();
+        return {};
     }
 }
-
-export default Storage;

@@ -6,7 +6,7 @@ const session = await loader.library('session');
 // Config
 const config = await loader.config('catalog');
 
-class Customer {
+export default class Customer {
     static instance = null;
     data = new Map(session.get('customer'));
     logged = false;
@@ -90,5 +90,3 @@ class Customer {
         return this.data.get('reward_point');
     }
 }
-
-export default Customer;

@@ -1,4 +1,4 @@
-class Session {
+export default class Session {
     static instance = null;
 
     get(key) {
@@ -29,5 +29,3 @@ class Session {
         return this.instance;
     }
 }
-
-export default Session;

@@ -71,7 +71,7 @@ class XPagination extends WebComponent {
             this.last = this.href.replace('{page}', this.num_pages);
         }
 
-        this.event.render();
+        this.render();
     }
 
     render() {
@@ -106,7 +106,7 @@ class XPagination extends WebComponent {
 
             this.innerHTML = html;
 
-            this.querySelectorAll('a').forEach((link) => link.addEventListener('click', this.event.onclick));
+            this.querySelectorAll('a').forEach((link) => link.addEventListener('click', this.onclick));
         }
     }
 

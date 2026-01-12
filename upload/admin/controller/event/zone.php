@@ -7,13 +7,11 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Zone extends \Opencart\System\Engine\Controller {
 	/**
-	 * Add
+	 * Add Zone
 	 *
-	 * Adds task to generate new country list
+	 * Generate new country info page with added zone
 	 *
 	 * Called using admin/model/localisation/zone/addZone
-	 * Called using admin/model/localisation/zone/editZone
-	 * Called using admin/model/localisation/zone/deleteZone
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -51,6 +49,18 @@ class Zone extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
+	/**
+	 * Edit Zone
+	 *
+	 * Generate new country info page with updated zone
+	 *
+	 * Called using admin/model/localisation/zone/editZone
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 *
+	 * @return void
+	 */
 	public function editZone(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'country.info.' . $args[1]['country_id'],
@@ -61,9 +71,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
-
-		// Admin
 		/*
+		// Admin
 		$task_data = [
 			'code'   => 'country',
 			'action' => 'task/admin/country.list',
@@ -82,14 +91,17 @@ class Zone extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
-	/*
+	/**
 	 * Delete Zone
 	 *
-	 * Trigger
+	 * Generate new country info page with deleted zone
 	 *
-	 * model/localisation/zone.deleteZone
+	 * Called using admin/model/localisation/zone/deleteZone
 	 *
-	 * Start processing country info data updated
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 *
+	 * @return void
 	 */
 	public function deleteZone(string &$route, array &$args, &$output): void {
 		$this->load->model('localisation/zone');
@@ -99,7 +111,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		if ($zone_info) {
 			$task_data = [
 				'code'   => 'country.info.' . $zone_info['country_id'],
-				'action' => 'task/admin/country.delete',
+				'action' => 'task/admin/country.info',
 				'args'   => ['country_id' => $zone_info['country_id']]
 			];
 

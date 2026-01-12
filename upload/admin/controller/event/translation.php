@@ -46,8 +46,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 	public function deleteTranslation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'translation.info.' . str_replace('/', '.', $args[0]['route']),
-			'action' => 'task/catalog/translation.info',
+			'code'   => 'translation.delete.' . str_replace('/', '.', $args[0]['route']),
+			'action' => 'task/catalog/translation.delete',
 			'args'   => ['route' => $args[0]['route']]
 		];
 

@@ -12,31 +12,23 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 * Adds task to generate new customer group list
 	 *
 	 * Called using admin/model/customer/customer_group/addCustomerGroup/after
-	 * Called using admin/model/customer/customer_group/editCustomerGroup/after
-	 * Called using admin/model/customer/customer_group/deleteCustomerGroup/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, &$output): void {
-		$pos = strpos($route, '.');
-
-		if ($pos == false) {
-			return;
-		}
-
-		$method = substr($route, 0, $pos);
-
-		$callable = [$this, $method];
-
-		if (is_callable($callable)) {
-			$callable($route, $args, $output);
-		}
-	}
-
 	public function addCustomerGroup(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'customer_group.list',
+			'action' => 'task/catalog/customer_group.list',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
 		$task_data = [
 			'code'   => 'customer_group.info.' . $output,
 			'action' => 'task/catalog/customer_group.info',
@@ -48,10 +40,21 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/**
+	 * edit Customer Group
+	 *
+	 * Adds task to generate new customer group list
+	 *
+	 * Called using admin/model/customer/customer_group/editCustomerGroup/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 *
+	 * @return void
+	 */
 	public function editCustomerGroup(string &$route, array &$args, &$output): void {
-		// Catalog
 		$task_data = [
-			'code'   => 'customer_group',
+			'code'   => 'customer_group.list',
 			'action' => 'task/catalog/customer_group.list',
 			'args'   => []
 		];
@@ -88,9 +91,21 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
+	/**
+	 * delete Customer Group
+	 *
+	 * Adds task to generate new customer group list
+	 *
+	 * Called using admin/model/customer/customer_group/deleteCustomerGroup/before
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 *
+	 * @return void
+	 */
 	public function deleteCustomerGroup(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'customer_group',
+			'code'   => 'customer_group.list',
 			'action' => 'task/catalog/customer_group.list',
 			'args'   => []
 		];

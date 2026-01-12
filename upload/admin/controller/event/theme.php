@@ -47,8 +47,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 	public function deleteTheme(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'theme.info.' . str_replace('/', '.', $args[0]['route']),
-			'action' => 'task/catalog/theme.info',
+			'code'   => 'theme.delete.' . str_replace('/', '.', $args[0]['route']),
+			'action' => 'task/catalog/theme.delete',
 			'args'   => ['route' => $args[0]['route']]
 		];
 

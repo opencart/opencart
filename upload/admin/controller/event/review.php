@@ -18,6 +18,19 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/*
+	 * Edit Review
+	 *
+	 * Adds task to generate new filter data.
+	 *
+	 * Called using admin/model/catalog/filter/editFilter/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 * @param array<string, string> $output
+	 *
+	 * @return void
+	 */
 	public function editReview(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'review.list.' . $args['product_id'],
@@ -30,7 +43,22 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/*
+	 * Delete Review
+	 *
+	 * Adds task to generate new filter data.
+	 *
+	 * Called using admin/model/catalog/delete/deleteFilter/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 * @param array<string, string> $output
+	 *
+	 * @return void
+	 */
 	public function deleteReview(string &$route, array &$args, &$output): void {
+
+
 		$task_data = [
 			'code'   => 'review.list.' . $args['product_id'],
 			'action' => 'task/catalog/review',

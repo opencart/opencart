@@ -32,7 +32,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	}
 
 	/*
-	 * Adit Banner
+	 * Edit Banner
 	 *
 	 * Adds task to generate new banner data.
 	 *

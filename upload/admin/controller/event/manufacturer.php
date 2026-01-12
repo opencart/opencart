@@ -7,16 +7,15 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
-	 * Index
+	 * Add Manufacturer
 	 *
-	 * Adds task to generate new manufacturer list
+	 * Adds task to generate new manufacturer data.
 	 *
-	 * Called using admin/model/catalog/manufacturer/addManufacturer/after
-	 * Called using admin/model/catalog/manufacturer/editManufacturer/after
-	 * Called using admin/model/catalog/manufacturer/deleteManufacturer/after
+	 * Called using model/catalog/manufacturer/addManufacturer/after
 	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -32,6 +31,19 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/**
+	 * Edit Manufacturer
+	 *
+	 * Adds task to generate new manufacturer data.
+	 *
+	 * Called using model/catalog/manufacturer/editManufacturer/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
 	public function editManufacturer(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'manufacturer.info.' . $args[0],
@@ -59,6 +71,19 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * Delete Manufacturer
+	 *
+	 * Adds task to generate new manufacturer data.
+	 *
+	 * Called using model/catalog/manufacturer/editManufacturer/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
 	public function deleteManufacturer(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'manufacturer.delete.' . $args[0],
@@ -69,5 +94,20 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+
+		// Update Products
+		$this->load->model('catalog/product');
+
+		$results = $this->model_catalog_product->getProductsByManufacturerId($args[0]);
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'product.info.' . $result['product_id'],
+				'action' => 'task/catalog/product.info',
+				'args'   => ['product_id' => $result['product_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 }

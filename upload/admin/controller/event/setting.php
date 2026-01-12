@@ -6,6 +6,7 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Setting extends \Opencart\System\Engine\Controller {
+
 	public function index(string &$route, array &$args, &$output): void {
 
 
@@ -17,7 +18,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Index
+	 * Refresh
 	 *
 	 * Auto update currencies
 	 *

@@ -5,7 +5,7 @@ namespace Opencart\Admin\Controller\Event;
  *
  * @package Opencart\Admin\Controller\Event
  */
-class etting extends \Opencart\System\Engine\Controller {
+class Setting extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, &$output): void {
 
 

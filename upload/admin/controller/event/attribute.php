@@ -6,6 +6,19 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Attribute extends \Opencart\System\Engine\Controller {
+	/*
+	 * Edit Attribute
+	 *
+	 * Adds task to generate new product data.
+	 *
+	 * Called using admin/model/cms/article/addArticle/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 * @param array<string, string> $output
+	 *
+	 * @return void
+	 */
 	public function editAttribute(string &$route, array &$args, &$output): void {
 		$this->load->model('catalog/product');
 
@@ -24,6 +37,19 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/*
+	 * Delete Attribute
+	 *
+	 * Adds task to generate new product data.
+	 *
+	 * Called using admin/model/cms/article/deleteAttribute/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 * @param array<string, string> $output
+	 *
+	 * @return void
+	 */
 	public function deleteAttribute(string &$route, array &$args, &$output): void {
 		$this->load->model('catalog/product');
 

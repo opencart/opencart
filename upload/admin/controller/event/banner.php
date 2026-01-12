@@ -6,6 +6,19 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Banner extends \Opencart\System\Engine\Controller {
+	/*
+	 * Add Banner
+	 *
+	 * Adds task to generate new banner data.
+	 *
+	 * Called using admin/model/deign/banner/addBanner/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 * @param array<string, string> $output
+	 *
+	 * @return void
+	 */
 	public function addBanner(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'banner.info.' . $output,
@@ -18,6 +31,19 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/*
+	 * Adit Banner
+	 *
+	 * Adds task to generate new banner data.
+	 *
+	 * Called using admin/model/deign/banner/addBanner/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 * @param array<string, string> $output
+	 *
+	 * @return void
+	 */
 	public function editBanner(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'banner.info.' . $args[0],
@@ -30,6 +56,19 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/*
+	 * Delete Banner
+	 *
+	 * Adds task to generate new banner data.
+	 *
+	 * Called using admin/model/deign/banner/addBanner/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 * @param array<string, string> $output
+	 *
+	 * @return void
+	 */
 	public function deleteBanner(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'banner.delete.' . $args[0],

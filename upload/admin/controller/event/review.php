@@ -6,11 +6,24 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Review extends \Opencart\System\Engine\Controller {
+	/*
+	 * Add Review
+	 *
+	 * Adds task to generate new review data.
+	 *
+	 * Called using admin/model/catalog/review/addReview/after
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 * @param array<string, string> $output
+	 *
+	 * @return void
+	 */
 	public function addReview(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'review.list.' . $args['product_id'],
+			'code'   => 'review.list.' . $args[1]['product_id'],
 			'action' => 'task/catalog/review',
-			'args'   => ['product_id' => $args['product_id']]
+			'args'   => ['product_id' => $args[1]['product_id']]
 		];
 
 		$this->load->model('setting/task');
@@ -21,9 +34,9 @@ class Review extends \Opencart\System\Engine\Controller {
 	/*
 	 * Edit Review
 	 *
-	 * Adds task to generate new filter data.
+	 * Adds task to generate new review data.
 	 *
-	 * Called using admin/model/catalog/filter/editFilter/after
+	 * Called using admin/model/catalog/review/editReview/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -33,9 +46,9 @@ class Review extends \Opencart\System\Engine\Controller {
 	 */
 	public function editReview(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'review.list.' . $args['product_id'],
+			'code'   => 'review.list.' . $args[1]['product_id'],
 			'action' => 'task/catalog/review',
-			'args'   => ['product_id' => $args['product_id']]
+			'args'   => ['product_id' => $args[1]['product_id']]
 		];
 
 		$this->load->model('setting/task');
@@ -46,9 +59,9 @@ class Review extends \Opencart\System\Engine\Controller {
 	/*
 	 * Delete Review
 	 *
-	 * Adds task to generate new filter data.
+	 * Adds task to generate delete review data.
 	 *
-	 * Called using admin/model/catalog/delete/deleteFilter/after
+	 * Called using admin/model/catalog/review/deleteReview/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -57,16 +70,20 @@ class Review extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteReview(string &$route, array &$args, &$output): void {
+		$this->load->model('catalog/review');
 
+		$review_info = $this->model_catalog_review->getReview($args[0]);
 
-		$task_data = [
-			'code'   => 'review.list.' . $args['product_id'],
-			'action' => 'task/catalog/review',
-			'args'   => ['product_id' => $args['product_id']]
-		];
+		if ($review_info) {
+			$task_data = [
+				'code'   => 'review.delete.' . $review_info['product_id'],
+				'action' => 'task/catalog/review',
+				'args'   => ['product_id' => $review_info['product_id']]
+			];
 
-		$this->load->model('setting/task');
+			$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 }

@@ -7,13 +7,11 @@ namespace Opencart\Admin\Controller\Event;
  */
 class Theme extends \Opencart\System\Engine\Controller {
 	/**
-	 * Index
+	 * Add Theme
 	 *
 	 * Adds task to generate new theme list
 	 *
 	 * model/design/theme/addTheme/after
-	 * model/design/theme/editTheme/after
-	 * model/design/theme/deleteTheme/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -33,6 +31,19 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/**
+	 * Edit Theme
+	 *
+	 * Adds task to generate new theme list
+	 *
+	 * model/design/theme/editTheme/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
 	public function editTheme(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'theme.info.' . str_replace('/', '.', $args[0]['route']),
@@ -45,6 +56,19 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/**
+	 * Delete Theme
+	 *
+	 * Adds task to generate new theme list
+	 *
+	 * model/design/theme/deleteTheme/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
 	public function deleteTheme(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'theme.delete.' . str_replace('/', '.', $args[0]['route']),

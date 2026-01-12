@@ -11,7 +11,7 @@ class Task extends \Opencart\System\Engine\Controller {
 	 *
 	 * Starts task queue if not running
 	 *
-	 * model/setting/task.addTask/after
+	 * Called using model/setting/task.addTask/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

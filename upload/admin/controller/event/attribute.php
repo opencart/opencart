@@ -11,7 +11,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using admin/model/cms/article/addArticle/after
+	 * Called using admin/model/cms/article/editAttribute/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

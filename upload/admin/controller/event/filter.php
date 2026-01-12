@@ -9,7 +9,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 	/*
 	 * Edit Filter
 	 *
-	 * Adds task to generate new filter data.
+	 * Adds task to generate new product data.
 	 *
 	 * Called using admin/model/catalog/filter/editFilter/after
 	 *
@@ -40,7 +40,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 	/*
 	 * Delete Filter
 	 *
-	 * Adds task to generate new filter data.
+	 * Adds task to generate new product data.
 	 *
 	 * Called using admin/model/catalog/delete/deleteFilter/after
 	 *

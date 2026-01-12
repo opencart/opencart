@@ -9,7 +9,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Zone
 	 *
-	 * Generate new country info page with added zone
+	 * Generate new country info page with added zone.
 	 *
 	 * Called using admin/model/localisation/zone/addZone
 	 *
@@ -52,7 +52,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Zone
 	 *
-	 * Generate new country info page with updated zone
+	 * Generate new country info page with updated zone.
 	 *
 	 * Called using admin/model/localisation/zone/editZone
 	 *
@@ -94,7 +94,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 	/**
 	 * Delete Zone
 	 *
-	 * Generate new country info page with deleted zone
+	 * Generate new country info page with deleted zone.
 	 *
 	 * Called using admin/model/localisation/zone/deleteZone
 	 *

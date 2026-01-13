@@ -1,4 +1,9 @@
-export default class Request {
+export default class Api {
+    fetch(request, response) {
+
+
+    }
+
     async get(config) {
 
     }

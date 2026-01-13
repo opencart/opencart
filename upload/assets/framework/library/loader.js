@@ -41,8 +41,6 @@ class Loader {
     async template(path, data = {}) {
         this.data.get('event').trigger('template/' + path + '/before', { path, data });
 
-        console.log(this.data);
-
         let output = await this.data.get('template').render(path, data);
 
         this.data.get('event').trigger('template/' + path + '/after', { path, data, output });

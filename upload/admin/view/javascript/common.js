@@ -54,7 +54,7 @@ $(document).ready(function() {
                 }
 
                 // If button
-                if ($(element).is('button')) {
+                if ($(element).is('button')) { 
                     if (state == 'loading') {
                         this.state = $(element).prop('disabled');
 
@@ -90,7 +90,7 @@ $(document).ready(function() {
 // Observe
 +function($) {
     $.fn.observe = function(callback) {
-        observer = new MutationObserver(callback);
+        let observer = new MutationObserver(callback);
 
         observer.observe($(this)[0], {
             characterData: false,

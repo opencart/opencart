@@ -1,7 +1,6 @@
 import { loader } from './loader.js';
 
 export default class Tax {
-    static instance;
     static tax_classes = new Map();
 
     constructor() {

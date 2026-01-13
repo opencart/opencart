@@ -1,5 +1,4 @@
 export default class Language {
-    static instance;
     directory = '';
     path = new Map();
     loaded = new Map();

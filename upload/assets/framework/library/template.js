@@ -1,12 +1,12 @@
 import '../liquid.browser.min.js';
 
 export default class Template {
-    static instance;
+    engine = {};
     directory = '';
     path = new Map();
-    engine = {};
+    loaded = new Map();
 
-    constructor(path) {
+    constructor() {
         this.engine = new liquidjs.Liquid({
             root: '',
             extname: '.twig'
@@ -21,7 +21,7 @@ export default class Template {
         }
     }
 
-    async render(path, data = {}) {
+    async fetch(path) {
         let file = this.directory + path + '.twig';
         let namespace = '';
         let parts = path.split('/');
@@ -38,6 +38,26 @@ export default class Template {
             }
         }
 
-        return this.engine.renderFile(file, data);
+        let response = await fetch(file);
+
+        if (response.status == 200) {
+            let object = await response.text();
+
+            this.loaded.set(path, object);
+
+            return this.loaded.get(path);
+        } else {
+            console.log('Could not load template file ' + path);
+        }
+
+        return '';
+    }
+
+    parse(code, data = {}) {
+        return this.engine.parseAndRender(code, data);
+    }
+
+    async render(path, data = {}) {
+        return this.parse(this.fetch(path), data);
     }
 }

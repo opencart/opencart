@@ -7,7 +7,7 @@ namespace Opencart\Admin\Controller\Event;
  */
 class GeoZone extends \Opencart\System\Engine\Controller {
 	/**
-	 * Add Zone
+	 * Add Geo Zone
 	 *
 	 * Generate new country info page with added zone.
 	 *
@@ -21,7 +21,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	public function addGeoZone(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
 
-		$this->load->model('localisation/geo_zone');
+		$this->load->model('localisation/tax_class');
 
 		$results = $this->model_localisation_geo_zone->getGeoZones();
 
@@ -56,7 +56,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Edit Zone
+	 * Edit Geo Zone
 	 *
 	 * Generate new country info page with updated zone.
 	 *
@@ -98,7 +98,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Delete Zone
+	 * Delete Geo Zone
 	 *
 	 * Generate new country info page with deleted zone.
 	 *

@@ -1,51 +1,49 @@
 let form = document.getElementById('form-login');
 let alert = document.getElementById('alert');
 
-const request = new Request('', {
-    method: "POST",
-    body: "Hello world",
-});
-//request.url = 'test/';
-//request.body; // ReadableStream
-
-console.log(request);
-
-form.addEventListener('submit', async (e) => {
+let onsubmit = async (e) => {
     e.preventDefault();
 
-    let element = form;
-    console.log(this);
-    console.log(new FormData(element));
+    console.log(e);
+    console.log(e.target);
+
+    let data = new FormData(e.target);
+
+    console.log(JSON.stringify(Object.fromEntries(data.entries())));
 
     let response = await fetch(form.getAttribute('action'), {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(new FormData(element))
-    });
+        body: JSON.stringify(Object.fromEntries(data.entries()))
+    });//JSON.stringify()
 
-    if (response.statusText == 200) {
+    console.log(response);
+    console.log(response.body);
+
+    if (response.status == 200) {
         response.json().then((json) => {
+            console.log(json);
+
             if (json['redirect']) {
                 document.location = json['redirect'];
             }
 
             if (typeof json['error']) {
-                alert.prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                //alert.insertAdjacentElement('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                alert.prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+               // alert.insertAdjacentElement('afterbegin', '<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         });
     }
-});
+}
 
-
+form.addEventListener('submit', onsubmit);
 
 /*
-
 // Alert Fade
 $('#alert').observe(function() {
     window.setTimeout(function() {
@@ -54,7 +52,6 @@ $('#alert').observe(function() {
         });
     }, 3000);
 });
-
 
 $('#form-login').on('submit', 'form', function(e) {
     e.preventDefault();

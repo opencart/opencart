@@ -9,7 +9,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Geo Zone
 	 *
-	 * Generate new country info page with added zone.
+	 * Generate new tax rate info page with added geo zone data.
 	 *
 	 * Called using admin/model/localisation/geo_zone/addGeoZone
 	 *
@@ -19,82 +19,50 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addGeoZone(string &$route, array &$args, &$output): void {
-		$this->load->model('setting/task');
 
-		$this->load->model('localisation/tax_class');
+		getZonesByCountryId
 
-		$results = $this->model_localisation_geo_zone->getGeoZones();
+		$args[1]['zone_to_geo_zone'];
 
-		foreach ($results as $result) {
-			$task_data = [
-				'code'   => 'tax_rate.info.' . $args[1]['country_id'],
-				'action' => 'task/catalog/tax_rate.info',
-				'args'   => ['country_id' => $args[1]['country_id']]
-			];
+		foreach (zone_to_geo_zone as zone_to_geo_zone) {
 
-			$this->model_setting_task->addTask($task_data);
+
 		}
 
-		/*
-		// Admin
+		// Update tax rates based on geo zone
 		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.list',
-			'args'   => []
+			'code'   => 'tax_rate.info.' . $output,
+			'action' => 'task/catalog/tax_rate.info',
+			'args'   => ['geo_zone_id' => $output]
 		];
 
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.info',
-			'args'   => ['country_id' => $output]
-		];
+		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 
 	/**
 	 * Edit Geo Zone
 	 *
-	 * Generate new country info page with updated zone.
+	 * Generate new tax rate info page with updated geo zone data.
 	 *
-	 * Called using admin/model/localisation/zone/editZone
+	 * Called using admin/model/localisation/zone/editGeoZone
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
-	public function editZone(string &$route, array &$args, &$output): void {
+	public function editGeoZone(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'country.info.' . $args[1]['country_id'],
-			'action' => 'task/catalog/country.info',
-			'args'   => ['country_id' => $args[1]['country_id']]
+			'code'   => 'tax_rate.info.' . $args[0],
+			'action' => 'task/catalog/tax_rate.info',
+			'args'   => ['geo_zone_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
-		/*
-		// Admin
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.list',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.info',
-			'args'   => ['country_id' => $args[0]]
-		];
-
-		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 
 	/**
@@ -102,28 +70,22 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new country info page with deleted zone.
 	 *
-	 * Called using admin/model/localisation/zone/deleteZone
+	 * Called using admin/model/localisation/zone/deleteGeoZone
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
-	public function deleteZone(string &$route, array &$args, &$output): void {
-		$this->load->model('localisation/zone');
+	public function deleteGeoZone(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'tax_rate.info.' . $args[0],
+			'action' => 'task/admin/country.info',
+			'args'   => ['geo_zone_id' => $args[0]]
+		];
 
-		$zone_info = $this->model_localisation_zone->getZone($args[0]);
+		$this->load->model('setting/task');
 
-		if ($zone_info) {
-			$task_data = [
-				'code'   => 'country.info.' . $zone_info['country_id'],
-				'action' => 'task/admin/country.info',
-				'args'   => ['country_id' => $zone_info['country_id']]
-			];
-
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
-		}
+		$this->model_setting_task->addTask($task_data);
 	}
 }

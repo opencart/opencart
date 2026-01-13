@@ -111,7 +111,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		if ($zone_info) {
 			$task_data = [
 				'code'   => 'country.info.' . $zone_info['country_id'],
-				'action' => 'task/admin/country.info',
+				'action' => 'task/catalog/country.info',
 				'args'   => ['country_id' => $zone_info['country_id']]
 			];
 

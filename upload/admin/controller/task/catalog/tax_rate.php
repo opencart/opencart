@@ -26,7 +26,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		foreach ($geo_zones as $geo_zone) {
 			$task_data = [
-				'code'   => 'tax_rate',
+				'code'   => 'tax_rate-' . $geo_zone['geo_zone_id'],
 				'action' => 'task/catalog/tax_rate.info',
 				'args'   => ['geo_zone_id' => $geo_zone['geo_zone_id']]
 			];

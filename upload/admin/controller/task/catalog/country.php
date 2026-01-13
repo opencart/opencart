@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Country
  *
- * Generates country JSON data files
+ * Generates country data files
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -22,7 +22,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		// Clear old data
 		$task_data = [
-			'code'   => 'country',
+			'code'   => 'country.clear',
 			'action' => 'task/catalog/country.clear',
 			'args'   => []
 		];
@@ -33,7 +33,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		// List
 		$task_data = [
-			'code'   => 'country',
+			'code'   => 'country.list',
 			'action' => 'task/catalog/country.list',
 			'args'   => []
 		];
@@ -47,7 +47,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($countries as $country) {
 			$task_data = [
-				'code'   => 'country',
+				'code'   => 'country.info.' . $country['country_id'],
 				'action' => 'task/catalog/country.info',
 				'args'   => ['country_id' => $country['country_id']]
 			];

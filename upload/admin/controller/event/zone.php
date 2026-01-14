@@ -9,9 +9,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Zone
 	 *
-	 * Generate new country info page with added zone.
+	 * Generate new country data with added zone.
 	 *
-	 * Called using admin/model/localisation/zone/addZone
+	 * Called using admin/model/localisation/zone.addZone/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -52,9 +52,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Zone
 	 *
-	 * Generate new country info page with updated zone.
+	 * Generate new country data with updated zone.
 	 *
-	 * Called using admin/model/localisation/zone/editZone
+	 * Called using admin/model/localisation/zone.editZone/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -94,9 +94,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 	/**
 	 * Delete Zone
 	 *
-	 * Generate new country info page with deleted zone.
+	 * Generate new country data with deleted zone.
 	 *
-	 * Called using admin/model/localisation/zone/deleteZone
+	 * Called using admin/model/localisation/zone.deleteZone/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

@@ -10,7 +10,6 @@ const tax = await loader.library('tax');
 const data = session.get('cart');
 
 export default class Cart {
-    static instance = null;
     customer = null;
     data = [];
 

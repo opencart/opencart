@@ -3,14 +3,10 @@ import { loader } from './loader.js';
 const currencies = await loader.storage('localisation/currencies');
 
 export default class Currency {
-    static instance = null;
     static currencies = {};
 
     async constructor() {
         this.currencies = new Map(currencies.toArray());
-
-        console.log('hi');
-        console.log(this.currencies);
     }
 
     format(number, code, value = 0, format = true) {

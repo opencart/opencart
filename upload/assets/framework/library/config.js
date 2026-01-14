@@ -1,5 +1,4 @@
 export default class Config {
-    static instance = null;
     directory = '';
     path = new Map();
     loaded = new Map();
@@ -38,13 +37,13 @@ export default class Config {
         if (response.status == 200) {
             let object = await response.json();
 
-            this.loaded.set(path, new Map(Object.entries(object)));
+            this.loaded.set(path, object);
 
             return this.loaded.get(path);
         } else {
             console.log('Could not load config file ' + path);
         }
 
-        return new Map();
+        return {};
     }
 }

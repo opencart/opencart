@@ -11,7 +11,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new translation data
 	 *
-	 * Called using admin/model/design/translation/addTranslation/after
+	 * Called using admin/model/design/translation.addTranslation/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -20,9 +20,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 */
 	public function addTranslation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'translation.info.' . str_replace('/', '.', $args[0]['route']),
+			'code'   => 'translation.info.' . $output,
 			'action' => 'task/catalog/translation.info',
-			'args'   => ['route' => $args[0]['route']]
+			'args'   => ['translation_id' => $output]
 		];
 
 		$this->load->model('setting/task');
@@ -35,7 +35,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new translation data
 	 *
-	 * Called using admin/model/design/translation/editTranslation/after
+	 * Called using admin/model/design/translation.editTranslation/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -44,9 +44,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 */
 	public function editTranslation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'translation.info.' . str_replace('/', '.', $args[0]['route']),
+			'code'   => 'translation.info.' . $args[0],
 			'action' => 'task/catalog/translation.info',
-			'args'   => ['route' => $args[0]['route']]
+			'args'   => ['translation_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');
@@ -59,7 +59,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new translation data
 	 *
-	 * Called using admin/model/design/translation/deleteTranslation/after
+	 * Called using admin/model/design/translation.deleteTranslation/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -68,9 +68,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 */
 	public function deleteTranslation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'translation.delete.' . str_replace('/', '.', $args[0]['route']),
+			'code'   => 'translation.delete.' . $args[0],
 			'action' => 'task/catalog/translation.delete',
-			'args'   => ['route' => $args[0]['route']]
+			'args'   => ['translation_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');

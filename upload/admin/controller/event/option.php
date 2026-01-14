@@ -11,7 +11,7 @@ class Option extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using admin/model/catalog/option/editOption/after
+	 * Called using admin/model/catalog/option.editOption/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -42,7 +42,7 @@ class Option extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using admin/model/catalog/option/deleteOption/after
+	 * Called using admin/model/catalog/option.deleteOption/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

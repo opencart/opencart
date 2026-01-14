@@ -1,6 +1,4 @@
 export default class Session {
-    static instance = null;
-
     get(key) {
         return JSON.parse(sessionStorage.getItem(key));
     }
@@ -19,13 +17,5 @@ export default class Session {
 
     clear() {
         sessionStorage.clear();
-    }
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Session();
-        }
-
-        return this.instance;
     }
 }

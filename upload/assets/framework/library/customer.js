@@ -7,7 +7,6 @@ const session = await loader.library('session');
 const config = await loader.config('catalog');
 
 export default class Customer {
-    static instance = null;
     data = new Map(session.get('customer'));
     logged = false;
 

@@ -1399,22 +1399,22 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
 
        ('ssr.article.add', 'Triggers article static site data creation.', 'catalog/model/cms/article.addArticle/after', 'event/article.addArticle', 1),
        ('ssr.article.edit', 'Triggers article static site data creation.', 'catalog/model/cms/article.editArticle/after', 'event/article.editArticle', 1),
-       ('ssr.article.delete', 'Triggers article static site data creation.', 'catalog/model/cms/article.deleteArticle/before', 'event/article.deleteArticle', 1),
+       ('ssr.article.delete', 'Triggers article static site data creation.', 'catalog/model/cms/article.deleteArticle/after', 'event/article.deleteArticle', 1),
 
        ('ssr.attribute.edit', 'Triggers attribute static site data creation.', 'catalog/model/catalog/attribute.editAttribute/after', 'event/attribute.editAttribute', 1),
-       ('ssr.attribute.delete', 'Triggers attribute static site data creation.', 'catalog/model/catalog/attribute.deleteAttribute/before', 'event/attribute.deleteAttribute', 1),
+       ('ssr.attribute.delete', 'Triggers attribute static site data creation.', 'catalog/model/catalog/attribute.deleteAttribute/after', 'event/attribute.deleteAttribute', 1),
 
        ('ssr.banner.add', 'Triggers banner static site data creation.', 'catalog/model/design/banner.addBanner/after', 'event/banner.addBanner', 1),
        ('ssr.banner.edit', 'Triggers banner static site data creation.', 'catalog/model/design/banner.editBanner/after', 'event/banner.editBanner', 1),
-       ('ssr.banner.delete', 'Triggers banner static site data creation.', 'catalog/model/design/banner.deleteBanner/before', 'event/banner.deleteBanner', 1),
+       ('ssr.banner.delete', 'Triggers banner static site data creation.', 'catalog/model/design/banner.deleteBanner/after', 'event/banner.deleteBanner', 1),
 
        ('ssr.category.add', 'Triggers category static site data creation.', 'catalog/model/catalog/category.addCategory/after', 'event/category.addCategory', 1),
        ('ssr.category.edit', 'Triggers category static site data creation.', 'catalog/model/catalog/category.editCategory/after', 'event/category.editCategory', 1),
-       ('ssr.category.delete', 'Triggers category static site data creation.', 'catalog/model/catalog/category.deleteCategory/before', 'event/category.deleteCategory', 1),
+       ('ssr.category.delete', 'Triggers category static site data creation.', 'catalog/model/catalog/category.deleteCategory/after', 'event/category.deleteCategory', 1),
 
        ('ssr.comment.add', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.addComment/after', 'event/comment.addComment', 1),
        ('ssr.comment.edit', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.editComment/after', 'event/comment.editComment', 1),
-       ('ssr.comment.delete', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.deleteComment/before', 'event/comment.deleteComment', 1),
+       ('ssr.comment.delete', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.deleteComment/after', 'event/comment.deleteComment', 1),
 
        ('ssr.country.add', 'Triggers country static site data creation.', 'catalog/model/localisation/country.addCountry/after', 'event/country.addCountry', 1),
        ('ssr.country.edit', 'Triggers country static site data creation.', 'catalog/model/localisation/country.editCountry/after', 'event/country.editCountry', 1),
@@ -1422,18 +1422,18 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
 
        ('ssr.currency.add', 'Triggers currency static site data creation.', 'admin/model/localisation/currency.addCurrency/after', 'event/currency', 1),
        ('ssr.currency.edit', 'Triggers currency static site data creation.', 'admin/model/localisation/currency.editCurrency/after', 'event/currency', 1),
-       ('ssr.currency.delete', 'Triggers currency static site data creation.', 'admin/model/localisation/currency.deleteCurrency/before', 'event/currency', 1),
+       ('ssr.currency.delete', 'Triggers currency static site data creation.', 'admin/model/localisation/currency.deleteCurrency/after', 'event/currency', 1),
 
        ('ssr.custom_field.add', 'Triggers custom field static site data creation.', 'catalog/model/customer/custom_field.addCustomField/after', 'event/custom_field.addCustomField', 1),
        ('ssr.custom_field.edit', 'Triggers custom field static site data creation.', 'catalog/model/customer/custom_field.editCustomField/after', 'event/custom_field.editCustomField', 1),
-       ('ssr.custom_field.delete', 'Triggers custom field static site data creation.', 'catalog/model/customer/custom_field.deleteCustomField/before', 'event/custom_field.deleteCustomField', 1),
+       ('ssr.custom_field.delete', 'Triggers custom field static site data creation.', 'catalog/model/customer/custom_field.deleteCustomField/after', 'event/custom_field.deleteCustomField', 1),
 
        ('ssr.customer_group.add', 'Triggers customer group static site data creation.', 'catalog/model/customer/customer_group.addCustomerGroup/after', 'event/customer_group.addCustomerGroup', 1),
        ('ssr.customer_group.edit', 'Triggers customer group static site data creation.', 'catalog/model/customer/customer_group.editCustomerGroup/after', 'event/customer_group.editCustomerGroup', 1),
-       ('ssr.customer_group.delete', 'Triggers customer group static site data creation.', 'catalog/model/customer/customer_group.deleteCustomerGroup/before', 'event/customer_group.deleteCustomerGroup', 1),
+       ('ssr.customer_group.delete', 'Triggers customer group static site data creation.', 'catalog/model/customer/customer_group.deleteCustomerGroup/after', 'event/customer_group.deleteCustomerGroup', 1),
 
        ('ssr.filter.edit', 'Triggers filter static site data creation.', 'catalog/model/catalog/filter.editFilter/after', 'event/filter.editFilter', 1),
-       ('ssr.filter.delete', 'Triggers filter static site data creation.', 'catalog/model/catalog/filter.deleteFilter/before', 'event/filter.deleteFilter', 1),
+       ('ssr.filter.delete', 'Triggers filter static site data creation.', 'catalog/model/catalog/filter.deleteFilter/after', 'event/filter.deleteFilter', 1),
 
        ('ssr.geo_zone.add', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.addGeoZone/after', 'event/geo_zone.addGeoZone', 1),
        ('ssr.geo_zone.edit', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.editGeoZone/after', 'event/geo_zone.editGeoZone', 1),
@@ -1464,11 +1464,11 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
 
        ('ssr.return_reason.add', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.addReturnReason/after', 'event/return_reason', 1),
        ('ssr.return_reason.edit', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.editReturnReason/after', 'event/return_reason', 1),
-       ('ssr.return_reason.delete', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.deleteReturnReason/before', 'event/return_reason', 1),
+       ('ssr.return_reason.delete', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.deleteReturnReason/after', 'event/return_reason', 1),
 
        ('ssr.review.add', 'Triggers review static site data creation.', 'catalog/model/catalog/review.addReview/after', 'event/review.addReview', 1),
        ('ssr.review.edit', 'Triggers review static site data creation.', 'catalog/model/catalog/review.editReview/after', 'event/review.editReview', 1),
-       ('ssr.review.delete', 'Triggers review static site data creation.', 'catalog/model/catalog/review.deleteReview/before', 'event/review.deleteReview', 1),
+       ('ssr.review.delete', 'Triggers review static site data creation.', 'catalog/model/catalog/review.deleteReview/after', 'event/review.deleteReview', 1),
 
        ('ssr.setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),
        ('ssr.setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),
@@ -1495,7 +1495,7 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
 
        ('ssr.zone.add', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.addZone/after', 'event/zone.addZone', 1),
        ('ssr.zone.edit', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.editZone/after', 'event/zone.editZone', 1),
-       ('ssr.zone.delete', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.deleteZone/before', 'event/zone.deleteZone', 1),
+       ('ssr.zone.delete', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.deleteZone/after', 'event/zone.deleteZone', 1),
 
        ('statistics.review.add', 'Updates review statistics when a new review is added.', 'catalog/model/catalog/review.addReview/after', 'event/statistics.addReview', 1),
        ('statistics.return.add', 'Updates return statistics when a new return is added.', 'catalog/model/account/returns.addReturn/after', 'event/statistics.addReturn', 1),

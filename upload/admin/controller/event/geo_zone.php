@@ -9,9 +9,9 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Geo Zone
 	 *
-	 * Generate new tax rate info page with added geo zone data.
+	 * Generate new tax rate info data by geo zone ID.
 	 *
-	 * Called using admin/model/localisation/geo_zone/addGeoZone
+	 * Called using admin/model/localisation/geo_zone.addGeoZone/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -19,16 +19,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addGeoZone(string &$route, array &$args, &$output): void {
-
-		getZonesByCountryId
-
-		$args[1]['zone_to_geo_zone'];
-
-		foreach (zone_to_geo_zone as zone_to_geo_zone) {
-
-
-		}
-
 		// Update tax rates based on geo zone
 		$task_data = [
 			'code'   => 'tax_rate.info.' . $output,
@@ -39,21 +29,48 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+
+		// Update countries based on geo zones.
+		if (isset($args[1]['zone_to_geo_zone']) && is_array($args[1]['zone_to_geo_zone'])) {
+			$country_ids = array_unique(array_column($args[1]['zone_to_geo_zone'], 'country_id'));
+
+			foreach ($country_ids as $country_id) {
+				$task_data = [
+					'code'   => 'country.info.' . $country_id,
+					'action' => 'task/catalog/country.info',
+					'args'   => ['country_id' => $country_id]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+		}
+	}
+
+	public function editGeoZoneBefore(string &$route, array &$args, &$output): void {
+		//$this->load->model('localisation/geo_zone');
+
+		//$results = $this->model_localisation_geo_zone->getZones($output);
+
+		if (isset($args[1]['zone_to_geo_zone']) && is_array($args[1]['zone_to_geo_zone'])) {
+			$country_ids = array_unique(array_column($args[1]['zone_to_geo_zone'], 'country_id'));
+
+
+		}
 	}
 
 	/**
 	 * Edit Geo Zone
 	 *
-	 * Generate new tax rate info page with updated geo zone data.
+	 * Generate new tax rate info data by geo zone ID.
 	 *
-	 * Called using admin/model/localisation/zone/editGeoZone
+	 * Called using admin/model/localisation/zone.editGeoZone/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
-	public function editGeoZone(string &$route, array &$args, &$output): void {
+	public function editGeoZoneAfter(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'tax_rate.info.' . $args[0],
 			'action' => 'task/catalog/tax_rate.info',
@@ -63,14 +80,31 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+
+		// Update countries based on geo zones.
+		$this->load->model('localisation/geo_zone');
+
+		$results = $this->model_localisation_geo_zone->getZones($args[0]);
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'country.info.' . $result['country_id'],
+				'action' => 'task/catalog/country.info',
+				'args'   => ['country_id' => $result['country_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+
 	}
 
 	/**
 	 * Delete Geo Zone
 	 *
-	 * Generate new country info page with deleted zone.
+	 * Generate new tax rate info data by geo zone ID.
 	 *
-	 * Called using admin/model/localisation/zone/deleteGeoZone
+	 * Called using admin/model/localisation/zone.deleteGeoZone/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -87,5 +121,17 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+
+		//$this->load->model('localisation/geo_zone');
+
+		$results = $this->model_localisation_geo_zone->getZones($output);
+		// Update countries based on geo zones.
+		$this->load->model('localisation/geo_zone');
+
+		$results = $this->model_localisation_geo_zone->getZones($args[0]);
+
+		foreach ($results as $result) {
+		}
+
 	}
 }

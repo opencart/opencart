@@ -1,5 +1,4 @@
 export default class Storage {
-    static instance = null;
     directory = '';
     path = new Map();
     loaded = new Map();

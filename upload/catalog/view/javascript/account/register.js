@@ -21,15 +21,12 @@ if (session.has('customer')) {
 
 class AccountRegister extends WebComponent {
     async connected() {
-        let data = { ...language };
+        let data = { ...language, ...config };
 
         data.customer_groups = config.get('config_customer_group_list');
         data.customer_group_id = config.get('config_customer_group_id');
 
         data.config_file_max_size = config.get('config_file_max_size');
-
-        data.config_telephone_status = config.get('config_telephone_status');
-        data.config_telephone_required = config.get('config_telephone_required');
 
         data.customer_group_id = config.get('config_customer_group_id');
 
@@ -55,8 +52,6 @@ class AccountRegister extends WebComponent {
         if (account_id) {
            await loader.storage('catalog/information-' + account_id);
         }
-
-
 
         if (information_info) {
             data.text_agree = language.get('text_agree').replace('%s', 'information/information.info&information_id=' + config.config_account_id).replace('%s', information_info.title);

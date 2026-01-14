@@ -13,7 +13,7 @@
       </div>
       <div class="col text-end">
         <ul class="list-inline">
-          <li class="list-inline-item"><a href="information/contact"><i class="fa-solid fa-phone"></i> <span class="d-none d-lg-inline">{{ telephone }}</span></a></li>
+          <li class="list-inline-item"><a href="information/contact"><i class="fa-solid fa-phone"></i> <span class="d-none d-lg-inline">{{ config_telephone }}</span></a></li>
           <li class="list-inline-item">
             <div class="dropdown">
               <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i> <span class="d-none d-lg-inline">{{ text_account }}</span> <i class="fa-solid fa-caret-down"></i></a>
@@ -31,7 +31,7 @@
               </ul>
             </div>
           </li>
-          <li class="list-inline-item"><a href="account/wishlist" id="wishlist-total" title="{{ text_wishlist | replace: '%s', wishlist }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist | replace: '%s', wishlist }}</span></a></li>
+          <li class="list-inline-item"><a href="account/wishlist" id="wishlist-total" title="{{ text_wishlist | replace: '%s', '0' }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist | replace: '%s', wishlist }}</span></a></li>
           <li class="list-inline-item"><a href="checkout/cart" title="{{ text_shopping_cart }}"><i class="fa-solid fa-cart-shopping"></i> <span class="d-none d-lg-inline">{{ text_shopping_cart }}</span></a></li>
           <li class="list-inline-item"><a href="checkout/checkout" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-lg-inline">{{ text_checkout }}</span></a></li>
         </ul>
@@ -44,10 +44,10 @@
     <div class="row">
       <div class="col-md-3 col-lg-4">
         <div id="logo">
-          {% if logo %}
-            <a href="common/home"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-fluid"/></a>
+          {% if config_logo %}
+            <a href="{{ config_url }}"><img src="{{ config_url }}image/{{ config_logo }}" title="{{ config_name }}" alt="{{ config_name }}" class="img-fluid"/></a>
           {% else %}
-            <h1><a href="common/home">{{ name }}</a></h1>
+            <h1><a href="{{ config_url }}">{{ config_name }}</a></h1>
           {% endif %}
         </div>
       </div>

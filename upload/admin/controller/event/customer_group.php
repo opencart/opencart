@@ -7,9 +7,9 @@ namespace Opencart\Admin\Controller\Event;
  */
 class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
-	 * add Customer Group
+	 * Add Customer Group
 	 *
-	 * Adds task to generate new customer group list
+	 * Adds task to generate new customer group data.
 	 *
 	 * Called using admin/model/customer/customer_group/addCustomerGroup/after
 	 *
@@ -41,9 +41,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * edit Customer Group
+	 * Edit Customer Group
 	 *
-	 * Adds task to generate new customer group list
+	 * Adds task to generate new customer group data.
 	 *
 	 * Called using admin/model/customer/customer_group/editCustomerGroup/after
 	 *
@@ -92,11 +92,11 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * delete Customer Group
+	 * Delete Customer Group
 	 *
-	 * Adds task to generate new customer group list
+	 * Adds task to generate new customer group data.
 	 *
-	 * Called using admin/model/customer/customer_group/deleteCustomerGroup/before
+	 * Called using admin/model/customer/customer_group/deleteCustomerGroup/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -115,12 +115,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		$task_data = [
-			'code'   => 'customer_group',
+			'code'   => 'customer_group.delete.' . $args[0],
 			'action' => 'task/catalog/customer_group.delete',
 			'args'   => ['customer_group_id' => $args[0]]
 		];
-
-		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 
@@ -128,7 +126,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		/*
 		$task_data = [
 			'code'   => 'country',
-			'action' => 'task/admin/country.delete',
+			'action' => 'task/admin/customer_group.delete',
 			'args'   => ['country_id' => $args[0]]
 		];
 

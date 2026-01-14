@@ -53,7 +53,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		$task_data = [
-			'code'   => 'admin.country',
+			'code'   => 'admin.country.' . $output,
 			'action' => 'task/admin/country.info',
 			'args'   => ['country_id' => $output]
 		];
@@ -99,7 +99,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		/*
 		// Admin
 		$task_data = [
-			'code'   => 'country',
+			'code'   => 'admin.country.list',
 			'action' => 'task/admin/country.list',
 			'args'   => []
 		];
@@ -107,7 +107,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		$task_data = [
-			'code'   => 'country',
+			'code'   => 'admin.country.info.' . $args[0],
 			'action' => 'task/admin/country.info',
 			'args'   => ['country_id' => $args[0]]
 		];
@@ -152,7 +152,17 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		/*
 		$task_data = [
-			'code'   => 'country.delete.' . $args[0],
+			'code'   => 'admin.country.list',
+			'action' => 'task/admin/country.list',
+			'args'   => []
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$task_data = [
+			'code'   => 'admin.country.delete.' . $args[0],
 			'action' => 'task/admin/country.delete',
 			'args'   => ['country_id' => $args[0]]
 		];

@@ -517,10 +517,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			return '';
 		}
 
+		$this->load->model('account/subscription');
+
+		$subscription_info = $this->model_account_subscription->getSubscription($subscription_id);
+
+		if (!$subscription_info) {
+			return '';
+		}
+
 		// Histories
 		$data['histories'] = [];
-
-		$this->load->model('account/subscription');
 
 		$results = $this->model_account_subscription->getHistories($subscription_id, ($page - 1) * $limit, $limit);
 

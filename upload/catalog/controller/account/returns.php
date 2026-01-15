@@ -61,10 +61,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_returns->getReturns(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
-			$data['returns'][] = [
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'href'       => $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $result['return_id'] . $url)
-			] + $result;
+			$data['returns'][] = ['href' => $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $result['return_id'] . $url)] + $result;
 		}
 
 		// Total Returns
@@ -509,10 +506,16 @@ class Returns extends \Opencart\System\Engine\Controller {
 			return '';
 		}
 
+		$this->load->model('account/returns');
+
+		$subscription_info = $this->model_account_returns->getReturns($return_id);
+
+		if (!$subscription_info) {
+			return '';
+		}
+
 		// Histories
 		$data['histories'] = [];
-
-		$this->load->model('account/returns');
 
 		$results = $this->model_account_returns->getHistories($return_id, ($page - 1) * $limit, $limit);
 

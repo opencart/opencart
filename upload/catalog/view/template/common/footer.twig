@@ -1,21 +1,17 @@
 <footer class="mt-auto">
   <div class="container">
     <div class="row">
-
-      {% if informations or blog %}
-        <div class="col-sm-3">
-          <h5>{{ text_information }}</h5>
-          <ul class="list-unstyled">
-            {% if blog %}
-              <li><a href="{{ blog }}">{{ text_blog }}</a></li>
-            {% endif %}
-            {% for information in informations %}
-              <li><a href="{{ information.href }}">{{ information.title }}</a></li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-
+      <div class="col-sm-3">
+        <h5>{{ text_information }}</h5>
+        <ul class="list-unstyled">
+          {% if articles %}
+            <li><a href="{{ blog }}">{{ text_blog }}</a></li>
+          {% endif %}
+          {% for informations in informations %}
+            <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
       <div class="col-sm-3">
         <h5>{{ text_service }}</h5>
         <ul class="list-unstyled">
@@ -27,7 +23,6 @@
           <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
         </ul>
       </div>
-
       <div class="col-sm-3">
         <h5>{{ text_extra }}</h5>
         <ul class="list-unstyled">
@@ -38,7 +33,6 @@
           <li><a href="{{ special }}">{{ text_special }}</a></li>
         </ul>
       </div>
-
       <div class="col-sm-3">
         <h5>{{ text_account }}</h5>
         <ul class="list-unstyled">
@@ -48,10 +42,9 @@
           <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
         </ul>
       </div>
-
     </div>
     <hr>
-    <p>{{ powered | replace '%s', config_name | replace: '%s', 'now' | date: '%Y' }}</p>
+    <p>{{ text_powered | replace_first: '%s', config_name | replace_first: '%s', year }}</p>
     <!--
 OpenCart is open source software and your free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
 Please donate via PayPal to donate@opencart.com

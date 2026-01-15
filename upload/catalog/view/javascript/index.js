@@ -11,6 +11,16 @@ const config = await loader.library('config');
 
 config.addPath('catalog/view/data/');
 
+// Testing Code
+config.config_language = 'en-gb';
+config.config_currency = 'EUR';
+
+// Testing Code
+const local = await loader.library('local');
+
+local.set('language', 'en-gb');
+local.set('currency', 'EUR');
+
 // Language
 const language = await loader.library('language');
 

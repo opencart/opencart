@@ -31,7 +31,7 @@
               </ul>
             </div>
           </li>
-          <li class="list-inline-item"><a href="account/wishlist" id="wishlist-total" title="{{ text_wishlist | replace: '%s', '0' }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist | replace: '%s', wishlist }}</span></a></li>
+          <li class="list-inline-item"><a href="account/wishlist" id="wishlist-total" title="{{ text_wishlist | replace: '%s', wishlist }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist | replace: '%s', wishlist }}</span></a></li>
           <li class="list-inline-item"><a href="checkout/cart" title="{{ text_shopping_cart }}"><i class="fa-solid fa-cart-shopping"></i> <span class="d-none d-lg-inline">{{ text_shopping_cart }}</span></a></li>
           <li class="list-inline-item"><a href="checkout/checkout" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-lg-inline">{{ text_checkout }}</span></a></li>
         </ul>
@@ -54,7 +54,7 @@
       <div class="col-md-5">
         <common-search></common-search>
       </div>
-      <div id="cart" class="col-md-4 col-lg-3 mb-2">
+      <div class="col-md-4 col-lg-3 mb-2">
         <common-cart></common-cart>
       </div>
     </div>

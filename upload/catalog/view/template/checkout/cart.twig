@@ -1,18 +1,1 @@
-{{ header }}
-<div id="checkout-cart" class="container">
-  <ul class="breadcrumb">
-    {% for breadcrumb in breadcrumbs %}
-      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-    {% endfor %}
-  </ul>
-  <div class="row">
-    {{ column_left }}
-    <div id="content" class="col">
-      {{ content_top }}
-      <div id="shopping-cart">{{ list }}</div>
-      {{ content_bottom }}
-    </div>
-    {{ column_right }}
-  </div>
-</div>
-{{ footer }}
+<div id="shopping-cart">{{ list }}</div>

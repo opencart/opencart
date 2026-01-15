@@ -12,17 +12,17 @@ const language = await loader.language('common/header');
 
 class CommonHeader extends WebComponent {
     async connected() {
+        let data = {};
 
+        data.logged = customer.isLogged();
 
+        data.wishlist = 0;
 
-        let template = await loader.template('common/header', { ...language, ...config });
+        if (data.logged) {
+            data.wishlist = customer.getWishlist().length;
+        }
 
-        console.log(template);
-
-        //wishlist
-
-
-        this.innerHTML = template;
+        this.innerHTML = await loader.template('common/header', { ...data, ...language, ...config });
     }
 }
 

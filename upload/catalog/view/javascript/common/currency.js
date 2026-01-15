@@ -4,9 +4,6 @@ import { loader } from '../index.js';
 // library
 const local = await loader.library('local');
 
-// Testing code
-local.set('currency', 'EUR');
-
 // Config
 const config = await loader.config('catalog');
 
@@ -20,25 +17,25 @@ class CommonCurrency extends WebComponent {
     connected() {
         let data = {};
 
-        // Set the code for the default currency
-        let code = config.config_currency;
+        // Config stored currency code
+        data.code = config.config_currency;
 
+        // Local storage currency code
         if (local.has('currency')) {
-           code = local.get('currency');
+            data.code = local.get('currency');
         }
 
-        if (code in currencies) {
-            data.symbol_left = currencies[code].symbol_left;
-            data.symbol_right = currencies[code].symbol_right;
+        if (data.code in currencies) {
+            data.symbol_left = currencies[data.code].symbol_left;
+            data.symbol_right = currencies[data.code].symbol_right;
         } else {
             data.symbol_left = '';
             data.symbol_right = '';
         }
 
-        data.code = code;
         data.currencies = Object.values(currencies);
 
-        let response = loader.template('common/currency', { ...data,  ...language, ...config });
+        let response = loader.template('common/currency', { ...data, ...language });
 
         response.then(this.render.bind(this));
         response.then(this.addEvent.bind(this));
@@ -49,7 +46,7 @@ class CommonCurrency extends WebComponent {
     }
 
     addEvent() {
-        let form = document.querySelector('#form-currency');
+        let form = document.getElementById('form-currency');
 
         let elements = form.querySelectorAll('a');
 
@@ -59,7 +56,7 @@ class CommonCurrency extends WebComponent {
     }
 
     onClick(e) {
-        local.set('currency', this.getAttribute('href'));
+        local.set('currency', e.target.getAttribute('href'));
     }
 }
 

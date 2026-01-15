@@ -1,26 +1,10 @@
-{{ header }}
-<div id="account-address" class="container">
-  <ul class="breadcrumb">
-    {% for breadcrumb in breadcrumbs %}
-      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-    {% endfor %}
-  </ul>
-  {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> {{ success }}</div>
-  {% endif %}
-  <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
-      <h1>{{ text_address_book }}</h1>
-      <div id="address">{{ list }}</div>
-      <div class="row">
-        <div class="col">
-          <a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
-        </div>
-        <div class="col text-end">
-          <a href="{{ add }}" class="btn btn-primary">{{ button_new_address }}</a>
-        </div>
-      </div>
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+<h1>{{ text_address_book }}</h1>
+<div id="address">{{ list }}</div>
+<div class="row">
+  <div class="col">
+    <a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
+  </div>
+  <div class="col text-end">
+    <a href="{{ add }}" class="btn btn-primary">{{ button_address_add }}</a>
+  </div>
 </div>
-{{ footer }}

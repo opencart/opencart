@@ -44,6 +44,13 @@ class Language extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_success')];
 	}
 
+	/***
+	 * List
+	 *
+	 * @param $args
+	 *
+	 * @return array|void
+	 */
 	public function list($args) {
 		$this->load->language('task/catalog/language');
 
@@ -67,7 +74,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$language_info = $this->model_localisation_language->getLanguages($language_id);
 
 			if ($language_info && $language_info['status']) {
-				$language_data[] = $language_info;
+				$language_data[$language_info['code']] = $language_info;
 			}
 		}
 
@@ -83,7 +90,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 	}
-
 
 	/**
 	 * Clear

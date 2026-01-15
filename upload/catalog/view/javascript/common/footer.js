@@ -15,15 +15,19 @@ const informations = await loader.storage('information/information');
 
 class CommonFooter extends WebComponent {
     async connected() {
-        let data = { ...language, ...config };
+        let data = {};
 
         // Articles
-        data.articles = articles;
+        data.articles = Object.values(articles).length;
 
         // Information Pages
-        data.informations = informations;
+        data.informations = Object.values(informations);
 
-        this.innerHTML = await loader.template('common/footer', data);
+        let date = new Date();
+
+        data.year = date.getFullYear();
+
+        this.innerHTML = await loader.template('common/footer', { ...data, ...language, ...config });
     }
 }
 

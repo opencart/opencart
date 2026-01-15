@@ -1,0 +1,35 @@
+<?php
+// Text
+$_['text_subject']               = '%s - Reihenfolge %s';
+$_['text_greeting']              = 'Vielen Dank für Ihr Interesse an %s Produkten. Ihre Bestellung ist eingegangen und wird bearbeitet, sobald die Zahlung bestätigt wurde.';
+$_['text_link']                  = 'Um Ihre Bestellung anzuzeigen, klicken Sie auf den folgenden Link:';
+$_['text_order_detail']          = 'Bestelldetails';
+$_['text_instruction']           = 'Anweisungen';
+$_['text_order_id']              = 'Bestellnummer:';
+$_['text_date_added']            = 'Datum hinzugefügt:';
+$_['text_order_status']          = 'Bestellstatus:';
+$_['text_payment_method']        = 'Zahlungsmethode:';
+$_['text_shipping_method']       = 'Versandart:';
+$_['text_email']                 = 'E-Mail:';
+$_['text_telephone']             = 'Telefon:';
+$_['text_ip']                    = 'IP-Adresse:';
+$_['text_payment_address']       = 'Zahlungsadresse';
+$_['text_shipping_address']      = 'Lieferadresse';
+$_['text_products']              = 'Produkte';
+$_['text_product']               = 'Produkt';
+$_['text_model']                 = 'Modell';
+$_['text_quantity']              = 'Menge';
+$_['text_price']                 = 'Preis';
+$_['text_order_total']           = 'Bestellsummen';
+$_['text_total']                 = 'Gesamt';
+$_['text_subscription']          = 'Abonnement';
+$_['text_subscription_duration'] = '%s alle %d %s(s) für %d Zahlung(en)';
+$_['text_subscription_cancel']   = '%s alle %d %s(s) bis zum Abbruch';
+$_['text_day']                   = 'Tag';
+$_['text_week']                  = 'Woche';
+$_['text_semi_month']            = 'halber Monat';
+$_['text_month']                 = 'Monat';
+$_['text_year']                  = 'Jahr';
+$_['text_download']              = 'Sobald Ihre Zahlung bestätigt wurde, können Sie auf den folgenden Link klicken, um auf Ihre herunterladbaren Produkte zuzugreifen:';
+$_['text_comment']               = 'Die Bemerkungen zu Ihrer Bestellung lauten:';
+$_['text_footer']                = 'Bei Fragen antworten Sie bitte auf diese E-Mail.';

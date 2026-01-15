@@ -1,0 +1,137 @@
+<?php
+// Heading
+$_['heading_title']                    = 'Geschäfte';
+
+// Text
+$_['text_settings']                    = 'Einstellungen';
+$_['text_success']                     = 'Erfolg: Sie haben Stores geändert!';
+$_['text_list']                        = 'Liste speichern';
+$_['text_add']                         = 'Store hinzufügen';
+$_['text_edit']                        = 'Shop bearbeiten';
+$_['text_site']                        = 'Site-Details';
+$_['text_meta']                        = 'Meta-Tags';
+$_['text_items']                       = 'Artikel';
+$_['text_shipping']                    = 'Lieferadresse';
+$_['text_payment']                     = 'Zahlungsadresse';
+$_['text_product']                     = 'Produkte';
+$_['text_legal']                       = 'Rechtliches';
+$_['text_tax']                         = 'Steuern';
+$_['text_account']                     = 'Konto';
+$_['text_checkout']                    = 'Kasse';
+$_['text_stock']                       = 'Aktie';
+$_['text_image']                       = 'Bildgrößen';
+$_['text_region']                      = 'Region';
+$_['text_language']                    = 'Sprache';
+$_['text_currency']                    = 'Währung';
+
+// Column
+$_['column_name']                      = 'Name des Geschäfts';
+$_['column_url']                       = 'URL speichern';
+$_['column_action']                    = 'Aktion';
+
+// Entry
+$_['entry_url']                        = 'URL speichern';
+$_['entry_meta_title']                 = 'Meta-Titel';
+$_['entry_meta_description']           = 'Meta-Tag-Beschreibung';
+$_['entry_meta_keyword']               = 'Meta-Tag-Schlüsselwörter';
+$_['entry_layout']                     = 'Standardlayout';
+$_['entry_theme']                      = 'Thema';
+$_['entry_name']                       = 'Name des Geschäfts';
+$_['entry_owner']                      = 'Ladenbesitzer';
+$_['entry_address']                    = 'Adresse';
+$_['entry_geocode']                    = 'Geokodieren';
+$_['entry_email']                      = 'E-Mail';
+$_['entry_telephone']                  = 'Telefon';
+$_['entry_image']                      = 'Bild';
+$_['entry_open']                       = 'Öffnungszeiten';
+$_['entry_comment']                    = 'Kommentar';
+$_['entry_location']                   = 'Standort des Geschäfts';
+$_['entry_country']                    = 'Land';
+$_['entry_zone']                       = 'Region/Staat';
+$_['entry_language']                   = 'Sprache';
+$_['entry_currency']                   = 'Währung';
+$_['entry_product_description_length'] = 'Liste Beschreibung Grenze';
+$_['entry_pagination']                 = 'Standardelemente pro Seite';
+$_['entry_product_count']              = 'Kategorie Produktanzahl';
+$_['entry_cookie']                     = 'Cookie-Richtlinie';
+$_['entry_gdpr']                       = 'DSGVO-Richtlinie';
+$_['entry_tax']                        = 'Preise inkl. MwSt. anzeigen';
+$_['entry_tax_default']                = 'Steueradresse des Geschäfts verwenden';
+$_['entry_tax_customer']               = 'Steueradresse des Kunden verwenden';
+$_['entry_customer_group']             = 'Kundengruppe';
+$_['entry_customer_group_display']     = 'Kundengruppen';
+$_['entry_customer_price']             = 'Anmelden Preise anzeigen';
+$_['entry_account']                    = 'Kontobedingungen';
+$_['entry_cart_weight']                = 'Gewicht auf der Warenkorbseite anzeigen';
+$_['entry_checkout_guest']             = 'Gast-Checkout';
+$_['entry_checkout']                   = 'Checkout-Bedingungen';
+$_['entry_stock_display']              = 'Lagerbestand anzeigen';
+$_['entry_stock_checkout']             = 'Lagerkasse';
+$_['entry_logo']                       = 'Logo speichern';
+$_['entry_icon']                       = 'Symbol';
+$_['entry_image_category']             = 'Kategorie Bildgröße (B x H)';
+$_['entry_image_thumb']                = 'Produktbild Daumengröße (B x H)';
+$_['entry_image_popup']                = 'Größe des Produktbild-Popups (B x H)';
+$_['entry_image_product']              = 'Produktbildliste Größe (B x H)';
+$_['entry_image_additional']           = 'Zusätzliche Produktbildgröße (B x H)';
+$_['entry_image_related']              = 'Größe des zugehörigen Produktbildes (B x H)';
+$_['entry_image_article']              = 'Artikelbildgröße (B x H)';
+$_['entry_image_topic']                = 'Themenbildgröße (B x H)';
+$_['entry_image_compare']              = 'Bildgröße vergleichen (B x H)';
+$_['entry_image_wishlist']             = 'Wunschlisten-Bildgröße (B x H)';
+$_['entry_image_cart']                 = 'Warenkorbbildgröße (B x H)';
+$_['entry_image_location']             = 'Bildgröße speichern (B x H)';
+$_['entry_width']                      = 'Breite';
+$_['entry_height']                     = 'Höhe';
+
+// Help
+$_['help_url']                         = 'Geben Sie die vollständige URL zu Ihrem Shop an. Achten Sie darauf, am Ende \'/\' hinzuzufügen. Beispiel: http://www.IhreDomain.com/Pfad/<br/><br/>Verwenden Sie keine Verzeichnisse, um einen neuen Shop zu erstellen. Sie sollten immer eine andere Domain oder Subdomain auf Ihr Hosting verweisen.';
+$_['help_icon']                        = 'Das Symbol sollte ein PNG mit der Größe 16 x 16 Pixel sein.';
+$_['help_geocode']                     = 'Bitte geben Sie den Geocode Ihres Filialstandorts manuell ein.';
+$_['help_open']                        = 'Geben Sie die Öffnungszeiten Ihres Geschäfts ein.';
+$_['help_comment']                     = 'In dieses Feld können Sie besondere Hinweise geben, die Sie dem Kunden mitteilen möchten, z. B.: Das Geschäft akzeptiert keine Schecks.';
+$_['help_location']                    = 'Die verschiedenen Filialstandorte, die Sie haben und die Sie im Kontaktformular anzeigen möchten.';
+$_['help_currency']                    = 'Ändern Sie die Standardwährung. Löschen Sie den Cache Ihres Browsers, um die Änderung anzuzeigen, und setzen Sie Ihr vorhandenes Cookie zurück.';
+$_['help_pagination']                  = 'Bestimmt, wie viele Katalogelemente pro Seite angezeigt werden (Produkte, Kategorien usw.)';
+$_['help_product_description_length']  = 'In der Listenansicht, Zeichenbegrenzung für Kurzbeschreibungen (Kategorien, Spezial etc.)';
+$_['help_cookie']                      = 'Cookie-Richtlinie als Teil des EU-Rechts anzeigen.';
+$_['help_gdpr']                        = 'Aktivieren Sie DSGVO-Funktionen, beispielsweise die Möglichkeit für Kunden, eine Kontolöschung zu beantragen.';
+$_['help_tax_default']                 = 'Wenn der Kunde nicht angemeldet ist, wird die Adresse des Geschäfts zur Berechnung der Steuern verwendet. Sie können die Adresse des Geschäfts auch als Versand- oder Zahlungsadresse des Kunden verwenden.';
+$_['help_tax_customer']                = 'Verwenden Sie die Standardadresse des Kunden beim Anmelden, um Steuern zu berechnen. Sie können die Standardadresse als Versand- oder Zahlungsadresse des Kunden verwenden.';
+$_['help_customer_group']              = 'Standard-Kundengruppe.';
+$_['help_customer_group_display']      = 'Zeigen Sie Kundengruppen an, die neue Kunden bei der Anmeldung auswählen können, z. B. Großhandel und Unternehmen.';
+$_['help_customer_price']              = 'Preise nur anzeigen, wenn Kunde eingeloggt ist.';
+$_['help_account']                     = 'Zwingt die Benutzer, Bedingungen zuzustimmen, bevor ein Konto erstellt werden kann.';
+$_['help_checkout_guest']              = 'Ermöglichen Sie Kunden, zur Kasse zu gehen, ohne ein Konto zu erstellen. Dies ist nicht möglich, wenn sich ein herunterladbares Produkt im Warenkorb befindet.';
+$_['help_checkout']                    = 'Zwingt die Kunden, den Bedingungen zuzustimmen, bevor sie zur Kasse gehen können.';
+$_['help_stock_display']               = 'Zeigen Sie die Lagermenge auf der Produktseite an.';
+$_['help_stock_checkout']              = 'Ermöglichen Sie Kunden, trotzdem zur Kasse zu gehen, wenn die von ihnen bestellten Produkte nicht auf Lager sind.';
+$_['help_product_count']               = 'Zeigen Sie die Anzahl der Produkte in den Unterkategorien im Kategoriemenü der Storefront-Kopfzeile an. Seien Sie gewarnt, dies führt bei Stores mit vielen Unterkategorien zu extremen Leistungseinbußen!';
+
+// Error
+$_['error_warning']                    = 'Achtung: Bitte prüfen Sie das Formular sorgfältig auf Fehler!';
+$_['error_permission']                 = 'Achtung: Sie sind nicht berechtigt, Geschäfte zu ändern!';
+$_['error_url']                        = 'Store-URL erforderlich!';
+$_['error_meta_title']                 = 'Der Titel muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_name']                       = 'Der Shopname muss zwischen 3 und 32 Zeichen lang sein!';
+$_['error_owner']                      = 'Der Store-Eigentümer muss zwischen 3 und 64 Zeichen lang sein!';
+$_['error_address']                    = 'Die Shop-Adresse muss zwischen 10 und 256 Zeichen lang sein!';
+$_['error_email']                      = 'E-Mail-Adresse scheint nicht gültig zu sein!';
+$_['error_product_description_length'] = 'Produktbeschreibungslänge erforderlich!';
+$_['error_pagination']                 = 'Seitennummerierung erforderlich!';
+$_['error_customer_group_display']     = 'Sie müssen die Standard-Kundengruppe einschließen, wenn Sie diese Funktion verwenden möchten!';
+$_['error_default']                    = 'Achtung: Sie können Ihren Standardshop nicht löschen!';
+$_['error_order']                      = 'Achtung: Dieser Store kann nicht gelöscht werden, da ihm aktuell %s Bestellungen zugewiesen sind!';
+$_['error_subscription']               = 'Achtung: Dieser Store kann nicht gelöscht werden, da ihm derzeit %s Abonnements zugewiesen sind!';
+$_['error_image_thumb']                = 'Produktbild: Daumengrößenabmessungen erforderlich!';
+$_['error_image_popup']                = 'Produktbild-Popup-Größenabmessungen erforderlich!';
+$_['error_image_product']              = 'Produktliste - Größenangaben erforderlich!';
+$_['error_image_category']             = 'Kategorie-Liste Größenangaben erforderlich!';
+$_['error_image_additional']           = 'Zusätzliche Produktbild-Größenangaben erforderlich!';
+$_['error_image_related']              = 'Zugehörige Produktbildgrößenabmessungen erforderlich!';
+$_['error_image_article']              = 'Artikelbild-Größenangaben erforderlich!';
+$_['error_image_topic']                = 'Abmessungen der Themenbildgröße erforderlich!';
+$_['error_image_compare']              = 'Vergleichen Sie die erforderlichen Bildgrößenabmessungen!';
+$_['error_image_wishlist']             = 'Abmessungen der Wunschlisten-Bildgröße erforderlich!';
+$_['error_image_cart']                 = 'Abmessungen der Warenkorb-Bildgröße erforderlich!';
+$_['error_image_location']             = 'Abmessungen der Bildgröße im Store erforderlich!';

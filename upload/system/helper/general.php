@@ -61,7 +61,7 @@ function safe_glob(string $pattern, int $flags = 0):array|false {
             $subPattern = str_replace($matches[0], trim($part), $pattern);
             
             // Recursively call to handle multiple sets of braces
-            $result = safe_glob_brace($subPattern, $flags);
+            $result = safe_glob($subPattern, $flags);
             
             if (is_array($result)) {
                 $files = array_merge($files, $result);

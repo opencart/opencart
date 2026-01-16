@@ -177,7 +177,7 @@ class ControllerMarketplaceModification extends Controller {
 						}
 
 						if ($path) {
-							$files = glob($path, GLOB_BRACE);
+							$files = safe_glob($path, GLOB_BRACE);
 
 							if ($files) {
 								foreach ($files as $file) {

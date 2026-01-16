@@ -123,7 +123,7 @@ class ModelUpgrade1009 extends Model {
 			fclose($handle);
 		}
 	
-		$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
+		$files = safe_glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
 
 		foreach ($files as $file) {
 			$lines = file($file);

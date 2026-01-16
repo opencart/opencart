@@ -12,12 +12,12 @@ const config = await loader.library('config');
 config.addPath('catalog/view/data/');
 
 // Testing Code
-const test = await loader.config('catalog');
-
-test.config_language = 'en-gb';
-test.config_currency = 'EUR';
-test.config_customer_group_id = 1;
-test.config_account_id = 1;
+config.data.set('catalog', {
+    config_language: 'en-gb',
+    config_currency: 'EUR',
+    config_customer_group_id: 1,
+    config_account_id: 1
+});
 
 // Testing Code
 const local = await loader.library('local');

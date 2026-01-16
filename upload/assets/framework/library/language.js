@@ -1,7 +1,7 @@
 export default class Language {
     directory = '';
     path = new Map();
-    loaded = new Map();
+    data = new Map();
 
     addPath(namespace, path = '') {
         if (!path) {
@@ -12,8 +12,8 @@ export default class Language {
     }
 
     async fetch(path) {
-        if (this.loaded.has(path)) {
-            return this.loaded.get(path);
+        if (this.data.has(path)) {
+            return this.data.get(path);
         }
 
         let file = this.directory + path + '.json';
@@ -37,9 +37,9 @@ export default class Language {
         if (response.status == 200) {
             let object = await response.json();
 
-            this.loaded.set(path, object);
+            this.data.set(path, object);
 
-            return this.loaded.get(path);
+            return this.data.get(path);
         } else {
             console.log('Could not load language file ' + path);
         }

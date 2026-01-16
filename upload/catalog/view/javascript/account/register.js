@@ -23,8 +23,6 @@ class AccountRegister extends WebComponent {
     async connected() {
         let data = {};
 
-        console.log(config);
-
         data.customer_group_id = config.config_customer_group_id;
 
         if (customer.length) {
@@ -59,23 +57,8 @@ class AccountRegister extends WebComponent {
         // Set up the customer group
         let customer_group = document.getElementById('input-customer-group');
 
-        console.log(customer_group);
-
-        customer_group.addEventListener('change', this.onChange);
-
-        // Set up the agree button enabled / disabled
-        let agree = document.getElementById('input-agree');
-
-        agree.addEventListener('change', this.onAgree);
-    }
-
-    onAgree(e) {
-        let button = document.getElementById('button-continue');
-
-        if (e.value == 1) {
-            button.addAttribute('disabled');
-        } else {
-            button.disabled = true;
+        if (customer_group) {
+            customer_group.addEventListener('change', this.onChange);
         }
     }
 
@@ -128,31 +111,3 @@ class AccountRegister extends WebComponent {
 }
 
 customElements.define('account-register', AccountRegister);
-
-/*
-$('#input-customer-group').on('change', function() {
-    $.ajax({
-        url: 'index.php?route=account/custom_field&customer_group_id=' + this.value + '&language={{ language }}',
-        dataType: 'json',
-        success: function(json) {
-            $('.custom-field').hide();
-            $('.custom-field').removeClass('required');
-
-            for (i = 0; i < json.length; i++) {
-                custom_field = json[i];
-
-                $('.custom-field-' + custom_field['custom_field_id']).show();
-
-                if (custom_field['required']) {
-                    $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
-                }
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#input-customer-group').trigger('change');
-*/

@@ -32,7 +32,7 @@ export default class Tax {
 
             if (tax_classes[tax_class_id][customer_group_id] == undefined) {
 
-            }
+            }tax_class_id
 
             tax_classes[tax_class_id] = [customer_group_id] + [tax_rule_id];
 

@@ -2,10 +2,7 @@ export { WebComponent } from './library/webcomponent.js';
 
 // Components
 import('./component/alert.js');
-//import('./component/autocomplete.js');
-import('./component/button.js');
-//import('./component/ckeditor.js');
-import('./component/datetime.js');
+import('./component/date.js');
 //import './component/modal.js';
 import('./component/pagination.js');
 
@@ -15,6 +12,7 @@ import('./component/country.js');
 import('./component/zone.js');
 
 // Input
+//import('./component/autocomplete.js');
 //import('./input/checkbox.js');
 //import('./input/ckeditor.js');
 //import('./input/date.js');

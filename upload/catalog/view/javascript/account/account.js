@@ -4,7 +4,7 @@ import { loader } from '../index.js';
 const language = await loader.language('account/account');
 
 class AccountAccount extends WebComponent {
-    async connected() {
+    connected() {
         this.innerHTML = await loader.template('account/account', { ...language });
     }
 }

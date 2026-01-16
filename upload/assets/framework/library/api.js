@@ -8,7 +8,7 @@ export default class Api {
 
     }
 
-    async post(option) {
+    async post(option, data = {}) {
         /*
         if (!config.method) {
             config.method = 'get';

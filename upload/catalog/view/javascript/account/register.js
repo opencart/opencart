@@ -1,38 +1,25 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-// library
-const session = await loader.library('session');
-
 // Config
 const config = await loader.config('catalog');
 
 // Language
 const language = await loader.language('account/register');
 
-// Template
-const template = await loader.template('account/register');
-
-let customer = {};
-
-if (session.has('customer')) {
-    customer = session.get('customer');
-}
+// customer groups
+let customer_groups = await loader.storage('customer/customer_group');
 
 class AccountRegister extends WebComponent {
     async connected() {
         let data = {};
 
-        data.customer_group_id = config.config_customer_group_id;
-
-        if (customer.length) {
-            data.customer_group_id = customer.get('customer_group_id');
-        }
+        data.customer_groups = customer_groups;
 
         // Custom Fields
         data.custom_fields = {};
 
-        let customer_group = await loader.storage('customer/customer_group-' + data.customer_group_id);
+        let customer_group = await loader.storage('customer/customer_group-' + config.config_customer_group_id);
 
         if (customer_group.length) {
             data.custom_fields = customer_group.custom_fields;
@@ -63,8 +50,6 @@ class AccountRegister extends WebComponent {
     }
 
     async onChange() {
-        //fetch();
-
         ///$this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true)
 
         let customer_group_info = await this.storage.fetch('customer/customer_group-' + data['customer_group_id']);

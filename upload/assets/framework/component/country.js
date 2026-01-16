@@ -1,4 +1,8 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
+
+// Storage
+const countries = await loader.storage('localisation/country');
 
 class XCountry extends WebComponent {
     static observed = ['value', 'postcode'];
@@ -38,68 +42,71 @@ class XCountry extends WebComponent {
         return this.getAttribute('postcode');
     }
 
-    event = {
-        connected: async () => {
-            this.default = this.innerHTML;
+    async connected() {
+        this.default = this.innerHTML;
 
-            let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="form-select"';
+        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="form-select"';
 
-            if (this.hasAttribute('required')) {
-                html += ' required';
-            }
-
-            if (this.hasAttribute('disabled')) {
-                html += ' disabled';
-            }
-
-            html += '>' + this.default + '</select>';
-
-            this.innerHTML = html;
-
-            this.addEventListener('[value]', this.event.changeValue);
-
-            this.element = this.querySelector('select');
-
-            this.addEventListener('[value]', this.event.changeValue);
-
-            let response = this.storage.fetch('localisation/country');
-
-            response.then(this.event.onloaded);
-            response.then(this.event.option);
-            response.then(this.event.postcode);
-        },
-        onloaded: (countries) => {
-            this.countries = countries;
-        },
-        option: () => {
-            let html = this.default;
-
-            for (let i in this.countries) {
-                html += '<option value="' + this.countries[i].country_id + '"';
-
-                if (this.countries[i].country_id == this.value) {
-                    html += ' selected';
-                }
-
-                html += '>' + this.countries[i].name + '</option>';
-            }
-
-            this.element.innerHTML = html;
-        },
-        postcode: () => {
-            if (this.countries[this.value] !== undefined) {
-                this.postcode = this.countries[this.value].postcode_required;
-            } else {
-                this.postcode = 0;
-            }
-        },
-        onchange: (e) => {
-            this.value = e.target.value;
-        },
-        changeValue: (e) => {
-            this.value = e.detail.value_new;
+        if (this.hasAttribute('required')) {
+            html += ' required';
         }
-    };
+
+        if (this.hasAttribute('disabled')) {
+            html += ' disabled';
+        }
+
+        html += '>' + this.default + '</select>';
+
+        this.innerHTML = html;
+
+        this.addEventListener('[value]', this.changeValue);
+
+        this.element = this.querySelector('select');
+
+        this.addEventListener('[value]', this.changeValue);
+
+        let response = this.storage.fetch('localisation/country');
+
+        response.then(this.event.onloaded);
+        response.then(this.event.option);
+        response.then(this.event.postcode);
+    }
+
+    onloaded(countries) {
+        this.countries = countries;
+    }
+
+    option() {
+        let html = this.default;
+
+        for (let i in this.countries) {
+            html += '<option value="' + this.countries[i].country_id + '"';
+
+            if (this.countries[i].country_id == this.value) {
+                html += ' selected';
+            }
+
+            html += '>' + this.countries[i].name + '</option>';
+        }
+
+        this.element.innerHTML = html;
+    }
+
+    postcode() {
+        if (this.countries[this.value] !== undefined) {
+            this.postcode = this.countries[this.value].postcode_required;
+        } else {
+            this.postcode = 0;
+        }
+    }
+
+    onchange(e) {
+        this.value = e.target.value;
+    }
+
+    changeValue(e) {
+        this.value = e.detail.value_new;
+    }
 }
 
 customElements.define('x-country', XCountry);

@@ -45,7 +45,7 @@ if(!function_exists('hash_equals')) {
 if (!defined('GLOB_BRACE')) {
     define('GLOB_BRACE', 0);
 }
-function safe_glob(string $pattern, int $flags = 0):array|false {
+function safe_glob(string $pattern, int $flags = 0): array|false {
     // 1. If GLOB_BRACE is supported and provided, use native glob
     if ((GLOB_BRACE !== 0) && ($flags & GLOB_BRACE)) {
         return glob($pattern, $flags);

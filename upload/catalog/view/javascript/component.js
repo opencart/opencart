@@ -5,9 +5,9 @@ import('./common/header.js');
 import('./common/language.js');
 import('./common/currency.js');
 import('./common/search.js');
+import('./common/cart.js');
 import('./common/menu.js');
 import('./common/footer.js');
-import('./common/cart.js');
 //import('./common/cookie.js');
 
 // Home Page
@@ -18,7 +18,7 @@ import('./common/home.js');
 import('./error/not_found.js');
 
 // Account
-import('./account/account.js');
+//import('./account/account.js');
 //import('./common/address.js');
 //import('./common/address_list.js');
 //import('./common/address_info.js');

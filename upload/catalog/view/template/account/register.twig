@@ -7,7 +7,7 @@
 
     <legend>{{ text_your_details }}</legend>
 
-    {% if customer_groups|size > 1 %}
+    {% if customer_groups.size > 1 %}
       <div class="row mb-3">
         <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
         <div class="col-sm-10">
@@ -79,7 +79,8 @@
             <div id="input-custom-field-{{ custom_field.custom_field_id }}">
               {% for custom_field_value in custom_field.custom_field_value %}
                 <div class="form-check">
-                  <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                  <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                  <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                 </div>
               {% endfor %}
             </div>
@@ -96,7 +97,8 @@
             <div id="input-custom-field-{{ custom_field.custom_field_id }}">
               {% for custom_field_value in custom_field.custom_field_value %}
                 <div class="form-check">
-                  <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                  <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                  <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                 </div>
               {% endfor %}
             </div>
@@ -197,11 +199,8 @@
 
   <div class="text-end">
 
-    {% if config.config_account_id %}
-
-      <label for="input-agree" class="form-check-label">{{ text_agree }}</label>
-      <x-switch name="agree" value="1" input-id="input-agree" input-class="form-switch form-switch-lg form-check-reverse form-check-inline align-top"></x-switch>
-
+    {% if config_account_id %}
+      <x-agree name="agree" value="{{ config_account_id }}" text="{{ text_agree }}" input-id="input-agree" target="#button-continue"></x-agree>
     {% endif %}
 
     <button type="submit" id="button-continue" class="btn btn-primary">{{ button_continue }}</button>

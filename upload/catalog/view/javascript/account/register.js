@@ -21,49 +21,29 @@ if (session.has('customer')) {
 
 class AccountRegister extends WebComponent {
     async connected() {
-        let data = { ...language, ...config };
+        let data = {};
 
-        data.customer_groups = config.get('config_customer_group_list');
-        data.customer_group_id = config.get('config_customer_group_id');
+        console.log(config);
 
-        data.config_file_max_size = config.get('config_file_max_size');
+        data.customer_group_id = config.config_customer_group_id;
 
-        data.customer_group_id = config.get('config_customer_group_id');
-
-        if (customer) {
+        if (customer.length) {
             data.customer_group_id = customer.get('customer_group_id');
         }
 
+        // Custom Fields
         data.custom_fields = {};
 
-        // Custom Fields
         let customer_group = await loader.storage('customer/customer_group-' + data.customer_group_id);
 
-        if (customer_group) {
-            data.custom_fields = customer_group.get('custom_field');
+        if (customer_group.length) {
+            data.custom_fields = customer_group.custom_fields;
         }
 
-        // If required to agree to terms
-        let account_id = config.get('config_account_id');
+        let response = loader.template('account/register', { ...data, ...language, ...config });
 
-        // Information
-        let information_info = {};
-
-        if (account_id) {
-           await loader.storage('catalog/information-' + account_id);
-        }
-
-        if (information_info) {
-            data.text_agree = language.get('text_agree').replace('%s', 'information/information.info&information_id=' + config.config_account_id).replace('%s', information_info.title);
-        } else {
-            data.text_agree = '';
-        }
-
-        let response = loader.template('account/register', data);
-
-        response.then(this.render);
-        response.then(this.addEvent);
-
+        response.then(this.render.bind(this));
+        response.then(this.addEvent.bind(this));
     }
 
     render(html) {

@@ -58,8 +58,8 @@ export default class Template {
     }
 
     async render(path, data = {}) {
-        console.log(path);
-        console.log(data);
+        //console.log(path);
+        //console.log(data);
 
         return this.parse(await this.fetch(path), data);
     }

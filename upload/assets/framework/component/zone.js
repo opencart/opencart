@@ -27,22 +27,22 @@ class XZone extends WebComponent {
         // Create the select element
         this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="form-select">' + this.default + '</select>';
 
-        this.addEventListener('[value]', this.event.changeValue);
+        this.addEventListener('[value]', this.changeValue);
 
         this.element = this.querySelector('select');
 
-        this.element.addEventListener('change', this.event.onchange);
+        this.element.addEventListener('change', this.onchange);
 
         // Country Element
         this.target = document.getElementById(this.getAttribute('target'));
 
-        this.target.addEventListener('[value]', this.event.changeCountry.bind(this));
+        this.target.addEventListener('[value]', this.changeCountry.bind(this));
 
         if (this.target.value != 0) {
             let response = this.storage.fetch('localisation/country-' + this.target.value);
 
-            response.then(this.event.onloaded);
-            response.then(this.event.option);
+            response.then(this.onloaded);
+            response.then(this.option);
         }
     }
 
@@ -84,7 +84,7 @@ class XZone extends WebComponent {
             response.then(this.option);
         } else {
             this.zones = [];
-            this.event.option();
+            this.option();
         }
     }
 }

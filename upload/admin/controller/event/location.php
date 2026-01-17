@@ -1,19 +1,19 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
- * Class Return Reason
+ * Class Location
  *
  * @package Opencart\Admin\Controller\Event
  */
-class ReturnReason extends \Opencart\System\Engine\Controller {
+class Location extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Adds task to generate new return reason list
+	 * Adds task to generate new location list.
 	 *
-	 * model/localisation/return_reason/addReturnReason/after
-	 * model/localisation/return_reason/editReturnReason/after
-	 * model/localisation/return_reason/deleteReturnReason/after
+	 * model/localisation/location/addLocation/after
+	 * model/localisation/location/editLocation/after
+	 * model/localisation/location/deleteLocation/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

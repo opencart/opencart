@@ -125,6 +125,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		//$this->load->model('localisation/geo_zone');
 
 		$results = $this->model_localisation_geo_zone->getZones($output);
+
 		// Update countries based on geo zones.
 		$this->load->model('localisation/geo_zone');
 

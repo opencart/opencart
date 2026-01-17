@@ -122,8 +122,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		// Admin
 		/*
+		// Admin
 		$task_data = [
 			'code'   => 'country',
 			'action' => 'task/admin/customer_group.delete',

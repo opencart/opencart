@@ -21,7 +21,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'tax_class.list',
+			'code'   => 'tax_class',
 			'action' => 'task/catalog/tax_class',
 			'args'   => []
 		];

@@ -32,17 +32,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 		/*
 		// Admin
 		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.list',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'country',
+			'code'   => 'country.info.' . $args[1]['country_id'],
 			'action' => 'task/admin/country.info',
-			'args'   => ['country_id' => $output]
+			'args'   => ['country_id' => $args[1]['country_id']]
 		];
 
 		$this->model_setting_task->addTask($task_data);
@@ -77,6 +69,17 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 
+			/*
+			// Admin
+			$task_data = [
+				'code'   => 'country.info.' . $args[1]['country_id'],
+				'action' => 'task/admin/country.info',
+				'args'   => ['country_id' => $args[1]['country_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+			*/
+
 			// In case country was switched we want to update old country
 			if ($args[1]['country_id'] != $zone_info['country_id']) {
 				$task_data = [
@@ -88,27 +91,19 @@ class Zone extends \Opencart\System\Engine\Controller {
 				$this->load->model('setting/task');
 
 				$this->model_setting_task->addTask($task_data);
+
+				/*
+				// Admin
+				$task_data = [
+					'code'   => 'country.info.' . $zone_info['country_id'],
+					'action' => 'task/admin/country.info',
+					'args'   => ['country_id' => $zone_info['country_id']]
+				];
+
+				$this->model_setting_task->addTask($task_data);
+				*/
 			}
 		}
-
-		/*
-		// Admin
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.list',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.info',
-			'args'   => ['country_id' => $args[0]]
-		];
-
-		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 
 	/**
@@ -138,6 +133,17 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/task');
 
 			$this->model_setting_task->addTask($task_data);
+
+			/*
+			// Admin
+			$task_data = [
+				'code'   => 'country.info.' . $zone_info['country_id'],
+				'action' => 'task/admin/country.info',
+				'args'   => ['country_id' => $zone_info['country_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+			*/
 		}
 	}
 }

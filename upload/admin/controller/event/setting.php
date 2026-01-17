@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
- * Class Currency
+ * Class Setting
  *
  * @package Opencart\Admin\Controller\Event
  */

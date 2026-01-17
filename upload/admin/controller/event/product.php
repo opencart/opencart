@@ -6,6 +6,19 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Product extends \Opencart\System\Engine\Controller {
+	/**
+	 * Add Product
+	 *
+	 * Adds task to generate new product data.
+	 *
+	 * Called using model/catalog/product/addProduct/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
 	public function addProduct(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'product.info.' . $output,
@@ -18,6 +31,19 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/**
+	 * Edit Product
+	 *
+	 * Adds task to generate new product data.
+	 *
+	 * Called using model/catalog/product/editProduct/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
 	public function editProduct(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'product.info.' . $args[0],
@@ -30,6 +56,19 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 	}
 
+	/**
+	 * Delete Product
+	 *
+	 * Adds task to generate new product data.
+	 *
+	 * Called using model/catalog/product/deleteProduct/after
+	 *
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
+	 *
+	 * @return void
+	 */
 	public function deleteProduct(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'product.delete.' . $args[0],

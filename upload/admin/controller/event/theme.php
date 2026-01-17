@@ -73,7 +73,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$task_data = [
 			'code'   => 'theme.delete.' . $args[0],
 			'action' => 'task/catalog/theme.delete',
-			'args'   => ['route' => $args[0]]
+			'args'   => ['theme_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');

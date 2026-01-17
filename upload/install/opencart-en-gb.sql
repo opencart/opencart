@@ -1467,8 +1467,8 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.return_reason.delete', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.deleteReturnReason/after', 'event/return_reason', 1),
 
        ('ssr.review.add', 'Triggers review static site data creation.', 'catalog/model/catalog/review.addReview/after', 'event/review.addReview', 1),
-       ('ssr.review.edit', 'Triggers review static site data creation.', 'catalog/model/catalog/review.editReview/after', 'event/review.editReview', 1),
-       ('ssr.review.delete', 'Triggers review static site data creation.', 'catalog/model/catalog/review.deleteReview/after', 'event/review.deleteReview', 1),
+       ('ssr.review.edit', 'Triggers review static site data creation.', 'catalog/model/catalog/review.editReview/before', 'event/review.editReview', 1),
+       ('ssr.review.delete', 'Triggers review static site data creation.', 'catalog/model/catalog/review.deleteReview/before', 'event/review.deleteReview', 1),
 
        ('ssr.setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),
        ('ssr.setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),

@@ -62,6 +62,8 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editZone(string &$route, array &$args, &$output): void {
+		$this->load->model('localisation/zone');
+
 		$zone_info = $this->model_localisation_zone->getZone($args[0]);
 
 		if ($zone_info) {

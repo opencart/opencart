@@ -25,7 +25,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'currency.list',
+			'code'   => 'currency',
 			'action' => 'task/catalog/currency',
 			'args'   => []
 		];

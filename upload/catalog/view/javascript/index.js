@@ -13,6 +13,8 @@ config.addPath('catalog/view/data/');
 
 // Testing Code
 config.data.set('catalog', {
+    config_logo: 'catalog/opencart-logo.png',
+    config_url: 'http://localhost/opencart-master/upload/',
     config_language: 'en-gb',
     config_currency: 'EUR',
     config_customer_group_id: 1,

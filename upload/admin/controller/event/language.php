@@ -31,6 +31,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
+		/*
 		$task_data = [
 			'code'   => 'language.list',
 			'action' => 'task/admin/language',
@@ -38,6 +39,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->model_setting_task->addTask($task_data);
+		*/
 	}
 
 	/**

@@ -6,17 +6,22 @@ let onsubmit = async (e) => {
 
     console.log(e);
     console.log(e.target);
+    
+    form.enctype = 'application/x-www-form-urlencoded';
 
-    let data = new FormData(e.target);
+    let data = new FormData(form);
+
+
+
 
     console.log(JSON.stringify(Object.fromEntries(data.entries())));
 
     let response = await fetch(form.getAttribute('action'), {
         method: 'POST',
         headers: {
-           'Content-Type': 'application/json'
+           'Content-Type': 'multipart/form-data'
         },
-        body: JSON.stringify(Object.fromEntries(data.entries()))
+        body: data
     });//JSON.stringify()
 
     console.log(response);

@@ -9,7 +9,7 @@
 
     {% if customer_groups.size > 1 %}
       <div class="row mb-3">
-        <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
+        <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
         <div class="col-sm-10">
           <select name="customer_group_id" id="input-customer-group" class="form-select" required>
             {% for customer_group in customer_groups %}
@@ -27,6 +27,7 @@
         <div id="error-firstname" class="invalid-feedback"></div>
       </div>
     </div>
+
     <div class="row mb-3">
       <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
       <div class="col-sm-10">
@@ -34,6 +35,7 @@
         <div id="error-lastname" class="invalid-feedback"></div>
       </div>
     </div>
+
     <div class="row mb-3">
       <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
       <div class="col-sm-10">

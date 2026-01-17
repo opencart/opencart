@@ -38,4 +38,8 @@ export class WebComponent extends HTMLElement {
         // Dispatch the event
         this.dispatchEvent(event);
     }
+
+    render() {
+
+    }
 }

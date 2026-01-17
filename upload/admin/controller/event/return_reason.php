@@ -31,13 +31,5 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'return_reason',
-			'action' => 'task/admin/return_reason',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
 	}
 }

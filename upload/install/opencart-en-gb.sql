@@ -1481,9 +1481,9 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.tax_class.edit', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.editTaxClass/after', 'event/tax_class', 1),
        ('ssr.tax_class.delete', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.deleteTaxClass/before', 'event/tax_class', 1),
 
-       ('ssr.tax_rate.add', 'Triggers tax_rate static site data creation.', 'admin/model/localisation/tax_rate.addTaxRate/after', 'event/tax_rate.addTaxRate', 1),
-       ('ssr.tax_rate.edit', 'Triggers tax_rate static site data creation.', 'admin/model/localisation/tax_rate.editTaxRate/after', 'event/tax_rate.editTaxRate', 1),
-       ('ssr.tax_rate.delete', 'Triggers tax_rate static site data creation.', 'admin/model/localisation/tax_rate.deleteTaxRate/before', 'event/tax_rate.deleteTaxRate', 1),
+       ('ssr.tax_rate.add', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.addTaxRate/after', 'event/tax_rate.addTaxRate', 1),
+       ('ssr.tax_rate.edit', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.editTaxRate/after', 'event/tax_rate.editTaxRate', 1),
+       ('ssr.tax_rate.delete', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.deleteTaxRate/before', 'event/tax_rate.deleteTaxRate', 1),
 
        ('ssr.topic.add', 'Triggers topic static site data creation.', 'catalog/model/cms/topic.addTopic/after', 'event/topic.addTopic', 1),
        ('ssr.topic.edit', 'Triggers topic static site data creation.', 'catalog/model/cms/topic.editTopic/after', 'event/topic.editTopic', 1),
@@ -1494,8 +1494,8 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.translation.delete', 'Triggers translation static site data creation.', 'catalog/model/design/translation.deleteTranslation/before', 'event/translation.deleteTranslation', 1),
 
        ('ssr.zone.add', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.addZone/after', 'event/zone.addZone', 1),
-       ('ssr.zone.edit', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.editZone/after', 'event/zone.editZone', 1),
-       ('ssr.zone.delete', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.deleteZone/after', 'event/zone.deleteZone', 1),
+       ('ssr.zone.edit', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.editZone/before', 'event/zone.editZone', 1),
+       ('ssr.zone.delete', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.deleteZone/before', 'event/zone.deleteZone', 1),
 
        ('statistics.review.add', 'Updates review statistics when a new review is added.', 'catalog/model/catalog/review.addReview/after', 'event/statistics.addReview', 1),
        ('statistics.return.add', 'Updates return statistics when a new return is added.', 'catalog/model/account/returns.addReturn/after', 'event/statistics.addReturn', 1),

@@ -1,12 +1,12 @@
 import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
+class CheckoutCart extends WebComponent {
     async connected() {
 
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('checkout-cart', CheckoutCart);
 
 
 $('#shopping-cart').on('submit', '#output-cart form', function(e) {

@@ -54,7 +54,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new country data with updated zone.
 	 *
-	 * Called using admin/model/localisation/zone.editZone/after
+	 * Called using admin/model/localisation/zone.editZone/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -62,15 +62,33 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editZone(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'country.info.' . $args[1]['country_id'],
-			'action' => 'task/catalog/country.info',
-			'args'   => ['country_id' => $args[1]['country_id']]
-		];
+		$zone_info = $this->model_localisation_zone->getZone($args[0]);
 
-		$this->load->model('setting/task');
+		if ($zone_info) {
+			$task_data = [
+				'code'   => 'country.info.' . $args[1]['country_id'],
+				'action' => 'task/catalog/country.info',
+				'args'   => ['country_id' => $args[1]['country_id']]
+			];
 
-		$this->model_setting_task->addTask($task_data);
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+
+			// In case country was switched we want to update old country
+			if ($args[1]['country_id'] != $zone_info['country_id']) {
+				$task_data = [
+					'code'   => 'country.info.' . $zone_info['country_id'],
+					'action' => 'task/catalog/country.info',
+					'args'   => ['country_id' => $zone_info['country_id']]
+				];
+
+				$this->load->model('setting/task');
+
+				$this->model_setting_task->addTask($task_data);
+			}
+		}
+
 		/*
 		// Admin
 		$task_data = [
@@ -96,7 +114,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new country data with deleted zone.
 	 *
-	 * Called using admin/model/localisation/zone.deleteZone/after
+	 * Called using admin/model/localisation/zone.deleteZone/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -121,4 +139,3 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 	}
 }
-

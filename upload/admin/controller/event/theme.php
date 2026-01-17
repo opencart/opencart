@@ -9,7 +9,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Theme
 	 *
-	 * Adds task to generate new theme list
+	 * Adds task to generate new theme data.
 	 *
 	 * model/design/theme/addTheme/after
 	 *
@@ -21,9 +21,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 	 */
 	public function addTheme(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'theme.info.' . str_replace('/', '.', $args[0]['route']),
+			'code'   => 'theme.info.' . $output,
 			'action' => 'task/catalog/theme.info',
-			'args'   => ['route' => $args[0]['route']]
+			'args'   => ['theme_id' => $output]
 		];
 
 		$this->load->model('setting/task');
@@ -34,8 +34,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Theme
 	 *
-	 * Adds task to generate new theme list
-	 *
+	 * Adds task to generate new theme data
+	 *.
 	 * model/design/theme/editTheme/after
 	 *
 	 * @param string            $route
@@ -46,9 +46,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 	 */
 	public function editTheme(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'theme.info.' . str_replace('/', '.', $args[0]['route']),
+			'code'   => 'theme.info.' . $args[0],
 			'action' => 'task/catalog/theme.info',
-			'args'   => ['route' => $args[0]['route']]
+			'args'   => ['theme_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');
@@ -59,7 +59,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 	/**
 	 * Delete Theme
 	 *
-	 * Adds task to generate new theme list
+	 * Adds task to generate new theme data.
 	 *
 	 * model/design/theme/deleteTheme/after
 	 *

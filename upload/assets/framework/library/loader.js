@@ -66,6 +66,18 @@ class Loader {
         return output;
     }
 
+    async request(url, option = {}) {
+        let response = fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        return response.json();
+    }
+
     static getInstance(event) {
         if (!this.instance) {
             this.instance = new Loader(event);

@@ -1,11 +1,17 @@
-class XLogin extends WebComponent {
-    async connected() {
-        this.load.language('common/header');
+import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-        this.innerHTML = this.load.template('common/header', data);
+// Language
+const language = await loader.language('account/login');
+
+class AccountLogin extends WebComponent {
+    async connected() {
+        data = {};
+
+        this.innerHTML = this.load.template('account/login', { ...data, ...language });
     }
 
-    onRender() {
+    render() {
         const form = document.getElementById('form-login');
 
         form.addEventListener('submit', this.onSubmit);
@@ -47,11 +53,6 @@ class XLogin extends WebComponent {
 }
 
 customElements.define('x-header', XHeader);
-
-
-
-
-
 
 /*
 $('#form-login').on('submit', function(e) {

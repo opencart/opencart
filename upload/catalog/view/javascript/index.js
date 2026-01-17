@@ -13,6 +13,7 @@ config.addPath('catalog/view/data/');
 
 // Testing Code
 config.data.set('catalog', {
+    config_name: 'OpenCart Store',
     config_logo: 'catalog/opencart-logo.png',
     config_url: 'http://localhost/opencart-master/upload/',
     config_language: 'en-gb',
@@ -51,9 +52,9 @@ event.register(/language\/.+\/after/g, ({ path, output }) => {
     //let data = language.fetch('default');
 
     //for (let key in data) {
-    //    if (output[key] == undefined) {
-    //        output[key] = data[key];
-    //   }
+    //  if (output[key] == undefined) {
+    //      output[key] = data[key];
+    //  }
     //}
 });
 

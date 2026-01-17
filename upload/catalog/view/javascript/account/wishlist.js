@@ -1,7 +1,42 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-class XAccount extends WebComponent {
+// Library
+const session = loader.library('session');
+
+// Language
+const language = loader.language('account/edit');
+
+class AccountWishlist extends WebComponent {
     async connected() {
+        let data = {};
+
+        data.wishlist = {};
+
+        let customer = session.get('customer');
+
+        if (session.has('customer')) {
+            data.wishlist = customer.get('wishlist');
+        }
+
+        let response = loader.template('account/register', { ...data, ...language });
+
+        response.then(this.render.bind(this));
+        response.then(this.addEvent.bind(this));
+    }
+
+    render(html) {
+        this.innerHTML = html;
+    }
+
+    addEvent() {
+        let button = this.querySelectorAll('button');
+
+        button.addEventListener('click', this.onClick.bind(this));
+    }
+
+    onClick() {
+
 
     }
 }

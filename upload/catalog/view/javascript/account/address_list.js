@@ -1,4 +1,7 @@
-class XAddressList extends WebComponent {
+import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
+
+class AccountAddressList extends WebComponent {
     async connected() {
         await this.load.language('account/address');
 

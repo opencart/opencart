@@ -1,6 +1,7 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
+// Language
 const language = await loader.language('account/address');
 
 class AccountAddress extends WebComponent {

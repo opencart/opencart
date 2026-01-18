@@ -6,16 +6,8 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Setting extends \Opencart\System\Engine\Controller {
-
-	public function index(string &$route, array &$args, &$output): void {
-
-
-	}
-
 	/**
-	 * Refresh
-	 *
-	 * Auto update currencies
+	 * Update data related to settings.
 	 *
 	 * Called using model/setting/setting/editSetting/after
 	 *
@@ -25,19 +17,38 @@ class Setting extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function refresh(string &$route, array &$args, &$output) {
-		if (!$this->config->get('config_currency_auto') || $route != 'setting/setting.editSetting') {
-			return;
+	public function index(string &$route, array &$args, &$output): void {
+		if ($route != 'setting/setting.editSetting') {
+			// Language
+			$task_data = [
+				'code'   => 'language',
+				'action' => 'task/catalog/language',
+				'args'   => []
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+
+			// Currency
+			if ($this->config->get('config_currency_auto')) {
+				$task_data = [
+					'code'   => 'currency',
+					'action' => 'task/catalog/currency',
+					'args'   => []
+				];
+
+				$this->model_setting_task->addTask($task_data);
+			}
+
+			// Location
+			$task_data = [
+				'code'   => 'location',
+				'action' => 'task/catalog/location',
+				'args'   => []
+			];
+
+			$this->model_setting_task->addTask($task_data);
 		}
-
-		$task_data = [
-			'code'   => 'currency',
-			'action' => 'task/admin/currency.refresh',
-			'args'   => []
-		];
-
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
 	}
 }

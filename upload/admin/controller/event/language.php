@@ -11,9 +11,9 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new language list
 	 *
-	 * Called using admin/model/localisation/language/addLanguage/after
-	 * Called using admin/model/localisation/language/editLanguage/after
-	 * Called using admin/model/localisation/language/deleteLanguage/after
+	 * Triggered using admin/model/localisation/language/addLanguage/after
+	 * Triggered using admin/model/localisation/language/editLanguage/after
+	 * Triggered using admin/model/localisation/language/deleteLanguage/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

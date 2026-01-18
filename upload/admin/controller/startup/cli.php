@@ -65,8 +65,6 @@ class Cli extends \Opencart\System\Engine\Controller {
 	}
 
 	public function end() {
-		//if () {
 
-		//}
 	}
 }

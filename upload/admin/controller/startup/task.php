@@ -20,7 +20,9 @@ class Task extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		register_shutdown_function([$this, 'start']);
+		if (php_sapi_name() !== 'cli') {
+			register_shutdown_function([$this, 'start']);
+		}
 	}
 
 	/*
@@ -38,13 +40,7 @@ class Task extends \Opencart\System\Engine\Controller {
 		}
 
 		if (strtoupper(substr(php_uname(), 0, 3)) == 'WIN') {
-			$handle = popen(DIR_APPLICATION . 'index.php start > ' . DIR_LOGS . 'command.log 2>&1', 'r');
-
-			$read = fread($handle, 4096);
-
-			pclose($handle);
-
-			//pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
+			pclose(popen('start /B php ' . DIR_APPLICATION . 'index.php start', 'r'));
 		} else {
 			shell_exec('php ' . DIR_APPLICATION . 'index.php start > /dev/null 2>&1 &');
 		}

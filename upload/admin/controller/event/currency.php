@@ -11,11 +11,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new currency data.
 	 *
-	 * Called using
-	 *
-	 * admin/model/localisation/currency/addCategory/after
-	 * admin/model/localisation/currency/editCategory/after
-	 * admin/model/localisation/currency/deleteCategory/after
+	 * Triggered using admin/model/localisation/currency/addCategory/after
+	 * Triggered using admin/model/localisation/currency/editCategory/after
+	 * Triggered using admin/model/localisation/currency/deleteCategory/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

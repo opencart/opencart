@@ -125,18 +125,19 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		//$this->load->model('localisation/geo_zone');
-
-		$results = $this->model_localisation_geo_zone->getZones($output);
-
 		// Update countries based on geo zones.
 		$this->load->model('localisation/geo_zone');
 
 		$results = $this->model_localisation_geo_zone->getZones($args[0]);
 
 		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'country.info.' . $result['country_id'],
+				'action' => 'task/catalog/country.info',
+				'args'   => ['country_id' => $result['country_id']]
+			];
 
-
+			$this->model_setting_task->addTask($task_data);
 		}
 	}
 }

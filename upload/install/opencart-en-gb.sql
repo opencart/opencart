@@ -1470,8 +1470,7 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.review.edit', 'Triggers review static site data creation.', 'catalog/model/catalog/review.editReview/before', 'event/review.editReview', 1),
        ('ssr.review.delete', 'Triggers review static site data creation.', 'catalog/model/catalog/review.deleteReview/before', 'event/review.deleteReview', 1),
 
-       ('ssr.setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),
-       ('ssr.setting', 'Updates currencies data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),
+       ('ssr.setting', 'Updates setting data when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/setting', 1),
 
        ('ssr.store.add', 'Triggers store static site data creation.', 'admin/model/setting/store.addStore/after', 'event/store.addStore', 1),
        ('ssr.store.edit', 'Triggers store static site data creation.', 'admin/model/setting/store.editStore/after', 'event/store.editStore', 1),
@@ -1482,7 +1481,7 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.tax_class.delete', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.deleteTaxClass/before', 'event/tax_class', 1),
 
        ('ssr.tax_rate.add', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.addTaxRate/after', 'event/tax_rate.addTaxRate', 1),
-       ('ssr.tax_rate.edit', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.editTaxRate/after', 'event/tax_rate.editTaxRate', 1),
+       ('ssr.tax_rate.edit', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.editTaxRate/before', 'event/tax_rate.editTaxRate', 1),
        ('ssr.tax_rate.delete', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.deleteTaxRate/before', 'event/tax_rate.deleteTaxRate', 1),
 
        ('ssr.topic.add', 'Triggers topic static site data creation.', 'catalog/model/cms/topic.addTopic/after', 'event/topic.addTopic', 1),

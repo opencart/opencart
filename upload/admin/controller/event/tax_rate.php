@@ -1,124 +1,95 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
- * Class Geo Zone
+ * Class Tax Rate
  *
  * @package Opencart\Admin\Controller\Event
  */
-class GeoZone extends \Opencart\System\Engine\Controller {
+class TaxRate extends \Opencart\System\Engine\Controller {
 	/**
-	 * Add Zone
+	 * Add Tax Rate
 	 *
-	 * Generate new country info page with added zone.
+	 * Generate new tax rate data with geo zone ID.
 	 *
-	 * Called using admin/model/localisation/geo_zone/addGeoZone
+	 * Called using admin/model/localisation/geo_zone/addTaxRate/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
-	public function addGeoZone(string &$route, array &$args, &$output): void {
+	public function addTaxRate(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'tax_rate.info.' . $args[1]['geo_zone_id'],
+			'action' => 'task/catalog/tax_rate.info',
+			'args'   => ['geo_zone_id' => $args[1]['geo_zone_id']]
+		];
+
 		$this->load->model('setting/task');
 
-		$this->load->model('localisation/geo_zone');
+		$this->model_setting_task->addTask($task_data);
+	}
 
-		$results = $this->model_localisation_geo_zone->getGeoZones();
+	/**
+	 * Edit Tax Rate
+	 *
+	 * Generate new tax rate data with updated geo zone ID.
+	 *
+	 * Called using admin/model/localisation/zone/editZone/before/before
+	 *
+	 * @param string                $route
+	 * @param array<string, string> $args
+	 *
+	 * @return void
+	 */
+	public function editTaxRate(string &$route, array &$args, &$output): void {
+		$task_data = [
+			'code'   => 'tax_rate.info.' . $args[1]['geo_zone_id'],
+			'action' => 'task/catalog/tax_rate.info',
+			'args'   => ['geo_zone_id' => $args[1]['geo_zone_id']]
+		];
 
-		foreach ($results as $result) {
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$this->load->model('localisation/tax_rate');
+
+		$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($args[0]);
+
+		if ($args[1]['geo_zone_id'] != $tax_rate_info['geo_zone_id']) {
 			$task_data = [
-				'code'   => 'tax_rate.info.' . $args[1]['country_id'],
+				'code'   => 'tax_rate.info.' . $tax_rate_info['geo_zone_id'],
 				'action' => 'task/catalog/tax_rate.info',
-				'args'   => ['country_id' => $args[1]['country_id']]
+				'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
-
-		/*
-		// Admin
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.list',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.info',
-			'args'   => ['country_id' => $output]
-		];
-
-		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 
 	/**
-	 * Edit Zone
-	 *
-	 * Generate new country info page with updated zone.
-	 *
-	 * Called using admin/model/localisation/zone/editZone
-	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
-	 *
-	 * @return void
-	 */
-	public function editZone(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'country.info.' . $args[1]['country_id'],
-			'action' => 'task/catalog/country.info',
-			'args'   => ['country_id' => $args[1]['country_id']]
-		];
-
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-		/*
-		// Admin
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.list',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/admin/country.info',
-			'args'   => ['country_id' => $args[0]]
-		];
-
-		$this->model_setting_task->addTask($task_data);
-		*/
-	}
-
-	/**
-	 * Delete Zone
+	 * Delete Tax Rate
 	 *
 	 * Generate new country info page with deleted zone.
 	 *
-	 * Called using admin/model/localisation/zone/deleteZone
+	 * Called using admin/model/localisation/zone/deleteZone/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
-	public function deleteZone(string &$route, array &$args, &$output): void {
-		$this->load->model('localisation/zone');
+	public function deleteTaxRate(string &$route, array &$args, &$output): void {
+		$this->load->model('localisation/tax_rate');
 
-		$zone_info = $this->model_localisation_zone->getZone($args[0]);
+		$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($args[0]);
 
-		if ($zone_info) {
+		if ($tax_rate_info) {
 			$task_data = [
-				'code'   => 'country.info.' . $zone_info['country_id'],
-				'action' => 'task/admin/country.info',
-				'args'   => ['country_id' => $zone_info['country_id']]
+				'code'   => 'tax_rate.delete.' . $tax_rate_info['geo_zone_id'],
+				'action' => 'task/admin/tax_rate.info',
+				'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
 			];
 
 			$this->load->model('setting/task');

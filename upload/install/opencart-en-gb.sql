@@ -1436,7 +1436,7 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.filter.delete', 'Triggers filter static site data creation.', 'catalog/model/catalog/filter.deleteFilter/after', 'event/filter.deleteFilter', 1),
 
        ('ssr.geo_zone.add', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.addGeoZone/after', 'event/geo_zone.addGeoZone', 1),
-       ('ssr.geo_zone.edit', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.editGeoZone/after', 'event/geo_zone.editGeoZone', 1),
+       ('ssr.geo_zone.edit', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.editGeoZone/before', 'event/geo_zone.editGeoZone', 1),
        ('ssr.geo_zone.delete', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.deleteGeoZone/before', 'event/geo_zone.deleteGeoZone', 1),
 
        ('ssr.information.add', 'Triggers information static site data creation.', 'catalog/model/catalog/information.addInformation/after', 'event/information.addInformation', 1),

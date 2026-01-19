@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-theme" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <button type="submit" form="form-template" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
         <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -18,7 +18,7 @@
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-theme" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <form id="form-template" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <div class="row mb-3">
             <label for="input-route" class="col-sm-2 col-form-label">{{ entry_store }}</label>
             <div class="col-sm-10">
@@ -63,7 +63,7 @@
               <x-switch name="status" value="1" checked="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
             </div>
           </div>
-          <input type="hidden" name="theme_id" value="{{ theme_id }}" id="input-theme-id"/>
+          <input type="hidden" name="template_id" value="{{ template_id }}" id="input-template-id"/>
         </form>
       </div>
     </div>
@@ -74,5 +74,5 @@
 <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
 <script type="text/javascript" src="view/javascript/codemirror/mode/xml/xml.js"></script>
 <script type="text/javascript" src="view/javascript/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-<script type="text/javascript" src="view/javascript/theme.js"></script>
+<script type="text/javascript" src="view/javascript/template.js"></script>
 {{ footer }}

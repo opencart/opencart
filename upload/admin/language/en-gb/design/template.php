@@ -1,13 +1,12 @@
 <?php
 // Heading
-$_['heading_title']     = 'Theme Editor';
+$_['heading_title']     = 'Template Editor';
 
 // Text
-$_['text_success']      = 'Success: You have modified themes!';
-$_['text_add']          = 'Add Theme';
-$_['text_edit']         = 'Edit Theme';
+$_['text_success']      = 'Success: You have modified templates!';
+$_['text_add']          = 'Add Template';
+$_['text_edit']         = 'Edit Template';
 $_['text_filter']       = 'Filter';
-$_['text_stylesheet']   = 'Stylesheets';
 $_['text_extension']    = 'Extensions';
 $_['text_code']         = 'Template Code Editor';
 $_['text_twig']         = 'The theme editor uses the template language Twig. You can read about <a href="https://twig.symfony.com/doc/" target="_blank" class="alert-link">Twig syntax here</a>.';
@@ -26,5 +25,5 @@ $_['entry_code']        = 'Code';
 $_['entry_status']      = 'Status';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify the theme editor!';
+$_['error_permission']  = 'Warning: You do not have permission to modify the template editor!';
 $_['error_file']        = 'Warning: Template file does not exist!';

@@ -69,8 +69,6 @@ class Login extends \Opencart\System\Engine\Controller {
 	public function login(): void {
 		$this->load->language('common/login');
 
-		//print_r($this->request->post);
-
 		$json = [];
 
 		// Stop any undefined index messages.

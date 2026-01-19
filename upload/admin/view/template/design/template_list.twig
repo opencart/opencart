@@ -1,4 +1,4 @@
-<form id="form-theme" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+<form id="form-template" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
@@ -12,19 +12,19 @@
         </tr>
       </thead>
       <tbody>
-        {% if themes %}
-          {% for theme in themes %}
-            <tr{% if not theme.status %} class="table-disabled"{% endif %}>
-              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ theme.theme_id }}" class="form-check-input"/></td>
-              <td>{{ theme.route }}</td>
-              <td>{{ theme.store }}</td>
-              <td class="text-center">{% if theme.status %}
+        {% if templates %}
+          {% for template in templates %}
+            <tr{% if not template.status %} class="table-disabled"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ template.template_id }}" class="form-check-input"/></td>
+              <td>{{ template.route }}</td>
+              <td>{{ template.store }}</td>
+              <td class="text-center">{% if template.status %}
                   <span class="badge bg-success">{{ text_enabled }}</span>
                 {% else %}
                   <span class="badge bg-danger">{{ text_disabled }}</span>
                 {% endif %}</td>
-              <td>{{ theme.date_added }}</td>
-              <td class="text-end text-nowrap"><a href="{{ theme.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td>{{ template.date_added }}</td>
+              <td class="text-end text-nowrap"><a href="{{ template.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

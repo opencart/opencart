@@ -18,16 +18,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/translation');
 
-		// Clear old data
-		$task_data = [
-			'code'   => 'translation',
-			'action' => 'task/catalog/translation.clear',
-			'args'   => []
-		];
 
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
 
 		// Generate new data
 		$ignore = [

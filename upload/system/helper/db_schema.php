@@ -7516,10 +7516,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'theme',
+		'name'  => 'template',
 		'field' => [
 			[
-				'name'           => 'theme_id',
+				'name'           => 'template_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
 			],
@@ -7547,7 +7547,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'theme_id'
+			'template_id'
 		],
 		'foreign' => [
 			[

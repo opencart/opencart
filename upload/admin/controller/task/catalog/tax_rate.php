@@ -7,37 +7,6 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  */
 class TaxRate extends \Opencart\System\Engine\Controller {
 	/**
-	 * Index
-	 *
-	 * Generate tax rate task list.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function index(array $args = []): array {
-		$this->load->language('task/catalog/tax_rate');
-
-		$this->load->model('setting/task');
-
-		$this->load->model('localisation/geo_zone');
-
-		$geo_zones = $this->model_localisation_geo_zone->getGeoZones();
-
-		foreach ($geo_zones as $geo_zone) {
-			$task_data = [
-				'code'   => 'tax_rate-' . $geo_zone['geo_zone_id'],
-				'action' => 'task/catalog/tax_rate.info',
-				'args'   => ['geo_zone_id' => $geo_zone['geo_zone_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
-
-		return ['success' => $this->language->get('text_task')];
-	}
-
-	/**
 	 * Info
 	 *
 	 * Generate tax rate information.

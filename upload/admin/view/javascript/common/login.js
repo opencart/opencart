@@ -4,47 +4,27 @@ let alert = document.getElementById('alert');
 let onsubmit = async (e) => {
     e.preventDefault();
 
-    console.log(e);
-    console.log(e.target);
-    
-    form.enctype = 'application/x-www-form-urlencoded';
-
-    let data = new FormData(form);
-
-
-
-
-    console.log(JSON.stringify(Object.fromEntries(data.entries())));
-
-    let response = await fetch(form.getAttribute('action'), {
+    let response = await fetch(e.target.getAttribute('action'), {
         method: 'POST',
-        headers: {
-           'Content-Type': 'multipart/form-data'
-        },
-        body: data
-    });//JSON.stringify()
-
-    console.log(response);
-    console.log(response.body);
+        body: new FormData(form)
+    });
 
     if (response.status == 200) {
-        response.json().then((json) => {
-            console.log(json);
+        let json = await response.json();
 
-            if (json['redirect']) {
-                document.location = json['redirect'];
-            }
+        if (json['redirect']) {
+            document.location = json['redirect'];
+        }
 
-            if (typeof json['error']) {
-                //alert.insertAdjacentElement('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
+        if (typeof json['error']) {
+            //alert.insertAdjacentElement('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
 
-            if (json['success']) {
-               // alert.insertAdjacentElement('afterbegin', '<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-        });
+        if (json['success']) {
+            // alert.insertAdjacentElement('afterbegin', '<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
     }
-}
+};
 
 form.addEventListener('submit', onsubmit);
 

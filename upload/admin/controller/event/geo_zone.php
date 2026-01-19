@@ -117,7 +117,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	public function deleteGeoZone(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'tax_rate.info.' . $args[0],
-			'action' => 'task/admin/country.info',
+			'action' => 'task/admin/tax_rate.info',
 			'args'   => ['geo_zone_id' => $args[0]]
 		];
 

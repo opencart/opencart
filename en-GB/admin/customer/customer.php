@@ -29,6 +29,9 @@ $_['text_option']              = 'Options';
 $_['text_login']               = 'Login into Store';
 $_['text_unlock']              = 'Unlock Account';
 $_['text_filter']              = 'Filter';
+$_['text_order']               = 'Orders';
+$_['text_return']              = 'Returns';
+$_['text_subscription']        = 'Subscriptions';
 
 // Column
 $_['column_name']              = 'Customer Name';

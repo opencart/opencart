@@ -4240,7 +4240,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'setting',
-				'type' => 'text'
+				'type' => 'longtext'
 			]
 		],
 		'primary' => [

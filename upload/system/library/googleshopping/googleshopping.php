@@ -955,9 +955,8 @@ class Googleshopping extends Library {
         $subject = $this->language->get('text_cron_email_subject');
         $message = sprintf($this->language->get('text_cron_email_message'), implode('<br/>', $report));
 
-        $mail = new \Mail();
+		$mail = new \Mail($this->config->get('config_mail_engine'));
 
-        $mail->protocol = $this->config->get('config_mail_protocol');
         $mail->parameter = $this->config->get('config_mail_parameter');
 
         $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');

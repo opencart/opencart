@@ -3,11 +3,17 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        {% if orders %}
-          <a href="{{ orders }}" title="{{ button_order }}" class="btn btn-warning"><i class="fa-solid fa-receipt"></i></a>
-        {% endif %}
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-receipt"></i> <i class="fa-solid fa-caret-down fa-fw"></i></button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ order }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_order }}</a></li>
+            <li><a href="{{ subscription }}" class="dropdown-item"><i class="fa-solid fa-repeat"></i> {{ text_subscription }}</a></li>
+            <li><a href="{{ return }}" class="dropdown-item"><i class="fa-solid fa-arrow-rotate-left"></i> {{ text_return }}</a></li>
+          </ul>
+        </div>
         <button type="submit" id="button-save" form="form-customer" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+      </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}

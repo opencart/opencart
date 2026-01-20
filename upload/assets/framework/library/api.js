@@ -1,46 +1,46 @@
 export default class Api {
-    fetch(request, response) {
+    async fetch(option) {
 
+        if (option.headers == undefined) {
+            option.headers == {
+                'content-type': 'multipart/form-data'
+            };
+        }
 
+        if (option.method == undefined) {
+            option.method == '';
+        }
+
+        let response = fetch(option.url, {
+            method: option.method,
+            // whatever data you want to post with a key-value pair
+            headers: option.headers,
+            body: option.data,
+
+        });
+
+        response.thn();
     }
 
     async get(config) {
 
     }
 
-    async post(option, data = {}) {
-        /*
-        if (!config.method) {
-            config.method = 'get';
-        }
-
-        if (!config.headers) {
-            config.headers = {
-                'Content-Type': 'application/json'
-            };
-        }
-
-        //if () {
-        //  option.data
-        //}
-
-        let response = await fetch(config.url, {
-            method: config.method,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: config.data
-        }).catch((err) => { });
-
-        if (response.status !== 200) {
-            throw new Error('HTTP error! status: ' + response.status);
-        }
+    async post(url, data = {}) {
+        let response = await fetch(option.url, {
+            method: 'POST',
+            body: new FormData(data),
+        });
 
         return await response.json();
-        */
     }
 
-    async get() {
+    async get(url) {
+        let response = await fetch(option.url, {
+            method: 'GET',
+            body: new FormData(data),
+        });
 
+        return await response.json();
     }
 }

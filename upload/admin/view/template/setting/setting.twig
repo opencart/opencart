@@ -3,6 +3,26 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
+
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-receipt"></i> <i class="fa-solid fa-caret-down fa-fw"></i></button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ order_status }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_order_status }}</a></li>
+            <li><a href="{{ subscription_status }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_subscription_status }}</a></li>
+
+            <li><a href="{{ stock_status }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_stock_status }}</a></li>
+            <li><a href="{{ length_class }}" class="dropdown-item"><i class="fa-solid fa-repeat"></i> {{ text_length_class }}</a></li>
+            <li><a href="{{ weight_class }}" class="dropdown-item"><i class="fa-solid fa-arrow-rotate-left"></i> {{ text_weight_class }}</a></li>
+
+            <li><a href="{{ return_status }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_return_status }}</a></li>
+            <li><a href="{{ return_action }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_return_action }}</a></li>
+            <li><a href="{{ return_reason }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_return_reason }}</a></li>
+
+          </ul>
+        </div>
+
+
         <button type="submit" form="form-setting" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
         <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
       </div>
@@ -28,18 +48,14 @@
           </ul>
           <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
-              <div class="accordion" id="accordion-general">
-                <div class="accordion-item">
-                  <h2 class="accordion-header"><button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse-general">{{ text_general }}</button></h2>
-                  <div id="collapse-general" class="accordion-collapse collapse show" data-bs-parent="#accordion-general">
-                    <div class="accordion-body">
-                      <ul class="nav nav-tabs">
-                        {% for language in languages %}
-                          <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
-                        {% endfor %}
-                      </ul>
-                      <div class="tab-content">
-                        {% for language in languages %}
+              <fieldset>
+                <legend>{{ text_general }}</legend>
+                <div class="accordion" id="accordion-general">
+                  {% for language in languages %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header"><button type="button" class="accordion-button{% if not loop.first %} collapsed{% endif %}" data-bs-toggle="collapse" data-bs-target="#collapse-language-{{ language.language_id }}"><img src="{{ language.image }}" title="{{ language.name }}" class="me-1"/> {{ language.name }}</button></h2>
+                      <div id="collapse-language-{{ language.language_id }}" class="accordion-collapse collapse{% if loop.first %} show{% endif %}" data-bs-parent="#accordion-general">
+                        <div class="accordion-body">
                           <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
                             <div class="row mb-3">
                               <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
@@ -61,155 +77,160 @@
                               </div>
                             </div>
                           </div>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-theme">{{ text_theme }}</button></h2>
-                  <div id="collapse-theme" class="accordion-collapse collapse" data-bs-parent="#accordion-general">
-                    <div class="accordion-body">
-                      <div class="row mb-3">
-                        <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
-                        <div class="col-sm-10">
-                          <div class="border rounded d-block" style="max-width: 300px;">
-                            <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
-                            <div class="d-grid">
-                              <button type="button" data-oc-toggle="image" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
-                              <button type="button" data-oc-toggle="clear" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-icon" class="col-sm-2 col-form-label">{{ entry_icon }}</label>
-                        <div class="col-sm-10">
-                          <div class="border rounded d-block" style="max-width: 300px;">
-                            <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
-                            <div class="d-grid">
-                              <button type="button" data-oc-toggle="image" data-oc-target="#input-icon" data-oc-thumb="#thumb-icon" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
-                              <button type="button" data-oc-toggle="clear" data-oc-target="#input-icon" data-oc-thumb="#thumb-icon" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
-                            </div>
-                          </div>
-                          <div class="form-text">{{ help_icon }}</div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
-                        <div class="col-sm-10">
-                          <select name="config_theme" id="input-theme" class="form-select">
-                            {% for theme in themes %}
-                              <option value="{{ theme.value }}"{% if theme.value == config_theme %} selected{% endif %}>{{ theme.text }}</option>
-                            {% endfor %}
-                          </select>
-                          <br/>
-                          <img src="" alt="" id="theme-thumb" class="img-thumbnail"/>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-layout" class="col-sm-2 col-form-label">{{ entry_layout }}</label>
-                        <div class="col-sm-10">
-                          <select name="config_layout_id" id="input-layout" class="form-select">
-                            {% for layout in layouts %}
-                              <option value="{{ layout.layout_id }}"{% if layout.layout_id == config_layout_id %} selected{% endif %}>{{ layout.name }}</option>
-                            {% endfor %}
-                          </select>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  {% endfor %}
                 </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-store">{{ text_store }}</button></h2>
-                  <div id="collapse-store" class="accordion-collapse collapse" data-bs-parent="#accordion-general">
-                    <div class="accordion-body">
-                      <div class="row mb-3">
-                        <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
-                        <div class="col-sm-10">
-                          <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
-                          <div id="error-name" class="invalid-feedback"></div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-owner" class="col-sm-2 col-form-label">{{ entry_owner }}</label>
-                        <div class="col-sm-10">
-                          <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control" required/>
-                          <div id="error-owner" class="invalid-feedback"></div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
-                        <div class="col-sm-10">
-                          <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control" required>{{ config_address }}</textarea>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
-                        <div class="col-sm-10">
-                          <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
-                          <div id="error-email" class="invalid-feedback"></div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
-                        <div class="col-sm-10">
-                          <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
-                          <div id="error-telephone" class="invalid-feedback"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-contact">{{ text_contact }}</button></h2>
-                  <div id="collapse-contact" class="accordion-collapse collapse" data-bs-parent="#accordion-general">
-                    <div class="accordion-body">
-                      <div class="row mb-3">
-                        <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
-                        <div class="col-sm-10">
-                          <div class="border rounded d-block" style="max-width: 300px;">
-                            <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
-                            <div class="d-grid">
-                              <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
-                              <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
-                        <div class="col-sm-10">
-                          <textarea name="config_open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ config_open }}</textarea>
-                          <div class="form-text">{{ help_open }}</div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
-                        <div class="col-sm-10">
-                          <textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
-                          <div class="form-text">{{ help_comment }}</div>
-                        </div>
-                      </div>
-                      {% if locations %}
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_store }}</legend>
+                <div class="accordion" id="accordion-store">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-theme">{{ text_theme }}</button></h2>
+                    <div id="collapse-theme" class="accordion-collapse collapse" data-bs-parent="#accordion-store">
+                      <div class="accordion-body">
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label">{{ entry_location }}</label>
+                          <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
                           <div class="col-sm-10">
-                            <div class="form-control" style="height: 150px; overflow: auto;">
-                              {% for location in locations %}
-                                <div class="form-check">
-                                  <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" id="input-location-{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked{% endif %}/> <label for="input-location-{{ location.location_id }}" class="form-check-label">{{ location.name }}</label>
-                                </div>
-                              {% endfor %}
+                            <div class="border rounded d-block" style="max-width: 300px;">
+                              <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                              <div class="d-grid">
+                                <button type="button" data-oc-toggle="image" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                                <button type="button" data-oc-toggle="clear" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                              </div>
                             </div>
-                            <div class="form-text">{{ help_location }}</div>
                           </div>
                         </div>
-                      {% endif %}
+                        <div class="row mb-3">
+                          <label for="input-icon" class="col-sm-2 col-form-label">{{ entry_icon }}</label>
+                          <div class="col-sm-10">
+                            <div class="border rounded d-block" style="max-width: 300px;">
+                              <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
+                              <div class="d-grid">
+                                <button type="button" data-oc-toggle="image" data-oc-target="#input-icon" data-oc-thumb="#thumb-icon" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                                <button type="button" data-oc-toggle="clear" data-oc-target="#input-icon" data-oc-thumb="#thumb-icon" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                              </div>
+                            </div>
+                            <div class="form-text">{{ help_icon }}</div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
+                          <div class="col-sm-10">
+                            <select name="config_theme" id="input-theme" class="form-select">
+                              {% for theme in themes %}
+                                <option value="{{ theme.value }}"{% if theme.value == config_theme %} selected{% endif %}>{{ theme.text }}</option>
+                              {% endfor %}
+                            </select>
+                            <br/>
+                            <img src="" alt="" id="theme-thumb" class="img-thumbnail"/>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-layout" class="col-sm-2 col-form-label">{{ entry_layout }}</label>
+                          <div class="col-sm-10">
+                            <select name="config_layout_id" id="input-layout" class="form-select">
+                              {% for layout in layouts %}
+                                <option value="{{ layout.layout_id }}"{% if layout.layout_id == config_layout_id %} selected{% endif %}>{{ layout.name }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-store">{{ text_store }}</button></h2>
+                    <div id="collapse-store" class="accordion-collapse collapse" data-bs-parent="#accordion-store">
+                      <div class="accordion-body">
+                        <div class="row mb-3">
+                          <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
+                            <div id="error-name" class="invalid-feedback"></div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-owner" class="col-sm-2 col-form-label">{{ entry_owner }}</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control" required/>
+                            <div id="error-owner" class="invalid-feedback"></div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
+                          <div class="col-sm-10">
+                            <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control" required>{{ config_address }}</textarea>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
+                            <div id="error-email" class="invalid-feedback"></div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+                            <div id="error-telephone" class="invalid-feedback"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-contact">{{ text_contact }}</button></h2>
+                    <div id="collapse-contact" class="accordion-collapse collapse" data-bs-parent="#accordion-store">
+                      <div class="accordion-body">
+                        <div class="row mb-3">
+                          <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
+                          <div class="col-sm-10">
+                            <div class="border rounded d-block" style="max-width: 300px;">
+                              <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+                              <div class="d-grid">
+                                <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                                <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
+                          <div class="col-sm-10">
+                            <textarea name="config_open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ config_open }}</textarea>
+                            <div class="form-text">{{ help_open }}</div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                          <div class="col-sm-10">
+                            <textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
+                            <div class="form-text">{{ help_comment }}</div>
+                          </div>
+                        </div>
+                        {% if locations %}
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">{{ entry_location }}</label>
+                            <div class="col-sm-10">
+                              <div class="form-control" style="height: 150px; overflow: auto;">
+                                {% for location in locations %}
+                                  <div class="form-check">
+                                    <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" id="input-location-{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked{% endif %}/> <label for="input-location-{{ location.location_id }}" class="form-check-label">{{ location.name }}</label>
+                                  </div>
+                                {% endfor %}
+                              </div>
+                              <div class="form-text">{{ help_location }}</div>
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </fieldset>
             </div>
             <div id="tab-local" class="tab-pane">
               <fieldset>
@@ -809,14 +830,11 @@
                       <div class="row mb-3">
                         <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_order_status_id" id="input-order-status" class="form-select">
-                              {% for order_status in order_statuses %}
-                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_order_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-order-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_order_status_id" id="input-order-status" class="form-select">
+                            {% for order_status in order_statuses %}
+                              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                            {% endfor %}
+                          </select>
                           <div class="form-text">{{ help_order_status }}</div>
                         </div>
                       </div>
@@ -851,42 +869,33 @@
                       <div class="row mb-3">
                         <label for="input-failed-status" class="col-sm-2 col-form-label">{{ entry_failed_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_failed_status_id" id="input-failed-status" class="form-select">
-                              {% for order_status in order_statuses %}
-                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_failed_status_id %} selected{% endif %}>{{ order_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_order_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-order-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_failed_status_id" id="input-failed-status" class="form-select">
+                            {% for order_status in order_statuses %}
+                              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_failed_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                            {% endfor %}
+                          </select>
                           <div class="form-text">{{ help_failed_status }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label for="input-void-status" class="col-sm-2 col-form-label">{{ entry_void_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_void_status_id" id="input-void-status" class="form-select">
-                              {% for order_status in order_statuses %}
-                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_void_status_id %} selected{% endif %}>{{ order_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_order_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-order-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_void_status_id" id="input-void-status" class="form-select">
+                            {% for order_status in order_statuses %}
+                              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_void_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                            {% endfor %}
+                          </select>
                           <div class="form-text">{{ help_void_status }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label for="input-fraud-status" class="col-sm-2 col-form-label">{{ entry_fraud_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_fraud_status_id" id="input-fraud-status" class="form-select">
-                              {% for order_status in order_statuses %}
-                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_fraud_status_id %} selected{% endif %}>{{ order_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_order_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-order-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_fraud_status_id" id="input-fraud-status" class="form-select">
+                            {% for order_status in order_statuses %}
+                              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_fraud_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                            {% endfor %}
+                          </select>
                           <div class="form-text">{{ help_fraud_status }}</div>
                         </div>
                       </div>
@@ -912,93 +921,72 @@
                       <div class="row mb-3">
                         <label for="input-subscription-status" class="col-sm-2 col-form-label">{{ entry_subscription_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_subscription_status_id" id="input-subscription-status" class="form-select">
-                              {% for subscription_status in subscription_statuses %}
-                                <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_subscription_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-subscription-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_subscription_status_id" id="input-subscription-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
                           <div class="form-text">{{ help_subscription }}</div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label for="input-subscription-active-status" class="col-sm-2 col-form-label">{{ entry_subscription_active_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_subscription_active_status_id" id="input-subscription-active-status" class="form-select">
-                              {% for subscription_status in subscription_statuses %}
-                                <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_active_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_subscription_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-subscription-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_subscription_active_status_id" id="input-subscription-active-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_active_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label for="input-subscription-expired-status" class="col-sm-2 col-form-label">{{ entry_subscription_expired_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_subscription_expired_status_id" id="input-subscription-expired-status" class="form-select">
-                              {% for subscription_status in subscription_statuses %}
-                                <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_expired_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_subscription_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-subscription-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_subscription_expired_status_id" id="input-subscription-expired-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_expired_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label for="input-subscription-suspended-status" class="col-sm-2 col-form-label">{{ entry_subscription_suspended_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_subscription_suspended_status_id" id="input-subscription-suspended-status" class="form-select">
-                              {% for subscription_status in subscription_statuses %}
-                                <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_suspended_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_subscription_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-subscription-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_subscription_suspended_status_id" id="input-subscription-suspended-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_suspended_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label for="input-subscription-canceled-status" class="col-sm-2 col-form-label">{{ entry_subscription_canceled_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_subscription_canceled_status_id" id="input-subscription-canceled-status" class="form-select">
-                              {% for subscription_status in subscription_statuses %}
-                                <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_canceled_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_subscription_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-subscription-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_subscription_canceled_status_id" id="input-subscription-canceled-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_canceled_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label for="input-subscription-failed-status" class="col-sm-2 col-form-label">{{ entry_subscription_failed_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_subscription_failed_status_id" id="input-subscription-failed-status" class="form-select">
-                              {% for subscription_status in subscription_statuses %}
-                                <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_failed_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_subscription_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-subscription-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_subscription_failed_status_id" id="input-subscription-failed-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_failed_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <label for="input-subscription-denied-status" class="col-sm-2 col-form-label">{{ entry_subscription_denied_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_subscription_denied_status_id" id="input-subscription-denied-status" class="form-select">
-                              {% for subscription_status in subscription_statuses %}
-                                <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_denied_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_subscription_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-subscription-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_subscription_denied_status_id" id="input-subscription-denied-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_denied_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -1032,14 +1020,11 @@
                       <div class="row mb-3">
                         <label for="input-stock-status" class="col-sm-2 col-form-label">{{ entry_stock_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_stock_status_id" id="input-stock-status" class="form-select">
-                              {% for stock_status in stock_statuses %}
-                                <option value="{{ stock_status.stock_status_id }}"{% if stock_status.stock_status_id == config_stock_status_id %} selected{% endif %}>{{ stock_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_stock_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-stock-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_stock_status_id" id="input-stock-status" class="form-select">
+                            {% for stock_status in stock_statuses %}
+                              <option value="{{ stock_status.stock_status_id }}"{% if stock_status.stock_status_id == config_stock_status_id %} selected{% endif %}>{{ stock_status.name }}</option>
+                            {% endfor %}
+                          </select>
                           <div class="form-text">{{ help_stock_status }}</div>
                         </div>
                       </div>
@@ -1110,14 +1095,11 @@
                       <div class="row mb-3">
                         <label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group">
-                            <select name="config_return_status_id" id="input-return-status" class="form-select">
-                              {% for return_status in return_statuses %}
-                                <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == config_return_status_id %} selected{% endif %}>{{ return_status.name }}</option>
-                              {% endfor %}
-                            </select>
-                            <button type="button" title="{{ button_return_status_add }}" data-bs-toggle="modal" data-bs-target="#modal-return-status" class="btn btn-secondary"><i class="fa fa-plus"></i></button>
-                          </div>
+                          <select name="config_return_status_id" id="input-return-status" class="form-select">
+                            {% for return_status in return_statuses %}
+                              <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == config_return_status_id %} selected{% endif %}>{{ return_status.name }}</option>
+                            {% endfor %}
+                          </select>
                           <div class="form-text">{{ help_return_status }}</div>
                         </div>
                       </div>

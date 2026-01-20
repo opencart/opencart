@@ -256,7 +256,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			$store_data = [];
 
-			foreach ($stores as $store) {
+			foreach ($data['stores'] as $store) {
 				$store_data[] = ['href' => $this->url->link('customer/customer.login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $store['store_id'])] + $store;
 			}
 
@@ -375,9 +375,13 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['upload'] = $this->url->link('tool/upload.upload', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['customer_id'])) {
-			$data['orders'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&filter_customer_id=' . $this->request->get['customer_id']);
+			$data['order'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&filter_customer_id=' . $this->request->get['customer_id']);
+			$data['return'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&filter_customer_id=' . $this->request->get['customer_id']);
+			$data['subscription'] = $this->url->link('sale/subscription', 'user_token=' . $this->session->data['user_token'] . '&filter_customer_id=' . $this->request->get['customer_id']);
 		} else {
-			$data['orders'] = '';
+			$data['order'] = '';
+			$data['return'] = '';
+			$data['subscription'] = '';
 		}
 
 		// Customer

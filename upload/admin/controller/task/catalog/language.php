@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Language
  *
- * Generates language list data for all stores
+ * Generates language list data for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */

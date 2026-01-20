@@ -6,7 +6,7 @@
         <button type="button" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
         <a href="{{ add }}" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
         <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> <i class="fa-solid fa-caret-down fa-fw"></i></button>
           <ul class="dropdown-menu">
             <li><button type="submit" form="form-customer" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
             <li><button type="submit" form="form-customer" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>

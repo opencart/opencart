@@ -1,3 +1,5 @@
+import { loader } from '../index.js';
+
 let form = document.getElementById('form-login');
 let alert = document.getElementById('alert');
 
@@ -17,11 +19,11 @@ let onsubmit = async (e) => {
         }
 
         if (typeof json['error']) {
-            //alert.insertAdjacentElement('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            alert.insertAdjacentElement('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
 
         if (json['success']) {
-            // alert.insertAdjacentElement('afterbegin', '<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            alert.insertAdjacentElement('afterbegin', '<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
     }
 };

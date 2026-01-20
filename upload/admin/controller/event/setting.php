@@ -19,14 +19,23 @@ class Setting extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		if ($route != 'setting/setting.editSetting') {
+			// Location
+			$task_data = [
+				'code'   => 'location',
+				'action' => 'task/catalog/location',
+				'args'   => []
+			];
+
+			$this->load->model('setting/task');
+
+			$this->model_setting_task->addTask($task_data);
+
 			// Language
 			$task_data = [
 				'code'   => 'language',
 				'action' => 'task/catalog/language',
 				'args'   => []
 			];
-
-			$this->load->model('setting/task');
 
 			$this->model_setting_task->addTask($task_data);
 
@@ -41,10 +50,19 @@ class Setting extends \Opencart\System\Engine\Controller {
 				$this->model_setting_task->addTask($task_data);
 			}
 
-			// Location
+			// Country
 			$task_data = [
-				'code'   => 'location',
-				'action' => 'task/catalog/location',
+				'code'   => 'country.list',
+				'action' => 'task/catalog/country.list',
+				'args'   => []
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
+			// Customer Group
+			$task_data = [
+				'code'   => 'customer_group.list',
+				'action' => 'task/catalog/customer_group.list',
 				'args'   => []
 			];
 

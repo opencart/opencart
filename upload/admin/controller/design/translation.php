@@ -3,6 +3,8 @@ namespace Opencart\Admin\Controller\Design;
 /**
  * Class Translation
  *
+ * Can be loaded using $this->load->controller('design/translation');
+ *
  * @package Opencart\Admin\Controller\Design
  */
 class Translation extends \Opencart\System\Engine\Controller {

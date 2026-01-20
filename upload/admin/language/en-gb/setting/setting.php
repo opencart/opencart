@@ -50,6 +50,14 @@ $_['text_password_uppercase']             = 'Uppercase';
 $_['text_password_lowercase']             = 'Lowercase';
 $_['text_password_number']                = 'Number';
 $_['text_password_symbol']                = 'Symbol';
+$_['text_order_status']                   = 'Order Status';
+$_['text_subscription_status']            = 'Subscription Status';
+$_['text_stock_status']                   = 'Stock Status';
+$_['text_length_class']                   = 'Length Class';
+$_['text_weight_class']                   = 'Weight Class';
+$_['text_return_status']                  = 'Return Status';
+$_['text_return_action']                  = 'Return Action';
+$_['text_return_reason']                  = 'Return Reason';
 
 // Entry
 $_['entry_meta_title']                    = 'Meta Title';

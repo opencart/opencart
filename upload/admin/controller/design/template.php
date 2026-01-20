@@ -47,7 +47,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('design/template', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
 		$data['add'] = $this->url->link('design/template.form', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -55,7 +55,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		$data['enable']	= $this->url->link('design/template.enable', 'user_token=' . $this->session->data['user_token']);
 		$data['disable'] = $this->url->link('design/template.disable', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->load->controller('design/theme.getList');
+		$data['list'] = $this->load->controller('design/template.getList');
 
 		// Stores
 		$data['stores'] = [];
@@ -78,7 +78,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/theme', $data));
+		$this->response->setOutput($this->load->view('design/template', $data));
 	}
 
 	/**
@@ -87,9 +87,9 @@ class Template extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function list(): void {
-		$this->load->language('design/theme');
+		$this->load->language('design/template');
 
-		$this->response->setOutput($this->load->controller('design/theme.getList'));
+		$this->response->setOutput($this->load->controller('design/template.getList'));
 	}
 
 	/**
@@ -124,9 +124,9 @@ class Template extends \Opencart\System\Engine\Controller {
 
 		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
-		$data['action'] = $this->url->link('design/theme.list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('design/template.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['themes'] = [];
+		$data['templates'] = [];
 
 		$filter_data = [
 			'filter_store_id' => $filter_store_id,
@@ -136,12 +136,12 @@ class Template extends \Opencart\System\Engine\Controller {
 		];
 
 		// Templates
-		$this->load->model('design/theme');
+		$this->load->model('design/template');
 
 		// Setting
 		$this->load->model('setting/store');
 
-		$results = $this->model_design_theme->getTemplates($filter_data);
+		$results = $this->model_design_template->getTemplates($filter_data);
 
 		foreach ($results as $result) {
 			$store_info = $this->model_setting_store->getStore($result['store_id']);
@@ -152,7 +152,7 @@ class Template extends \Opencart\System\Engine\Controller {
 				$store = '';
 			}
 
-			$data['themes'][] = [
+			$data['templates'][] = [
 				'store'      => ($result['store_id'] ? $store : $this->language->get('text_default')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('design/template.form', 'user_token=' . $this->session->data['user_token'] . '&template_id=' . $result['template_id']),

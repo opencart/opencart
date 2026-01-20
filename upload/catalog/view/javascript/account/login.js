@@ -25,7 +25,7 @@ class AccountLogin extends WebComponent {
         let login = api.fetch({
             url: element.getAttribute('action'),
             method: 'post',
-            data: new FormData(form),
+            data: form,
             beforeSend: () => {
 
             },

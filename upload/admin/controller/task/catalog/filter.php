@@ -16,12 +16,13 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/catalog/article');
+		$this->load->language('task/catalog/filter');
 
-		// Clear old data
+
+		// List
 		$task_data = [
-			'code'   => 'article',
-			'action' => 'task/catalog/article.clear',
+			'code'   => 'filter',
+			'action' => 'task/catalog/filter.list',
 			'args'   => []
 		];
 
@@ -29,15 +30,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		// List
-		$task_data = [
-			'code'   => 'article',
-			'action' => 'task/catalog/article.list',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
 
 
 
@@ -48,8 +40,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 
 		$task_data = [
-			'code'   => 'article',
-			'action' => 'task/catalog/article.list',
+			'code'   => 'filter',
+			'action' => 'task/catalog/filter.list',
 			'args'   => []
 		];
 

@@ -3,26 +3,19 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-
-
         <div class="btn-group">
           <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-receipt"></i> <i class="fa-solid fa-caret-down fa-fw"></i></button>
           <ul class="dropdown-menu">
             <li><a href="{{ order_status }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_order_status }}</a></li>
             <li><a href="{{ subscription_status }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_subscription_status }}</a></li>
-
             <li><a href="{{ stock_status }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_stock_status }}</a></li>
             <li><a href="{{ length_class }}" class="dropdown-item"><i class="fa-solid fa-repeat"></i> {{ text_length_class }}</a></li>
             <li><a href="{{ weight_class }}" class="dropdown-item"><i class="fa-solid fa-arrow-rotate-left"></i> {{ text_weight_class }}</a></li>
-
             <li><a href="{{ return_status }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_return_status }}</a></li>
             <li><a href="{{ return_action }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_return_action }}</a></li>
             <li><a href="{{ return_reason }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_return_reason }}</a></li>
-
           </ul>
         </div>
-
-
         <button type="submit" form="form-setting" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
         <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
       </div>
@@ -50,31 +43,29 @@
             <div id="tab-general" class="tab-pane active">
               <fieldset>
                 <legend>{{ text_general }}</legend>
-                <div class="accordion" id="accordion-general">
+                <div class="accordion" id="accordion-language">
                   {% for language in languages %}
                     <div class="accordion-item">
                       <h2 class="accordion-header"><button type="button" class="accordion-button{% if not loop.first %} collapsed{% endif %}" data-bs-toggle="collapse" data-bs-target="#collapse-language-{{ language.language_id }}"><img src="{{ language.image }}" title="{{ language.name }}" class="me-1"/> {{ language.name }}</button></h2>
-                      <div id="collapse-language-{{ language.language_id }}" class="accordion-collapse collapse{% if loop.first %} show{% endif %}" data-bs-parent="#accordion-general">
+                      <div id="collapse-language-{{ language.language_id }}" class="accordion-collapse collapse{% if loop.first %} show{% endif %}" data-bs-parent="#accordion-language">
                         <div class="accordion-body">
-                          <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
-                            <div class="row mb-3">
-                              <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
-                              <div class="col-sm-10">
-                                <input type="text" name="config_description[{{ language.language_id }}][meta_title]" value="{{ config_description[language.language_id] ? config_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control" required/>
-                                <div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback"></div>
-                              </div>
+                          <div class="row mb-3">
+                            <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
+                            <div class="col-sm-10">
+                              <input type="text" name="config_description[{{ language.language_id }}][meta_title]" value="{{ config_description[language.language_id] ? config_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control" required/>
+                              <div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback"></div>
                             </div>
-                            <div class="row mb-3">
-                              <label for="input-meta-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
-                              <div class="col-sm-10">
-                                <textarea name="config_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ config_description[language.language_id] ? config_description[language.language_id].meta_description }}</textarea>
-                              </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label for="input-meta-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
+                            <div class="col-sm-10">
+                              <textarea name="config_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ config_description[language.language_id] ? config_description[language.language_id].meta_description }}</textarea>
                             </div>
-                            <div class="row mb-3">
-                              <label for="input-meta-keyword-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
-                              <div class="col-sm-10">
-                                <textarea name="config_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ config_description[language.language_id] ? config_description[language.language_id].meta_keyword }}</textarea>
-                              </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label for="input-meta-keyword-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
+                            <div class="col-sm-10">
+                              <textarea name="config_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ config_description[language.language_id] ? config_description[language.language_id].meta_keyword }}</textarea>
                             </div>
                           </div>
                         </div>

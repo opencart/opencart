@@ -18,76 +18,80 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-banner" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3">
-            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
-              <div id="error-name" class="invalid-feedback"></div>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
-            <div class="col-sm-10">
-              <x-switch name="status" value="1" checked="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
-            </div>
-          </div>
-          <br/>
-          <ul class="nav nav-tabs">
-            {% for language in languages %}
-              <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
-            {% endfor %}
-          </ul>
-          <div class="tab-content">
-            {% set image_row = 0 %}
-            {% for language in languages %}
-              <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
-                <table id="image-{{ language.language_id }}" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th class="text-center">{{ entry_image }}</th>
-                      <th class="required">{{ entry_title }}</th>
-                      <th>{{ entry_link }}</th>
-                      <th class="text-end">{{ entry_sort_order }}</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% if banner_images[language.language_id] %}
-                      {% for banner_image in banner_images[language.language_id] %}
-                        <tr id="image-row-{{ image_row }}">
-                          <td class="text-center">
-                            <div class="border rounded d-block" style="max-width: 300px;">
-                              <img src="{{ banner_image.thumb }}" alt="" title="" id="thumb-image-{{ language.language_id }}-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
-                              <input type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][image]" value="{{ banner_image.image }}" id="input-image-{{ language.language_id }}-{{ image_row }}-image"/>
-                              <div class="d-grid">
-                                <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ language.language_id }}-{{ image_row }}-image" data-oc-thumb="#thumb-image-{{ language.language_id }}-{{ image_row }}" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
-                                <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ language.language_id }}-{{ image_row }}-image" data-oc-thumb="#thumb-image-{{ language.language_id }}-{{ image_row }}" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
-                              </div>
-                            </div>
-                          </td>
-                          <td><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" id="input-image-{{ language.language_id }}-{{ image_row }}-title" class="form-control"/>
-                            <div id="error-image-{{ language.language_id }}-{{ image_row }}-title" class="invalid-feedback"></div>
-                          </td>
-                          <td style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" id="input-image-{{ language.language_id }}-{{ image_row }}-link" class="form-control"/>
-                            <div id="error-image-{{ language.language_id }}-{{ image_row }}-link" class="invalid-feedback"></div>
-                          </td>
-                          <td class="text-end" style="width: 10%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-image-{{ language.language_id }}-{{ image_row }}-sort-order" class="form-control"/></td>
-                          <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}').remove();" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
-                        </tr>
-                        {% set image_row = image_row + 1 %}
-                      {% endfor %}
-                    {% endif %}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colspan="4"></td>
-                      <td class="text-end"><button type="button" id="button-banner-{{ language.language_id }}" data-language="{{ language.language_id }}" title="{{ button_banner_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
-                    </tr>
-                  </tfoot>
-                </table>
+          <fieldset>
+            <legend>{{ text_banner }}</legend>
+            <div class="row mb-3">
+              <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
+                <div id="error-name" class="invalid-feedback"></div>
               </div>
-            {% endfor %}
-          </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+              <div class="col-sm-10">
+                <x-switch name="status" value="1" checked="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>{{ text_image }}</legend>
+            <div class="accordion" id="accordion-general">
+              {% set image_row = 0 %}
+              {% for language in languages %}
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button type="button" class="accordion-button{% if not loop.first %} collapsed{% endif %}" data-bs-toggle="collapse" data-bs-target="#collapse-language-{{ language.language_id }}"><img src="{{ language.image }}" title="{{ language.name }}" class="me-1"/> {{ language.name }}</button></h2>
+                  <div id="collapse-language-{{ language.language_id }}" class="accordion-collapse collapse{% if loop.first %} show{% endif %}" data-bs-parent="#accordion-general">
+                    <div class="accordion-body">
+                      <table id="image-{{ language.language_id }}" class="table table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th class="text-center">{{ entry_image }}</th>
+                            <th class="required">{{ entry_title }}</th>
+                            <th>{{ entry_link }}</th>
+                            <th class="text-end">{{ entry_sort_order }}</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% if banner_images[language.language_id] %}
+                            {% for banner_image in banner_images[language.language_id] %}
+                              <tr id="image-row-{{ image_row }}">
+                                <td class="text-center">
+                                  <div class="border rounded d-block" style="max-width: 300px;">
+                                    <img src="{{ banner_image.thumb }}" alt="" title="" id="thumb-image-{{ language.language_id }}-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][image]" value="{{ banner_image.image }}" id="input-image-{{ language.language_id }}-{{ image_row }}-image"/>
+                                    <div class="d-grid">
+                                      <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ language.language_id }}-{{ image_row }}-image" data-oc-thumb="#thumb-image-{{ language.language_id }}-{{ image_row }}" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                                      <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ language.language_id }}-{{ image_row }}-image" data-oc-thumb="#thumb-image-{{ language.language_id }}-{{ image_row }}" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" id="input-image-{{ language.language_id }}-{{ image_row }}-title" class="form-control"/>
+                                  <div id="error-image-{{ language.language_id }}-{{ image_row }}-title" class="invalid-feedback"></div>
+                                </td>
+                                <td style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" id="input-image-{{ language.language_id }}-{{ image_row }}-link" class="form-control"/>
+                                  <div id="error-image-{{ language.language_id }}-{{ image_row }}-link" class="invalid-feedback"></div>
+                                </td>
+                                <td class="text-end" style="width: 10%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-image-{{ language.language_id }}-{{ image_row }}-sort-order" class="form-control"/></td>
+                                <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}').remove();" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              </tr>
+                              {% set image_row = image_row + 1 %}
+                            {% endfor %}
+                          {% endif %}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td colspan="4"></td>
+                            <td class="text-end"><button type="button" id="button-banner-{{ language.language_id }}" data-language="{{ language.language_id }}" title="{{ button_banner_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </fieldset>
           <input type="hidden" name="banner_id" value="{{ banner_id }}" id="input-banner-id"/>
         </form>
       </div>

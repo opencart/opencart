@@ -50,6 +50,14 @@ $_['text_password_uppercase']             = 'Großbuchstaben';
 $_['text_password_lowercase']             = 'Kleinbuchstaben';
 $_['text_password_number']                = 'Nummer';
 $_['text_password_symbol']                = 'Symbol';
+$_['text_order_status']                   = 'Bestellstatus';
+$_['text_subscription_status']            = 'Abonnementstatus';
+$_['text_stock_status']                   = 'Lagerstatus';
+$_['text_length_class']                   = 'Längenklasse';
+$_['text_weight_class']                   = 'Gewichtsklasse';
+$_['text_return_status']                  = 'Rückgabe Status';
+$_['text_return_action']                  = 'Aktion';
+$_['text_return_reason']                  = 'Rückgabegrund';
 
 // Entry
 $_['entry_meta_title']                    = 'Meta-Titel';

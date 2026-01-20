@@ -7,6 +7,8 @@ $_['text_success']     = 'Success: You have modified banners!';
 $_['text_list']        = 'Banner List';
 $_['text_add']         = 'Add Banner';
 $_['text_edit']        = 'Edit Banner';
+$_['text_banner']      = 'Banner';
+$_['text_image']       = 'Banner Images';
 
 // Column
 $_['column_name']      = 'Banner Name';

@@ -189,7 +189,8 @@
                           <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
                           <div class="col-sm-10">
                             <div class="border rounded d-block" style="max-width: 300px;">
-                              <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+                              <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/>
+                              <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
                               <div class="d-grid">
                                 <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary rounded-0"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                                 <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning rounded-0"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
@@ -218,7 +219,8 @@
                               <div class="form-control" style="height: 150px; overflow: auto;">
                                 {% for location in locations %}
                                   <div class="form-check">
-                                    <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" id="input-location-{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked{% endif %}/> <label for="input-location-{{ location.location_id }}" class="form-check-label">{{ location.name }}</label>
+                                    <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" id="input-location-{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked{% endif %}/>
+                                    <label for="input-location-{{ location.location_id }}" class="form-check-label">{{ location.name }}</label>
                                   </div>
                                 {% endfor %}
                               </div>
@@ -249,7 +251,8 @@
                   <div class="col-sm-10">
                     <div id="input-country-list" class="form-control" style="height: 150px; overflow: auto;">
                       <div class="form-check">
-                        <input type="checkbox" id="input-country-all" onclick="$('input[name*=\'config_country_list\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/> <label for="input-country-all" class="form-check-label">{{ text_all }}</label>
+                        <input type="checkbox" id="input-country-all" onclick="$('input[name*=\'config_country_list\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/>
+                        <label for="input-country-all" class="form-check-label">{{ text_all }}</label>
                       </div>
                       {% for country in countries %}
                         <div class="form-check">

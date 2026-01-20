@@ -1492,6 +1492,28 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'country_to_store',
+		'field' => [
+			[
+				'name'           => 'country_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name'    => 'store_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'country_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'coupon',
 		'field' => [
 			[

@@ -29,6 +29,9 @@ $_['text_option']              = 'Optionen';
 $_['text_login']               = 'Im Store anmelden';
 $_['text_unlock']              = 'Konto entsperren';
 $_['text_filter']              = 'Filter';
+$_['text_order']               = 'Bestellungen';
+$_['text_return']              = 'Rückgaben';
+$_['text_subscription']        = 'Abonnements';
 
 // Column
 $_['column_name']              = 'Kundenname';

@@ -30,15 +30,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-
-
-
-
-
-
-
-
-
 		$task_data = [
 			'code'   => 'filter',
 			'action' => 'task/catalog/filter.list',

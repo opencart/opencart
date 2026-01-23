@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Currency
  *
- * Generates currency data files.
+ * Generates currency data for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -11,7 +11,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate currency task list.
+	 * Generate currency list task for each store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -22,26 +22,21 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
+		// Stores
 		$this->load->model('setting/store');
+		$this->load->model('setting/setting');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		foreach ($stores as $store) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store['store_id']);
+		foreach ($store_ids as $store_id) {
+			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
 			foreach ($language_ids as $language_id) {
 				$task_data = [
-					'code'   => 'currency',
+					'code'   => 'currency.' . $store_id . '.' . $language_id,
 					'action' => 'task/catalog/currency.list',
 					'args'   => [
-						'store_id'    => $store['store_id'],
+						'store_id'    => $store_id,
 						'language_id' => $language_id
 					]
 				];
@@ -56,7 +51,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate JSON currency list file.
+	 * Generate currency list by store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -65,25 +60,23 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
-		$required = [
-			'store_id',
-			'language_id'
+		// Store
+		$store_info = [
+			'name' => $this->config->get('config_name'),
+			'url'  => HTTP_CATALOG
 		];
 
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
-		}
-
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
@@ -92,9 +85,21 @@ class Currency extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		// Currency
+		$currency_data = [];
+
+		$this->load->model('setting/setting');
 		$this->load->model('localisation/currency');
 
-		$currencies = $this->model_localisation_currency->getCurrencies();
+		$currency_ids = $this->model_setting_setting->getValue('config_currency_list', $args['store_id']);
+
+		foreach ($currency_ids as $currency_id) {
+			$currency_info = $this->model_localisation_currency->getCurrency($currency_id);
+
+			if (!$currency_info || !$currency_info['status']) {
+				$currency_data[$currency_info['code']] = $currency_info;
+			}
+		}
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
@@ -104,7 +109,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($currencies))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($currency_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -120,7 +125,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
+	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
 		$stores = [];

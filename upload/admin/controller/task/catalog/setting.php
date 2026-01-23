@@ -3,6 +3,8 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Setting
  *
+ * Generates setting data for all stores.
+ *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Setting extends \Opencart\System\Engine\Controller {
@@ -18,16 +20,9 @@ class Setting extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/setting');
 
-		// Clear old data
-		$task_data = [
-			'code'   => 'setting',
-			'action' => 'task/catalog/setting.clear',
-			'args'   => []
-		];
-
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+
 
 		$stores = [];
 

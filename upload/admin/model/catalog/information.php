@@ -531,6 +531,21 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_store_data;
 	}
 
+	/*
+	 * Get information data based on stores
+	 */
+	public function getStoresByStoreId(int $store_id): array {
+		$store_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
+
+		foreach ($query->rows as $result) {
+			$store_data[] = $result['information_id'];
+		}
+
+		return $store_data;
+	}
+
 	/**
 	 * Add Layout
 	 *

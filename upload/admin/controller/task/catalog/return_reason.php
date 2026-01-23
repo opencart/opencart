@@ -3,13 +3,15 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Return Reason
  *
+ * Generates return reason data for all stores.
+ *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate return reason task list.
+	 * Generate return reason list task for each store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -20,29 +22,22 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
+		// Stores
 		$this->load->model('setting/store');
+		$this->load->model('setting/setting');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		$this->load->model('localisation/language');
+		foreach ($store_ids as $store_id) {
+			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			foreach ($languages as $language) {
+			foreach ($language_ids as $language_id) {
 				$task_data = [
-					'code'   => 'return_reason',
+					'code'   => 'return_reason.' . $store_id . '.' . $language_id,
 					'action' => 'task/catalog/return_reason.list',
 					'args'   => [
-						'store_id'    => $store['store_id'],
-						'language_id' => $language['language_id']
+						'store_id'    => $store_id,
+						'language_id' => $language_id
 					]
 				];
 
@@ -65,42 +60,44 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 
-		$required = [
-			'store_id',
-			'language_id'
+		// Store
+		$store_info = [
+			'name' => $this->config->get('config_name'),
+			'url'  => HTTP_CATALOG
 		];
 
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
-		}
-
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
-		if (!$language_info) {
+		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$filter_data = [
-			'filter_store_id'    => $store_info['store_id'],
-			'filter_language_id' => $language_info['language_id'],
-			'status'             => 1
-		];
+		$return_reason_data = [];
 
 		$this->load->model('localisation/return_reason');
 
-		$return_reasons = $this->model_localisation_return_reason->getReturnReasons($filter_data);
+		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
+
+		foreach ($return_reasons as $return_reason) {
+			$description_info = $this->model_localisation_return_reason->getDescription($return_reason['return_reason_id'], $language_info['language_id']);
+
+			if (!$description_info) {
+				$return_reason_data[] = $description_info;
+			}
+		}
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
@@ -110,7 +107,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($return_reasons))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($return_reason_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -118,7 +115,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Clear
+	 * Delete
 	 *
 	 * Delete generated JSON language files.
 	 *
@@ -126,7 +123,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
+	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 
 		$stores = [];

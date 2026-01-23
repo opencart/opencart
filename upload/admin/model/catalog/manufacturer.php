@@ -294,6 +294,20 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/*
+	 * Get Manufacturer By Store ID
+	 *
+	 * @param   int   $store_id
+	 *
+	 * @return  array<int, array<string, mixed>> manufacturer records
+	 *
+	 */
+	public function getManufacturersByStoreId(int $store_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 * Get Total Manufacturers
 	 *
@@ -538,6 +552,8 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 		return $manufacturer_store_data;
 	}
+
+
 
 	/**
 	 * Add Layout

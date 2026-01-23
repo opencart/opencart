@@ -1,46 +1,42 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
- * Class Country
+ * Class Manufacturer
  *
- * Generates country data files
+ * Generates manufacturer data for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class Country extends \Opencart\System\Engine\Controller {
+class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
-	 * List
+	 * Index
 	 *
-	 * Generate all country list data for all stores.
+	 * Generate country list task for each store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function list(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
+
+		$this->load->model('setting/task');
+
 		// Stores
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
-
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		foreach ($stores as $store) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store['store_id']);
+		foreach ($store_ids as $store_id) {
+			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
 			foreach ($language_ids as $language_id) {
 				$task_data = [
-					'code'   => 'country',
-					'action' => 'task/catalog/country.countries',
+					'code'   => 'manufacturer.list.' . $store_id . '.' . $language_id,
+					'action' => 'task/catalog/manufacturer.manufacturer',
 					'args'   => [
-						'store_id'    => $store['store_id'],
+						'store_id'    => $store_id,
 						'language_id' => $language_id
 					]
 				];
@@ -55,13 +51,13 @@ class Country extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate country lists.
+	 * Generate country list by store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
-	public function countries(array $args = []): array {
+	public function list_(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
 		$this->load->model('setting/store');
@@ -164,10 +160,10 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($stores as $store) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store['store_id']);
+			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
 			foreach ($language_ids as $language_id) {
 				$task_data = [

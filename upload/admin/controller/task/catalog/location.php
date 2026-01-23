@@ -1,48 +1,43 @@
 <?php
 namespace Opencart\Admin\Controller\Task\Catalog;
 /**
- * Class Return Reason
+ * Class Location
+ *
+ * Generates location data for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
-class ReturnReason extends \Opencart\System\Engine\Controller {
+class Location extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate return reason task list.
+	 * Generate location list task for each store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/catalog/return_reason');
+		$this->load->language('task/catalog/location');
 
 		$this->load->model('setting/task');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
+		// Stores
 		$this->load->model('setting/store');
+		$this->load->model('setting/setting');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		$this->load->model('localisation/language');
+		foreach ($store_ids as $store_id) {
+			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			foreach ($languages as $language) {
+			foreach ($language_ids as $language_id) {
 				$task_data = [
-					'code'   => 'return_reason',
-					'action' => 'task/catalog/return_reason.list',
+					'code'   => 'location.' . $store_id . '.' . $language_id,
+					'action' => 'task/catalog/location.list',
 					'args'   => [
-						'store_id'    => $store['store_id'],
-						'language_id' => $language['language_id']
+						'store_id'    => $store_id,
+						'language_id' => $language_id
 					]
 				];
 
@@ -56,61 +51,65 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate JSON return reason list file.
+	 * Generate location list by store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
 	public function list(array $args = []): array {
-		$this->load->language('task/catalog/return_reason');
+		$this->load->language('task/catalog/location');
 
-		$required = [
-			'store_id',
-			'language_id'
+		// Store
+		$store_info = [
+			'name' => $this->config->get('config_name'),
+			'url'  => HTTP_CATALOG
 		];
 
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
 			}
 		}
 
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
-		}
-
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
-		if (!$language_info) {
+		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$filter_data = [
-			'filter_store_id'    => $store_info['store_id'],
-			'filter_language_id' => $language_info['language_id'],
-			'status'             => 1
-		];
+		// Location
+		$location_data = [];
 
-		$this->load->model('localisation/return_reason');
+		$this->load->model('setting/setting');
+		$this->load->model('localisation/location');
 
-		$return_reasons = $this->model_localisation_return_reason->getReturnReasons($filter_data);
+		$location_ids = $this->model_setting_setting->getValue('config_location_list', $args['store_id']);
+
+		foreach ($location_ids as $location_id) {
+			$location_info = $this->model_localisation_location->getLocation($location_id);
+
+			if (!$location_info || !$location_info['status']) {
+				$location_data[] = $location_info;
+			}
+		}
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'return_reason.json';
+		$filename = 'location.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($return_reasons))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($location_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -126,7 +125,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
+	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 
 		$stores = [];
@@ -146,7 +145,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		foreach ($stores as $store) {
 			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/return_reason.json';
+				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/location.json';
 
 				if (is_file($file)) {
 					unlink($file);

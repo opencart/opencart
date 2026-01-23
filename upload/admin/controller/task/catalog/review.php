@@ -3,13 +3,15 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Review
  *
+ * Generates review list data for all stores.
+ *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate review task list.
+	 * Generate review list task for each store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -20,50 +22,35 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$limit = 10;
-
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
+		// Stores
 		$this->load->model('setting/store');
+		$this->load->model('setting/setting');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		$this->load->model('localisation/language');
+		foreach ($store_ids as $store_id) {
+			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
-		$languages = $this->model_localisation_language->getLanguages();
+			foreach ($language_ids as $language_id) {
+				$task_data = [
+					'code'   => 'review',
+					'action' => 'task/catalog/review.list',
+					'args'   => [
+						'store_id'    => $store_id,
+						'language_id' => $language_id,
+						'product_id'  => $product_id,
+					]
+				];
 
-		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$product_total = $this->model_catalog_product->getTotalProducts();
-
-				$page_total = ceil($product_total / $limit);
-
-				for ($i = 1; $i <= $page_total; $i++) {
-					$start = $i * $limit;
-
-					$task_data = [
-						'code'   => 'review',
-						'action' => 'task/catalog/review.list',
-						'args'   => [
-							'store_id'    => $store['store_id'],
-							'language_id' => $language['language_id'],
-							'start'       => $start,
-							'limit'       => $limit
-						]
-					];
-
-					$this->model_setting_task->addTask($task_data);
-				}
+				$this->model_setting_task->addTask($task_data);
 			}
 		}
 
 		return ['success' => $this->language->get('text_task')];
 	}
+
+
+
 
 	/**
 	 * List
@@ -75,6 +62,28 @@ class Review extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
+		$product_total = $this->model_catalog_product->getTotalProducts();
+
+		$page_total = ceil($product_total / $limit);
+
+		for ($i = 1; $i <= $page_total; $i++) {
+			$start = $i * $limit;
+
+			$task_data = [
+				'code'   => 'review',
+				'action' => 'task/catalog/review.list',
+				'args'   => [
+					'store_id'    => $store['store_id'],
+					'language_id' => $language['language_id'],
+					'start'       => $start,
+					'limit'       => $limit
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		$limit = 10;
 		$this->load->language('task/catalog/review');
 
 		$this->load->model('setting/store');

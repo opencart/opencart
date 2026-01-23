@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Article
  *
- * Generates article JSON data files
+ * Generates article data for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -11,7 +11,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate all article task list.
+	 * Generate article list task for each store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -20,69 +20,28 @@ class Article extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
-		// Clear old data
-		$task_data = [
-			'code'   => 'article.clear',
-			'action' => 'task/catalog/article.clear',
-			'args'   => []
-		];
-
 		$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
-
-		// List
-		$task_data = [
-			'code'   => 'article',
-			'action' => 'task/catalog/article.list',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
-			'code'   => 'article',
-			'action' => 'task/catalog/article.list',
-			'args'   => []
-		];
-
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
+		// Stores
 		$this->load->model('setting/store');
+		$this->load->model('setting/setting');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		foreach ($stores as $store) {
-			$setting_info = $this->model_setting_setting->getSettings('config', $store['store_id']);
+		foreach ($store_ids as $store_id) {
+			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
-			if ($setting_info) {
-				if ($setting_info['config_language_list']) {
-					$languages = (array)$setting_info['config_language_list'];
-				} else {
-					$languages = [];
-				}
+			foreach ($language_ids as $language_id) {
+				$task_data = [
+					'code'   => 'article.' . $store_id . '.' . $language_id,
+					'action' => 'task/catalog/article.list',
+					'args'   => [
+						'store_id'    => $store_id,
+						'language_id' => $language_id
+					]
+				];
 
-				foreach ($languages as $language_id) {
-					$task_data = [
-						'code'   => 'country',
-						'action' => 'task/catalog/country.list',
-						'args'   => [
-							'store_id'    => $store['store_id'],
-							'language_id' => $language_id
-						]
-					];
-
-					$this->model_setting_task->addTask($task_data);
-				}
+				$this->model_setting_task->addTask($task_data);
 			}
 		}
 
@@ -92,7 +51,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate JSON country list file.
+	 * Generate article list by store and language.
 	 *
 	 * @param array<string, string> $args
 	 *

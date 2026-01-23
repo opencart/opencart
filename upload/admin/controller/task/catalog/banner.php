@@ -3,6 +3,8 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Banner
  *
+ * Generates banner data files.
+ *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
 class Banner extends \Opencart\System\Engine\Controller {
@@ -20,29 +22,22 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
+		// Stores
 		$this->load->model('setting/store');
+		$this->load->model('setting/setting');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		$this->load->model('localisation/language');
+		foreach ($store_ids as $store_id) {
+			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			foreach ($languages as $language) {
+			foreach ($language_ids as $language_id) {
 				$task_data = [
-					'code'   => 'banner',
+					'code'   => 'banner.' . $store_id . '.' . $language_id,
 					'action' => 'task/catalog/banner.list',
 					'args'   => [
-						'store_id'    => $store['store_id'],
-						'language_id' => $language['language_id']
+						'store_id'    => $store_id,
+						'language_id' => $language_id
 					]
 				];
 
@@ -52,68 +47,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		return ['success' => $this->language->get('text_task')];
 	}
-
-	/**
-	 * List
-	 *
-	 * Generate JSON banner list file.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function list(array $args = []): array {
-		$this->load->language('task/catalog/banner');
-
-		$required = [
-			'store_id',
-			'language_id'
-		];
-
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
-			}
-		}
-
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
-		}
-
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
-		$this->load->model('design/banner');
-
-		$banners = $this->model_design_banner->getBanners();
-
-		foreach ($banners as $banner) {
-			// Add a task for generating the country info data
-			$task_data = [
-				'code'   => 'banner',
-				'action' => 'task/catalog/banner.info',
-				'args'   => [
-					'banner_id'   => $banner['banner_id'],
-					'store_id'    => $store_info['store_id'],
-					'language_id' => $language_info['language_id']
-				]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
-
-		return ['success' => $this->language->get('text_list')];
-	}
-
 
 	/**
 	 * Info

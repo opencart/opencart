@@ -156,6 +156,8 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_information')];
 		}
 
+		$this->load->model('setting/setting');
+
 		$store_ids = $this->model_catalog_information->getStores($args['information_id']);
 
 		foreach ($store_ids as $store_id) {
@@ -179,7 +181,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_info'), $information_info['name'])];
 	}
 
-	public function info_(array $args = []): array {
+	public function _info(array $args = []): array {
 		$this->load->language('task/catalog/information');
 
 		if (!array_key_exists('information_id', $args)) {

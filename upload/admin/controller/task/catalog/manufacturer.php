@@ -33,8 +33,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			foreach ($language_ids as $language_id) {
 				$task_data = [
-					'code'   => 'manufacturer.list.' . $store_id . '.' . $language_id,
-					'action' => 'task/catalog/manufacturer.manufacturer',
+					'code'   => 'manufacturer._list.' . $store_id . '.' . $language_id,
+					'action' => 'task/catalog/manufacturer.list_',
 					'args'   => [
 						'store_id'    => $store_id,
 						'language_id' => $language_id
@@ -60,12 +60,20 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	public function list_(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
-		$this->load->model('setting/store');
+		// Store
+		$store_info = [
+			'name' => $this->config->get('config_name'),
+			'url'  => HTTP_CATALOG
+		];
 
-		$store_info = $this->model_setting_store->getStores($args['store_id']);
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		if ($args['store_id'] != 0 && !$store_info) {
-			return ['error' => $this->language->get('error_store')];
+			$store_info = $this->model_setting_store->getStores($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
 		}
 
 		$this->load->model('localisation/language');
@@ -76,12 +84,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		$this->load->model('localisation/country');
-
 		// Country
 		$country_data = [];
 
 		$this->load->model('setting/setting');
+		$this->load->model('localisation/country');
 
 		$country_ids = $this->model_setting_setting->getValue('config_country_list', $args['store_id']);
 
@@ -168,7 +175,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			foreach ($language_ids as $language_id) {
 				$task_data = [
 					'code'   => 'country',
-					'action' => 'task/catalog/country.info',
+					'action' => 'task/catalog/country.info_',
 					'args'   => [
 						'country_id'  => $country_info['country_id'],
 						'store_id'    => $store['store_id'],
@@ -186,7 +193,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	/*
 	 *
 	 */
-	public function country(array $args = []): array {
+	public function info_(array $args = []): array {
 		// Country
 		$this->load->model('localisation/country');
 

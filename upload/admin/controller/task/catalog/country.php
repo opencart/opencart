@@ -157,6 +157,8 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_country')];
 		}
 
+		$this->load->model('setting/task');
+
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');

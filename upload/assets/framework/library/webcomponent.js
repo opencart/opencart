@@ -1,8 +1,37 @@
 import { loader } from '../index.js';
 
+const sdsd = (html) => {
+    console.log(html);
+
+    this.innerHTML = html;
+}
+
+// Attach Events based on elements that have data-on-* attributes
+const event = (html) => {
+    let elements = this.querySelectorAll('[data-on]');
+
+    for (let element of elements) {
+        for (let attribute of element.attributes) {
+
+            console.log(attribute.name);
+
+            let type = attribute.value.split('.');
+
+            element.addEventListener(type, this[attribute.value]);
+
+            element.removeAttribute(attribute.name);
+        }
+    }
+}
+
 export class WebComponent extends HTMLElement {
     constructor() {
         super();
+
+        // Set any changes to the attributes of the element to re-render the contents.
+        for (let attribute of this.attributes) {
+            this.addEventListener('[' + attribute.name + ']', this.render);
+        }
     }
 
     connectedCallback() {
@@ -11,47 +40,27 @@ export class WebComponent extends HTMLElement {
         }
 
         if (this.render !== undefined) {
-            let render = (html) => {
-                this.innerHTML = html;
-            }
-
-            let event = (html) => {
-                let elements = this.querySelectorAll('*');
-
-                for (let element of elements) {
-                    for (let attribute of element.attributes) {
-                        if (attribute.name.startsWith('data-on-')) {
-                            let type = attribute.name.substr(8);
-
-                            element.addEventListener(type, this[attribute.value]);
-
-                            element.removeAttribute(attribute.name);
-                        }
-                    }
-                }
-            }
-
             let response = this.render();
 
-            response.then(render.bind(this));
-            response.then(event.bind(this));
+            console.log(response);
+
+            response.then(sdsd.bind(this));
+            //response.then(event.bind(this));
+
+            this.addEventListener('[value]', this.render);
         }
     }
 
     disconnectedCallback() {
-        if (this.disconnected == undefined) {
-            return;
+        if (this.disconnected !== undefined) {
+            this.disconnected();
         }
-
-        this.disconnected();
     }
 
     adoptedCallback() {
-        if (this.adopted == undefined) {
-            return;
+        if (this.adopted !== undefined) {
+            this.adopted();
         }
-
-        this.adopted();
     }
 
     static get observedAttributes() {

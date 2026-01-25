@@ -1,12 +1,95 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../loader.js';
 
-class XAccount extends WebComponent {
-    async connected() {
+// Config
+const config = await loader.config('catalog');
+
+// Language
+const language = await loader.language('catalog/product');
+
+// Library
+const tax = await loader.library('tax');
+const weight = await loader.library('weight');
+const length = await loader.library('length');
+
+class ProductInfo extends WebComponent {
+    async render() {
+        let data = {};
+
+        // customer groups
+        let product = loader.storage('product/product-' + this.getAttribute('product_id'));
+
+        if (product.length) {
+            data.thumb = product.thumb;
+            data.popup = product.popup;
+            data.images = product.image;
+
+            data.name = product.name;
+            data.description = product.description;
+            data.model = product.model;
+
+            data.codes = product.code;
+
+            data.manufacturer_id = product.manufacturer_id;
+            data.manufacturer = product.manufacturer;
+
+            data.price = tax.calculate(product.price);
+            data.special = tax.calculate(product.special);
+            data.tax = '';
+
+            if (config.config_tax) {
+                data.tax = product.special ? product.special : product.price;
+            }
+
+            data.quantity = product.quantity;
+            data.minimum = product.minimum;
+            data.stock_status = product.stock_status;
+
+            data.points = product.points;
+            data.rewards = product.rewards;
+
+            data.sales = product.sales;
+            data.rating = product.rating;
+
+            data.weight = product.weight;
+            data.weight_class_id = product.weight_class_id;
+
+            data.length = product.length;
+            data.width = product.width;
+            data.height = product.height;
+            data.length_class_id = product.length_class_id;
+
+            data.attributes = product.attribute;
+
+            data.discounts = [];
+
+            for (let discount of product.discount) {
+                discount
+            }
+
+
+            data.options = product.option;
+
+            data.subscriptions = product.subscription;
+        }
+
+        return this.render('catalog/product_info', { ...data, ...language, ...config });
+    }
+
+    onChange() {
+
 
     }
+
+    submit() {
+
+
+    }
+
+
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('product-info', ProductInfo);
 
 
 $('#input-subscription').on('change', function(e) {

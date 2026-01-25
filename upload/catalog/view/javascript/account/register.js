@@ -32,15 +32,13 @@ class AccountRegister extends WebComponent {
         return loader.template('account/register', { ...data, ...language, ...config });
     }
 
-    async onChange() {
-        ///$this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true)
-
-        let customer_group_info = await this.storage.fetch('customer/customer_group-' + data['customer_group_id']);
+    async onChange(e) {
+        let customer_group_info = await this.storage.fetch('customer/customer_group-' + this.value);
 
         if (customer_group_info) {
-            data['custom_fields'] = customer_group_info['custom_field'];
+            data.custom_fields = customer_group_info.custom_field;
         } else {
-            data['custom_fields'] = [];
+            data.custom_fields = [];
         }
 
         $('.custom-field').addClass('d-none');
@@ -57,7 +55,7 @@ class AccountRegister extends WebComponent {
         }
     }
 
-    onSubmit(e) {
+    register(e) {
         e.preventDefault();
 
         loader.request({

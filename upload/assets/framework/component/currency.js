@@ -1,4 +1,11 @@
 import { WebComponent } from '../component.js';
+import { loader } from "../index.js";
+
+// Library
+const currency = await loader.library('currency');
+
+// Storage
+const currencies = loader.storage('localisation/currency');
 
 class XCurrency extends WebComponent {
     static observed = [
@@ -6,7 +13,6 @@ class XCurrency extends WebComponent {
         'amount',
         'value'
     ];
-    currencies = [];
 
     get code() {
         return this.getAttribute('code');
@@ -24,36 +30,12 @@ class XCurrency extends WebComponent {
         this.setAttribute('amount', amount);
     }
 
-    get symbol_left() {
-        if (this.currencies[this.code]) {
-            return this.currencies[this.code]['symbol_left'];
-        } else {
-            return '';
-        }
-    }
-
-    get symbol_right() {
-        if (this.currencies[this.code]) {
-            return this.currencies[this.code]['symbol_right'];
-        } else {
-            return '';
-        }
-    }
-
-    get decimal_place() {
-        if (this.currencies[this.code]) {
-            return this.currencies[this.code]['decimal_place'];
-        } else {
-            return 2;
-        }
-    }
-
     get value() {
         if (this.hasAttribute('value')) {
             return parseFloat(this.getAttribute('value')).toFixed(this.decimal_place);
         }
 
-        if (this.currencies[this.code]) {
+        if (this.code in this.currencies) {
             return this.currencies[this.code]['value'];
         } else {
             return 1.00000;
@@ -64,23 +46,15 @@ class XCurrency extends WebComponent {
         this.setAttribute('value', value);
     }
 
-    async connected() {
-        this.addEventListener('[code]', this.render);
-        this.addEventListener('[amount]', this.render);
-        this.addEventListener('[value]', this.render);
+    constructor() {
+        super();
 
-        let response = this.storage.fetch('localisation/currency');
-
-        response.then(this.event.onloaded);
-        response.then(this.event.format);
-    }
-
-    onloaded(currencies) {
+        this.currency = currency;
         this.currencies = currencies;
     }
 
-    render() {
-        this.innerHTML = this.currency.format(this.value, this.code);
+    async render() {
+        return this.currency.format(this.value, this.code);
     }
 }
 

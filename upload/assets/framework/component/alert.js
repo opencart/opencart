@@ -1,7 +1,7 @@
 import { WebComponent } from '../component.js';
 
 class XAlert extends WebComponent {
-    async connected() {
+    render() {
         let icon = '';
         let type = this.getAttribute('type');
 
@@ -20,7 +20,7 @@ class XAlert extends WebComponent {
                 break;
         }
 
-        this.innerHTML = '<div class="alert ' + type + '"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</div>';
+        return '<div class="alert ' + type + '" onload="timeout"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</div>';
 
         // Get the alert element
         let alert = this.querySelector('.alert');

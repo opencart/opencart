@@ -104,7 +104,7 @@ class XPagination extends WebComponent {
 
             html += '</ul>';
 
-            this.innerHTML = html;
+            return html;
 
             this.querySelectorAll('a').forEach((link) => link.addEventListener('click', this.onclick));
         }

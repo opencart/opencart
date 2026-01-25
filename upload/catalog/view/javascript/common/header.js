@@ -7,9 +7,6 @@ const config = await loader.config('catalog');
 // Language
 const language = await loader.language('common/header');
 
-// Template
-const template = await loader.template('common/header');
-
 // library
 const session = await loader.library('session');
 

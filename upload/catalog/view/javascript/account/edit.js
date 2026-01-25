@@ -4,11 +4,11 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('catalog');
 
-// Library
-const session = loader.library('session');
-
 // Language
-const language = loader.language('account/edit');
+const language = await loader.language('account/edit');
+
+// Library
+const session = await loader.library('session');
 
 class AccountEdit extends WebComponent {
     async connected() {
@@ -29,21 +29,10 @@ class AccountEdit extends WebComponent {
         if (customer_group.length) {
             data.custom_fields = customer_group.custom_fields;
         }
-
-        let response = loader.template('account/register', { ...data, ...language, ...config });
-
-        response.then(this.render.bind(this));
-        response.then(this.addEvent.bind(this));
     }
 
-    render(html) {
-        this.innerHTML = html;
-    }
-
-    addEvent() {
-        let form = this.querySelector('#form-customer');
-
-        form.addEventListener('submit', this.onSubmit.bind(this));
+    render() {
+        return loader.template('account/register', { ...data, ...language, ...config });
     }
 
     onSubmit(e) {

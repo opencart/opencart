@@ -12,22 +12,13 @@ const language = await loader.language('common/cart');
 
 class CommonCart extends WebComponent {
     async connected() {
-        let data = {};
 
-        let response = loader.template('common/cart', { ...data,  ...language });
-
-        response.then(this.render.bind(this));
-        response.then(this.addEvent.bind(this));
     };
 
-    render(html) {
-        this.innerHTML = html;
-    }
+    render() {
+        let data = {};
 
-    addEvent() {
-        let form = document.getElementById('form-cart');
-
-        form.addEventListener('submit', this.onSubmit);
+        return loader.template('common/cart', { ...data,  ...language });
     }
 
     onSubmit(e) {

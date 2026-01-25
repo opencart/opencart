@@ -6,12 +6,6 @@ class AccountAddressList extends WebComponent {
         await this.load.language('account/address');
 
         this.innerHTML = await this.load.template('account/address', this.language.all());
-
-        let buttons = this.querySelectorAll('.btn-danger');
-
-        for (let button of buttons) {
-            button.addEventListener('click', this.onClick);
-        }
     }
 
     onClick() {

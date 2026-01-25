@@ -42,13 +42,14 @@ class InformationContact extends WebComponent {
         }
 
         data.locations = locations;
+    }
 
-        this.render(template, { ...data, ...language, ...config });
+    render() {
+        return loader.template('information/contact', { ...data, ...language, ...config });
+    }
 
-        let response = loader.template('information/contact', { ...data, ...language, ...config });
+    onSubmit(e) {
 
-        response.then(this.render.bind(this));
-        response.then(this.addEvent.bind(this));
     }
 }
 

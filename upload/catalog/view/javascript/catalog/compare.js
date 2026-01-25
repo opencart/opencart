@@ -1,9 +1,12 @@
 import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
+class ProductCompare extends WebComponent {
     async connected() {
+
+
+
 
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('product-compare', ProductCompare);

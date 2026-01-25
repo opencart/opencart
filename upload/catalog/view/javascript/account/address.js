@@ -8,6 +8,9 @@ class AccountAddress extends WebComponent {
     async connected() {
         this.innerHTML = await this.load.template('account/address', { ...language });
 
+
+
+
         let buttons = this.querySelectorAll('.btn-danger');
 
         buttons.forEach(button => {

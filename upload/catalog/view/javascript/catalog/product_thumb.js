@@ -7,9 +7,6 @@ const config = await loader.config('catalog');
 // Language
 const language = await loader.language('catalog/thumb');
 
-// Template
-const template = await loader.template('catalog/thumb');
-
 // Library
 const tax = await loader.library('tax');
 
@@ -18,16 +15,17 @@ class ProductThumb extends WebComponent {
 
     }
 
-    render() {
+    async render() {
         let data = {};
 
         // customer groups
-        let product = loader.storage('product/product-' + this.getAttribute('product_id'));
+        let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
         if (product.length) {
+            data.thumb = product.thumb;
+
             data.name = product.name;
             data.description = product.description;
-            data.thumb = product.thumb;
             data.model = product.model;
             data.price = tax.calculate(product.price);
             data.special = tax.calculate(product.special);
@@ -41,10 +39,10 @@ class ProductThumb extends WebComponent {
             data.minimum =  product.minimum;
         }
 
-        return this.render(template, { ...data, ...language, ...config });
+        return loader.template('catalog/thumb', { ...data, ...language, ...config });
     }
 
-    onSubmit() {
+    onSubmit(e) {
 
 
     }

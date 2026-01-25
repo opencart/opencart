@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Banner
  *
- * Generates banner data files.
+ * Generates banner data for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -11,7 +11,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate banner task list.
+	 * Generate banner task by banner ID for each store and language.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -35,15 +35,12 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_banner')];
 		}
 
-		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$banner_info = $this->model_design_banner->getBanner((int)$args['banner_id']);
-
 			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
 			foreach ($language_ids as $language_id) {
@@ -76,22 +73,32 @@ class Banner extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/banner');
 
-		$this->load->model('setting/store');
+		// Store
+		$store_info = [
+			'name' => $this->config->get('config_name'),
+			'url'  => HTTP_CATALOG
+		];
 
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
+			$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
 		}
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
-		if (!$language_info) {
+		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
 		}
 
+		// Banner
 		$this->load->model('design/banner');
 
 		$banner_info = $this->model_design_banner->getBanner((int)$args['banner_id']);
@@ -100,6 +107,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_banner')];
 		}
 
+		// Banner Images
 		$banners = $this->model_design_banner->getImages($banner_info['banner_id'], $language_info['language_id']);
 
 		$sort_order = [];

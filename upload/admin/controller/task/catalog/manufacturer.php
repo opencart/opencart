@@ -34,7 +34,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			foreach ($language_ids as $language_id) {
 				$task_data = [
 					'code'   => 'manufacturer._list.' . $store_id . '.' . $language_id,
-					'action' => 'task/catalog/manufacturer.list_',
+					'action' => 'task/catalog/manufacturer._list',
 					'args'   => [
 						'store_id'    => $store_id,
 						'language_id' => $language_id
@@ -57,8 +57,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function list_(array $args = []): array {
-		$this->load->language('task/catalog/country');
+	public function _list(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
 
 		// Store
 		$store_info = [

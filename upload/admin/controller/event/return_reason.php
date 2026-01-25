@@ -11,9 +11,9 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new return reason list
 	 *
-	 * model/localisation/return_reason/addReturnReason/after
-	 * model/localisation/return_reason/editReturnReason/after
-	 * model/localisation/return_reason/deleteReturnReason/after
+	 * Triggered using model/localisation/return_reason/addReturnReason/after
+	 * Triggered using model/localisation/return_reason/editReturnReason/after
+	 * Triggered using model/localisation/return_reason/deleteReturnReason/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

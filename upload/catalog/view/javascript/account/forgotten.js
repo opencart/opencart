@@ -1,9 +1,9 @@
 import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
+class AccountForgotten extends WebComponent {
     async connected() {
 
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('account-forgotten', AccountForgotten);

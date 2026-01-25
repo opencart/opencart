@@ -29,6 +29,39 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+
+
+
+
+		// Categories
+		$this->load->model('catalog/category');
+
+		$results = $this->model_catalog_category->getProductsByFilterId($output);
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'filter.' . $result['filter_id'],
+				'action' => 'task/catalog/filter',
+				'args'   => ['filter_id' => $result['filter_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		// Filters
+		$this->load->model('catalog/filter');
+
+		$results = $this->model_catalog_product->getProductsByFilterId($output);
+
+		foreach ($results as $result) {
+			$task_data = [
+				'code'   => 'filter.' . $result['filter_id'],
+				'action' => 'task/catalog/filter',
+				'args'   => ['filter_id' => $result['filter_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 
 	/**

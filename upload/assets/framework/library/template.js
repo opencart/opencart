@@ -1,10 +1,10 @@
 import '../liquid.browser.min.js';
 
-export default class Template {
+class Template {
     engine = {};
     directory = '';
     path = new Map();
-    loaded = new Map();
+    data = new Map();
 
     constructor() {
         this.engine = new liquidjs.Liquid({
@@ -43,9 +43,9 @@ export default class Template {
         if (response.status == 200) {
             let object = await response.text();
 
-            this.loaded.set(path, object);
+            this.data.set(path, object);
 
-            return this.loaded.get(path);
+            return this.data.get(path);
         } else {
             console.log('Could not load template file ' + path);
         }
@@ -58,9 +58,18 @@ export default class Template {
     }
 
     async render(path, data = {}) {
-        //console.log(path);
-        //console.log(data);
-
         return this.parse(await this.fetch(path), data);
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Template();
+        }
+
+        return this.instance;
+    }
 }
+
+const template = Template.getInstance();
+
+export { template };

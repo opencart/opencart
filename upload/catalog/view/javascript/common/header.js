@@ -1,17 +1,24 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-// library
-const session = await loader.library('session');
-
 // Config
 const config = await loader.config('catalog');
 
 // Language
 const language = await loader.language('common/header');
 
+// Template
+const template = await loader.template('common/header');
+
+// library
+const session = await loader.library('session');
+
 class CommonHeader extends WebComponent {
     async connected() {
+
+    }
+
+    render() {
         let data = {};
 
         data.wishlist = 0;
@@ -22,7 +29,7 @@ class CommonHeader extends WebComponent {
             data.wishlist = session.get('customer').getWishlist().length;
         }
 
-        this.innerHTML = await loader.template('common/header', { ...data, ...language, ...config });
+        return loader.template('common/header', { ...data, ...language, ...config });
     }
 }
 

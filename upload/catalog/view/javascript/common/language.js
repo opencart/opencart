@@ -15,6 +15,10 @@ const languages = await loader.storage('localisation/language');
 
 class CommonLanguage extends WebComponent {
     connected() {
+
+    }
+
+    render() {
         let data = {};
 
         // Config stored language code
@@ -35,24 +39,7 @@ class CommonLanguage extends WebComponent {
 
         data.languages = Object.values(languages);
 
-        let response = loader.template('common/language', { ...data,  ...language });
-
-        response.then(this.render.bind(this));
-        response.then(this.addEvent.bind(this));
-    }
-
-    render(html) {
-        this.innerHTML = html;
-    }
-
-    addEvent() {
-        let form = document.getElementById('form-language');
-
-        let elements = form.querySelectorAll('a');
-
-        for (let element of elements) {
-            element.addEventListener('click', this.onClick);
-        }
+        return loader.template('common/language', { ...data,  ...language });
     }
 
     async onClick(e) {

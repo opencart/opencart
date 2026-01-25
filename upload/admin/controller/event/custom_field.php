@@ -35,15 +35,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
-		/*
-		$task_data = [
-			'code'   => 'admin.customer_group',
-			'action' => 'task/admin/customer_group',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 
 	/**
@@ -75,16 +66,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
-
-		/*
-		$task_data = [
-			'code'   => 'customer_group',
-			'action' => 'task/admin/customer_group',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 
 	/**
@@ -116,15 +97,5 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
-
-		/*
-		$task_data = [
-			'code'   => 'customer_group',
-			'action' => 'task/admin/customer_group',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 }

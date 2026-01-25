@@ -11,7 +11,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new customer group data.
 	 *
-	 * Called using admin/model/customer/customer_group/addCustomerGroup/after
+	 * Triggered using admin/model/customer/customer_group/addCustomerGroup/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -45,7 +45,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new customer group data.
 	 *
-	 * Called using admin/model/customer/customer_group/editCustomerGroup/after
+	 * Triggered using admin/model/customer/customer_group/editCustomerGroup/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -96,7 +96,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new customer group data.
 	 *
-	 * Called using admin/model/customer/customer_group/deleteCustomerGroup/after
+	 * Triggered using admin/model/customer/customer_group/deleteCustomerGroup/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

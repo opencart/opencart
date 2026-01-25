@@ -1,4 +1,4 @@
-export default class Storage {
+class Storage {
     directory = '';
     path = new Map();
     data = new Map();
@@ -46,4 +46,16 @@ export default class Storage {
 
         return {};
     }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new Storage();
+        }
+
+        return this.instance;
+    }
 }
+
+const storage = Storage.getInstance();
+
+export { storage };

@@ -117,9 +117,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Clear
+	 * Delete
 	 *
-	 * Delete generated JSON currency files.
+	 * Delete files based on country ID
 	 *
 	 * @param array<string, string> $args
 	 *

@@ -67,4 +67,4 @@ class Event {
 
 const event = Event.getInstance();
 
-export { event, event as default };
+export { event };

@@ -1,3 +1,5 @@
+import { loader } from '../index.js';
+
 export class WebComponent extends HTMLElement {
     constructor() {
         super();
@@ -7,18 +9,49 @@ export class WebComponent extends HTMLElement {
         if (this.connected !== undefined) {
             this.connected();
         }
+
+        if (this.render !== undefined) {
+            let render = (html) => {
+                this.innerHTML = html;
+            }
+
+            let event = (html) => {
+                let elements = this.querySelectorAll('*');
+
+                for (let element of elements) {
+                    for (let attribute of element.attributes) {
+                        if (attribute.name.startsWith('data-on-')) {
+                            let type = attribute.name.substr(8);
+
+                            element.addEventListener(type, this[attribute.value]);
+
+                            element.removeAttribute(attribute.name);
+                        }
+                    }
+                }
+            }
+
+            let response = this.render();
+
+            response.then(render.bind(this));
+            response.then(event.bind(this));
+        }
     }
 
     disconnectedCallback() {
-        if (this.disconnected !== undefined) {
-            this.disconnected();
+        if (this.disconnected == undefined) {
+            return;
         }
+
+        this.disconnected();
     }
 
     adoptedCallback() {
-        if (this.adopted !== undefined) {
-            this.adopted();
+        if (this.adopted == undefined) {
+            return;
         }
+
+        this.adopted();
     }
 
     static get observedAttributes() {
@@ -37,9 +70,5 @@ export class WebComponent extends HTMLElement {
 
         // Dispatch the event
         this.dispatchEvent(event);
-    }
-
-    render() {
-
     }
 }

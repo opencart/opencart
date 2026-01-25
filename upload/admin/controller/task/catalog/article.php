@@ -48,7 +48,7 @@ class Article extends \Opencart\System\Engine\Controller {
 					'code'   => 'article.info.' . $store_id . '.' . $language_id . '.' . $article_info['article_id'],
 					'action' => 'task/catalog/article.info',
 					'args'   => [
-						'article_id'  => $article_info['store_id'],
+						'article_id'  => $article_info['article_id'],
 						'store_id'    => $store_id,
 						'language_id' => $language_id
 					]
@@ -87,12 +87,19 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		// Store
-		$this->load->model('setting/store');
+		$store_info = [
+			'name' => $this->config->get('config_name'),
+			'url'  => HTTP_CATALOG
+		];
 
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
+			$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
 		}
 
 		// Language
@@ -100,7 +107,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
-		if (!$language_info) {
+		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
 		}
 
@@ -113,6 +120,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_article')];
 		}
 
+		// Description
 		$description_info = $this->model_cms_article->getDescription($article_info['article_id'], $language_info['language_id']);
 
 		if (!$description_info) {

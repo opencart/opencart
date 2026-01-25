@@ -15,8 +15,9 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * Triggered using admin/model/localisation/language/editLanguage/after
 	 * Triggered using admin/model/localisation/language/deleteLanguage/after
 	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */

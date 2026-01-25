@@ -7,11 +7,15 @@ const config = await loader.config('catalog');
 // Language
 const language = await loader.language('account/register');
 
-// customer groups
-let customer_groups = await loader.storage('customer/customer_group');
+// Customer Groups
+const customer_groups = await loader.storage('customer/customer_group');
 
 class AccountRegister extends WebComponent {
     async connected() {
+
+    }
+
+    render() {
         let data = {};
 
         data.customer_groups = customer_groups;
@@ -19,34 +23,13 @@ class AccountRegister extends WebComponent {
         // Custom Fields
         data.custom_fields = {};
 
-        let customer_group = await loader.storage('customer/customer_group-' + config.config_customer_group_id);
+        let customer_group = loader.storage('customer/customer_group-' + config.config_customer_group_id);
 
         if (customer_group.length) {
             data.custom_fields = customer_group.custom_fields;
         }
 
-        let response = loader.template('account/register', { ...data, ...language, ...config });
-
-        response.then(this.render.bind(this));
-        response.then(this.addEvent.bind(this));
-    }
-
-    render(html) {
-        this.innerHTML = html;
-    }
-
-    addEvent() {
-        // Attach event to form
-        let form = document.getElementById('form-register');
-
-        form.addEventListener('submit', this.onSubmit);
-
-        // Set up the customer group
-        let customer_group = document.getElementById('input-customer-group');
-
-        if (customer_group) {
-            customer_group.addEventListener('change', this.onChange);
-        }
+        return loader.template('account/register', { ...data, ...language, ...config });
     }
 
     async onChange() {
@@ -77,21 +60,24 @@ class AccountRegister extends WebComponent {
     onSubmit(e) {
         e.preventDefault();
 
-        this.request.fetch({
+        loader.request({
+            url: '',
+            method: 'POST',
+            data: [],
+            beforeSend: '',
+            afterSend: '',
+            onComplete: (json) => {
+                let alert = document.getElementById('alert');
 
+                if (json['error']) {
+                    alert.append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+            }
         });
-    }
-
-    onComplete(json) {
-        let alert = document.getElementById('alert');
-
-        if (json['error']) {
-            alert.append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-        }
-
-        if (json['success']) {
-            alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-        }
     }
 }
 

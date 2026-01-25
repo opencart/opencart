@@ -7,6 +7,9 @@ const config = await loader.config('catalog');
 // Language
 const language = await loader.language('common/footer');
 
+// Template
+const template = await loader.template('common/footer');
+
 // Storage
 const articles = await loader.storage('cms/article-1');
 
@@ -15,6 +18,10 @@ const informations = await loader.storage('information/information');
 
 class CommonFooter extends WebComponent {
     async connected() {
+
+    }
+
+    render() {
         let data = {};
 
         // Articles
@@ -27,7 +34,7 @@ class CommonFooter extends WebComponent {
 
         data.year = date.getFullYear();
 
-        this.innerHTML = await loader.template('common/footer', { ...data, ...language, ...config });
+        return loader.template('common/footer', { ...data, ...language, ...config });
     }
 }
 

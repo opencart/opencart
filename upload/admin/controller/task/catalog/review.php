@@ -22,6 +22,15 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
+		// Review
+		$this->load->model('catalog/product');
+
+		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
+
+		if (!$product_info || !$product_info['status']) {
+			return ['error' => $this->language->get('error_review')];
+		}
+
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');

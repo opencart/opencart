@@ -115,44 +115,4 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
 	}
-
-	/**
-	 * Clear
-	 *
-	 * Delete generated JSON language files.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/return_reason');
-
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		$this->load->model('setting/store');
-
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
-
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/location.json';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
-			}
-		}
-
-		return ['success' => $this->language->get('text_clear')];
-	}
 }

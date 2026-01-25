@@ -11,9 +11,9 @@ class Location extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new location list.
 	 *
-	 * model/localisation/location/addLocation/after
-	 * model/localisation/location/editLocation/after
-	 * model/localisation/location/deleteLocation/after
+	 * Triggered using admin/model/localisation/location/addLocation/after
+	 * Triggered using admin/model/localisation/location/editLocation/after
+	 * Triggered using admin/model/localisation/location/deleteLocation/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

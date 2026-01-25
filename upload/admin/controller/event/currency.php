@@ -15,9 +15,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 * Triggered using admin/model/localisation/currency/editCategory/after
 	 * Triggered using admin/model/localisation/currency/deleteCategory/after
 	 *
-	 * @param string                $route
-	 * @param array<string, string> $args
-	 * @param array<string, string> $output
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 * @param mixed             $output
 	 *
 	 * @return void
 	 */
@@ -31,16 +31,5 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
-
-		/*
-		// Admin
-		$task_data = [
-			'code'   => 'admin.currency',
-			'action' => 'task/admin/currency',
-			'args'   => []
-		];
-
-		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 }

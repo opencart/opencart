@@ -1,11 +1,14 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
+
+
+
 class AccountAddressList extends WebComponent {
     async connected() {
         await this.load.language('account/address');
 
-        this.innerHTML = await this.load.template('account/address', this.language.all());
+        this.innerHTML = await this.load.template('account/address', this.language);
     }
 
     onClick() {

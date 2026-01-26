@@ -38,6 +38,10 @@ const storage = await loader.library('storage');
 
 storage.addPath('catalog/view/data/' + base.host + '/' + lang + '/');
 
+storage.data.set('cms/article-1', {
+    articles: []
+});
+
 // Template
 const template = await loader.library('template');
 

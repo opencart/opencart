@@ -11,7 +11,7 @@ const language = await loader.language('account/edit');
 const session = await loader.library('session');
 
 class AccountEdit extends WebComponent {
-    async connected() {
+    async render() {
         let data = {};
 
         let customer = session.get('customer');
@@ -29,11 +29,6 @@ class AccountEdit extends WebComponent {
         if (customer_group.length) {
             data.custom_fields = customer_group.custom_fields;
         }
-    }
-
-    render() {
-
-
 
         return loader.template('account/edit', { ...data, ...language, ...config });
     }

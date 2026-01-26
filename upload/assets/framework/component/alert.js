@@ -21,7 +21,6 @@ class XAlert extends WebComponent {
         }
 
         return '<div class="alert ' + type + '" data-on-load="timeout"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</div>';
-
     }
 
     timeout(e) {

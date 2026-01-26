@@ -1,12 +1,12 @@
 import { loader } from './loader.js';
 
-const currencies = await loader.storage('localisation/currencies');
+const currencies = await loader.storage('localisation/currency');
 
 export default class Currency {
     static currencies = {};
 
-    async constructor() {
-        this.currencies = new Map(currencies.toArray());
+    constructor() {
+        this.currencies = currencies;
     }
 
     format(number, code, value = 0, format = true) {

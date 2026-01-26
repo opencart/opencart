@@ -1,37 +1,23 @@
 import { loader } from '../index.js';
 
-const render = (html) => {
-    console.log(html);
-
-    this.innerHTML = html;
-}
-
 // Attach Events based on elements that have data-on-* attributes
 const event = (html) => {
     let elements = this.querySelectorAll('[data-on]');
 
     for (let element of elements) {
-        for (let attribute of element.attributes) {
+        let part= element.getAttribute('data-on').split(':');
 
-            console.log(attribute.name);
+        element.addEventListener(part[0], this[part[1]]);
 
-            let type = attribute.value.split('.');
-
-            element.addEventListener(type, this[attribute.value]);
-
-            element.removeAttribute(attribute.name);
-        }
+        element.removeAttribute('data-on');
     }
 }
 
 export class WebComponent extends HTMLElement {
+    element = this;
+
     constructor() {
         super();
-
-        // Set any changes to the attributes of the element to re-render the contents.
-        for (let attribute of this.attributes) {
-            this.addEventListener('[' + attribute.name + ']', this.render);
-        }
     }
 
     async connectedCallback() {
@@ -39,13 +25,21 @@ export class WebComponent extends HTMLElement {
             this.connected();
         }
 
+        // Set any changes to the attributes of the element to re-render the contents.
+        for (let attribute of this.attributes) {
+            this.addEventListener('[' + attribute.name + ']', this.render);
+        }
+
         if (this.render !== undefined) {
             let response = this.render();
 
             //console.log(response);
-            console.log(render);
+           // console.log(render);
 
-            response.then(render.bind(this));
+            response.then((html) => {
+                this.innerHTML = html;
+            });
+
             //response.then(event.bind(this));
 
             this.addEventListener('[value]', this.render);

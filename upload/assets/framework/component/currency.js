@@ -1,5 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from "../index.js";
+import { loader } from '../index.js';
 
 // Library
 const currency = await loader.library('currency');

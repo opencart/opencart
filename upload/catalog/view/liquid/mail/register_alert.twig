@@ -1,0 +1,14 @@
+{{ text_signup }}<br/>
+<br/>
+{{ text_firstname }} {{ firstname }}<br/>
+{{ text_lastname }} {{ lastname }}<br/>
+{% if customer_group %}
+{{ text_customer_group }} {{ customer_group }}<br/>
+{% endif %}
+{{ text_email }} {{ email }}<br/>
+{% if telephone %}
+{{ text_telephone }} {{ telephone }}
+{% endif %}
+<br/>
+{{ store }}<br/>
+{{ store_url }}

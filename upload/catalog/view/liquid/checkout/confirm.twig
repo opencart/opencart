@@ -1,0 +1,57 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{{ column_product }}</th>
+        <th class="text-end">{{ column_total }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+        <tr>
+          <td>{{ product.quantity }}x <a href="{{ product.href }}">{{ product.name }}</a>
+
+            <ul class="list-unstyled mb-0">
+              <li>
+                <small> - {{ text_model }}: {{ product.model }}</small>
+              </li>
+              {% for option in product.option %}
+                <li>
+                  <small> - {{ option.name }}: {{ option.value }}</small>
+                </li>
+              {% endfor %}
+
+              {% if product.subscription %}
+                <li>
+                  <small> - {{ text_subscription }}: {{ product.subscription }}</small>
+                </li>
+              {% endif %}
+
+              {% if product.reward %}
+                <li>
+                  <small> - {{ text_points }}: {{ product.reward }}</small>
+                </li>
+              {% endif %}
+            </ul>
+          </td>
+          <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      {% for total in totals %}
+        <tr>
+          <td class="text-end"><strong>{{ total.title }}</strong></td>
+          <td class="text-end"><x-currency code="{{ currency }}" amount="{{ total.value }}"></x-currency></td>
+        </tr>
+      {% endfor %}
+    </tfoot>
+  </table>
+</div>
+<div id="checkout-payment">
+  {% if payment %}
+    {{ payment }}
+  {% else %}
+    <div class="text-end"><button type="button" class="btn btn-primary" disabled>{{ button_confirm }}</button></div>
+  {% endif %}
+</div>

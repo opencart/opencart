@@ -1,0 +1,64 @@
+<nav id="top">
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <ul class="list-inline">
+          <li class="list-inline-item me-3">
+            <common-currency></common-currency>
+          </li>
+          <li class="list-inline-item">
+            <common-language></common-language>
+          </li>
+        </ul>
+      </div>
+      <div class="col text-end">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="information/contact"><i class="fa-solid fa-phone"></i> <span class="d-none d-lg-inline">{{ config_telephone }}</span></a></li>
+          <li class="list-inline-item">
+            <div class="dropdown">
+              <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i> <span class="d-none d-lg-inline">{{ text_account }}</span> <i class="fa-solid fa-caret-down"></i></a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                {% if not logged %}
+                  <li><a href="account/register" class="dropdown-item">{{ text_register }}</a></li>
+                  <li><a href="account/login" class="dropdown-item">{{ text_login }}</a></li>
+                {% else %}
+                  <li><a href="account/account" class="dropdown-item">{{ text_account }}</a></li>
+                  <li><a href="account/order" class="dropdown-item">{{ text_order }}</a></li>
+                  <li><a href="account/transaction" class="dropdown-item">{{ text_transaction }}</a></li>
+                  <li><a href="account/download" class="dropdown-item">{{ text_download }}</a></li>
+                  <li><a href="account/logout" class="dropdown-item">{{ text_logout }}</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </li>
+          <li class="list-inline-item"><a href="account/wishlist" id="wishlist-total" title="{{ text_wishlist | replace: '%s', wishlist }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist | replace: '%s', wishlist }}</span></a></li>
+          <li class="list-inline-item"><a href="checkout/cart" title="{{ text_shopping_cart }}"><i class="fa-solid fa-cart-shopping"></i> <span class="d-none d-lg-inline">{{ text_shopping_cart }}</span></a></li>
+          <li class="list-inline-item"><a href="checkout/checkout" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-lg-inline">{{ text_checkout }}</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-lg-4">
+        <div id="logo">
+          {% if config_logo %}
+            <a href="{{ config_url }}"><img src="{{ config_url }}image/{{ config_logo }}" title="{{ config_name }}" alt="{{ config_name }}" class="img-fluid"/></a>
+          {% else %}
+            <h1><a href="{{ config_url }}">{{ config_name }}</a></h1>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-md-5">
+        <common-search></common-search>
+      </div>
+      <div class="col-md-4 col-lg-3 mb-2">
+        <common-cart></common-cart>
+      </div>
+    </div>
+  </div>
+</header>
+
+

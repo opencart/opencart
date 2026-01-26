@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col mb-3">
+    <div class="border rounded p-3 d-flex flex-column h-100">
+      <h2>{{ text_new_customer }}</h2>
+      <p><strong>{{ text_register }}</strong></p>
+      <p>{{ text_register_account }}</p>
+      <div class="text-end">
+        <a href="{{ register }}" class="btn btn-primary">{{ button_continue }}</a>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-3">
+    <div class="border rounded p-3 d-flex flex-column h-100">
+      <form id="form-login" action="{{ login }}">
+        <h2>{{ text_returning_customer }}</h2>
+        <p><strong>{{ text_i_am_returning_customer }}</strong></p>
+        <div class="mb-3">
+          <label for="input-email" class="col-form-label">{{ entry_email }}</label>
+          <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+        </div>
+        <div class="mb-3">
+          <label for="input-password" class="col-form-label">{{ entry_password }}</label>
+          <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control mb-1"/>
+          <a href="{{ forgotten }}">{{ text_forgotten }}</a>
+        </div>
+        {% if redirect %}
+          <input type="hidden" name="redirect" value="{{ redirect }}"/>
+        {% endif %}
+        <div class="text-end">
+          <button id="button-login" type="submit" class="btn btn-primary">{{ button_login }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { loader } from '../index.js';
 
-const sdsd = (html) => {
+const render = (html) => {
     console.log(html);
 
     this.innerHTML = html;
@@ -34,7 +34,7 @@ export class WebComponent extends HTMLElement {
         }
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         if (this.connected !== undefined) {
             this.connected();
         }
@@ -42,9 +42,10 @@ export class WebComponent extends HTMLElement {
         if (this.render !== undefined) {
             let response = this.render();
 
-            console.log(response);
+            //console.log(response);
+            console.log(render);
 
-            response.then(sdsd.bind(this));
+            response.then(render.bind(this));
             //response.then(event.bind(this));
 
             this.addEventListener('[value]', this.render);

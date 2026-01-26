@@ -1,0 +1,51 @@
+{% if products %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">{{ column_image }}</th>
+          <th>{{ column_name }}</th>
+          <th>{{ column_model }}</th>
+          <th class="text-end">{{ column_stock }}</th>
+          <th class="text-end">{{ column_price }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set product_row = 0 %}
+        {% for product in products %}
+          <tr>
+            <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px"/></a>{% endif %}</td>
+            <td><a href="{{ product.href }}">{{ product.name }}</a>
+              <form id="form-product-{{ product_row }}" action="{{ cart_add }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
+                <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+                <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
+              </form>
+            </td>
+            <td>{{ product.model }}</td>
+            <td class="text-end">{{ product.stock }}</td>
+            <td class="text-end text-nowrap">
+              {% if product.price %}
+                <div class="price">
+                  {% if not product.special %}
+                    <x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency>
+                  {% else %}
+                    <strong><x-currency code="{{ currency }}" amount="{{ product.special }}"></x-currency></strong> <s><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></s>
+                  {% endif %}
+                </div>
+              {% endif %}</td>
+            <td class="text-end text-nowrap" style="width: 1px;">
+              <div class="d-grid">
+                <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_cart }}</button>
+                <a href="{{ product.remove }}" class="btn btn-danger">{{ button_remove }}</a>
+              </div>
+            </td>
+          </tr>
+          {% set product_row = product_row + 1 %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <p>{{ text_no_results }}</p>
+{% endif %}

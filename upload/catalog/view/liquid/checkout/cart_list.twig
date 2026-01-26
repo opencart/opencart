@@ -1,0 +1,99 @@
+{% if products %}
+  {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+  {% endif %}
+  {% if error_stock %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_stock }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+  {% endif %}
+  {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+  {% endif %}
+  {% if attention %}
+    <div class="alert alert-info"><i class="fa-solid fa-circle-info"></i> {{ attention }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+  {% endif %}
+  <h1>{{ heading_title }}{% if weight %} ({{ weight }}){% endif %}</h1>
+  <div id="output-cart" class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center">{{ column_image }}</th>
+          <th>{{ column_name }}</th>
+          <th>{{ column_quantity }}</th>
+          <th class="text-end">{{ column_price }}</th>
+          <th class="text-end">{{ column_total }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+          <tr>
+            <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" style="width: 100px"/></a>{% endif %}</td>
+            <td class="text-start text-wrap"><a href="{{ product.href }}">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <small> - {{ text_model }}: {{ product.model }}</small>
+                </li>
+                {% for option in product.option %}
+                  <li>
+                    <small> - {{ option.name }}: {{ option.value }}</small>
+                  </li>
+                {% endfor %}
+                {% if product.subscription %}
+                  <li>
+                    <small> - {{ text_subscription }}: {{ product.subscription }}</small>
+                  </li>
+                {% endif %}
+                {% if product.reward %}
+                  <li>
+                    <small> - {{ text_points }}: {{ product.reward }}</small>
+                  </li>
+                {% endif %}
+              </ul>
+            </td>
+            <td>
+              <form method="post" data-oc-target="#shopping-cart">
+                <div class="input-group">
+                  <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control{% if product.minimum %} is-invalid{% endif %}"/>
+                  <input type="hidden" name="key" value="{{ product.cart_id }}"/>
+                  <button type="submit" formaction="{{ edit }}" title="{{ button_update }}" class="btn btn-primary"><i class="fa-solid fa-rotate"></i></button>
+                  <a href="{{ product.remove }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a>
+                </div>
+              </form>
+              {% if product.minimum %}
+                <small class="invalid-feedback d-block">{{ product.minimum }}</small>
+              {% endif %}</td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.price }}"></x-currency></td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot id="checkout-total">
+        {% for total in totals %}
+          <tr>
+            <td colspan="4" class="text-end"><strong>{{ total.title }}</strong></td>
+            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ total.value }}"></x-currency></td>
+          </tr>
+        {% endfor %}
+      </tfoot>
+    </table>
+  </div>
+
+  {% if modules %}
+    <h2>{{ text_next }}</h2>
+    <p>{{ text_next_choice }}</p>
+    <div id="accordion" class="accordion">
+      {% for module in modules %}
+        {{ module }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <br/>
+  <div class="row">
+    <div class="col"><a href="{{ continue }}" class="btn btn-light">{{ button_shopping }}</a></div>
+    <div class="col text-end"><a href="{{ checkout }}" class="btn btn-primary">{{ button_checkout }}</a></div>
+  </div>
+{% else %}
+  <h1>{{ heading_title }}</h1>
+  <p>{{ text_no_results }}</p>
+  <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+{% endif %}

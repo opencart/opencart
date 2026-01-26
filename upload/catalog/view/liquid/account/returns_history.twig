@@ -1,0 +1,30 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{{ column_date_added }}</th>
+        <th>{{ column_status }}</th>
+        <th>{{ column_comment }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if histories %}
+        {% for history in histories %}
+          <tr>
+            <td>{{ history.date_added }}</td>
+            <td>{{ history.status }}</td>
+            <td>{{ history.comment }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="3" class="text-center">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

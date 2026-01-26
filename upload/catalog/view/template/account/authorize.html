@@ -1,0 +1,36 @@
+{{ header }}
+<div id="content">
+  <div class="container-fluid">
+    <br/>
+    <br/>
+    <div class="row justify-content-sm-center">
+      <div class="col-sm-10 col-md-8 col-lg-5">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-lock"></i> {{ heading_title }}</div>
+          <div class="card-body">
+            <form id="form-authorize" action="{{ action }}" method="post" data-oc-toggle="ajax">
+              <p>{{ text_security }}</p>
+              <p>{{ text_code }}</p>
+              <div class="mb-3">
+                <label for="input-code" class="form-label">{{ entry_code }}</label>
+                <div class="input-group">
+                  <input type="text" name="code" value="" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                  <button type="button" id="button-send" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_send }}</button>
+                </div>
+                <div id="error-code" class="invalid-feedback"></div>
+              </div>
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button>
+              </div>
+              {% if redirect %}
+                <input type="hidden" name="redirect" value="{{ redirect }}"/>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}
+

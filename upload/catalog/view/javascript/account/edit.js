@@ -32,7 +32,10 @@ class AccountEdit extends WebComponent {
     }
 
     render() {
-        return loader.template('account/register', { ...data, ...language, ...config });
+
+
+
+        return loader.template('account/edit', { ...data, ...language, ...config });
     }
 
     onSubmit(e) {

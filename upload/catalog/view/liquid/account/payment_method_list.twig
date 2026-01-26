@@ -1,0 +1,7 @@
+{% if payment_methods %}
+{% for payment_method in payment_methods %}
+{{ payment_method }}
+{% endfor %}
+{% else %}
+<p>{{ text_no_results }}</p>
+{% endif %}

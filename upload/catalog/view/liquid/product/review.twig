@@ -1,0 +1,40 @@
+<form id="form-review">
+  <div id="review">{{ list }}</div>
+  <h2>{{ text_write }}</h2>
+  {% if review_guest %}
+    <div class="mb-3">
+      <label for="input-author" class="form-label">{{ entry_author }}</label>
+      <input type="text" name="author" value="{{ customer }}" id="input-author" class="form-control" required/>
+      <div id="error-author" class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3">
+      <label for="input-text" class="form-label">{{ entry_review }}</label>
+      <textarea name="text" rows="5" id="input-text" class="form-control" required></textarea>
+      <div id="error-text" class="invalid-feedback"></div>
+      <div class="invalid-feedback">{{ text_note }}</div>
+    </div>
+    <div class="row mb-3">
+      <label class="form-label required">{{ entry_rating }}</label>
+      <div id="input-rating">
+        {{ entry_bad }}&nbsp;
+        <input type="radio" name="rating" value="1" class="form-check-input"/>
+        &nbsp;
+        <input type="radio" name="rating" value="2" class="form-check-input"/>
+        &nbsp;
+        <input type="radio" name="rating" value="3" class="form-check-input"/>
+        &nbsp;
+        <input type="radio" name="rating" value="4" class="form-check-input"/>
+        &nbsp;
+        <input type="radio" name="rating" value="5" class="form-check-input"/>
+        &nbsp;{{ entry_good }}
+      </div>
+      <div id="error-rating" class="invalid-feedback"></div>
+    </div>
+    {{ captcha }}
+    <div class="text-end">
+      <button type="submit" id="button-review" class="btn btn-primary">{{ button_continue }}</button>
+    </div>
+  {% else %}
+    {{ text_login }}
+  {% endif %}
+</form>

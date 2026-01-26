@@ -20,8 +20,11 @@ class XAlert extends WebComponent {
                 break;
         }
 
-        return '<div class="alert ' + type + '" onload="timeout"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</div>';
+        return '<div class="alert ' + type + '" data-on-load="timeout"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</div>';
 
+    }
+
+    timeout(e) {
         // Get the alert element
         let alert = this.querySelector('.alert');
 
@@ -30,7 +33,7 @@ class XAlert extends WebComponent {
         }
     }
 
-    timeout(e) {
+    _timeout(e) {
         this.style.opacity = 1;
 
         const fade = () => {

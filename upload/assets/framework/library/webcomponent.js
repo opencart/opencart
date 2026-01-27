@@ -1,18 +1,5 @@
 import { loader } from '../index.js';
 
-// Attach Events based on elements that have data-on-* attributes
-const event = (html) => {
-    let elements = this.querySelectorAll('[data-on]');
-
-    for (let element of elements) {
-        let part= element.getAttribute('data-on').split(':');
-
-        element.addEventListener(part[0], this[part[1]]);
-
-        element.removeAttribute('data-on');
-    }
-}
-
 export class WebComponent extends HTMLElement {
     element = this;
 
@@ -25,24 +12,25 @@ export class WebComponent extends HTMLElement {
             this.connected();
         }
 
-        // Set any changes to the attributes of the element to re-render the contents.
+        // Adds reactive components event changes to the attributes of the element to re-render the contents.
         for (let attribute of this.attributes) {
+            // Create reactive attributes
             this.addEventListener('[' + attribute.name + ']', this.render);
         }
 
         if (this.render !== undefined) {
-            let response = this.render();
+            this.innerHTML = await this.render();
 
-            //console.log(response);
-           // console.log(render);
+            // Attach Events based on elements that have data-on attributes
+            let elements = this.querySelectorAll('[data-on]');
 
-            response.then((html) => {
-                this.innerHTML = html;
-            });
+            for (let element of elements) {
+                let part= element.getAttribute('data-on').split(':');
 
-            //response.then(event.bind(this));
+                element.addEventListener(part[0], this[part[1]]);
 
-            this.addEventListener('[value]', this.render);
+                element.removeAttribute('data-on');
+            }
         }
     }
 

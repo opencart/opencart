@@ -1,6 +1,6 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_description }}</p>
-<form id="form-return" action="{{ save }}" method="post" data-oc-toggle="ajax">
+<form id="form-return" action="{{ save }}" method="post" data-bind="onsubmit:save">
   <fieldset>
     <legend>{{ text_order }}</legend>
     <div class="row mb-3">

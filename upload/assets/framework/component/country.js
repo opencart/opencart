@@ -43,9 +43,14 @@ class XCountry extends WebComponent {
     }
 
     async connected() {
+
+    }
+
+    render() {
+
         this.default = this.innerHTML;
 
-        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="form-select"';
+        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="onchange:update" class="form-select"';
 
         if (this.hasAttribute('required')) {
             html += ' required';

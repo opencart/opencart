@@ -1,6 +1,6 @@
 <template id="account-edit">
   <h1>{{ heading_title }}</h1>
-  <form id="form-customer" action="{{ save }}" data-on="submit.confirm">
+  <form id="form-customer" action="{{ save }}" data-on="onsubmit:edit">
     <fieldset>
       <legend>{{ text_your_details }}</legend>
       <div class="row mb-3">
@@ -15,6 +15,7 @@
         <div class="col-sm-10">
           <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required/>
           <div id="error-lastname" class="invalid-feedback"></div>
+        </div>
         </div>
       </div>
       <div class="row mb-3">

@@ -50,7 +50,8 @@
               </ul>
             </td>
             <td>
-              <form method="post" data-oc-target="#shopping-cart">
+
+              <form data-on="submit:submit">
                 <div class="input-group">
                   <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control{% if product.minimum %} is-invalid{% endif %}"/>
                   <input type="hidden" name="key" value="{{ product.cart_id }}"/>
@@ -58,6 +59,7 @@
                   <a href="{{ product.remove }}" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></a>
                 </div>
               </form>
+
               {% if product.minimum %}
                 <small class="invalid-feedback d-block">{{ product.minimum }}</small>
               {% endif %}</td>

@@ -1,6 +1,6 @@
 <h1>{{ heading_title }}</h1>
 <p>{{ text_gdpr|format(store, gdpr, title) }}</p>
-<form action="{{ action }}" method="post" data-oc-toggle="ajax">
+<form action="{{ action }}" data-bind="onsubmit:submit">
   <fieldset>
     <legend id="account">{{ text_verification }}</legend>
     <div class="mb-3">
@@ -16,10 +16,12 @@
     <legend id="action">{{ text_action }}</legend>
     <div class="mb-3">
       <div class="form-check">
-        <input type="radio" name="action" value="export" id="input-export" checked class="form-check-input"/> <label for="input-export" class="form-check-label"><strong>{{ text_export }}</strong></label>
+        <input type="radio" name="action" value="export" id="input-export" checked class="form-check-input"/>
+        <label for="input-export" class="form-check-label"><strong>{{ text_export }}</strong></label>
       </div>
       <div class="form-check">
-        <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label for="input-remove" class="form-check-label"><strong>{{ text_remove }}</strong></label>
+        <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/>
+        <label for="input-remove" class="form-check-label"><strong>{{ text_remove }}</strong></label>
       </div>
     </div>
     <div id="collapse-remove" class="alert alert-warning collapse">

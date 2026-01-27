@@ -3,9 +3,9 @@
     <ul class="dropdown-menu">
       {% for currency in currencies %}
         {% if currency.symbol_left != blank %}
-          <li><a href="{{ currency.code }}" data-on="onclick:change" class="dropdown-item">{{ currency.symbol_left }} {{ currency.title }}</a></li>
+          <li><a href="{{ currency.code }}" data-on="click:change" class="dropdown-item">{{ currency.symbol_left }} {{ currency.title }}</a></li>
         {% else %}
-          <li><a href="{{ currency.code }}" data-on="onclick:change" class="dropdown-item">{{ currency.symbol_right }} {{ currency.title }}</a></li>
+          <li><a href="{{ currency.code }}" data-on="click:change" class="dropdown-item">{{ currency.symbol_right }} {{ currency.title }}</a></li>
         {% endif %}
       {% endfor %}
     </ul>

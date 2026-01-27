@@ -1,17 +1,19 @@
 <fieldset id="shipping-address" style="display: {% if payment_address_required and not addresses %}none{% else %}block{% endif %};">
   <legend>{{ heading_title }}</legend>
+
   <div id="shipping-addresses" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <div class="form-check">
-      <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input"{% if addresses %} checked{% endif %}/>
+      <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" data-on="change:existing" class="form-check-input"{% if addresses %} checked{% endif %}/>
       <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
     </div>
     <div class="form-check">
-      <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"{% if not addresses %} checked{% endif %}/>
+      <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" data-on="change:existing" class="form-check-input"{% if not addresses %} checked{% endif %}/>
       <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
     </div>
   </div>
+
   <div id="shipping-existing" style="display: {% if addresses %}block{% else %}none{% endif %};">
-    <select name="address_id" id="input-shipping-address" class="form-select">
+    <select name="address_id" id="input-shipping-address" class="form-select" data-on="change:change">
       <option value="">{{ text_select }}</option>
       {% for address in addresses %}
         <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
@@ -21,7 +23,7 @@
   </div>
   <br/>
   <div id="shipping-new" style="display: {% if not addresses %}block{% else %}none{% endif %};">
-    <form id="form-shipping-address">
+    <form id="form-shipping-address" data-on="submit:submit">
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col mb-3">
           <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label >

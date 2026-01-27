@@ -4,12 +4,12 @@ import { loader } from '../index.js';
 const language = loader.language('account/download');
 
 class AccountDownload extends WebComponent {
-    async connected() {
+    async render() {
         let data = {};
 
         data.downloads = {};
 
-        this.innerHTML = this.load.template('account/download', { ...data, ...language });
+        return this.load.template('account/download', { ...data, ...language });
     }
 }
 

@@ -93,7 +93,7 @@
                 </li>
               {% endif %}
             </ul>
-            <form id="form-product-{{ product_row }}">
+            <form id="form-product-{{ product_row }}" data-on="submit:submit">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
               {% for option in product.option %}
                 {% if option.type == 'select' or option.type == 'radio' %}
@@ -120,7 +120,7 @@
             <div class="d-grid">
               <button type="submit" form="form-product-{{ product_row }}" class="btn btn-primary mb-1">{{ button_reorder }}</button>
               <a href="{{ product.return }}" class="btn btn-danger">{{ button_return }}</a>
-            </div
+            </div>
           </td>
         </tr>
         {% set product_row = product_row + 1 %}

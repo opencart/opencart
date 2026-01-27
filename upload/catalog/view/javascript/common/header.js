@@ -11,10 +11,6 @@ const language = await loader.language('common/header');
 const session = await loader.library('session');
 
 class CommonHeader extends WebComponent {
-    async connected() {
-
-    }
-
     render() {
         let data = {};
 
@@ -27,6 +23,15 @@ class CommonHeader extends WebComponent {
         }
 
         return loader.template('common/header', { ...data, ...language, ...config });
+    }
+
+    register(e) {
+
+
+    }
+
+    login(e) {
+
     }
 }
 

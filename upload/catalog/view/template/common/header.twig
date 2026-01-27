@@ -19,8 +19,8 @@
               <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i> <span class="d-none d-lg-inline">{{ text_account }}</span> <i class="fa-solid fa-caret-down"></i></a>
               <ul class="dropdown-menu dropdown-menu-right">
                 {% if not logged %}
-                  <li><a href="account/register" class="dropdown-item">{{ text_register }}</a></li>
-                  <li><a href="account/login" class="dropdown-item">{{ text_login }}</a></li>
+                  <li><a href="account/register" data-on="click:register" class="dropdown-item">{{ text_register }}</a></li>
+                  <li><a href="account/login" data-on="click:login" class="dropdown-item">{{ text_login }}</a></li>
                 {% else %}
                   <li><a href="account/account" class="dropdown-item">{{ text_account }}</a></li>
                   <li><a href="account/order" class="dropdown-item">{{ text_order }}</a></li>

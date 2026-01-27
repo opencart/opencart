@@ -33,7 +33,7 @@ class AccountEdit extends WebComponent {
         return loader.template('account/edit', { ...data, ...language, ...config });
     }
 
-    onSubmit(e) {
+    submit(e) {
         e.preventDefault();
 
     }

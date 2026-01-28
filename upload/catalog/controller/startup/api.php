@@ -93,7 +93,11 @@ class Api extends \Opencart\System\Engine\Controller {
 				$string .= md5(http_build_query($this->request->post)) . "\n";
 				$string .= $time . "\n";
 
-				if (rawurldecode($this->request->get['signature']) != base64_encode(hash_hmac('sha1', $string, $api_info['key'], true))) {
+				// Security: Use constant-time comparison to prevent timing attacks on HMAC signature
+				$expected_signature = base64_encode(hash_hmac('sha1', $string, $api_info['key'], true));
+				$provided_signature = rawurldecode((string)$this->request->get['signature']);
+				
+				if (!hash_equals($expected_signature, $provided_signature)) {
 					$status = false;
 				}
 			}

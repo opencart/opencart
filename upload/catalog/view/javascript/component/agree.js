@@ -2,6 +2,14 @@ import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 class ComponentAgree extends WebComponent {
+    get value() {
+        return this.getAttribute('value');
+    }
+
+    set value(value) {
+        this.setAttribute('value', value);
+    }
+
     async render() {
         let html = '';
 
@@ -27,4 +35,4 @@ class ComponentAgree extends WebComponent {
     }
 }
 
-customElements.define('account-register', AccountRegister);
+customElements.define('component-Agree', ComponentAgree);

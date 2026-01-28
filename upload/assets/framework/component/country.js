@@ -42,15 +42,11 @@ class XCountry extends WebComponent {
         return this.getAttribute('postcode');
     }
 
-    async connected() {
-
-    }
-
-    render() {
+    async render() {
 
         this.default = this.innerHTML;
 
-        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:update" class="form-select"';
+        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:change" class="form-select"';
 
         if (this.hasAttribute('required')) {
             html += ' required';
@@ -72,9 +68,7 @@ class XCountry extends WebComponent {
 
         let response = this.storage.fetch('localisation/country');
 
-        response.then(this.event.onloaded);
-        response.then(this.event.option);
-        response.then(this.event.postcode);
+        return
     }
 
     onloaded(countries) {
@@ -105,7 +99,7 @@ class XCountry extends WebComponent {
         }
     }
 
-    onchange(e) {
+    change(e) {
         this.value = e.target.value;
     }
 

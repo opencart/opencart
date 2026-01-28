@@ -11,9 +11,10 @@
           </li>
         </ul>
       </div>
+
       <div class="col text-end">
         <ul class="list-inline">
-          <li class="list-inline-item"><a href="information/contact"><i class="fa-solid fa-phone"></i> <span class="d-none d-lg-inline">{{ config_telephone }}</span></a></li>
+          <li class="list-inline-item"><a href="information/contact" data-bind="contact"><i class="fa-solid fa-phone"></i> <span class="d-none d-lg-inline">{{ config_telephone }}</span></a></li>
           <li class="list-inline-item">
             <div class="dropdown">
               <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i> <span class="d-none d-lg-inline">{{ text_account }}</span> <i class="fa-solid fa-caret-down"></i></a>
@@ -36,6 +37,7 @@
           <li class="list-inline-item"><a href="checkout/checkout" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-lg-inline">{{ text_checkout }}</span></a></li>
         </ul>
       </div>
+
     </div>
   </div>
 </nav>
@@ -43,6 +45,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 col-lg-4">
+
         <div id="logo">
           {% if config_logo %}
             <a href="{{ config_url }}"><img src="{{ config_url }}image/{{ config_logo }}" title="{{ config_name }}" alt="{{ config_name }}" class="img-fluid"/></a>
@@ -50,6 +53,7 @@
             <h1><a href="{{ config_url }}">{{ config_name }}</a></h1>
           {% endif %}
         </div>
+
       </div>
       <div class="col-md-5">
         <common-search></common-search>

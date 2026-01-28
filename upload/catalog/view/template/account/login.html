@@ -11,7 +11,8 @@
   </div>
   <div class="col mb-3">
     <div class="border rounded p-3 d-flex flex-column h-100">
-      <form id="form-login" action="{{ login }}" data-bind="onsubmit:login">
+      <form id="form-login" action="{{ login }}" data-on="submit:login">
+
         <h2>{{ text_returning_customer }}</h2>
         <p><strong>{{ text_i_am_returning_customer }}</strong></p>
         <div class="mb-3">
@@ -23,12 +24,15 @@
           <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control mb-1"/>
           <a href="{{ forgotten }}">{{ text_forgotten }}</a>
         </div>
+
         {% if redirect %}
           <input type="hidden" name="redirect" value="{{ redirect }}"/>
         {% endif %}
+        
         <div class="text-end">
           <button id="button-login" type="submit" class="btn btn-primary">{{ button_login }}</button>
         </div>
+
       </form>
     </div>
   </div>

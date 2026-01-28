@@ -8,11 +8,7 @@ const language = await loader.language('account/edit');
 const session = loader.library('session');
 
 class AccountNewsletter extends WebComponent {
-    async connected() {
-
-    }
-
-    render() {
+    async render() {
         let data = {};
 
         let customer = session.get('customer');
@@ -22,7 +18,7 @@ class AccountNewsletter extends WebComponent {
         return loader.template('account/newsletter', { ...data, ...language, ...config });
     }
 
-    onSubmit(e) {
+    submit(e) {
         e.preventDefault();
 
     }

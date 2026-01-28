@@ -9,7 +9,7 @@ class Template {
     constructor() {
         this.engine = new liquidjs.Liquid({
             root: '',
-            extname: '.twig'
+            extname: '.html'
         });
     }
 
@@ -22,7 +22,7 @@ class Template {
     }
 
     async fetch(path) {
-        let file = this.directory + path + '.twig';
+        let file = this.directory + path + '.html';
         let namespace = '';
         let parts = path.split('/');
 
@@ -34,7 +34,7 @@ class Template {
             }
 
             if (this.path.has(namespace)) {
-                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.twig';
+                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.html';
             }
         }
 

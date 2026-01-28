@@ -8,7 +8,7 @@ const session = loader.library('session');
 const language = loader.language('account/edit');
 
 class AccountWishlist extends WebComponent {
-    async connected() {
+    render() {
         let data = {};
 
         data.wishlist = {};
@@ -19,30 +19,17 @@ class AccountWishlist extends WebComponent {
             data.wishlist = customer.get('wishlist');
         }
 
-        let response = loader.template('account/register', { ...data, ...language });
-
-        response.then(this.render.bind(this));
-        response.then(this.addEvent.bind(this));
+       return loader.template('account/wishlist', { ...data, ...language });
     }
 
-    render(html) {
-        this.innerHTML = html;
-    }
-
-    addEvent() {
-        let button = this.querySelectorAll('button');
-
-        button.addEventListener('click', this.onClick.bind(this));
-    }
-
-    onClick() {
+    remove() {
 
 
     }
 }
 
-customElements.define('x-account', XAccount);
-
+customElements.define('account-wishlist', AccountWishlist);
+/*
 $('#wishlist').on('click', '.btn-danger', function(e) {
     e.preventDefault();
 
@@ -75,3 +62,4 @@ $('#wishlist').on('click', '.btn-danger', function(e) {
         }
     });
 });
+*/

@@ -5,13 +5,9 @@ import { loader } from '../index.js';
 const config = await loader.config('catalog');
 
 // Language
-const language = loader.language('account/edit');
+const language = loader.language('account/information');
 
 class InformationInformation extends WebComponent {
-    async connected() {
-
-    }
-
     async render() {
         let data = {};
 

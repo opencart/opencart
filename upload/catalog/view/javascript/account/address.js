@@ -4,27 +4,51 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/address');
 
+// Library
+const session = await loader.library('session');
+
 class AccountAddress extends WebComponent {
-    async connected() {
-        this.innerHTML = await this.load.template('account/address', { ...language });
+    render() {
+        let data = {};
 
+        let customer = session.get('customer');
 
+        data.address = customer.get('addresses');
 
+        return this.load.template('account/address', { ...data, ...language });
+    }
 
-        let buttons = this.querySelectorAll('.btn-danger');
+    submit(e) {
+        e.preventDefault();
 
-        buttons.forEach(button => {
-            button.addEventListener('click', this.onClick);
+    }
+
+    delete(e) {
+        let dismissible = document.querySelectorAll('.alert-dismissible');
+
+        dismissible.remove();
+
+        this.request.post({
+            url: '',
+            success: this.onComplete
         });
     }
 
-    onClick(e) {
+    onSuccess(json) {
+        let alert = document.getElementById('alert');
 
+        if (json['error']) {
+            alert.append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
+
+        if (json['success']) {
+            alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
     }
 }
 
 customElements.define('account-address', AccountAddress);
-
+/*
 const address = document.getElementById('address');
 
 $('#address').on('click', '.btn-danger', function(e) {
@@ -61,3 +85,4 @@ $('#address').on('click', '.btn-danger', function(e) {
         }
     });
 });
+*/

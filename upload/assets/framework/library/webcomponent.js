@@ -1,10 +1,15 @@
 import { loader } from '../index.js';
 
 export class WebComponent extends HTMLElement {
-    element = this;
-
     constructor() {
         super();
+
+        // Adds reactive component event changes to the attributes of the element to re-render the contents.
+        for (let attribute of this.attributes) {
+            if (!attribute.name.startsWith('data-')) {
+                this.addEventListener('[' + attribute.name + ']', this.initialize.bind(this));
+            }
+        }
     }
 
     async connectedCallback() {
@@ -12,25 +17,42 @@ export class WebComponent extends HTMLElement {
             this.connected();
         }
 
-        // Adds reactive components event changes to the attributes of the element to re-render the contents.
-        for (let attribute of this.attributes) {
-            // Create reactive attributes
-            this.addEventListener('[' + attribute.name + ']', this.render);
-        }
-
         if (this.render !== undefined) {
-            this.innerHTML = await this.render();
+            this.initialize();
+        }
+    }
+
+    async initialize() {
+        let render = (html) => {
+            this.innerHTML = html;
 
             // Attach Events based on elements that have data-on attributes
-            let elements = this.querySelectorAll('[data-on]');
+            let elements = this.querySelectorAll('[data-bind], [data-on]');
 
             for (let element of elements) {
-                let part= element.getAttribute('data-on').split(':');
+                // Binds the element to an attribute of thge web component class
+                if (element.hasAttribute('data-bind')) {
+                    this[element.getAttribute('data-bind')] = element;
 
-                element.addEventListener(part[0], this[part[1]]);
+                    element.removeAttribute('data-bind');
+                }
 
-                element.removeAttribute('data-on');
+                if (element.hasAttribute('data-on')) {
+                    let part = element.getAttribute('data-on').split(':');
+
+                    if (part[1] !== undefined && part[1] in this) {
+                        element.addEventListener(part[0], this[part[1]].bind(this));
+
+                        element.removeAttribute('data-on');
+                    }
+                }
             }
+        };
+
+        let response = this.render();
+
+        if (response instanceof Promise) {
+            response.then(render.bind(this));
         }
     }
 

@@ -11,10 +11,6 @@ const language = await loader.language('catalog/thumb');
 const tax = await loader.library('tax');
 
 class ProductThumb extends WebComponent {
-    async connected() {
-
-    }
-
     async render() {
         let data = {};
 
@@ -42,7 +38,7 @@ class ProductThumb extends WebComponent {
         return loader.template('catalog/thumb', { ...data, ...language, ...config });
     }
 
-    onSubmit(e) {
+    submit(e) {
 
 
     }

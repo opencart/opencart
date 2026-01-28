@@ -4,7 +4,7 @@ import { loader } from '../index.js';
 const language = loader.language('account/download');
 
 class AccountDownload extends WebComponent {
-    async render() {
+    render() {
         let data = {};
 
         data.downloads = {};

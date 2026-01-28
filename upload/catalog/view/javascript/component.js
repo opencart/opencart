@@ -18,11 +18,22 @@ import('./common/home.js');
 import('./error/not_found.js');
 
 // Account
-//import('./account/account.js');
-//import('./common/address.js');
-//import('./common/address_list.js');
-//import('./common/address_info.js');
+import('./account/account.js');
+import('./account/address.js');
+import('./account/edit.js');
+import('./account/forgotten.js');
+import('./account/login.js');
+import('./account/newsletter.js');
+//import('./account/order.js');
+import('./account/password.js');
+import('./account/payment_method.js');
 import('./account/register.js');
+//import('./account/return.js');
+import('./account/reward.js');
+import('./account/reset.js');
+import('./account/subscription.js');
+import('./account/transaction.js');
+import('./account/wishlist.js');
 
 // Catalog
 //import('./catalog/brand.js');

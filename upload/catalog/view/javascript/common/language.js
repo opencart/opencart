@@ -14,10 +14,6 @@ const language = await loader.language('common/language');
 const languages = await loader.storage('localisation/language');
 
 class CommonLanguage extends WebComponent {
-    connected() {
-
-    }
-
     render() {
         let data = {};
 
@@ -42,8 +38,10 @@ class CommonLanguage extends WebComponent {
         return loader.template('common/language', { ...data,  ...language });
     }
 
-    async onClick(e) {
+    change(e) {
         local.set('language', e.target.getAttribute('href'));
+
+        this.initialize();
     }
 }
 

@@ -64,16 +64,15 @@ class ProductInfo extends WebComponent {
             data.discounts = [];
 
             for (let discount of product.discount) {
-                discount
+                data.discounts = [];
             }
-
 
             data.options = product.option;
 
             data.subscriptions = product.subscription;
         }
 
-        return this.render('catalog/product_info', { ...data, ...language, ...config });
+        return loader.template('catalog/product_info', { ...data, ...language, ...config });
     }
 
     onChange() {

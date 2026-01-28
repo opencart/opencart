@@ -8,16 +8,13 @@ const config = await loader.config('catalog');
 const language = await loader.language('account/edit');
 
 class AccountForgotten extends WebComponent {
-    async render() {
-
+    render() {
 
         return loader.template('account/forgotten', { ...language });
     }
 
     confirm(e) {
         e.preventDefault();
-
-
 
     }
 }

@@ -8,7 +8,7 @@ const language = await loader.language('common/search');
 const url = new URLSearchParams(document.location.search);
 
 class CommonSearch extends WebComponent {
-    connected() {
+    render() {
         let data = {};
 
         if (url.has('search')) {
@@ -17,20 +17,12 @@ class CommonSearch extends WebComponent {
             data.search = '';
         }
 
-        let response = loader.template('common/search', { ...data, ...language });
-
-        response.then(this.render.bind(this));
-        response.then(this.onSubmit.bind(this));
+        return loader.template('common/search', { ...data, ...language });
     }
 
-    render(html) {
-        this.innerHTML = html;
-    }
-
-    onSubmit(e) {
+    submit(e) {
 
 
-        //location = '';
     }
 }
 

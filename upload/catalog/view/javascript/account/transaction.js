@@ -1,9 +1,13 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-class XAccount extends WebComponent {
-    async connected() {
+// Language
+const language = loader.language('account/transaction');
 
+class AccountTransaction extends WebComponent {
+    render() {
+        return loader.template('account/transaction', { ...language });
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('account-transaction', AccountTransaction);

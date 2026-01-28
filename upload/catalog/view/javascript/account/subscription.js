@@ -1,13 +1,13 @@
 import { WebComponent } from '../component.js';
 
-class XAccount extends WebComponent {
-    async connected() {
+class AccountSubscription extends WebComponent {
+    async render() {
 
     }
 }
 
-customElements.define('x-account', XAccount);
-
+customElements.define('account-subscription', AccountSubscription);
+/*
 $('#button-cancel').on('click', function(e) {
     e.preventDefault();
 
@@ -52,3 +52,4 @@ $('#order').on('click', '.pagination a', function(e) {
 
     $('#order').load(this.href);
 });
+*/

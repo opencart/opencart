@@ -11,11 +11,9 @@ const language = await loader.language('account/register');
 const customer_groups = await loader.storage('customer/customer_group');
 
 class AccountRegister extends WebComponent {
-    async connected() {
 
-    }
 
-    render() {
+    async render() {
         let data = {};
 
         data.customer_groups = customer_groups;
@@ -23,7 +21,7 @@ class AccountRegister extends WebComponent {
         // Custom Fields
         data.custom_fields = {};
 
-        let customer_group = loader.storage('customer/customer_group-' + config.config_customer_group_id);
+        let customer_group = await loader.storage('customer/customer_group-' + config.config_customer_group_id);
 
         if (customer_group.length) {
             data.custom_fields = customer_group.custom_fields;
@@ -32,7 +30,7 @@ class AccountRegister extends WebComponent {
         return loader.template('account/register', { ...data, ...language, ...config });
     }
 
-    async onChange(e) {
+    async change(e) {
         let customer_group_info = await this.storage.fetch('customer/customer_group-' + this.value);
 
         if (customer_group_info) {
@@ -41,23 +39,26 @@ class AccountRegister extends WebComponent {
             data.custom_fields = [];
         }
 
-        $('.custom-field').addClass('d-none');
-        $('.custom-field').removeClass('required');
+        //$('.custom-field').addClass('d-none');
+        //$('.custom-field').removeClass('required');
 
-        for (let i = 0; i < json.length; i++) {
-            let custom_field = json[i];
+        //for (let i = 0; i < json.length; i++) {
+        //    let custom_field = json[i];
 
-            $('.custom-field-' + custom_field['custom_field_id']).removeClass('d-none');
+        //    $('.custom-field-' + custom_field['custom_field_id']).removeClass('d-none');
 
-            if (custom_field['required']) {
-                $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
-            }
-        }
+        //    if (custom_field['required']) {
+        //        $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
+        //     }
+        //}
     }
 
-    register(e) {
+    submit(e) {
         e.preventDefault();
 
+        console.log(e);
+
+        /*
         loader.request({
             url: '',
             method: 'POST',
@@ -76,6 +77,7 @@ class AccountRegister extends WebComponent {
                 }
             }
         });
+        */
     }
 }
 

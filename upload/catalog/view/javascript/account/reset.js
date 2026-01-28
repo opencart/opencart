@@ -1,9 +1,12 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-class XAccount extends WebComponent {
-    async connected() {
+const language = await loader.language('account/reset');
 
+class AccountReset extends WebComponent {
+    render() {
+        return loader.template('account/reset', { ...language });
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('account-reset', AccountReset);

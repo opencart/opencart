@@ -26,11 +26,14 @@ class CommonHeader extends WebComponent {
     }
 
     register(e) {
+        e.preventDefault();
 
 
     }
 
     login(e) {
+        e.preventDefault();
+
 
     }
 }

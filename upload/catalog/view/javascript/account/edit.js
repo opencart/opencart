@@ -11,6 +11,8 @@ const language = await loader.language('account/edit');
 const session = await loader.library('session');
 
 class AccountEdit extends WebComponent {
+    button = HTMLElement;
+
     async render() {
         let data = {};
 
@@ -35,6 +37,7 @@ class AccountEdit extends WebComponent {
 
     submit(e) {
         e.preventDefault();
+
 
     }
 }

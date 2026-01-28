@@ -5,23 +5,11 @@ import { loader } from '../index.js';
 const language = await loader.language('account/return');
 
 class AccountReturnForm extends WebComponent {
-    async connected() {
-        let data = {};
-
-
+   render() {
+       return loader.template('account/return', { ...language });
     }
 
-    render(html) {
-        this.innerHTML = html;
-    }
-
-    addEvent() {
-        let form = this.querySelector('#form-customer');
-
-        form.addEventListener('submit', this.onSubmit.bind(this));
-    }
-
-    onSubmit(e) {
+    submit(e) {
         e.preventDefault();
 
     }

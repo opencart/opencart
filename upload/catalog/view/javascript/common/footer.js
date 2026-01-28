@@ -17,10 +17,6 @@ const articles = await loader.storage('cms/article-1');
 const informations = await loader.storage('information/information');
 
 class CommonFooter extends WebComponent {
-    async connected() {
-
-    }
-
     render() {
         let data = {};
 

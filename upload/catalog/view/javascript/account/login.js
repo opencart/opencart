@@ -4,45 +4,46 @@ import { loader } from '../index.js';
 // Language
 const language = await loader.language('account/login');
 
+// Library
+const session = await loader.library('session');
+
 class AccountLogin extends WebComponent {
-    async connected() {
+    render() {
         data = {};
 
-        this.innerHTML = this.load.template('account/login', { ...data, ...language });
+        var element = this;
+
+        return loader.template('account/login', { ...data, ...language });
     }
 
-    render() {
-        const form = document.getElementById('form-login');
-
-        form.addEventListener('submit', this.onSubmit);
-    }
-
-    onSubmit(e) {
+    submit(e) {
         e.preventDefault();
 
         console.log(e);
 
         let login = api.fetch({
-            url: element.getAttribute('action'),
+            url: this.getAttribute('action'),
             method: 'post',
-            data: form,
+            data: new FormData(this),
             beforeSend: () => {
-
+                $('#button-login').button('loading');
             },
             afterSend: () => {
-
+                $('#button-login').button('reset');
             },
             success: (json) => {
-                document.querySelector('.alert-dismissible').remove();
+                this.querySelector('.alert-dismissible').remove();
 
-                if (json['error']) {
-                    $('#alert').append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                let alert = document.getElementById('alert');
+
+                if (json.error !== undefined) {
+                    alert.append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json.error + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
-                if (json['success']) {
-                    $('#alert').append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                if (json.success !== undefined) {
+                    alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json.success + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    session.set('customer_token', json['customer_token']);
+                    session.set('customer', json.customer);
                 }
             },
             error: (xhr, ajaxOptions, thrownError) => {
@@ -52,7 +53,7 @@ class AccountLogin extends WebComponent {
     }
 }
 
-customElements.define('x-header', XHeader);
+customElements.define('account-login', AccountLogin);
 
 /*
 $('#form-login').on('submit', function(e) {

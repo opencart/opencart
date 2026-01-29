@@ -5,10 +5,14 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Billing** service.
+ * @method \Aws\Result associateSourceViews(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateSourceViewsAsync(array $args = [])
  * @method \Aws\Result createBillingView(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createBillingViewAsync(array $args = [])
  * @method \Aws\Result deleteBillingView(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBillingViewAsync(array $args = [])
+ * @method \Aws\Result disassociateSourceViews(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateSourceViewsAsync(array $args = [])
  * @method \Aws\Result getBillingView(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBillingViewAsync(array $args = [])
  * @method \Aws\Result getResourcePolicy(array $args = [])

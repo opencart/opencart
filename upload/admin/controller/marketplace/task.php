@@ -221,6 +221,8 @@ class Task extends \Opencart\System\Engine\Controller {
 			return;
 		}
 
+		ob_start();
+
 		$filter_data = [
 			'filter_status' => 'pending',
 			'start'         => 0,
@@ -232,13 +234,15 @@ class Task extends \Opencart\System\Engine\Controller {
 		while ($results) {
 			$task = array_shift($results);
 
-			$this->model_setting_task->editStatus($task['task_id'], 'processing');
+			//$this->model_setting_task->editStatus($task['task_id'], 'processing');
 
 			try {
 				$output = $this->load->controller($task['action'], $task['args']);
 			} catch (\Exception $e) {
 				$output = $e;
 			}
+
+			$this->model_setting_task->addLog('test', json_encode($output), true);
 
 			if ($output instanceof \Exception) {
 				$output = ['error' => $output->getMessage() . ' in ' . $output->getFile() . ' on line ' . $output->getLine()];
@@ -267,6 +271,14 @@ class Task extends \Opencart\System\Engine\Controller {
 
 			usleep(2000);
 		}
+
+		$buffer = ob_get_contents();
+
+		ob_end_clean();
+
+		$this->model_setting_task->addLog('test', $buffer, true);
+
+
 	}
 
 	/**

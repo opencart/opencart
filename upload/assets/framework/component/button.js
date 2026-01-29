@@ -1,58 +1,97 @@
 import { WebComponent } from '../component.js';
 
 class XButton extends WebComponent {
+    static observed = ['state'];
+    text = '';
+    width = 0;
+
+    get state() {
+        return this.getAttribute('state');
+    }
+
+    set state(value) {
+        if (value == 'loading') {
+
+            this.$button.disabled = true;
+
+            this.text = this.$button.innerHTML;
+
+            console.log(this.$button.offsetWidth);
+
+           // this.button.width(this.button.offsetWidth);
+
+            this.$button.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-light"></i>';
+
+        }
+
+        if (value == 'reset') {
+            this.$button.disabled = false;
+
+            this.$button.innerHTML = this.text;
+            //this.button.4
+
+        }
+
+        this.setAttribute('state', value);
+    }
+
     render() {
         let icon = '';
         let type = this.getAttribute('type');
-        let type = this.getAttribute('type');
+        let state = this.getAttribute('state');
 
-        switch (type) {
-            case 'success':
-                icon = 'fa-circle-check';
-                break;
-            case 'danger':
-                icon = 'fa-circle-exclamation';
-                break;
-            case 'warning':
-                icon = 'fa-circle-info';
-                break;
-            case 'info':
-                icon = 'fa-circle-info';
-                break;
-        }
-
-        return '<button type="' + type + '" class="btn btn-' + type + '" data-on="click:click"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</button>';
+        return '<button type="' + type + '" class="btn btn-' + type + '" data-bind="button"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</button>';
     }
 
     click(e) {
+        /*
+        let element = this;
 
+        if (state == 'loading') {
+            this.html = $(element).html();
 
-    }
-
-    timeout(e) {
-        // Get the alert element
-        let alert = this.querySelector('.alert');
-
-        if (alert.classList.contains('alert-dismissible')) {
-            window.setTimeout(this.timeout, 3000);
+            $(element).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
         }
-    }
 
-    _timeout(e) {
-        this.style.opacity = 1;
+        if (state == 'reset') {
+            $(element).width('').html(this.html);
+        }
 
-        const fade = () => {
-            if (this.style.opacity > 0) {
-                this.style.opacity -= 0.10;
-            } else {
-                window.clearInterval(this._timer);
+        // If button
+        if ($(element).is('button')) {
+            if (state == 'loading') {
+                this.state = $(element).prop('disabled');
 
-                this.remove();
+                $(element).prop('disabled', true);
+            }
+
+            if (state == 'reset') {
+                $(element).prop('disabled', this.state);
             }
         }
 
-        this._timer = window.setInterval(fade.bind(this), 60);
+        // If link
+        if ($(element).is('a')) {
+            if (state == 'loading') {
+                this.state = $(element).hasClass('disabled');
+
+                $(element).addClass('disabled');
+            }
+
+            if (state == 'reset') {
+                if (this.state) {
+                    $(element).addClass('disabled');
+                } else {
+                    $(element).removeClass('disabled');
+                }
+            }
+        }
+        */
     }
 }
 
-customElements.define('x-alert', XAlert);
+customElements.define('x-button', XButton);
+
+//customElements.define('button-button', XButton);
+
+//customElements.define('button-link', XButton);

@@ -68,7 +68,7 @@ class ConfigurationResolver
      *
      * @return null | mixed
      */
-    public static function env($key, $expectedType)
+    public static function env($key, $expectedType = 'string')
     {
         // Use config from environment variables, if available
         $envValue = getenv(self::$envPrefix . strtoupper($key));
@@ -203,6 +203,7 @@ class ConfigurationResolver
         ) {
             $value = intVal($value);
         }
+
         return $value;
     }
 
@@ -237,8 +238,11 @@ class ConfigurationResolver
             "services {$data[$profile]['services']}"
         );
 
-        if (!isset($services_section[$options['subsection']][$options['key']])
-        ) {
+        if (empty($options['subsection']) || empty($options['key'])) {
+            return null;
+        }
+
+        if (!isset($services_section[$options['subsection']][$options['key']])) {
             return null;
         }
 

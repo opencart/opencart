@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS ARC - Zonal Shift** service.
+ * @method \Aws\Result cancelPracticeRun(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelPracticeRunAsync(array $args = [])
  * @method \Aws\Result cancelZonalShift(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelZonalShiftAsync(array $args = [])
  * @method \Aws\Result createPracticeRunConfiguration(array $args = [])
@@ -21,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listManagedResourcesAsync(array $args = [])
  * @method \Aws\Result listZonalShifts(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listZonalShiftsAsync(array $args = [])
+ * @method \Aws\Result startPracticeRun(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startPracticeRunAsync(array $args = [])
  * @method \Aws\Result startZonalShift(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startZonalShiftAsync(array $args = [])
  * @method \Aws\Result updateAutoshiftObserverNotificationStatus(array $args = [])

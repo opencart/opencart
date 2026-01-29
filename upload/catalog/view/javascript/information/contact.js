@@ -10,9 +10,6 @@ const config = loader.config('catalog');
 // Language
 const language = loader.language('information/contact');
 
-// Template
-let template = loader.template('information/contact');
-
 // Storage
 const locations = loader.storage('information/location');
 
@@ -48,7 +45,9 @@ class InformationContact extends WebComponent {
         return loader.template('information/contact', { ...data, ...language, ...config });
     }
 
-    onSubmit(e) {
+    submit(e) {
+        e.preventDefault();
+
 
     }
 }

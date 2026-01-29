@@ -28,9 +28,10 @@
         {% if redirect %}
           <input type="hidden" name="redirect" value="{{ redirect }}"/>
         {% endif %}
-        
+
         <div class="text-end">
-          <button id="button-login" type="submit" class="btn btn-primary">{{ button_login }}</button>
+          <x-button type="submit" data-bind="button" class="btn btn-primary">{{ button_login }}</x-button>
+
         </div>
 
       </form>

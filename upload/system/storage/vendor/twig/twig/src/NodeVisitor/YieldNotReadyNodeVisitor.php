@@ -30,7 +30,7 @@ final class YieldNotReadyNodeVisitor implements NodeVisitorInterface
 
     public function enterNode(Node $node, Environment $env): Node
     {
-        $class = \get_class($node);
+        $class = $node::class;
 
         if ($node instanceof AbstractExpression || isset($this->yieldReadyNodes[$class])) {
             return $node;

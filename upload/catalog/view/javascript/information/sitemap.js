@@ -1,11 +1,15 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
+
+// Language
+const language = await loader.language('common/language');
 
 class InformationSitemap extends WebComponent {
-    async connected() {
+    render() {
 
 
 
-        let response = this.load.template.render('common/header', this.data);
+        return loader.template('information/sitemap', language);
     }
 }
 

@@ -1,9 +1,6 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-// Config
-const config = await loader.config('catalog');
-
 // Language
 const language = await loader.language('account/edit');
 
@@ -11,12 +8,11 @@ const language = await loader.language('account/edit');
 const session = await loader.library('session');
 
 class AccountEdit extends WebComponent {
-    button = HTMLElement;
-
     async render() {
         let data = {};
 
-        let customer = session.get('customer');
+        //let customer = session.get('customer');
+        let customer = new Map();
 
         data.firstname = customer.get('firstname');
         data.lastname = customer.get('lastname');
@@ -32,13 +28,13 @@ class AccountEdit extends WebComponent {
             data.custom_fields = customer_group.custom_fields;
         }
 
-        return loader.template('account/edit', { ...data, ...language, ...config });
+        return loader.template('account/edit', { ...data, ...language });
     }
 
     submit(e) {
         e.preventDefault();
 
-
+        this.button.state = 'loading';
     }
 }
 

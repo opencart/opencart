@@ -102,6 +102,10 @@ class EventParsingIterator implements Iterator
                 return $this->parseError($event);
             }
 
+            if ($event['headers'][':message-type'] === 'exception') {
+                return $this->parseException($event);
+            }
+
             if ($event['headers'][':message-type'] !== 'event') {
                 throw new ParserException('Failed to parse unknown message type.');
             }
@@ -187,6 +191,16 @@ class EventParsingIterator implements Iterator
         throw new EventStreamDataException(
             $event['headers'][':error-code'],
             $event['headers'][':error-message']
+        );
+    }
+
+    private function parseException(array $event) {
+        $payload = $event['payload']?->getContents();
+        $parsedPayload = json_decode($payload, true);
+
+        throw new EventStreamDataException(
+            $event['headers'][':exception-type'] ?? 'Unknown',
+            $parsedPayload['message'] ?? $payload,
         );
     }
 

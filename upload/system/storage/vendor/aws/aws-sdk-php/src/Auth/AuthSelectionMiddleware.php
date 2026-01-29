@@ -2,6 +2,7 @@
 namespace Aws\Auth;
 
 use Aws\Api\Service;
+use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\CommandInterface;
 use Closure;
 use GuzzleHttp\Promise\Promise;
@@ -27,38 +28,50 @@ class AuthSelectionMiddleware
     /** @var Service */
     private $api;
 
+    /** @var array|null */
+    private ?array $configuredAuthSchemes;
+
     /**
      * Create a middleware wrapper function
      *
      * @param AuthSchemeResolverInterface $authResolver
      * @param Service $api
+     * @param array|null $configuredAuthSchemes
+     * 
      * @return Closure
      */
     public static function wrap(
         AuthSchemeResolverInterface $authResolver,
-        Service $api
+        Service $api,
+        ?array $configuredAuthSchemes
     ): Closure
     {
-        return function (callable $handler) use ($authResolver, $api) {
-            return new self($handler, $authResolver, $api);
+        return function (callable $handler) use (
+            $authResolver,
+            $api,
+            $configuredAuthSchemes
+        ) {
+            return new self($handler, $authResolver, $api, $configuredAuthSchemes);
         };
     }
 
     /**
      * @param callable $nextHandler
-     * @param $authResolver
-     * @param callable $identityProvider
+     * @param AuthSchemeResolverInterface $authResolver
      * @param Service $api
+     * @param array|null $configuredAuthSchemes
      */
     public function __construct(
         callable $nextHandler,
         AuthSchemeResolverInterface $authResolver,
-        Service $api
+        Service $api,
+        ?array $configuredAuthSchemes = null
     )
     {
         $this->nextHandler = $nextHandler;
         $this->authResolver = $authResolver;
         $this->api = $api;
+        $this->configuredAuthSchemes = $configuredAuthSchemes;
     }
 
     /**
@@ -84,16 +97,63 @@ class AuthSelectionMiddleware
                 $resolver = $this->authResolver;
             }
 
-            $selectedAuthScheme = $resolver->selectAuthScheme(
-                $resolvableAuth,
-                ['unsigned_payload' => $unsignedPayload]
-            );
+            try {
+                $authSchemeList = $this->buildAuthSchemeList(
+                    $resolvableAuth,
+                    $command['@context']['auth_scheme_preference']
+                        ?? null,
+                );
+                $selectedAuthScheme = $resolver->selectAuthScheme(
+                    $authSchemeList,
+                    ['unsigned_payload' => $unsignedPayload]
+                );
 
-            if (!empty($selectedAuthScheme)) {
-                $command['@context']['signature_version'] = $selectedAuthScheme;
+                if (!empty($selectedAuthScheme)) {
+                    $command['@context']['signature_version'] = $selectedAuthScheme;
+                }
+            } catch (UnresolvedAuthSchemeException $ignored) {
+                // There was an error resolving auth
+                // The signature version will fall back to the modeled `signatureVersion`
+                // or auth schemes resolved during endpoint resolution
             }
         }
 
         return $nextHandler($command);
+    }
+
+    /**
+     * Prioritizes auth schemes according to user preference order.
+     * User-preferred schemes that are available will be placed first,
+     * followed by remaining available schemes.
+     *
+     * @param array $resolvableAuthSchemeList Available auth schemes
+     * @param array|null $commandConfiguredAuthSchemes Command-level preferences (overrides config)
+     *
+     * @return array Reordered auth schemes with user preferences first
+     */
+    private function buildAuthSchemeList(
+        array $resolvableAuthSchemeList,
+        ?array $commandConfiguredAuthSchemes,
+    ): array
+    {
+        $userConfiguredAuthSchemes = $commandConfiguredAuthSchemes
+            ?? $this->configuredAuthSchemes;
+
+        if (empty($userConfiguredAuthSchemes)) {
+            return $resolvableAuthSchemeList;
+        }
+
+        $prioritizedAuthSchemes = array_intersect(
+            $userConfiguredAuthSchemes,
+            $resolvableAuthSchemeList
+        );
+
+        // Get remaining schemes not in user preferences
+        $remainingAuthSchemes = array_diff(
+            $resolvableAuthSchemeList,
+            $prioritizedAuthSchemes
+        );
+
+        return array_merge($prioritizedAuthSchemes, $remainingAuthSchemes);
     }
 }

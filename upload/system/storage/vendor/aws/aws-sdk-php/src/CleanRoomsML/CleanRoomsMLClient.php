@@ -99,6 +99,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result listTrainedModelInferenceJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTrainedModelInferenceJobsAsync(array $args = [])
+ * @method \Aws\Result listTrainedModelVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTrainedModelVersionsAsync(array $args = [])
  * @method \Aws\Result listTrainedModels(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTrainedModelsAsync(array $args = [])
  * @method \Aws\Result listTrainingDatasets(array $args = [])

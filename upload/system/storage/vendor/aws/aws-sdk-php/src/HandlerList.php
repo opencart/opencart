@@ -116,6 +116,20 @@ class HandlerList implements \Countable
     }
 
     /**
+     * Checks if a middleware exists. The middleware
+     * should have been added with a name in order to
+     * use this method.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasMiddleware(string $name): bool
+    {
+        return isset($this->named[$name]);
+    }
+
+    /**
      * Append a middleware to the init step.
      *
      * @param callable $middleware Middleware function to add.

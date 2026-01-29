@@ -16,7 +16,21 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Twig\ExpressionParser;
+use Twig\ExpressionParser\Infix\ArrowExpressionParser;
+use Twig\ExpressionParser\Infix\AssignmentExpressionParser;
+use Twig\ExpressionParser\Infix\BinaryOperatorExpressionParser;
+use Twig\ExpressionParser\Infix\ConditionalTernaryExpressionParser;
+use Twig\ExpressionParser\Infix\DotExpressionParser;
+use Twig\ExpressionParser\Infix\FilterExpressionParser;
+use Twig\ExpressionParser\Infix\FunctionExpressionParser;
+use Twig\ExpressionParser\Infix\IsExpressionParser;
+use Twig\ExpressionParser\Infix\IsNotExpressionParser;
+use Twig\ExpressionParser\Infix\SquareBracketExpressionParser;
+use Twig\ExpressionParser\InfixAssociativity;
+use Twig\ExpressionParser\PrecedenceChange;
+use Twig\ExpressionParser\Prefix\GroupingExpressionParser;
+use Twig\ExpressionParser\Prefix\LiteralExpressionParser;
+use Twig\ExpressionParser\Prefix\UnaryOperatorExpressionParser;
 use Twig\Markup;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Expression\Binary\AddBinary;
@@ -42,10 +56,12 @@ use Twig\Node\Expression\Binary\ModBinary;
 use Twig\Node\Expression\Binary\MulBinary;
 use Twig\Node\Expression\Binary\NotEqualBinary;
 use Twig\Node\Expression\Binary\NotInBinary;
+use Twig\Node\Expression\Binary\NotSameAsBinary;
 use Twig\Node\Expression\Binary\NullCoalesceBinary;
 use Twig\Node\Expression\Binary\OrBinary;
 use Twig\Node\Expression\Binary\PowerBinary;
 use Twig\Node\Expression\Binary\RangeBinary;
+use Twig\Node\Expression\Binary\SameAsBinary;
 use Twig\Node\Expression\Binary\SpaceshipBinary;
 use Twig\Node\Expression\Binary\StartsWithBinary;
 use Twig\Node\Expression\Binary\SubBinary;
@@ -63,11 +79,12 @@ use Twig\Node\Expression\Test\EvenTest;
 use Twig\Node\Expression\Test\NullTest;
 use Twig\Node\Expression\Test\OddTest;
 use Twig\Node\Expression\Test\SameasTest;
+use Twig\Node\Expression\Test\TrueTest;
 use Twig\Node\Expression\Unary\NegUnary;
 use Twig\Node\Expression\Unary\NotUnary;
 use Twig\Node\Expression\Unary\PosUnary;
+use Twig\Node\Expression\Unary\SpreadUnary;
 use Twig\Node\Node;
-use Twig\OperatorPrecedenceChange;
 use Twig\Parser;
 use Twig\Sandbox\SecurityNotAllowedMethodError;
 use Twig\Sandbox\SecurityNotAllowedPropertyError;
@@ -266,6 +283,7 @@ final class CoreExtension extends AbstractExtension
             // iteration and runtime
             new TwigFilter('default', [self::class, 'default'], ['node_class' => DefaultFilter::class]),
             new TwigFilter('keys', [self::class, 'keys']),
+            new TwigFilter('invoke', [self::class, 'invoke']),
         ];
     }
 
@@ -304,6 +322,7 @@ final class CoreExtension extends AbstractExtension
             new TwigTest('iterable', 'is_iterable'),
             new TwigTest('sequence', [self::class, 'testSequence']),
             new TwigTest('mapping', [self::class, 'testMapping']),
+            new TwigTest('true', null, ['node_class' => TrueTest::class]),
         ];
     }
 
@@ -312,50 +331,74 @@ final class CoreExtension extends AbstractExtension
         return [];
     }
 
-    public function getOperators(): array
+    public function getExpressionParsers(): array
     {
         return [
-            [
-                'not' => ['precedence' => 50, 'precedence_change' => new OperatorPrecedenceChange('twig/twig', '3.15', 70), 'class' => NotUnary::class],
-                '-' => ['precedence' => 500, 'class' => NegUnary::class],
-                '+' => ['precedence' => 500, 'class' => PosUnary::class],
-            ],
-            [
-                '? :' => ['precedence' => 5, 'class' => ElvisBinary::class, 'associativity' => ExpressionParser::OPERATOR_RIGHT],
-                '?:' => ['precedence' => 5, 'class' => ElvisBinary::class, 'associativity' => ExpressionParser::OPERATOR_RIGHT],
-                '??' => ['precedence' => 300, 'precedence_change' => new OperatorPrecedenceChange('twig/twig', '3.15', 5), 'class' => NullCoalesceBinary::class, 'associativity' => ExpressionParser::OPERATOR_RIGHT],
-                'or' => ['precedence' => 10, 'class' => OrBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'xor' => ['precedence' => 12, 'class' => XorBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'and' => ['precedence' => 15, 'class' => AndBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'b-or' => ['precedence' => 16, 'class' => BitwiseOrBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'b-xor' => ['precedence' => 17, 'class' => BitwiseXorBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'b-and' => ['precedence' => 18, 'class' => BitwiseAndBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '==' => ['precedence' => 20, 'class' => EqualBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '!=' => ['precedence' => 20, 'class' => NotEqualBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '<=>' => ['precedence' => 20, 'class' => SpaceshipBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '<' => ['precedence' => 20, 'class' => LessBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '>' => ['precedence' => 20, 'class' => GreaterBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '>=' => ['precedence' => 20, 'class' => GreaterEqualBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '<=' => ['precedence' => 20, 'class' => LessEqualBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'not in' => ['precedence' => 20, 'class' => NotInBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'in' => ['precedence' => 20, 'class' => InBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'matches' => ['precedence' => 20, 'class' => MatchesBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'starts with' => ['precedence' => 20, 'class' => StartsWithBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'ends with' => ['precedence' => 20, 'class' => EndsWithBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'has some' => ['precedence' => 20, 'class' => HasSomeBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'has every' => ['precedence' => 20, 'class' => HasEveryBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '..' => ['precedence' => 25, 'class' => RangeBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '+' => ['precedence' => 30, 'class' => AddBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '-' => ['precedence' => 30, 'class' => SubBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '~' => ['precedence' => 40, 'precedence_change' => new OperatorPrecedenceChange('twig/twig', '3.15', 27), 'class' => ConcatBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '*' => ['precedence' => 60, 'class' => MulBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '/' => ['precedence' => 60, 'class' => DivBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '//' => ['precedence' => 60, 'class' => FloorDivBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '%' => ['precedence' => 60, 'class' => ModBinary::class, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'is' => ['precedence' => 100, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                'is not' => ['precedence' => 100, 'associativity' => ExpressionParser::OPERATOR_LEFT],
-                '**' => ['precedence' => 200, 'class' => PowerBinary::class, 'associativity' => ExpressionParser::OPERATOR_RIGHT],
-            ],
+            // unary operators
+            new UnaryOperatorExpressionParser(NotUnary::class, 'not', 50, new PrecedenceChange('twig/twig', '3.15', 70)),
+            new UnaryOperatorExpressionParser(SpreadUnary::class, '...', 512, description: 'Spread operator', operandPrecedence: 0),
+            new UnaryOperatorExpressionParser(NegUnary::class, '-', 500),
+            new UnaryOperatorExpressionParser(PosUnary::class, '+', 500),
+
+            // binary operators
+            new BinaryOperatorExpressionParser(ElvisBinary::class, '?:', 5, InfixAssociativity::Right, description: 'Elvis operator (a ?: b)', aliases: ['? :']),
+            new BinaryOperatorExpressionParser(NullCoalesceBinary::class, '??', 300, InfixAssociativity::Right, new PrecedenceChange('twig/twig', '3.15', 5), description: 'Null coalescing operator (a ?? b)'),
+            new BinaryOperatorExpressionParser(OrBinary::class, 'or', 10),
+            new BinaryOperatorExpressionParser(XorBinary::class, 'xor', 12),
+            new BinaryOperatorExpressionParser(AndBinary::class, 'and', 15),
+            new BinaryOperatorExpressionParser(BitwiseOrBinary::class, 'b-or', 16),
+            new BinaryOperatorExpressionParser(BitwiseXorBinary::class, 'b-xor', 17),
+            new BinaryOperatorExpressionParser(BitwiseAndBinary::class, 'b-and', 18),
+            new BinaryOperatorExpressionParser(EqualBinary::class, '==', 20),
+            new BinaryOperatorExpressionParser(NotEqualBinary::class, '!=', 20),
+            new BinaryOperatorExpressionParser(SpaceshipBinary::class, '<=>', 20),
+            new BinaryOperatorExpressionParser(LessBinary::class, '<', 20),
+            new BinaryOperatorExpressionParser(GreaterBinary::class, '>', 20),
+            new BinaryOperatorExpressionParser(GreaterEqualBinary::class, '>=', 20),
+            new BinaryOperatorExpressionParser(LessEqualBinary::class, '<=', 20),
+            new BinaryOperatorExpressionParser(NotInBinary::class, 'not in', 20),
+            new BinaryOperatorExpressionParser(InBinary::class, 'in', 20),
+            new BinaryOperatorExpressionParser(MatchesBinary::class, 'matches', 20),
+            new BinaryOperatorExpressionParser(StartsWithBinary::class, 'starts with', 20),
+            new BinaryOperatorExpressionParser(EndsWithBinary::class, 'ends with', 20),
+            new BinaryOperatorExpressionParser(HasSomeBinary::class, 'has some', 20),
+            new BinaryOperatorExpressionParser(HasEveryBinary::class, 'has every', 20),
+            new BinaryOperatorExpressionParser(SameAsBinary::class, '===', 20),
+            new BinaryOperatorExpressionParser(NotSameAsBinary::class, '!==', 20),
+            new BinaryOperatorExpressionParser(RangeBinary::class, '..', 25),
+            new BinaryOperatorExpressionParser(AddBinary::class, '+', 30),
+            new BinaryOperatorExpressionParser(SubBinary::class, '-', 30),
+            new BinaryOperatorExpressionParser(ConcatBinary::class, '~', 40, precedenceChange: new PrecedenceChange('twig/twig', '3.15', 27)),
+            new BinaryOperatorExpressionParser(MulBinary::class, '*', 60),
+            new BinaryOperatorExpressionParser(DivBinary::class, '/', 60),
+            new BinaryOperatorExpressionParser(FloorDivBinary::class, '//', 60, description: 'Floor division'),
+            new BinaryOperatorExpressionParser(ModBinary::class, '%', 60),
+            new BinaryOperatorExpressionParser(PowerBinary::class, '**', 200, InfixAssociativity::Right, description: 'Exponentiation operator'),
+
+            // ternary operator
+            new ConditionalTernaryExpressionParser(),
+
+            // assignment operator
+            new AssignmentExpressionParser('='),
+
+            // Twig callables
+            new IsExpressionParser(),
+            new IsNotExpressionParser(),
+            new FilterExpressionParser(),
+            new FunctionExpressionParser(),
+
+            // get attribute operators
+            new DotExpressionParser(),
+            new SquareBracketExpressionParser(),
+
+            // group expression
+            new GroupingExpressionParser(),
+
+            // arrow function
+            new ArrowExpressionParser(),
+
+            // all literals
+            new LiteralExpressionParser(),
         ];
     }
 
@@ -382,10 +425,8 @@ final class CoreExtension extends AbstractExtension
 
                 trigger_deprecation('twig/twig', '3.12', 'Passing a non-countable sequence of values to "%s()" is deprecated.', __METHOD__);
 
-                return $values;
+                $values = self::toArray($values, false);
             }
-
-            $values = self::toArray($values, false);
         }
 
         if (!$count = \count($values)) {
@@ -509,7 +550,6 @@ final class CoreExtension extends AbstractExtension
      * Returns a formatted string.
      *
      * @param string|null $format
-     * @param ...$values
      *
      * @internal
      */
@@ -575,7 +615,7 @@ final class CoreExtension extends AbstractExtension
         if (ctype_digit($asString) || ('' !== $asString && '-' === $asString[0] && ctype_digit(substr($asString, 1)))) {
             $date = new \DateTime('@'.$date);
         } else {
-            $date = new \DateTime($date, $this->getTimezone());
+            $date = new \DateTime($date);
         }
 
         if (false !== $timezone) {
@@ -916,6 +956,16 @@ final class CoreExtension extends AbstractExtension
     }
 
     /**
+     * Invokes a callable.
+     *
+     * @internal
+     */
+    public static function invoke(\Closure $arrow, ...$arguments): mixed
+    {
+        return $arrow(...$arguments);
+    }
+
+    /**
      * Reverses a variable.
      *
      * @param array|\Traversable|string|null $item         An array, a \Traversable instance, or a string
@@ -957,8 +1007,6 @@ final class CoreExtension extends AbstractExtension
      * The function does not preserve keys.
      *
      * @param array|\Traversable|string|null $item
-     *
-     * @return mixed
      *
      * @internal
      */
@@ -1394,8 +1442,6 @@ final class CoreExtension extends AbstractExtension
      *        {# ... #}
      *    {% endif %}
      *
-     * @param mixed $value
-     *
      * @internal
      */
     public static function testSequence($value): bool
@@ -1418,8 +1464,6 @@ final class CoreExtension extends AbstractExtension
      *    {% if foo is mapping %}
      *        {# ... #}
      *    {% endif %}
-     *
-     * @param mixed $value
      *
      * @internal
      */
@@ -1570,10 +1614,10 @@ final class CoreExtension extends AbstractExtension
     {
         if (null !== $object) {
             if ('class' === $constant) {
-                return $checkDefined ? true : \get_class($object);
+                return $checkDefined ? true : $object::class;
             }
 
-            $constant = \get_class($object).'::'.$constant;
+            $constant = $object::class.'::'.$constant;
         }
 
         if (!\defined($constant)) {
@@ -1656,7 +1700,7 @@ final class CoreExtension extends AbstractExtension
             }
 
             if (match (true) {
-                \is_array($object) => \array_key_exists($arrayItem, $object),
+                \is_array($object) => \array_key_exists($arrayItem = (string) $arrayItem, $object),
                 $object instanceof \ArrayAccess => $object->offsetExists($arrayItem),
                 default => false,
             }) {
@@ -1677,9 +1721,13 @@ final class CoreExtension extends AbstractExtension
                 }
 
                 if ($object instanceof \ArrayAccess) {
-                    $message = \sprintf('Key "%s" in object with ArrayAccess of class "%s" does not exist.', $arrayItem, \get_class($object));
+                    if (\is_object($arrayItem) || \is_array($arrayItem)) {
+                        $message = \sprintf('Key of type "%s" does not exist in ArrayAccess-able object of class "%s".', get_debug_type($arrayItem), get_debug_type($object));
+                    } else {
+                        $message = \sprintf('Key "%s" does not exist in ArrayAccess-able object of class "%s".', $arrayItem, get_debug_type($object));
+                    }
                 } elseif (\is_object($object)) {
-                    $message = \sprintf('Impossible to access a key "%s" on an object of class "%s" that does not implement ArrayAccess interface.', $item, \get_class($object));
+                    $message = \sprintf('Impossible to access a key "%s" on an object of class "%s" that does not implement ArrayAccess interface.', $item, get_debug_type($object));
                 } elseif (\is_array($object)) {
                     if (!$object) {
                         $message = \sprintf('Key "%s" does not exist as the sequence/mapping is empty.', $arrayItem);
@@ -1775,7 +1823,7 @@ final class CoreExtension extends AbstractExtension
 
         static $cache = [];
 
-        $class = \get_class($object);
+        $class = $object::class;
 
         // object method
         // precedence: getXxx() > isXxx() > hasXxx()
@@ -1800,7 +1848,7 @@ final class CoreExtension extends AbstractExtension
                 } elseif ('h' === $lcName[0] && str_starts_with($lcName, 'has')) {
                     $name = substr($method, 3);
                     $lcName = substr($lcName, 3);
-                    if (\in_array('is'.$lcName, $lcMethods)) {
+                    if (\in_array('is'.$lcName, $lcMethods, true)) {
                         continue;
                     }
                 } else {
@@ -1842,7 +1890,7 @@ final class CoreExtension extends AbstractExtension
                 return;
             }
 
-            throw new RuntimeError(\sprintf('Neither the property "%1$s" nor one of the methods "%1$s()", "get%1$s()"/"is%1$s()"/"has%1$s()" or "__call()" exist and have public access in class "%2$s".', $item, $class), $lineno, $source);
+            throw new RuntimeError(\sprintf('Neither the property "%1$s" nor one of the methods "%1$s()", "get%1$s()", "is%1$s()", "has%1$s()" or "__call()" exist and have public access in class "%2$s".', $item, $class), $lineno, $source);
         }
 
         if ($sandboxed) {
@@ -2140,7 +2188,7 @@ final class CoreExtension extends AbstractExtension
 
         $property = $class->getProperty($property);
 
-        if (!$property->isPublic()) {
+        if (!$property->isPublic() || $property->isStatic()) {
             static $false;
 
             return $false ??= static fn () => false;

@@ -28,8 +28,11 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
+		/*
 		foreach ($store_ids as $store_id) {
 			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
+
+			print_r($language_ids);
 
 			foreach ($language_ids as $language_id) {
 				$task_data = [
@@ -44,6 +47,19 @@ class Currency extends \Opencart\System\Engine\Controller {
 				$this->model_setting_task->addTask($task_data);
 			}
 		}
+		`*/
+
+		$task_data = [
+			'code'   => 'currency.0.1',
+			'action' => 'task/catalog/currency.list',
+			'args'   => [
+				'store_id'    => 0,
+				'language_id' => 1
+			]
+		];
+
+		$this->model_setting_task->addTask($task_data);
+
 
 		return ['success' => $this->language->get('text_task')];
 	}
@@ -91,10 +107,14 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/currency');
 
-		$currency_ids = $this->model_setting_setting->getValue('config_currency_list', $args['store_id']);
+		//$currency_ids = $this->model_setting_setting->getValue('config_currency_list', $args['store_id']);
+
+		$currency_ids = [1, 2, 3, 4, 5, 6, 7, 8];
 
 		foreach ($currency_ids as $currency_id) {
 			$currency_info = $this->model_localisation_currency->getCurrency($currency_id);
+
+			print_r($currency_info);
 
 			if (!$currency_info || !$currency_info['status']) {
 				$currency_data[$currency_info['code']] = $currency_info;
@@ -102,14 +122,16 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'currency.json';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) .  '/' . $language_info['code'] . '/localisation/';
+		$filename = 'currency.yaml';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($currency_data))) {
+		$this->load->helper('yaml');
+
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($currency_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

@@ -39,9 +39,13 @@ class CommonLanguage extends WebComponent {
     }
 
     change(e) {
+        e.preventDefault();
+
         local.set('language', e.target.getAttribute('href'));
 
         this.initialize();
+
+
     }
 }
 

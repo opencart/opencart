@@ -322,8 +322,8 @@ class EndpointDiscoveryMiddleware
 
             // If no more cached endpoints, make discovery call
             // if none made within cooldown for given key
-            if (time() - $this->discoveryTimes[$cacheKey]
-                < self::$discoveryCooldown
+            if (isset($this->discoveryTimes[$cacheKey])
+                && time() - $this->discoveryTimes[$cacheKey] < self::$discoveryCooldown
             ) {
 
                 // If no more cached endpoints and it's required,

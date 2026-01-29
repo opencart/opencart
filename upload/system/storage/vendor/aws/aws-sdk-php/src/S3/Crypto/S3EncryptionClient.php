@@ -54,6 +54,14 @@ class S3EncryptionClient extends AbstractCryptoClient
         S3Client $client,
         $instructionFileSuffix = null
     ) {
+        trigger_error(
+            'S3EncryptionClient is deprecated and will be removed in a future ' .
+            'release due to security vulnerabilities. Please migrate to ' .
+            'S3EncryptionClientV3 as soon as possible.' . "\n" .
+            'See https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/' .
+            'security.html for upgrade guidance.',
+            E_USER_DEPRECATED
+        );
         $this->client = $client;
         $this->instructionFileSuffix = $instructionFileSuffix;
         MetricsBuilder::appendMetricsCaptureMiddleware(

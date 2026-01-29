@@ -7,9 +7,6 @@ const config = await loader.config('catalog');
 // Language
 const language = await loader.language('common/footer');
 
-// Template
-const template = await loader.template('common/footer');
-
 // Storage
 const articles = await loader.storage('cms/article-1');
 

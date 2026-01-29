@@ -190,9 +190,8 @@ class Waiter implements PromisorInterface
      */
     private function matchesPath($result, array $acceptor)
     {
-        return !($result instanceof ResultInterface)
-            ? false
-            : $acceptor['expected'] == $result->search($acceptor['argument']);
+        return $result instanceof ResultInterface
+            && $acceptor['expected'] === $result->search($acceptor['argument']);
     }
 
     /**
@@ -208,6 +207,11 @@ class Waiter implements PromisorInterface
         }
 
         $actuals = $result->search($acceptor['argument']) ?: [];
+        // If is empty or not evaluates to an array it must return false.
+        if (empty($actuals) || !is_array($actuals)) {
+            return false;
+        }
+
         foreach ($actuals as $actual) {
             if ($actual != $acceptor['expected']) {
                 return false;
@@ -230,6 +234,11 @@ class Waiter implements PromisorInterface
         }
 
         $actuals = $result->search($acceptor['argument']) ?: [];
+        // If is empty or not evaluates to an array it must return false.
+        if (empty($actuals) || !is_array($actuals)) {
+            return false;
+        }
+
         return in_array($acceptor['expected'], $actuals);
     }
 

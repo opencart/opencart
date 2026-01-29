@@ -39,7 +39,7 @@ import('./account/wishlist.js');
 //import('./catalog/brand.js');
 //import('./catalog/category.js');
 //import('./catalog/compare.js');
-//import('./catalog/product.js');
+import('./catalog/product.js');
 //import('./catalog/product_list.js');
 //import('./catalog/product_info.js');
 //import('./catalog/product_thumb.js');

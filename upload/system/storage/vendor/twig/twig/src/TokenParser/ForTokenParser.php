@@ -13,6 +13,7 @@
 namespace Twig\TokenParser;
 
 use Twig\Node\Expression\Variable\AssignContextVariable;
+use Twig\Node\ForElseNode;
 use Twig\Node\ForNode;
 use Twig\Node\Node;
 use Twig\Token;
@@ -34,15 +35,16 @@ final class ForTokenParser extends AbstractTokenParser
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
-        $targets = $this->parser->getExpressionParser()->parseAssignmentExpression();
+        $targets = $this->parseAssignmentExpression();
         $stream->expect(Token::OPERATOR_TYPE, 'in');
-        $seq = $this->parser->getExpressionParser()->parseExpression();
+        $seq = $this->parser->parseExpression();
 
         $stream->expect(Token::BLOCK_END_TYPE);
         $body = $this->parser->subparse([$this, 'decideForFork']);
         if ('else' == $stream->next()->getValue()) {
+            $elseLineno = $stream->getCurrent()->getLine();
             $stream->expect(Token::BLOCK_END_TYPE);
-            $else = $this->parser->subparse([$this, 'decideForEnd'], true);
+            $else = new ForElseNode($this->parser->subparse([$this, 'decideForEnd'], true), $elseLineno);
         } else {
             $else = null;
         }

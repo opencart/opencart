@@ -15,8 +15,9 @@ namespace Twig\Node\Expression;
 use Twig\Compiler;
 use Twig\Error\SyntaxError;
 use Twig\Node\Expression\Variable\AssignContextVariable;
+use Twig\Node\Expression\Variable\ContextVariable;
 
-class AssignNameExpression extends NameExpression
+class AssignNameExpression extends ContextVariable
 {
     public function __construct(string $name, int $lineno)
     {
@@ -25,7 +26,7 @@ class AssignNameExpression extends NameExpression
         }
 
         // All names supported by ExpressionParser::parsePrimaryExpression() should be excluded
-        if (\in_array(strtolower($name), ['true', 'false', 'none', 'null'])) {
+        if (\in_array(strtolower($name), ['true', 'false', 'none', 'null'], true)) {
             throw new SyntaxError(\sprintf('You cannot assign a value to "%s".', $name), $lineno);
         }
 

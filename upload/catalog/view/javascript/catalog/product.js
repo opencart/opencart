@@ -1,5 +1,5 @@
 import { WebComponent } from '../component.js';
-import { loader } from '../loader.js';
+import { loader } from '../index.js';
 
 // Config
 const config = await loader.config('catalog');
@@ -9,10 +9,8 @@ const language = await loader.language('catalog/product');
 
 // Library
 const tax = await loader.library('tax');
-const weight = await loader.library('weight');
-const length = await loader.library('length');
 
-class ProductInfo extends WebComponent {
+class CatalogProduct extends WebComponent {
     async render() {
         let data = {};
 
@@ -69,36 +67,28 @@ class ProductInfo extends WebComponent {
 
             data.options = product.option;
 
-            data.subscriptions = product.subscription;
+            data.subscription_plans = product.subscription_plans;
         }
 
-        return loader.template('catalog/product_info', { ...data, ...language, ...config });
+        return loader.template('product/product', { ...data, ...language, ...config });
     }
 
-    onChange() {
+    change(e) {
+        $('.subscription').addClass('d-none');
 
 
+
+        $('#subscription-description-' + $(element).val()).removeClass('d-none');
     }
 
     submit() {
 
 
     }
-
-
 }
 
-customElements.define('product-info', ProductInfo);
-
-
-$('#input-subscription').on('change', function(e) {
-    var element = this;
-
-    $('.subscription').addClass('d-none');
-
-    $('#subscription-description-' + $(element).val()).removeClass('d-none');
-});
-
+customElements.define('catalog-product', CatalogProduct);
+/*
 $('#form-product').on('submit', function(e) {
     e.preventDefault();
 
@@ -150,3 +140,5 @@ $(document).ready(function() {
         }
     });
 });
+
+ */

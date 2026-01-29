@@ -27,6 +27,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deletePolicyStatementAsync(array $args = [])
  * @method \Aws\Result deleteSchemaMapping(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteSchemaMappingAsync(array $args = [])
+ * @method \Aws\Result generateMatchId(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise generateMatchIdAsync(array $args = [])
  * @method \Aws\Result getIdMappingJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getIdMappingJobAsync(array $args = [])
  * @method \Aws\Result getIdMappingWorkflow(array $args = [])

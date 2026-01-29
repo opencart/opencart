@@ -9,11 +9,17 @@ const language = loader.language('account/password');
 
 class AccountPassword extends WebComponent {
     render() {
-        return loader.template('account/password', { ...language });
+        let data = {};
+
+        return loader.template('account/password', { ...data, ...language });
     }
 
     submit(e) {
         e.preventDefault();
+
+
+
+
     }
 }
 

@@ -13,6 +13,6 @@ namespace Twig\Node\Expression\Variable;
 
 use Twig\Node\Expression\NameExpression;
 
-final class ContextVariable extends NameExpression
+class ContextVariable extends NameExpression
 {
 }

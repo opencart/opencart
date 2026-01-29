@@ -62,7 +62,7 @@
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.8.2",
         "http-interop/http-factory-tests": "0.9.0",
-        "phpunit/phpunit": "^8.5.39 || ^9.6.20"
+        "phpunit/phpunit": "^8.5.44 || ^9.6.25"
     },
     "suggest": {
         "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"

@@ -2,6 +2,25 @@
 
 Please refer to [UPGRADING](UPGRADING.md) guide for upgrading to a major version.
 
+## 7.10.0 - 2025-08-23
+
+### Added
+
+- Support for PHP 8.5
+
+### Changed
+
+- Adjusted `guzzlehttp/promises` version constraint to `^2.3`
+- Adjusted `guzzlehttp/psr7` version constraint to `^2.8`
+
+
+## 7.9.3 - 2025-03-27
+
+### Changed
+
+- Remove explicit content-length header for GET requests
+- Improve compatibility with bad servers for boolean cookie values
+
 
 ## 7.9.2 - 2024-07-24
 

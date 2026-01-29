@@ -30,9 +30,9 @@ export class WebComponent extends HTMLElement {
             let elements = this.querySelectorAll('[data-bind], [data-on]');
 
             for (let element of elements) {
-                // Binds the element to an attribute of thge web component class
+                // Binds the element to an attribute by name.
                 if (element.hasAttribute('data-bind')) {
-                    this[element.getAttribute('data-bind')] = element;
+                    this['$' + element.getAttribute('data-bind')] = element;
 
                     element.removeAttribute('data-bind');
                 }

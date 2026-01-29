@@ -9,6 +9,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise associateOriginationIdentityAsync(array $args = [])
  * @method \Aws\Result associateProtectConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise associateProtectConfigurationAsync(array $args = [])
+ * @method \Aws\Result carrierLookup(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise carrierLookupAsync(array $args = [])
  * @method \Aws\Result createConfigurationSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createConfigurationSetAsync(array $args = [])
  * @method \Aws\Result createEventDestination(array $args = [])

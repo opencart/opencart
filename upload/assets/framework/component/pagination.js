@@ -109,27 +109,27 @@ class XPagination extends WebComponent {
             let html = '<ul class="pagination">';
 
             if (first) {
-                html += '<li class="page-item"><a href="' + first +'" data-on="click:onclick" class="page-link">|&lt;</a></li>';
+                html += '<li class="page-item"><a href="' + first +'" data-on="click:click" class="page-link">|&lt;</a></li>';
             }
 
             if (prev) {
-                html += '<li class="page-item"><a href="' + prev + '" data-on="click:onclick" class="page-link">&lt;</a></li>';
+                html += '<li class="page-item"><a href="' + prev + '" data-on="click:click" class="page-link">&lt;</a></li>';
             }
 
             for (let link of links) {
                 if (link.page == this.page) {
                     html += '<li class="page-item active"><span class="page-link">' + link.page + '</span></li>';
                 } else {
-                    html += '<li class="page-item"><a href="' + link.href + '" data-on="click:onclick" class="page-link">' + link.page + '</a></li>';
+                    html += '<li class="page-item"><a href="' + link.href + '" data-on="click:click" class="page-link">' + link.page + '</a></li>';
                 }
             }
 
             if (next) {
-                html += '<li class="page-item"><a href="' + next + '" data-on="click:onclick" class="page-link">&gt;</a></li>';
+                html += '<li class="page-item"><a href="' + next + '" data-on="click:click" class="page-link">&gt;</a></li>';
             }
 
             if (last) {
-                html += '<li class="page-item"><a href="' + last + '" data-on="click:onclick" class="page-link">&gt;|</a></li>';
+                html += '<li class="page-item"><a href="' + last + '" data-on="click:click" class="page-link">&gt;|</a></li>';
             }
 
             html += '</ul>';
@@ -138,7 +138,7 @@ class XPagination extends WebComponent {
         }
     }
 
-    async onclick(e) {
+    async click(e) {
         e.preventDefault();
 
         this.fetch(e.target.getAttribute('href')).then(this.onload);

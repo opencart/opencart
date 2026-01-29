@@ -210,6 +210,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise describeDBClustersAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result describeDBInstanceAutomatedBackups(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise describeDBInstanceAutomatedBackupsAsync(array $args = []) (supported in versions 2014-10-31)
+ * @method \Aws\Result describeDBMajorEngineVersions(array $args = []) (supported in versions 2014-10-31)
+ * @method \GuzzleHttp\Promise\Promise describeDBMajorEngineVersionsAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result describeDBProxies(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise describeDBProxiesAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result describeDBProxyEndpoints(array $args = []) (supported in versions 2014-10-31)
@@ -355,6 +357,13 @@ class RdsClient extends AwsClient
                         'service' => 'rds',
                         'presign_param' => 'PreSignedUrl',
                         'require_different_region' => true,
+                        'extra_query_params' => [
+                            'CopyDBSnapshot' => ['DestinationRegion'],
+                            'CreateDBInstanceReadReplica' => ['DestinationRegion'],
+                            'CopyDBClusterSnapshot' => ['DestinationRegion'],
+                            'CreateDBCluster' => ['DestinationRegion'],
+                            'StartDBInstanceAutomatedBackupsReplication' => ['DestinationRegion']
+                        ]
                     ]
                 ),
                 'rds.presigner'

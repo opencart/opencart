@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Credentials;
 
+use Aws\Arn\Arn;
 use Aws\Exception\CredentialsException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -86,6 +87,15 @@ class EcsCredentialProvider
                         ]
                     )->then(function (ResponseInterface $response) {
                         $result = $this->decodeResult((string)$response->getBody());
+                        if (!isset($result['AccountId']) && isset($result['RoleArn'])) {
+                            try {
+                                $parsedArn = new Arn($result['RoleArn']);
+                                $result['AccountId'] = $parsedArn->getAccountId();
+                            } catch (\Exception $e) {
+                                // AccountId will be null
+                            }
+                        }
+
                         return new Credentials(
                             $result['AccessKeyId'],
                             $result['SecretAccessKey'],

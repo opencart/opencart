@@ -80,7 +80,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStore($args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];

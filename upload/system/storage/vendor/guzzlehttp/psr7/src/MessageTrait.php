@@ -174,10 +174,6 @@ trait MessageTrait
             return $this->trimAndValidateHeaderValues([$value]);
         }
 
-        if (count($value) === 0) {
-            throw new \InvalidArgumentException('Header value can not be an empty array.');
-        }
-
         return $this->trimAndValidateHeaderValues($value);
     }
 

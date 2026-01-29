@@ -35,6 +35,8 @@ class Cli extends \Opencart\System\Engine\Controller {
 			// Get the arguments passed with the command
 			$command = array_shift($argv);
 
+
+
 			switch ($command) {
 				case 'start':
 					if (stream_isatty(STDOUT)) {

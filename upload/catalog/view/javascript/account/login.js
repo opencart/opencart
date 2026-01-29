@@ -9,14 +9,14 @@ const session = await loader.library('session');
 
 class AccountLogin extends WebComponent {
     render() {
-        data = {};
+        let data = {};
 
         var element = this;
 
         return loader.template('account/login', { ...data, ...language });
     }
 
-    submit(e) {
+    onSubmit(e) {
         e.preventDefault();
 
         console.log(e);

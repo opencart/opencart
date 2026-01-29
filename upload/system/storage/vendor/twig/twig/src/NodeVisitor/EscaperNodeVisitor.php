@@ -154,10 +154,13 @@ final class EscaperNodeVisitor implements NodeVisitorInterface
             $safe = $this->safeAnalysis->getSafe($expression);
         }
 
-        return \in_array($type, $safe) || \in_array('all', $safe);
+        return \in_array($type, $safe, true) || \in_array('all', $safe, true);
     }
 
-    private function needEscaping()
+    /**
+     * @return string|false
+     */
+    private function needEscaping(): string|bool
     {
         if (\count($this->statusStack)) {
             return $this->statusStack[\count($this->statusStack) - 1];

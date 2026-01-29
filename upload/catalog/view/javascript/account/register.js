@@ -11,8 +11,6 @@ const language = await loader.language('account/register');
 const customer_groups = await loader.storage('customer/customer_group');
 
 class AccountRegister extends WebComponent {
-
-
     async render() {
         let data = {};
 

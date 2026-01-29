@@ -28,7 +28,7 @@ final class GetBucketLocationResultMutator implements S3ResultMutator
             return $result;
         }
 
-        static $location = 'us-east-1';
+        $location = 'us-east-1';
         static $pattern = '/>(.+?)<\/LocationConstraint>/';
         if (preg_match($pattern, $response->getBody(), $matches)) {
             $location = $matches[1] === 'EU' ? 'eu-west-1' : $matches[1];

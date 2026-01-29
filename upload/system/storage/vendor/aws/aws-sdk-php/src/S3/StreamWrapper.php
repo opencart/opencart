@@ -259,7 +259,7 @@ class StreamWrapper
         $this->initProtocol($path);
 
         // Some paths come through as S3:// for some reason.
-        $split = explode('://', $path);
+        $split = explode('://', $path, 2);
         $path = strtolower($split[0]) . '://' . $split[1];
 
         // Check if this path is in the url_stat cache
@@ -581,6 +581,30 @@ class StreamWrapper
         return false;
     }
 
+    public function stream_set_option($option, $arg1, $arg2)
+    {
+        return false;
+    }
+
+    public function stream_metadata($path, $option, $value)
+    {
+        return false;
+    }
+
+    public function stream_lock($operation)
+    {
+        trigger_error(
+            'stream_lock() is not supported by the Amazon S3 stream wrapper',
+            E_USER_WARNING
+        );
+        return false;
+    }
+
+    public function stream_truncate($new_size)
+    {
+        return false;
+    }
+
     /**
      * Validates the provided stream arguments for fopen and returns an array
      * of errors.
@@ -679,7 +703,7 @@ class StreamWrapper
     private function getBucketKey($path)
     {
         // Remove the protocol
-        $parts = explode('://', $path);
+        $parts = explode('://', $path, 2);
         // Get the bucket, key
         $parts = explode('/', $parts[1], 2);
 

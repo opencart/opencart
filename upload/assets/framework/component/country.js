@@ -43,7 +43,6 @@ class XCountry extends WebComponent {
     }
 
     async render() {
-
         this.default = this.innerHTML;
 
         let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:change" class="form-select"';
@@ -66,13 +65,7 @@ class XCountry extends WebComponent {
 
         this.addEventListener('[value]', this.changeValue);
 
-        let response = this.storage.fetch('localisation/country');
-
-        return
-    }
-
-    onloaded(countries) {
-        this.countries = countries;
+        return html;
     }
 
     option() {

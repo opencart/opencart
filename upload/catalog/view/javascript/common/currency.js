@@ -11,7 +11,7 @@ const config = await loader.config('catalog');
 const language = await loader.language('common/currency');
 
 // Storage
-let currencies = await loader.storage('localisation/currency');
+const currencies = await loader.storage('localisation/currency');
 
 class CommonCurrency extends WebComponent {
     render() {
@@ -39,7 +39,17 @@ class CommonCurrency extends WebComponent {
     }
 
     change(e) {
+        e.preventDefault();
+
         local.set('currency', e.target.getAttribute('href'));
+
+        this.initialize();
+
+        let elements = document.querySelectorAll('x-currency');
+
+        for (let element of elements) {
+
+        }
     }
 }
 

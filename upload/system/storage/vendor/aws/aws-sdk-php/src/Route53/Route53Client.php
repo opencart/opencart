@@ -144,6 +144,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise updateHealthCheckAsync(array $args = [])
  * @method \Aws\Result updateHostedZoneComment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateHostedZoneCommentAsync(array $args = [])
+ * @method \Aws\Result updateHostedZoneFeatures(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateHostedZoneFeaturesAsync(array $args = [])
  * @method \Aws\Result updateTrafficPolicyComment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTrafficPolicyCommentAsync(array $args = [])
  * @method \Aws\Result updateTrafficPolicyInstance(array $args = [])

@@ -34,6 +34,7 @@ use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
 use Aws\Signature\SignatureProvider;
 use Aws\Token\Token;
 use Aws\Token\TokenInterface;
+use Aws\Token\BedrockTokenProvider;
 use Aws\Token\TokenProvider;
 use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException as IAE;
@@ -60,6 +61,8 @@ class ClientResolver
         __CLASS__,
         '_resolve_from_env_ini'
     ];
+    private const ANONYMOUS_SIGNATURE = 'anonymous';
+    private const DPOP_SIGNATURE = 'dpop';
 
     /** @var array Map of types to a corresponding function */
     private static $typeMap = [
@@ -205,6 +208,13 @@ class ClientResolver
             'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [__CLASS__, '_default_credential_provider'],
+        ],
+        'auth_scheme_preference' => [
+            'type'    => 'value',
+            'valid'   => ['string', 'array'],
+            'doc'     => 'Comma-separated list of authentication scheme preferences in priority order. Configure via environment variable `AWS_AUTH_SCHEME_PREFERENCE`, INI config file `auth_scheme_preference`, or client constructor parameter `auth_scheme_preference` (string or array).\nExample: `AWS_AUTH_SCHEME_PREFERENCE=aws.auth#sigv4a,aws.auth#sigv4,smithy.api#httpBearerAuth`',
+            'default' => self::DEFAULT_FROM_ENV_INI,
+            'fn' => [__CLASS__, '_apply_auth_scheme_preference'],
         ],
         'token' => [
             'type'    => 'value',
@@ -660,7 +670,10 @@ class ClientResolver
             $args['credentials'] = CredentialProvider::fromCredentials(
                 new Credentials('', '')
             );
-            $args['config']['signature_version'] = 'anonymous';
+            if ($args['config']['signature_version'] !== self::DPOP_SIGNATURE) {
+                $args['config']['signature_version'] = self::ANONYMOUS_SIGNATURE;
+            }
+
             $args['config']['configured_signature_version'] = true;
         } elseif ($value instanceof CacheInterface) {
             $args['credentials'] = CredentialProvider::defaultProvider($args);
@@ -704,8 +717,17 @@ class ClientResolver
         }
     }
 
-    public static function _default_token_provider(array $args)
+    public static function _default_token_provider(array &$args)
     {
+        if (($args['config']['signing_name'] ?? '') === 'bedrock') {
+            // Checks for env value, if present, sets auth_scheme_preference
+            // to bearer auth and returns a provider
+            $provider = BedrockTokenProvider::createIfAvailable($args);
+            if (!is_null($provider)) {
+                return $provider;
+            }
+        }
+
         return TokenProvider::defaultProvider($args);
     }
 
@@ -1120,6 +1142,32 @@ class ClientResolver
     public static function _default_auth_scheme_resolver(array $args)
     {
         return new AuthSchemeResolver($args['credentials'], $args['token']);
+    }
+
+    public static function _apply_auth_scheme_preference(
+        string|array|null &$value,
+        array &$args
+    ): void
+    {
+        // Not provided user's preference auth scheme list
+        if (empty($value)) {
+            $value = null;
+            $args['config']['auth_scheme_preference'] = $value;
+            return;
+        }
+
+        // Normalize it as an array
+        if (is_string($value)) {
+            $value = explode(',', $value);
+        }
+
+        // Let`s trim each value to remove break lines, spaces and/or tabs
+        foreach ($value as &$val) {
+            $val = trim($val);
+        }
+
+        // Assign user's preferred auth scheme list
+        $args['auth_scheme_preference'] = $value;
     }
 
     public static function _default_signature_version(array &$args)

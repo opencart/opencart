@@ -16,6 +16,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteInsightRulesAsync(array $args = [])
  * @method \Aws\Result deleteMetricStream(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMetricStreamAsync(array $args = [])
+ * @method \Aws\Result describeAlarmContributors(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeAlarmContributorsAsync(array $args = [])
  * @method \Aws\Result describeAlarmHistory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAlarmHistoryAsync(array $args = [])
  * @method \Aws\Result describeAlarms(array $args = [])

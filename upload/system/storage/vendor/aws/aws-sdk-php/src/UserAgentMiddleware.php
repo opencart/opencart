@@ -28,12 +28,6 @@ class UserAgentMiddleware
         'getMetrics'
     ];
 
-    static $metricsFnList = [
-        'appendEndpointMetric',
-        'appendAccountIdModeMetric',
-        'appendRetryConfigMetric',
-    ];
-
     /** @var callable  */
     private $nextHandler;
 
@@ -178,7 +172,11 @@ class UserAgentMiddleware
         if (function_exists('php_uname')
             && !in_array('php_uname', $disabledFunctions, true)
         ) {
-            $osName = "OS/" . php_uname('s') . '#' . php_uname('r');
+            // Replace spaces with underscores to prevent breaking the user agent format
+            $os = str_replace(' ', '_', php_uname('s'));
+            $release = php_uname('r');
+            $osName = "OS/{$os}#{$release}";
+
             if (!empty($osName)) {
                 return $osName;
             }
@@ -258,81 +256,14 @@ class UserAgentMiddleware
      */
     private function getMetrics(): string
     {
-        foreach (self::$metricsFnList as $fn) {
-            $this->{$fn}();
-        }
-
+        // Resolve first metrics related to client arguments.
+        $this->metricsBuilder->resolveAndAppendFromArgs($this->args);
+        // Build the metrics.
         $metricsEncoded = $this->metricsBuilder->build();
         if (empty($metricsEncoded)) {
             return "";
         }
 
         return "m/" . $metricsEncoded;
-    }
-
-    /**
-     * Appends the endpoint metric into the metrics builder,
-     * just if a custom endpoint was provided at client construction.
-     */
-    private function appendEndpointMetric(): void
-    {
-        if (!empty($this->args['endpoint_override'])) {
-            $this->metricsBuilder->append(MetricsBuilder::ENDPOINT_OVERRIDE);
-        }
-    }
-
-    /**
-     * Appends the account id endpoint mode metric into the metrics builder,
-     * based on the account id endpoint mode provide as client argument.
-     */
-    private function appendAccountIdModeMetric(): void
-    {
-        $accountIdMode = $this->args['account_id_endpoint_mode'] ?? null;
-        if ($accountIdMode === null) {
-            return;
-        }
-
-        if ($accountIdMode === 'preferred') {
-            $this->metricsBuilder->append(MetricsBuilder::ACCOUNT_ID_MODE_PREFERRED);
-        } elseif ($accountIdMode === 'disabled') {
-            $this->metricsBuilder->append(MetricsBuilder::ACCOUNT_ID_MODE_DISABLED);
-        } elseif ($accountIdMode === 'required') {
-            $this->metricsBuilder->append(MetricsBuilder::ACCOUNT_ID_MODE_REQUIRED);
-        }
-    }
-
-    /**
-     * Appends the retry mode metric into the metrics builder,
-     * based on the resolved retry config mode.
-     */
-    private function appendRetryConfigMetric(): void
-    {
-        $retries = $this->args['retries'] ?? null;
-        if ($retries === null) {
-            return;
-        }
-
-        $retryMode = '';
-        if ($retries instanceof \Aws\Retry\Configuration) {
-            $retryMode = $retries->getMode();
-        } elseif (is_array($retries)
-            && isset($retries["mode"])
-        ) {
-            $retryMode = $retries["mode"];
-        }
-
-        if ($retryMode === 'legacy') {
-            $this->metricsBuilder->append(
-                MetricsBuilder::RETRY_MODE_LEGACY
-            );
-        } elseif ($retryMode === 'standard') {
-            $this->metricsBuilder->append(
-                MetricsBuilder::RETRY_MODE_STANDARD
-            );
-        } elseif ($retryMode === 'adaptive') {
-            $this->metricsBuilder->append(
-                MetricsBuilder::RETRY_MODE_ADAPTIVE
-            );
-        }
     }
 }

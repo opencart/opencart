@@ -27,7 +27,7 @@ class FilterExpression extends CallExpression
     public function __construct(Node $node, TwigFilter|ConstantExpression $filter, Node $arguments, int $lineno)
     {
         if (!$node instanceof AbstractExpression) {
-            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "node" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($node));
+            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "node" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, $node::class);
         }
 
         if ($filter instanceof TwigFilter) {

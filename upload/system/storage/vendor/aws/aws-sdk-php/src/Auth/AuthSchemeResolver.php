@@ -3,6 +3,8 @@
 namespace Aws\Auth;
 
 use Aws\Auth\Exception\UnresolvedAuthSchemeException;
+use Aws\Exception\CredentialsException;
+use Aws\Exception\TokenException;
 use Aws\Identity\AwsCredentialIdentity;
 use Aws\Identity\BearerTokenIdentity;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -142,7 +144,12 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
         $result = $fn();
 
         if ($result instanceof PromiseInterface) {
-            return $result->wait() instanceof AwsCredentialIdentity;
+            try {
+                $resolved = $result->wait();
+                return $resolved instanceof AwsCredentialIdentity;
+            } catch (CredentialsException $e) {
+                return false;
+            }
         }
 
         return $result instanceof AwsCredentialIdentity;
@@ -158,7 +165,12 @@ class AuthSchemeResolver implements AuthSchemeResolverInterface
             $result = $fn();
 
             if ($result instanceof PromiseInterface) {
-                return $result->wait() instanceof BearerTokenIdentity;
+                try {
+                    $resolved = $result->wait();
+                    return $resolved instanceof BearerTokenIdentity;
+                } catch (TokenException $e) {
+                    return false;
+                }
             }
 
             return $result instanceof BearerTokenIdentity;

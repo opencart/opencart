@@ -1,5 +1,81 @@
+# 3.23.0 (2026-01-23)
+
+ * Add `=` assignment operator (allows to set variables in expression or to replace the short-form of the set tag)
+ * Add sequence, mapping, and object destructuring
+ * Add `?.` null-safe operator
+ * Add `===` and `!==` operators (equivalent to the `same as` and `not same as` tests)
+ * Fix opcache preload warning for unlinked anonymous class
+ * Fix spread operator behavior
+
+# 3.22.2 (2025-12-14)
+
+ * Fix "cycle" with non-countable ArrayAccess + Traversable objects
+ * Use "getShareDir" as an indicator of Symfony version in Symfony bundle
+ * Fix escaper compatibility with PHP 8.5
+
+# 3.22.1 (2025-11-16)
+
+ * Add support for Symfony 8
+
+# 3.22.0 (2025-10-29)
+
+ * Add support for two words test in guard tag
+ * Add `Environment::registerUndefinedTestCallback()`
+ * Fix compatibility with Symfony 8
+ * Fix accessing arrays with stringable objects as key
+ * Avoid errors when failing to guess the template info for an error
+ * Fix expression parser compatibility layer
+ * Fix compiling 'index' with repr (not string) in EmbedNode
+ * Update configuration keys + allow extra keys for CommonMark extensions
+ * Allow usage of other Markdown converters than CommonMark in LeagueMarkdown
+
+# 3.21.1 (2025-05-03)
+
+ * Fix ExtensionSet usage of BinaryOperatorExpressionParser
+
+# 3.21.0 (2025-05-02)
+
+ * Fix wrong array index
+ * Deprecate `Template::loadTemplate()`
+ * Fix testing and expression when it evaluates to an instance of `Markup`
+ * Add `ReturnPrimitiveTypeInterface` (and sub-interfaces for number, boolean, string, and array)
+ * Add `SupportDefinedTestInterface` for expression nodes supporting the `defined` test
+ * Deprecate using the `|` operator in an expression with `+` or `-` without using parentheses to clarify precedence
+ * Deprecate operator precedence outside of the [0, 512] range
+ * Introduce expression parser classes to describe operators and operands provided by extensions
+   instead of arrays (it comes with many deprecations that are documented in
+   the ``deprecated`` documentation chapter)
+ * Deprecate the `Twig\ExpressionParser`, and `Twig\OperatorPrecedenceChange` classes
+ * Add attributes `AsTwigFilter`, `AsTwigFunction`, and `AsTwigTest` to ease extension development
+
+# 3.20.0 (2025-02-13)
+
+ * Fix support for ignoring syntax errors in an undefined handler in guard
+ * Add configuration for Commonmark
+ * Fix wrong array index
+ * Bump minimum PHP version to 8.1
+ * Add support for registering callbacks for undefined functions, filters or token parsers in the IntegrationTestCase
+ * Use correct line number for `ForElseNode`
+ * Fix timezone conversion on strings
+
+# 3.19.0 (2025-01-28)
+
+ * Fix a security issue where escaping was missing when using `??`
+ * Deprecate `Token::getType()`, use `Token::test()` instead
+ * Add `Token::toEnglish()`
+ * Add `ForElseNode`
+ * Deprecate `Twig\ExpressionParser::parseOnlyArguments()` and
+  `Twig\ExpressionParser::parseArguments()` (use
+  `Twig\ExpressionParser::parseNamedArguments()` instead)
+ * Fix `constant()` behavior when used with `??`
+ * Add the `invoke` filter
+ * Make `{}` optional for the `types` tag
+ * Add `LastModifiedExtensionInterface` and implementation in `AbstractExtension` to track modification of runtime classes
+ * Ignore static properties when using the dot operator
+
 # 3.18.0 (2024-12-29)
 
+ * Support for invoking closures
  * Fix unary operator precedence change
  * Ignore `SyntaxError` exceptions from undefined handlers when using the `guard` tag
  * Add a way to stream template rendering (`TemplateWrapper::stream()` and `TemplateWrapper::streamBlock()`)
@@ -8,7 +84,6 @@
 
  * Fix the null coalescing operator when the test returns null
  * Fix the Elvis operator when used as '? :' instead of '?:'
- * Support for invoking closures
 
 # 3.17.0 (2024-12-10)
 
@@ -24,7 +99,7 @@
  * Deprecate returning `null` from `TwigFilter::getSafe()` and `TwigFunction::getSafe()`, return `[]` instead
 
 # 3.15.0 (2024-11-17)
- 
+
  * [BC BREAK] Add support for accessing class constants with the dot operator;
    this can be a BC break if you don't use UPPERCASE constant names
  * Add Spanish inflector support for the `plural` and `singular` filters in the String extension

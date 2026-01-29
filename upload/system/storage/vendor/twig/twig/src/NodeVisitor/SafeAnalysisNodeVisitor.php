@@ -19,9 +19,9 @@ use Twig\Node\Expression\FunctionExpression;
 use Twig\Node\Expression\GetAttrExpression;
 use Twig\Node\Expression\MacroReferenceExpression;
 use Twig\Node\Expression\MethodCallExpression;
-use Twig\Node\Expression\NameExpression;
 use Twig\Node\Expression\OperatorEscapeInterface;
 use Twig\Node\Expression\ParentExpression;
+use Twig\Node\Expression\Variable\ContextVariable;
 use Twig\Node\Node;
 
 /**
@@ -42,7 +42,7 @@ final class SafeAnalysisNodeVisitor implements NodeVisitorInterface
      */
     public function getSafe(Node $node)
     {
-        $hash = spl_object_hash($node);
+        $hash = spl_object_id($node);
         if (!isset($this->data[$hash])) {
             return [];
         }
@@ -52,7 +52,7 @@ final class SafeAnalysisNodeVisitor implements NodeVisitorInterface
                 continue;
             }
 
-            if (\in_array('html_attr', $bucket['value'])) {
+            if (\in_array('html_attr', $bucket['value'], true)) {
                 $bucket['value'][] = 'html';
             }
 
@@ -64,7 +64,7 @@ final class SafeAnalysisNodeVisitor implements NodeVisitorInterface
 
     private function setSafe(Node $node, array $safe): void
     {
-        $hash = spl_object_hash($node);
+        $hash = spl_object_id($node);
         if (isset($this->data[$hash])) {
             foreach ($this->data[$hash] as &$bucket) {
                 if ($bucket['key'] === $node) {
@@ -146,9 +146,9 @@ final class SafeAnalysisNodeVisitor implements NodeVisitorInterface
         } elseif ($node instanceof MethodCallExpression || $node instanceof MacroReferenceExpression) {
             // all macro calls are safe
             $this->setSafe($node, ['all']);
-        } elseif ($node instanceof GetAttrExpression && $node->getNode('node') instanceof NameExpression) {
+        } elseif ($node instanceof GetAttrExpression && $node->getNode('node') instanceof ContextVariable) {
             $name = $node->getNode('node')->getAttribute('name');
-            if (\in_array($name, $this->safeVars)) {
+            if (\in_array($name, $this->safeVars, true)) {
                 $this->setSafe($node, ['all']);
             }
         }
@@ -162,11 +162,11 @@ final class SafeAnalysisNodeVisitor implements NodeVisitorInterface
             return [];
         }
 
-        if (\in_array('all', $a)) {
+        if (\in_array('all', $a, true)) {
             return $b;
         }
 
-        if (\in_array('all', $b)) {
+        if (\in_array('all', $b, true)) {
             return $a;
         }
 

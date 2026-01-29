@@ -17,7 +17,7 @@ use Twig\Node\NameDeprecation;
 use Twig\Node\Node;
 use Twig\TwigTest;
 
-class TestExpression extends CallExpression
+class TestExpression extends CallExpression implements ReturnBoolInterface
 {
     #[FirstClassTwigCallableReady]
     /**
@@ -26,7 +26,7 @@ class TestExpression extends CallExpression
     public function __construct(Node $node, string|TwigTest $test, ?Node $arguments, int $lineno)
     {
         if (!$node instanceof AbstractExpression) {
-            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "node" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($node));
+            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "node" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, $node::class);
         }
 
         $nodes = ['node' => $node];

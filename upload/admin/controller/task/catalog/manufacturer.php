@@ -98,7 +98,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				continue;
 			}
 
-			$description_info = $this->model_localisation_country->getDescription($manufacturer_info['country_id'], $language_info['language_id']);
+			$description_info = $this->model_catalog_manufacturer->getDescription($manufacturer_info['country_id'], $language_info['language_id']);
 
 			if (!$description_info) {
 				continue;
@@ -228,7 +228,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Description
-		$description_data = $this->model_localisation_country->getDescription($manufacturer_info['manufacturer_id'], $language_info['language_id']);
+		$description_data = $this->model_catalog_manufacturer->getDescription($manufacturer_info['manufacturer_id'], $language_info['language_id']);
 
 		if (!$description_data) {
 			return ['error' => $this->language->get('error_description')];

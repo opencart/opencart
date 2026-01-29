@@ -84,51 +84,50 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		// Country
-		$country_data = [];
+		// Manufacturer
+		$manufacturer_data = [];
 
-		$this->load->model('setting/setting');
-		$this->load->model('localisation/country');
+		$this->load->model('catalog/manufacturer');
 
-		$country_ids = $this->model_setting_setting->getValue('config_country_list', $args['store_id']);
+		$manufacturer_ids = $this->model_catalog_manufacturer->getStoresByStoreId($args['store_id']);
 
-		foreach ($country_ids as $country_id) {
-			$country_info = $this->model_localisation_country->getCountry($country_id);
+		foreach ($manufacturer_ids as $manufacturer_id) {
+			$manufacturer_info = $this->model_localisation_country->getManufacturer($manufacturer_id);
 
-			if (!$country_info || !$country_info['status']) {
+			if (!$manufacturer_info || !$manufacturer_info['status']) {
 				continue;
 			}
 
-			$description_info = $this->model_localisation_country->getDescription($country_info['country_id'], $language_info['language_id']);
+			$description_info = $this->model_localisation_country->getDescription($manufacturer_info['country_id'], $language_info['language_id']);
 
 			if (!$description_info) {
 				continue;
 			}
 
-			$country_data[] = $country_info + $description_info;
+			$manufacturer_data[] = $manufacturer_info + $description_info;
 		}
 
 		$sort_order = [];
 
-		foreach ($country_data as $key => $value) {
+		foreach ($manufacturer_data as $key => $value) {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $country_data);
+		array_multisort($sort_order, SORT_ASC, $manufacturer_data);
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country.json';
+		$filename = 'country.yaml';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_data))) {
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($manufacturer_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['code'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['name'])];
 	}
 
 	/**
@@ -141,45 +140,39 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function info(array $args = []): array {
-		$this->load->language('task/catalog/country');
+		$this->load->language('task/catalog/manufacturer');
 
-		if (!array_key_exists('country_id', $args)) {
+		if (!array_key_exists('manufacturer_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Country
-		$this->load->model('localisation/country');
+		// Manufacturer
+		$this->load->model('catalog/manufacturer');
 
-		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
+		$manufacturer_info = $this->model_catalog_manufacturer->getCountry((int)$args['manufacturer_id']);
 
-		if (!$country_info || !$country_info['status']) {
-			return ['error' => $this->language->get('error_country')];
+		if (!$manufacturer_info || !$manufacturer_info['status']) {
+			return ['error' => $this->language->get('error_manufacturer')];
 		}
 
 		// Stores
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		foreach ($stores as $store) {
+		foreach ($store_ids as $store_id) {
 			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
 
 			foreach ($language_ids as $language_id) {
 				$task_data = [
-					'code'   => 'country',
-					'action' => 'task/catalog/country.info_',
+					'code'   => 'manufacturer',
+					'action' => 'task/catalog/manufacturer._info',
 					'args'   => [
-						'country_id'  => $country_info['country_id'],
-						'store_id'    => $store['store_id'],
-						'language_id' => $language_id
+						'manufacturer_id' => $manufacturer_info['manufacturer_id'],
+						'store_id'        => $store_id,
+						'language_id'     => $language_id
 					]
 				];
 
@@ -187,29 +180,33 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $country_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $manufacturer_info['name'])];
 	}
 
 	/*
 	 *
 	 */
-	public function info_(array $args = []): array {
-		// Country
-		$this->load->model('localisation/country');
+	public function _info(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
 
-		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
-
-		if (!$country_info || !$country_info['status']) {
-			return ['error' => $this->language->get('error_country')];
+		if (!array_key_exists('manufacturer_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
 		}
 
 		// Store
-		$this->load->model('setting/store');
+		$store_info = [
+			'name' => $this->config->get('config_name'),
+			'url'  => HTTP_CATALOG
+		];
 
-		$store_info = $this->model_setting_store->getStore($args['language_id']);
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
+			$store_info = $this->model_setting_store->getStores($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
 		}
 
 		// Language
@@ -221,68 +218,35 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		// Setup allowed countries
-		$this->load->model('setting/setting');
+		// Manufacturer
+		$this->load->model('catalog/manufacturer');
 
-		$country_ids = $this->model_setting_setting->getValue('config_country_list', $store_info['store_id']);
+		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
 
-		if (!in_array($country_info['country_id'], $country_ids)) {
-			return ['error' => $this->language->get('error_country')];
+		if (!$manufacturer_info || !$manufacturer_info['status']) {
+			return ['error' => $this->language->get('error_manufacturer')];
 		}
 
 		// Description
-		$description_data = $this->model_localisation_country->getDescription($country_info['country_id'], $language_info['language_id']);
+		$description_data = $this->model_localisation_country->getDescription($manufacturer_info['manufacturer_id'], $language_info['language_id']);
 
 		if (!$description_data) {
 			return ['error' => $this->language->get('error_description')];
 		}
 
-		// Zones
-		$zone_data = [];
-
-		// Zones
-		$this->load->model('localisation/zone');
-
-		$zones = $this->model_localisation_zone->getZonesByCountryId($country_info['country_id']);
-
-		foreach ($zones as $zone) {
-			if (!$zone['status']) {
-				continue;
-			}
-
-			$zone_description_info = $this->model_localisation_zone->getDescription($zone['zone_id'], $language_info['language_id']);
-
-			if (!$zone_description_info) {
-				continue;
-			}
-
-			$zone_data[] = $zone + $zone_description_info;
-		}
-
-		// Geo Zones
-		$geo_zone_data = [];
-
-		$this->load->model('localisation/geo_zone');
-
-		$geo_zones = $this->model_localisation_geo_zone->getZonesByCountryId($country_info['country_id']);
-
-		foreach ($geo_zones as $geo_zone) {
-			$geo_zone_data['geo_zone'][$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
-		}
-
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country-' . $country_info['country_id'] . '.json';
+		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_data + ['zone' => $zone_data] + ['geo_zone' => $geo_zone_data]))) {
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($manufacturer_info + $description_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $country_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $description_data['name'])];
 	}
 
 	/*

@@ -520,30 +520,30 @@ class Information extends \Opencart\System\Engine\Model {
 	 * $information_store = $this->model_catalog_information->getStores($information_id);
 	 */
 	public function getStores(int $information_id): array {
-		$information_store_data = [];
+		$store_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
 
 		foreach ($query->rows as $result) {
-			$information_store_data[] = $result['store_id'];
+			$store_data[] = $result['store_id'];
 		}
 
-		return $information_store_data;
+		return $store_data;
 	}
 
 	/*
 	 * Get information data based on stores
 	 */
 	public function getStoresByStoreId(int $store_id): array {
-		$store_data = [];
+		$information_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
 
 		foreach ($query->rows as $result) {
-			$store_data[] = $result['information_id'];
+			$information_data[] = $result['information_id'];
 		}
 
-		return $store_data;
+		return $information_data;
 	}
 
 	/**

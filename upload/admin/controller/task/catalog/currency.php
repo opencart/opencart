@@ -129,13 +129,11 @@ class Currency extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		$this->load->helper('yaml');
-
 		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($currency_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['name'])];
 	}
 
 	/**

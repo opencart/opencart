@@ -119,13 +119,13 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country.json';
+		$filename = 'country.yaml';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_data))) {
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($country_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -157,11 +157,10 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_country')];
 		}
 
-		$this->load->model('setting/task');
-
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -271,13 +270,13 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country-' . $country_info['country_id'] . '.json';
+		$filename = 'country-' . $country_info['country_id'] . '.yaml';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zone_data] + ['geo_zone' => $geo_zone_data]))) {
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($country_info + $description_info + ['zone' => $zone_data] + ['geo_zone' => $geo_zone_data]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

@@ -294,20 +294,6 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	/*
-	 * Get Manufacturer By Store ID
-	 *
-	 * @param   int   $store_id
-	 *
-	 * @return  array<int, array<string, mixed>> manufacturer records
-	 *
-	 */
-	public function getManufacturersByStoreId(int $store_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
-
-		return $query->rows;
-	}
-
 	/**
 	 * Get Total Manufacturers
 	 *
@@ -542,18 +528,31 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	 * $manufacturer_store = $this->model_catalog_manufacturer->getStores($manufacturer_id);
 	 */
 	public function getStores(int $manufacturer_id): array {
-		$manufacturer_store_data = [];
+		$store_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
 		foreach ($query->rows as $result) {
-			$manufacturer_store_data[] = $result['store_id'];
+			$store_data[] = $result['store_id'];
 		}
 
-		return $manufacturer_store_data;
+		return $store_data;
 	}
 
+	/*
+	 * Get information data based on stores
+	 */
+	public function getStoresByStoreId(int $store_id): array {
+		$manufacturer_data = [];
 
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
+
+		foreach ($query->rows as $result) {
+			$manufacturer_data[] = $result['manufacturer_id'];
+		}
+
+		return $manufacturer_data;
+	}
 
 	/**
 	 * Add Layout

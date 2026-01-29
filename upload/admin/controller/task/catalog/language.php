@@ -83,7 +83,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_language')];
 		}
 
-		// Lanage List
+		// Language List
 		$language_data = [];
 
 		$this->load->model('setting/setting');
@@ -100,13 +100,13 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'language.json';
+		$filename = 'language.yaml';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($language_data))) {
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($language_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 	}

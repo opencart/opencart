@@ -15,7 +15,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function info(array $args = []): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/tax_rate');
 
 		if (!array_key_exists('geo_zone_id', $args)) {
@@ -45,13 +45,13 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_CATALOG . 'view/data/localisation/';
-		$filename = 'tax_rate-' . $geo_zone_info['geo_zone_id'] . '.json';
+		$filename = 'tax_rate-' . $geo_zone_info['geo_zone_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($tax_rate_data))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($tax_rate_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

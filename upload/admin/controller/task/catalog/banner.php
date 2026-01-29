@@ -120,17 +120,17 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/design/';
-		$filename = 'banner-' . $args['banner_id'] . '.json';
+		$filename = 'banner-' . $args['banner_id'] . '.yaml';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($banners))) {
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($banners))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $banner_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['name'], $banner_info['name'])];
 	}
 
 	/**

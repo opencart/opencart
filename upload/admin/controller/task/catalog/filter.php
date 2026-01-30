@@ -101,7 +101,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		// Store
 		$this->load->model('setting/store');
 
-		$store_info = $this->model_setting_store->getStore($args['store_id']);
+		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 		if (!$store_info) {
 			return ['error' => $this->language->get('error_store')];
@@ -110,7 +110,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		// Language
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];

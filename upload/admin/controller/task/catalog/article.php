@@ -17,14 +17,12 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function index(array $args = []): array {
+	public function info(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
 		if (!array_key_exists('article_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
-
-		$this->load->model('setting/task');
 
 		// Article
 		$this->load->model('cms/article');
@@ -37,6 +35,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		// Stores
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = $this->model_cms_article->getStores((int)$args['article_id']);
 
@@ -45,8 +44,8 @@ class Article extends \Opencart\System\Engine\Controller {
 
 			foreach ($language_ids as $language_id) {
 				$task_data = [
-					'code'   => 'article.info.' . $store_id . '.' . $language_id . '.' . $article_info['article_id'],
-					'action' => 'task/catalog/article.info',
+					'code'   => 'article.createArticle(' . $store_id . ', ' . $language_id . ', ' . $article_info['article_id'] . ')',
+					'action' => 'task/catalog/article.createArticle',
 					'args'   => [
 						'article_id'  => $article_info['article_id'],
 						'store_id'    => $store_id,
@@ -70,7 +69,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function info(array $args = []): array {
+	public function _info(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
 		// Validate
@@ -95,7 +94,7 @@ class Article extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStore($args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -135,11 +134,11 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($article_info + $description_info))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($description_info + $article_info))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $article_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $description_info['name'])];
 	}
 
 	/**

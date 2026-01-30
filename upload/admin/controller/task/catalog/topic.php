@@ -15,7 +15,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function add(array $args = []): array {
+	public function addTopic(array $args = []): array {
 		$this->load->language('task/catalog/topic');
 
 
@@ -23,6 +23,4 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		return ['success' => $this->language->get('text_task')];
 	}
-
-
 }

@@ -20,11 +20,10 @@ class Information extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/information');
 
-		$this->load->model('setting/task');
-
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -69,7 +68,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStore($args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -79,7 +78,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		// Language
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
 		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
@@ -90,7 +89,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/information');
 
-		$information_ids = $this->model_catalog_information->getStoresByStoreId($args['store_id']);
+		$information_ids = $this->model_catalog_information->getStoresByStoreId((int)$args['store_id']);
 
 		foreach ($information_ids as $information_id) {
 			$information_info = $this->model_catalog_information->getInformation($information_id);
@@ -237,7 +236,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($information_info + $description_info))) {
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($description_info + $information_info))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

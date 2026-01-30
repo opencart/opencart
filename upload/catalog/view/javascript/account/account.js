@@ -5,7 +5,7 @@ const language = await loader.language('account/account');
 
 class AccountAccount extends WebComponent {
     render() {
-        return loader.template('account/account', { ...language });
+        return loader.template('account/account', language);
     }
 }
 

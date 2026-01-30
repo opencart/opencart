@@ -20,11 +20,10 @@ class Language extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/language');
 
-		$this->load->model('setting/task');
-
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -67,7 +66,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStore($args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -77,7 +76,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		// Language
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
 		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
@@ -88,10 +87,10 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/setting');
 
-		$language_ids = $this->model_setting_setting->getValue('config_language_list', $args['store_id']);
+		$language_ids = $this->model_setting_setting->getValue('config_language_list', (int)$args['store_id']);
 
 		foreach ($language_ids as $language_id) {
-			$language_2_info = $this->model_localisation_language->getLanguage($language_id);
+			$language_2_info = $this->model_localisation_language->getLanguage((int)$language_id);
 
 			if ($language_2_info && $language_2_info['status']) {
 				$language_data[$language_2_info['code']] = $language_2_info;

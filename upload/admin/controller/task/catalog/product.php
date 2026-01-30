@@ -32,7 +32,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Stores
 		$this->load->model('setting/setting');
 
-		$store_ids = $this->model_catalog_product->getStores((int)$args['product_id']);
+		$store_ids = $this->model_catalog_product->getStores((int)$product_info['product_id']);
 
 		foreach ($store_ids as $store_id) {
 			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
@@ -146,7 +146,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Attributes
 		$attribute_groups = $this->model_catalog_product->getAttributes($product_info['product_id']);
 
-		$discounts = $this->model_catalog_product->getDiscounts($product_id);
+		$discounts = $this->model_catalog_product->getDiscounts($product_info['product_id']);
 
 		$directory = DIR_APPLICATION . 'view/data/catalog/';
 		$filename = 'product-' . $product_info['product_id'] . '.json';
@@ -155,7 +155,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($product_info + $description_info + ['images' => $results]))) {
+		if (!file_put_contents($directory . $filename, json_encode($description_info + $product_info + ['images' => $results]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

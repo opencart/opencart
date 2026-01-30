@@ -29,6 +29,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
@@ -66,7 +67,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$store_info = $this->model_setting_store->getStores($args['store_id']);
+		$store_info = $this->model_setting_store->getStores((int)$args['store_id']);
 
 		if ($args['store_id'] != 0 && !$store_info) {
 			return ['error' => $this->language->get('error_store')];
@@ -74,7 +75,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
 		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
@@ -87,7 +88,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/setting');
 
-		$country_ids = $this->model_setting_setting->getValue('config_country_list', $args['store_id']);
+		$country_ids = $this->model_setting_setting->getValue('config_country_list', (int)$args['store_id']);
 
 		foreach ($country_ids as $country_id) {
 			$country_info = $this->model_localisation_country->getCountry($country_id);

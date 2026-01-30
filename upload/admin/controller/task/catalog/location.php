@@ -20,11 +20,10 @@ class Location extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/location');
 
-		$this->load->model('setting/task');
-
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -69,7 +68,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStore($args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -91,7 +90,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/location');
 
-		$location_ids = $this->model_setting_setting->getValue('config_location_list', $args['store_id']);
+		$location_ids = $this->model_setting_setting->getValue('config_location_list', (int)$args['store_id']);
 
 		foreach ($location_ids as $location_id) {
 			$location_info = $this->model_localisation_location->getLocation($location_id);

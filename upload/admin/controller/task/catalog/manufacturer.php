@@ -17,14 +17,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function list(array $args = []): array {
+	public function addList(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
-
-		$this->load->model('setting/task');
 
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -33,8 +32,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			foreach ($language_ids as $language_id) {
 				$task_data = [
-					'code'   => 'manufacturer._list.' . $store_id . '.' . $language_id,
-					'action' => 'task/catalog/manufacturer._list',
+					'code'   => 'manufacturer.renderList.' . $store_id . '.' . $language_id,
+					'action' => 'task/catalog/manufacturer.renderList',
 					'args'   => [
 						'store_id'    => $store_id,
 						'language_id' => $language_id
@@ -57,7 +56,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function _list(array $args = []): array {
+	public function renderList(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
 		// Store
@@ -69,7 +68,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStores($args['store_id']);
+			$store_info = $this->model_setting_store->getStores((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -78,7 +77,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
 		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
@@ -89,7 +88,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		$manufacturer_ids = $this->model_catalog_manufacturer->getStoresByStoreId($args['store_id']);
+		$manufacturer_ids = $this->model_catalog_manufacturer->getStoresByStoreId((int)$args['store_id']);
 
 		foreach ($manufacturer_ids as $manufacturer_id) {
 			$manufacturer_info = $this->model_localisation_country->getManufacturer($manufacturer_id);
@@ -98,7 +97,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				continue;
 			}
 
-			$description_info = $this->model_catalog_manufacturer->getDescription($manufacturer_info['country_id'], $language_info['language_id']);
+			$description_info = $this->model_catalog_manufacturer->getDescription($manufacturer_info['manufacturer_id'], $language_info['language_id']);
 
 			if (!$description_info) {
 				continue;
@@ -116,8 +115,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $manufacturer_data);
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country.yaml';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/catalog/';
+		$filename = 'manufacturer.yaml';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -133,13 +132,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Info
 	 *
-	 * Generate country information.
+	 * Generate manufacturer information.
 	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
-	public function info(array $args = []): array {
+	public function addManufacturer(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
 		if (!array_key_exists('manufacturer_id', $args)) {
@@ -149,7 +148,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		// Manufacturer
 		$this->load->model('catalog/manufacturer');
 
-		$manufacturer_info = $this->model_catalog_manufacturer->getCountry((int)$args['manufacturer_id']);
+		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
 
 		if (!$manufacturer_info || !$manufacturer_info['status']) {
 			return ['error' => $this->language->get('error_manufacturer')];
@@ -202,7 +201,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStores($args['store_id']);
+			$store_info = $this->model_setting_store->getStores((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -228,9 +227,9 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Description
-		$description_data = $this->model_catalog_manufacturer->getDescription($manufacturer_info['manufacturer_id'], $language_info['language_id']);
+		$description_info = $this->model_catalog_manufacturer->getDescription($manufacturer_info['manufacturer_id'], $language_info['language_id']);
 
-		if (!$description_data) {
+		if (!$description_info) {
 			return ['error' => $this->language->get('error_description')];
 		}
 
@@ -242,11 +241,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($manufacturer_info + $description_data))) {
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($description_info + $manufacturer_info))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $description_data['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $description_info['name'])];
 	}
 
 	/*

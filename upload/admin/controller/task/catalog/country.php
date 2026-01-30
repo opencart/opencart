@@ -20,11 +20,10 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
-		$this->load->model('setting/task');
-
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -69,7 +68,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStores($args['store_id']);
+			$store_info = $this->model_setting_store->getStores((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -79,7 +78,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		// Language
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
 		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
@@ -91,7 +90,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/country');
 
-		$country_ids = $this->model_setting_setting->getValue('config_country_list', $args['store_id']);
+		$country_ids = $this->model_setting_setting->getValue('config_country_list', (int)$args['store_id']);
 
 		foreach ($country_ids as $country_id) {
 			$country_info = $this->model_localisation_country->getCountry($country_id);
@@ -106,7 +105,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				continue;
 			}
 
-			$country_data[] = $country_info + $description_info;
+			$country_data[] = $description_info + $country_info;
 		}
 
 		$sort_order = [];
@@ -204,7 +203,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStores($args['store_id']);
+			$store_info = $this->model_setting_store->getStores((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -276,7 +275,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($country_info + $description_info + ['zone' => $zone_data] + ['geo_zone' => $geo_zone_data]))) {
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($description_info + $country_info + ['zone' => $zone_data] + ['geo_zone' => $geo_zone_data]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

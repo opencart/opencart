@@ -20,10 +20,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/setting');
 
-		$this->load->model('setting/task');
-
-
-
 		$stores = [];
 
 		$stores[] = [
@@ -32,14 +28,18 @@ class Setting extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->load->model('setting/store');
+		$this->load->model('setting/task');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($stores as $store) {
+
+
+
 			foreach ($languages as $language) {
 				$task_data = [
 					'code'   => 'setting',

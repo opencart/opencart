@@ -20,11 +20,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
 
-		$this->load->model('setting/task');
-
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -69,7 +68,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStore($args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -79,7 +78,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		// Language
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguage($args['language_id']);
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
 		if (!$language_info || !$language_info['status']) {
 			return ['error' => $this->language->get('error_language')];
@@ -91,7 +90,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('customer/customer_group');
 
-		$customer_group_ids = $this->model_setting_setting->getValue('config_customer_group_list', $args['store_id']);
+		$customer_group_ids = $this->model_setting_setting->getValue('config_customer_group_list', (int)$args['store_id']);
 
 		foreach ($customer_group_ids as $customer_group_id) {
 			$customer_group_info = $this->model_customer_customer_group->getCountry($customer_group_id);

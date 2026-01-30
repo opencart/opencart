@@ -20,8 +20,6 @@ class Review extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/review');
 
-		$this->load->model('setting/task');
-
 		// Review
 		$this->load->model('catalog/product');
 
@@ -34,6 +32,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
@@ -45,9 +44,9 @@ class Review extends \Opencart\System\Engine\Controller {
 					'code'   => 'review',
 					'action' => 'task/catalog/review.list',
 					'args'   => [
+						'product_id'  => $product_info['product_id'],
 						'store_id'    => $store_id,
-						'language_id' => $language_id,
-						'product_id'  => $product_id,
+						'language_id' => $language_id
 					]
 				];
 

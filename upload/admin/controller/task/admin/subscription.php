@@ -70,7 +70,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Language
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguageByCode($subscription_info['language']);
+		$language_info = $this->model_localisation_language->getLanguageByCode($subscription_info['language_id']);
 
 		if (!$language_info) {
 			return ['error' => $this->language->get('error_language')];

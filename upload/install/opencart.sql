@@ -7823,7 +7823,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (3965, 190, 'Notranjsko-kraška', '10', 1),
 (3966, 190, 'Goriška', '11', 1),
 (3967, 190, 'Obalno-kraška', '12', 1),
-(3968, 33, 'Ruse', '', 1),
+(3968, 33, 'Ruse', '18', 1),
 (3969, 101, 'Alborz', 'ALB', 1),
 (3970, 21, 'Brussels-Capital Region', 'BRU', 1),
 (3971, 138, 'Aguascalientes', 'AG', 1),

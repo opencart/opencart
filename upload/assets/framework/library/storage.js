@@ -1,7 +1,11 @@
 class Storage {
-    directory = '';
-    path = new Map();
-    data = new Map();
+    static instance = null;
+
+    constructor() {
+        this.directory = '';
+        this.path = new Map();
+        this.cache = new Map();
+    }
 
     addPath(namespace, path = '') {
         if (!path) {
@@ -12,8 +16,8 @@ class Storage {
     }
 
     async fetch(path) {
-        if (this.data.has(path)) {
-            return this.data.get(path);
+        if (this.cache.has(path)) {
+            return this.cache.get(path);
         }
 
         let file = this.directory + path + '.json';
@@ -37,9 +41,9 @@ class Storage {
         if (response.status == 200) {
             let data = await response.json();
 
-            this.data.set(path, data);
+            this.cache.set(path, data);
 
-            return this.data.get(path);
+            return this.cache.get(path);
         } else {
             console.log('Could not load storage file ' + path);
         }

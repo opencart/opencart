@@ -3,8 +3,6 @@ import { loader } from './loader.js';
 const currencies = await loader.storage('localisation/currency');
 
 export default class Currency {
-    static currencies = {};
-
     constructor() {
         this.currencies = currencies;
     }

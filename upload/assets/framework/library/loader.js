@@ -6,9 +6,9 @@ import { template } from './template.js';
 
 class Loader {
     static instance;
-    data = new Map();
 
     constructor() {
+        this.data = new Map();
         this.data.set('config', config);
         this.data.set('event', event);
         this.data.set('language', language);

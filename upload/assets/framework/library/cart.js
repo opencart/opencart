@@ -10,11 +10,9 @@ const tax = await loader.library('tax');
 const data = session.get('cart');
 
 export default class Cart {
-    customer = null;
-    data = [];
-
     constructor() {
-
+        this.customer = null;
+        this.data = [];
     }
 
     add(item) {

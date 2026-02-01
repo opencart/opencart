@@ -12,7 +12,7 @@ const config = await loader.library('config');
 config.addPath('catalog/view/data/');
 
 // Testing Code
-config.data.set('catalog', {
+config.cache.set('catalog', {
     config_name: 'OpenCart Store',
     config_logo: 'catalog/opencart-logo.png',
     config_url: 'http://localhost/opencart-master/upload/',
@@ -38,7 +38,7 @@ const storage = await loader.library('storage');
 
 storage.addPath('catalog/view/data/' + base.host + '/' + lang + '/');
 
-storage.data.set('cms/article-1', {
+storage.cache.set('cms/article-1', {
     articles: []
 });
 

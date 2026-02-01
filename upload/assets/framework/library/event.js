@@ -10,7 +10,10 @@
  */
 class Event {
     static instance;
-    data = new Map();
+
+    constructor() {
+        this.data = new Map();
+    }
 
     /**
      * Register a handler for an event (trigger)

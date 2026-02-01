@@ -1,12 +1,9 @@
 import { loader } from './loader.js';
 
 export default class Tax {
-    static tax_classes = new Map();
-
     constructor() {
         this.storage = loader.library('storage');
-
-        //this.tax_classes = tax_classes;
+       // this.tax_classes = tax_classes;
 
         //this.load(3);
     }

@@ -18,7 +18,7 @@ class AccountNewsletter extends WebComponent {
         return loader.template('account/newsletter', { ...data, ...language, ...config });
     }
 
-    submit(e) {
+    onSubmit(e) {
         e.preventDefault();
 
     }

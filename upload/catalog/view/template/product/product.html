@@ -6,6 +6,7 @@
         {% if thumb %}
           <a href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail mb-3"/></a>
         {% endif %}
+
         {% if images %}
           <div>
             {% for image in images %}
@@ -13,6 +14,7 @@
             {% endfor %}
           </div>
         {% endif %}
+
       </div>
     </div>
   {% endif %}
@@ -49,20 +51,14 @@
     {% if price %}
       <ul class="list-unstyled">
         {% if not special %}
-          <li>
-            <h2><span class="price-new"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span></h2>
-          </li>
+          <li><h2><span class="price-new"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span></h2></li>
         {% else %}
           <li><span class="price-old"><x-currency code="{{ currency }}" amount="{{ price }}"></x-currency></span></li>
-          <li>
-            <h2><span class="price-new"><x-currency code="{{ currency }}" amount="{{ special }}"></x-currency></span></h2>
-          </li>
+          <li><h2><span class="price-new"><x-currency code="{{ currency }}" amount="{{ special }}"></x-currency></span></h2></li>
         {% endif %}
 
         {% if tax %}
-          <li>{{ text_tax }}
-            <x-currency code="{{ currency }}" amount="{{ tax }}"></x-currency>
-          </li>
+          <li>{{ text_tax }} <x-currency code="{{ currency }}" amount="{{ tax }}"></x-currency></li>
         {% endif %}
 
         {% if points %}
@@ -75,9 +71,7 @@
           </li>
 
           {% for discount in discounts %}
-            <li>{{ discount.quantity }}{{ text_discount }}
-              <x-currency code="{{ currency }}" amount="{{ discount.price }}"></x-currency>
-            </li>
+            <li>{{ discount.quantity }}{{ text_discount }} <x-currency code="{{ currency }}" amount="{{ discount.price }}"></x-currency></li>
           {% endfor %}
 
         {% endif %}
@@ -94,7 +88,7 @@
 
     <br/>
     <div id="product">
-      <form id="form-product" data-on="submit:save">
+      <form id="form-product" data-on="submit:onSubmit">
         {% if options %}
           <hr>
           <h3>{{ text_option }}</h3>
@@ -106,11 +100,7 @@
                   <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
                     <option value="">{{ text_select }}</option>
                     {% for option_value in option.product_option_value %}
-                      <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
-                        {% if option_value.price %}
-                          ({{ option_value.price_prefix }}
-                          <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>)
-                        {% endif %}</option>
+                      <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }} {% if option_value.price %} ({{ option_value.price_prefix }} <x-currency code="{{ currency }}" amount="{{ option_value.price }}"></x-currency>) {% endif %}</option>
                     {% endfor %}
                   </select>
                   <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
@@ -212,7 +202,7 @@
           <hr/>
           <h3>{{ text_subscription }}</h3>
           <div class="mb-3">
-            <select name="subscription_plan_id" id="input-subscription" data-on="change:change" class="form-select" required>
+            <select name="subscription_plan_id" id="input-subscription" data-on="change:onChange" class="form-select" required>
               <option value="">{{ text_select }}</option>
               {% for subscription_plan in subscription_plans %}
                 <option value="{{ subscription_plan.subscription_plan_id }}">{{ subscription_plan.name }}</option>
@@ -228,8 +218,8 @@
         <div class="mb-3">
           <div class="input-group">
             <div class="input-group-text">{{ entry_qty }}</div>
-            <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/>
-            <button type="submit" id="button-cart" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
+            <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" data-bind="quantity" class="form-control"/>
+            <button type="submit" id="button-cart" data-bind="button_cart" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
           </div>
           <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
           <div id="error-quantity" class="form-text"></div>

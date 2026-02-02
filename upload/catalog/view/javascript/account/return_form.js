@@ -9,7 +9,7 @@ class AccountReturnForm extends WebComponent {
        return loader.template('account/return', { ...language });
     }
 
-    submit(e) {
+    onSubmit(e) {
         e.preventDefault();
 
     }

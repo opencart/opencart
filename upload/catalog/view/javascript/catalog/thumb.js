@@ -7,14 +7,18 @@ const config = await loader.config('catalog');
 // Language
 const language = await loader.language('catalog/thumb');
 
-// Library
+// library
+const local = await loader.library('local');
 const tax = await loader.library('tax');
+
+// Currency
+const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
 class ProductThumb extends WebComponent {
     async render() {
         let data = {};
 
-        // customer groups
+        // Get product by product ID
         let product = await loader.storage('product/product-' + this.getAttribute('product_id'));
 
         if (product.length) {
@@ -33,13 +37,19 @@ class ProductThumb extends WebComponent {
 
             data.rating = product.rating;
             data.minimum =  product.minimum;
+
+            data.currency = currency;
         }
 
         return loader.template('catalog/thumb', { ...data, ...language, ...config });
     }
 
-    submit(e) {
+    onSubmit(e) {
+        e.preventDefault();
 
+        this.$button_wishlist.getAttribute('action');
+        this.$button_cart.getAttribute('action');
+        this.$button_cart.getAttribute('compare_add');
 
     }
 }

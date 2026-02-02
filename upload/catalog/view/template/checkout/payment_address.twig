@@ -21,7 +21,7 @@
   </div>
   <br/>
   <div id="payment-new" style="display: {% if not addresses %}block{% else %}none{% endif %};">
-    <form id="form-payment-address" data-on="submit:submit">
+    <form id="form-payment-address" data-on="submit:onSubmit">
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col mb-3">
           <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label>

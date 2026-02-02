@@ -31,10 +31,10 @@ class AccountEdit extends WebComponent {
         return loader.template('account/edit', { ...data, ...language });
     }
 
-    submit(e) {
+    onSubmit(e) {
         e.preventDefault();
 
-        this.button.state = 'loading';
+        this.$button.state = 'loading';
     }
 }
 

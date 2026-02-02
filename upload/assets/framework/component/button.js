@@ -1,6 +1,22 @@
 import { WebComponent } from '../component.js';
 
-class XButton extends WebComponent {
+class ButtonText extends WebComponent {
+    static observed = ['state'];
+    text = '';
+    width = 0;
+
+    render() {
+        let icon = '';
+        let type = this.getAttribute('type');
+        let state = this.getAttribute('state');
+
+        return '<button type="button" class="btn btn-' + type + '" data-bind="button"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</button>';
+    }
+}
+
+customElements.define('button-text', ButtonText);
+
+class ButtonSubmit extends WebComponent {
     static observed = ['state'];
     text = '';
     width = 0;
@@ -40,7 +56,7 @@ class XButton extends WebComponent {
         let type = this.getAttribute('type');
         let state = this.getAttribute('state');
 
-        return '<button type="' + type + '" class="btn btn-' + type + '" data-bind="button"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</button>';
+        return '<button type="submit" class="btn btn-' + type + '" data-bind="button"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</button>';
     }
 
     click(e) {
@@ -90,8 +106,20 @@ class XButton extends WebComponent {
     }
 }
 
-customElements.define('x-button', XButton);
+class ButtonLink extends WebComponent {
+    static observed = ['state'];
+    text = '';
+    width = 0;
 
-//customElements.define('button-button', XButton);
+    render() {
+        let icon = '';
+        let type = this.getAttribute('type');
+        let state = this.getAttribute('state');
 
-//customElements.define('button-link', XButton);
+
+
+        return '<a href="" class="btn btn-' + type + '" data-bind="button"><i class="fa ' + icon + '"></i> ' + this.innerHTML + '</a>';
+    }
+}
+
+customElements.define('button-link', ButtonLink);

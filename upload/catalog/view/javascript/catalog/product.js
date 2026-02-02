@@ -8,7 +8,11 @@ const config = await loader.config('catalog');
 const language = await loader.language('catalog/product');
 
 // Library
+const local = await loader.library('local');
 const tax = await loader.library('tax');
+
+// Currency
+const currency = local.has('currency') ? local.get('currency') : config.config_currency;
 
 class CatalogProduct extends WebComponent {
     async render() {
@@ -68,21 +72,20 @@ class CatalogProduct extends WebComponent {
             data.options = product.option;
 
             data.subscription_plans = product.subscription_plans;
+
+            data.currency = currency;
         }
 
         return loader.template('product/product', { ...data, ...language, ...config });
     }
 
-    change(e) {
+    onChange(e) {
         $('.subscription').addClass('d-none');
-
-
 
         $('#subscription-description-' + $(element).val()).removeClass('d-none');
     }
 
-    submit() {
-
+    onSubmit() {
 
     }
 }

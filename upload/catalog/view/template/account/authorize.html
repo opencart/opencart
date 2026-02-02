@@ -8,7 +8,7 @@
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-lock"></i> {{ heading_title }}</div>
           <div class="card-body">
-            <form id="form-authorize" action="{{ action }}" data-on="submit:submit">
+            <form id="form-authorize" action="{{ action }}" data-on="submit:onSubmit">
               <p>{{ text_security }}</p>
               <p>{{ text_code }}</p>
               <div class="mb-3">
@@ -20,7 +20,7 @@
                 <div id="error-code" class="invalid-feedback"></div>
               </div>
               <div class="text-end">
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button>
+                <button type="submit" data-bind="button" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button>
               </div>
               {% if redirect %}
                 <input type="hidden" name="redirect" value="{{ redirect }}"/>

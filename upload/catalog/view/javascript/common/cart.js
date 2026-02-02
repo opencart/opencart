@@ -10,13 +10,18 @@ const config = await loader.config('catalog');
 // Language
 const language = await loader.language('common/cart');
 
+// library
+const local = await loader.library('local');
+const tax = await loader.library('tax');
+
+// Currency
+const currency = local.has('currency') ? local.get('currency') : config.config_currency;
+
 class CommonCart extends WebComponent {
-    async connected() {
-
-    };
-
     render() {
         let data = {};
+
+        data.currency = currency;
 
         return loader.template('common/cart', { ...data,  ...language });
     }

@@ -51,7 +51,7 @@ class AccountRegister extends WebComponent {
         //}
     }
 
-    submit(e) {
+    onSubmit(e) {
         e.preventDefault();
 
         console.log(e);

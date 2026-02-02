@@ -14,7 +14,7 @@ class AccountPassword extends WebComponent {
         return loader.template('account/password', { ...data, ...language });
     }
 
-    submit(e) {
+    onSubmit(e) {
         e.preventDefault();
 
 

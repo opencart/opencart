@@ -18,7 +18,7 @@
             <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" style="width: 60px"/></a>{% endif %}</td>
             <td><a href="{{ product.href }}">{{ product.name }}</a>
 
-              <form id="form-product-{{ product_row }}" action="{{ cart_add }}" data-on="submit:submit">
+              <form id="form-product-{{ product_row }}" action="{{ cart_add }}" data-on="submit:onSubmit">
                 <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
                 <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
               </form>

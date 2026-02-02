@@ -18,7 +18,7 @@ class AccountAddress extends WebComponent {
         return this.load.template('account/address', { ...data, ...language });
     }
 
-    submit(e) {
+    onSubmit(e) {
         e.preventDefault();
 
     }

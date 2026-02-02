@@ -20,8 +20,8 @@ class CommonSearch extends WebComponent {
         return loader.template('common/search', { ...data, ...language });
     }
 
-    submit(e) {
-
+    onSubmit(e) {
+        e.preventDefault();
 
     }
 }

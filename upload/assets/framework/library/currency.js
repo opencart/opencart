@@ -4,13 +4,13 @@ const currencies = await loader.storage('localisation/currency');
 
 export default class Currency {
     constructor() {
-        this.currencies = currencies;
+       // this.currencies = currencies;
     }
 
     format(number, code, value = 0, format = true) {
-        if (!this.currencies.has(code)) return number;
+        if (!code in currencies) return number;
 
-        let currency = this.currencies.get(code);
+        let currency = currencies[code];
 
         value = parseFloat(value ? value : currency.value);
 
@@ -58,8 +58,8 @@ export default class Currency {
     }
 
     convert(value, from, to) {
-        if (!this.currencies.has(from) || !this.currencies.has(to)) return value;
+        if (!from in currencies || !to in currencies) return value;
 
-        return value * (this.currencies.get(to).value / this.currencies.get(from).value);
+        return value * (currencies[to].value / currencies[from].value);
     }
 }

@@ -14,6 +14,13 @@ class XCurrency extends WebComponent {
         'value'
     ];
 
+    constructor() {
+        super();
+
+        this.currency = currency;
+        this.currencies = currencies;
+    }
+
     get code() {
         return this.getAttribute('code');
     }
@@ -36,7 +43,7 @@ class XCurrency extends WebComponent {
         }
 
         if (this.code in this.currencies) {
-            return this.currencies[this.code]['value'];
+            return this.currencies[this.code].value;
         } else {
             return 1.00000;
         }
@@ -46,14 +53,9 @@ class XCurrency extends WebComponent {
         this.setAttribute('value', value);
     }
 
-    constructor() {
-        super();
-
-        this.currency = currency;
-        this.currencies = currencies;
-    }
-
     async render() {
+        console.log(this.code);
+
         return this.currency.format(this.value, this.code);
     }
 }

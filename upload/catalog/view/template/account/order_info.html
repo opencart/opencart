@@ -93,7 +93,7 @@
                 </li>
               {% endif %}
             </ul>
-            <form id="form-product-{{ product_row }}" data-on="submit:submit">
+            <form id="form-product-{{ product_row }}" data-on="submit:onSubmit">
               <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.quantity }}"/>
               {% for option in product.option %}
                 {% if option.type == 'select' or option.type == 'radio' %}

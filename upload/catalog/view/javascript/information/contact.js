@@ -45,7 +45,7 @@ class InformationContact extends WebComponent {
         return loader.template('information/contact', { ...data, ...language, ...config });
     }
 
-    submit(e) {
+    onSubmit(e) {
         e.preventDefault();
 
 

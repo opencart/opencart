@@ -38,7 +38,7 @@ class CommonCurrency extends WebComponent {
         return loader.template('common/currency', { ...data, ...language });
     }
 
-    change(e) {
+    onChange(e) {
         e.preventDefault();
 
         local.set('currency', e.target.getAttribute('href'));

@@ -1,6 +1,36 @@
-class Engine {
+class Template {
+    static instance = null;
+
     constructor() {
-        this.filters = {
+        this.directory = '';
+        this.path = new Map();
+        this.cache = new Map();
+
+        // Unified handler map — all handlers get the same 4 arguments
+        this.tagHandler = {
+            if: this.handleIf.bind(this),
+            unless: this.handleUnless.bind(this),
+            elsif: this.handleElsif.bind(this),
+            else: this.handleElse.bind(this),
+            endif: this.handleEndif.bind(this),
+            endunless: this.handleEndunless.bind(this),
+            for: this.handleFor.bind(this),
+            endfor: this.handleEndfor.bind(this),
+            continue: this.handleContinue.bind(this),
+            break: this.handleBreak.bind(this),
+            case: this.handleCase.bind(this),
+            when: this.handleWhen.bind(this),
+            endcase: this.handleEndcase.bind(this),
+            assign: this.handleAssign.bind(this),
+            capture: this.handleCapture.bind(this),
+            endcapture: this.handleEndcapture.bind(this),
+            raw: this.handleRaw.bind(this),
+            endraw: this.handleEndraw.bind(this),
+            comment: this.handleComment.bind(this),
+            endcomment: this.handleEndcomment.bind(this),
+        };
+
+        this.filter = {
             // Core filters
             escape: value => String(value ?? '').replace(/[&<>"']/g, m => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[m] || m)),
             upcase: value => String(value).toUpperCase(),
@@ -34,7 +64,6 @@ class Engine {
                 const n = Number(v);
                 return isNaN(n) ? 0 : Number(n.toFixed(Number(decimals)));
             },
-
             // Multi-argument capable filters
             replace: (value, search, replaceWith = '', ...pairs) => {
                 let str = String(value ?? '');
@@ -46,46 +75,217 @@ class Engine {
                 }
                 return str;
             },
-
             slice: (value, start, length) => {
                 const str = String(value ?? '');
                 const s = Number(start) || 0;
                 return length !== undefined ? str.slice(s, s + Number(length)) : str.slice(s);
             },
         };
+    }
 
-        // Unified handler map — all handlers get the same 4 arguments
-        this.tagHandlers = {
-            if: this.handleIf.bind(this),
-            unless: this.handleUnless.bind(this),
-            elsif: this.handleElsif.bind(this),
-            else: this.handleElse.bind(this),
-            endif: this.handleEndif.bind(this),
-            endunless: this.handleEndunless.bind(this),
-            for: this.handleFor.bind(this),
-            endfor: this.handleEndfor.bind(this),
-            continue: this.handleContinue.bind(this),
-            break:    this.handleBreak.bind(this),
-            case: this.handleCase.bind(this),
-            when: this.handleWhen.bind(this),
-            endcase: this.handleEndcase.bind(this),
-            assign: this.handleAssign.bind(this),
-            capture: this.handleCapture.bind(this),
-            endcapture: this.handleEndcapture.bind(this),
-            raw: this.handleRaw.bind(this),
-            endraw: this.handleEndraw.bind(this),
-            comment: this.handleComment.bind(this),
-            endcomment: this.handleEndcomment.bind(this),
-        };
+    addPath(namespace, path = '') {
+        if (!path) {
+            this.directory = namespace;
+        } else {
+            this.path.set(namespace, path);
+        }
+    }
+
+    addFilter(name, filter) {
+        this.filter.set(name, filter);
+    }
+
+    async fetch(path) {
+        let file = this.directory + path + '.html';
+        let namespace = '';
+        let parts = path.split('/');
+
+        for (let part of parts) {
+            if (!namespace) {
+                namespace += part;
+            } else {
+                namespace += '/' + part;
+            }
+
+            if (this.path.has(namespace)) {
+                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.html';
+            }
+        }
+
+        let response = await fetch(file);
+
+        if (response.status == 200) {
+            let object = await response.text();
+
+            this.cache.set(path, object);
+
+            return this.cache.get(path);
+        } else {
+            console.log('Could not load template file ' + path);
+        }
+
+        return '';
+    }
+
+    parse(code, data = {}) {
+        return this._render(code, data);
+    }
+
+    async render(path, data = {}) {
+        return this.parse(await this.fetch(path), data);
+    }
+
+    // ─── Main render ────────────────────────────────────────────────────────
+    _render(template, data = {}) {
+        const ctx = {...data};
+        const tokens = this.tokenize(template);
+        let output = '';
+        const stack = [];
+        let i = 0;
+
+        while (i < tokens.length) {
+            const token = tokens[i];
+            const top = stack[stack.length - 1];
+
+            const inRaw = stack.some(s => s.type === 'raw');
+            const inComment = stack.some(s => s.type === 'comment');
+            const isCapturing = top?.type === 'capture';
+
+            // ─── Comment handling ─────────────────────────────────────────────
+            if (inComment) {
+                if (token.type === 'tag') {
+                    const cmd = token.raw.split(/\s+/)[0].toLowerCase();
+                    if (cmd === 'endcomment') {
+                        this.handleEndcomment(token, stack, ctx, i);
+                    }
+                }
+                i++;
+                continue;
+            }
+
+            // ─── Raw handling ─────────────────────────────────────────────────
+            if (inRaw) {
+                if (token.type === 'tag') {
+                    const cmd = token.raw.split(/\s+/)[0].toLowerCase();
+                    if (cmd === 'endraw') {
+                        this.handleEndraw(token, stack, ctx, i);
+                        i++;
+                        continue;
+                    }
+                }
+                if (token.type === 'text') output += token.value;
+                else if (token.type === 'output') output += `{{${token.raw}}}`;
+                else if (token.type === 'tag') output += `{% ${token.raw} %}`;
+                i++;
+                continue;
+            }
+
+            // ─── Normal rendering ─────────────────────────────────────────────
+            if (token.type === 'text') {
+                if (isCapturing) {
+                    top.content += token.value;
+                } else if (!this.shouldSkipRendering(stack)) {
+                    output += token.value;
+                }
+
+                i++;
+
+                continue;
+            }
+
+            if (token.type === 'output') {
+                if (this.shouldSkipRendering(stack)) {
+                    i++;
+                    continue;
+                }
+
+                const [rawExpr, ...filters] = token.raw.split('|').map(s => s.trim());
+
+                let value = this.evaluate(rawExpr, ctx);
+
+                value = this.applyFilters(value, filters.join('|'));
+
+                const rendered = this.filter.escape(value ?? '');
+
+                if (isCapturing) {
+                    top.content += rendered;
+                } else {
+                    output += rendered;
+                }
+
+                i++;
+
+                continue;
+            }
+
+            if (token.type === 'tag') {
+                const cmd = token.raw.split(/\s+/)[0].toLowerCase();
+                const handler = this.tagHandler[cmd].bind(this);
+
+                if (handler) {
+                    const jumpTo = handler(token, stack, ctx, i);
+
+                    if (typeof jumpTo === 'number' && jumpTo >= 0) {
+                        i = jumpTo;
+                        continue;
+                    }
+                }
+            }
+
+            i++;
+        }
+
+        return output;
+    }
+
+    tokenize(template) {
+        const tokens = [];
+        const regex = /\{\{([\s\S]*?)\}\}|\{%\s*([\s\S]*?)\s*%\}/g;
+        let lastIndex = 0;
+        let match;
+
+        while ((match = regex.exec(template)) !== null) {
+            if (match.index > lastIndex) {
+                tokens.push({type: 'text', value: template.slice(lastIndex, match.index)});
+            }
+            if (match[1] !== undefined) {
+                tokens.push({type: 'output', raw: match[1].trim()});
+            } else if (match[2] !== undefined) {
+                tokens.push({type: 'tag', raw: match[2].trim()});
+            }
+            lastIndex = regex.lastIndex;
+        }
+
+        if (lastIndex < template.length) {
+            tokens.push({type: 'text', value: template.slice(lastIndex)});
+        }
+        return tokens;
+    }
+
+    shouldSkipRendering(stack) {
+        for (let i = stack.length - 1; i >= 0; i--) {
+            const frame = stack[i];
+
+            if (frame.type === 'if' || frame.type === 'unless') {
+                return !frame.entered;
+            }
+
+            if (frame.type === 'case') {
+                return !frame.matched;
+            }
+        }
+        return false;
     }
 
     evaluate(expr, ctx) {
         if (!expr?.trim()) return undefined;
+
         try {
-            const safe = expr.trim()
-            .replace(/([a-zA-Z_]\w*)\./g, 'data.$1.')
-            .replace(/([a-zA-Z_]\w*)\[/g, 'data.$1[');
-            return new Function('data', `with(data) { return (${safe}); }`)(ctx);
+            const safe = expr.trim().replace(/([a-zA-Z_]\w*)\./g, 'data.$1.').replace(/([a-zA-Z_]\w*)\[/g, 'data.$1[');
+
+            let func = new Function('data', `with(data) { return (${safe}); }`);
+
+            return func(ctx);
         } catch {
             return undefined;
         }
@@ -104,7 +304,7 @@ class Engine {
             const name = colonIndex === -1 ? part.trim() : part.substring(0, colonIndex).trim();
             const argsStr = colonIndex === -1 ? '' : part.substring(colonIndex + 1).trim();
 
-            const fn = this.filters[name];
+            const fn = this.filter[name];
             if (!fn) continue;
 
             const args = this.#parseFilterArgs(argsStr);
@@ -143,6 +343,7 @@ class Engine {
                     quote = c;
                 } else if (c === ',') {
                     if (current.trim()) args.push(current.trim());
+
                     current = '';
                 } else if (!/\s/.test(c)) {
                     current += c;
@@ -161,45 +362,8 @@ class Engine {
         });
     }
 
-    tokenize(template) {
-        const tokens = [];
-        const regex = /\{\{([\s\S]*?)\}\}|\{%\s*([\s\S]*?)\s*%\}/g;
-        let lastIndex = 0;
-        let match;
-
-        while ((match = regex.exec(template)) !== null) {
-            if (match.index > lastIndex) {
-                tokens.push({type: 'text', value: template.slice(lastIndex, match.index)});
-            }
-            if (match[1] !== undefined) {
-                tokens.push({type: 'output', raw: match[1].trim()});
-            } else if (match[2] !== undefined) {
-                tokens.push({type: 'tag', raw: match[2].trim()});
-            }
-            lastIndex = regex.lastIndex;
-        }
-
-        if (lastIndex < template.length) {
-            tokens.push({type: 'text', value: template.slice(lastIndex)});
-        }
-        return tokens;
-    }
-
-    shouldSkipRendering(stack) {
-        for (let i = stack.length - 1; i >= 0; i--) {
-            const frame = stack[i];
-            if (frame.type === 'if' || frame.type === 'unless') {
-                return !frame.entered;
-            }
-            if (frame.type === 'case') {
-                return !frame.matched;
-            }
-        }
-        return false;
-    }
-
     // ─── Tag handlers ────────────────────────────────────────────────────────
-
+    // Unified handler map — all handlers get the same 4 arguments
     handleIf(token, stack, ctx, currentIndex) {
         const cond = token.raw.slice(2).trim();
         stack.push({type: 'if', entered: !!this.evaluate(cond, ctx)});
@@ -247,7 +411,9 @@ class Engine {
 
         // Look for limit: N and offset: N anywhere after 'in'
         const paramRegex = /(limit|offset):\s*(\d+)/gi;
+
         let match;
+
         while ((match = paramRegex.exec(collectionExpr)) !== null) {
             const key = match[1].toLowerCase();
             const val = Number(match[2]);
@@ -255,27 +421,27 @@ class Engine {
                 if (key === 'limit') limit = val;
                 if (key === 'offset') offset = val;
             }
+
+            // Remove the limit/offset clauses from the expression so evaluate works
+            collectionExpr = collectionExpr.replace(paramRegex, '').trim();
+
+            const fullArray = this.evaluate(collectionExpr, ctx) || [];
+
+            // Apply offset & limit (safe slicing)
+            const start = Math.max(0, offset);
+            const end = limit === Infinity ? undefined : start + limit;
+            const slicedArray = fullArray.slice(start, end);
+
+            stack.push({
+                type: 'for',
+                itemName,
+                array: slicedArray,           // ← now already sliced
+                originalArrayLength: fullArray.length,  // useful if you later want total count
+                index: -1,
+                bodyStart: currentIndex + 1,
+                parentCtx: {...ctx}
+            });
         }
-
-        // Remove the limit/offset clauses from the expression so evaluate works
-        collectionExpr = collectionExpr.replace(paramRegex, '').trim();
-
-        const fullArray = this.evaluate(collectionExpr, ctx) || [];
-
-        // Apply offset & limit (safe slicing)
-        const start = Math.max(0, offset);
-        const end = limit === Infinity ? undefined : start + limit;
-        const slicedArray = fullArray.slice(start, end);
-
-        stack.push({
-            type: 'for',
-            itemName,
-            array: slicedArray,           // ← now already sliced
-            originalArrayLength: fullArray.length,  // useful if you later want total count
-            index: -1,
-            bodyStart: currentIndex + 1,
-            parentCtx: { ...ctx }
-        });
     }
 
     handleEndfor(token, stack, ctx, currentIndex) {
@@ -286,6 +452,7 @@ class Engine {
 
         if (top.index < top.array.length) {
             Object.assign(ctx, top.parentCtx);
+
             ctx[top.itemName] = top.array[top.index];
             ctx.forloop = {
                 index: top.index + 1,
@@ -403,163 +570,6 @@ class Engine {
         if (stack.length) stack.pop();
     }
 
-    // ─── Main render ────────────────────────────────────────────────────────
-
-    render(template, data = {}) {
-        const ctx = {...data};
-        const tokens = this.tokenize(template);
-        let output = '';
-        const stack = [];
-        let i = 0;
-
-        while (i < tokens.length) {
-            const token = tokens[i];
-            const top = stack[stack.length - 1];
-
-            const inRaw = stack.some(s => s.type === 'raw');
-            const inComment = stack.some(s => s.type === 'comment');
-            const isCapturing = top?.type === 'capture';
-
-            // ─── Comment handling ─────────────────────────────────────────────
-            if (inComment) {
-                if (token.type === 'tag') {
-                    const cmd = token.raw.split(/\s+/)[0].toLowerCase();
-                    if (cmd === 'endcomment') {
-                        this.handleEndcomment(token, stack, ctx, i);
-                    }
-                }
-                i++;
-                continue;
-            }
-
-            // ─── Raw handling ─────────────────────────────────────────────────
-            if (inRaw) {
-                if (token.type === 'tag') {
-                    const cmd = token.raw.split(/\s+/)[0].toLowerCase();
-                    if (cmd === 'endraw') {
-                        this.handleEndraw(token, stack, ctx, i);
-                        i++;
-                        continue;
-                    }
-                }
-                if (token.type === 'text') output += token.value;
-                else if (token.type === 'output') output += `{{${token.raw}}}`;
-                else if (token.type === 'tag') output += `{% ${token.raw} %}`;
-                i++;
-                continue;
-            }
-
-            // ─── Normal rendering ─────────────────────────────────────────────
-            if (token.type === 'text') {
-                if (isCapturing) {
-                    top.content += token.value;
-                } else if (!this.shouldSkipRendering(stack)) {
-                    output += token.value;
-                }
-                i++;
-                continue;
-            }
-
-            if (token.type === 'output') {
-                if (this.shouldSkipRendering(stack)) {
-                    i++;
-                    continue;
-                }
-                const [rawExpr, ...filters] = token.raw.split('|').map(s => s.trim());
-                let value = this.evaluate(rawExpr, ctx);
-                value = this.applyFilters(value, filters.join('|'));
-                const rendered = this.filters.escape(value ?? '');
-                if (isCapturing) {
-                    top.content += rendered;
-                } else {
-                    output += rendered;
-                }
-                i++;
-                continue;
-            }
-
-            if (token.type === 'tag') {
-                const cmd = token.raw.split(/\s+/)[0].toLowerCase();
-                const handler = this.tagHandlers[cmd];
-                if (handler) {
-                    const jumpTo = handler(token, stack, ctx, i);
-                    if (typeof jumpTo === 'number' && jumpTo >= 0) {
-                        i = jumpTo;
-                        continue;
-                    }
-                }
-            }
-
-            i++;
-        }
-
-        return output;
-    }
-}
-
-
-class Template {
-    static instance = null;
-
-    constructor() {
-        this.engine = new Engine();
-        this.directory = '';
-        this.path = new Map();
-        this.cache = new Map()
-    }
-
-    addPath(namespace, path = '') {
-        if (!path) {
-            this.directory = namespace;
-        } else {
-            this.path.set(namespace, path);
-        }
-    }
-
-    addFilter(name, filter) {
-        this.engine.filter.set(name, filter);
-    }
-
-    async fetch(path) {
-        let file = this.directory + path + '.html';
-        let namespace = '';
-        let parts = path.split('/');
-
-        for (let part of parts) {
-            if (!namespace) {
-                namespace += part;
-            } else {
-                namespace += '/' + part;
-            }
-
-            if (this.path.has(namespace)) {
-                file = this.path.get(namespace) + path.substr(path, namespace.length) + '.html';
-            }
-        }
-
-        let response = await fetch(file);
-
-        if (response.status == 200) {
-            let object = await response.text();
-
-            this.cache.set(path, object);
-
-            return this.cache.get(path);
-        } else {
-            console.log('Could not load template file ' + path);
-        }
-
-        return '';
-    }
-
-    parse(code, data = {}) {
-        return this.engine.render(code, data);
-    }
-
-    async render(path, data = {}) {
-        return this.parse(await this.fetch(path), data);
-    }
-
     static getInstance() {
         if (!this.instance) {
             this.instance = new Template();
@@ -571,7 +581,7 @@ class Template {
 
 const template = Template.getInstance();
 
-export { template };
+export {template};
 
 const html = `
 {% for i in (1..10) %}
@@ -584,7 +594,6 @@ Number: {{ i }}
 console.log(template.parse(html, {
     items: ['A', 'B', 'C']
 }));
-
 
 
 const html2 = `
@@ -600,8 +609,8 @@ const html2 = `
 
 const data = {
     cart: [
-        { name: "Coffee", price: 28 },
-        { name: "Cake",   price: 45 }
+        {name: "Coffee", price: 28},
+        {name: "Cake", price: 45}
     ]
 };
 

@@ -86,7 +86,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$path = '';
 
@@ -116,7 +116,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Set the last category breadcrumb
 		$data['breadcrumbs'][] = [
@@ -148,7 +148,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Categories
 		$data['categories'] = [];
@@ -178,7 +178,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Product
 		$data['products'] = [];
@@ -245,7 +245,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'limit'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['sorts'] = [];
 
@@ -312,7 +312,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'order'
 		];
 
-		$url = '&' . http_build_query(array_diff_key($this->request->get, array_flip($allowed)));
+		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['limits'] = [];
 

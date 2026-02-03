@@ -2,18 +2,18 @@ import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Language
-const language = loader.language('common/menu');
+const language = await loader.language('common/menu');
 
 // Storage
-const categories = loader.storage('catalog/category');
+const categories = await loader.storage('catalog/category');
 
 class CommonMenu extends WebComponent {
-    async connected() {
+    render() {
         let data = {};
 
         data.categories = categories;
 
-        this.innerHTML = await loader.template('common/menu', { ...data,  ...language });
+        return loader.template('common/menu', { ...data,  ...language });
     }
 }
 

@@ -390,6 +390,9 @@ class ModelUpgrade1010 extends Model {
 				$this->removeByNameFromDB('squareup');
 			}
 		}
+		$this->removeByName($dir_opencart,'usps.php');
+		$this->removeByName($dir_opencart,'usps.twig');
+		$this->removeByNameFromDB('usps');
 
 		// remove some other obsolete core files
 		$this->deleteEntry($dir_opencart.'/admin/view/image/payment/paypal/icon-message.svg');
@@ -612,7 +615,8 @@ class ModelUpgrade1010 extends Model {
 					if (($type=='access') || ($type=='modify')) {
 						if (!empty($permission) && is_array($permission)) {
 							foreach ($permission as $key=>$val) {
-								if (strpos($val,$name)===false) {
+								$route = explode('/',$val);
+								if (is_array($route) && $name!=end($route)) {
 									continue;
 								}
 								unset($new_user_group_permission[$type][$key]);
@@ -628,8 +632,8 @@ class ModelUpgrade1010 extends Model {
 				}
 			}
 		}
-		$this->db->query("DELETE FROM `".DB_PREFIX."extension` WHERE `code` LIKE '%".$this->db->escape($name)."%';");
-		$this->db->query("DELETE FROM `".DB_PREFIX."setting` WHERE `code` LIKE '%".$this->db->escape($name)."%';");
+		$this->db->query("DELETE FROM `".DB_PREFIX."extension` WHERE `code`='".$this->db->escape($name)."';");
+		$this->db->query("DELETE FROM `".DB_PREFIX."setting` WHERE `code` LIKE '%_".$this->db->escape($name)."';");
 		if ($name=='squareup') {
 			$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_transaction`");
 			$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "squareup_token`");

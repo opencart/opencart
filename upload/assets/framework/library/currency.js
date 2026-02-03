@@ -3,10 +3,6 @@ import { loader } from './loader.js';
 const currencies = await loader.storage('localisation/currency');
 
 export default class Currency {
-    constructor() {
-       // this.currencies = currencies;
-    }
-
     format(number, code, value = 0, format = true) {
         if (!code in currencies) return number;
 

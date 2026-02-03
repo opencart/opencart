@@ -39,9 +39,9 @@ class ProductThumb extends WebComponent {
             data.minimum =  product.minimum;
 
             data.currency = currency;
-        }
 
-        return loader.template('catalog/thumb', { ...data, ...language, ...config });
+            return loader.template('catalog/thumb', { ...data, ...language, ...config });
+        }
     }
 
     onSubmit(e) {

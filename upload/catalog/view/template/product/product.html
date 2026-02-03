@@ -26,13 +26,16 @@
       {% if manufacturer %}
         <li>{{ text_manufacturer }}: <strong><a href="{{ manufacturers }}">{{ manufacturer }}</a></strong></li>
       {% endif %}
+
       <li>{{ text_model }}: <strong>{{ model }}</strong></li>
       {% for product_code in product_codes %}
         <li>{{ product_code.code }}: <strong>{{ product_code.value }}</strong></li>
       {% endfor %}
+
       {% if reward %}
         <li>{{ text_reward }}: <strong>{{ reward }}</strong></li>
       {% endif %}
+
       <li>{{ text_stock }}: <strong><span class="text-{% if stock %}success{% else %}danger{% endif %}">{{ stock_status }}</span></strong></li>
     </ul>
 
@@ -224,6 +227,7 @@
           <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
           <div id="error-quantity" class="form-text"></div>
         </div>
+
         {% if minimum > 1 %}
           <div class="alert alert-warning"><i class="fa-solid fa-circle-info"></i> {{ text_minimum }}</div>
         {% endif %}
@@ -242,7 +246,8 @@
 </ul>
 <div class="tab-content">
 
-  <div id="tab-description" class="tab-pane fade show active mb-4">{{ description }}
+  <div id="tab-description" class="tab-pane fade show active mb-4">
+    {{ description }}
     {% if tags %}
       <p>{{ text_tags }}
         {% for tag in tags %}

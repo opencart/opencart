@@ -1,9 +1,6 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
-// library
-const cart = await loader.library('cart');
-
 // Config
 const config = await loader.config('catalog');
 
@@ -11,6 +8,7 @@ const config = await loader.config('catalog');
 const language = await loader.language('common/cart');
 
 // library
+const cart = await loader.library('cart');
 const local = await loader.library('local');
 const tax = await loader.library('tax');
 
@@ -29,8 +27,12 @@ class CommonCart extends WebComponent {
     onSubmit(e) {
         e.preventDefault();
 
-        this.request.fetch({
+        loader.request({
+            onComplete: () => {
 
+
+            },
+            on
         });
     }
 }

@@ -8,6 +8,7 @@ import('./component/date.js');
 import('./component/pagination.js');
 
 // Custom
+import('./component/price.js');
 import('./component/currency.js');
 import('./component/country.js');
 import('./component/zone.js');

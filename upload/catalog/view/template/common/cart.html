@@ -36,7 +36,7 @@
                 </ul>
               </td>
               <td class="text-end text-nowrap">x {{ product.quantity }}</td>
-              <td class="text-end">{{ product.total }}</td>
+              <td class="text-end"><x-currency code="{{ currency }}" value="{{ product.total }}"></x-currency></td>
               <td class="text-end">
 
                 <form action="{{ remove }}" method="post" data-oc-target="#cart">

@@ -3,24 +3,41 @@ import { loader } from '../index.js';
 
 // Library
 const currency = await loader.library('currency');
+const tax = await loader.library('tax');
 
 // Storage
-const currencies = await loader.storage('localisation/currency');
+const currencies = loader.storage('localisation/currency');
+const tax_rates = loader.storage('localisation/tax_rate-');
 
-class XCurrency extends WebComponent {
+class XPrice extends WebComponent {
     static observed = [
         'code',
         'amount',
         'value'
     ];
 
-    get code() {
-        return this.getAttribute('code');
+    constructor() {
+        super();
+
+        this.currencies = currencies;
     }
 
-    set code(code) {
-        this.setAttribute('code', code);
+    get currency() {
+        return this.getAttribute('currency');
     }
+
+    set currency(currency) {
+        this.setAttribute('currency', currency);
+    }
+
+    get tax_class_id() {
+        return this.getAttribute('tax_class_id');
+    }
+
+    set tax_class_id(tax_class_id) {
+        this.setAttribute('tax_class_id', tax_class_id);
+    }
+
 
     get amount() {
         return parseFloat(this.getAttribute('amount'));
@@ -35,8 +52,8 @@ class XCurrency extends WebComponent {
             return parseFloat(this.getAttribute('value')).toFixed(this.decimal_place);
         }
 
-        if (this.code in currencies) {
-            return currencies[this.code].value;
+        if (this.code in this.currencies) {
+            return this.currencies[this.code].value;
         } else {
             return 1.00000;
         }
@@ -53,4 +70,4 @@ class XCurrency extends WebComponent {
     }
 }
 
-customElements.define('x-currency', XCurrency);
+customElements.define('x-price', XPrice);

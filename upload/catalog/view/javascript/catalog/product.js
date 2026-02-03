@@ -74,9 +74,9 @@ class CatalogProduct extends WebComponent {
             data.subscription_plans = product.subscription_plans;
 
             data.currency = currency;
-        }
 
-        return loader.template('product/product', { ...data, ...language, ...config });
+            return loader.template('product/product', { ...data, ...language, ...config });
+        }
     }
 
     onChange(e) {
@@ -143,5 +143,4 @@ $(document).ready(function() {
         }
     });
 });
-
- */
+*/

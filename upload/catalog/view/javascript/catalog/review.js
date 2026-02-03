@@ -1,12 +1,24 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
-class XAccount extends WebComponent {
-    async connected() {
+// Config
+const config = await loader.config('catalog');
+
+// Language
+const language = await loader.language('catalog/review');
+
+class CatalogReview extends WebComponent {
+    async render() {
+
+    }
+
+    onSubmit() {
+
 
     }
 }
 
-customElements.define('x-account', XAccount);
+customElements.define('catalog-review', CatalogReview);
 
 
 // Forms

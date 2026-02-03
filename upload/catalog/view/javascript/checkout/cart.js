@@ -1,8 +1,17 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
+
+// Language
+const language = await loader.language('account/edit');
+
+// Library
+const session = await loader.library('session');
 
 class CheckoutCart extends WebComponent {
-    async connected() {
+    async render() {
 
+
+        return
     }
 }
 

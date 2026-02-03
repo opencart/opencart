@@ -27,59 +27,87 @@ class Template {
             raw: this.handleRaw.bind(this),
             endraw: this.handleEndraw.bind(this),
             comment: this.handleComment.bind(this),
-            endcomment: this.handleEndcomment.bind(this),
+            endcomment: this.handleEndcomment.bind(this)
         };
 
         this.filter = {
             // Core filters
-            escape: value => String(value ?? '').replace(/[&<>"']/g, m => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[m] || m)),
-            upcase: value => String(value).toUpperCase(),
-            downcase: value => String(value).toLowerCase(),
-            strip: value => String(value ?? '').trim(),
-            lstrip: value => String(value ?? '').replace(/^\s+/, ''),
-            rstrip: value => String(value ?? '').replace(/\s+$/, ''),
-            newline_to_br: value => String(value ?? '').replace(/\n/g, '<br>'),
-            prepend: (value, prefix) => String(prefix ?? '') + String(value ?? ''),
-            append: (value, suffix) => String(value ?? '') + String(suffix ?? ''),
-            size: value => {
-                if (Array.isArray(value)) return value.length;
-                if (typeof value === 'string') return value.length;
+            escape: (value) => {
+                return value.replace(/[&<>"']/g, m => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[m] || m));
+            },
+            upcase: (value) => {
+                return value.toUpperCase();
+            },
+            downcase: (value) => {
+                return value.toLowerCase();
+            },
+            strip: (value) => {
+                return value.trim();
+            },
+            lstrip: (value) => {
+                return value.replace(/^\s+/, '');
+            },
+            rstrip: (value) => {
+                return value.replace(/\s+$/, '');
+            },
+            nl2br: (value) => {
+                return value.replace(/\n/g, '<br/>');
+            },
+            prepend: (value, prefix) => {
+                return prefix + value;
+            },
+            append: (value, suffix) => {
+                return value + suffix;
+            },
+            size: (value) => {
+                if (typeof value === 'array') {
+                    return value.length;
+                }
+
+                if (typeof value === 'string') {
+                    return value.length;
+                }
+
                 return 0;
             },
-            join: (value, sep = ' ') => Array.isArray(value) ? value.join(String(sep)) : String(value ?? ''),
-
-            // Math filters
-            plus: (v, a) => Number(v || 0) + Number(a || 0),
-            minus: (v, a) => Number(v || 0) - Number(a || 0),
-            times: (v, a) => Number(v || 0) * Number(a || 0),
-            divided_by: (v, a) => {
-                const d = Number(a || 1);
-                return d === 0 ? 0 : Number(v || 0) / d;
+            join: (value, seperator = ' ') => {
+                return value.join(seperator);
             },
-            modulo: (v, a) => Number(v || 0) % Number(a || 1),
-            abs: v => Math.abs(Number(v) || 0),
-            ceil: v => Math.ceil(Number(v) || 0),
-            floor: v => Math.floor(Number(v) || 0),
-            round: (v, decimals = 0) => {
-                const n = Number(v);
-                return isNaN(n) ? 0 : Number(n.toFixed(Number(decimals)));
+            // Math filters
+            plus: (value, amount) => {
+                return value + amount;
+            },
+            minus: (value, amount) => {
+                return value - amount;
+            },
+            times: (value, amount) => {
+                return value * amount;
+            },
+            divided_by: (value, amount) => {
+                return value / amount;
+            },
+            modulo: (value, amount) => {
+                return value % amount;
+            },
+            abs: (value) => {
+                return Math.abs(value);
+            },
+            ceil: (value) => {
+                return Math.ceil(value);
+            },
+            floor: (value) => {
+                return Math.floor(value);
+            },
+            round: (value, decimal = 0) => {
+                return value.toFixed(decimal);
             },
             // Multi-argument capable filters
-            replace: (value, search, replaceWith = '', ...pairs) => {
-                let str = String(value ?? '');
-                str = str.replaceAll(search, replaceWith);
-                for (let i = 0; i < pairs.length; i += 2) {
-                    const s = pairs[i];
-                    const r = pairs[i + 1] ?? '';
-                    str = str.replaceAll(s, r);
-                }
-                return str;
+            replace: (value, search, replace = '') => {
+                return value.replaceAll(search, replace);
             },
             slice: (value, start, length) => {
-                const str = String(value ?? '');
-                const s = Number(start) || 0;
-                return length !== undefined ? str.slice(s, s + Number(length)) : str.slice(s);
-            },
+                return length !== undefined ? value.slice(start, start + length) : value.slice(start);
+            }
         };
     }
 
@@ -137,10 +165,11 @@ class Template {
 
     // ─── Main render ────────────────────────────────────────────────────────
     _render(template, data = {}) {
-        const ctx = {...data};
+        const ctx = { ...data };
         const tokens = this.tokenize(template);
-        let output = '';
+
         const stack = [];
+        let output = '';
         let i = 0;
 
         while (i < tokens.length) {
@@ -155,11 +184,14 @@ class Template {
             if (inComment) {
                 if (token.type === 'tag') {
                     const cmd = token.raw.split(/\s+/)[0].toLowerCase();
+
                     if (cmd === 'endcomment') {
                         this.handleEndcomment(token, stack, ctx, i);
                     }
                 }
+
                 i++;
+
                 continue;
             }
 
@@ -167,16 +199,26 @@ class Template {
             if (inRaw) {
                 if (token.type === 'tag') {
                     const cmd = token.raw.split(/\s+/)[0].toLowerCase();
+
                     if (cmd === 'endraw') {
                         this.handleEndraw(token, stack, ctx, i);
+
                         i++;
+
                         continue;
                     }
                 }
-                if (token.type === 'text') output += token.value;
-                else if (token.type === 'output') output += `{{${token.raw}}}`;
-                else if (token.type === 'tag') output += `{% ${token.raw} %}`;
+
+                if (token.type === 'text') {
+                    output += token.value;
+                } else if (token.type === 'output') {
+                    output += `{{${token.raw}}}`;
+                } else if (token.type === 'tag') {
+                    output += `{% ${token.raw} %}`;
+                }
+
                 i++;
+
                 continue;
             }
 
@@ -184,7 +226,7 @@ class Template {
             if (token.type === 'text') {
                 if (isCapturing) {
                     top.content += token.value;
-                } else if (!this.shouldSkipRendering(stack)) {
+                } else if (!this.isSkip(stack)) {
                     output += token.value;
                 }
 
@@ -194,8 +236,9 @@ class Template {
             }
 
             if (token.type === 'output') {
-                if (this.shouldSkipRendering(stack)) {
+                if (this.isSkip(stack)) {
                     i++;
+
                     continue;
                 }
 
@@ -241,28 +284,44 @@ class Template {
     tokenize(template) {
         const tokens = [];
         const regex = /\{\{([\s\S]*?)\}\}|\{%\s*([\s\S]*?)\s*%\}/g;
+
         let lastIndex = 0;
         let match;
 
         while ((match = regex.exec(template)) !== null) {
             if (match.index > lastIndex) {
-                tokens.push({type: 'text', value: template.slice(lastIndex, match.index)});
+                tokens.push({
+                    type: 'text',
+                    value: template.slice(lastIndex, match.index
+                )});
             }
+
             if (match[1] !== undefined) {
-                tokens.push({type: 'output', raw: match[1].trim()});
+                tokens.push({
+                    type: 'output',
+                    raw: match[1].trim()
+                });
             } else if (match[2] !== undefined) {
-                tokens.push({type: 'tag', raw: match[2].trim()});
+                tokens.push({
+                    type: 'tag',
+                    raw: match[2].trim()
+                });
             }
+
             lastIndex = regex.lastIndex;
         }
 
         if (lastIndex < template.length) {
-            tokens.push({type: 'text', value: template.slice(lastIndex)});
+            tokens.push({
+                type: 'text',
+                value: template.slice(lastIndex)
+            });
         }
+
         return tokens;
     }
 
-    shouldSkipRendering(stack) {
+    isSkip(stack) {
         for (let i = stack.length - 1; i >= 0; i--) {
             const frame = stack[i];
 
@@ -277,11 +336,11 @@ class Template {
         return false;
     }
 
-    evaluate(expr, ctx) {
-        if (!expr?.trim()) return undefined;
+    evaluate(expression, ctx) {
+        if (!expression?.trim()) return undefined;
 
         try {
-            const safe = expr.trim().replace(/([a-zA-Z_]\w*)\./g, 'data.$1.').replace(/([a-zA-Z_]\w*)\[/g, 'data.$1[');
+            const safe = expression.trim().replace(/([a-zA-Z_]\w*)\./g, 'data.$1.').replace(/([a-zA-Z_]\w*)\[/g, 'data.$1[');
 
             let func = new Function('data', `with(data) { return (${safe}); }`);
 
@@ -296,7 +355,9 @@ class Template {
      */
     applyFilters(value, filterStr) {
         if (!filterStr) return value;
+
         let result = value;
+
         const parts = filterStr.split('|').map(p => p.trim()).filter(Boolean);
 
         for (const part of parts) {
@@ -305,9 +366,11 @@ class Template {
             const argsStr = colonIndex === -1 ? '' : part.substring(colonIndex + 1).trim();
 
             const fn = this.filter[name];
+
             if (!fn) continue;
 
             const args = this.#parseFilterArgs(argsStr);
+
             result = fn(result, ...args);
         }
         return result;
@@ -322,6 +385,7 @@ class Template {
         if (!str) return [];
 
         const args = [];
+
         let current = '';
         let quote = null;
         let i = 0;
@@ -337,115 +401,154 @@ class Template {
                     i++;
                     continue;
                 }
+
                 current += c;
             } else {
                 if (c === '"' || c === "'") {
                     quote = c;
                 } else if (c === ',') {
-                    if (current.trim()) args.push(current.trim());
+                    if (current.trim()) {
+                        args.push(current.trim());
+                    }
 
                     current = '';
                 } else if (!/\s/.test(c)) {
                     current += c;
                 }
             }
+
             i++;
         }
 
-        if (current.trim()) args.push(current.trim());
+        if (current.trim()) {
+            args.push(current.trim());
+        }
 
         return args.map(a => {
             if ((a[0] === '"' && a.at(-1) === '"') || (a[0] === "'" && a.at(-1) === "'")) {
                 return a.slice(1, -1);
             }
+
             return a;
         });
     }
 
     // ─── Tag handlers ────────────────────────────────────────────────────────
     // Unified handler map — all handlers get the same 4 arguments
-    handleIf(token, stack, ctx, currentIndex) {
-        const cond = token.raw.slice(2).trim();
-        stack.push({type: 'if', entered: !!this.evaluate(cond, ctx)});
+    handleIf(token, stack, ctx, index) {
+        const condition = token.raw.slice(2).trim();
+
+        stack.push({
+            type: 'if',
+            entered: !!this.evaluate(condition, ctx)
+        });
     }
 
-    handleUnless(token, stack, ctx, currentIndex) {
-        const cond = token.raw.slice(6).trim();
-        stack.push({type: 'unless', entered: !this.evaluate(cond, ctx)});
+    handleUnless(token, stack, ctx, index) {
+        const condition = token.raw.slice(6).trim();
+
+        stack.push({
+            type: 'unless',
+            entered: !this.evaluate(condition, ctx)
+        });
     }
 
-    handleElsif(token, stack, ctx, currentIndex) {
+    handleElsif(token, stack, ctx, index) {
         const top = stack[stack.length - 1];
+
         if (!top || (top.type !== 'if' && top.type !== 'unless') || top.entered) return;
-        const cond = token.raw.slice(5).trim();
-        top.entered = !!this.evaluate(cond, ctx);
+
+        const condition = token.raw.slice(5).trim();
+
+        top.entered = !!this.evaluate(condition, ctx);
     }
 
-    handleElse(token, stack, ctx, currentIndex) {
+    handleElse(token, stack, ctx, index) {
         const top = stack[stack.length - 1];
+
         if (!top || (top.type !== 'if' && top.type !== 'unless') || top.entered) return;
+
         top.entered = true;
     }
 
-    handleEndif(token, stack, ctx, currentIndex) {
+    handleEndif(token, stack, ctx, index) {
         if (stack[stack.length - 1]?.type === 'if') stack.pop();
     }
 
-    handleEndunless(token, stack, ctx, currentIndex) {
+    handleEndunless(token, stack, ctx, index) {
         if (stack[stack.length - 1]?.type === 'unless') stack.pop();
     }
 
-    handleFor(token, stack, ctx, currentIndex) {
+    handleFor(token, stack, ctx, index) {
         const raw = token.raw.trim();
+
+        console.log('handleFor');
+        console.log(token);
 
         // 1. Split into main part + optional parameters
         const parts = raw.split(/\s+/);
+
+        console.log(parts);
+
         if (parts.length < 4 || parts[2].toLowerCase() !== 'in') return;
 
-        const itemName = parts[1];
-        let collectionExpr = parts.slice(3).join(' ');
+        const name = parts[1];
+
+        let expression = parts.slice(3).join(' ');
+
+        console.log(expression);
 
         // 2. Parse optional limit & offset parameters
         let limit = Infinity;
         let offset = 0;
 
         // Look for limit: N and offset: N anywhere after 'in'
-        const paramRegex = /(limit|offset):\s*(\d+)/gi;
+        const limitMatch = expression.match(/limit\s*:\s*(\d+)/i);
+        const offsetMatch = expression.match(/offset\s*:\s*(\d+)/i);
 
-        let match;
+        if (limitMatch) limit = Number(limitMatch[1]);
+        if (offsetMatch) offset = Number(offsetMatch[1]);
 
-        while ((match = paramRegex.exec(collectionExpr)) !== null) {
-            const key = match[1].toLowerCase();
-            const val = Number(match[2]);
-            if (!isNaN(val)) {
-                if (key === 'limit') limit = val;
-                if (key === 'offset') offset = val;
-            }
+        // Remove limit/offset clauses (very naive but usually enough)
+        expression = expression.replace(/limit\s*:\s*\d+/i, '').replace(/offset\s*:\s*\d+/i, '').trim();
 
-            // Remove the limit/offset clauses from the expression so evaluate works
-            collectionExpr = collectionExpr.replace(paramRegex, '').trim();
+        // Evaluate the collection
+        const collection = this.evaluate(expression, ctx) || [];
 
-            const fullArray = this.evaluate(collectionExpr, ctx) || [];
+        console.log(collection);
 
-            // Apply offset & limit (safe slicing)
-            const start = Math.max(0, offset);
-            const end = limit === Infinity ? undefined : start + limit;
-            const slicedArray = fullArray.slice(start, end);
+        // Force it to be an array — this is the key defensive line
+        let fullArray = Array.isArray(collection) ? collection : [];
 
-            stack.push({
-                type: 'for',
-                itemName,
-                array: slicedArray,           // ← now already sliced
-                originalArrayLength: fullArray.length,  // useful if you later want total count
-                index: -1,
-                bodyStart: currentIndex + 1,
-                parentCtx: {...ctx}
-            });
+        // Handle common edge cases explicitly (optional but clearer)
+        if (collection != null && !Array.isArray(collection)) {
+            console.warn(`[Template] for-loop expected array but got ${typeof collection}:`, expression, collection);
         }
+
+        // Apply offset & limit safely
+        const start = Math.max(0, offset);
+        const end = limit === Infinity ? undefined : start + limit;
+        const sliced = fullArray.slice(start, end);
+
+        stack.push({
+            type: 'for',
+            name,
+            array: sliced,
+            originalArrayLength: fullArray.length,
+            index: -1,
+            bodyStart: index + 1,
+            parentCtx: { ...ctx }
+        });
     }
 
-    handleEndfor(token, stack, ctx, currentIndex) {
+    handleEndfor(token, stack, ctx, index) {
         const top = stack[stack.length - 1];
+
+        console.log('handleEndfor');
+        console.log(token);
+
+
+
         if (top?.type !== 'for') return null;
 
         top.index++;
@@ -453,7 +556,8 @@ class Template {
         if (top.index < top.array.length) {
             Object.assign(ctx, top.parentCtx);
 
-            ctx[top.itemName] = top.array[top.index];
+            ctx[top.name] = top.array[top.index];  // ← top.name (not top.name)
+
             ctx.forloop = {
                 index: top.index + 1,
                 index0: top.index,
@@ -465,108 +569,135 @@ class Template {
                 // Optional: if you want original total length too
                 original_length: top.originalArrayLength || top.array.length
             };
+
             return top.bodyStart;
         }
 
         Object.assign(ctx, top.parentCtx);
+
         stack.pop();
-        delete ctx[top.itemName];
+
+        delete ctx[top.name];
         delete ctx.forloop;
+
         return null;
     }
 
-    handleContinue(token, stack, ctx, currentIndex) {
+    handleContinue(token, stack, ctx, index) {
         const top = stack[stack.length - 1];
+
         if (top?.type !== 'for') return;
 
         // Signal to skip the rest of this iteration
         top._skipCurrent = true;
     }
 
-    handleBreak(token, stack, ctx, currentIndex) {
+    handleBreak(token, stack, ctx, index) {
         const top = stack[stack.length - 1];
+
         if (top?.type !== 'for') return;
 
         // Signal to exit the entire loop
         top._breakLoop = true;
     }
 
-    handleAssign(token, stack, ctx, currentIndex) {
-        const raw = token.raw.trim();
-        const eqIndex = raw.indexOf('=');
-        if (eqIndex <= 0) return;
+    handleAssign(token, stack, ctx, index) {
+        const raw = token.raw.replace(/^assign\s+/, '').trim();
 
-        const varName = raw.slice(0, eqIndex).trim();
-        let valuePart = raw.slice(eqIndex + 1).trim();
+        const eq_index = raw.indexOf('=');
 
-        const pipeIndex = valuePart.indexOf('|');
-        let filters = '';
-        if (pipeIndex >= 0) {
-            filters = valuePart.slice(pipeIndex);
-            valuePart = valuePart.slice(0, pipeIndex).trim();
+        if (eq_index < 0) return;
+
+        let name = raw.substring(0, eq_index).trim();
+        let value = raw.substring(eq_index + 1).trim();
+
+        let filter = '';
+
+        // Check if contains | so the method can handle multiple filters.
+        const pipe_index = value.indexOf('|');
+
+        if (pipe_index >= 0) {
+            filter = value.slice(pipe_index).trim();
+            value = value.slice(0, pipe_index).trim();
         }
 
-        let value = this.evaluate(valuePart, ctx);
-        if (filters) value = this.applyFilters(value, filters);
+        let output = this.evaluate(value, ctx);
 
-        ctx[varName] = value;
+        if (filter) {
+            output = this.applyFilters(output, filter);
+        }
+
+        ctx[name] = output;
     }
 
-    handleCapture(token, stack, ctx, currentIndex) {
+    handleCapture(token, stack, ctx, index) {
         const words = token.raw.trim().split(/\s+/);
+
         if (words.length < 2) return;
-        stack.push({type: 'capture', varName: words[1], content: ''});
+
+        stack.push({
+            type: 'capture',
+            name: words[1],
+            content: ''
+        });
     }
 
-    handleEndcapture(token, stack, ctx, currentIndex) {
+    handleEndcapture(token, stack, ctx, index) {
         const top = stack[stack.length - 1];
+
         if (top?.type === 'capture') {
-            ctx[top.varName] = top.content;
+            ctx[top.name] = top.content;
+
             stack.pop();
         }
     }
 
-    handleRaw(token, stack, ctx, currentIndex) {
-        stack.push({type: 'raw'});
+    handleRaw(token, stack, ctx, index) {
+        stack.push({ type: 'raw' });
     }
 
-    handleEndraw(token, stack, ctx, currentIndex) {
+    handleEndraw(token, stack, ctx, index) {
         while (stack.length && stack[stack.length - 1].type !== 'raw') {
             stack.pop();
         }
+
         if (stack.length) stack.pop();
     }
 
-    handleCase(token, stack, ctx, currentIndex) {
-        const expr = token.raw.slice(4).trim();
+    handleCase(token, stack, ctx, index) {
+        const expression = token.raw.slice(4).trim();
+
         stack.push({
             type: 'case',
-            value: this.evaluate(expr, ctx),
+            value: this.evaluate(expression, ctx),
             matched: false
         });
     }
 
-    handleWhen(token, stack, ctx, currentIndex) {
+    handleWhen(token, stack, ctx, index) {
         const top = stack[stack.length - 1];
+
         if (!top || top.type !== 'case' || top.matched) return;
 
-        const valuesStr = token.raw.slice(4).trim();
-        const values = valuesStr.split(/\s+/).map(v => v.replace(/^["'](.+)["']$/, '$1'));
+        const code = token.raw.slice(4).trim();
+        const values = code.split(/\s+/).map(v => v.replace(/^["'](.+)["']$/, '$1'));
+
         top.matched = values.some(val => top.value == val);
     }
 
-    handleEndcase(token, stack, ctx, currentIndex) {
+    handleEndcase(token, stack, ctx, index) {
         if (stack[stack.length - 1]?.type === 'case') stack.pop();
     }
 
-    handleComment(token, stack, ctx, currentIndex) {
-        stack.push({type: 'comment'});
+    handleComment(token, stack, ctx, index) {
+        stack.push({ type: 'comment' });
     }
 
-    handleEndcomment(token, stack, ctx, currentIndex) {
+    handleEndcomment(token, stack, ctx, index) {
         while (stack.length && stack[stack.length - 1].type !== 'comment') {
             stack.pop();
         }
+
         if (stack.length) stack.pop();
     }
 
@@ -581,39 +712,4 @@ class Template {
 
 const template = Template.getInstance();
 
-export {template};
-
-const html = `
-{% for i in (1..10) %}
-{% if i == 3 %}{% continue %}{% endif %}
-{% if i == 7 %}{% break %}{% endif %}
-Number: {{ i }}
-{% endfor %}
-`;
-
-console.log(template.parse(html, {
-    items: ['A', 'B', 'C']
-}));
-
-
-const html2 = `
-  {% assign total = 0 %}
-  
-  {% for item in cart %}
-    {% assign total = total | plus: item.price %}
-    {{ item.name }} — {{ item.price }}
-  {% endfor %}
-  
-  Total: {{ total }}
-`;
-
-const data = {
-    cart: [
-        {name: "Coffee", price: 28},
-        {name: "Cake", price: 45}
-    ]
-};
-
-const result = template.parse(html2, data);
-
-console.log(result);
+export { template };

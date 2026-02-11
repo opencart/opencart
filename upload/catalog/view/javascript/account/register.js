@@ -25,10 +25,40 @@ class AccountRegister extends WebComponent {
             data.custom_fields = customer_group.custom_fields;
         }
 
+        console.log(data);
+
         return loader.template('account/register', { ...data, ...language, ...config });
     }
 
-    async change(e) {
+    onSubmit(e) {
+        e.preventDefault();
+
+        console.log(e);
+
+        loader.request({
+            url: '',
+            method: 'POST',
+            header: [],
+            data: [],
+            accept: [],
+            beforeSend: '',
+            afterSend: '',
+            onComplete: (json) => {
+                let alert = document.getElementById('alert');
+
+                if (json['error']) {
+                    alert.append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+            }
+        });
+
+    }
+
+    async onChange(e) {
         let customer_group_info = await this.storage.fetch('customer/customer_group-' + this.value);
 
         if (customer_group_info) {
@@ -49,33 +79,6 @@ class AccountRegister extends WebComponent {
         //        $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
         //     }
         //}
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        console.log(e);
-
-        /*
-        loader.request({
-            url: '',
-            method: 'POST',
-            data: [],
-            beforeSend: '',
-            afterSend: '',
-            onComplete: (json) => {
-                let alert = document.getElementById('alert');
-
-                if (json['error']) {
-                    alert.append('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['success']) {
-                    alert.append('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-            }
-        });
-        */
     }
 }
 

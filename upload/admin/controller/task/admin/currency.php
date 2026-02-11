@@ -20,19 +20,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		// Language
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguage((int)$args['language_id']);
 
 		foreach ($languages as $language) {
 			$task_data = [
-				'code'   => 'currency.' . $store_id . '.' . $language_id,
+				'code'   => 'currency.' . $language['language_id'],
 				'action' => 'task/catalog/currency.list',
-				'args'   => [
-					'store_id'    => $store_id,
-					'language_id' => $language_id
-				]
+				'args'   => ['language_id' => $language['language_id']]
 			];
 
 			$this->model_setting_task->addTask($task_data);
@@ -52,6 +48,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 */
 	public function list(array $args = []): array {
 		$this->load->language('task/admin/currency');
+
+		// Language
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+
+		if (!$language_info || !$language_info['status']) {
+			return ['error' => $this->language->get('error_language')];
+		}
 
 		$this->load->model('localisation/currency');
 

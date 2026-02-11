@@ -18,7 +18,7 @@ class CatalogProduct extends WebComponent {
     async render() {
         let data = {};
 
-        // customer groups
+        // Product Info
         let product = loader.storage('product/product-' + this.getAttribute('product_id'));
 
         if (product.length) {
@@ -80,60 +80,63 @@ class CatalogProduct extends WebComponent {
     }
 
     onChange(e) {
-        $('.subscription').addClass('d-none');
+        let subscription = this.querySelectorAll('.subscription');
 
-        $('#subscription-description-' + $(element).val()).removeClass('d-none');
+        subscription.classList.add('d-none');
+
+        $('#subscription-description-' + $(element).val()).classList.remove('d-none');
+
+
+
     }
 
-    onSubmit() {
+    onSubmit(e) {
+        e.preventDefault();
 
+        loader.request({
+            url: 'index.php?route=checkout/cart.add&language={{ language }}',
+            type: 'post',
+            data: new FormData(this.$form.getAttribute('action')),
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+                this.$button_cart.state = 'loading';
+            },
+            complete: function() {
+                this.$button_cart.state = 'reset';
+            },
+            success: function(json) {
+                console.log(json);
+
+                /*
+                $('#form-product').find('.is-invalid').removeClass('is-invalid');
+                $('#form-product').find('.invalid-feedback').removeClass('d-block');
+
+                if (json['error'])
+                    for (key in json['error']) {
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                    }
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
+                }
+                */
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
     }
 }
 
 customElements.define('catalog-product', CatalogProduct);
 /*
-$('#form-product').on('submit', function(e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: 'index.php?route=checkout/cart.add&language={{ language }}',
-        type: 'post',
-        data: $('#form-product').serialize(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        cache: false,
-        processData: false,
-        beforeSend: function() {
-            $('#button-cart').button('loading');
-        },
-        complete: function() {
-            $('#button-cart').button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('#form-product').find('.is-invalid').removeClass('is-invalid');
-            $('#form-product').find('.invalid-feedback').removeClass('d-block');
-
-            if (json['error']) {
-                for (key in json['error']) {
-                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-                }
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#cart').load('index.php?route=common/cart.info&language={{ language }}');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
 $(document).ready(function() {
     $('.magnific-popup').magnificPopup({
         type: 'image',

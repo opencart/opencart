@@ -17,7 +17,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function generateList(array $args = []): array {
+	public function list(array $args = []): array {
 		$this->load->language('task/admin/country');
 
 		$this->load->model('setting/task');
@@ -29,8 +29,8 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($languages as $language) {
 			$task_data = [
-				'code'   => 'country.list.' . $language['language_id'],
-				'action' => 'task/catalog/country.list',
+				'code'   => 'country._list.' . $language['language_id'],
+				'action' => 'task/catalog/country._list',
 				'args'   => ['language_id' => $language['language_id']]
 			];
 
@@ -49,7 +49,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function list(array $args = []): array {
+	public function _list(array $args = []): array {
 		$this->load->language('task/admin/country');
 
 		// Language

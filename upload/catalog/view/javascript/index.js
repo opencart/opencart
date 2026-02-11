@@ -16,6 +16,7 @@ config.cache.set('catalog', {
     config_name: 'OpenCart Store',
     config_logo: 'catalog/opencart-logo.png',
     config_url: 'http://localhost/opencart-master/upload/',
+    config_telephone: '01234 67890',
     config_language: 'en-gb',
     config_currency: 'EUR',
     config_customer_group_id: 1,
@@ -38,9 +39,8 @@ const storage = await loader.library('storage');
 
 storage.addPath('catalog/view/data/' + base.host + '/' + lang + '/');
 
-storage.cache.set('cms/article-1', {
-    articles: []
-});
+storage.cache.set('cms/article-1', { articles: [] });
+storage.cache.set('catalog/information', { information: [] });
 
 // Template
 const template = await loader.library('template');

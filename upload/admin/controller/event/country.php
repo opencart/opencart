@@ -42,7 +42,6 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		/*
 		// Admin
 		$task_data = [
 			'code'   => 'admin.country.list',
@@ -59,7 +58,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 
 	/**
@@ -96,7 +94,6 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		/*
 		// Admin
 		$task_data = [
 			'code'   => 'admin.country.list',
@@ -113,7 +110,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 
 	/**

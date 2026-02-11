@@ -17,8 +17,8 @@
  */
 class Request {
     constructor(defaults = {}) {
-        this.defaults = {
-            baseURL: '',
+        this.default = {
+            url: '',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -45,6 +45,7 @@ class Request {
 
         // Handle baseURL
         let url = config.url;
+
         if (config.baseURL && !url.startsWith('http')) {
             url = config.baseURL.replace(/\/$/, '') + '/' + url.replace(/^\//, '');
         }
@@ -74,6 +75,7 @@ class Request {
 
         // Timeout handling
         const controller = new AbortController();
+
         fetchInit.signal = controller.signal;
 
         const timeoutId = setTimeout(() => {
@@ -103,6 +105,7 @@ class Request {
 
             // Auto-parse JSON if expected
             const contentType = response.headers.get('content-type');
+
             if (contentType && contentType.includes('application/json')) {
                 return await response.json();
             }

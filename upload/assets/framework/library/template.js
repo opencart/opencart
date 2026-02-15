@@ -6,6 +6,7 @@ class Template {
         this.directory = '';
         this.path = new Map();
         this.cache = new Map();
+        this.skip = false;
 
         // Unified handler map — all handlers get the same 4 arguments
         this.tag = {
@@ -168,11 +169,8 @@ class Template {
 
     // ─── Main render ────────────────────────────────────────────────────────
     process(template, data = {}) {
-        let ctx = { ...data };
+        let ctx = data;
         let tokens = this.tokenize(template);
-
-        console.log(ctx);
-        console.log(tokens);
 
         let stack = [];
         let output = '';
@@ -182,35 +180,10 @@ class Template {
             let token = tokens[i];
             let top = stack[stack.length - 1];
 
-            // ─── Normal rendering ─────────────────────────────────────────────
-            if (token.type == 'text') {
-                const skip = stack.some(s => s.type === 'if' && !s.entered);
-
-
-                if (!this.isSkip()) {
-                    output += token.value;
-                }
-            }
-
-            // Handle Output
-            if (token.type == 'output') {
-                let match = token.value.match(/^(\w+)\s?\|?\s?(.*)?$/i);
-
-                if (!match) {
-                    console.log('[Template] Invalid output: ' + token.value);
-                }
-
-                let [, name, filter] = match;
-
-                let value = this.evaluate(name, ctx);
-
-                // Apply Filters
-                if (filter !== undefined) {
-                    value = this.applyFilters(value, filter.indexOf(' | ') !== -1 ? filter.split(' | ') : [filter]);
-                }
-
-                output += this.filter.escape(value ?? '');
-            }
+            //console.log('[process]');
+            //console.log('token');
+            //console.log(token);
+            //console.log(top ? top : 'top empty');
 
             // Handle Tag
             if (token.type in this.tag) {
@@ -219,15 +192,63 @@ class Template {
                 if (handler) {
                     let jump = handler(token, stack, ctx, i);
 
-                    //console.log('jump');
-                    //console.log(jump);
-
                     if (typeof jump === 'number' && jump >= 0) {
                         i = jump;
 
                         continue;
                     }
                 }
+            }
+
+            if (top && !top.active) {
+                console.log(token);
+                console.log('skip');
+                console.log(top);
+
+                i++;
+
+                continue;
+            }
+
+            // Handle Output
+            if (token.type == 'output' && !this.skip) {
+                let match = token.value.match(/^([^\s]+)\s?\|?\s?(.*)?$/i);
+
+                if (!match) {
+                    console.log('[Template] Invalid output: ' + token.value);
+                }
+
+                let [full, name, filter] = match;
+
+                let value = this.evaluate(name, ctx);
+
+
+                console.log('[handle] output: ' + name);
+                console.log(value);
+
+
+
+                // Apply Filters
+                if (filter !== undefined) {
+                    value = this.applyFilters(value, filter.indexOf(' | ') !== -1 ? filter.split(' | ') : [filter]);
+                }
+
+                output += this.filter.escape(value ?? '');
+
+                i++;
+
+                continue;
+            }
+
+            // ─── Normal rendering ─────────────────────────────────────────────
+            if (token.type == 'text' && !this.skip) {
+                console.log('[handle] text: ' + token.value);
+
+                output += token.value;
+
+                i++;
+
+                continue;
             }
 
             i++;
@@ -244,8 +265,6 @@ class Template {
         const regex = /\{\{\s([\s\S]*?)\s\}\}|\{%-?\s([\s\S]*?)\s-?%}/g;
 
         while ((match = regex.exec(template)) !== null) {
-            console.log(match);
-
             let [full, output, tag] = match;
 
             // Grabs all the Text before the matched index.
@@ -266,6 +285,9 @@ class Template {
 
             // Capture statement tag {% if my_var %}
             if (tag !== undefined) {
+                //console.log(index + ' ' + tag.match(/^\S+/)[0]);
+                //console.log(match);
+
                 token.push({
                     type: tag.match(/^\S+/)[0],
                     value: tag
@@ -333,26 +355,11 @@ class Template {
         return result;
     }
 
-    isSkip(stack) {
-        for (let i = stack.length - 1; i >= 0; i--) {
-            const frame = stack[i];
-
-            if (frame.type === 'if' || frame.type === 'unless') {
-                return !frame.entered;
-            }
-
-            if (frame.type === 'case') {
-                return !frame.matched;
-            }
-        }
-
-        return false;
-    }
-
     // ─── Tag handlers ────────────────────────────────────────────────────────
+    // Unified handler map — all handlers get the same 4 arguments
 
     /**
-     * Process assign statements
+     * Handle assign statement
      *
      * assign var = expression | filter1 | filter2
      */
@@ -373,14 +380,26 @@ class Template {
         }
 
         ctx[name] = value;
+
+        console.log('[handle] assign: ' + token.value);
     }
-
-    // Unified handler map — all handlers get the same 4 arguments
+    /**
+     * Handle assign statement
+     *
+     * assign var = expression | filter1 | filter2
+     */
     handleIf(token, stack, ctx, index) {
-        console.log('handleIf');
-        console.log(token);
+        // If skip we don't want to run evaluate method.
+        if (this.skip) {
+            stack.push({
+                type: 'if',
+                active: !this.skip
+            });
 
-        let match = token.value.match(/^if\s(.+)$/);
+            return;
+        }
+
+        let match = token.value.match(/^if\s(.+)$/i);
 
         if (!match) {
             console.log('[Template] Invalid if syntax: ' + token.value);
@@ -388,25 +407,34 @@ class Template {
             return;
         }
 
-        let evaluate =!!this.evaluate(match[1], ctx);
-
-        let test = !!this.evaluate(match[1], ctx);
-
-        console.log(match);
-        console.log(ctx);
-        console.log(evaluate);
+        let active = this.evaluate(match[1], ctx);
 
         stack.push({
             type: 'if',
-            entered: test
+            active: active
         });
+
+        // If the result is false skip
+        this.skip = !active;
+
+        console.log('[handle] If: ' + match[1] + ' ' + active);
     }
 
     handleEndif(token, stack, ctx, index) {
-        if (stack.length && stack[stack.length - 1].type === 'if') stack.pop();
+        let top = stack[stack.length - 1];
+
+        if (top && top.type === 'if') stack.pop();
+
+        console.log('[handle] Endif');
     }
 
     handleElsif(token, stack, ctx, index) {
+        if (this.skip) return;
+
+        let top = stack[stack.length - 1];
+
+        if (!top || (top.type !== 'if' && top.type !== 'unless')) return;
+
         let match = token.value.match(/^elsif\s(.+)$/);
 
         if (!match) {
@@ -415,34 +443,52 @@ class Template {
             return;
         }
 
-        let top = stack[stack.length - 1];
+        if (!top.active) {
+            top.active = this.evaluate(match[1], ctx);
+        }
 
-        if (!top || (top.type !== 'if' && top.type !== 'unless' && top.type !== 'when') || top.entered) return;
-
-        top.entered = !!this.evaluate(match[1], ctx);
+        console.log('[handle] Elsif: ' + match[1] + ' ' + top.active);
     }
 
     handleElse(token, stack, ctx, index) {
+        if (this.skip) return;
+
         let top = stack[stack.length - 1];
 
-        if (!top || (top.type !== 'if' && top.type !== 'unless') || top.entered) return;
+        if (!top || (top.type !== 'if' && top.type !== 'unless')) return;
 
-        top.entered = true;
+        top.active = top.active ? false : true;
+
+        console.log('[handle] Else: ' + top.active);
     }
 
     handleUnless(token, stack, ctx, index) {
-        let match = token.value.match(/^unless\s(.+)$/);
-
-        if (!match) {
-            console.warn('[Template] Invalid unless syntax: ' + token.value);
+        // If skip we don't want to run evaluate method.
+        if (this.skip) {
+            stack.push({
+                type: 'unless',
+                active: !this.skip
+            });
 
             return;
         }
 
+        let match = token.value.match(/^unless\s(.+)$/);
+
+        if (!match) {
+            console.log('[Template] Invalid unless syntax: ' + token.value);
+
+            return;
+        }
+
+        let active = this.evaluate(match[1], ctx);
+
         stack.push({
             type: 'unless',
-            entered: !this.evaluate(match[1], ctx)
+            active: !active
         });
+
+        console.log('[handle] Unless: ' + match[1] + ' ' + active);
     }
 
     handleEndunless(token, stack, ctx, index) {
@@ -450,9 +496,18 @@ class Template {
     }
 
     handleFor(token, stack, ctx, index) {
-        console.log(stack);
+        // If skip we don't want to run evaluate method.
+        if (this.skip) {
+            stack.push({
+                type: 'for',
+                items: [],
+                active: !this.skip
+            });
 
-        let match = token.value.match(/^for\s(\w*)\sin\s([^\s]+)\s?(.*)$/);
+            return;
+        }
+
+        let match = token.value.match(/^for\s(\w*)\sin\s([\w.]+)\s?(.*)$/);
 
         if (!match) {
             console.log('[Template] Invalid for syntax: ' + token.value);
@@ -462,67 +517,95 @@ class Template {
 
         let [, name, key, filter] = match;
 
-        // Filters
-        // Parse optional parameters limit & offset
-        let [, limit] = filter.match(/limit\s:\s([^\s]+)/i);
+        // Parse optional offset argument
+        let offset = 0;
 
-        if (limit == undefined) {
-            limit = Infinity;
+        match = filter.match(/offset:\s([^\s]+)/i);
+
+        if (match !== null) {
+            offset = match[1];
         }
 
-        let [, offset] = filter.match(/offset\s:\s([^\s]+)/i);
+        // Parse optional limit argument
+        let limit = Infinity;
 
-        if (offset == undefined) {
-            offset = 0;
+        match = filter.match(/limit:\s([^\s]+)/i);
+
+        if (match !== null) {
+            limit = match[1];
         }
 
-        let [, reversed] = filter.match(/(reversed)/i);
+        let reversed = false;
 
-        if (reversed == undefined) {
-            reversed = false;
+        match = filter.match(/(reversed)/i);
+
+        if (match !== null) {
+            reversed = true;
         }
 
-        // Remove limit/offset clauses (very naive but usually enough)
-        // Evaluate the collection
-        const items = this.evaluate(key, ctx) || [];
+        // Key from the data
+        let items = this.evaluate(key, ctx);
+
+        items = typeof items == 'object' ? items : [];
+
+        //ctx = Object.assign({}, ctx, { user: items[0] });
 
         // Now safe to slice
-        const start = Math.max(0, offset);
-        const end = limit === Infinity ? undefined : start + limit;
-        const sliced = collection.slice(start, end);
+        //const start = Math.max(0, offset);
+        //const end = limit === Infinity ? items.length : start + limit;
+        //console.log('handleFor');
+        //console.log('name ' + name);
+        //console.log('key ' + key);
+        //console.log(items);
+        //console.log(items.length);
 
         stack.push({
             type: 'for',
             name: name,
-            items: Array.isArray(items) ? items : [],
-            length: items.length,
+            //items: Array.isArray(items) ? items.slice(start, end) : [],
+            items: items,
             index: -1,
             start: index + 1,
-            parent: { ...ctx }
+            //parent: { ...ctx },
+            active: false
         });
+
+        console.log('[handle] For: ' + name + ' in ' + key);
     }
 
     handleEndfor(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        //console.log('handleEndfor');
-        //console.log(token);
-
         if (top?.type !== 'for') return;
 
         top.index++;
 
-        if (top.index < top.ctx.length) {
-            ctx[top.name] = top.ctx[top.index];  // ← top.name (not top.name)
+        console.log('[handle] Endfor: ' + top.index);
 
-            return top.start - 1;
-        } else {
-            stack.pop();
+        if (top.index < top.items.length) {
+            console.log('looping');
 
-            delete ctx[top.name];
+            top.active = true;
 
-            return;
+            //ctx =  Object.assign({}, ctx, { user: top.items[top.index] });
+
+            //console.log(ctx);
+
+            // Restore parent context (prevents leakage)
+            //Object.assign(ctx, top.parent);
+
+            ctx[top.name] = top.items[top.index];  // ← top.name (not top.name)
+
+            console.log(top.name);
+            console.log(ctx);
+
+            return top.start;
         }
+
+        // Loop finished → cleanup
+       // Object.assign(ctx, top.parent);
+
+        stack.pop();
     }
 
     handleContinue(token, stack, ctx, index) {
@@ -541,6 +624,47 @@ class Template {
 
         // Signal to exit the entire loop
         top._breakLoop = true;
+    }
+
+    handleCase(token, stack, ctx, index) {
+        let match = token.value.match(/^case\s(\w+)$/);
+
+        if (!match) {
+            console.log('[Template] Invalid case syntax: ' + token.value);
+
+            return;
+        }
+
+        stack.push({
+            type: 'case',
+            value: this.evaluate(match[1], ctx),
+            matched: false
+        });
+    }
+
+    handleWhen(token, stack, ctx, index) {
+        let top = stack[stack.length - 1];
+
+        if (!top || top.type !== 'case' || top.matched) return;
+
+        let match = token.value.match(/^when\s(.+)$/);
+
+        if (!match) {
+            console.log('[Template] Invalid when syntax: ' + token.value);
+
+            return;
+        }
+
+        // Apply Filters
+        let args = match[1].indexOf(', ') !== -1 ? filter.split(', ') : [filter];
+
+        let values = args.map(value => value.replace(/^["']?(.*)["']?$/, '$1'));
+
+        top.matched = values.some(value => top.value == value);
+    }
+
+    handleEndcase(token, stack, ctx, index) {
+        if (stack[stack.length - 1]?.type === 'case') stack.pop();
     }
 
     handleCapture(token, stack, ctx, index) {
@@ -579,47 +703,6 @@ class Template {
         if (stack.length) stack.pop();
     }
 
-    handleCase(token, stack, ctx, index) {
-        let match = token.value.match(/^case\s(\w+)$/);
-
-        if (!match) {
-            console.log('[Template] Invalid case syntax: ' + token.value);
-
-            return;
-        }
-
-        stack.push({
-            type: 'case',
-            value: this.evaluate(match[0], ctx),
-            matched: false
-        });
-    }
-
-    handleWhen(token, stack, ctx, index) {
-        let top = stack[stack.length - 1];
-
-        if (!top || top.type !== 'case' || top.matched) return;
-
-        let match = token.value.match(/^when\s(.+)$/);
-
-        if (!match) {
-            console.log('[Template] Invalid when syntax: ' + token.value);
-
-            return;
-        }
-
-        // Apply Filters
-        let args = match[1].indexOf(', ') !== -1 ? filter.split(', ') : [filter];
-
-        let values = args.map(value => value.replace(/^["']?(.*)["']?$/, '$1'));
-
-        top.matched = values.some(value => top.value == value);
-    }
-
-    handleEndcase(token, stack, ctx, index) {
-        if (stack[stack.length - 1]?.type === 'case') stack.pop();
-    }
-
     handleComment(token, stack, ctx, index) {
         stack.push({ type: 'comment' });
     }
@@ -646,62 +729,79 @@ export { template };
 // Assign
 let test = [];
 
+// 0
 test.push(`--- assign string ---
 {% assign my_var = "Hello" %}
 {{ my_var }}, world!
 `);
 
+// 1
 test.push(`--- assign number ---
 {% assign my_var = 121213 %}
 {{ my_var }}, world!
 `);
 
+// 2
 test.push(`--- assign decimal ---
 {% assign my_var = 1212.13 %}
 {{ my_var }}, world!
 `);
 
+// 3
 test.push(`--- assign replace ---
 {% assign my_var = "Hello world" | replace: 'e', 'A' %}
 {{ my_var }}, world!
 `);
 
+// 4
 test.push(`--- ucase ---
 {% assign my_var = "Hello world" %}
 {{ my_var | upcase }}
 `);
 
+// 5
 test.push(`--- replace --- 
 {% assign my_var = "Hello world" %}
 {{ my_var | replace: "e", "Q" }}, world!
 `);
 
+// 6
 test.push(`--- assign test ---
 {% assign year = 2025 %}
 Current year: {{ year }}
 `);
 
+// 7
 test.push(`{% assign my_var = "Hello, World" | downcase | upcase | replace: "O", "X" %}{{ my_var }}`);
 
+// 8
+test.push(`{% assign my_var = "Hello" %}{% if my_var == "Hello" %}WORKS!{% endif %}`);
 
-test.push(`
-{% assign my_var = "Hello, World" %}
-{% if my_var == "Awesome Shoes" %}
-  These shoes are awesome!
-{% endif %}
-`);
+// 9
+test.push(`{% assign my_var = "red" %}{% if my_var == "red" %}red!{% else %}blue{% endif %}`);
 
+// 10
+test.push(`{% assign my_var = "blue" %}{% if my_var == "red" %}red!{% else %}blue{% endif %}`);
+
+// 11
+test.push(`{% assign my_var = "green" %}{% if my_var == "red" %}red!{% elsif my_var == "green" %}green{% else %}blue{% endif %}`);
+
+// 12
+test.push(`{% assign my_var = "green" %}{% if my_var == "red" %}red!{% elsif my_var == "green" %}green{% if my_var != "blue" %}green{% endif %}{% else %}blue{% endif %}`);'' +
+
+// 13
 test.push(`
 {% for user in users %}
   Name: {{ user.name }}
   Favorite colors:
   {% for color in user.colors %}
-    • {{ color }} {{ forloop.first ? '(primary)' : '' }}
+    • {{ color }}
   {% endfor %}
   ---
 {% endfor %}
 `);
 
+// 14
 test.push(`
 {% for user in users limit: 1 offset: 2 %}
   Name: {{ user.name }}
@@ -713,7 +813,7 @@ test.push(`
 {% endfor %}
 `);
 
-let number = 9;
+let number = 14;
 
 await test.splice(number, 1).map(async value => {
     console.log('TEMPLATE');
@@ -722,9 +822,27 @@ await test.splice(number, 1).map(async value => {
     // Loop
     const data = {
         users: [
-            { name: "Alice", colors: ["red", "blue", "green"] },
-            { name: "Bob",   colors: ["yellow"] },
-            { name: "Carol", colors: ["purple", "pink"] }
+            {
+                name: "Alice",
+                colors: [
+                    "red",
+                    "blue",
+                    "green"
+                ]
+            },
+            {
+                name: "Bob",
+                colors: [
+                    "yellow"
+                ]
+            },
+            {
+                name: "Carol",
+                colors: [
+                    "purple",
+                    "pink"
+                ]
+            }
         ]
     };
 

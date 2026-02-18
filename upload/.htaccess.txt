@@ -21,7 +21,7 @@
 
 ## No-Referrer-Header
 <IfModule mod_headers.c>
-  Header set Referrer-Policy "no-referrer"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
 ## Suppress mime type detection in browsers for unknown types and prevent FLOC

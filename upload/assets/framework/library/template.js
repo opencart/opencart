@@ -895,11 +895,11 @@ test.push(`
 
 // 15
 test.push(`
-{% for user in users offset: 0 limit: 1 %}
+{% for user in users %}
   Name: {{ user.name }}
   Favorite colors:
   {% for color in user.colors %}
-    • {{ color }} {{ forloop.first ? '(primary)' : '' }}
+    • {{ color }} {{ loop.first ? '(primary)' : '' }}
   {% endfor %}
   ---
 {% endfor %}

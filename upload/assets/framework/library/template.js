@@ -7,88 +7,26 @@ class Template {
         this.path = new Map();
         this.cache = new Map();
 
-        this.openTag = {
-            if: (token, stack) => {
-                console.log(token);
+        // Opening Tags
+        this.open = [{
+            if: this.openIf,
+            unless: this.openUnless,
+            elsif: this.openElsif,
+            else:  this.openElse,
+            case: this.openCase,
+            when: this.openWhen,
+            for: this.openFor
+        }];
 
-                stack.push({
-                    type: 'if',
-                    index: token.length
-                });
-            },
-            elsif: (token, stack) => {
-                console.log(token);
-
-                let top = stack[stack.length - 1];
-
-                if (!top || top.type !== 'if') return;
-
-                token[top.index].end = token.length;
-
-                stack.pop();
-
-                stack.push({
-                    type: 'elsif',
-                    index: token.length
-                });
-            },
-            else: (token, stack) => {
-                let top = stack[stack.length - 1];
-
-                if (!top || (top.type !== 'if' && top.type !== 'elsif' && top.type !== 'unless' && top.type !== 'case')) return;
-
-                token[top.index].end = token.length;
-
-                stack.pop();
-
-                stack.push({
-                    type: 'else',
-                    index: token.length
-                });
-            },
-            unless: (token, stack) => {
-                stack.push({
-                    type: 'unless',
-                    index: token.length
-                });
-            },
-            case: (token, stack) => {
-                stack.push({
-                    type: 'case',
-                    index: token.length
-                });
-            },
-            for: (token, stack) => {
-                stack.push({
-                    type: 'for',
-                    index: token.length
-                });
-            }
-        };
-
-        this.endTag = {
-            endif: (token, stack) => {
-                let top = stack[stack.length - 1];
-
-                if (!top || (top.type !== 'if' && top.type !== 'elsif' && top.type !== 'else')) return;
-
-                token[top.index].end = token.length;
-
-                stack.pop();
-            },
-            endfor: (token, stack) => {
-                let top = stack[stack.length - 1];
-
-                if (!top || top.type !== 'for') return;
-
-                token[top.index].end = token.length;
-
-                stack.pop();
-            }
-        };
+        // Closing Tags
+        this.end = [{
+            endif: this.handleEndif,
+            endcase: this.handleEndcase,
+            endfor: this.handleEndfor
+        }];
 
         // Unified handler map — all handlers get the same 4 arguments
-        this.handleTag = {
+        this.handler = {
             assign: this.handleAssign,
             if: this.handleIf,
             endif: this.handleEndif,
@@ -269,8 +207,8 @@ class Template {
             }
 
             // Handle Tags
-            if (token.type in this.handleTag) {
-                let handler = this.handleTag[token.type].bind(this);
+            if (token.type in this.handler) {
+                let handler = this.handler[token.type].bind(this);
 
                 if (handler) {
                     let jump = handler(token, stack, ctx, i);
@@ -302,7 +240,7 @@ class Template {
 
                 // Apply Filters
                 if (filter !== undefined) {
-                    value = this.applyFilters(value, filter.indexOf(' | ') !== -1 ? filter.split(' | ') : [filter]);
+                    value = this.handleFilter(value, filter.indexOf(' | ') !== -1 ? filter.split(' | ') : [filter]);
                 }
 
                 output += this.filter.escape(value ?? '');
@@ -346,12 +284,14 @@ class Template {
             if (tag !== undefined) {
                 let command = tag.match(/^\S+/)[0].toLowerCase();
 
-                if (command in this.openTag) {
-                    this.openTag[command](token, stack);
+                // Close Tags
+                if (this.open.includes(command)) {
+                    this.open[command](token, stack);
                 }
 
-                if (command in this.endTag) {
-                    this.endTag[command](token, stack);
+                // Open Tags
+                if (this.end.includes(command)) {
+                    this.end[command](token, stack);
                 }
 
                 token.push({
@@ -406,7 +346,7 @@ class Template {
     /**
      * Apply chain of filters — now supports multiple comma-separated arguments per filter
      */
-    applyFilters(value, filters = {}) {
+    handleFilter(value, filters = {}) {
         if (!filters.length) return value;
 
         let result = value;
@@ -434,6 +374,134 @@ class Template {
         return result;
     }
 
+    // Tag Open handler
+    openIf(token, stack) {
+        stack.push({
+            type: 'if',
+            index: token.length
+        });
+    }
+
+    openUnless(token, stack) {
+        stack.push({
+            type: 'unless',
+            index: token.length
+        });
+    }
+
+    openElsif(token, stack) {
+        let top = stack[stack.length - 1];
+
+        // Check to see if there's no open tag
+        if (!top || (top.type !== 'if' && top.type !== 'elsif')) return;
+
+        token[top.index].end = token.length;
+
+        stack.pop();
+
+        stack.push({
+            type: 'elsif',
+            index: token.length
+        });
+    }
+
+    openElse(token, stack) {
+        let top = stack[stack.length - 1];
+
+        // Check to see if there's no open tag
+        if (!top || (top.type !== 'if' && top.type !== 'elsif' && top.type !== 'when')) return;
+
+        token[top.index].end = token.length;
+
+        stack.pop();
+
+        stack.push({
+            type: 'else',
+            index: token.length
+        });
+    }
+
+    openCase(token, stack) {
+        stack.push({
+            type: 'case',
+            index: token.length
+        });
+    }
+
+    openWhen(token, stack) {
+        let top = stack[stack.length - 1];
+
+        // Check to see if there's no open tag
+        if (!top || (top.type !== 'case' && top.type !== 'when')) return;
+
+        if (top.type == 'when') {
+            token[top.index].end = token.length;
+
+            stack.pop();
+        }
+
+        stack.push({
+            type: 'when',
+            index: token.length
+        });
+    }
+
+    openFor(token, stack) {
+        stack.push({
+            type: 'for',
+            index: token.length
+        });
+    }
+
+    // Tag End handler
+    endIf(token, stack) {
+        let top = stack[stack.length - 1];
+
+        // Check to see if there's no open tag
+        if (!top || (top.type !== 'if' && top.type !== 'elsif' && top.type !== 'else')) return;
+
+        token[top.index].end = token.length;
+
+        stack.pop();
+    }
+
+    endUnless(token, stack) {
+        let top = stack[stack.length - 1];
+
+        // Check to see if there's no open tag
+        if (!top || (top.type !== 'unless' && top.type !== 'else')) return;
+
+        token[top.index].end = token.length;
+
+        stack.pop();
+    }
+
+    endCase(token, stack) {
+        let top = stack[stack.length - 1];
+
+        // Check to see if there's no open tag
+        if (!top || top.type !== 'when' || top.type !== 'else') return;
+
+        token[top.index].end = token.length;
+
+        // Remove `when` or `else`.
+        stack.pop();
+
+        // Remove `case`
+        stack.pop();
+    }
+
+    endFor(token, stack) {
+        let top = stack[stack.length - 1];
+
+        // Check to see if there's no open tag
+        if (!top || (top.type !== 'case' && top.type !== 'when')) return;
+
+        token[top.index].end = token.length;
+
+        stack.pop();
+    }
+
     // ─── Tag handlers ────────────────────────────────────────────────────────
     // Unified handler map — all handlers get the same 4 arguments
 
@@ -457,7 +525,7 @@ class Template {
 
         // Apply Filters
         if (filter !== undefined) {
-            value = this.applyFilters(value, filter.indexOf(' | ') !== -1 ? filter.split(' | ') : [filter]);
+            value = this.handleFilter(value, filter.indexOf(' | ') !== -1 ? filter.split(' | ') : [filter]);
         }
 
         // Add key value
@@ -496,6 +564,15 @@ class Template {
 
         stack.pop();
     }
+
+
+
+
+
+
+
+
+
 
     handleUnless(token, stack, ctx, index) {
         let match = token.value.match(/^unless\s(.+)$/);
@@ -560,7 +637,7 @@ class Template {
     }
 
     handleFor(token, stack, ctx, index) {
-        let match = token.value.match(/^for\s(\w*)\sin\s([\w.]+)\s?(.*)$/);
+        let match = token.value.match(/^for\s(\w*)\sin\s([^\s]+)\s?(.*)$/);
 
         if (!match) {
             console.log('[Template] Invalid for syntax: ' + token.value);
@@ -570,54 +647,29 @@ class Template {
 
         let [, name, key, filter] = match;
 
-        let items = this.evaluate(key, ctx);
+        let items = [];
+
+        if (key.indexOf('..') == -1) {
+            items = this.evaluate(key, ctx);
+        } else {
+            items = this.handleRange(key, ctx);
+        }
 
         if (typeof items !== 'object') {
             items = [];
         }
 
         // Parse optional offset argument
-        let offset = 0;
-
-        if (match = filter.match(/offset:\s([0-9]+)|offset:\s([^\s]+)/i)) {
-            // If match is in 0-9
-            if (match[1]) {
-                offset = Number(match[1]);
-            }
-
-            // If match is not in 0-9 it should be a variable
-            if (match[2]) {
-                offset = Number(this.evaluate(match[2], ctx));
-            }
-        }
+        let offset = this.handleOffset(filter, items, ctx);
 
         // Parse optional limit argument
-        let limit = items.length;
+        let limit = this.handleLimit(filter, items, ctx);
 
-        if (match = filter.match(/limit:\s([0-9]+)|limit:\s([^\s]+)/i)) {
-            // If match is in 0-9
-            if (match[1]) {
-                limit = Number(match[1]);
-            }
-
-            // If match is not in 0-9 it should be a variable
-            if (match[2]) {
-                limit = Number(this.evaluate(match[2], ctx));
-            }
-        }
-
-        let reversed = false;
-
-        if (filter.match(/(reversed)/i) !== null) {
-            items = items.reverse();
-        }
-
-        console.log('[handle] For: ' + name + ' in ' + key + ' ' + items.length);
+        // Reversed
+        items = this.handleReversed(filter, items, ctx);
 
         // Now safe to slice
-        if (offset || limit) {
-            items = items.slice(offset, (offset + limit));
-        }
+        items = items.slice(offset, (offset + limit));
 
         stack.push({
             type: 'for',
@@ -625,10 +677,90 @@ class Template {
             items: items,
             index: -1,
             start: index + 1,
+            end: token.end,
             parent: { ...ctx }
         });
 
         return token.end;
+    }
+
+    handleRange(filter, ctx) {
+        let match = filter.match(/\(([^\.]+)\.\.([^\.]+)\)/i);
+
+        if (!match) {
+            return;
+        }
+
+        let start = match[1];
+        let end = match[2];
+
+        let is_var = /[a-z]/i;
+
+        if (is_var.test(start)) {
+            start = this.evaluate(start, ctx);
+        }
+
+        if (is_var.test(end)) {
+            end = this.evaluate(end, ctx);
+        }
+
+        let range = [];
+
+        for (let i = start; i <= end; i++) {
+            range.push(Number(i));
+        }
+
+        return range;
+    }
+
+    handleOffset(filter, items, ctx) {
+        let offset = 0;
+
+        let match = filter.match(/offset:\s([0-9]+)|offset:\s([^\s]+)/i);
+
+        if (!match) {
+            return offset;
+        }
+
+        // If match is in 0-9
+        if (match[1]) {
+            return Number(match[1]);
+        }
+
+        // If match variable
+        if (match[2]) {
+            return Number(this.evaluate(match[2], ctx));
+        }
+    }
+
+    handleLimit(filter, items, ctx) {
+        let limit = items.length;
+
+        let match = filter.match(/limit:\s([0-9]+)|limit:\s([^\s]+)/i);
+
+        if (!match) {
+            return limit;
+        }
+
+        // If match is in 0-9
+        if (match[1]) {
+            limit = Number(match[1]);
+        }
+
+        // If match is not in 0-9 it should be a variable
+        if (match[2]) {
+            return Number(this.evaluate(match[2], ctx));
+        }
+    }
+
+    handleReversed(filter, items, ctx) {
+        let reversed = false;
+
+        if (filter.match(/(reversed)/i) !== null) {
+            return items.reverse();
+        }
+
+        return items;
     }
 
     handleEndfor(token, stack, ctx, index) {
@@ -665,25 +797,35 @@ class Template {
     }
 
     handleContinue(token, stack, ctx, index) {
-        let top = stack[stack.length - 1];
+        let loop = stack.filter(value => value.type == 'for');
 
-        if (top == undefined || top.type !== 'for') return;
+        if (!loop.length) return;
 
-        top.index++;
+        loop.reverse();
 
-        return
+        let top = loop.pop();
+
+        return top.end;
     }
 
     handleBreak(token, stack, ctx, index) {
-        const top = stack[stack.length - 1];
+        let loop = stack.filter(value => value.type == 'for');
 
-        if (top == undefined || top.type !== 'for') return;
+        if (!loop.length) return;
 
-        // Signal to exit the entire loop
-        top._breakLoop = true;
+        loop.reverse();
+
+        let top = loop.pop();
+
+        // Loop finished → cleanup
+        stack.pop();
+
+        return top.end + 1;
     }
 
     handleCase(token, stack, ctx, index) {
+        console.log('handleCase');
+
         let match = token.value.match(/^case\s(\w+)$/);
 
         if (!match) {
@@ -695,8 +837,12 @@ class Template {
         stack.push({
             type: 'case',
             value: this.evaluate(match[1], ctx),
-            matched: false
+            active: false
         });
+    }
+
+    handleEndcase(token, stack, ctx, index) {
+        if (stack[stack.length - 1]?.type === 'case') stack.pop();
     }
 
     handleWhen(token, stack, ctx, index) {
@@ -710,19 +856,45 @@ class Template {
 
         let top = stack[stack.length - 1];
 
-        if (!top || top.type !== 'case' || top.matched) return;
+        if (!top || top.type !== 'case' || top.active) return;
 
         // Apply Filters
         let args = match[1].indexOf(', ') !== -1 ? filter.split(', ') : [filter];
 
         let values = args.map(value => value.replace(/^["']?(.*)["']?$/, '$1'));
 
+
+
+
         top.matched = values.some(value => top.value == value);
     }
 
-    handleEndcase(token, stack, ctx, index) {
-        if (stack[stack.length - 1]?.type === 'case') stack.pop();
+
+    handleElsif(token, stack, ctx, index) {
+        let match = token.value.match(/^elsif\s(.+)$/);
+
+        if (!match) {
+            console.log('[Template] Invalid elsif syntax: ' + token.value);
+
+            return;
+        }
+
+        let top = stack[stack.length - 1];
+
+        if (!top || (top.type !== 'if')) return;
+
+        if (top.active) return token.end;
+
+        // Check if the stack is active
+        let active = this.evaluate(match[1], ctx) ? index + 1 : token.end;
+
+        top.active = active;
+
+        if (!active) return token.end;
     }
+
+
+
 
     handleCapture(token, stack, ctx, index) {
         let match = token.value.match(/^capture\s(.+)$/);
@@ -854,19 +1026,13 @@ blue
 {% else %}
 yellow
 {% endif %}
-
-
 {% else %}
-
-
 black
-
 {% if my_var != "blue" %}
 blue
 {% else %}
 yellow
 {% endif %}
-
 {% endif %}`);
 
 // 13
@@ -895,17 +1061,32 @@ test.push(`
 
 // 15
 test.push(`
-{% for user in users %}
-  Name: {{ user.name }}
-  Favorite colors:
-  {% for color in user.colors %}
-    • {{ color }} {{ loop.first ? '(primary)' : '' }}
-  {% endfor %}
-  ---
+{% for i in (1..5) %}
+
+  {% if i == 4 %}
+      fail
+    {% continue %}
+  {% endif %}
+  
+  {{ i }}
+  
 {% endfor %}
 `);
 
-let number = 15;
+// 16
+test.push(`
+{% assign handle = "red" %}
+{% case handle %}
+  {% when "yellow" %}
+     yellow
+  {% when "pink", "red" %}
+     pink | red
+  {% else %}
+     none
+{% endcase %}
+`);
+
+let number = 16;
 
 await test.splice(number, 1).map(async value => {
     console.log('TEMPLATE');

@@ -7,8 +7,8 @@ class Template {
         this.path = new Map();
         this.cache = new Map();
 
-        // Opening Tags
-        this.open = [{
+        // Handle Opening Tags
+        this.open = {
             if: this.openIf,
             unless: this.openUnless,
             elsif: this.openElsif,
@@ -16,16 +16,16 @@ class Template {
             case: this.openCase,
             when: this.openWhen,
             for: this.openFor
-        }];
+        };
 
-        // Closing Tags
-        this.end = [{
-            endif: this.handleEndif,
-            endcase: this.handleEndcase,
-            endfor: this.handleEndfor
-        }];
+        // Handle Closing Tags
+        this.end = {
+            endif: this.endIf,
+            endcase: this.endCase,
+            endfor: this.endFor
+        };
 
-        // Unified handler map — all handlers get the same 4 arguments
+        // Handler Tags
         this.handler = {
             assign: this.handleAssign,
             if: this.handleIf,
@@ -285,13 +285,13 @@ class Template {
                 let command = tag.match(/^\S+/)[0].toLowerCase();
 
                 // Close Tags
-                if (this.open.includes(command)) {
-                    this.open[command](token, stack);
+                if (this.end[command] !== undefined) {
+                    this.end[command](token, stack);
                 }
 
                 // Open Tags
-                if (this.end.includes(command)) {
-                    this.end[command](token, stack);
+                if (this.open[command] !== undefined) {
+                    this.open[command](token, stack);
                 }
 
                 token.push({
@@ -351,6 +351,8 @@ class Template {
 
         let result = value;
 
+        console.log(result);
+
         for (let filter of filters) {
             let name = filter;
             let data = [];
@@ -362,11 +364,15 @@ class Template {
 
                 // Extract the arguments
                 data = filter.substr(index + 2).split(', ').map(value => value.trim().replace(/^["']?(.*?)["']?$/, '$1'));
+
+                console.log(data);
             }
 
             let func = this.filter[name];
 
             if (!func) continue;
+
+            console.log(result);
 
             result = func(result, ...data);
         }
@@ -477,17 +483,24 @@ class Template {
     }
 
     endCase(token, stack) {
+        // Remove `when` or `else`.
         let top = stack[stack.length - 1];
 
         // Check to see if there's no open tag
-        if (!top || top.type !== 'when' || top.type !== 'else') return;
+        if (!top || (top.type !== 'when' && top.type !== 'else')) return;
 
         token[top.index].end = token.length;
 
-        // Remove `when` or `else`.
         stack.pop();
 
         // Remove `case`
+        let remove = stack[stack.length - 1];
+
+        // Check to see if there's no open tag
+        if (!remove || remove.type !== 'endcase') return;
+
+        token[remove.index].end = token.length;
+
         stack.pop();
     }
 
@@ -495,7 +508,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         // Check to see if there's no open tag
-        if (!top || (top.type !== 'case' && top.type !== 'when')) return;
+        if (!top || top.type !== 'for') return;
 
         token[top.index].end = token.length;
 
@@ -511,14 +524,13 @@ class Template {
      * assign var = expression | filter1 | filter2
      */
     handleAssign(token, stack, ctx, index, output) {
-        let match = token.value.match(/^assign\s(\w+)\s=\s([^\s?\|]+)?\s?\|?\s?(.*)?$/i);
+        let match = token.value.match(/^assign\s(\w+)\s=\s([^\|]+)?\s?\|?\s?(.*)?$/i);
 
         if (!match) {
             console.log('[Template] Invalid assign syntax: ' + token.value);
 
             return;
         }
-
         let [, name, value, filter] = match;
 
         value = this.evaluate(value, ctx);
@@ -564,15 +576,6 @@ class Template {
 
         stack.pop();
     }
-
-
-
-
-
-
-
-
-
 
     handleUnless(token, stack, ctx, index) {
         let match = token.value.match(/^unless\s(.+)$/);
@@ -864,9 +867,7 @@ class Template {
         let values = args.map(value => value.replace(/^["']?(.*)["']?$/, '$1'));
 
 
-
-
-        top.matched = values.some(value => top.value == value);
+        top.active = values.some(value => top.value == value);
     }
 
 
@@ -960,7 +961,7 @@ let test = [];
 
 // 0
 test.push(`--- assign string ---
-{% assign my_var = "Hello" %}
+{% assign my_var = "Hello test" %}
 {{ my_var }}, world!
 `);
 
@@ -1082,11 +1083,12 @@ test.push(`
   {% when "pink", "red" %}
      pink | red
   {% else %}
+  {% else %}
      none
 {% endcase %}
 `);
 
-let number = 16;
+let number = 13;
 
 await test.splice(number, 1).map(async value => {
     console.log('TEMPLATE');

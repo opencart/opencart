@@ -335,6 +335,8 @@ class Template {
         try {
             const safe = expression;
 
+            console.log(`return (${safe});`);
+
             let func = new Function('data', `with(data) { return (${safe}); }`);
 
             return func(ctx);
@@ -697,7 +699,7 @@ class Template {
 
         stack.push({
             type: 'case',
-            value: this.evaluate(match[1], ctx),
+            value: match[1],
             active: false
         });
     }
@@ -716,7 +718,7 @@ class Template {
         if (!top || top.type !== 'case') return;
 
         // Split if more than one item to compare
-        if (!this.evaluate('[' + match[1] + '].includes(\'' + top.value + '\')', ctx)) return token.end;
+        if (!this.evaluate('[' + match[1] + '].includes(' + top.value + ')', ctx)) return token.end;
 
         top.active = true;
     }
@@ -933,7 +935,7 @@ test.push(`
 
 // 16
 test.push(`
-{% assign handle = "red" %}
+{% assign handle = 100 %}
 {% case handle %}
   {% when "yellow" %}
      yellow
@@ -954,7 +956,29 @@ test.push(`
 {% endcase %}
 `);
 
-let number = 16;
+// 17
+test.push(`
+{% assign my_var = 100 %}
+{% case my_var %}
+  {% when "yellow" %}
+     yellow
+  {% when "pink", "red" %}
+     pink | red
+{% when 100 %}
+     100
+{% when 100.00, 200 %}
+     100.00
+{% when true %}
+     true
+{% when false %}
+     true
+{% when 'red', "test 3456" %}
+     red
+{% else %}
+     none
+{% endcase %}
+`);
+let number = 17;
 
 await test.splice(number, 1).map(async value => {
     console.log('TEMPLATE');

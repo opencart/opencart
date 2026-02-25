@@ -1,4 +1,4 @@
-/* OpenCart Twig replacement. Based on Django template syntax. */
+/* OpenCart Twig replacement. Based on Django, Nunjucks template syntax. */
 class Template {
     static instance = null;
 
@@ -6,6 +6,71 @@ class Template {
         this.directory = '';
         this.path = new Map();
         this.cache = new Map();
+
+        this.tag_start = '{%';
+        this.tag_end = '%}';
+        this.output_start = '{{';
+        this.output_end = '}}';
+        this.comment_start = '{#';
+        this.comment_end = '#}';
+
+        this.openclose = {
+            if: [
+                'elsif',
+                'else',
+                'endif',
+            ],
+            elsif: [
+                'elsif',
+                'else',
+                'endif',
+            ],
+            else: [
+                'endif',
+                'endcase'
+            ],
+            when: [
+                'when',
+                'else',
+                'endcase'
+            ],
+            for: [
+                'endfor'
+            ],
+            capture: [
+                'endcapture'
+            ],
+            raw: [
+                'endraw'
+            ],
+            comment: [
+                'endcomment'
+            ]
+        };
+
+        // Unified handler map — all handlers get the same 4 arguments
+        this.tag = {
+            assign: this.handleAssign.bind(this),
+            if: this.handleIf.bind(this),
+            endif: this.handleEndif.bind(this),
+            elsif: this.handleElsif.bind(this),
+            else: this.handleElse.bind(this),
+            unless: this.handleUnless.bind(this),
+            endunless: this.handleEndunless.bind(this),
+            for: this.handleFor.bind(this),
+            endfor: this.handleEndfor.bind(this),
+            continue: this.handleContinue.bind(this),
+            break: this.handleBreak.bind(this),
+            case: this.handleCase.bind(this),
+            when: this.handleWhen.bind(this),
+            endcase: this.handleEndcase.bind(this),
+            capture: this.handleCapture.bind(this),
+            endcapture: this.handleEndcapture.bind(this),
+            raw: this.handleRaw.bind(this),
+            endraw: this.handleEndraw.bind(this),
+            comment: this.handleComment.bind(this),
+            endcomment: this.handleEndcomment.bind(this)
+        };
 
         this.filter = {
             // Core filters
@@ -17,6 +82,9 @@ class Template {
                     '"': '&quot;',
                     "'": '&#39;'
                 }[m] || m));
+            },
+            default: (value, test) => {
+                return test;
             },
             upcase: (value) => {
                 return value.toUpperCase();
@@ -147,26 +215,26 @@ class Template {
         let ctx = data;
         let tokens = this.tokenize(template);
 
-        console.log(tokens);
-
         let i = 0;
         let stack = [];
         let output = '';
 
         while (i < tokens.length) {
             let token = tokens[i];
-            let top = stack[stack - 1];
+            let top = stack[stack.length - 1];
 
-            // Handle Tags
-            let handle = this['handle' + token.type[0].toUpperCase() + token.type.slice(1)];
+            let test = '';
 
-            if (handle !== undefined) {
-                let jump = handle.bind(this)(token, stack, ctx, i);
+            if (top && top.type == 'raw' && token.type !== 'endraw') {
+                console.log('token.value ' + token.value);
 
-                if (typeof jump === 'number' && jump >= 0) {
-                    i = jump;
-
-                    continue;
+                // output literally
+                if (token.type === 'text') {
+                    test += token.value;
+                } else if (token.type === 'output') {
+                    test += '{{ ' + token.value + ' }}';
+                } else if (token.type === 'tag') {
+                    test += '{% ' + token.value + ' %}';
                 }
 
                 i++;
@@ -174,22 +242,12 @@ class Template {
                 continue;
             }
 
-            if (top && !top.active) {
-                console.log('skip ' + token.type + ' ' + token.value);
-
-                i++;
-
-                continue;
-            }
-
-            // Handle Text
             if (token.type == 'text') {
-                output += token.value;
+                test += token.value;
             }
 
-            // Handle Output
             if (token.type == 'output') {
-                let match = token.value.match(/^([^\|]+)\s?\|?\s?(.*)?$/i);
+                let match = token.value.match(/^([^\|]*)\s?\|?\s?(.*)?$/i);
 
                 if (!match) {
                     console.log('[Template] Invalid output: ' + token.value);
@@ -204,7 +262,29 @@ class Template {
                     value = this.applyFilter(value, filter.indexOf(' | ') !== -1 ? filter.split(' | ') : [filter]);
                 }
 
-                output += this.filter.escape(value ?? '');
+                test += this.filter.escape(value ?? '');
+            }
+
+            if (token.type == 'tag') {
+                // Handle Tags
+                let handle = this.tag[token.tag];
+
+                if (handle !== undefined) {
+                    // Unified handler map — all handlers get the same 5 arguments
+                    let jump = handle(token, stack, ctx, i);
+
+                    if (typeof jump === 'number' && jump >= 0) {
+                        i = jump;
+
+                        continue;
+                    }
+                }
+            }
+
+            if (top?.type == 'capture') {
+                top.value += test;
+            } else {
+                output += test;
             }
 
             i++;
@@ -217,31 +297,6 @@ class Template {
         let token = [];
         let index = 0;
         let match;
-
-        let openclose = {
-            if: [
-                'elsif',
-                'else',
-                'endif',
-            ],
-            elsif: [
-                'elsif',
-                'else',
-                'endif',
-            ],
-            else: [
-                'endif',
-                'endcase'
-            ],
-            when: [
-                'when',
-                'else',
-                'endcase'
-            ],
-            for: [
-                'endfor'
-            ]
-        };
 
         let stack = [];
 
@@ -262,7 +317,8 @@ class Template {
             if (output !== undefined) {
                 token.push({
                     type: 'output',
-                    value: output
+                    value: output,
+
                 });
             }
 
@@ -273,14 +329,14 @@ class Template {
                 // Handle Close Tags
                 let top = stack[stack.length - 1];
 
-                if (top && openclose[top.type].includes(command)) {
+                if (top && this.openclose[top.type].includes(command)) {
                     token[top.index].end = token.length;
 
                     stack.pop();
                 }
 
                 // Handle Open Tags
-                if (command in openclose) {
+                if (command in this.openclose) {
                     // Remember this opening tag's token index
                     stack.push({
                         type: command,
@@ -289,9 +345,9 @@ class Template {
                 }
 
                 token.push({
-                    type: command,
-                    value: tag,
-                    index: token.length
+                    type: 'tag',
+                    tag: command,
+                    value: tag
                 });
             }
 
@@ -313,20 +369,6 @@ class Template {
         }
 
         return token;
-    }
-
-    /**
-     * Quick check if current position is inside a raw block
-     */
-    isRaw(stack) {
-        return stack.some(frame => frame.type === 'raw');
-    }
-
-    /**
-     * Quick check if current position is inside a comment block
-     */
-    isComment(stack) {
-        return stack.some(frame => frame.type === 'comment');
     }
 
     evaluate(expression, ctx) {
@@ -353,8 +395,6 @@ class Template {
 
         let result = value;
 
-        console.log(result);
-
         for (let filter of filters) {
             let name = filter;
             let data = [];
@@ -365,7 +405,11 @@ class Template {
                 name = filter.substr(0, index);
 
                 // Extract the arguments
-                data = filter.substr(index + 2).split(', ').map(value => value.trim().replace(/^["']?(.*?)["']?$/, '$1'));
+                //data = filter.substr(index + 2).split(', ').map(value => value.trim().replace(/^["']?(.*?)["']?$/, '$1'));
+
+                //this.evaluate('(' + filter.substr(index + 2) + , ctx);
+
+                data = filter.substr(index + 2).split(', ').map(value => this.evaluate);
 
                 console.log(data);
             }
@@ -374,16 +418,36 @@ class Template {
 
             if (!func) continue;
 
-            console.log(result);
-
             result = func(result, ...data);
         }
 
         return result;
     }
 
-    // ─── Tag handlers ────────────────────────────────────────────────────────
-    // Unified handler map — all handlers get the same 4 arguments
+    getArg(value, ctx) {
+        // Match String
+        let string = value.match(/^["'](.*)["']$/i);
+
+        if (string) return string[1];
+
+        // Match Digit
+        let number = value.match(/^(-?\d+)$/i);
+
+        if (number) return Number(number[1]);
+
+        // Match Float
+        let float = value.match(/^(-?\d+.\d+)$/i);
+
+        if (float) return parseFloat(float[1]);
+
+        // Match Boolean
+        let boolean = value.match(/^(true|false)$/i);
+
+        if (boolean) return boolean[1] == 'true' ? true : false;
+
+        // If match variable
+        return this.evaluate(value, ctx);
+    }
 
     /**
      * Handle assign statement
@@ -413,11 +477,11 @@ class Template {
     }
 
     /**
-     * Handle assign statement
+     * Handle If statement
      *
-     * assign var = expression | filter1 | filter2
+     * If var = expression | filter1 | filter2
      */
-    handleIf(token, stack, ctx, index) {
+    handleIf(token, stack, ctx, index, output) {
         let match = token.value.match(/^if\s(.+)$/i);
 
         if (!match) {
@@ -437,15 +501,16 @@ class Template {
         if (!active) return token.end;
     }
 
-    handleEndif(token, stack, ctx, index) {
-        let top = stack[stack.length - 1];
-
-        if (!top || top.type !== 'if') return;
-
-        stack.pop();
+    /**
+     * Handle If statement
+     *
+     * End If var = expression | filter1 | filter2
+     */
+    handleEndif(token, stack, ctx, index, output) {
+        if (stack.length && stack[stack.length - 1].type == 'if') stack.pop();
     }
 
-    handleUnless(token, stack, ctx, index) {
+    handleUnless(token, stack, ctx, index, output) {
         let match = token.value.match(/^unless\s(.+)$/);
 
         if (!match) {
@@ -465,15 +530,11 @@ class Template {
         if (!active) return token.end;
     }
 
-    handleEndunless(token, stack, ctx, index) {
-        let top = stack[stack.length - 1];
-
-        if (!top || top.type !== 'unless') return;
-
-        stack.pop();
+    handleEndunless(token, stack, ctx, index, output) {
+        if (stack.length || stack[stack.length - 1].type == 'unless') stack.pop();
     }
 
-    handleElsif(token, stack, ctx, index) {
+    handleElsif(token, stack, ctx, index, output) {
         let match = token.value.match(/^elsif\s(.+)$/);
 
         if (!match) {
@@ -492,7 +553,7 @@ class Template {
         top.active = this.evaluate(match[1], ctx);
     }
 
-    handleElse(token, stack, ctx, index) {
+    handleElse(token, stack, ctx, index, output) {
         let top = stack[stack.length - 1];
 
         if (!top || (top.type !== 'if' && top.type !== 'unless' && top.type !== 'case')) return;
@@ -503,7 +564,7 @@ class Template {
         top.active = true;
     }
 
-    handleFor(token, stack, ctx, index) {
+    handleFor(token, stack, ctx, index, output) {
         let match = token.value.match(/^for\s(\w*)\sin\s([^\s]+)\s?(.*)$/);
 
         if (!match) {
@@ -551,7 +612,7 @@ class Template {
         return token.end;
     }
 
-    handleEndfor(token, stack, ctx, index) {
+    handleEndfor(token, stack, ctx, index, output) {
         // If skip we don't want to run evaluate method.
         let top = stack[stack.length - 1];
 
@@ -578,13 +639,14 @@ class Template {
             return top.start;
         }
 
-        delete ctx.loop;
-
         // Loop finished → cleanup
         stack.pop();
+
+        delete ctx[top.name];
+        delete ctx.loop;
     }
 
-    handleContinue(token, stack, ctx, index) {
+    handleContinue(token, stack, ctx, index, output) {
         for (let i = stack.length -1; i >= 0; i--) {
             if (stack[i].type == 'for') {
                 return stack[i].end;
@@ -595,12 +657,15 @@ class Template {
         }
     }
 
-    handleBreak(token, stack, ctx, index) {
-        let next = 0;
+    // fix!!@!
+    handleBreak(token, stack, ctx, index, output) {
+        let top = {};
 
         for (let i = stack.length -1; i >= 0; i--) {
-            if (stack[i].type == 'for') {
-                next = stack[i].end + 1;
+            let top = stack[i];
+
+            if (top.type == 'for') {
+                top = stack[i];
 
                 break;
             }
@@ -611,6 +676,8 @@ class Template {
 
         // Loop finished → cleanup
         stack.pop();
+
+        stack[i].end + 1;
 
         if (next) return next;
     }
@@ -688,7 +755,7 @@ class Template {
         return items;
     }
 
-    handleCase(token, stack, ctx, index) {
+    handleCase(token, stack, ctx, index, output) {
         let match = token.value.match(/^case\s(\w+)$/);
 
         if (!match) {
@@ -704,7 +771,7 @@ class Template {
         });
     }
 
-    handleWhen(token, stack, ctx, index) {
+    handleWhen(token, stack, ctx, index, output) {
         let match = token.value.match(/^when\s(.+)$/);
 
         if (!match) {
@@ -723,40 +790,15 @@ class Template {
         top.active = true;
     }
 
-    handleEndcase(token, stack, ctx, index) {
+    handleEndcase(token, stack, ctx, index, output) {
         let top = stack[stack.length - 1];
 
-        if (!top || (top.type !== 'case' && top.type !== 'else')) return;
+        if (!top || (top.type !== 'case' && top.type !== 'if')) return;
 
         stack.pop();
     }
 
-    getArg(value, ctx) {
-        // Match String
-        let string = value.match(/^["'](.*)["']$/i);
-
-        if (string) return string[1];
-
-        // Match Digit
-        let number = value.match(/^(-?\d+)$/i);
-
-        if (number) return Number(number[1]);
-
-        // Match Float
-        let float = value.match(/^(-?\d+.\d+)$/i);
-
-        if (float) return parseFloat(float[1]);
-
-        // Match Boolean
-        let boolean = value.match(/^(true|false)$/i);
-
-        if (boolean) return boolean[1] == 'true' ? true : false;
-
-        // If match variable
-        return this.evaluate(value, ctx);
-    }
-
-    handleCapture(token, stack, ctx, index) {
+    handleCapture(token, stack, ctx, index, output) {
         let match = token.value.match(/^capture\s(.+)$/);
 
         if (!match) {
@@ -768,38 +810,50 @@ class Template {
         stack.push({
             type: 'capture',
             name: match[1],
-            content: ''
+            value: ''
         });
     }
 
-    handleEndcapture(token, stack, ctx, index) {
+    handleEndcapture(token, stack, ctx, index, output) {
         let top = stack[stack.length - 1];
 
-        if (top?.type === 'capture') {
-            ctx[top.name] = top.content;
+        ctx[top.name] = top.value;
 
-            stack.pop();
-        }
+        stack.pop();
     }
 
-    handleRaw(token, stack, ctx, index) {
-        stack.push({ type: 'raw' });
+    handleRaw(token, stack, ctx, index, output) {
+        console.log('handleRaw');
+
+        stack.push({
+            type: 'raw',
+            start: index + 1
+        });
     }
 
-    handleEndraw(token, stack, ctx, index) {
-        while (stack.length && stack[stack.length - 1].type !== 'raw') stack.pop();
+    handleEndraw(token, stack, ctx, index, output) {
+        let top = stack[stack.length - 1];
 
-        if (stack.length) stack.pop();
+        if (!top || top.type !== 'raw') return;
+
+        top.start
+
+        stack.pop();
     }
 
-    handleComment(token, stack, ctx, index) {
-        stack.push({ type: 'comment' });
+    handleComment(token, stack, ctx, index, output) {
+        stack.push({
+            type: 'comment',
+            active: false
+        });
     }
 
-    handleEndcomment(token, stack, ctx, index) {
-        while (stack.length && stack[stack.length - 1].type !== 'comment') stack.pop();
+    handleEndcomment(token, stack, ctx, index, output) {
+        let top = stack[stack.length - 1];
 
-        if (stack.length) stack.pop();
+        if (!top || top.type !== 'comment') return;
+
+        stack.pop();
     }
 
     static getInstance() {
@@ -922,7 +976,6 @@ test.push(`
 // 15
 test.push(`
 {% for i in (1..5) %}
-
   {% if i == 4 %}
       skip
     {% continue %}
@@ -978,7 +1031,44 @@ test.push(`
      none
 {% endcase %}
 `);
-let number = 17;
+
+// 18
+test.push(`
+{% raw %}
+{% assign my_var = 100 %}
+{% case my_var %}
+  {% when "yellow" %}
+     yellow
+  {% when "pink", "red" %}
+     pink | red
+{% when 100 %}
+     100
+{% when 100.00, 200 %}
+     100.00
+{% when true %}
+     true
+{% when false %}
+     true
+{% when 'red', "test 3456" %}
+     red
+{% else %}
+     none
+{% endcase %}
+{% endraw %}
+
+example code
+`);
+
+// 19
+test.push(`
+{% assign name = "test" %}
+{% capture greeting %}
+  Hello {{ name }}!
+{% endcapture %}
+{{ greeting }}
+`);
+
+let number = 19;
 
 await test.splice(number, 1).map(async value => {
     console.log('TEMPLATE');

@@ -110,6 +110,26 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Token
+	 *
+	 * Edit customer token record in the database.
+	 *
+	 * @param string $email
+	 * @param string $token
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/customer');
+	 *
+	 * $this->model_account_customer->editToken($email, $token);
+	 */
+	public function editToken(string $email, string $token): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
+	}
+
+	/**
 	 * Edit Newsletter
 	 *
 	 * Edit customer newsletter record in the database.

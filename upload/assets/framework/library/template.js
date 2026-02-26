@@ -7,18 +7,20 @@ class Template {
         this.path = new Map();
         this.cache = new Map();
 
-        this.tag = [
-            '{%',
-            '%}'
-        ];
-        this.output = [
-            '{{',
-            '}}'
-        ];
-        this.comment = [
-            '{#',
-            '#}'
-        ];
+        this.tag = {
+            tag: {
+                open: '{%',
+                close: '%}'
+            },
+            output: {
+                open: '{{',
+                close: '}}'
+            },
+            comment: {
+                open: '{#',
+                close: '#}'
+            }
+        };
 
         this.openclose = {
             if: [
@@ -78,8 +80,33 @@ class Template {
             endcomment: this.handleEndcomment.bind(this)
         };
 
+        this.global = {
+            range: (start, stop, step) => {
+
+            },
+            cycler: (item) => {
+
+            },
+            joiner: (separator) => {
+
+            }
+        }
+
         this.filter = {
-            // Core filters
+            abs: (value) => {
+                return Math.abs(value);
+            },
+            batch: (value, offset, limit, step) => {
+
+            },
+            capitalize: (value) => {
+                let str = normalize(str, '');
+                const ret = str.toLowerCase();
+                return r.copySafeness(str, ret.charAt(0).toUpperCase() + ret.slice(1));
+            },
+            default: (value, test, bool) => {
+                return value != undefined ? value : test;
+            },
             escape: (value) => {
                 return String(value ?? '').replace(/[&<>"']/g, m => ({
                     '&': '&amp;',
@@ -89,26 +116,104 @@ class Template {
                     "'": '&#39;'
                 }[m] || m));
             },
-            default: (value, test) => {
-                return value != undefined ? value : test;
+            first: () => {
+
             },
-            upcase: (value) => {
-                return value.toUpperCase();
+            float: () => {
+
             },
-            downcase: (value) => {
+            floor: (value) => {
+                return Math.floor(value);
+            },
+            groupby: () => {
+
+            },
+            indent: () => {
+
+            },
+            int: (value) => {
+                return Number(value);
+            },
+            join: (value, seperator = ' ') => {
+                return value.join(seperator);
+            },
+            last: () => {
+
+            },
+            length: (value) => {
+                return typeof value === 'array' || typeof value === 'string' ? value.length : 0;
+            },
+
+            lower: (value) => {
                 return value.toLowerCase();
+            },
+            list: () => {
+
+            },
+            nl2br: (value) => {
+
+            },
+            random: (value) => {
+
+            },
+            reject: (value) => {
+
+            },
+            rejectattr: (value) => {
+
+            },
+            replace: (value, search, replace = '') => {
+                return value.replaceAll(search, replace);
+            },
+            reverse: (value) => {
+
+            },
+            round: (value, decimal = 0) => {
+                return Number(value).toFixed(decimal);
+            },
+            safe: (value) => {
+
+            },
+            select: (value) => {
+
+            },
+            slice: (value, start, length) => {
+                return length !== undefined ? value.slice(start, start + length) : value.slice(start);
+            },
+            sort: (value, max) => {
+
+            },
+            striptags: (value, max) => {
+
+            },
+            sum: (value, amount) => {
+                return value + amount;
+            },
+            title: (value) => {
+
             },
             trim: (value) => {
                 return value.trim();
+                //return value.replace(/^\s+/, '');
+                //return value.replace(/\s+$/, '');
             },
             ltrim: (value) => {
-                return value.replace(/^\s+/, '');
+                return value.trimStart();
             },
             rtrim: (value) => {
-                return value.replace(/\s+$/, '');
+                return value.trimEnd();
             },
-            truncate: (value, max) => {
+            truncate: (value, size) => {
 
+            },
+            upper: (value) => {
+                return value.toUpperCase();
+            },
+            urlencode: (value) => {
+                return value.toUpperCase();
+            },
+            wordcount: (value) => {
+                return value.toUpperCase();
             },
             prepend: (value, prefix) => {
                 return prefix + value;
@@ -116,18 +221,11 @@ class Template {
             append: (value, suffix) => {
                 return value + suffix;
             },
-            size: (value) => {
-                return typeof value === 'array' || typeof value === 'string' ? value.length : 0;
+            ceil: (value) => {
+                return Math.ceil(value);
             },
-            join: (value, seperator = ' ') => {
-                return value.join(seperator);
-            },
-            // Multi-argument capable filters
-            replace: (value, search, replace = '') => {
-                return value.replaceAll(search, replace);
-            },
-            slice: (value, start, length) => {
-                return length !== undefined ? value.slice(start, start + length) : value.slice(start);
+            divide: (value, amount) => {
+                return value / amount;
             },
             // Math filters
             plus: (value, amount) => {
@@ -136,26 +234,11 @@ class Template {
             minus: (value, amount) => {
                 return value - amount;
             },
-            times: (value, amount) => {
-                return value * amount;
-            },
-            divide: (value, amount) => {
-                return value / amount;
-            },
             modulo: (value, amount) => {
                 return value % amount;
             },
-            abs: (value) => {
-                return Math.abs(value);
-            },
-            ceil: (value) => {
-                return Math.ceil(value);
-            },
-            floor: (value) => {
-                return Math.floor(value);
-            },
-            round: (value, decimal = 0) => {
-                return Number(value).toFixed(decimal);
+            times: (value, amount) => {
+                return value * amount;
             }
         };
     }
@@ -221,6 +304,8 @@ class Template {
         let ctx = data;
         let tokens = this.tokenize(template);
 
+        console.log(tokens);
+
         let i = 0;
         let stack = [];
         let output = '';
@@ -232,14 +317,7 @@ class Template {
             let code = '';
 
             if (top?.type == 'raw' && token.type !== 'endraw') {
-                // output literally
-                if (token.type === 'text') {
-                    code += token.value;
-                } else if (token.type === 'output') {
-                    code += '{{ ' + token.value + ' }}';
-                } else if (token.type === 'tag') {
-                    code += '{% ' + token.value + ' %}';
-                }
+                code = token.raw;
 
                 i++;
 
@@ -247,14 +325,18 @@ class Template {
             }
 
             if (token.type == 'text') {
-                code += token.value;
+                code = token.raw;
+
+                console.log('token.type == text');
+                console.log(token);
+                console.log(token.raw);
             }
 
             if (token.type == 'output') {
-                let match = token.value.match(/^([^\|]*)\s?\|?\s?(.*)?$/i);
+                let match = token.value.match(/^([^\|]+)\s?\|?\s?(.*)?$/i);
 
                 if (!match) {
-                    console.log(`[Template] Invalid output: ${token.value}`);
+                    console.log(`[Template] Invalid output line ${token.line} column ${token.column}`);
                 }
 
                 let [full, name, filter] = match;
@@ -266,7 +348,24 @@ class Template {
                     value = this.applyFilter(value, filter.indexOf(' | ') !== -1 ? filter.split(' | ') : [filter]);
                 }
 
-                code += this.filter.escape(value ?? '');
+                value = this.filter.escape(value ?? '');
+
+                // Trim whitespace
+                if (token.raw[3] == '-') {
+                    value = value.trimStart();
+                }
+
+                if (token.raw[-3] == '-') {
+                    value = value.trimEnd();
+                }
+
+                code += value;
+            }
+
+            if (top?.type == 'capture') {
+                top.value += code;
+            } else {
+                output += code;
             }
 
             if (token.type == 'tag') {
@@ -285,11 +384,10 @@ class Template {
                 }
             }
 
-            if (top?.type == 'capture') {
-                top.value += code;
-            } else {
-                output += code;
-            }
+
+
+            console.log(code);
+            console.log(output);
 
             i++;
         }
@@ -304,16 +402,18 @@ class Template {
 
         let stack = [];
 
-        const regex = /\{\{\s([\s\S]*?)\s\}\}|\{%-?\s([\s\S]*?)\s-?%}/g;
+        const regex = /\{\{-?\s([\s\S]*?)\s-?\}\}|\{%-?\s([\s\S]*?)\s-?%}|\{\#\s([\s\S]*?)\s\#}/g;
 
         while ((match = regex.exec(template)) !== null) {
             let [full, output, tag] = match;
+
+            let line = template.substring(0, match.index).split(/\r\n|\r|\n/).length;
 
             // Grabs all the Text before the matched index.
             if (match.index > index) {
                 token.push({
                     type: 'text',
-                    value: template.slice(index, match.index)
+                    raw: template.slice(index, match.index)
                 });
             }
 
@@ -322,7 +422,9 @@ class Template {
                 token.push({
                     type: 'output',
                     value: output,
-
+                    raw: full,
+                    line: line,
+                    column: index
                 });
             }
 
@@ -351,7 +453,10 @@ class Template {
                 token.push({
                     type: 'tag',
                     tag: command,
-                    value: tag
+                    value: tag,
+                    raw: full,
+                    line: line,
+                    column: index
                 });
             }
 
@@ -379,9 +484,10 @@ class Template {
         if (!expression) return undefined;
 
         try {
+            //.replace(/([a-zA-Z_]\w*)\./g, 'data.$1.').replace(/([a-zA-Z_]\w*)\[/g, 'data.$1[')
             const safe = expression;
 
-            console.log(`return (${safe});`);
+            //console.log(`return (${safe});`);
 
             let func = new Function('data', `with(data) { return (${safe}); }`);
 
@@ -428,6 +534,31 @@ class Template {
         return result;
     }
 
+    cleanArg(value, ctx) {
+        // Match String
+        let string = value.match(/^["'](.*)["']$/i);
+
+        if (string) return string[1];
+
+        // Match Digit
+        let number = value.match(/^(-?\d+)$/i);
+
+        if (number) return Number(number[1]);
+
+        // Match Float
+        let float = value.match(/^(-?\d+.\d+)$/i);
+
+        if (float) return parseFloat(float[1]);
+
+        // Match Boolean
+        let boolean = value.match(/^(true|false)$/i);
+
+        if (boolean) return boolean[1] == 'true' ? true : false;
+
+        // If match variable
+        return this.evaluate(value, ctx);
+    }
+
     /**
      * Handle set statement
      *
@@ -437,7 +568,7 @@ class Template {
         let match = token.value.match(/^set\s(\w+)\s=\s([^\|]+)?\s?\|?\s?(.*)?$/i);
 
         if (!match) {
-            console.log(`[Template] Invalid 'set' syntax: ${token.value}`);
+            console.log(`[Template] Invalid 'set' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -445,6 +576,8 @@ class Template {
         let [, name, value, filter] = match;
 
         value = this.evaluate(value, ctx);
+
+        console.log(match);
 
         // Apply Filters
         if (filter !== undefined) {
@@ -464,7 +597,7 @@ class Template {
         let match = token.value.match(/^if\s(.+)$/i);
 
         if (!match) {
-            console.log(`[Template] Invalid 'if' syntax: ${token.value}`);
+            console.log(`[Template] Invalid 'if' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -489,7 +622,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'if') {
-            console.log(`[Template] Unexpected 'if' tag: ${token.value}`);
+            console.log(`[Template] Unexpected 'if' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -501,7 +634,7 @@ class Template {
         let match = token.value.match(/^unless\s(.+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'unless' syntax: ${token.value}`);
+            console.log(`[Template] Invalid 'unless' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -521,7 +654,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'unless') {
-            console.log(`[Template] Unexpected 'endunless' tag: ${token.value}`);
+            console.log(`[Template] Unexpected 'endunless' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -533,7 +666,7 @@ class Template {
         let match = token.value.match(/^elif\s(.+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'elif' syntax: ${token.value}`);
+            console.log(`[Template] Invalid 'elif' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -541,7 +674,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'if') {
-            console.log(`[Template] Unexpected 'elif' tag: ${token.value}`);
+            console.log(`[Template] Unexpected 'elif' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -556,7 +689,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || (top.type !== 'if' && top.type !== 'unless' && top.type !== 'case')) {
-            console.log(`[Template] Unexpected 'else' tag: ${token.value}`);
+            console.log(`[Template] Unexpected 'else' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -568,43 +701,28 @@ class Template {
     }
 
     handleFor(token, stack, ctx, index) {
-        let match = token.value.match(/^for\s(.*)?\sin\s(.*)\s?(.*)$/);
+        let match = token.value.match(/^for\s(.*)?\sin\s([^\|]+)\s?\|?\s?(.*)?$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'for' syntax: ${token.value}`);
+            console.log(`[Template] Invalid 'for' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
-
-        console.log(match);
 
         let [, name, key, filter] = match;
 
         let items = [];
 
-        if (key.indexOf('..') == -1) {
-            items = this.evaluate(`key`, ctx);
-        } else {
-            items = this.getRange(key, ctx);
-        }
-
-        console.log(items);
+        items = this.evaluate(key, ctx);
 
         if (typeof items !== 'object') {
             items = [];
         }
 
-        // Parse optional offset argument
-        let offset = this.getOffset(filter, items, ctx);
-
-        // Parse optional limit argument
-        let limit = this.getLimit(filter, items, ctx);
-
-        // Reversed
-        items = this.getReversed(filter, items, ctx);
-
-        // Now safe to slice
-        items = items.slice(offset, (offset + limit));
+        // Apply Filters
+        if (filter !== undefined) {
+            items = this.applyFilter(items, filter.indexOf(' | ') !== -1 ? filter.split(' | ') : [filter]);
+        }
 
         stack.push({
             type: 'for',
@@ -623,7 +741,11 @@ class Template {
         // If skip we don't want to run evaluate method.
         let top = stack[stack.length - 1];
 
-        if (top == undefined || top.type !== 'for') return;
+        if (top == undefined || top.type !== 'for') {
+            console.log(`[Template] Unexpected 'endfor' line ${token.line} column ${token.column}`);
+
+            return;
+        }
 
         top.index++;
 
@@ -631,7 +753,23 @@ class Template {
             // Restore parent context (prevents leakage)
             Object.assign(ctx, top.parent);
 
-            ctx[top.name] = top.items[top.index];  // ← top.name (not top.name)
+            if (top.name.indexOf(', ') === -1) {
+                ctx[top.name] = top.items[top.index];  // ← top.name (not top.name)
+            } else {
+
+                console.log('handleEndfor');
+                console.log(top.items[top.index]);
+
+                for (let name of top.name.split(', ')) {
+
+
+                    console.log(top.items[top.index][name]);
+
+                    ctx[name] = top.items[top.index][name];
+                }
+            }
+
+            console.log(ctx);
 
             ctx.loop = {
                 index: top.index + 1,
@@ -645,6 +783,8 @@ class Template {
 
             return top.start;
         }
+
+
 
         // Loop finished → cleanup
         stack.pop();
@@ -689,84 +829,11 @@ class Template {
         if (next) return next;
     }
 
-    getRange(filter, ctx) {
-        let match = filter.match(/\(([^\.]+)\.\.([^\.]+)\)/i);
-
-        if (!match) return;
-
-        let start = match[1];
-        let end = match[2];
-
-        let is_var = /[a-z]/i;
-
-        if (is_var.test(start)) {
-            start = this.evaluate(start, ctx);
-        }
-
-        if (is_var.test(end)) {
-            end = this.evaluate(end, ctx);
-        }
-
-        let range = [];
-
-        for (let i = start; i <= end; i++) {
-            range.push(Number(i));
-        }
-
-        return range;
-    }
-
-    getOffset(filter, items, ctx) {
-        let offset = 0;
-
-        let match = filter.match(/offset:\s([0-9]+)|offset:\s([^\s]+)/i);
-
-        if (!match) return offset;
-
-        // If match is in 0-9
-        if (match[1]) {
-            return Number(match[1]);
-        }
-
-        // If match variable
-        if (match[2]) {
-            return Number(this.evaluate(match[2], ctx));
-        }
-    }
-
-    getLimit(filter, items, ctx) {
-        let limit = items.length;
-
-        let match = filter.match(/limit:\s([0-9]+)|limit:\s([^\s]+)/i);
-
-        if (!match) return limit;
-
-        // If match is in 0-9
-        if (match[1]) {
-            return Number(match[1]);
-        }
-
-        // If match is not in 0-9 it should be a variable
-        if (match[2]) {
-            return Number(this.evaluate(match[2], ctx));
-        }
-    }
-
-    getReversed(filter, items, ctx) {
-        let reversed = false;
-
-        if (filter.match(/(reversed)/i) !== null) {
-            return items.reverse();
-        }
-
-        return items;
-    }
-
     handleCase(token, stack, ctx, index) {
         let match = token.value.match(/^case\s(\w+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'case' syntax: ' + token.value`);
+            console.log(`[Template] Invalid 'case' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -782,7 +849,7 @@ class Template {
         let match = token.value.match(/^when\s(.+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'when' syntax: ${token.value}`);
+            console.log(`[Template] Invalid 'when' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -790,13 +857,13 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'case') {
-            console.log(`[Template] Unexpected 'when' tag: ${token.value}`);
+            console.log(`[Template] Unexpected 'when' tag line ${token.line} column ${token.column}`);
 
             return;
         }
 
         // Split if more than one item to compare
-        if (!this.evaluate(`[${match[1]}].includes([${top.value})`, ctx)) return token.end;
+        if (!this.evaluate(`[${match[1]}].includes(${top.value})`, ctx)) return token.end;
 
         top.active = true;
     }
@@ -805,7 +872,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || (top.type !== 'case' && top.type !== 'if')) {
-            console.log(`[Template] Unexpected 'endunless' tag: ${token.value}`);
+            console.log(`[Template] Unexpected 'endunless' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -813,11 +880,32 @@ class Template {
         stack.pop();
     }
 
+    handleInclude(token, stack, ctx, index) {
+        let match = token.value.match(/^include\s(.+)$/);
+
+        if (!match) {
+            console.warn(`[Template] Invalid 'capture' syntax line ${token.line} column ${token.column}`);
+
+            return;
+        }
+
+        this.render(match[1], ctx);
+    }
+
+    handleFilter(token, stack, ctx, index) {
+
+    }
+
+
+    handleEndfilter(token, stack, ctx, index) {
+
+    }
+
     handleCapture(token, stack, ctx, index) {
         let match = token.value.match(/^capture\s(.+)$/);
 
         if (!match) {
-            console.warn(`[Template] Invalid 'capture' syntax: ${token.value}`);
+            console.warn(`[Template] Invalid 'capture' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -833,7 +921,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || (top.type !== 'case' && top.type !== 'if')) {
-            console.log(`[Template] Unexpected 'endcapture' tag: ${token.value}`);
+            console.log(`[Template] Unexpected 'endcapture' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -851,7 +939,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'raw') {
-            console.log(`[Template] Unexpected 'raw' tag: ${token.value}`);
+            console.log(`[Template] Unexpected 'raw' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -869,7 +957,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'comment') {
-            console.log(`[Template] Unexpected 'comment' tag: ${token.value}`);
+            console.log(`[Template] Unexpected 'comment' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -894,8 +982,8 @@ export { template };
 let test = [];
 
 // 0
-test.push(`--- assign string ---
-{% assign my_var = "Hello test" %}
+test.push(`--- set string ---
+{% set my_var = "Hello test" %}
 {{ my_var }}, world!
 `);
 
@@ -931,7 +1019,8 @@ test.push(`--- replace ---
 
 // 6
 test.push(`--- assign test ---
-{% assign year = 2025 %}
+
+{% set year = 2025 %}
 Current year: {{ year }}
 `);
 
@@ -951,7 +1040,7 @@ test.push(`{% assign my_var = "blue" %}{% if my_var == "red" %}red!{% else %}blu
 test.push(`{% assign my_var = "green" %}{% if my_var == "red" %}red!{% elif my_var == "green" %}green{% else %}blue{% endif %}`);
 
 // 12
-test.push(`{% assign my_var = "red" %}
+test.push(`{% set my_var = "red" %}
 {% if my_var == "red" %}
 red!
 {% elif my_var == "green" %}
@@ -972,7 +1061,7 @@ yellow
 
 // 13
 test.push(`
-{% for key, user in users %}
+{% for name, colors in users %}
   Name: {{ user.name }}
   Favorite colors:
   {% for color in user.colors %}
@@ -1089,7 +1178,7 @@ test.push(`
 {{ greeting }}
 `);
 
-let number = 13;
+let number = 0;
 
 await test.splice(number, 1).map(async value => {
     console.log('TEMPLATE');
@@ -1104,20 +1193,23 @@ await test.splice(number, 1).map(async value => {
                     "red",
                     "blue",
                     "green"
-                ]
+                ],
+                test: '111'
             },
             {
                 name: "Bob",
                 colors: [
                     "yellow"
-                ]
+                ],
+                test: '222'
             },
             {
                 name: "Carol",
                 colors: [
                     "purple",
                     "pink"
-                ]
+                ],
+                test: '333'
             }
         ]
     };

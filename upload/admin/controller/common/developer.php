@@ -265,16 +265,26 @@ class Developer extends \Opencart\System\Engine\Controller {
 								$next = array_shift($directories);
 
 								if (is_dir($next)) {
-									foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-										if (is_dir($file)) {
-											$directories[] = $file . '/';
-										}
+									$files = scandir($next);
 
-										if (is_file($file)) {
-											$namespace = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1);
+									if ($files !== false) {
+										foreach ($files as $filename) {											
+											if ($filename == '.' || $filename == '..') {
+												continue;
+											}
 
-											if ($namespace) {
-												$autoload[$namespace] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+											$file = rtrim($next, '/') . '/' . $filename;
+
+											if (is_dir($file)) {
+												$directories[] = $file . '/';
+											}
+
+											if (is_file($file)) {
+												$namespace = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1);
+
+												if ($namespace) {
+													$autoload[$namespace] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+												}
 											}
 										}
 									}

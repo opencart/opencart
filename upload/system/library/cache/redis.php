@@ -9,6 +9,10 @@ class Redis {
 
 		$this->cache = new \Redis();
 		$this->cache->pconnect(CACHE_HOSTNAME, CACHE_PORT);
+
+		if (defined('CACHE_PASSWORD') && CACHE_PASSWORD) {
+			$this->cache->auth(CACHE_PASSWORD);
+		}
 	}
 
 	public function get($key) {

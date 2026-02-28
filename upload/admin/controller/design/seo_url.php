@@ -513,14 +513,14 @@ class ControllerDesignSeoUrl extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if(isset($this->request->get['seo_url_id']) && $this->request->get['seo_url_id']) {
+		if (isset($this->request->get['seo_url_id']) && $this->request->get['seo_url_id']) {
 			$seo_urls = $this->model_design_seo_url->getSeoUrlsByQueryId($this->request->get['seo_url_id'], $this->request->post['query']);
 		} else {
 			$seo_urls = $this->model_design_seo_url->getSeoUrlsByQuery($this->request->post['query']);
 		}
 		
 		foreach ($seo_urls as $seo_url) {
-			if ($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['query'] == $this->request->post['query']) {
+			if ($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id'] && $seo_url['query'] == $this->request->post['query']) {
 				$this->error['query'] = $this->language->get('error_query_exists');
 
 				break;

@@ -1,0 +1,23 @@
+<fieldset>
+  <legend>{{ text_title }}</legend>
+  <div class="border rounded p-3 mb-3">
+    <div class="d-flex align-items-center mb-2">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
+        <circle cx="16" cy="16" r="16" fill="#6366F1"/>
+        <path d="M10 16l4 4 8-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <strong>{{ text_title }}</strong>
+    </div>
+    <p class="text-muted mb-1">{{ text_description }}</p>
+    <p class="text-muted small mb-0"><i class="fa-solid fa-link"></i> {{ text_chain_info|format(chain_name) }}</p>
+  </div>
+  <div class="alert alert-info small">
+    <i class="fa-solid fa-circle-info"></i> {{ text_redirect_notice }}
+  </div>
+  <div class="text-end">
+    <button type="button" id="button-confirm" class="btn btn-primary">
+      <i class="fa-solid fa-wallet"></i> {{ button_confirm }}
+    </button>
+  </div>
+</fieldset>
+<script src="extension/paythefly/catalog/view/javascript/paythefly.js" type="text/javascript"></script>

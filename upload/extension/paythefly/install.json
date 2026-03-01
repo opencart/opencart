@@ -1,0 +1,7 @@
+{
+  "name": "PayTheFly - Crypto Payment Gateway",
+  "description": "Accept cryptocurrency payments via PayTheFly Pro. Supports BSC and TRON networks with EIP-712 typed signatures.",
+  "version": "1.0.0",
+  "author": "PayTheFly",
+  "link": "https://pro.paythefly.com"
+}

@@ -62,7 +62,7 @@ class Twig {
 	 * @return string
 	 */
 	public function render(string $filename, array $data = [], string $code = ''): string {
-		$file = $this->directory . $filename . '.twig';
+		$file = $this->directory . $filename . '.html';
 
 		/*
 		 * FYI: To all the Twig lovers out there!
@@ -86,7 +86,7 @@ class Twig {
 			}
 
 			if (isset($this->path[$namespace])) {
-				$file = $this->path[$namespace] . substr($filename, strlen($namespace) + 1) . '.twig';
+				$file = $this->path[$namespace] . substr($filename, strlen($namespace) + 1) . '.html';
 			}
 		}
 

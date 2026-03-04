@@ -439,9 +439,6 @@ class Template {
     evaluate(expression, ctx) {
         if (!expression) return undefined;
 
-        console.log('evaluate');
-        console.log(expression);
-
         try {
             // Replace .property with ["property"]
             const safe = expression;
@@ -450,11 +447,108 @@ class Template {
 
             return func({ ...ctx });
         } catch (error)  {
-            console.log('error');
-            console.log(error);
+            console.log(`[Template] Warning: eval error '${error}'`);
 
             return undefined;
         }
+    }
+
+    /**
+     * Apply chain of filters — now supports multiple comma-separated arguments per filter
+     */
+    parseFilter(value, filters = {}, ctx) {
+        if (!filters.length) return value;
+
+        console.log('parseFilter');
+        console.log(value);
+
+        let result = value;
+
+        for (let filter of filters) {
+            let match = filter.match(/^([^\(\)]+?)(?:\((.+)\))?$/);
+
+            if (!match) return;
+
+            let [, name, argument] = match;
+
+            let args = [];
+
+            if (argument) {
+                args = this.parseArg(argument, ctx);
+            }
+
+            let func = this.filter[name];
+
+            if (!func) {
+                console.log(`[Template] Unknown filter ${name}!`);
+
+                return;
+            }
+
+            result = func(result, ...args);
+        }
+
+        return result;
+    }
+
+    parseFunction(expression, ctx) {
+        let match = expression.match(/^([^\(]+?)(?:\((.+)\))$/);
+
+        if (!match) return;
+
+        let [, name, argument] = match;
+
+        let args = [];
+
+        if (argument) {
+            args = this.parseArg(argument, ctx);
+        }
+
+        let func = this.global[name];
+
+        if (!func) {
+            console.log(`[Template] Unknown function ${name}!`);
+
+            return;
+        }
+
+        let result = func(...args);
+
+        return result;
+    }
+
+    parseArg(argument, ctx) {
+        let args = [];
+
+        // Extract the arguments
+        let values = argument.indexOf(', ') !== -1 ? argument.split(', ').map(value => value.trim(argument)) : [];
+
+        for (let value of values) {
+            // Match String
+            let string = value.match(/^["'](.*)["']$/i);
+
+            if (string) {
+                args.push(string[1]);
+
+                continue;
+            }
+
+            // Match Boolean
+            let boolean = value.match(/^(true|false)$/i);
+
+            if (boolean) {
+                args.push(boolean[1] == 'true' ? true : false);
+
+                continue;
+            }
+
+            // If match variable
+            let output = this.evaluate(value, ctx);
+
+            args.push(output);
+        }
+
+        return args;
     }
 
     handleText(token, stack, ctx, index) {
@@ -507,7 +601,16 @@ class Template {
 
         let [, name, expression, filter] = match;
 
-        let value = this.evaluate(expression, ctx);
+        let value = '';
+
+            // Match any global function
+        let output = this.parseFunction(expression);
+
+        if (output !== undefined) {
+            value = output;
+        } else {
+            value = this.evaluate(expression, ctx);
+        }
 
         // Apply Filters
         if (filter !== undefined) {
@@ -655,119 +758,6 @@ class Template {
         top.active = true;
     }
 
-    /**
-     * Apply chain of filters — now supports multiple comma-separated arguments per filter
-     */
-    parseFilter(value, filters = {}, ctx) {
-        if (!filters.length) return value;
-
-        let result = value;
-
-        for (let filter of filters) {
-            let match = filter.match(/^([^\(\)]+?)(?:\((.+)\))?$/);
-
-            if (!match) return;
-
-            let [, name, argument] = match;
-
-            let args = [];
-
-            if (argument) {
-                args = this.parseArg(argument, ctx);
-            }
-
-            let func = this.filter[name];
-
-            if (!func) {
-                console.log(`[Template] Unknown filter ${name}!`);
-
-                return;
-            }
-
-            result = func(result, ...args);
-        }
-
-        return result;
-    }
-
-    parseFunction(expression, ctx) {
-        let match = expression.match(/^([^\(]+?)(?:\((.+)\))$/);
-
-        if (!match) return;
-
-        let [, name, argument] = match;
-
-        let args = [];
-
-        if (argument) {
-            args = this.parseArg(argument, ctx);
-        }
-
-        let func = this.global[name];
-
-        if (!func) {
-            console.log(`[Template] Unknown function ${name}!`);
-
-            return;
-        }
-
-        let result = func(...args);
-
-        return result;
-    }
-
-    parseArg(argument, ctx) {
-        let args = [];
-
-        // Extract the arguments
-        let values = argument.indexOf(', ') !== -1 ? argument.split(', ').map(value => value.trim(argument)) : [];
-
-        for (let value of values) {
-            // Match String
-            let string = value.match(/^["'](.*)["']$/i);
-
-            if (string) {
-                args.push(string[1]);
-
-                continue;
-            }
-
-            // Match Boolean
-            let boolean = value.match(/^(true|false)$/i);
-
-            if (boolean) {
-                args.push(boolean[1] == 'true' ? true : false);
-
-                continue;
-            }
-
-            // Match Digit
-            let number = value.match(/^(-?\d+)$/i);
-
-            if (number) {
-                args.push(Number(number[1]));
-
-                continue;
-            }
-
-            // Match Float
-            let float = value.match(/^(-?\d+.\d+)$/i);
-
-            if (float) {
-                args.push(parseFloat(float[1]));
-
-                continue;
-            }
-
-            // If match variable
-            let output = this.evaluate(value, ctx);
-
-            args.push(output);
-        }
-
-        return args;
-    }
-
     handleFor(token, stack, ctx, index) {
         let match = token.value.match(/^for\s(.*)\sin\s([^\|]+?)\s*(?:\s*\|\s*(.+))?$/);
 
@@ -782,7 +772,7 @@ class Template {
         let items = [];
 
         // Match any global function
-        let output = this.parseFunction(key);
+        let output = this.parseFunction(key, ctx);
 
         if (output !== undefined) {
             items = output;
@@ -938,11 +928,32 @@ class Template {
     }
 
     handleFilter(token, stack, ctx, index) {
+        let match = token.value.match(/^filter\s(\w+)$/);
 
+        if (!match) {
+            console.log(`[Template] Invalid 'filter' syntax line ${token.line} column ${token.column}`);
+
+            return;
+        }
+
+        stack.push({
+            type: 'filter',
+            filter: match[1],
+            output: ''
+        });
     }
 
-
     handleEndfilter(token, stack, ctx, index) {
+        let top = stack[stack.length - 1];
+
+        if (!top || top.type !== 'filter') {
+            console.log(`[Template] Unexpected 'endfilter' tag line ${token.line} column ${token.column}`);
+
+            return;
+        }
+
+        let filter = this.parseFilter(top.output, top.filter.indexOf(' | ') !== -1 ? top.filter.split(' | ') : [filter], ctx);
+
 
     }
 
@@ -1097,7 +1108,7 @@ yellow
 {% endif %}
 {% endif %}`);
 
-// 13
+// 1
 test.push(`
 {% for user in users %}
   Name: {{ user.name }}
@@ -1119,9 +1130,9 @@ test.push(`
 {% endfor %}
 `);
 
-// 14
+// 3
 test.push(`
-{% for user in users offset: 0 limit: 4 %}
+{% for user in users %}
   Name: {{ user.name }}  {{ loop.index }}
   Favorite colors:
   {% for color in user.colors %}
@@ -1131,7 +1142,7 @@ test.push(`
 {% endfor %}
 `);
 
-// 15
+// 3
 test.push(`
 {% set handle = 100 %}
 {% case handle %}
@@ -1213,7 +1224,7 @@ test.push(`
 {{ greeting }}
 `);
 
-let number = 2;
+let number = 3;
 
 await test.splice(number, 1).map(async value => {
     console.log('TEMPLATE');

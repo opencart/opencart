@@ -72,12 +72,10 @@ class Template {
 
         this.global = {
             range: (start, stop, step = 1) => Array.from({ length: (stop - start) / step + 1 }, (value, index) => start + index * step),
-            cycler: (item) => {
+            cycle: (items) => {
 
             },
-            joiner: (separator) => {
-
-            }
+            join: (value, seperator = ' ') => value.join(seperator)
         }
 
         this.filter = {
@@ -88,12 +86,6 @@ class Template {
                 return value + suffix;
             },
             batch: (value, size, fill = null) => {
-                if (!Array.isArray(value)) return [];
-
-                console.log(value);
-                console.log(size);
-                console.log(fill);
-
                 let result = [];
 
                 for (let i = 0; i < value.length; i += size) {
@@ -109,12 +101,14 @@ class Template {
                     result.push(chunk);
                 }
 
-                console.log(result);
-
                 return result;
             },
             capitalize: (value) => {
+                let string = value.trim();
 
+                if (!string) return '';
+
+                return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
             },
             ceil: (value) => {
                 return Math.ceil(value);
@@ -137,11 +131,11 @@ class Template {
                     "'": '&#39;'
                 }[m] || m));
             },
-            first: () => {
-
+            first: (value) => {
+                return value[0] !== undefined ? value[0] : [];
             },
-            float: () => {
-
+            float: (value) => {
+                return parseFloat(value);
             },
             floor: (value) => {
                 return Math.floor(value);
@@ -158,13 +152,12 @@ class Template {
             join: (value, seperator = ' ') => {
                 return value.join(seperator);
             },
-            last: () => {
-
+            last: (value) => {
+                return value[value.length - 1] !== undefined ? value[value.length - 1] : [];
             },
             length: (value) => {
                 return typeof value === 'array' || typeof value === 'string' ? value.length : 0;
             },
-
             lower: (value) => {
                 return value.toLowerCase();
             },
@@ -181,7 +174,9 @@ class Template {
                 return value % amount;
             },
             nl2br: (value) => {
+                if (value == null) return '';
 
+                return String(value).replace(/\n/g, '<br/>');
             },
             plus: (value, amount) => {
                 return value + amount;
@@ -190,7 +185,7 @@ class Template {
                 return prefix + value;
             },
             random: (value) => {
-
+                return value[Math.floor(Math.random() * value.length)];
             },
             reject: (value) => {
 
@@ -202,7 +197,15 @@ class Template {
                 return value.replaceAll(search, replace);
             },
             reverse: (value) => {
+                if (Array.isArray(value)) {
+                    return [...value].reverse();
+                }
 
+                if (typeof value === 'string') {
+                    return value.split('').reverse().join('');
+                }
+
+                return value; // fallback: return unchanged
             },
             round: (value, decimal = 0) => {
                 return Number(value).toFixed(decimal);
@@ -233,11 +236,11 @@ class Template {
             },
             trim: (value) => {
                 return value.trim();
-                //return value.replace(/^\s+/, '');
-                //return value.replace(/\s+$/, '');
             },
-            truncate: (value, size) => {
+            truncate: (value, length = 255, end = '...') => {
+                if (value.length <= length) return value;
 
+                return value.substring(0, length - end.length) + end;
             },
             upper: (value) => {
                 return value.toUpperCase();
@@ -246,7 +249,13 @@ class Template {
                 return value.toUpperCase();
             },
             wordcount: (value) => {
-                return value.toUpperCase();
+                if (value == null) return 0;
+
+                let string = String(value).trim();
+
+                if (!string) return 0;
+
+                return string.split(/\s+/).length;
             }
         };
     }
@@ -330,8 +339,8 @@ class Template {
                 continue;
             }
 
-            if (top?.type == 'include') {
-                code = token.output;
+            if (top?.type == 'output') {
+                output += top?.output;
 
                 stack.pop();
             }
@@ -346,7 +355,11 @@ class Template {
 
             if (top?.type == 'capture') {
                 top.value += code;
-            } else {
+
+                code = '';
+            }
+
+            if (code) {
                 output += code;
             }
 
@@ -461,18 +474,11 @@ class Template {
         if (!expression) return undefined;
 
         try {
-            // Replace .property with ["property"]
-            const safe = expression;
-
-            let func = new Function('{ ' + Object.keys(ctx).join(', ') + ' }', `return (${safe});`);
-
-            console.log('evaluate');
-            console.log(expression);
-            console.log(func);
+            let func = new Function('{ ' + Object.keys(ctx).join(', ') + ' }', `return (${expression});`);
 
             return func({ ...ctx });
         } catch (error)  {
-            console.log(`[Template] Warning: evaluate error '${error}'`);
+            console.log(`[Template] Warning: Evaluate error '${error}'`);
 
             return undefined;
         }
@@ -481,14 +487,10 @@ class Template {
     /**
      * Apply chain of filters — now supports multiple comma-separated arguments per filter
      */
-    parseFilter(value, filters = {}, ctx) {
-        if (!filters.length) return value;
+    parseFilter(value, expression = '', ctx) {
+        if (!expression.length) return value;
 
-        filters = filters.indexOf(' | ') !== -1 ? filters.split(' | ') : [filters];
-
-        console.log('parseFilter');
-        console.log(value);
-        console.log(filters);
+        let filters = expression.indexOf(' | ') !== -1 ? expression.split(' | ') : [expression];
 
         let result = value;
 
@@ -508,7 +510,7 @@ class Template {
             let func = this.filter[name];
 
             if (!func) {
-                console.log(`[Template] Unknown filter ${name}!`);
+                console.log(`[Template] Unknown filter: ${name}!`);
 
                 return;
             }
@@ -520,15 +522,11 @@ class Template {
     }
 
     parseFunction(expression, ctx) {
-        let match = expression.match(/^([^\(]+?)(?:\((.+)\))$/);
+        let match = expression.match(/^([^\(]+)(?:\((.+)\))$/);
 
         if (!match) return;
 
         let [, name, argument] = match;
-
-        console.log('parseFunction');
-        console.log(match);
-        console.log(argument);
 
         let args = [];
 
@@ -549,10 +547,18 @@ class Template {
         return result;
     }
 
+    /**
+     * Handle Text
+     */
     handleText(token, stack, ctx, index) {
         return token.raw;
     }
 
+    /**
+     * Handle Output
+     *
+     * {{ my_var | filter_1 | filter_2 }}
+     */
     handleOutput(token, stack, ctx, index) {
         let match = token.value.match(/([^\|]+?)\s*(?:\s*\|\s*(.+))?$/);
 
@@ -619,7 +625,7 @@ class Template {
         ctx[name] = value;
     }
 
-    handleInclude(token, stack, ctx) {
+    handleInclude(token, stack, ctx, index) {
         let match = token.value.match(/^include\s(.+)$/);
 
         if (!match) {
@@ -628,10 +634,7 @@ class Template {
             return;
         }
 
-        stack.push({
-            type: 'include',
-            output: this.render(match[1], ctx)
-        });
+        output += this.render(match[1], ctx);
     }
 
     handleCode(token, stack, ctx, index) {
@@ -656,6 +659,7 @@ class Template {
         let active = this.evaluate(match[1], ctx);
 
         stack.push({
+            name: 'if',
             type: 'if',
             active: active
         });
@@ -671,7 +675,7 @@ class Template {
     handleEndif(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.type !== 'if') {
+        if (!top || top.name !== 'if') {
             console.log(`[Template] Unexpected 'if' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -698,6 +702,7 @@ class Template {
         let active = !this.evaluate(match[1], ctx);
 
         stack.push({
+            name: 'if',
             type: 'unless',
             active: active
         });
@@ -946,8 +951,7 @@ class Template {
             return;
         }
 
-        let filter = this.parseFilter(top.output, top.filter, ctx);
-
+        output += this.parseFilter(top.value, top.filter, ctx);
     }
 
     handleBlock(token, stack, ctx, index) {
@@ -1176,7 +1180,7 @@ test.push(`
 {% endcase %}
 `);
 
-// 4
+// 5
 test.push(`
 {% raw %}
 {% set my_var = 100 %}
@@ -1203,14 +1207,14 @@ test.push(`
 example code
 `);
 
-// 5
+// 6
 test.push(`
 {% set name = "test" %}
 {% block greeting %}Hello {{ name }}!{% endblock %}
 captured: {{ greeting }}
 `);
 
-let number = 0;
+let number = 6;
 
 await test.splice(number, 1).map(async value => {
     console.log('TEMPLATE');

@@ -848,7 +848,6 @@ class Template {
         }
     }
 
-    // fix!!@!
     handleBreak(token, stack, ctx, index) {
         let top = {};
 
@@ -868,9 +867,7 @@ class Template {
         // Loop finished → cleanup
         stack.pop();
 
-        stack[i].end + 1;
-
-        if (next) return next;
+        return top.end + 1;
     }
 
     handleCase(token, stack, ctx, index) {
@@ -949,7 +946,7 @@ class Template {
             return;
         }
 
-        let filter = parseFilter(top.output, top.filter, ctx);
+        let filter = this.parseFilter(top.output, top.filter, ctx);
 
     }
 
@@ -957,7 +954,7 @@ class Template {
         let match = token.value.match(/^block\s(.+)$/);
 
         if (!match) {
-            console.warn(`[Template] Invalid 'capture' syntax line ${token.line} column ${token.column}`);
+            console.warn(`[Template] Invalid 'block' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -973,7 +970,7 @@ class Template {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'capture') {
-            console.log(`[Template] Unexpected 'endcapture' tag line ${token.line} column ${token.column}`);
+            console.log(`[Template] Unexpected 'endblock' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -1105,7 +1102,7 @@ yellow
 {% endif %}
 {% endif %}`);
 
-// 1
+// 2
 test.push(`
 {% for user in users %}
   Name: {{ user.name }}
@@ -1133,7 +1130,7 @@ test.push(`
 {% endfor %}
 `);
 
-// 2
+// 3
 test.push(`
 {% set handle = 100 %}
 {% case handle %}
@@ -1156,7 +1153,7 @@ test.push(`
 {% endcase %}
 `);
 
-// 3
+// 4
 test.push(`
 {% set my_var = 100 %}
 {% case my_var %}
@@ -1209,13 +1206,11 @@ example code
 // 5
 test.push(`
 {% set name = "test" %}
-{% block greeting %}
-  Hello {{ name }}!
-{% endblock %}
+{% block greeting %}Hello {{ name }}!{% endblock %}
 captured: {{ greeting }}
 `);
 
-let number = 6;
+let number = 0;
 
 await test.splice(number, 1).map(async value => {
     console.log('TEMPLATE');

@@ -12,6 +12,10 @@ COLOR_RESET := \033[0m
 # Define the base docker compose command to avoid repetition.
 COMPOSE := docker compose --env-file=./docker/.env.docker
 
+# Get current user name and ID to pass to build process
+CURRENT_USER_NAME := $(shell id -un)
+CURRENT_USER_ID   := $(shell id -u)
+
 # --- Variable Handling for Options ---
 # For passing extra arguments to docker compose commands.
 # Example: make down options="-v --remove-orphans"
@@ -84,7 +88,11 @@ init: ## Initialize the project (copies .env.docker)
 	fi
 
 build: ## Build images. Use 'options' for flags (e.g., --no-cache)
-	$(COMPOSE) build $(options)
+	@echo "Building images for user: $(CURRENT_USER_NAME) (ID: $(CURRENT_USER_ID))"
+	$(COMPOSE) build \
+		--build-arg PHP_UNAME="$(CURRENT_USER_NAME)" \
+        --build-arg PHP_UID="$(CURRENT_USER_ID)" \
+		$(options)
 
 up: ## Start services. Use 'profiles' and 'options'
 	@echo "Starting services..."

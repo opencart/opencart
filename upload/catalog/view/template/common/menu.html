@@ -1,4 +1,4 @@
-{% if categories != blank %}
+{% if categories != '' %}
   <div class="container">
     <nav id="menu" class="navbar navbar-expand-lg bg-primary">
       <div id="category" class="d-block d-sm-block d-lg-none">{{ text_category }}</div>
@@ -21,13 +21,13 @@
 
               {% if total > 20 %}
 
-                {% assign batch = total | divided_by: 4 | round %}
+                {% assign batch = total | divide(4) | round %}
                 {% assign column = 4 %}
 
               {% else %}
 
                 {% assign batch = 5 %}
-                {% assign column = total | divided_by: 5 | round %}
+                {% assign column = total | divided(5) | round %}
 
               {% endif %}
 

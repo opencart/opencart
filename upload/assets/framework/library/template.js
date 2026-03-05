@@ -514,9 +514,13 @@ class Template {
 
     evaluate(expression, ctx) {
         if (!expression) return undefined;
+        ///'{ ' + Object.keys(ctx).join(', ') + ' }'
 
         try {
-            let func = new Function('{ ' + Object.keys(ctx).join(', ') + ' }', `return (${expression});`);
+            let func = new Function('data', `with(data) return (${expression});`);
+
+            //console.log(func);
+            //console.log(ctx);
 
             return func({ ...ctx });
         } catch (error)  {
@@ -564,7 +568,7 @@ class Template {
     }
 
     parseFunction(expression, ctx) {
-        let match = expression.match(/^([^\(]+)(?:\((.+)\))$/);
+        let match = expression.match(/^([^\(]+)\((.+)\)$/);
 
         if (!match) return;
 
@@ -1075,226 +1079,3 @@ class Template {
 const template = Template.getInstance();
 
 export { template };
-/*
-// Assign
-let test = [];
-
-// 0
-test.push(`--- set string ---
-{% set my_var = "Hello test" %}
-{{ my_var }}, world!
-
---- set number ---
-
-{% set my_var = 121213 %}
-{{ my_var }}, world!
-
---- set decimal ---
-
-{% set my_var = 1212.13 %}
-{{ my_var }}, world!
-
---- set replace ---
-
-{% set test_1 = "Hello world" | replace('e', 'A') %}
-{{ test_1 }}, world!
-
---- ucase ---
-
-{% set my_var = "Hello world" %}
-{{ my_var | upper }}
-
---- replace --- 
-
-{% set my_var = "Hello world" %}
-{{ my_var | replace("e", "Q") }}, world!
-
---- set test ---
-{% set year = 2025 %}
-Current year: {{ year }}
-
---- set multi test ---
-
-{% set test_1 = "Hello, World" | lower | upper | replace("O", "X") %}
-{{ test_1 }}
-`);
-
-// 1
-test.push(`
-{% set my_var = "Hello" %}{% if my_var == "Hello" %}WORKS!{% endif %}
-
-{% set my_var = "red" %}{% if my_var == "red" %}red!{% else %}blue{% endif %}
-
-{% set my_var = "blue" %}{% if my_var == "red" %}red!{% else %}blue{% endif %}
-
-{% set my_var = "green" %}{% if my_var == "red" %}red!{% elif my_var == "green" %}green{% else %}blue{% endif %}
-
-{% set my_var = "red" %}
-{% if my_var == "red" %}
-red!
-{% elif my_var == "green" %}
-green!
-{% if my_var != "blue" %}
-blue
-{% else %}
-yellow
-{% endif %}
-{% else %}
-black
-{% if my_var != "blue" %}
-blue
-{% else %}
-yellow
-{% endif %}
-{% endif %}`);
-
-// 2
-test.push(`
-{% for user in users %}
-  Name: {{ user.name }}
-  Favorite colors:
-  {% for color in user.colors %}
-    • {{ color }}
-  {% endfor %}
-  ---
-{% endfor %}
-
-{% for i in range(1, 5) %}
-  {% if i == 4 %}skip{% continue %}{% endif %} {{ i }}
-{% endfor %}
-
-{% for test in users | batch(2) %}
-    {{ loop.index }}
-    {% for user in test %}
-      Name: {{ user.name }} {{ loop.index }}
-      Favorite colors:
-      {% for color in user.colors %}
-        • {{ color }} {{ loop.index }}
-      {% endfor %}
-      ---
-    {% endfor %}
-{% endfor %}
-`);
-
-// 3
-test.push(`
-{% set handle = 100 %}
-{% case handle %}
-  {% when "yellow" %}
-     yellow
-  {% when "pink", "red" %}
-     pink | red
-{% when 100 %}
-     100
-{% when 100.00, 200 %}
-     100.00
-{% when true %}
-     true
-{% when false %}
-     true
-{% when 'red' %}
-     red
-{% else %}
-     none
-{% endcase %}
-`);
-
-// 4
-test.push(`
-{% set my_var = 100 %}
-{% case my_var %}
-  {% when "yellow" %}
-     yellow
-  {% when "pink", "red" %}
-     pink | red
-{% when 100 %}
-     100
-{% when 100.00, 200 %}
-     100.00
-{% when true %}
-     true
-{% when false %}
-     true
-{% when 'red', "test 3456" %}
-     red
-{% else %}
-     none
-{% endcase %}
-`);
-
-// 5
-test.push(`
-{% raw %}
-{% set my_var = 100 %}
-{% case my_var %}
-  {% when "yellow" %}
-     yellow
-  {% when "pink", "red" %}
-     pink | red
-{% when 100 %}
-     100
-{% when 100.00, 200 %}
-     100.00
-{% when true %}
-     true
-{% when false %}
-     true
-{% when 'red', "test 3456" %}
-     red
-{% else %}
-     none
-{% endcase %}
-{% endraw %}
-
-example code
-`);
-
-// 6
-test.push(`
-{% set name = "test" %}
-{% block greeting %}Hello {{ name }}!{% endblock %}
-captured: {{ greeting }}
-`);
-
-let number = 6;
-
-await test.splice(number, 1).map(async value => {
-    console.log('TEMPLATE');
-    console.log(value);
-
-    // Loop
-    const data = {
-        users: [
-            {
-                name: "Alice",
-                colors: [
-                    "red",
-                    "blue",
-                    "green"
-                ],
-                test: '111'
-            },
-            {
-                name: "Bob",
-                colors: [
-                    "yellow"
-                ],
-                test: '222'
-            },
-            {
-                name: "Carol",
-                colors: [
-                    "purple",
-                    "pink"
-                ],
-                test: '333'
-            }
-        ]
-    };
-
-    let output = await template.parse(value, data);
-
-    console.log('OUTPUT');
-    console.log(output);
-});
-*/

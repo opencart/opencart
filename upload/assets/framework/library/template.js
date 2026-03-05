@@ -113,11 +113,18 @@ class Template {
             ceil: (value) => {
                 return Math.ceil(value);
             },
-            default: (value, test, bool) => {
-                return value != undefined ? value : test;
+            default: (value, alternative, bool) => {
+                if (bool) {
+                    return value || alternative;
+                } else {
+                    return (value !== undefined) ? value : alternative;
+                }
             },
             divide: (value, amount) => {
                 return value / amount;
+            },
+            dump: (value) => {
+                return JSON.stringify(value);
             },
             e: (value) => {
                 return this.filter.escape(value);
@@ -140,11 +147,19 @@ class Template {
             floor: (value) => {
                 return Math.floor(value);
             },
-            group: () => {
-
+            groupBy: (value, type) => {
+                return Object.groupBy(value, ({ type }) => type);
             },
-            indent: () => {
+            indent: (value, width = 4) => {
+                if (value == '') return '';
 
+                let indent = ' '.repeat(width);
+
+                let lines = value.split("\n");
+
+                let indented = lines.map((line, index) => line.trim() === '' ? line : indent + line);
+
+                return indented.join('\n');
             },
             int: (value) => {
                 return Number(value);
@@ -161,8 +176,8 @@ class Template {
             lower: (value) => {
                 return value.toLowerCase();
             },
-            list: () => {
-
+            list: (value) => {
+                return value.join(',');
             },
             ltrim: (value) => {
                 return value.trimStart();
@@ -187,13 +202,10 @@ class Template {
             random: (value) => {
                 return value[Math.floor(Math.random() * value.length)];
             },
-            reject: (value) => {
-
+            reject: (value, key) => {
+                value.filter((item) => !item[key]);
             },
-            rejectattr: (value) => {
-
-            },
-            replace: (value, search, replace = '') => {
+            replace: (value, search, replace = '', max = 0) => {
                 return value.replaceAll(search, replace);
             },
             reverse: (value) => {
@@ -210,20 +222,33 @@ class Template {
             round: (value, decimal = 0) => {
                 return Number(value).toFixed(decimal);
             },
-            safe: (value) => {
-
+            rtrim: (value) => {
+                return value.trimEnd();
             },
-            select: (value) => {
-
+            safe: (value) => {
+                return (value === null || value === undefined) ? '' : value;
+            },
+            select: (value, key) => {
+                value.filter((item) => item[key]);
             },
             slice: (value, start, length) => {
                 return length !== undefined ? value.slice(start, start + length) : value.slice(start);
             },
-            sort: (value, max) => {
+            sort: (value, key = null, direction = 'asc') => {
+                const dir = direction === 'desc' ? -1 : 1;
 
+                return [...value].sort((a, b) => {
+                    let va = key ? a?.[key] : a;
+                    let vb = key ? b?.[key] : b;
+
+                    return String(va ?? '').toLowerCase().localeCompare(String(vb ?? '').toLowerCase()) * dir;
+                });
             },
-            striptags: (value, max) => {
+            striptags: (value) => {
+                if (value == null) return '';
 
+                // Remove all tags, including <style>, <script>, comments, etc.
+                return value.replace(/<[^>]*>/g, '').replace(/<!--[\s\S]*?-->/g, '').replace(/<\s*script[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<\s*style[^>]*>[\s\S]*?<\/style>/gi, '').trim();
             },
             sum: (value, amount) => {
                 return value + amount;
@@ -232,7 +257,13 @@ class Template {
                 return value * amount;
             },
             title: (value) => {
+                if (value == null) return '';
 
+                let string = String(value).trim();
+
+                if (!string) return '';
+
+                return string.toLowerCase().replace(/(^|\s|-|_|\b)\w/g, value => value.toUpperCase());
             },
             trim: (value) => {
                 return value.trim();
@@ -246,7 +277,18 @@ class Template {
                 return value.toUpperCase();
             },
             urlencode: (value) => {
-                return value.toUpperCase();
+                if (value == null) return '';
+
+                return encodeURIComponent(String(value));
+            },
+            urldecode: value => {
+                if (value == null) return '';
+
+                try {
+                    return decodeURIComponent(String(value));
+                } catch {
+                    return String(value);
+                }
             },
             wordcount: (value) => {
                 if (value == null) return 0;
@@ -1033,7 +1075,7 @@ class Template {
 const template = Template.getInstance();
 
 export { template };
-
+/*
 // Assign
 let test = [];
 
@@ -1255,3 +1297,4 @@ await test.splice(number, 1).map(async value => {
     console.log('OUTPUT');
     console.log(output);
 });
+*/

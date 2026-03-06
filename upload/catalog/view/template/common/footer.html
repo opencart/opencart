@@ -5,7 +5,7 @@
         <h5>{{ text_information }}</h5>
         <ul class="list-unstyled">
           {% if articles %}
-            <li><a href="{{ blog }}">{{ text_blog }}</a></li>
+            <li><x-a href="cms/article" target="#content">{{ text_blog }}</x-a></li>
           {% endif %}
           {% for informations in informations %}
             <li><a href="{{ information.href }}">{{ information.title }}</a></li>
@@ -16,7 +16,7 @@
         <h5>{{ text_service }}</h5>
         <ul class="list-unstyled">
           <li><a href="{{ contact }}">{{ text_contact }}</a></li>
-          <li><a href="{{ return }}">{{ text_return }}</a></li>
+          <li><a href="{{ returns }}">{{ text_return }}</a></li>
           {% if gdpr %}
             <li><a href="{{ gdpr }}">{{ text_gdpr }}</a></li>
           {% endif %}

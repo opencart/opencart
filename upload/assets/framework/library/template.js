@@ -8,10 +8,12 @@ class Template {
         this.cache = new Map();
 
         this.handler = {
+            assign : this.handleSet.bind(this),
             set: this.handleSet.bind(this),
             if: this.handleIf.bind(this),
             endif: this.handleEndif.bind(this),
             elif: this.handleElif.bind(this),
+            elseif: this.handleElif.bind(this),
             else: this.handleElse.bind(this),
             unless: this.handleUnless.bind(this),
             endunless: this.handleEndunless.bind(this),
@@ -70,13 +72,7 @@ class Template {
             ]
         };
 
-        this.global = {
-            range: (start, stop, step = 1) => Array.from({ length: (stop - start) / step + 1 }, (value, index) => start + index * step),
-            cycle: (items) => {
-
-            },
-            join: (value, seperator = ' ') => value.join(seperator)
-        }
+        this.global = {};
 
         this.filter = {
             // Tools
@@ -207,7 +203,7 @@ class Template {
                 value.pop();
             },
             shift: (value) => {
-                value.pop();
+                value.shift();
             },
             unshift: (value, item) => {
                 value.unshift(item);
@@ -556,32 +552,6 @@ class Template {
         return result;
     }
 
-    parseFunction(expression, ctx) {
-        let match = expression.match(/^([^\(]+)\((.+)\)$/);
-
-        if (!match) return;
-
-        let [, name, argument] = match;
-
-        let args = [];
-
-        if (argument) {
-            args = this.evaluate('[' + argument + ']', ctx);
-        }
-
-        let func = this.global[name];
-
-        if (!func) {
-            console.log(`[Template] Unknown function ${name}!`);
-
-            return;
-        }
-
-        let result = func(...args);
-
-        return result;
-    }
-
     /**
      * Handle Text
      */
@@ -640,16 +610,7 @@ class Template {
 
         let [, name, expression, filter] = match;
 
-        let value = '';
-
-        // Match any global function
-        let output = this.parseFunction(expression);
-
-        if (output !== undefined) {
-            value = output;
-        } else {
-            value = this.evaluate(expression, ctx);
-        }
+        let value = this.evaluate(expression, ctx);
 
         // Apply Filters
         if (filter !== undefined) {
@@ -676,6 +637,41 @@ class Template {
             type: 'output',
             output: output
         });
+    }
+
+    handleCycle(token, stack, ctx, index) {
+        let match = token.value.match(/^cycle\s(.*)/);
+
+        if (!match) {
+            console.warn(`[Template] Invalid 'cycle' syntax line ${token.line} column ${token.column}`);
+
+            return;
+        }
+
+        let args = this.evaluate('[' + match[1] + ']', ctx);
+
+        if (args.length === 0) return;
+
+        // Optional group name
+        // Get or initialize cycle state for this group
+        if (!ctx._cycle) ctx._cycle = {};
+
+        if (!this.ctx._cycle[group]) this.ctx._cycle[group] = {
+            index: -1,
+            values
+        };
+
+        const state = this.ctx._cycle[group];
+
+        state.index = (state.index + 1) % state.values.length;
+
+        this.append(state.values[state.index]);
+
+        return;
+    }
+
+    handleExtend(token, stack, ctx, index) {
+
     }
 
     handleCode(token, stack, ctx, index) {
@@ -812,16 +808,8 @@ class Template {
 
         let [, name, key, filter] = match;
 
-        let items = [];
-
         // Match any global function
-        let output = this.parseFunction(key, ctx);
-
-        if (output !== undefined) {
-            items = output;
-        } else {
-            items = this.evaluate(key, ctx);
-        }
+        let items = this.evaluate(key, ctx);
 
         if (typeof items !== 'object') {
             items = [];
@@ -927,6 +915,7 @@ class Template {
         }
 
         stack.push({
+            tag: 'case',
             type: 'case',
             value: match[1],
             active: false
@@ -944,7 +933,7 @@ class Template {
 
         let top = stack[stack.length - 1];
 
-        if (!top || top.type !== 'case') {
+        if (!top || top.tag !== 'case') {
             console.log(`[Template] Unexpected 'when' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -978,7 +967,7 @@ class Template {
         }
 
         stack.push({
-            name: 'filter',
+            tag: 'filter',
             type: 'capture',
             filter: match[1],
             output: ''

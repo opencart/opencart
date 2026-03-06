@@ -31,9 +31,9 @@ class CommonCart extends WebComponent {
             onComplete: () => {
 
 
-            },
-            on
+            }
         });
     }
 }
 
+customElements.define('common-cart', CommonCart);

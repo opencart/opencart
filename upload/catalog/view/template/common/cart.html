@@ -1,10 +1,8 @@
 <div class="dropdown d-grid">
   <button type="button" data-bs-toggle="dropdown" class="btn btn-lg btn-dark d-block dropdown-toggle"><i class="fa-solid fa-cart-shopping"></i> {{ text_items }}</button>
   <ul class="dropdown-menu dropdown-menu-end p-2">
-
     {% if products %}
       <li>
-
         <table class="table table-striped mb-2">
           {% for product in products %}
             <tr>
@@ -14,7 +12,6 @@
                   <li>
                     <small> - {{ text_model }}: {{ product.model }}</small>
                   </li>
-
                   {% for option in product.option %}
                     <li>
                       <small> - {{ option.name }}: {{ option.value }}</small>

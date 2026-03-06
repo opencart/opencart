@@ -25,6 +25,8 @@ class AccountRegister extends WebComponent {
             data.custom_fields = customer_group.custom_fields;
         }
 
+        data.config_telephone_status = config.config_telephone_status;
+
         console.log(data);
 
         return loader.template('account/register', { ...data, ...language, ...config });

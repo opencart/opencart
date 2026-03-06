@@ -3,6 +3,8 @@ set -e
 
 echo "--- OpenCart initialization ---"
 
+APP_USER="${PHP_UNAME:-www-data}"
+
 # ================================================================
 # STEP 1: SYNC ENVIRONMENT VARIABLES TO EXISTING CONFIGS
 # ================================================================
@@ -108,13 +110,14 @@ fi
 # ================================================================
 
 # Fix ownership for all files by targeting the real directory.
-echo "--- STEP 4: Fixing ownership on /var/www/upload ---"
-chown -R www-data:www-data /var/www/upload
+echo "--- STEP 4: Fixing ownership(user $APP_USER:www-data) on /var/www/upload ---"
+chown -R $APP_USER:www-data /var/www/upload
+chmod -R 775 /var/www/upload
 echo "--- Ownership fixed ---"
 
 # Set permissions for storage relocation
 echo "--- STEP 4: Setting permissions for storage relocation ---"
-chown www-data:www-data /var/www
+chown $APP_USER:www-data /var/www
 chmod 775 /var/www
 
 # ================================================================

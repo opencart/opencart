@@ -38,7 +38,7 @@ class CommonLanguage extends WebComponent {
         return loader.template('common/language', { ...data,  ...language });
     }
 
-    change(e) {
+    onChange(e) {
         e.preventDefault();
 
         local.set('language', e.target.getAttribute('href'));

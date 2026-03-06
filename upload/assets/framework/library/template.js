@@ -79,12 +79,87 @@ class Template {
         }
 
         this.filter = {
-            abs: (value) => {
-                return Math.abs(value);
+            // Tools
+            default: (value, alternative, bool) => {
+                if (bool) {
+                    return value || alternative;
+                } else {
+                    return (value !== undefined) ? value : alternative;
+                }
+            },
+            dump: (value) => {
+                return JSON.stringify(value);
+            },
+            safe: (value) => {
+                return (value === null || value === undefined) ? '' : value;
+            },
+            // HTML
+            e: (value) => {
+                return this.filter.escape(value);
+            },
+            escape: (value) => {
+                return String(value ?? '').replace(/[&<>"']/g, m => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[m] || m));
+            },
+            nl2br: (value) => {
+                if (value == null) return '';
+
+                return String(value).replace(/\n/g, '<br/>');
+            },
+            strip: (value) => {
+                if (value == null) return '';
+
+                // Remove all tags, including <style>, <script>, comments, etc.
+                return value.replace(/<[^>]*>/g, '').replace(/<!--[\s\S]*?-->/g, '').replace(/<\s*script[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<\s*style[^>]*>[\s\S]*?<\/style>/gi, '').trim();
+            },
+            // String
+            lower: (value) => {
+                return value.toLowerCase();
+            },
+            upper: (value) => {
+                return value.toUpperCase();
+            },
+            replace: (value, search, replace = '', max = 0) => {
+                return value.replaceAll(search, replace);
+            },
+            split: (value, separator) => {
+                return value.split(separator);
             },
             append: (value, suffix) => {
                 return value + suffix;
             },
+            prepend: (value, prefix) => {
+                return prefix + value;
+            },
+            trim: (value) => {
+                return value.trim();
+            },
+            ltrim: (value) => {
+                return value.trimStart();
+            },
+            rtrim: (value) => {
+                return value.trimEnd();
+            },
+            truncate: (value, length = 255, end = '...') => {
+                if (value.length <= length) return value;
+
+                return value.substring(0, length - end.length) + end;
+            },
+            wordcount: (value) => {
+                if (value == null) return 0;
+
+                let string = String(value).trim();
+
+                if (!string) return 0;
+
+                return string.split(/\s+/).length;
+            },
+            // Array
             batch: (value, size, fill = null) => {
                 let result = [];
 
@@ -103,110 +178,45 @@ class Template {
 
                 return result;
             },
-            capitalize: (value) => {
-                let string = value.trim();
-
-                if (!string) return '';
-
-                return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+            concat: (value, ...args) => {
+                return value.concat(...args);
             },
-            ceil: (value) => {
-                return Math.ceil(value);
-            },
-            default: (value, alternative, bool) => {
-                if (bool) {
-                    return value || alternative;
-                } else {
-                    return (value !== undefined) ? value : alternative;
-                }
-            },
-            divide: (value, amount) => {
-                return value / amount;
-            },
-            dump: (value) => {
-                return JSON.stringify(value);
-            },
-            e: (value) => {
-                return this.filter.escape(value);
-            },
-            escape: (value) => {
-                return String(value ?? '').replace(/[&<>"']/g, m => ({
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;',
-                    "'": '&#39;'
-                }[m] || m));
-            },
-            first: (value) => {
-                return value[0] !== undefined ? value[0] : [];
-            },
-            float: (value) => {
-                return parseFloat(value);
-            },
-            floor: (value) => {
-                return Math.floor(value);
-            },
-            groupBy: (value, type) => {
+            groupby: (value, type) => {
                 return Object.groupBy(value, ({ type }) => type);
             },
-            indent: (value, width = 4) => {
-                if (value == '') return '';
+            sort: (value, key = null, direction = 'asc') => {
+                const dir = direction === 'desc' ? -1 : 1;
 
-                let indent = ' '.repeat(width);
+                return [...value].sort((a, b) => {
+                    let va = key ? a?.[key] : a;
+                    let vb = key ? b?.[key] : b;
 
-                let lines = value.split("\n");
-
-                let indented = lines.map((line, index) => line.trim() === '' ? line : indent + line);
-
-                return indented.join('\n');
-            },
-            int: (value) => {
-                return Number(value);
-            },
-            join: (value, seperator = ' ') => {
-                return value.join(seperator);
-            },
-            last: (value) => {
-                return value[value.length - 1] !== undefined ? value[value.length - 1] : [];
+                    return String(va ?? '').toLowerCase().localeCompare(String(vb ?? '').toLowerCase()) * dir;
+                });
             },
             length: (value) => {
                 return typeof value === 'array' || typeof value === 'string' ? value.length : 0;
             },
-            lower: (value) => {
-                return value.toLowerCase();
+            sum: (value, amount) => {
+                return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
             },
-            list: (value) => {
-                return value.join(',');
+            push: (value, item) => {
+                value.push(item);
             },
-            ltrim: (value) => {
-                return value.trimStart();
+            pop: (value) => {
+                value.pop();
             },
-            minus: (value, amount) => {
-                return value - amount;
+            shift: (value) => {
+                value.pop();
             },
-            modulo: (value, amount) => {
-                return value % amount;
+            unshift: (value, item) => {
+                value.unshift(item);
             },
-            nl2br: (value) => {
-                if (value == null) return '';
-
-                return String(value).replace(/\n/g, '<br/>');
+            slice: (value, start, length) => {
+                return length !== undefined ? value.slice(start, start + length) : value.slice(start);
             },
-            plus: (value, amount) => {
-                return value + amount;
-            },
-            prepend: (value, prefix) => {
-                return prefix + value;
-            },
-            random: (value) => {
-                return value[Math.floor(Math.random() * value.length)];
-            },
-            reject: (value, key) => {
-                value.filter((item) => !item[key]);
-            },
-            replace: (value, search, replace = '', max = 0) => {
-                return value.replaceAll(search, replace);
+            join: (value, seperator = ' ') => {
+                return value.join(seperator);
             },
             reverse: (value) => {
                 if (Array.isArray(value)) {
@@ -219,63 +229,52 @@ class Template {
 
                 return value; // fallback: return unchanged
             },
-            round: (value, decimal = 0) => {
-                return Number(value).toFixed(decimal);
+            first: (value) => {
+                return value[0] !== undefined ? value[0] : [];
             },
-            rtrim: (value) => {
-                return value.trimEnd();
-            },
-            safe: (value) => {
-                return (value === null || value === undefined) ? '' : value;
+            last: (value) => {
+                let last = value.length - 1;
+
+                return value[last] !== undefined ? value[last] : [];
             },
             select: (value, key) => {
                 value.filter((item) => item[key]);
             },
-            slice: (value, start, length) => {
-                return length !== undefined ? value.slice(start, start + length) : value.slice(start);
+            reject: (value, key) => {
+                value.filter((item) => !item[key]);
             },
-            sort: (value, key = null, direction = 'asc') => {
-                const dir = direction === 'desc' ? -1 : 1;
-
-                return [...value].sort((a, b) => {
-                    let va = key ? a?.[key] : a;
-                    let vb = key ? b?.[key] : b;
-
-                    return String(va ?? '').toLowerCase().localeCompare(String(vb ?? '').toLowerCase()) * dir;
-                });
+            random: (value) => {
+                return value[Math.floor(Math.random() * value.length)];
             },
-            striptags: (value) => {
-                if (value == null) return '';
-
-                // Remove all tags, including <style>, <script>, comments, etc.
-                return value.replace(/<[^>]*>/g, '').replace(/<!--[\s\S]*?-->/g, '').replace(/<\s*script[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<\s*style[^>]*>[\s\S]*?<\/style>/gi, '').trim();
-            },
-            sum: (value, amount) => {
+            // Math
+            plus: (value, amount) => {
                 return value + amount;
+            },
+            minus: (value, amount) => {
+                return value - amount;
             },
             times: (value, amount) => {
                 return value * amount;
             },
-            title: (value) => {
-                if (value == null) return '';
-
-                let string = String(value).trim();
-
-                if (!string) return '';
-
-                return string.toLowerCase().replace(/(^|\s|-|_|\b)\w/g, value => value.toUpperCase());
+            divide: (value, amount) => {
+                return value / amount;
             },
-            trim: (value) => {
-                return value.trim();
+            round: (value, decimal = 0) => {
+                return Number(value).toFixed(decimal);
             },
-            truncate: (value, length = 255, end = '...') => {
-                if (value.length <= length) return value;
-
-                return value.substring(0, length - end.length) + end;
+            ceil: (value) => {
+                return Math.ceil(value);
             },
-            upper: (value) => {
-                return value.toUpperCase();
+            floor: (value) => {
+                return Math.floor(value);
             },
+            abs: (value) => {
+                return Math.abs(value);
+            },
+            modulo: (value, amount) => {
+                return value % amount;
+            },
+            // URL
             urlencode: (value) => {
                 if (value == null) return '';
 
@@ -284,20 +283,7 @@ class Template {
             urldecode: value => {
                 if (value == null) return '';
 
-                try {
-                    return decodeURIComponent(String(value));
-                } catch {
-                    return String(value);
-                }
-            },
-            wordcount: (value) => {
-                if (value == null) return 0;
-
-                let string = String(value).trim();
-
-                if (!string) return 0;
-
-                return string.split(/\s+/).length;
+                return decodeURIComponent(String(value));
             }
         };
     }
@@ -373,6 +359,7 @@ class Template {
 
             let code = '';
 
+            // Stack Capture Raw Syntax
             if (top?.type == 'raw' && index < top.end) {
                 output += token.raw;
 
@@ -381,6 +368,7 @@ class Template {
                 continue;
             }
 
+            // Stack Output
             if (top?.type == 'output') {
                 output += top?.output;
 
@@ -395,6 +383,7 @@ class Template {
                 code = this.handleOutput(token, stack, ctx, index);
             }
 
+            // Stack Capture Raw Output
             if (top?.type == 'capture') {
                 top.value += code;
 
@@ -671,7 +660,7 @@ class Template {
         ctx[name] = value;
     }
 
-    handleInclude(token, stack, ctx, index) {
+    async handleInclude(token, stack, ctx, index) {
         let match = token.value.match(/^include\s(.+)$/);
 
         if (!match) {
@@ -680,7 +669,13 @@ class Template {
             return;
         }
 
-        output += this.render(match[1], ctx);
+        let output = await this.render(match[1], ctx);
+
+        stack.push({
+            tag: 'include',
+            type: 'output',
+            output: output
+        });
     }
 
     handleCode(token, stack, ctx, index) {
@@ -705,7 +700,7 @@ class Template {
         let active = this.evaluate(match[1], ctx);
 
         stack.push({
-            name: 'if',
+            tag: 'if',
             type: 'if',
             active: active
         });
@@ -721,7 +716,7 @@ class Template {
     handleEndif(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.name !== 'if') {
+        if (!top || top.tag !== 'if') {
             console.log(`[Template] Unexpected 'if' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -748,7 +743,7 @@ class Template {
         let active = !this.evaluate(match[1], ctx);
 
         stack.push({
-            name: 'if',
+            tag: 'unless',
             type: 'unless',
             active: active
         });
@@ -759,7 +754,7 @@ class Template {
     handleEndunless(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.type !== 'unless') {
+        if (!top || top.tag !== 'unless') {
             console.log(`[Template] Unexpected 'endunless' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -779,7 +774,7 @@ class Template {
 
         let top = stack[stack.length - 1];
 
-        if (!top || top.type !== 'if') {
+        if (!top || top.tag !== 'if') {
             console.log(`[Template] Unexpected 'elif' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -794,7 +789,7 @@ class Template {
     handleElse(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || (top.type !== 'if' && top.type !== 'unless' && top.type !== 'case')) {
+        if (!top || (top.tag !== 'if' && top.tag !== 'unless' && top.tag !== 'case')) {
             console.log(`[Template] Unexpected 'else' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -838,6 +833,7 @@ class Template {
         }
 
         stack.push({
+            tag: 'for',
             type: 'for',
             name: name,
             items: items,
@@ -963,7 +959,7 @@ class Template {
     handleEndcase(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || (top.type !== 'case' && top.type !== 'if')) {
+        if (!top || top.tag !== 'case') {
             console.log(`[Template] Unexpected 'endunless' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -982,7 +978,8 @@ class Template {
         }
 
         stack.push({
-            type: 'filter',
+            name: 'filter',
+            type: 'capture',
             filter: match[1],
             output: ''
         });
@@ -991,13 +988,18 @@ class Template {
     handleEndfilter(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.type !== 'filter') {
+        if (!top || top.tag !== 'filter') {
             console.log(`[Template] Unexpected 'endfilter' tag line ${token.line} column ${token.column}`);
 
             return;
         }
 
-        output += this.parseFilter(top.value, top.filter, ctx);
+        stack.pop();
+
+        stack.push({
+            type: 'output',
+            output: this.parseFilter(top.value, top.filter, ctx)
+        });
     }
 
     handleBlock(token, stack, ctx, index) {
@@ -1010,6 +1012,7 @@ class Template {
         }
 
         stack.push({
+            tag: 'block',
             type: 'capture',
             name: match[1],
             value: ''
@@ -1019,7 +1022,7 @@ class Template {
     handleEndblock(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.type !== 'capture') {
+        if (!top || top.tag !== 'block') {
             console.log(`[Template] Unexpected 'endblock' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -1050,7 +1053,10 @@ class Template {
     }
 
     handleComment(token, stack, ctx, index) {
-        stack.push({ type: 'comment' });
+        stack.push({
+            tag: 'comment',
+            type: 'comment'
+        });
 
         return token.end;
     }

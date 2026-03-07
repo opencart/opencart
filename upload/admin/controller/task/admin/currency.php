@@ -3,6 +3,8 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Currency
  *
+ * Generates currency data for the admin
+ *
  * @package Opencart\Admin\Controller\Task\Admin
  */
 class Currency extends \Opencart\System\Engine\Controller {
@@ -20,6 +22,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguage((int)$args['language_id']);

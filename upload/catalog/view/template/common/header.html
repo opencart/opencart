@@ -20,21 +20,21 @@
               <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i> <span class="d-none d-lg-inline">{{ text_account }}</span> <i class="fa-solid fa-caret-down"></i></a>
               <ul class="dropdown-menu dropdown-menu-right">
                 {% if !logged %}
-                <li><a href="account/register" data-on="click:register" class="dropdown-item">{{ text_register }}</a></li>
-                <li><a href="account/login" data-on="click:login" class="dropdown-item">{{ text_login }}</a></li>
+                <li><a href="account/register.html" data-on="click:register" class="dropdown-item">{{ text_register }}</a></li>
+                <li><a href="account/login.html" data-on="click:login" class="dropdown-item">{{ text_login }}</a></li>
                 {% else %}
-                <li><a href="account/account" class="dropdown-item">{{ text_account }}</a></li>
-                <li><a href="account/order" class="dropdown-item">{{ text_order }}</a></li>
-                <li><a href="account/transaction" class="dropdown-item">{{ text_transaction }}</a></li>
-                <li><a href="account/download" class="dropdown-item">{{ text_download }}</a></li>
-                <li><a href="account/logout" class="dropdown-item">{{ text_logout }}</a></li>
+                <li><a href="account/account.html" class="dropdown-item">{{ text_account }}</a></li>
+                <li><a href="account/order.html" class="dropdown-item">{{ text_order }}</a></li>
+                <li><a href="account/transaction.html" class="dropdown-item">{{ text_transaction }}</a></li>
+                <li><a href="account/download.html" class="dropdown-item">{{ text_download }}</a></li>
+                <li><a href="account/logout.html" class="dropdown-item">{{ text_logout }}</a></li>
                 {% endif %}
               </ul>
             </div>
           </li>
-          <li class="list-inline-item"><a href="account/wishlist" id="wishlist-total" title="{{ text_wishlist | replace: '%s', wishlist }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist | replace: '%s', wishlist }}</span></a></li>
-          <li class="list-inline-item"><a href="checkout/cart" title="{{ text_shopping_cart }}"><i class="fa-solid fa-cart-shopping"></i> <span class="d-none d-lg-inline">{{ text_shopping_cart }}</span></a></li>
-          <li class="list-inline-item"><a href="checkout/checkout" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-lg-inline">{{ text_checkout }}</span></a></li>
+          <li class="list-inline-item"><a href="account/wishlist.html" id="wishlist-total" title="{{ text_wishlist | replace: '%s', wishlist }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist | replace: '%s', wishlist }}</span></a></li>
+          <li class="list-inline-item"><a href="checkout/cart.html" title="{{ text_shopping_cart }}"><i class="fa-solid fa-cart-shopping"></i> <span class="d-none d-lg-inline">{{ text_shopping_cart }}</span></a></li>
+          <li class="list-inline-item"><a href="checkout/checkout.html" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-lg-inline">{{ text_checkout }}</span></a></li>
         </ul>
       </div>
 

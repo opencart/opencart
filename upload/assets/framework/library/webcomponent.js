@@ -7,7 +7,7 @@ export class WebComponent extends HTMLElement {
         // Adds reactive component event changes to the attributes of the element to re-render the contents.
         for (let attribute of this.attributes) {
             if (!attribute.name.startsWith('data-')) {
-                this.addEventListener('[' + attribute.name + ']', this.initialize.bind(this));
+                this.addEventListener('[' + attribute.name + ']', this.update.bind(this));
             }
         }
     }
@@ -18,15 +18,15 @@ export class WebComponent extends HTMLElement {
         }
 
         if (this.render !== undefined) {
-            this.initialize();
+            this.update();
         }
     }
 
-    async initialize() {
+    async update() {
         let render = (html) => {
             this.innerHTML = html;
 
-            // Attach Events based on elements that have data-on attributes
+            // Attach Events based on elements that have data-bind and data-on attributes
             let elements = this.querySelectorAll('[data-bind], [data-on]');
 
             for (let element of elements) {

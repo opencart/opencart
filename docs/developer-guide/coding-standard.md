@@ -1,21 +1,5 @@
 # Coding Standard
 
-* [File types & encoding](https://docs.opencart.com/developer-guide/coding-standard#file-types)
-* [PHP tags](https://github.com/opencart/opencart/wiki/Coding-Standards#php-tags)
-* [Indentation](https://github.com/opencart/opencart/wiki/Coding-Standards#indentation)
-* [Spacing](https://github.com/opencart/opencart/wiki/Coding-Standards#spacing)
-* [Whitespace](https://github.com/opencart/opencart/wiki/Coding-Standards#whitespace)
-* [New lines](https://github.com/opencart/opencart/wiki/Coding-Standards#new-lines)
-* [File naming](https://github.com/opencart/opencart/wiki/Coding-Standards#file-naming)
-* [Class & method naming](https://github.com/opencart/opencart/wiki/Coding-Standards#class-method-naming)
-* [Helper naming](https://github.com/opencart/opencart/wiki/Coding-Standards#helper-naming)
-* [PHP variable naming](https://github.com/opencart/opencart/wiki/Coding-Standards#php-variable-naming)
-* [User defined constants](https://github.com/opencart/opencart/wiki/Coding-Standards#user-constants)
-* [PHP constants](https://github.com/opencart/opencart/wiki/Coding-Standards#php-constants)
-* [HTML / CSS rules](https://github.com/opencart/opencart/wiki/Coding-Standards#html-css)
-* [PHP CS Fixer](https://github.com/opencart/opencart/wiki/Coding-Standards#cs-fixer)
-* [PHPStan](https://github.com/opencart/opencart/wiki/Coding-Standards#phpstan)
-
 ### File types & encoding
 
 

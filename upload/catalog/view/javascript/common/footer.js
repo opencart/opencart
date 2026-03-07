@@ -23,6 +23,9 @@ class CommonFooter extends WebComponent {
         // Information Pages
         data.informations = Object.values(informations);
 
+        data.gdpr = config.config_gdpr_id ? true : false;
+        data.affiliate = config.config_affiliate_status ? true : false;
+
         let date = new Date();
 
         data.year = date.getFullYear();

@@ -72,6 +72,7 @@
 
 ## Developer Guide
 
+* [Coding Standard](developer-guide/coding-standard.md)
 * [Extensions](developer-guide/extensions.md)
 * [Events](developer-guide/events.md)
 * [Startups](developer-guide/startups.md)

@@ -1056,13 +1056,13 @@ class CurlyTag {
 
     static getInstance() {
         if (!this.instance) {
-            this.instance = new Template();
+            this.instance = new CurlyTag();
         }
 
         return this.instance;
     }
 }
 
-const template = Template.getInstance();
+const template = CurlyTag.getInstance();
 
 export { template };

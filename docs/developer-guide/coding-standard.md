@@ -1,6 +1,6 @@
 # Coding Standard
 
-* [File types & encoding](https://github.com/opencart/opencart/wiki/Coding-Standards#file-types)
+* [File types & encoding](https://docs.opencart.com/developer-guide/coding-standard#file-types)
 * [PHP tags](https://github.com/opencart/opencart/wiki/Coding-Standards#php-tags)
 * [Indentation](https://github.com/opencart/opencart/wiki/Coding-Standards#indentation)
 * [Spacing](https://github.com/opencart/opencart/wiki/Coding-Standards#spacing)

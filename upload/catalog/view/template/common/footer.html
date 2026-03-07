@@ -5,7 +5,7 @@
         <h5>{{ text_information }}</h5>
         <ul class="list-unstyled">
           {% if articles %}
-            <li><x-link href="cms/article" target="#content">{{ text_blog }}</x-link></li>
+            <li><x-link href="cms/article.html" target="#content">{{ text_blog }}</x-link></li>
           {% endif %}
           {% for information in informations %}
             <li><a href="information/information-{{ information.information_id }}.html">{{ information.title }}</a></li>

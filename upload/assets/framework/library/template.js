@@ -263,14 +263,10 @@ class Template {
             },
             // URL
             urlencode: (value) => {
-                if (value == null) return '';
-
-                return encodeURIComponent(String(value));
+                return encodeURIComponent(value);
             },
             urldecode: value => {
-                if (value == null) return '';
-
-                return decodeURIComponent(String(value));
+                return decodeURIComponent(value);
             }
         };
     }

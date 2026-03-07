@@ -1,12 +1,11 @@
 /* OpenCart Twig replacement. Based on Django, Nunjucks template syntax. */
-class Template {
+class CurlyTag {
     static instance = null;
 
     constructor() {
         this.directory = '';
         this.path = new Map();
         this.cache = new Map();
-        this.compile = new Map();
 
         this.handler = {
             set: this.handleSet.bind(this),
@@ -102,7 +101,7 @@ class Template {
             nl2br: (value) => {
                 return String(value).replace(/\n/g, '<br/>');
             },
-            strip: (value) => {
+            striptag: (value) => {
                 // Remove all tags, including <style>, <script>, comments, etc.
                 return value.replace(/<[^>]*>/g, '').replace(/<!--[\s\S]*?-->/g, '').replace(/<\s*script[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<\s*style[^>]*>[\s\S]*?<\/style>/gi, '').trim();
             },
@@ -113,8 +112,11 @@ class Template {
             upper: (value) => {
                 return value.toUpperCase();
             },
-            replace: (value, search, replace = '', max = 0) => {
+            replace: (value, search, replace = '') => {
                 return value.replaceAll(search, replace);
+            },
+            replace_first: (value, search, replace = '') => {
+                return value.replace(search, replace);
             },
             split: (value, separator) => {
                 return value.split(separator);
@@ -184,6 +186,9 @@ class Template {
             length: (value) => {
                 return typeof value === 'array' || typeof value === 'string' ? value.length : 0;
             },
+            limit: (value, offset, limit) => {
+                return value.slice(offset, offset + limit);
+            },
             sum: (value, amount) => {
                 return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
             },
@@ -199,8 +204,8 @@ class Template {
             unshift: (value, item) => {
                 value.unshift(item);
             },
-            slice: (value, start, length) => {
-                return length !== undefined ? value.slice(start, start + length) : value.slice(start);
+            slice: (value, start, end) => {
+                return length !== undefined ? value.slice(start, end) : value.slice(start);
             },
             join: (value, seperator = ' ') => {
                 return value.join(seperator);
@@ -303,11 +308,7 @@ class Template {
         let response = await fetch(file);
 
         if (response.status == 200) {
-            let object = await response.text();
-
-            this.cache.set(path, object);
-
-            return this.cache.get(path);
+            return await response.text();
         } else {
             console.log(`[Template] Could not load template file ${path}!`);
         }
@@ -324,23 +325,19 @@ class Template {
      * @returns {string} - Rendered template string
      */
     async render(path, data = {}) {
-        let code = await this.fetch(path);
-
-        if (!this.compile.has(path)) {
-            this.compile.set(path, this.tokenize(code));
+        if (!this.cache.has(path)) {
+            this.cache.set(path, this.tokenize(await this.fetch(path)));
         }
 
-        let tokens = this.compile.get(path);
-
-        return this.process(tokens, data);
+        return this.process(this.cache.get(path), data);
     }
 
     // ─── Main render ────────────────────────────────────────────────────────
-    process(tokens, data = {}) {
-        let ctx = data;
-        let index  = 0;
-        let stack = [];
-        let output = '';
+    process(tokens, data= {}) {
+        let ctx= data;
+        let index= 0;
+        let stack= [];
+        let output= '';
 
         while (index < tokens.length) {
             let token = tokens[index];
@@ -359,17 +356,17 @@ class Template {
 
             // Stack Output
             if (top?.type == 'output') {
-                output += top?.output;
+                code = top?.output;
 
                 stack.pop();
             }
 
             if (token.type == 'text') {
-                code = this.handleText(token, stack, ctx, index);
+                code += this.handleText(token, stack, ctx, index);
             }
 
             if (token.type == 'output') {
-                code = this.handleOutput(token, stack, ctx, index);
+                code += this.handleOutput(token, stack, ctx, index);
             }
 
             // Stack Capture Raw Output
@@ -492,16 +489,16 @@ class Template {
 
     evaluate(expression, ctx) {
         if (!expression) return undefined;
-        ///'{ ' + Object.keys(ctx).join(', ') + ' }'
 
         try {
             let func = new Function('data', `with(data) return (${expression});`);
 
-            //console.log(func);
-            //console.log(ctx);
-
             return func({ ...ctx });
         } catch (error)  {
+            console.trace();
+
+            console.log("http://localhost:8000/path/to/file.js:83:2");
+
             console.log(`[Template] Warning: Evaluate error '${error}'`);
 
             return undefined;
@@ -583,11 +580,11 @@ class Template {
 
         // Trim whitespace
         if (token.raw[3] == '-') {
-            //value = value.trimStart();
+            value = value.trimStart();
         }
 
         if (token.raw[-3] == '-') {
-            //value = value.trimEnd();
+            value = value.trimEnd();
         }
 
         return value;
@@ -650,6 +647,9 @@ class Template {
         let args = this.evaluate('[' + match[1] + ']', ctx);
 
         if (args.length === 0) return;
+
+
+        const pos = i % arr.length;
 
         // Optional group name
         // Get or initialize cycle state for this group

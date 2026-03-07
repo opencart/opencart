@@ -7562,12 +7562,68 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'theme',
+		'field' => [
+			[
+				'name'           => 'theme_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name'    => 'store_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name'    => 'route',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name' => 'code',
+				'type' => 'mediumtext'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'theme_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'translation',
 		'field' => [
 			[
 				'name'           => 'translation_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
+			],
+			[
+				'name'    => 'store_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
 			],
 			[
 				'name' => 'route',
@@ -7588,9 +7644,35 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'translation_id'
+			'translation_id',
+			'store_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			],
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
 		],
 		'index' => [
+			[
+				'name' => 'store',
+				'key'  => [
+					'store_id'
+				]
+			],
+			[
+				'name' => 'language',
+				'key'  => [
+					'language_id'
+				]
+			],
 			[
 				'name' => 'route',
 				'key'  => [

@@ -11,7 +11,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate currency task list.
+	 * Generate currency list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -35,7 +35,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 	/*

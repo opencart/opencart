@@ -3,13 +3,15 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Customer Group
  *
+ * Generates customer group data for all stores.
+ *
  * @package Opencart\Admin\Controller\Task\Admin
  */
 class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate customer group task list.
+	 * Generate customer group list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -18,42 +20,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
-		// Clear old data
-		$task_data = [
-			'code'   => 'customer_group',
-			'action' => 'task/admin/customer_group.clear',
-			'args'   => []
-		];
-
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-		// Create new data
-		$task_data = [
-			'code'   => 'customer_group',
-			'action' => 'task/admin/customer_group.list'
-		];
-
-		$this->model_setting_task->addTask($task_data);
-
-		return ['success' => $this->language->get('text_task')];
-	}
-
-	/**
-	 * List
-	 *
-	 * Generate JSON customer group list file.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function list(array $args = []): array {
-		$this->load->language('task/admin/customer_group');
-
-		$this->load->model('setting/task');
-
 		$customer_group_data = [];
 
 		$this->load->model('customer/customer_group');
@@ -61,15 +27,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
 		foreach ($customer_groups as $customer_group) {
-			$customer_group_data[] = $customer_group + ['description' => $this->model_localisation_country->getDesciptions($customer_group['customer_group_id'])];
-
-			$task_data = [
-				'code'   => 'customer_group',
-				'action' => 'task/admin/customer_group.info',
-				'args'   => ['customer_group_id' => $customer_group['customer_group_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
+			$customer_group_data[] = $customer_group + ['description' => $this->model_customer_customer_group->getDesciptions($customer_group['customer_group_id'])];
 		}
 
 		$directory = DIR_APPLICATION . 'view/data/customer/';
@@ -110,11 +68,15 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_customer_group')];
 		}
 
-		$customer_group_info = $customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])];
+		$custom_field_data = [];
 
 		$this->load->model('customer/custom_field');
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
+
+		foreach ($custom_fields as $custom_field) {
+			$custom_field_data[] = $custom_field + ['description' => $this->model_customer_custom_field->getDesciptions($custom_field['custom_field_id'])];
+		}
 
 		$directory = DIR_APPLICATION . 'view/data/customer/';
 		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
@@ -123,7 +85,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($customer_group_info + ['custom_field' => $custom_fields]))) {
+		if (!file_put_contents($directory . $filename, json_encode($customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])] + ['custom_field' => $custom_field_data]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

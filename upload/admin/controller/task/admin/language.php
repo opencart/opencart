@@ -11,7 +11,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate language list file.
+	 * Generate language list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -35,7 +35,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_success')];
+		return ['success' => $this->language->get('text_list')];
 	}
 
 	/**

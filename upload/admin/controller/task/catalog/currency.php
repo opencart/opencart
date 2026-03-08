@@ -53,8 +53,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		// Store
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -72,12 +73,12 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/currency');
 
-		$currency_ids = $this->model_setting_setting->getValue('config_currency_list', (int)$args['store_id']);
+		$currency_ids = $this->model_setting_setting->getValue('config_currency_list', $store_info['store_id']);
 
 		foreach ($currency_ids as $currency_id) {
 			$currency_info = $this->model_localisation_currency->getCurrency((int)$currency_id);
 
-			if (!$currency_info || !$currency_info['status']) {
+			if ($currency_info && $currency_info['status']) {
 				$currency_data[$currency_info['code']] = $currency_info;
 			}
 		}

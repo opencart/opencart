@@ -20,28 +20,19 @@ class Location extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/location');
 
-		// Stores
 		$this->load->model('setting/store');
-		$this->load->model('setting/setting');
 		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
+			$task_data = [
+				'code'   => 'location.' . $store_id,
+				'action' => 'task/catalog/location.list',
+				'args'   => ['store_id' => $store_id]
+			];
 
-			foreach ($language_ids as $language_id) {
-				$task_data = [
-					'code'   => 'location.' . $store_id . '.' . $language_id,
-					'action' => 'task/catalog/location.list',
-					'args'   => [
-						'store_id'    => $store_id,
-						'language_id' => $language_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];

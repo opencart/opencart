@@ -28,7 +28,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'country.list.' . $store_id,
-				'action' => 'task/catalog/country._list',
+				'action' => 'task/catalog/country.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -52,8 +52,9 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		// Store
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -66,7 +67,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Country List
 		$country_data = [];
 
 		$this->load->model('setting/setting');

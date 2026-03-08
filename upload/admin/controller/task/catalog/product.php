@@ -35,21 +35,16 @@ class Product extends \Opencart\System\Engine\Controller {
 		$store_ids = $this->model_catalog_product->getStores((int)$product_info['product_id']);
 
 		foreach ($store_ids as $store_id) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
+			$task_data = [
+				'code'   => 'product.info.' . $store_id . '.' . $product_info['product_id'],
+				'action' => 'task/catalog/product.info',
+				'args'   => [
+					'product_id' => $product_info['product_id'],
+					'store_id'   => $store_id
+				]
+			];
 
-			foreach ($language_ids as $language_id) {
-				$task_data = [
-					'code'   => 'product.info.' . $store_id . '.' . $language_id . '.' . $product_info['product_id'],
-					'action' => 'task/catalog/product.info',
-					'args'   => [
-						'product_id'  => $product_info['product_id'],
-						'store_id'    => $store_id,
-						'language_id' => $language_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];
@@ -106,7 +101,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Description
-		$description_info = $this->model_cms_article->getDescription($product_info['product_id'], $language_info['language_id']);
+		$description_info = $this->model_cms_article->getDescription($product_info['product_id']);
 
 		if (!$description_info) {
 			return ['error' => $this->language->get('error_description')];

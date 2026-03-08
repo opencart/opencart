@@ -65,15 +65,8 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/article');
 
 		// Validate
-		$required = [
-			'article_id',
-			'store_id'
-		];
-
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $args)) {
-				return ['error' => sprintf($this->language->get('error_required'), $value)];
-			}
+		if (!array_key_exists('article_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
 		}
 
 		// Store

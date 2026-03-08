@@ -109,16 +109,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'url'      => $this->config->get('config_url')
-		];
-
 		$this->load->model('setting/store');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$stores = array_merge(['url' => $this->config->get('config_url')], $this->model_setting_store->getStores());
 
 		foreach ($stores as $store) {
 			$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/localisation/currency.json';

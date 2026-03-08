@@ -34,27 +34,21 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('setting/store');
-		$this->load->model('setting/setting');
 		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
+			$task_data = [
+				'code'   => 'banner.info.' . $store_id . '.' . $banner_info['banner_id'],
+				'action' => 'task/catalog/banner.info',
+				'args'   => [
+					'banner_id' => $banner_info['banner_id'],
+					'store_id'  => $store_id
+				]
+			];
 
-			foreach ($language_ids as $language_id) {
-				$task_data = [
-					'code'   => 'banner.info.' . $store_id . '.' . $language_id . '.' . $banner_info['banner_id'],
-					'action' => 'task/catalog/banner.info',
-					'args'   => [
-						'banner_id'   => $banner_info['banner_id'],
-						'store_id'    => $store_id,
-						'language_id' => $language_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];
@@ -88,15 +82,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
 		// Banner
 		$this->load->model('design/banner');
 
@@ -107,7 +92,13 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		// Banner Images
-		$banners = $this->model_design_banner->getImages($banner_info['banner_id'], $language_info['language_id']);
+		$banner_data = [];
+
+		$banners = $this->model_design_banner->getImages($banner_info['banner_id']);
+
+		foreach ($banners as $banner) {
+			$banner_data[] =
+		}
 
 		$sort_order = [];
 
@@ -118,18 +109,18 @@ class Banner extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $banners);
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/design/';
-		$filename = 'banner-' . $args['banner_id'] . '.yaml';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/design/';
+		$filename = 'banner-' . $args['banner_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($banners))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($banner_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['name'], $banner_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $banner_info['name'])];
 	}
 
 	/**
@@ -155,17 +146,11 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
 		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$files = oc_directory_read(DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/design/', false, '/banner\-.+\.json$/');
+			$files = oc_directory_read(DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/design/', false, '/banner\-.+\.json$/');
 
-				foreach ($files as $file) {
-					unlink($file);
-				}
+			foreach ($files as $file) {
+				unlink($file);
 			}
 		}
 

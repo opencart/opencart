@@ -17,7 +17,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function info(array $args = []): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
 		if (!array_key_exists('article_id', $args)) {
@@ -40,21 +40,16 @@ class Article extends \Opencart\System\Engine\Controller {
 		$store_ids = $this->model_cms_article->getStores((int)$args['article_id']);
 
 		foreach ($store_ids as $store_id) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
+			$task_data = [
+				'code'   => 'article.info.' . $store_id . '.' . $article_info['article_id'],
+				'action' => 'task/catalog/article.info',
+				'args'   => [
+					'article_id'  => $article_info['article_id'],
+					'store_id'    => $store_id
+				]
+			];
 
-			foreach ($language_ids as $language_id) {
-				$task_data = [
-					'code'   => 'article.createArticle(' . $store_id . ', ' . $language_id . ', ' . $article_info['article_id'] . ')',
-					'action' => 'task/catalog/article.createArticle',
-					'args'   => [
-						'article_id'  => $article_info['article_id'],
-						'store_id'    => $store_id,
-						'language_id' => $language_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];
@@ -69,14 +64,13 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function _info(array $args = []): array {
+	public function info(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
 		// Validate
 		$required = [
 			'article_id',
-			'store_id',
-			'language_id'
+			'store_id'
 		];
 
 		foreach ($required as $value) {
@@ -101,15 +95,6 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
 		// Article
 		$this->load->model('cms/article');
 
@@ -119,26 +104,19 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_article')];
 		}
 
-		// Description
-		$description_info = $this->model_cms_article->getDescription($article_info['article_id'], $language_info['language_id']);
-
-		if (!$description_info) {
-			return ['error' => $this->language->get('error_description')];
-		}
-
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/cms/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
 		$filename = 'article-' . $article_info['article_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($description_info + $article_info))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($article_info + ['description' => $this->model_cms_article->getDescriptions($article_info['article_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $language_info['name'], $description_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $article_info['name'])];
 	}
 
 	/**
@@ -169,22 +147,22 @@ class Article extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/cms/';
 
-				$file = $base . $directory . 'country.json';
+			$base = DIR_CATALOG . 'view/data/';
+			$directory = parse_url($store['url'], PHP_URL_HOST) . '/cms/';
 
-				if (is_file($file)) {
-					unlink($file);
-				}
+			$file = $base . $directory . 'country.json';
 
-				$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
-
-				foreach ($files as $file) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
 			}
+
+			$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
+
+			foreach ($files as $file) {
+				unlink($file);
+			}
+
 		}
 
 		return ['success' => $this->language->get('text_clear')];

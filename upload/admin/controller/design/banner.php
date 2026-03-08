@@ -219,26 +219,28 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		foreach ($data['languages'] as $language) {
-			$banner_images = $this->model_design_banner->getImages($this->request->get['banner_id'], $language['language_id']);
+		$banner_images = [];
 
-			foreach ($banner_images as $banner_image) {
-				if ($banner_image['image'] && is_file(DIR_IMAGE . html_entity_decode($banner_image['image'], ENT_QUOTES, 'UTF-8'))) {
-					$image = $banner_image['image'];
-					$thumb = $banner_image['image'];
-				} else {
-					$image = '';
-					$thumb = 'no_image.png';
-				}
+		if (!empty($banner_info)) {
+			$banner_images = $this->model_design_banner->getImages($banner_info['banner_id']);
+		}
 
-				$data['banner_images'][$banner_image['language_id']][] = [
-					'title'      => $banner_image['title'],
-					'link'       => $banner_image['link'],
-					'image'      => $image,
-					'thumb'      => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
-					'sort_order' => $banner_image['sort_order']
-				];
+		foreach ($banner_images as $language_id => $banner_image) {
+			if ($banner_image['image'] && is_file(DIR_IMAGE . html_entity_decode($banner_image['image'], ENT_QUOTES, 'UTF-8'))) {
+				$image = $banner_image['image'];
+				$thumb = $banner_image['image'];
+			} else {
+				$image = '';
+				$thumb = 'no_image.png';
 			}
+
+			$data['banner_images'][$language_id][] = [
+				'title'      => $banner_image['title'],
+				'link'       => $banner_image['link'],
+				'image'      => $image,
+				'thumb'      => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
+				'sort_order' => $banner_image['sort_order']
+			];
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));

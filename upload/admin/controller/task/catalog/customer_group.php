@@ -20,7 +20,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
 
-		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
@@ -53,8 +52,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		// Store
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -72,16 +72,14 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('customer/customer_group');
 
-		$customer_group_ids = $this->model_setting_setting->getValue('config_customer_group_list', (int)$args['store_id']);
+		$customer_group_ids = $this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']);
 
 		foreach ($customer_group_ids as $customer_group_id) {
 			$customer_group_info = $this->model_customer_customer_group->getCountry($customer_group_id);
 
-			if (!$customer_group_info || !$customer_group_info['status']) {
-				continue;
+			if ($customer_group_info && $customer_group_info['status']) {
+				$customer_group_data[] = $customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_id)];
 			}
-
-			$customer_group_data[] = $customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_id)];
 		}
 
 		$base = DIR_CATALOG . 'view/data/';

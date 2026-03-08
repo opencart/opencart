@@ -24,7 +24,6 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Article
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle((int)$args['article_id']);
@@ -33,19 +32,17 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_article')];
 		}
 
-		// Stores
-		$this->load->model('setting/setting');
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_cms_article->getStores((int)$args['article_id']);
+		$store_ids = $this->model_cms_article->getStores($article_info['article_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'article.info.' . $store_id . '.' . $article_info['article_id'],
 				'action' => 'task/catalog/article.info',
 				'args'   => [
-					'article_id'  => $article_info['article_id'],
-					'store_id'    => $store_id
+					'article_id' => $article_info['article_id'],
+					'store_id'   => $store_id
 				]
 			];
 
@@ -131,23 +128,11 @@ class Article extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
 		$this->load->model('setting/store');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
-
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
+		$stores = array_merge(['url' => HTTP_CATALOG], $this->model_setting_store->getStores());
 
 		foreach ($stores as $store) {
-
 			$base = DIR_CATALOG . 'view/data/';
 			$directory = parse_url($store['url'], PHP_URL_HOST) . '/cms/';
 

@@ -20,47 +20,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
-		$this->load->model('setting/task');
-
-		// Language
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		foreach ($languages as $language) {
-			$task_data = [
-				'code'   => 'currency.' . $language['language_id'],
-				'action' => 'task/catalog/currency.list',
-				'args'   => ['language_id' => $language['language_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
-
-		return ['success' => $this->language->get('text_task')];
-	}
-
-	/**
-	 * List
-	 *
-	 * Generate JSON currency list file.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function list(array $args = []): array {
-		$this->load->language('task/admin/currency');
-
-		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
 		$this->load->model('localisation/currency');
 
 		$currencies = $this->model_localisation_currency->getCurrencies();
@@ -76,7 +35,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => $this->language->get('text_list')];
+		return ['success' => $this->language->get('text_success')];
 	}
 
 	/*
@@ -125,16 +84,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
-		$this->load->model('localisation/language');
+		$file = DIR_APPLICATION . 'view/data/localisation/currency.json';
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($languages as $language) {
-			$file = DIR_APPLICATION . 'view/data/' . $language['code'] . '/localisation/currency.json';
-
-			if (is_file($file)) {
-				unlink($file);
-			}
+		if (is_file($file)) {
+			unlink($file);
 		}
 
 		return ['success' => $this->language->get('text_clear')];

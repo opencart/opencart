@@ -196,7 +196,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
 
 		foreach ($custom_fields as $custom_field) {
-			$custom_field_data[] = $custom_field + ['description' => $this->model_customer_custom_field->getDesciptions($custom_field['custom_field_id'])];
+			$custom_field_data[] = $custom_field + ['description' => $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id'])];
 		}
 
 		$base = DIR_CATALOG . 'view/data/';

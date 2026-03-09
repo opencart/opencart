@@ -129,11 +129,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_catalog_information->getStores($args['information_id']);
+		$store_ids = $this->model_catalog_information->getStores($manufacturer_info['manufacturer_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'manufacturer._info.' . $store_id . '.' . $manufacturer_info['information_id'],
+				'code'   => 'manufacturer._info.' . $store_id . '.' . $manufacturer_info['manufacturer_id'],
 				'action' => 'task/catalog/manufacturer._info',
 				'args'   => [
 					'manufacturer_id' => $manufacturer_info['manufacturer_id'],

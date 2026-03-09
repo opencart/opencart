@@ -18,7 +18,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/filter');
 
-
 		// List
 		$task_data = [
 			'code'   => 'filter',
@@ -61,19 +60,19 @@ class Filter extends \Opencart\System\Engine\Controller {
 					$languages = [];
 				}
 
-				foreach ($languages as $language_id) {
-					$task_data = [
-						'code'   => 'country',
-						'action' => 'task/catalog/country.list',
-						'args'   => [
-							'store_id'    => $store['store_id'],
-							'language_id' => $language_id
-						]
-					];
 
-					$this->model_setting_task->addTask($task_data);
-				}
+				$task_data = [
+					'code'   => 'country',
+					'action' => 'task/catalog/country.list',
+					'args'   => [
+						'store_id'    => $store['store_id'],
+						'language_id' => $language_id
+					]
+				];
+
+				$this->model_setting_task->addTask($task_data);
 			}
+
 		}
 
 		return ['success' => $this->language->get('text_task')];
@@ -213,14 +212,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_store')];
 		}
 
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
@@ -231,12 +222,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		if (!$country_info['status']) {
 			return ['success' => sprintf($this->language->get('text_skip'), $store_info['name'], $language_info['name'], $country_info['name'])];
-		}
-
-		$description_info = $this->model_localisation_country->getDescription((int)$country_info['country_id'], $language_info['language_id']);
-
-		if (!$description_info) {
-			return ['error' => $this->language->get('error_description')];
 		}
 
 		$stores = $this->model_localisation_country->getStores((int)$country_info['country_id']);
@@ -275,7 +260,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + $description_info + ['zone' => $zones] + ['geo_zone' => $geo_zone_data]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($country_info + ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])] + ['zone' => $zones] + ['geo_zone' => $geo_zone_data]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

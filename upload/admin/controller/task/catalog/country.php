@@ -77,11 +77,9 @@ class Country extends \Opencart\System\Engine\Controller {
 		foreach ($country_ids as $country_id) {
 			$country_info = $this->model_localisation_country->getCountry($country_id);
 
-			if (!$country_info || !$country_info['status']) {
-				continue;
+			if ($country_info && $country_info['status']) {
+				$country_data[] = $country_info + ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])];
 			}
-
-			$country_data[] = $country_info + ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])];
 		}
 
 		$sort_order = [];
@@ -123,7 +121,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Country
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
@@ -140,7 +137,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'country._info.' . $store_id . '.' . $country_info['country_id'],
-				'action' => 'task/catalog/country.info',
+				'action' => 'task/catalog/country._info',
 				'args'   => [
 					'country_id' => $country_info['country_id'],
 					'store_id'   => $store_id
@@ -153,8 +150,14 @@ class Country extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_info'), $country_info['name'])];
 	}
 
-	/*
+	/**
+	 * Info
 	 *
+	 * Generate country information.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
 	 */
 	public function _info(array $args = []): array {
 		$this->load->language('task/catalog/country');
@@ -196,11 +199,9 @@ class Country extends \Opencart\System\Engine\Controller {
 		$zones = $this->model_localisation_zone->getZonesByCountryId($country_info['country_id']);
 
 		foreach ($zones as $zone) {
-			if (!$zone['status']) {
-				continue;
+			if ($zone['status']) {
+				$zone_data[] = $zone + ['description' => $this->model_localisation_zone->getDescriptions($zone['zone_id'])];
 			}
-
-			$zone_data[] = $zone + ['description' => $this->model_localisation_zone->getDescription($zone['zone_id'])];
 		}
 
 		// Geo Zones

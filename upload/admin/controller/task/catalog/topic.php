@@ -18,7 +18,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/catalog/information');
+		$this->load->language('task/catalog/topic');
 
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
@@ -27,8 +27,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'information.list.' . $store_id,
-				'action' => 'task/catalog/information.list',
+				'code'   => 'topic.list.' . $store_id,
+				'action' => 'task/catalog/topic.list',
 				'args'   => ['store_id' => $store_id]
 			];
 
@@ -48,7 +48,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
-		$this->load->language('task/catalog/information');
+		$this->load->language('task/catalog/topic');
 
 		$store_info = [
 			'store_id' => 0,
@@ -66,37 +66,37 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$information_data = [];
+		$topic_data = [];
 
-		$this->load->model('catalog/information');
+		$this->load->model('cms/topic');
 
-		$information_ids = $this->model_catalog_information->getStoresByStoreId($store_info['store_id']);
+		$topic_ids = $this->model_cms_topic->getStoresByStoreId($store_info['store_id']);
 
-		foreach ($information_ids as $information_id) {
-			$information_info = $this->model_catalog_information->getInformation($information_id);
+		foreach ($topic_ids as $topic_id) {
+			$topic_info = $this->model_cms_topic->getTopic($topic_id);
 
-			if ($information_info && $information_info['status']) {
-				$information_data[] = $information_info + ['description' => $this->model_localisation_country->getDesciptions($information_info['information_id'])];
+			if ($topic_info && $topic_info['status']) {
+				$topic_data[] = $topic_info + ['description' => $this->model_cms_topic->getDesciptions($topic_info['topic_id'])];
 			}
 		}
 
 		$sort_order = [];
 
-		foreach ($information_data as $key => $value) {
+		foreach ($topic_data as $key => $value) {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $information_data);
+		array_multisort($sort_order, SORT_ASC, $topic_data);
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'information.json';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
+		$filename = 'topic.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($information_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($topic_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

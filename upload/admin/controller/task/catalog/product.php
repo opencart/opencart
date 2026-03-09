@@ -20,7 +20,6 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/product');
 
-		// Product
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
@@ -29,10 +28,9 @@ class Product extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_product')];
 		}
 
-		// Stores
 		$this->load->model('setting/setting');
 
-		$store_ids = $this->model_catalog_product->getStores((int)$product_info['product_id']);
+		$store_ids = $this->model_catalog_product->getStores($product_info['product_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -66,7 +64,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Store
 		$store_info = [
 			'name' => $this->config->get('config_name'),
 			'url'  => HTTP_CATALOG
@@ -82,20 +79,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Product
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
 
 		if (!$product_info) {
 			return ['error' => $this->language->get('error_product')];
-		}
-
-		// Description
-		$description_info = $this->model_cms_article->getDescription($product_info['product_id']);
-
-		if (!$description_info) {
-			return ['error' => $this->language->get('error_description')];
 		}
 
 		// Image
@@ -141,7 +130,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($description_info + $product_info + ['images' => $results]))) {
+		if (!file_put_contents($directory . $filename, json_encode($product_info + ['description' => $this->model_catalog_product->getDescriptions($product_info['product_id'])] + ['images' => $results]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -158,9 +147,9 @@ class Product extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function clear(array $args = []): array {
-		$this->load->language('task/admin/information');
+		$this->load->language('task/admin/product');
 
-		$file = HTTP_SERVER . 'view/data/admin/information.json';
+		$file = HTTP_SERVER . 'view/data/admin/product.json';
 
 		if (is_file($file)) {
 			unlink($file);

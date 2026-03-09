@@ -24,7 +24,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Banner
 		$this->load->model('design/banner');
 
 		$banner_info = $this->model_design_banner->getBanner((int)$args['banner_id']);
@@ -66,7 +65,10 @@ class Banner extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/banner');
 
-		// Store
+		if (!array_key_exists('banner_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$store_info = [
 			'name' => $this->config->get('config_name'),
 			'url'  => HTTP_CATALOG
@@ -82,7 +84,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Banner
 		$this->load->model('design/banner');
 
 		$banner_info = $this->model_design_banner->getBanner((int)$args['banner_id']);

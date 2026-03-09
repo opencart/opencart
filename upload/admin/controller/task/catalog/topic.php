@@ -76,7 +76,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$topic_info = $this->model_cms_topic->getTopic($topic_id);
 
 			if ($topic_info && $topic_info['status']) {
-				$topic_data[] = $topic_info + ['description' => $this->model_cms_topic->getDesciptions($topic_info['topic_id'])];
+				$topic_data[] = $topic_info + ['description' => $this->model_cms_topic->getDescriptions($topic_info['topic_id'])];
 			}
 		}
 
@@ -133,8 +133,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'topic.info.' . $store_id,
-				'action' => 'task/catalog/topic.info',
+				'code'   => 'topic._info.' . $store_id,
+				'action' => 'task/catalog/topic._info',
 				'args'   => [
 					'topic_id' => $topic_info['topic_id'],
 					'store_id' => $store_id

@@ -50,7 +50,6 @@ class Information extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/information');
 
-		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -134,8 +133,8 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'information.addTask.' . $store_id . '.' . $information_info['information_id'],
-				'action' => 'task/catalog/information.createTask',
+				'code'   => 'information._info.' . $store_id . '.' . $information_info['information_id'],
+				'action' => 'task/catalog/information._info',
 				'args'   => [
 					'information_id' => $information_info['information_id'],
 					'store_id'       => $store_id
@@ -190,7 +189,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $information_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $information_info['name'])];
 	}
 
 	/**

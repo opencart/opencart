@@ -48,70 +48,59 @@ class Category extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
-		$this->load->language('task/catalog/country');
+		$this->load->language('task/catalog/category');
 
-		$this->load->model('setting/store');
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
 
-		$store_info = $this->model_setting_store->getStores((int)$args['store_id']);
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
 
-		if ($args['store_id'] != 0 && !$store_info) {
-			return ['error' => $this->language->get('error_store')];
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
 		}
 
-		$this->load->model('localisation/language');
+		$category_data = [];
 
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
+		$this->load->model('catalog/category');
 
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('error_language')];
-		}
+		$category_ids = $this->model_catalog_category->getStores($store_info['store_id']);
 
-		$this->load->model('localisation/country');
+		foreach ($category_ids as $country_id) {
+			$category_info = $this->model_catalog_category->getCategory($country_id);
 
-		// Country
-		$country_data = [];
-
-		$this->load->model('setting/setting');
-
-		$country_ids = $this->model_setting_setting->getValue('config_country_list', (int)$args['store_id']);
-
-		foreach ($country_ids as $country_id) {
-			$country_info = $this->model_localisation_country->getCountry($country_id);
-
-			if (!$country_info || !$country_info['status']) {
-				continue;
+			if ($category_info && $category_info['status']) {
+				$category_data[] = $category_info + ['description' => $this->model_catalog_category->getDescriptions($category_info['category_id'])];
 			}
-
-			$description_info = $this->model_localisation_country->getDescription($country_info['country_id'], $language_info['language_id']);
-
-			if (!$description_info) {
-				continue;
-			}
-
-			$country_data[] = $country_info + $description_info;
 		}
 
 		$sort_order = [];
 
-		foreach ($country_data as $key => $value) {
+		foreach ($category_data as $key => $value) {
 			$sort_order[$key] = $value['name'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $country_data);
+		array_multisort($sort_order, SORT_ASC, $category_data);
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country.json';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$filename = 'category.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($country_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($category_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['code'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 
 	/**
@@ -130,7 +119,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Country
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
@@ -176,7 +164,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	/*
 	 *
 	 */
-	public function country(array $args = []): array {
+	public function _info(array $args = []): array {
 		// Country
 		$this->load->model('localisation/country');
 

@@ -18,36 +18,23 @@ class Category extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
-		// Stores
-		$stores = [];
+		$this->load->language('task/catalog/category');
 
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name'),
-			'url'      => HTTP_CATALOG
-		];
 
-		$this->load->model('setting/store');
-		$this->load->model('setting/setting');
+
+
 		$this->load->model('setting/task');
 
 		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
 		foreach ($stores as $store) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store['store_id']);
+			$task_data = [
+				'code'   => 'category',
+				'action' => 'task/catalog/category.list',
+				'args'   => ['store_id' => $store['store_id']]
+			];
 
-			foreach ($language_ids as $language_id) {
-				$task_data = [
-					'code'   => 'country',
-					'action' => 'task/catalog/country.countries',
-					'args'   => [
-						'store_id'    => $store['store_id'],
-						'language_id' => $language_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];

@@ -76,7 +76,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$information_info = $this->model_catalog_information->getInformation($information_id);
 
 			if ($information_info && $information_info['status']) {
-				$information_data[] = $information_info + $this->model_localisation_country->getDesciptions($information_id);
+				$information_data[] = $information_info + ['description' => $this->model_localisation_country->getDesciptions($information_info['information_id'])];
 			}
 		}
 

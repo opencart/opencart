@@ -20,7 +20,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
-		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 

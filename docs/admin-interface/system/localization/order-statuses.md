@@ -80,18 +80,8 @@ To match your business processes:
 To trigger actions based on status changes:
 
 1. Identify key status transitions (e.g., "Processing" → "Shipped").
-2. Configure email notifications for each status in **System → Settings → Mail** tab.
-3. Consider extensions that add advanced automation (stock updates, CRM integration, task assignments).
-4. Test the workflow by placing a test order and updating its status.
-
-### Managing Digital Download Access
-
-For stores selling digital products:
-
-1. Create or identify an order status that indicates "paid and approved" (e.g., "Complete" or "Processing").
-2. Set this as the **Default Download Status** in **System → Settings → Options** tab.
-3. Ensure customers receive download links only when orders reach this status.
-4. Test digital product purchases to verify access controls work correctly.
+2. Consider extensions that add advanced automation (stock updates, CRM integration, task assignments).
+3. Test the workflow by placing a test order and updating its status.
 
 ## Best Practices
 
@@ -161,8 +151,7 @@ For stores selling digital products:
 
 **Download Status Configuration**
 
-* **Default Download Status**: Verify the correct status is set in **System → Settings → Options**.
-* **Order Status Check**: Ensure the order has reached the required status.
+* **Order Status Check**: Ensure the order has reached the complete status.
 * **Download Limits**: Check if download limits or expiration dates are preventing access.
 * **File Permissions**: Verify digital files are correctly uploaded and accessible.
 

@@ -17,31 +17,22 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function list(array $args = []): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/information');
 
-		// Stores
 		$this->load->model('setting/store');
-		$this->load->model('setting/setting');
 		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
+			$task_data = [
+				'code'   => 'information.list.' . $store_id,
+				'action' => 'task/catalog/information.list',
+				'args'   => ['store_id' => $store_id]
+			];
 
-			foreach ($language_ids as $language_id) {
-				$task_data = [
-					'code'   => 'information._list.' . $store_id . '.' . $language_id,
-					'action' => 'task/catalog/information._list',
-					'args'   => [
-						'store_id'    => $store_id,
-						'language_id' => $language_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];
@@ -56,13 +47,14 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function _list(array $args = []): array {
+	public function list(array $args = []): array {
 		$this->load->language('task/catalog/information');
 
 		// Store
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -75,36 +67,18 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
-		// Information List
 		$information_data = [];
 
 		$this->load->model('catalog/information');
 
-		$information_ids = $this->model_catalog_information->getStoresByStoreId((int)$args['store_id']);
+		$information_ids = $this->model_catalog_information->getStoresByStoreId($store_info['store_id']);
 
 		foreach ($information_ids as $information_id) {
 			$information_info = $this->model_catalog_information->getInformation($information_id);
 
-			if (!$information_info || !$information_info['status']) {
-				continue;
+			if ($information_info && $information_info['status']) {
+				$information_data[] = $information_info + $this->model_localisation_country->getDesciptions($information_id);
 			}
-
-			$description_info = $this->model_localisation_country->getDesciptions($information_id, $language_info['language_id']);
-
-			if (!$description_info) {
-				continue;
-			}
-
-			$information_data[] = $information_info + $description_info;
 		}
 
 		$sort_order = [];
@@ -116,18 +90,18 @@ class Information extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $information_data);
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/catalog/';
-		$filename = 'information.yaml';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$filename = 'information.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($information_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($information_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['code'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 
 	/**
@@ -146,7 +120,6 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Information
 		$this->load->model('catalog/information');
 
 		$information_info = $this->model_catalog_information->getInformation($args['information_id']);
@@ -155,26 +128,21 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_information')];
 		}
 
-		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = $this->model_catalog_information->getStores($args['information_id']);
 
 		foreach ($store_ids as $store_id) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
+			$task_data = [
+				'code'   => 'information.addTask.' . $store_id . '.' . $information_info['information_id'],
+				'action' => 'task/catalog/information.createTask',
+				'args'   => [
+					'information_id' => $information_info['information_id'],
+					'store_id'       => $store_id
+				]
+			];
 
-			foreach ($language_ids as $language_id) {
-				$task_data = [
-					'code'   => 'information.addTask.' . $store_id . '.' . $language_id . '.' . $information_info['information_id'],
-					'action' => 'task/catalog/information.createTask',
-					'args'   => [
-						'information_id' => $information_info['information_id'],
-						'store_id'       => $store_id,
-						'language_id'    => $language_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => sprintf($this->language->get('text_info'), $information_info['name'])];
@@ -187,7 +155,6 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Store
 		$store_info = [
 			'name' => $this->config->get('config_name'),
 			'url'  => HTTP_CATALOG
@@ -203,16 +170,6 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
-		// Information
 		$this->load->model('catalog/information');
 
 		$information_info = $this->model_catalog_information->getInformation((int)$args['information_id']);
@@ -221,22 +178,15 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_information')];
 		}
 
-		// Description
-		$description_info = $this->model_catalog_information->getDescription($information_info['information_id'], $language_info['language_id']);
-
-		if (!$description_info) {
-			return ['error' => $this->language->get('error_description')];
-		}
-
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/catalog/';
-		$filename = 'information-' . $information_info['information_id'] . '.yaml';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$filename = 'information-' . $information_info['information_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($description_info + $information_info))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($information_info + ['description' => $this->model_catalog_information->getDescription($information_info['information_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

@@ -20,7 +20,6 @@ class Language extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/language');
 
-		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
@@ -39,9 +38,10 @@ class Language extends \Opencart\System\Engine\Controller {
 		return ['success' => $this->language->get('text_task')];
 	}
 
-	/***
+	/**
 	 * List
 	 *
+	 * Generate language list.
 	 *
 	 * @param $args
 	 *

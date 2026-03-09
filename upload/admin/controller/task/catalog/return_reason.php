@@ -20,28 +20,19 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
 
-		// Stores
 		$this->load->model('setting/store');
-		$this->load->model('setting/setting');
 		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
+			$task_data = [
+				'code'   => 'return_reason.' . $store_id,
+				'action' => 'task/catalog/return_reason.list',
+				'args'   => ['store_id' => $store_id]
+			];
 
-			foreach ($language_ids as $language_id) {
-				$task_data = [
-					'code'   => 'return_reason.' . $store_id . '.' . $language_id,
-					'action' => 'task/catalog/return_reason.list',
-					'args'   => [
-						'store_id'    => $store_id,
-						'language_id' => $language_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];
@@ -61,8 +52,9 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		// Store
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -91,16 +83,12 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
 
 		foreach ($return_reasons as $return_reason) {
-			$description_info = $this->model_localisation_return_reason->getDescription($return_reason['return_reason_id'], $language_info['language_id']);
-
-			if (!$description_info) {
-				$return_reason_data[] = $description_info;
-			}
+			$return_reason_data[] = $this->model_localisation_return_reason->getDescriptions($return_reason['return_reason_id']);
 		}
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'return_reason.yaml';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$filename = 'return_reason.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

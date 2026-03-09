@@ -67,25 +67,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
-		$return_reason_data = [];
-
-		$this->load->model('localisation/return_reason');
-
-		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
-
-		foreach ($return_reasons as $return_reason) {
-			$return_reason_data[] = $this->model_localisation_return_reason->getDescriptions($return_reason['return_reason_id']);
-		}
-
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'return_reason.json';
@@ -94,7 +75,9 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($return_reason_data))) {
+		$this->load->model('localisation/return_reason');
+
+		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($this->model_localisation_return_reason->getReturnReasons()))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -124,17 +107,11 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
 		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/return_reason.json';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/localisation/return_reason.json';
 
-				if (is_file($file)) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
 			}
 		}
 

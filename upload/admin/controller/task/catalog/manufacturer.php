@@ -180,13 +180,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
+		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($manufacturer_info + ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($manufacturer_info + ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

@@ -17,21 +17,19 @@ class Category extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function list(array $args = []): array {
+	public function index(array $args = []): array {
 		$this->load->language('task/catalog/category');
 
-
-
-
+		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		foreach ($stores as $store) {
+		foreach ($store_ids as $store_id) {
 			$task_data = [
 				'code'   => 'category',
 				'action' => 'task/catalog/category.list',
-				'args'   => ['store_id' => $store['store_id']]
+				'args'   => ['store_id' => $store_id]
 			];
 
 			$this->model_setting_task->addTask($task_data);
@@ -49,7 +47,7 @@ class Category extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function countries(array $args = []): array {
+	public function list(array $args = []): array {
 		$this->load->language('task/catalog/country');
 
 		$this->load->model('setting/store');

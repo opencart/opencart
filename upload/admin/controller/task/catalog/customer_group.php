@@ -166,7 +166,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Store
 		$store_info = [
 			'name' => $this->config->get('config_name'),
 			'url'  => HTTP_CATALOG
@@ -182,7 +181,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
@@ -191,7 +189,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_customer_group')];
 		}
 
-		// Custom Fields
 		$custom_field_data = [];
 
 		$this->load->model('customer/custom_field');

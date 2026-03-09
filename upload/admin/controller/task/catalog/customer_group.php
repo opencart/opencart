@@ -11,7 +11,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate customer group list.
+	 * Generate customer group task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -35,7 +35,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_list')];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
@@ -75,12 +75,20 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_group_ids = $this->model_setting_setting->getValue('config_customer_group_list', $store_info['store_id']);
 
 		foreach ($customer_group_ids as $customer_group_id) {
-			$customer_group_info = $this->model_customer_customer_group->getCountry($customer_group_id);
+			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($customer_group_id);
 
 			if ($customer_group_info && $customer_group_info['status']) {
-				$customer_group_data[] = $customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_id)];
+				$customer_group_data[] = $customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])];
 			}
 		}
+
+		$sort_order = [];
+
+		foreach ($customer_group_data as $key => $value) {
+			$sort_order[$key] = $value['name'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $country_data);
 
 		$base = DIR_CATALOG . 'view/data/';
 		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
@@ -109,7 +117,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
 
-		// Customer Group
+		if (!array_key_exists('customer_group_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$this->load->model('customer/customer_group');
 
 		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
@@ -118,7 +129,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_customer_group')];
 		}
 
-		// Stores
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
@@ -151,6 +161,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 */
 	public function _info(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
+
+		if (!array_key_exists('customer_group_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
 		// Store
 		$store_info = [

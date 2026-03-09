@@ -68,6 +68,10 @@
     * [API](admin-interface/system/users/api.md)
 * [Reports](admin-interface/reports/README.md)
   * [Sales](admin-interface/reports/sales.md)
+  * [Customers](admin-interface/reports/customers.md)
+  * [Products](admin-interface/reports/products.md)
+  * [Marketing](admin-interface/reports/marketing.md)
+  * [Subscriptions](admin-interface/reports/subscriptions.md)
 
 ## DESIGN
 

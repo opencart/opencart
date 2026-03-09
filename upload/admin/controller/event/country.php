@@ -84,6 +84,9 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
+
+		print_r($args);
+
 		$task_data = [
 			'code'   => 'country.info.' . $args[0],
 			'action' => 'task/catalog/country.info',
@@ -146,7 +149,6 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-		/*
 		$task_data = [
 			'code'   => 'admin.country.list',
 			'action' => 'task/admin/country.list',
@@ -164,6 +166,5 @@ class Country extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->model_setting_task->addTask($task_data);
-		*/
 	}
 }

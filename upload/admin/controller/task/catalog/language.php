@@ -70,7 +70,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/language');
 
-		$language_ids = $this->model_setting_setting->getValue('config_language_list', (int)$store_info['store_id']);
+		$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_info['store_id']);
 
 		foreach ($language_ids as $language_id) {
 			$language_info = $this->model_localisation_language->getLanguage((int)$language_id);

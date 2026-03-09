@@ -51,8 +51,9 @@ class Location extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/location');
 
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -71,7 +72,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/location');
 
-		$location_ids = $this->model_setting_setting->getValue('config_location_list', (int)$args['store_id']);
+		$location_ids = $this->model_setting_setting->getValue('config_location_list', $store_info['store_id']);
 
 		foreach ($location_ids as $location_id) {
 			$location_info = $this->model_localisation_location->getLocation($location_id);

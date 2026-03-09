@@ -27,7 +27,7 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'location.' . $store_id,
+				'code'   => 'location.list.' . $store_id,
 				'action' => 'task/catalog/location.list',
 				'args'   => ['store_id' => $store_id]
 			];
@@ -41,7 +41,7 @@ class Location extends \Opencart\System\Engine\Controller {
 	/**
 	 * List
 	 *
-	 * Generate location list by store and language.
+	 * Generate location list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -50,7 +50,6 @@ class Location extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/location');
 
-		// Store
 		$store_info = [
 			'name' => $this->config->get('config_name'),
 			'url'  => HTTP_CATALOG
@@ -66,15 +65,6 @@ class Location extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguage((int)$args['language_id']);
-
-		if (!$language_info || !$language_info['status']) {
-			return ['error' => $this->language->get('error_language')];
-		}
-
 		// Location
 		$location_data = [];
 
@@ -86,23 +76,23 @@ class Location extends \Opencart\System\Engine\Controller {
 		foreach ($location_ids as $location_id) {
 			$location_info = $this->model_localisation_location->getLocation($location_id);
 
-			if (!$location_info || !$location_info['status']) {
+			if ($location_info && $location_info['status']) {
 				$location_data[] = $location_info;
 			}
 		}
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'location.yaml';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$filename = 'location.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($location_data))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($location_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 }

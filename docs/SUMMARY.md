@@ -56,6 +56,7 @@
     * [Order Statuses](admin-interface/system/localization/order-statuses.md)
     * [Returns](admin-interface/system/localization/returns.md)
     * [Countries](admin-interface/system/localization/countries.md)
+    * [Zones](admin-interface/system/localization/zones.md)
   * [Users](admin-interface/system/users/README.md)
     * [User Groups](admin-interface/system/users/user-groups.md)
     * [API](admin-interface/system/users/api.md)

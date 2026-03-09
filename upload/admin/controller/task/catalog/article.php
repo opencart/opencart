@@ -64,12 +64,10 @@ class Article extends \Opencart\System\Engine\Controller {
 	public function info(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
-		// Validate
 		if (!array_key_exists('article_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Store
 		$store_info = [
 			'name' => $this->config->get('config_name'),
 			'url'  => HTTP_CATALOG
@@ -85,7 +83,6 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Article
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle((int)$args['article_id']);
@@ -140,7 +137,6 @@ class Article extends \Opencart\System\Engine\Controller {
 			foreach ($files as $file) {
 				unlink($file);
 			}
-
 		}
 
 		return ['success' => $this->language->get('text_clear')];

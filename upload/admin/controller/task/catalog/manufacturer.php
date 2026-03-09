@@ -77,7 +77,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			if ($manufacturer_info && $manufacturer_info['status']) {
 				$manufacturer_data[] = $manufacturer_info + ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])];
-
 			}
 		}
 

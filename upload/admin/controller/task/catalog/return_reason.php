@@ -77,11 +77,11 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/return_reason');
 
-		if (!file_put_contents($base . $directory . $filename, oc_yaml_encode($this->model_localisation_return_reason->getReturnReasons()))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($this->model_localisation_return_reason->getReturnReasons()))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $language_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
 
 	/**

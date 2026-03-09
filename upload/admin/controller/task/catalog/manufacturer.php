@@ -70,10 +70,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		$manufacturer_ids = $this->model_catalog_manufacturer->getStoresByStoreId((int)$args['store_id']);
+		$manufacturer_ids = $this->model_catalog_manufacturer->getStores($store_info['store_id']);
 
 		foreach ($manufacturer_ids as $manufacturer_id) {
-			$manufacturer_info = $this->model_localisation_country->getManufacturer($manufacturer_id);
+			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
 			if ($manufacturer_info && $manufacturer_info['status']) {
 				$manufacturer_data[] = $manufacturer_info + ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])];

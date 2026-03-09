@@ -61,6 +61,8 @@
     * [Tax Classes](admin-interface/system/localization/tax-classes.md)
     * [Tax Rates](admin-interface/system/localization/tax-rates.md)
     * [Length Classes](admin-interface/system/localization/length-classes.md)
+    * [Weight Classes](admin-interface/system/localization/weight-classes.md)
+    * [Address Formats](admin-interface/system/localization/address-formats.md)
   * [Users](admin-interface/system/users/README.md)
     * [User Groups](admin-interface/system/users/user-groups.md)
     * [API](admin-interface/system/users/api.md)

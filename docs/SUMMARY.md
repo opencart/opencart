@@ -63,11 +63,19 @@
     * [Length Classes](admin-interface/system/localization/length-classes.md)
     * [Weight Classes](admin-interface/system/localization/weight-classes.md)
     * [Address Formats](admin-interface/system/localization/address-formats.md)
+  * [Maintenance](admin-interface/system/maintenance/README.md)
+    * [Error Logs](admin-interface/system/maintenance/error-logs.md)
+    * [Upgrade](admin-interface/system/maintenance/upgrade.md)
+    * [Uploads](admin-interface/system/maintenance/uploads.md)
   * [Users](admin-interface/system/users/README.md)
     * [User Groups](admin-interface/system/users/user-groups.md)
     * [API](admin-interface/system/users/api.md)
 * [Reports](admin-interface/reports/README.md)
   * [Sales](admin-interface/reports/sales.md)
+  * [Customers](admin-interface/reports/customers.md)
+  * [Products](admin-interface/reports/products.md)
+  * [Marketing](admin-interface/reports/marketing.md)
+  * [Subscriptions](admin-interface/reports/subscriptions.md)
 
 ## DESIGN
 

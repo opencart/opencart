@@ -9,9 +9,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Customer
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/customer/addCustomer/after
+	 * Trigger catalog/model/account/customer/addCustomer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -35,10 +33,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Edit Customer
-	 *
-	 * Trigger
      *
-     * catalog/model/account/customer/editCustomer/after
+     * Trigger catalog/model/account/customer/editCustomer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -63,9 +59,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Password
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/customer/editPassword/after
+	 * Trigger catalog/model/account/customer/editPassword/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -103,9 +97,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Login
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/customer/deleteLoginAttempts/after
+	 * Trigger catalog/model/account/customer/deleteLoginAttempts/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -133,9 +125,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Forgotten
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/customer/addToken/after
+	 * Trigger catalog/model/account/customer/addToken/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -166,9 +156,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Transaction
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/customer/addTransaction/after
+	 * Trigger catalog/model/account/customer/addTransaction/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -200,9 +188,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Affiliate
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/affiliate/addAffiliate/after
+	 * Trigger catalog/model/account/affiliate/addAffiliate/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -227,9 +213,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Affiliate
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/affiliate/editAffiliate/after
+	 * Trigger catalog/model/account/affiliate/editAffiliate/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -254,9 +238,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Address
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/address/addAddress/after
+	 * Trigger catalog/model/account/address/addAddress/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -281,9 +263,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Edit Address
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/address/editAddress/after
+	 * Trigger catalog/model/account/address/editAddress/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -308,9 +288,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Delete Address
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/address/deleteAddress/after
+	 * Trigger catalog/model/account/address/deleteAddress/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -335,9 +313,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Return
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/account/returns/addReturn/after
+	 * Trigger catalog/model/account/returns/addReturn/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -372,9 +348,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add History
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/checkout/order/addHistory/before
+	 * Trigger catalog/model/checkout/order/addHistory/before
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

@@ -11,7 +11,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new country data with added zone.
 	 *
-	 * Called using admin/model/localization/zone.addZone/after
+	 * Trigger admin/model/localization/zone.addZone/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -44,7 +44,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new country data with updated zone.
 	 *
-	 * Called using admin/model/localisation/zone.editZone/before
+	 * Trigger admin/model/localisation/zone.editZone/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -104,7 +104,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new country data with deleted zone.
 	 *
-	 * Called using admin/model/localisation/zone.deleteZone/before
+	 * Trigger admin/model/localisation/zone.deleteZone/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

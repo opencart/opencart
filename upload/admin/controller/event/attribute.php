@@ -11,7 +11,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using admin/model/catalog/product/editAttribute/after
+	 * Trigger admin/model/catalog/product/editAttribute/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -42,7 +42,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using admin/model/catalog/product/deleteAttribute/after
+	 * Trigger admin/model/catalog/product/deleteAttribute/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

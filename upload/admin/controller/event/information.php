@@ -11,7 +11,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new information data.
 	 *
-	 * Called using model/catalog/information/addInformation/after
+	 * Trigger model/catalog/information/addInformation/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -44,7 +44,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new information data.
 	 *
-	 * Called using model/catalog/information/addInformation/after
+	 * Trigger model/catalog/information/addInformation/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -77,7 +77,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new information data.
 	 *
-	 * Called using model/catalog/information/deleteInformation/after
+	 * Trigger model/catalog/information/deleteInformation/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

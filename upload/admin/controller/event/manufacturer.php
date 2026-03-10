@@ -11,7 +11,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new manufacturer data.
 	 *
-	 * Called using model/catalog/manufacturer/addManufacturer/after
+	 * Trigger model/catalog/manufacturer/addManufacturer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -46,7 +46,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new manufacturer data.
 	 *
-	 * Called using model/catalog/manufacturer/editManufacturer/after
+	 * Trigger model/catalog/manufacturer/editManufacturer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -96,7 +96,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new manufacturer data.
 	 *
-	 * Called using model/catalog/manufacturer/editManufacturer/after
+	 * Trigger model/catalog/manufacturer/editManufacturer/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

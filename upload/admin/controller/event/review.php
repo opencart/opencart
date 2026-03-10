@@ -11,7 +11,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new review data.
 	 *
-	 * Called using admin/model/catalog/review/addReview/after
+	 * Trigger admin/model/catalog/review/addReview/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -36,7 +36,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new review data.
 	 *
-	 * Called using admin/model/catalog/review/editReview/before
+	 * Trigger admin/model/catalog/review/editReview/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -78,7 +78,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate delete review data.
 	 *
-	 * Called using admin/model/catalog/review/deleteReview/before
+	 * Trigger admin/model/catalog/review/deleteReview/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

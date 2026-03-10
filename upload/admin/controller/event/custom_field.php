@@ -11,7 +11,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new customer group data with the updated customer fields.
 	 *
-	 * Called using model/customer/custom_field/addCustomField/after
+	 * Trigger model/customer/custom_field/addCustomField/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -42,7 +42,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new customer group data with the updated customer fields.
 	 *
-	 * Called using model/customer/custom_field/editCustomField/after
+	 * Trigger model/customer/custom_field/editCustomField/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -73,7 +73,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new customer group data with the updated customer fields.
 	 *
-	 * Called using model/customer/custom_field/deleteCustomField/after
+	 * Trigger model/customer/custom_field/deleteCustomField/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

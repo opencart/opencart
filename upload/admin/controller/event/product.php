@@ -11,7 +11,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using model/catalog/product/addProduct/after
+	 * Trigger model/catalog/product/addProduct/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -69,7 +69,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using model/catalog/product/editProduct/after
+	 * Trigger model/catalog/product/editProduct/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -94,7 +94,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using model/catalog/product/deleteProduct/after
+	 * Trigger model/catalog/product/deleteProduct/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

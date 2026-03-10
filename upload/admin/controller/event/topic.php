@@ -11,7 +11,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new topic data.
 	 *
-	 * Called using admin/model/cms/topic/addTopic/after
+	 * Trigger admin/model/cms/topic/addTopic/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -36,7 +36,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new topic data.
 	 *
-	 * Called using admin/model/cms/topic/editTopic/after
+	 * Trigger admin/model/cms/topic/editTopic/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -61,7 +61,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate delete topic data.
 	 *
-	 * Called using admin/model/cms/topic/deleteTopic/before
+	 * Trigger admin/model/cms/topic/deleteTopic/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

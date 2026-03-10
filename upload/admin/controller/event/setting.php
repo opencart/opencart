@@ -9,7 +9,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 	/**
 	 * Update data related to settings.
 	 *
-	 * Called using model/setting/setting/editSetting/after
+	 * Trigger model/setting/setting/editSetting/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args

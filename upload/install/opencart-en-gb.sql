@@ -1152,8 +1152,8 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.category.delete', 'Triggers category static site data creation.', 'admin/model/catalog/category.deleteCategory/after', 'event/category.deleteCategory', 1),
 
        ('ssr.comment.add', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.addComment/after', 'event/comment.addComment', 1),
-       ('ssr.comment.edit', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.editComment/after', 'event/comment.editComment', 1),
-       ('ssr.comment.delete', 'Triggers comment static site data creation.', 'catalog/model/cms/comment.deleteComment/after', 'event/comment.deleteComment', 1),
+       ('ssr.comment.edit', 'Triggers comment static site data creation.', 'admin/model/cms/comment.editComment/after', 'event/comment.editComment', 1),
+       ('ssr.comment.delete', 'Triggers comment static site data creation.', 'admin/model/cms/comment.deleteComment/after', 'event/comment.deleteComment', 1),
 
        ('ssr.country.add', 'Triggers country static site data creation.', 'admin/model/localisation/country.addCountry/after', 'event/country.addCountry', 1),
        ('ssr.country.edit', 'Triggers country static site data creation.', 'admin/model/localisation/country.editCountry/after', 'event/country.editCountry', 1),
@@ -1206,8 +1206,9 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.return_reason.delete', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.deleteReturnReason/after', 'event/return_reason', 1),
 
        ('ssr.review.add', 'Triggers review static site data creation.', 'catalog/model/catalog/review.addReview/after', 'event/review.addReview', 1),
-       ('ssr.review.edit', 'Triggers review static site data creation.', 'catalog/model/catalog/review.editReview/before', 'event/review.editReview', 1),
-       ('ssr.review.delete', 'Triggers review static site data creation.', 'catalog/model/catalog/review.deleteReview/before', 'event/review.deleteReview', 1),
+       ('ssr.review.add', 'Triggers review static site data creation.', 'admin/model/catalog/review.addReview/after', 'event/review.addReview', 1),
+       ('ssr.review.edit', 'Triggers review static site data creation.', 'admin/model/catalog/review.editReview/before', 'event/review.editReview', 1),
+       ('ssr.review.delete', 'Triggers review static site data creation.', 'admin/model/catalog/review.deleteReview/before', 'event/review.deleteReview', 1),
 
        ('ssr.setting', 'Triggers setting static data creation.', 'admin/model/setting/setting.editSetting/after', 'event/setting', 1),
 

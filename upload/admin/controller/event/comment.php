@@ -11,7 +11,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new comment data.
 	 *
-	 * Called using admin/model/cms/comment/addComment/after
+	 * Trigger admin/model/cms/comment/addComment/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -36,7 +36,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new comment data.
 	 *
-	 * Called using admin/model/cms/comment/editComment/after
+	 * Trigger admin/model/cms/comment/editComment/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -61,7 +61,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new comment data.
 	 *
-	 * Called using admin/model/cms/comment/deleteComment/after
+	 * Trigger admin/model/cms/comment/deleteComment/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

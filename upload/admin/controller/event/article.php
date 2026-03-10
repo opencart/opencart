@@ -11,7 +11,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new article data.
 	 *
-	 * Called using admin/model/cms/article/addArticle/after
+	 * Trigger admin/model/cms/article/addArticle/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -44,7 +44,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new article data.
 	 *
-	 * Called using admin/model/cms/article/addArticle/after
+	 * Trigger admin/model/cms/article/addArticle/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -77,7 +77,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new article data.
 	 *
-	 * Called using admin/model/cms/article/addArticle/after
+	 * Trigger admin/model/cms/article/addArticle/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

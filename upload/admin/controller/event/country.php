@@ -11,7 +11,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new country data.
 	 *
-	 * Called using admin/model/localisation/country/addCountry/after
+	 * Trigger admin/model/localisation/country/addCountry/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -65,7 +65,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new country data.
 	 *
-	 * Called using admin/model/localisation/country/editCountry/after
+	 * Trigger admin/model/localisation/country/editCountry/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -120,7 +120,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new country data.
 	 *
-	 * Called using admin/model/localisation/country/deleteCountry/after
+	 * Trigger admin/model/localisation/country/deleteCountry/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

@@ -11,7 +11,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new translation data
 	 *
-	 * Called using admin/model/design/translation.addTranslation/after
+	 * Trigger admin/model/design/translation.addTranslation/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -35,7 +35,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new translation data
 	 *
-	 * Called using admin/model/design/translation.editTranslation/after
+	 * Trigger admin/model/design/translation.editTranslation/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -59,7 +59,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new translation data
 	 *
-	 * Called using admin/model/design/translation.deleteTranslation/after
+	 * Trigger admin/model/design/translation.deleteTranslation/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

@@ -11,7 +11,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using admin/model/catalog/filter.editFilter/after
+	 * Trigger admin/model/catalog/filter.editFilter/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -58,7 +58,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Called using admin/model/catalog/filter.deleteFilter/after
+	 * Trigger admin/model/catalog/filter.deleteFilter/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

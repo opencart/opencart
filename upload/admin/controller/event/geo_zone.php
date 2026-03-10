@@ -11,7 +11,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new tax rate info data by geo zone ID.
 	 *
-	 * Called using admin/model/localisation/geo_zone.addGeoZone/after
+	 * Trigger admin/model/localisation/geo_zone.addGeoZone/after
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -51,7 +51,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new tax rate info data by geo zone ID.
 	 *
-	 * Called using admin/model/localisation/zone.editGeoZone/before
+	 * Trigger admin/model/localisation/zone.editGeoZone/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -107,7 +107,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new tax rate info data by geo zone ID.
 	 *
-	 * Called using admin/model/localisation/zone.deleteGeoZone/before
+	 * Trigger admin/model/localisation/zone.deleteGeoZone/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

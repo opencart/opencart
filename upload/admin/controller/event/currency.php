@@ -23,8 +23,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'admin.currency',
-			'action' => 'task/admin/currency',
+			'code'   => 'currency',
+			'action' => 'task/catalog/currency',
 			'args'   => []
 		];
 
@@ -33,8 +33,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		$task_data = [
-			'code'   => 'currency',
-			'action' => 'task/catalog/currency',
+			'code'   => 'admin.currency',
+			'action' => 'task/admin/currency',
 			'args'   => []
 		];
 

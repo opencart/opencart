@@ -629,7 +629,6 @@ class CurlyTag {
         let output = await this.render(match[1], ctx);
 
         stack.push({
-            tag: 'include',
             type: 'output',
             output: output
         });
@@ -688,7 +687,6 @@ class CurlyTag {
         let active = this.evaluate(match[1], ctx);
 
         stack.push({
-            tag: 'if',
             type: 'if',
             active: active
         });
@@ -704,7 +702,7 @@ class CurlyTag {
     handleEndif(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.tag !== 'if') {
+        if (!top || top.type !== 'if') {
             console.log(`[Template] Unexpected 'if' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -731,7 +729,6 @@ class CurlyTag {
         let active = !this.evaluate(match[1], ctx);
 
         stack.push({
-            tag: 'unless',
             type: 'unless',
             active: active
         });
@@ -742,7 +739,7 @@ class CurlyTag {
     handleEndunless(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.tag !== 'unless') {
+        if (!top || top.type !== 'unless') {
             console.log(`[Template] Unexpected 'endunless' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -762,7 +759,7 @@ class CurlyTag {
 
         let top = stack[stack.length - 1];
 
-        if (!top || top.tag !== 'if') {
+        if (!top || top.type !== 'if') {
             console.log(`[Template] Unexpected 'elseif' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -777,7 +774,7 @@ class CurlyTag {
     handleElse(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || (top.tag !== 'if' && top.tag !== 'unless' && top.tag !== 'case')) {
+        if (!top || (top.type !== 'if' && top.type !== 'unless' && top.type !== 'switch' && top.type !== 'for')) {
             console.log(`[Template] Unexpected 'else' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -813,7 +810,6 @@ class CurlyTag {
         }
 
         stack.push({
-            tag: 'for',
             type: 'for',
             name: name,
             items: items,
@@ -907,7 +903,6 @@ class CurlyTag {
         }
 
         stack.push({
-            tag: 'switch',
             type: 'switch',
             value: match[1],
             active: false
@@ -925,7 +920,7 @@ class CurlyTag {
 
         let top = stack[stack.length - 1];
 
-        if (!top || top.tag !== 'switch') {
+        if (!top || top.type !== 'switch') {
             console.log(`[Template] Unexpected 'switch' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -940,7 +935,7 @@ class CurlyTag {
     handleEndswitch(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.tag !== 'switch') {
+        if (!top || top.type !== 'switch') {
             console.log(`[Template] Unexpected 'switch' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -959,7 +954,6 @@ class CurlyTag {
         }
 
         stack.push({
-            tag: 'filter',
             type: 'capture',
             filter: match[1],
             output: ''
@@ -969,7 +963,7 @@ class CurlyTag {
     handleEndfilter(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.tag !== 'filter') {
+        if (!top || top.type !== 'capture') {
             console.log(`[Template] Unexpected 'endfilter' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -993,7 +987,6 @@ class CurlyTag {
         }
 
         stack.push({
-            tag: 'block',
             type: 'capture',
             name: match[1],
             value: ''
@@ -1003,7 +996,7 @@ class CurlyTag {
     handleEndblock(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.tag !== 'block') {
+        if (!top || top.type !== 'capture') {
             console.log(`[Template] Unexpected 'endblock' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -1034,10 +1027,7 @@ class CurlyTag {
     }
 
     handleComment(token, stack, ctx, index) {
-        stack.push({
-            tag: 'comment',
-            type: 'comment'
-        });
+        stack.push({ type: 'comment' });
 
         return token.end;
     }

@@ -20,14 +20,16 @@ class Comment extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addComment(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'comment.' . $args[1]['article_id'],
-			'action' => 'task/catalog/comment',
-			'args'   => ['article_id' => $args[1]['article_id']]
-		];
+		if ($this->config->get('config_comment_approve')) {
+			$task_data = [
+				'code'   => 'comment.' . $args[1]['article_id'],
+				'action' => 'task/catalog/comment',
+				'args'   => ['article_id' => $args[1]['article_id']]
+			];
 
-		$this->load->model('setting/task');
+			$this->load->model('setting/task');
 
-		$this->model_setting_task->addTask($task_data);
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 }

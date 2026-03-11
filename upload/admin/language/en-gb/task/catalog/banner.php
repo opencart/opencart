@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_task']       = 'Generating banner task list!';
-$_['text_info']       = 'Skipping banner %s %s %s!';
+$_['text_info']       = 'Generating %s banner information!';
 $_['text_delete']     = 'Banner %s data deleted!';
 
 // Error

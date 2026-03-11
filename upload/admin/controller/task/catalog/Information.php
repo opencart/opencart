@@ -70,7 +70,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/information');
 
-		$information_ids = $this->model_catalog_information->getStoresByStoreId($store_info['store_id']);
+		$information_ids = $this->model_catalog_information->getStores($store_info['store_id']);
 
 		foreach ($information_ids as $information_id) {
 			$information_info = $this->model_catalog_information->getInformation($information_id);

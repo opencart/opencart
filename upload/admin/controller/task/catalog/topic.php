@@ -70,7 +70,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('cms/topic');
 
-		$topic_ids = $this->model_cms_topic->getStoresByStoreId($store_info['store_id']);
+		$topic_ids = $this->model_cms_topic->getStores($store_info['store_id']);
 
 		foreach ($topic_ids as $topic_id) {
 			$topic_info = $this->model_cms_topic->getTopic($topic_id);

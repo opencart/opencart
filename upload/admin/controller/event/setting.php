@@ -52,8 +52,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 			// Country
 			$task_data = [
-				'code'   => 'country.list',
-				'action' => 'task/catalog/country.list',
+				'code'   => 'country',
+				'action' => 'task/catalog/country',
 				'args'   => []
 			];
 
@@ -61,8 +61,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 			// Customer Group
 			$task_data = [
-				'code'   => 'customer_group.list',
-				'action' => 'task/catalog/customer_group.list',
+				'code'   => 'customer_group',
+				'action' => 'task/catalog/customer_group',
 				'args'   => []
 			];
 

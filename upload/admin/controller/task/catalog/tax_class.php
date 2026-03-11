@@ -19,7 +19,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$this->load->language('task/catalog/tax_class');
 
 		$this->load->model('setting/task');
-
 		$this->load->model('localisation/tax_class');
 
 		$tax_classes = $this->model_localisation_tax_class->getTaxClasses();

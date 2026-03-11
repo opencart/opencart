@@ -201,8 +201,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		// Refresh Lists
 		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/catalog/country.list',
+			'code'   => 'manufacturer',
+			'action' => 'task/catalog/manufacturer',
 			'args'   => []
 		];
 
@@ -222,26 +222,20 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$stores = array_merge($stores, $this->model_setting_store->getStores());
 
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
 		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+			$base = DIR_CATALOG . 'view/data/';
+			$directory = parse_url($store['url'], PHP_URL_HOST) . '/localisation/';
 
-				$file = $base . $directory . 'country.json';
+			$file = $base . $directory . 'country.json';
 
-				if (is_file($file)) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
+			}
 
-				$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
+			$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
 
-				foreach ($files as $file) {
-					unlink($file);
-				}
+			foreach ($files as $file) {
+				unlink($file);
 			}
 		}
 

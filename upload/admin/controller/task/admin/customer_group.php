@@ -93,7 +93,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Clear
+	 * Delete
 	 *
 	 * Delete generated JSON customer group files.
 	 *
@@ -101,22 +101,24 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
+	public function delete(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
+		$this->load->model('customer/customer_group');
+
+		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
+
+		if (!$customer_group_info) {
+			return ['error' =>$this->language->get('error_customer_group')];
+		}
+
 		$directory = DIR_APPLICATION . 'view/data/customer/';
-		$file = $directory . 'customer_group.json';
+		$file = $directory . 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$files = oc_directory_read($directory, false, '/customer_group-\d+\.json$/');
-
-		foreach ($files as $file) {
-			unlink($file);
-		}
-		
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' =>  sprintf($this->language->get('text_delete'), $customer_group_info['name'])];
 	}
 }

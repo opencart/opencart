@@ -113,19 +113,21 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/admin/country');
 
+		$this->load->model('localisation/country');
+
+		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
+
+		if (!$country_info) {
+			return ['error' => $this->language->get('error_country')];
+		}
+
 		$directory = DIR_APPLICATION . 'view/data/localisation/';
-		$file = $directory . 'country.json';
+		$file = $directory . 'country-' + $country_info['country_id'] + '.json';
 
 		if (is_file($file)) {
 			unlink($file);
 		}
 
-		$files = oc_directory_read($directory, false, '/country-\d+\.json$/');
-
-		foreach ($files as $file) {
-			unlink($file);
-		}
-
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' => sprintf($this->language->get('text_delete'), $country_info['name'])];
 	}
 }

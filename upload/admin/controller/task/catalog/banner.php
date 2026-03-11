@@ -70,8 +70,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -117,27 +118,28 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/language');
+		$this->load->language('task/catalog/banner');
 
-		$stores = [];
+		$this->load->model('design/banner');
 
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
+		$banner_info = $this->model_design_banner->getBanner((int)$args['banner_id']);
+
+		if (!$banner_info || !$banner_info['status']) {
+			return ['error' => $this->language->get('error_banner')];
+		}
 
 		$this->load->model('setting/store');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
-		foreach ($stores as $store) {
-			$files = oc_directory_read(DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/design/', false, '/banner\-.+\.json$/');
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/design/banner-' . $banner_info['banner_id'] . '.json';
 
-			foreach ($files as $file) {
+			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' => sprintf($this->language->get('text_delete'), $banner_info['name'])];
 	}
 }

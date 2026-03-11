@@ -129,10 +129,10 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$stores = array_merge(['url' => HTTP_CATALOG], $this->model_cms_article->getStores());
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
-		foreach ($stores as $store) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/cms/article-' . $article_info['article_id'] . '.json';
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/cms/article-' . $article_info['article_id'] . '.json';
 
 			if (is_file($file)) {
 				unlink($file);

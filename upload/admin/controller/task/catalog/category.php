@@ -230,21 +230,19 @@ class Category extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
+			$base = DIR_CATALOG . 'view/data/';
+			$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
 
-				$file = $base . $directory . 'country.json';
+			$file = $base . $directory . 'country.json';
 
-				if (is_file($file)) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
+			}
 
-				$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
+			$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
 
-				foreach ($files as $file) {
-					unlink($file);
-				}
+			foreach ($files as $file) {
+				unlink($file);
 			}
 		}
 

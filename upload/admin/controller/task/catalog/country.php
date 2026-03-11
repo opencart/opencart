@@ -235,13 +235,12 @@ class Country extends \Opencart\System\Engine\Controller {
 	 *
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/language');
+		$this->load->language('task/catalog/country');
 
 		if (!array_key_exists('country_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		// Country
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
@@ -250,27 +249,18 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_country')];
 		}
 
-		// Stores
 		$this->load->model('setting/store');
-		
-		$stores = array_merge(['url' => HTTP_CATALOG], $this->model_setting_store->getStores());
 
-		foreach ($stores as $store) {
-			$base = DIR_CATALOG . 'view/data/';
-			$directory = parse_url($store['url'], PHP_URL_HOST) . '/localisation/';
-			$file = $base . $directory . 'country.json';
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
+
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/country-' . $country_info['country_id'] . '.json';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
-
-			$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
-
-			foreach ($files as $file) {
-				unlink($file);
-			}
 		}
 
-		return ['success' => $this->language->get('text_delete')];
+		return ['success' => sprintf($this->language->get('text_delete'), $country_info['name'])];
 	}
 }

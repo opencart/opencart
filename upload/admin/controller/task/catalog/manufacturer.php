@@ -178,7 +178,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
@@ -192,102 +192,38 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $manufacturer_info['name'])];
 	}
 
-	/*
-	 * Delete files based on country ID
-	 *
-	 */
-	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/language');
-
-		// Refresh Lists
-		$task_data = [
-			'code'   => 'manufacturer',
-			'action' => 'task/catalog/manufacturer',
-			'args'   => []
-		];
-
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-		// Delete pages
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		$this->load->model('setting/store');
-
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
-
-		foreach ($stores as $store) {
-			$base = DIR_CATALOG . 'view/data/';
-			$directory = parse_url($store['url'], PHP_URL_HOST) . '/localisation/';
-
-			$file = $base . $directory . 'country.json';
-
-			if (is_file($file)) {
-				unlink($file);
-			}
-
-			$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
-
-			foreach ($files as $file) {
-				unlink($file);
-			}
-		}
-
-		return ['success' => $this->language->get('text_delete')];
-	}
-
 	/**
-	 * Clear
+	 * Delete
 	 *
-	 * Delete generated JSON country files.
+	 * Delete generated JSON manufacturer files.
 	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
-		$this->load->language('task/catalog/language');
+	public function delete(array $args = []): array {
+		$this->load->language('task/catalog/manufacturer');
 
-		$stores = [];
+		$this->load->model('catalog/manufacturer');
 
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
+		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
+
+		if (!$manufacturer_info || !$manufacturer_info['status']) {
+			return ['error' => $this->language->get('error_manufacturer')];
+		}
 
 		$this->load->model('setting/store');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
-		$this->load->model('localisation/language');
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			foreach ($languages as $language) {
-				$base = DIR_CATALOG . 'view/data/';
-				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-
-				$file = $base . $directory . 'country.json';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
-
-				$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
-
-				foreach ($files as $file) {
-					unlink($file);
-				}
+			if (is_file($file)) {
+				unlink($file);
 			}
 		}
 
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' => sprintf($this->language->get('text_delete'), $manufacturer_info['name'])];
 	}
 }

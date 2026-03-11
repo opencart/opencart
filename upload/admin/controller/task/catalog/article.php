@@ -119,6 +119,10 @@ class Article extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/article');
 
+		if (!array_key_exists('article_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle((int)$args['article_id']);

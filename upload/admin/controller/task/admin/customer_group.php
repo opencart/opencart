@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Customer Group
  *
- * Generates customer group data for all stores.
+ * Generates customer group information for admin.
  *
  * @package Opencart\Admin\Controller\Task\Admin
  */

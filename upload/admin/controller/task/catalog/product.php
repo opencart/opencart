@@ -146,7 +146,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
+	public function delete(array $args = []): array {
 		$this->load->language('task/admin/product');
 
 		$file = HTTP_SERVER . 'view/data/admin/product.json';
@@ -155,6 +155,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			unlink($file);
 		}
 
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' => $this->language->get('text_delete')];
 	}
 }

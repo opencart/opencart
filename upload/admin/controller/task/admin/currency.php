@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Currency
  *
- * Generates currency data for the admin
+ * Generates currency information for the admin.
  *
  * @package Opencart\Admin\Controller\Task\Admin
  */
@@ -20,10 +20,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/admin/currency');
 
-		$this->load->model('localisation/currency');
-
-		$currencies = $this->model_localisation_currency->getCurrencies();
-
 		$directory = DIR_APPLICATION . 'view/data/localisation/';
 		$filename = 'currency.json';
 
@@ -31,7 +27,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($currencies))) {
+		$this->load->model('localisation/currency');
+
+		if (!file_put_contents($directory . $filename, json_encode($this->model_localisation_currency->getCurrencies()))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -70,26 +68,5 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		return ['success' => $this->language->get('text_refresh')];
-	}
-
-	/**
-	 * Clear
-	 *
-	 * Delete generated JSON currency files.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function clear(array $args = []): array {
-		$this->load->language('task/admin/currency');
-
-		$file = DIR_APPLICATION . 'view/data/localisation/currency.json';
-
-		if (is_file($file)) {
-			unlink($file);
-		}
-
-		return ['success' => $this->language->get('text_clear')];
 	}
 }

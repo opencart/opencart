@@ -20,38 +20,19 @@ class Setting extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/setting');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		$this->load->model('localisation/language');
+		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'setting',
+				'action' => 'task/catalog/setting.store',
+				'args'   => ['store_id' => $store_id]
+			];
 
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-
-
-
-			foreach ($languages as $language) {
-				$task_data = [
-					'code'   => 'setting',
-					'action' => 'task/catalog/setting.store',
-					'args'   => [
-						'store_id'    => $store['store_id'],
-						'language_id' => $language['language_id']
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];

@@ -95,31 +95,4 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'])];
 	}
-
-	/**
-	 * Delete
-	 *
-	 * Delete files based on country ID
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function clear(array $args = []): array {
-		$this->load->language('task/catalog/currency');
-
-		$this->load->model('setting/store');
-
-		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
-
-		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/currency.json';
-
-			if (is_file($file)) {
-				unlink($file);
-			}
-		}
-
-		return ['success' => $this->language->get('text_clear')];
-	}
 }

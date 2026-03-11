@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Language
  *
- * Generates language data for the admin
+ * Generates language information for admin.
  *
  * @package Opencart\Admin\Controller\Task\Admin
  */
@@ -36,26 +36,5 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		return ['success' => $this->language->get('text_list')];
-	}
-
-	/**
-	 * Clear
-	 *
-	 * Clears generated language data.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function clear(array $args = []): array {
-		$this->load->language('task/admin/language');
-
-		$file = DIR_APPLICATION . 'view/data/localisation/language.json';
-
-		if (is_file($file)) {
-			unlink($file);
-		}
-
-		return ['success' => $this->language->get('text_clear')];
 	}
 }

@@ -120,6 +120,10 @@ class Banner extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/banner');
 
+		if (!array_key_exists('banner_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$this->load->model('design/banner');
 
 		$banner_info = $this->model_design_banner->getBanner((int)$args['banner_id']);

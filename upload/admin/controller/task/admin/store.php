@@ -9,7 +9,7 @@ class Store extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate JSON store list file.
+	 * Generate store information for admin.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -41,26 +41,5 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		return ['success' => $this->language->get('text_list')];
-	}
-
-	/**
-	 * Clear
-	 *
-	 * Delete generated JSON store files.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function clear(array $args = []): array {
-		$this->load->language('task/admin/store');
-
-		$file = DIR_APPLICATION . 'view/data/setting/setting.json';
-
-		if (is_file($file)) {
-			unlink($file);
-		}
-
-		return ['success' => $this->language->get('text_clear')];
 	}
 }

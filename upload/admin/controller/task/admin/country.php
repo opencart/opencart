@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Admin;
 /**
  * Class Country
  *
- * Generate country list file.
+ * Generate country information for the admin.
  *
  * @package Opencart\Admin\Controller\Task\Admin
  */
@@ -112,6 +112,10 @@ class Country extends \Opencart\System\Engine\Controller {
 	 */
 	public function delete(array $args = []): array {
 		$this->load->language('task/admin/country');
+
+		if (!array_key_exists('country_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
 		$this->load->model('localisation/country');
 

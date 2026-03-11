@@ -171,7 +171,7 @@ class CurlyTag {
                 return value.concat(...args);
             },
             groupby: (value, type) => {
-                return Object.groupBy(value, ({ type }) => type);
+                return Object.groupBy(value, ({type}) => type);
             },
             sort: (value, key = null, direction = 'asc') => {
                 const dir = direction === 'desc' ? -1 : 1;
@@ -333,11 +333,11 @@ class CurlyTag {
     }
 
     // ─── Main render ────────────────────────────────────────────────────────
-    process(tokens, data= {}) {
-        let ctx= data;
-        let index= 0;
-        let stack= [];
-        let output= '';
+    process(tokens, data = {}) {
+        let ctx = data;
+        let index = 0;
+        let stack = [];
+        let output = '';
 
         while (index < tokens.length) {
             let token = tokens[index];
@@ -412,7 +412,7 @@ class CurlyTag {
         let regex = /\{\{-?\s([\s\S]*?)\s-?\}\}|\{%-?\s([\s\S]*?)\s-?%}|\{\#\s([\s\S]*?)\s\#\}/g;
 
         while ((match = regex.exec(template)) !== null) {
-            let [raw, output, tag] = match;
+            let [raw, output, tag, comment] = match;
 
             let line = template.substring(0, match.index).split(/\r\n|\r|\n/).length;
 
@@ -493,12 +493,8 @@ class CurlyTag {
         try {
             let func = new Function('data', `with(data) return (${expression});`);
 
-            return func({ ...ctx });
-        } catch (error)  {
-            console.trace();
-
-            console.log("http://localhost:8000/path/to/file.js:83:2");
-
+            return func({...ctx});
+        } catch (error) {
             console.log(`[Template] Warning: Evaluate error '${error}'`);
 
             return undefined;
@@ -509,17 +505,11 @@ class CurlyTag {
      * Apply chain of filters — now supports multiple comma-separated arguments per filter
      */
     parseFilter(value, expression = '', ctx) {
-        if (!expression.length) return value;
-
-        let filters = [];
-
-        if (expression.indexOf('|') !== -1){
-            filters = expression.split('|').map(value => value.trim());
-        } else {
-            filters = [expression];
-        }
+        if (expression == undefined) return value;
 
         let result = value;
+
+        let filters = (expression.indexOf('|') !== -1) ? expression.split('|').map(value => value.trim()) : [expression];
 
         for (let filter of filters) {
             let match = filter.match(/^([^:]*):?\s?(.+)?$/);
@@ -573,7 +563,7 @@ class CurlyTag {
 
         // Apply Filters
         if (filter !== undefined) {
-           value = this.parseFilter(value, filter, ctx);
+            value = this.parseFilter(value, filter, ctx);
         }
 
         value = this.filter.escape(value ?? '');
@@ -816,7 +806,7 @@ class CurlyTag {
             index: -1,
             start: index + 1,
             end: token.end,
-            parent: { ...ctx }
+            parent: {...ctx}
         });
 
         return token.end;
@@ -861,7 +851,7 @@ class CurlyTag {
     }
 
     handleContinue(token, stack, ctx, index) {
-        for (let i = stack.length -1; i >= 0; i--) {
+        for (let i = stack.length - 1; i >= 0; i--) {
             if (stack[i].type == 'for') {
                 return stack[i].end;
             }
@@ -874,7 +864,7 @@ class CurlyTag {
     handleBreak(token, stack, ctx, index) {
         let top = {};
 
-        for (let i = stack.length -1; i >= 0; i--) {
+        for (let i = stack.length - 1; i >= 0; i--) {
             let top = stack[i];
 
             if (top.type == 'for') {
@@ -1027,7 +1017,7 @@ class CurlyTag {
     }
 
     handleComment(token, stack, ctx, index) {
-        stack.push({ type: 'comment' });
+        stack.push({type: 'comment'});
 
         return token.end;
     }
@@ -1055,4 +1045,4 @@ class CurlyTag {
 
 const template = CurlyTag.getInstance();
 
-export { template };
+export {template};

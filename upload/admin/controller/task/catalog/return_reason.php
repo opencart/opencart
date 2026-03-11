@@ -93,22 +93,15 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function delete(array $args = []): array {
+	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/return_reason');
-
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
 
 		$this->load->model('setting/store');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
-		foreach ($stores as $store) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/localisation/return_reason.json';
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/return_reason.json';
 
 			if (is_file($file)) {
 				unlink($file);

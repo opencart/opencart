@@ -202,7 +202,7 @@ class Information extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/admin/information');
+		$this->load->language('task/catalog/information');
 
 		$this->load->model('information/information');
 

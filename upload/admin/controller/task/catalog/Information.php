@@ -121,7 +121,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/information');
 
-		$information_info = $this->model_catalog_information->getInformation($args['information_id']);
+		$information_info = $this->model_catalog_information->getInformation((int)$args['information_id']);
 
 		if (!$information_info || !$information_info['status']) {
 			return ['error' => $this->language->get('error_information')];
@@ -129,7 +129,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_catalog_information->getStores($args['information_id']);
+		$store_ids = $this->model_catalog_information->getStores($information_info['information_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -185,7 +185,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($information_info + ['description' => $this->model_catalog_information->getDescription($information_info['information_id'])]))) {
+		if (!file_put_contents($base . $directory . $filename, json_encode($information_info + ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -204,12 +204,26 @@ class Information extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/admin/information');
 
-		$file = HTTP_SERVER . 'view/data/admin/information.json';
+		$this->load->model('information/information');
 
-		if (is_file($file)) {
-			unlink($file);
+		$information_info = $this->model_information_information->getInformation((int)$args['information_id']);
+
+		if (!$information_info) {
+			return ['error' => $this->language->get('error_information')];
 		}
 
-		return ['success' => $this->language->get('text_delete')];
+		$this->load->model('setting/store');
+
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
+
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/information/information-' . $information_info['information_id'] . '.json';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+
+		return ['success' => sprintf($this->language->get('text_delete'), $information_info['title'])];
 	}
 }

@@ -50,7 +50,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function list(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
-		// Store
 		$store_info = [
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name'),
@@ -83,7 +82,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) .  '/localisation/';
+		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'currency.json';
 
 		if (!oc_directory_create($base . $directory, 0777)) {
@@ -106,15 +105,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function delete(array $args = []): array {
+	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/currency');
 
 		$this->load->model('setting/store');
 
-		$stores = array_merge(['url' => HTTP_CATALOG], $this->model_setting_store->getStores());
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
-		foreach ($stores as $store) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/localisation/currency.json';
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/currency.json';
 
 			if (is_file($file)) {
 				unlink($file);

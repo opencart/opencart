@@ -204,9 +204,9 @@ class Information extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/information');
 
-		$this->load->model('information/information');
+		$this->load->model('catalog/information');
 
-		$information_info = $this->model_information_information->getInformation((int)$args['information_id']);
+		$information_info = $this->model_catalog_information->getInformation((int)$args['information_id']);
 
 		if (!$information_info) {
 			return ['error' => $this->language->get('error_information')];

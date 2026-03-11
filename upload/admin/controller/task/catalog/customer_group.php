@@ -215,7 +215,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Clear
+	 * Delete
 	 *
 	 * Delete generated JSON country files.
 	 *
@@ -226,18 +226,26 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/customer_group');
 
+		$this->load->model('customer/customer_group');
+
+		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
+
+		if (!$customer_group_info) {
+			return ['error' => $this->language->get('error_customer_group')];
+		}
+
 		$this->load->model('setting/store');
 
-		$stores = array_merge(['url' => HTTP_CATALOG], $this->model_setting_store->getStores());
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
-		foreach ($stores as $store) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '/customer/customer_group.json';
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/customer/customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' => sprintf($this->language->get('text_delete'), $customer_group_info['name'])];
 	}
 }

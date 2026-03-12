@@ -1,9 +1,9 @@
 <?php
 // Text
-$_['text_task']        = 'Generating language task list!';
-$_['text_list']        = 'Generating %s %s language data!';
-$_['text_clear']       = 'Language data cleared!';
+$_['text_task']       = 'Generating language task list!';
+$_['text_list']       = 'Generating %s language data!';
 
 // Error
-$_['error_directory']  = 'Error: Directory %s does not exist or is not writable!';
-$_['error_file']       = 'Error: File %s could not be written!';
+$_['error_store']     = 'Error: Store could not be found!';
+$_['error_directory'] = 'Error: Directory %s does not exist or is not writable!';
+$_['error_file']      = 'Error: File %s could not be written!';

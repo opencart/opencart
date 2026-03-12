@@ -27,15 +27,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$countries = $this->model_localisation_country->getCountries(['sort_order' => 'ASC']);
 
 		foreach ($countries as $country) {
-			$country_description_data = [];
-
-			$results = $this->model_localisation_country->getDescriptions($country['country_id']);
-
-			foreach ($results as $result) {
-				$country_description_data[$result['code']] = $result;
-			}
-
-			$country_data[] = $country + ['description' => $country_description_data];
+			$country_data[] = $country + ['description' => $this->model_localisation_country->getDescriptions($country['country_id'])];
 		}
 
 		$sort_order = [];
@@ -84,14 +76,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_country')];
 		}
 
-		$country_description_data = [];
-
-		$results = $this->model_localisation_country->getDescriptions($country_info['country_id']);
-
-		foreach ($results as $result) {
-			$country_description_data[$result['code']] = $result;
-		}
-
 		// Zones
 		$zone_data = [];
 
@@ -100,15 +84,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$zones = $this->model_localisation_zone->getZonesByCountryId($country_info['country_id']);
 
 		foreach ($zones as $zone) {
-			$zone_description_data = [];
-
-			$results = $this->model_localisation_zone->getDescriptions($zone['zone_id']);
-
-			foreach ($results as $result) {
-				$zone_description_data[$result['code']] = $result;
-			}
-
-			$zone_data[] = $zone + ['description' => $zone_description_data];
+			$zone_data[] = $zone + ['description' => $this->model_localisation_zone->getDescriptions($zone['zone_id'])];
 		}
 
 		$directory = DIR_APPLICATION . 'view/data/localisation/';
@@ -118,7 +94,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($country_info + ['description' => $country_description_data] + ['zone' => $zone_data]))) {
+		if (!file_put_contents($directory . $filename, json_encode($country_info + ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])] + ['zone' => $zone_data]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

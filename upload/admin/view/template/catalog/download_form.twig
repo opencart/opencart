@@ -31,7 +31,7 @@
                   {% for language in languages %}
                     <div class="input-group">
                       <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                      <input type="text" name="download_description[{{ language.language_id }}][name]" value="{{ download_description[language.language_id] ? download_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
+                      <input type="text" name="download_description[{{ language.language_id }}][name]" value="{{ download_description[language.code] ? download_description[language.code].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
                     </div>
                     <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                   {% endfor %}

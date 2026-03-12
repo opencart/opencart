@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Customer Group
  *
- * Generates customer group data for all stores.
+ * Generates customer group information for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -90,15 +90,14 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $country_data);
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
 		$filename = 'customer_group.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($customer_group_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -167,8 +166,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -199,15 +199,14 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$custom_field_data[] = $custom_field + ['description' => $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id'])];
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
 		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])] + ['custom_field' => $custom_field_data]))) {
+		if (!file_put_contents($directory . $filename, json_encode($customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])] + ['custom_field' => $custom_field_data]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

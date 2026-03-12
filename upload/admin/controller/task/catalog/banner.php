@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Banner
  *
- * Generates banner data for all stores.
+ * Generates banner information for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -93,15 +93,14 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_banner')];
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/design/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/design/';
 		$filename = 'banner-' . $banner_info['banner_id'] . '.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($banner_info + ['image' => $this->model_design_banner->getImages($banner_info['banner_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode($banner_info + ['image' => $this->model_design_banner->getImages($banner_info['banner_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

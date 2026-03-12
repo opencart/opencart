@@ -6,6 +6,12 @@ namespace Opencart\Admin\Controller\Event;
  * @package Opencart\Admin\Controller\Event
  */
 class Filter extends \Opencart\System\Engine\Controller {
+	public function addFilter(string &$route, array &$args, &$output): void {
+		$this->load->model('catalog/filter');
+
+
+	}
+
 	/*
 	 * Edit Filter
 	 *
@@ -20,6 +26,12 @@ class Filter extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editFilter(string &$route, array &$args, &$output): void {
+
+
+
+
+
+
 		$this->load->model('catalog/product');
 
 		$results = $this->model_catalog_product->getProductsByFilterId($args[0]);

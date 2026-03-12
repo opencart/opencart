@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Article
  *
- * Generates article data for all stores.
+ * Generates article information for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -92,15 +92,14 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_article')];
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
 		$filename = 'article-' . $article_info['article_id'] . '.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($article_info + ['description' => $this->model_cms_article->getDescriptions($article_info['article_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode($article_info + ['description' => $this->model_cms_article->getDescriptions($article_info['article_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

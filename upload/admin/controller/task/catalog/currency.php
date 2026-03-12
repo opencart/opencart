@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Currency
  *
- * Generates currency data for all stores.
+ * Generates currencyinformation for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -81,15 +81,14 @@ class Currency extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'currency.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($currency_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($currency_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

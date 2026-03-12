@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Product
  *
- * data for all stores.
+ * Generates product information for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -28,7 +28,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_product')];
 		}
 
-		$this->load->model('setting/setting');
+		$this->load->model('setting/task');
 
 		$store_ids = $this->model_catalog_product->getStores($product_info['product_id']);
 
@@ -65,8 +65,9 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -138,7 +139,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Clear
+	 * Delete
 	 *
 	 * Delete generated JSON information files.
 	 *
@@ -147,14 +148,32 @@ class Product extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/admin/product');
+		$this->load->language('task/catalog/product');
 
-		$file = HTTP_SERVER . 'view/data/admin/product.json';
-
-		if (is_file($file)) {
-			unlink($file);
+		if (!array_key_exists('product_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
 		}
 
-		return ['success' => $this->language->get('text_delete')];
+		$this->load->model('catalog/product');
+
+		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
+
+		if (!$product_info) {
+			return ['error' => $this->language->get('error_product')];
+		}
+
+		$this->load->model('setting/store');
+
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
+
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/product-' . $product_info['product_id'] . '.json';
+
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+
+		return ['success' => sprintf($this->language->get('text_delete'), $product_info['name'])];
 	}
 }

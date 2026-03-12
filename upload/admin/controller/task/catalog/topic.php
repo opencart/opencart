@@ -88,15 +88,14 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $topic_data);
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
 		$filename = 'topic.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($topic_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($topic_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -164,8 +163,9 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -186,15 +186,14 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_topic')];
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
 		$filename = 'topic-' . $topic_info['topic_id'] . '.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($topic_info + ['description' => $this->model_cms_topic->getDescriptions($topic_info['topic_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode($topic_info + ['description' => $this->model_cms_topic->getDescriptions($topic_info['topic_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -212,6 +211,10 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 */
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/topic');
+
+		if (!array_key_exists('topic_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
 		$this->load->model('cms/topic');
 

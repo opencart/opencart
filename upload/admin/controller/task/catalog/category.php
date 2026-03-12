@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Category
  *
- * Generates category data files
+ * Generates category information for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -88,15 +88,14 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $category_data);
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'category.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($category_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($category_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -129,7 +128,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_catalog_information->getStores($category_info['category_id']);
+		$store_ids = $this->model_catalog_category->getStores($category_info['category_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -158,14 +157,15 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStores((int)$args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -180,15 +180,14 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_category')];
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'category-' . $category_info['category_id'] . '.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($category_info + ['description' => $this->model_catalog_category->getDescriptions($category_info['category_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode($category_info + ['description' => $this->model_catalog_category->getDescriptions($category_info['category_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -200,52 +199,32 @@ class Category extends \Opencart\System\Engine\Controller {
 	 *
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/language');
+		$this->load->language('task/catalog/category');
 
-		// Refresh Lists
-		$task_data = [
-			'code'   => 'country',
-			'action' => 'task/catalog/country.list',
-			'args'   => []
-		];
+		if (!array_key_exists('category_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
-		$this->load->model('setting/task');
+		$this->load->model('catalog/category');
 
-		$this->model_setting_task->addTask($task_data);
+		$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);
 
-		// Delete pages
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
+		if (!$category_info || !$category_info['status']) {
+			return ['error' => $this->language->get('error_category')];
+		}
 
 		$this->load->model('setting/store');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
-		$this->load->model('localisation/language');
-
-		$languages = $this->model_localisation_language->getLanguages();
-
-		foreach ($stores as $store) {
-			$base = DIR_CATALOG . 'view/data/';
-			$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-
-			$file = $base . $directory . 'country.json';
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/category-' . $category_info['category_id'] . '.json';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
-
-			$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
-
-			foreach ($files as $file) {
-				unlink($file);
-			}
 		}
 
-		return ['success' => $this->language->get('text_delete')];
+		return ['success' => sprintf($this->language->get('text_delete'), $category_info['name'])];
 	}
 }

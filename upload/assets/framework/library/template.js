@@ -149,15 +149,15 @@ class CurlyTag {
                 return string.split(/\s+/).length;
             },
             // Array
-            batch: (value, size, fill = null) => {
+            batch: (value, length, fill = null) => {
                 let result = [];
 
-                for (let i = 0; i < value.length; i += size) {
-                    let chunk = value.slice(i, i + size);
+                for (let i = 0; i < value.length; i += length) {
+                    let chunk = value.slice(i, i + length);
 
                     // Fill last chunk with fillWith value if needed
-                    if (fill !== null && chunk.length < size) {
-                        while (chunk.length < size) {
+                    if (fill !== null && chunk.length < length) {
+                        while (chunk.length < length) {
                             chunk.push(fill);
                         }
                     }

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Information
  *
- * Generates information data for all stores.
+ * Generates information for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -76,7 +76,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$information_info = $this->model_catalog_information->getInformation($information_id);
 
 			if ($information_info && $information_info['status']) {
-				$information_data[] = $information_info + ['description' => $this->model_localisation_country->getDescriptions($information_info['information_id'])];
+				$information_data[] = $information_info + ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])];
 			}
 		}
 
@@ -88,15 +88,14 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $information_data);
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'information.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($information_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($information_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -155,8 +154,9 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
@@ -177,15 +177,14 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_information')];
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'information-' . $information_info['information_id'] . '.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($information_info + ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode($information_info + ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -203,6 +202,10 @@ class Information extends \Opencart\System\Engine\Controller {
 	 */
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/information');
+
+		if (!array_key_exists('information_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
 		$this->load->model('catalog/information');
 

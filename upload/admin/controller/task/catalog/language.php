@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Language
  *
- * Generates language list data for all stores.
+ * Generates language information for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -71,7 +71,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/language');
 
-		$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_info['store_id']);
+		$language_ids = (array)$this->model_setting_setting->getValue('config_language_list', $store_info['store_id']);
 
 		foreach ($language_ids as $language_id) {
 			$language_info = $this->model_localisation_language->getLanguage((int)$language_id);
@@ -81,15 +81,14 @@ class Language extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'language.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($language_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($language_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

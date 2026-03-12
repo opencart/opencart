@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Task\Catalog;
 /**
  * Class Manufacturer
  *
- * Generates manufacturer data for all stores.
+ * Generates manufacturer information for all stores.
  *
  * @package Opencart\Admin\Controller\Task\Catalog
  */
@@ -11,7 +11,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate manufacturer task list for each store.
+	 * Generates product manufacturer for all stores.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -59,7 +59,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStores((int)$args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -88,15 +88,14 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $manufacturer_data);
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'manufacturer.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($manufacturer_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($manufacturer_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -129,7 +128,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_catalog_information->getStores($manufacturer_info['manufacturer_id']);
+		$store_ids = $this->model_catalog_manufacturer->getStores($manufacturer_info['manufacturer_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -155,14 +154,15 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		$store_info = [
-			'name' => $this->config->get('config_name'),
-			'url'  => HTTP_CATALOG
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
 		];
 
 		if ($args['store_id']) {
 			$this->load->model('setting/store');
 
-			$store_info = $this->model_setting_store->getStores((int)$args['store_id']);
+			$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
 
 			if (!$store_info) {
 				return ['error' => $this->language->get('error_store')];
@@ -177,15 +177,14 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_manufacturer')];
 		}
 
-		$base = DIR_CATALOG . 'view/data/';
-		$directory = parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
 
-		if (!oc_directory_create($base . $directory, 0777)) {
+		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($base . $directory . $filename, json_encode($manufacturer_info + ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode($manufacturer_info + ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])]))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -204,6 +203,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/manufacturer');
 
+		if (!array_key_exists('manufacturer_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$this->load->model('catalog/manufacturer');
 
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
@@ -217,7 +220,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
 
 			if (is_file($file)) {
 				unlink($file);

@@ -311,10 +311,10 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $order_status_id): array {
 		$order_status_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `os`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = '" . (int)$order_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$order_status_data[$result['language_id']] = $result;
+			$order_status_data[$result['code']] = $result;
 		}
 
 		return $order_status_data;

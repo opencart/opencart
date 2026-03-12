@@ -416,10 +416,10 @@ class Information extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $information_id): array {
 		$information_description_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `id`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "information_description` `id` WHERE `id`.`information_id` = '" . (int)$information_id . "'");
 
 		foreach ($query->rows as $result) {
-			$information_description_data[$result['language_id']] = $result;
+			$information_description_data[$result['code']] = $result;
 		}
 
 		return $information_description_data;

@@ -313,10 +313,10 @@ class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $subscription_status_id): array {
 		$subscription_status_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `subscription_status_id` = '" . (int)$subscription_status_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `ss`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "subscription_status` `ss` WHERE `ss`.`subscription_status_id` = '" . (int)$subscription_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$subscription_status_data[$result['language_id']] = $result;
+			$subscription_status_data[$result['code']] = $result;
 		}
 
 		return $subscription_status_data;

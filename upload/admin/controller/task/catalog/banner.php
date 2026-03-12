@@ -127,7 +127,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$banner_info = $this->model_design_banner->getBanner((int)$args['banner_id']);
 
-		if (!$banner_info || !$banner_info['status']) {
+		if (!$banner_info) {
 			return ['error' => $this->language->get('error_banner')];
 		}
 

@@ -430,10 +430,10 @@ class Zone extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $zone_id): array {
 		$zone_description_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_description` WHERE `zone_id` = '" . (int)$zone_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `zd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "zone_description` `zd` WHERE `zd`.`zone_id` = '" . (int)$zone_id . "'");
 
 		foreach ($query->rows as $result) {
-			$zone_description_data[$result['language_id']] = $result;
+			$zone_description_data[$result['code']] = $result;
 		}
 
 		return $zone_description_data;

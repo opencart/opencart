@@ -347,10 +347,10 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $length_class_id): array {
 		$length_class_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `lcd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "length_class_description` `lcd` WHERE `lcd`.`length_class_id` = '" . (int)$length_class_id . "'");
 
 		foreach ($query->rows as $result) {
-			$length_class_data[$result['language_id']] = $result;
+			$length_class_data[$result['code']] = $result;
 		}
 
 		return $length_class_data;

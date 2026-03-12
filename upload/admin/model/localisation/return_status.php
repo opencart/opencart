@@ -313,10 +313,10 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $return_status_id): array {
 		$return_status_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `rs`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "return_status` `rs` WHERE `rs`.`return_status_id` = '" . (int)$return_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$return_status_data[$result['language_id']] = $result;
+			$return_status_data[$result['code']] = $result;
 		}
 
 		return $return_status_data;

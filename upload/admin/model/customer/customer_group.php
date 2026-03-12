@@ -320,10 +320,10 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $customer_group_id): array {
 		$customer_group_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group_description` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `cgd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "customer_group_description` `cgd` WHERE `cgd`.`customer_group_id` = '" . (int)$customer_group_id . "'");
 
 		foreach ($query->rows as $result) {
-			$customer_group_data[$result['language_id']] = $result;
+			$customer_group_data[$result['code']] = $result;
 		}
 
 		return $customer_group_data;

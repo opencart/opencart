@@ -20,6 +20,10 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/product');
 
+		if (!array_key_exists('product_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
@@ -28,6 +32,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_product')];
 		}
 
+		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
 		$store_ids = $this->model_catalog_product->getStores($product_info['product_id']);
@@ -124,7 +129,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$discounts = $this->model_catalog_product->getDiscounts($product_info['product_id']);
 
-		$directory = DIR_APPLICATION . 'view/data/catalog/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'product-' . $product_info['product_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -135,7 +140,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $product_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $product_info['name'])];
 	}
 
 	/**

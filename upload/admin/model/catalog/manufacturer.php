@@ -424,10 +424,10 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $manufacturer_id): array {
 		$manufacturer_description_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_description` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `md`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "manufacturer_description` `md` WHERE `md`.`manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
 		foreach ($query->rows as $result) {
-			$manufacturer_description_data[$result['language_id']] = $result;
+			$manufacturer_description_data[$result['code']] = $result;
 		}
 
 		return $manufacturer_description_data;

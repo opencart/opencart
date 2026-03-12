@@ -326,10 +326,10 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $weight_class_id): array {
 		$weight_class_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class_description` WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `wcd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "weight_class_description` `wcd` WHERE `wcd`.`weight_class_id` = '" . (int)$weight_class_id . "'");
 
 		foreach ($query->rows as $result) {
-			$weight_class_data[$result['language_id']] = $result;
+			$weight_class_data[$result['code']] = $result;
 		}
 
 		return $weight_class_data;

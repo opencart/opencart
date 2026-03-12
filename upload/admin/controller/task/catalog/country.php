@@ -243,7 +243,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$country_info = $this->model_localisation_country->getCountry((int)$args['country_id']);
 
-		if (!$country_info || !$country_info['status']) {
+		if (!$country_info) {
 			return ['error' => $this->language->get('error_country')];
 		}
 

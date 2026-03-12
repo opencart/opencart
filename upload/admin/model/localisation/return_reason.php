@@ -313,10 +313,10 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $return_reason_id): array {
 		$return_reason_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_reason` WHERE `return_reason_id` = '" . (int)$return_reason_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `rr`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "return_reason` `rr` WHERE `rr`.`return_reason_id` = '" . (int)$return_reason_id . "'");
 
 		foreach ($query->rows as $result) {
-			$return_reason_data[$result['language_id']] = $result;
+			$return_reason_data[$result['code']] = $result;
 		}
 
 		return $return_reason_data;

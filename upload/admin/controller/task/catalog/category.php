@@ -209,7 +209,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);
 
-		if (!$category_info || !$category_info['status']) {
+		if (!$category_info) {
 			return ['error' => $this->language->get('error_category')];
 		}
 

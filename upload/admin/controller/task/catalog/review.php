@@ -11,7 +11,7 @@ class Review extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Generate review list task for each store and language.
+	 * Generate review list task for each store.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -19,6 +19,10 @@ class Review extends \Opencart\System\Engine\Controller {
 	 */
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/review');
+
+		if (!array_key_exists('product_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
 		// Review
 		$this->load->model('catalog/product');
@@ -31,27 +35,21 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		// Stores
 		$this->load->model('setting/store');
-		$this->load->model('setting/setting');
 		$this->load->model('setting/task');
 
 		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
 		foreach ($store_ids as $store_id) {
-			$language_ids = $this->model_setting_setting->getValue('config_language_list', $store_id);
+			$task_data = [
+				'code'   => 'review',
+				'action' => 'task/catalog/review.list',
+				'args'   => [
+					'product_id' => $product_info['product_id'],
+					'store_id'   => $store_id
+				]
+			];
 
-			foreach ($language_ids as $language_id) {
-				$task_data = [
-					'code'   => 'review',
-					'action' => 'task/catalog/review.list',
-					'args'   => [
-						'product_id'  => $product_info['product_id'],
-						'store_id'    => $store_id,
-						'language_id' => $language_id
-					]
-				];
-
-				$this->model_setting_task->addTask($task_data);
-			}
+			$this->model_setting_task->addTask($task_data);
 		}
 
 		return ['success' => $this->language->get('text_task')];
@@ -79,7 +77,6 @@ class Review extends \Opencart\System\Engine\Controller {
 				'action' => 'task/catalog/review.list',
 				'args'   => [
 					'store_id'    => $store['store_id'],
-					'language_id' => $language['language_id'],
 					'start'       => $start,
 					'limit'       => $limit
 				]

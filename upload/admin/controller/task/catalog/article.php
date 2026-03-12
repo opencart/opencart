@@ -126,7 +126,7 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$article_info = $this->model_cms_article->getArticle((int)$args['article_id']);
 
-		if (!$article_info || !$article_info['status']) {
+		if (!$article_info) {
 			return ['error' => $this->language->get('error_article')];
 		}
 

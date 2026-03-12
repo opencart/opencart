@@ -302,10 +302,10 @@ class Download extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $download_id): array {
 		$download_description_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `id`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "download_description` `dd` WHERE `dd`.`download_id` = '" . (int)$download_id . "'");
 
 		foreach ($query->rows as $result) {
-			$download_description_data[$result['language_id']] = $result;
+			$download_description_data[$result['code']] = $result;
 		}
 
 		return $download_description_data;

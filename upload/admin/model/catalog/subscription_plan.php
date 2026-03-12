@@ -351,10 +351,10 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $subscription_plan_id): array {
 		$subscription_plan_description_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `spd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "subscription_plan_description` `spd` WHERE `spd`.`subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
 		foreach ($query->rows as $result) {
-			$subscription_plan_description_data[$result['language_id']] = $result;
+			$subscription_plan_description_data[$result['code']] = $result;
 		}
 
 		return $subscription_plan_description_data;

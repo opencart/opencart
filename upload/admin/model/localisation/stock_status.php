@@ -313,10 +313,10 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $stock_status_id): array {
 		$stock_status_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `ss`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "stock_status` `ss` WHERE `ss`.`stock_status_id` = '" . (int)$stock_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$stock_status_data[$result['language_id']] = $result;
+			$stock_status_data[$result['code']] = $result;
 		}
 
 		return $stock_status_data;

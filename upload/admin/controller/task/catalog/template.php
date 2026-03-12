@@ -20,8 +20,7 @@ class Template extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'route',
-			'store_id',
-			'language_id'
+			'store_id'
 		];
 
 		foreach ($required as $value) {

@@ -689,7 +689,9 @@ class Product extends \Opencart\System\Engine\Model {
 			// Description
 			$product_descriptions = $this->model_catalog_product->getDescriptions($master_id);
 
-			foreach ($product_descriptions as $language_id => $product_description) {
+			foreach ($product_descriptions as $product_description) {
+				$language_id = $product_description['language_id'];
+
 				foreach ($product_description as $key => $value) {
 					if (!isset($override['product_description'][$language_id][$key])) {
 						$product_data['product_description'][$language_id][$key] = $value;
@@ -831,7 +833,9 @@ class Product extends \Opencart\System\Engine\Model {
 			// Descriptions
 			$product_descriptions = $this->model_catalog_product->getDescriptions($product['product_id']);
 
-			foreach ($product_descriptions as $language_id => $product_description) {
+			foreach ($product_descriptions as $product_description) {
+				$language_id = $product_description['language_id'];
+
 				foreach ($product_description as $key => $value) {
 					// If override set use the POST data values
 					if (isset($override['product_description'][$language_id][$key])) {
@@ -1465,10 +1469,10 @@ class Product extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $product_id): array {
 		$product_description_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_description` WHERE `product_id` = '" . (int)$product_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `pd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "product_description` `pd` WHERE `pd`.`product_id` = '" . (int)$product_id . "'");
 
 		foreach ($query->rows as $result) {
-			$product_description_data[$result['language_id']] = $result;
+			$product_description_data[$result['code']] = $result;
 		}
 
 		return $product_description_data;

@@ -211,7 +211,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
 
-		if (!$manufacturer_info || !$manufacturer_info['status']) {
+		if (!$manufacturer_info) {
 			return ['error' => $this->language->get('error_manufacturer')];
 		}
 

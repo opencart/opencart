@@ -274,10 +274,10 @@ class Menu extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $menu_id): array {
 		$menu_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` WHERE `menu_id` = '" . (int)$menu_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `id`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "menu_description` WHERE `menu_id` = '" . (int)$menu_id . "'");
 
 		foreach ($query->rows as $result) {
-			$menu_data[$result['language_id']] = $result;
+			$menu_data[$result['code']] = $result;
 		}
 
 		return $menu_data;

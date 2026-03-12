@@ -296,10 +296,10 @@ class Option extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $option_id): array {
 		$description_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `od`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "option_description` `od` WHERE `od`.`option_id` = '" . (int)$option_id . "'");
 
 		foreach ($query->rows as $result) {
-			$description_data[$result['language_id']] = $result;
+			$description_data[$result['code']] = $result;
 		}
 
 		return $description_data;

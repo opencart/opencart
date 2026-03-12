@@ -444,10 +444,10 @@ class Article extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $article_id): array {
 		$article_description_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_description` WHERE `article_id` = '" . (int)$article_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `ad`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "article_description` `ad` WHERE `ad`.`article_id` = '" . (int)$article_id . "'");
 
 		foreach ($query->rows as $result) {
-			$article_description_data[$result['language_id']] = $result;
+			$article_description_data[$result['code']] = $result;
 		}
 
 		return $article_description_data;

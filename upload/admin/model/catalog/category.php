@@ -652,10 +652,10 @@ class Category extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $category_id): array {
 		$category_description_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `cd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "category_description` `cd` WHERE `cd`.`category_id` = '" . (int)$category_id . "'");
 
 		foreach ($query->rows as $result) {
-			$category_description_data[$result['language_id']] = $result;
+			$category_description_data[$result['code']] = $result;
 		}
 
 		return $category_description_data;

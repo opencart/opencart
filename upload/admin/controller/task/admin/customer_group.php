@@ -27,7 +27,15 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
 		foreach ($customer_groups as $customer_group) {
-			$customer_group_data[] = $customer_group + ['description' => $this->model_customer_customer_group->getDesciptions($customer_group['customer_group_id'])];
+			$customer_group_description_data = [];
+
+			$results = $this->model_customer_customer_group->getDesciptions($customer_group['customer_group_id']);
+
+			foreach ($results as $result) {
+				$customer_group_description_data[$result['code']] = $result;
+			}
+
+			$customer_group_data[] = $customer_group + ['description' => $customer_group_description_data];
 		}
 
 		$directory = DIR_APPLICATION . 'view/data/customer/';

@@ -673,10 +673,10 @@ class Attribute extends \Opencart\System\Engine\Model {
 	public function getAttributeDescriptions(int $attribute_id): array {
 		$attribute_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `ad`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "attribute_description` `ad` WHERE `ad`.`attribute_id` = '" . (int)$attribute_id . "'");
 
 		foreach ($query->rows as $result) {
-			$attribute_data[$result['language_id']] = $result;
+			$attribute_data[$result['code']] = $result;
 		}
 
 		return $attribute_data;

@@ -35,7 +35,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_catalog_product->getStoresByStoreId($product_info['product_id']);
+		$store_ids = $this->model_catalog_product->getStores($product_info['product_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [

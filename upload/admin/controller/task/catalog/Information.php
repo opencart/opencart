@@ -70,20 +70,23 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/information');
 
-		$information_ids = $this->model_catalog_information->getStores($store_info['store_id']);
+		$information_ids = $this->model_catalog_information->getStoresByStoreId($store_info['store_id']);
 
 		foreach ($information_ids as $information_id) {
-			$information_info = $this->model_catalog_information->getInformation($information_id);
+			$information_info = $this->model_catalog_information->getInformation((int)$information_id);
 
 			if ($information_info && $information_info['status']) {
 				$information_data[] = array_merge($information_info, ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])]);
 			}
 		}
 
+		//throw new \Exception(json_encode($information_data));
+
+
 		$sort_order = [];
 
 		foreach ($information_data as $key => $value) {
-			$sort_order[$key] = $value['name'];
+			$sort_order[$key] = $value['title'];
 		}
 
 		array_multisort($sort_order, SORT_ASC, $information_data);
@@ -128,7 +131,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_catalog_information->getStores($information_info['information_id']);
+		$store_ids = $this->model_catalog_information->getStoresByStoreId($information_info['information_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
@@ -143,7 +146,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $information_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $information_info['title'])];
 	}
 
 	public function _info(array $args = []): array {
@@ -188,7 +191,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $information_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $information_info['title'])];
 	}
 
 	/**

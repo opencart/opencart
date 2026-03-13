@@ -553,23 +553,23 @@ if (extension_loaded('mbstring')) {
 			}
 
 			if ($unicode[$i] >= 128 && $unicode[$i] <= 2047) {
-				$string .= chr(($unicode[$i] / 64) + 192) . chr(($unicode[$i] % 64) + 128);
+				$string .= chr((int)($unicode[$i] / 64) + 192) . chr(($unicode[$i] % 64) + 128);
 			}
 
 			if ($unicode[$i] >= 2048 && $unicode[$i] <= 65535) {
-				$string .= chr(($unicode[$i] / 4096) + 224) . chr(128 + (($unicode[$i] / 64) % 64)) . chr(($unicode[$i] % 64) + 128);
+				$string .= chr((int)($unicode[$i] / 4096) + 224) . chr(128 + ((int)($unicode[$i] / 64) % 64)) . chr(($unicode[$i] % 64) + 128);
 			}
 
 			if ($unicode[$i] >= 65536 && $unicode[$i] <= 2097151) {
-				$string .= chr(($unicode[$i] / 262144) + 240) . chr((($unicode[$i] / 4096) % 64) + 128) . chr((($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
+				$string .= chr((int)($unicode[$i] / 262144) + 240) . chr(((int)($unicode[$i] / 4096) % 64) + 128) . chr(((int)($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
 			}
 
 			if ($unicode[$i] >= 2097152 && $unicode[$i] <= 67108863) {
-				$string  .= chr(($unicode[$i] / 16777216) + 248) . chr((($unicode[$i] / 262144) % 64) + 128) . chr((($unicode[$i] / 4096) % 64) + 128) . chr((($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
+				$string .= chr((int)($unicode[$i] / 16777216) + 248) . chr(((int)($unicode[$i] / 262144) % 64) + 128) . chr(((int)($unicode[$i] / 4096) % 64) + 128) . chr(((int)($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
 			}
 
 			if ($unicode[$i] >= 67108864 && $unicode[$i] <= 2147483647) {
-				$string .= chr(($unicode[$i] / 1073741824) + 252) . chr((($unicode[$i] / 16777216) % 64) + 128) . chr((($unicode[$i] / 262144) % 64) + 128) . chr(128 + (($unicode[$i] / 4096) % 64)) . chr((($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
+				$string .= chr((int)($unicode[$i] / 1073741824) + 252) . chr(((int)($unicode[$i] / 16777216) % 64) + 128) . chr(((int)($unicode[$i] / 262144) % 64) + 128) . chr(128 + ((int)($unicode[$i] / 4096) % 64)) . chr(((int)($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
 			}
 		}
 

@@ -205,9 +205,9 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (!empty($attribute_group_info)) {
-			$data['attribute_description'] = $this->model_catalog_attribute->getDescriptions($attribute_group_info['attribute_group_id']);
+			$data['attribute_group_description'] = $this->model_catalog_attribute->getDescriptions($attribute_group_info['attribute_group_id']);
 		} else {
-			$data['attribute_description'] = [];
+			$data['attribute_group_description'] = [];
 		}
 
 		if (!empty($attribute_info)) {
@@ -217,11 +217,17 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		}
 
 		// Attributes
+		$data['attributes'] = [];
+
 		if (!empty($attribute_group_info)) {
 			$data['attributes'] = $this->model_catalog_attribute->getAttributes(['filter_attribute_group_id' => $attribute_group_info['attribute_group_id']]);
-		} else {
-			$data['attributes'] = [];
+
+			$data['attributes'] = $this->model_catalog_attribute->getAttributeDescriptions();
 		}
+
+
+
+
 
 		$data['user_token'] = $this->session->data['user_token'];
 

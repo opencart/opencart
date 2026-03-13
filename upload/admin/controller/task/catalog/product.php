@@ -29,7 +29,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
 
 		if (!$product_info || !$product_info['status']) {
-			return ['error' => $this->language->get('error_product')];
+			return ['success' => $this->language->get('error_product')];
 		}
 
 		$this->load->model('setting/store');

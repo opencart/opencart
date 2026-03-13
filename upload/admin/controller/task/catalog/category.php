@@ -70,7 +70,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/category');
 
-		$category_ids = $this->model_catalog_category->getStores($store_info['store_id']);
+		$category_ids = $this->model_catalog_category->getStoresByStoreId($store_info['store_id']);
 
 		foreach ($category_ids as $category_id) {
 			$category_info = $this->model_catalog_category->getCategory($category_id);

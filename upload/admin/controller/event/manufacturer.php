@@ -22,8 +22,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	public function addManufacturer(string &$route, array &$args, &$output): void {
 		// List
 		$task_data = [
-			'code'   => 'manufacturer.list',
-			'action' => 'task/catalog/manufacturer.list',
+			'code'   => 'manufacturer',
+			'action' => 'task/catalog/manufacturer',
 			'args'   => []
 		];
 
@@ -57,8 +57,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	public function editManufacturer(string &$route, array &$args, &$output): void {
 		// List
 		$task_data = [
-			'code'   => 'manufacturer.list',
-			'action' => 'task/catalog/manufacturer.list',
+			'code'   => 'manufacturer',
+			'action' => 'task/catalog/manufacturer',
 			'args'   => []
 		];
 
@@ -78,7 +78,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		// Products
 		$this->load->model('catalog/product');
 
-		$results = $this->model_catalog_product->getProductsByManufacturerId($args[0]);
+		$results = $this->model_catalog_product->getProducts(['filter_manufacturer_id' => $args[0]]);
 
 		foreach ($results as $result) {
 			$task_data = [
@@ -107,8 +107,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	public function deleteManufacturer(string &$route, array &$args, &$output): void {
 		// List
 		$task_data = [
-			'code'   => 'manufacturer.list',
-			'action' => 'task/catalog/manufacturer.list',
+			'code'   => 'manufacturer',
+			'action' => 'task/catalog/manufacturer',
 			'args'   => []
 		];
 
@@ -126,20 +126,5 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
-
-		// Products
-		$this->load->model('catalog/product');
-
-		$results = $this->model_catalog_product->getProductsByManufacturerId($args[0]);
-
-		foreach ($results as $result) {
-			$task_data = [
-				'code'   => 'product.info.' . $result['product_id'],
-				'action' => 'task/catalog/product.info',
-				'args'   => ['product_id' => $result['product_id']]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
 	}
 }

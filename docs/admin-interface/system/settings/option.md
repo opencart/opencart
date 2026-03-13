@@ -61,11 +61,7 @@ Because this tab contains many settings, they are grouped into logical sub-secti
 
 * **List Description Limit (Articles)**: Character limit for short article descriptions in list views (e.g., blog homepage, category pages).
 * **Allow Comments**: Enable or disable the comment system for articles.
-* **Allow Guest Comments**: Allow visitors without accounts to post comments on articles.
 * **Auto Approve Comments**: Automatically approve comments; otherwise, first comment from each user requires manual approval.
-* **Comments Interval**: Minimum minutes between comments from the same user (flood protection). Set to 0 to disable.
-* **Article Image Size**: Default dimensions (Width × Height) for article featured images.
-* **Topic Image Size**: Default dimensions (Width × Height) for topic/category images.
 
 </details>
 

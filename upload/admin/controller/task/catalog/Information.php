@@ -131,7 +131,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_catalog_information->getStoresByStoreId($information_info['information_id']);
+		$store_ids = $this->model_catalog_information->getStores($information_info['information_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [

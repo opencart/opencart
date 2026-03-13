@@ -128,7 +128,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_catalog_manufacturer->getStoresByStoreId($manufacturer_info['manufacturer_id']);
+		$store_ids = $this->model_catalog_manufacturer->getStores($manufacturer_info['manufacturer_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [

@@ -128,7 +128,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/task');
 
-		$store_ids = $this->model_cms_topic->getStoresByStoreId($topic_info['topic_id']);
+		$store_ids = $this->model_cms_topic->getStores($topic_info['topic_id']);
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [

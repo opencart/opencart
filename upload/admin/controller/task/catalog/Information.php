@@ -80,9 +80,6 @@ class Information extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		//throw new \Exception(json_encode($information_data));
-
-
 		$sort_order = [];
 
 		foreach ($information_data as $key => $value) {

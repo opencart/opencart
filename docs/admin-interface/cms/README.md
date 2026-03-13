@@ -47,10 +47,7 @@ Protect your blog from spam comments by maintaining a list of banned keywords an
 
 * **List Description Limit**: Character limit for article descriptions in list views
 * **Allow Comments**: Enable/disable the comment system globally
-* **Allow Guest Comments**: Permit comments from visitors without accounts
 * **Auto Approve Comments**: Automatically approve comments or require moderation
-* **Comments Interval**: Flood protection (minutes between comments)
-* **Article/Topic Image Sizes**: Default dimensions for content images
 {% endhint %}
 
 ## Getting Started

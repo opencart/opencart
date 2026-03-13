@@ -27,15 +27,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
 		foreach ($customer_groups as $customer_group) {
-			$customer_group_description_data = [];
-
-			$results = $this->model_customer_customer_group->getDesciptions($customer_group['customer_group_id']);
-
-			foreach ($results as $result) {
-				$customer_group_description_data[$result['code']] = $result;
-			}
-
-			$customer_group_data[] = $customer_group + ['description' => $customer_group_description_data];
+			$customer_group_data[] = array_merge($customer_group, ['description' => $this->model_customer_customer_group->getDesciptions($customer_group['customer_group_id'])]);
 		}
 
 		$directory = DIR_APPLICATION . 'view/data/customer/';
@@ -93,7 +85,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])] + ['custom_field' => $custom_field_data]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($customer_group_info, ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])], ['custom_field' => $custom_field_data])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

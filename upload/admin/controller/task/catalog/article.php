@@ -99,7 +99,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($article_info + ['description' => $this->model_cms_article->getDescriptions($article_info['article_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($article_info, ['description' => $this->model_cms_article->getDescriptions($article_info['article_id'])])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

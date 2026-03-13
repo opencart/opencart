@@ -78,7 +78,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($customer_group_id);
 
 			if ($customer_group_info && $customer_group_info['status']) {
-				$customer_group_data[] = $customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])];
+				$customer_group_data[] = array_merge($customer_group_info, ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])]);
 			}
 		}
 
@@ -196,7 +196,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
 
 		foreach ($custom_fields as $custom_field) {
-			$custom_field_data[] = $custom_field + ['description' => $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id'])];
+			$custom_field_data[] = array_merge($custom_field, ['description' => $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id'])]);
 		}
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
@@ -206,7 +206,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($customer_group_info + ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])] + ['custom_field' => $custom_field_data]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($customer_group_info, ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])], ['custom_field' => $custom_field_data])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

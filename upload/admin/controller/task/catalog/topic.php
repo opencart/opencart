@@ -76,7 +76,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$topic_info = $this->model_cms_topic->getTopic($topic_id);
 
 			if ($topic_info && $topic_info['status']) {
-				$topic_data[] = $topic_info + ['description' => $this->model_cms_topic->getDescriptions($topic_info['topic_id'])];
+				$topic_data[] = array_merge($topic_info, ['description' => $this->model_cms_topic->getDescriptions($topic_info['topic_id'])]);
 			}
 		}
 
@@ -193,7 +193,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($topic_info + ['description' => $this->model_cms_topic->getDescriptions($topic_info['topic_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($topic_info, ['description' => $this->model_cms_topic->getDescriptions($topic_info['topic_id'])])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

@@ -199,7 +199,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($zones as $zone) {
 			if ($zone['status']) {
-				$zone_data[] = $zone + ['description' => $this->model_localisation_zone->getDescriptions($zone['zone_id'])];
+				$zone_data[] = array_merge($zone, ['description' => $this->model_localisation_zone->getDescriptions($zone['zone_id'])]);
 			}
 		}
 
@@ -221,7 +221,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($country_info + ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])] + ['zone' => $zone_data] + ['geo_zone' => $geo_zone_data]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($country_info, ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])], ['zone' => $zone_data], ['geo_zone' => $geo_zone_data])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

@@ -76,7 +76,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$information_info = $this->model_catalog_information->getInformation($information_id);
 
 			if ($information_info && $information_info['status']) {
-				$information_data[] = $information_info + ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])];
+				$information_data[] = array_merge($information_info, ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])]);
 			}
 		}
 
@@ -184,7 +184,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($information_info + ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($information_info, ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

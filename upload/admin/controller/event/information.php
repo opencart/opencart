@@ -21,8 +21,8 @@ class Information extends \Opencart\System\Engine\Controller {
 	 */
 	public function addInformation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'information.list',
-			'action' => 'task/catalog/information.list',
+			'code'   => 'information',
+			'action' => 'task/catalog/information',
 			'args'   => []
 		];
 
@@ -54,8 +54,8 @@ class Information extends \Opencart\System\Engine\Controller {
 	 */
 	public function editInformation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'information.list',
-			'action' => 'task/catalog/information.list',
+			'code'   => 'information',
+			'action' => 'task/catalog/information',
 			'args'   => []
 		];
 
@@ -87,8 +87,8 @@ class Information extends \Opencart\System\Engine\Controller {
 	 */
 	public function deleteInformation(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'information.list',
-			'action' => 'task/catalog/information.list',
+			'code'   => 'information',
+			'action' => 'task/catalog/information',
 			'args'   => []
 		];
 

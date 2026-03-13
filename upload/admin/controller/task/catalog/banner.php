@@ -100,7 +100,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($banner_info + ['image' => $this->model_design_banner->getImages($banner_info['banner_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($banner_info, ['image' => $this->model_design_banner->getImages($banner_info['banner_id'])])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

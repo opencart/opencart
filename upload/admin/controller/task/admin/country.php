@@ -27,7 +27,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$countries = $this->model_localisation_country->getCountries(['sort_order' => 'ASC']);
 
 		foreach ($countries as $country) {
-			$country_data[] = $country + ['description' => $this->model_localisation_country->getDescriptions($country['country_id'])];
+			$country_data[] = array_merge($country, ['description' => $this->model_localisation_country->getDescriptions($country['country_id'])]);
 		}
 
 		$sort_order = [];
@@ -94,7 +94,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($country_info + ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])] + ['zone' => $zone_data]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($country_info, ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])], ['zone' => $zone_data])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

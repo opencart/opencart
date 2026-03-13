@@ -76,7 +76,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
 			if ($manufacturer_info && $manufacturer_info['status']) {
-				$manufacturer_data[] = $manufacturer_info + ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])];
+				$manufacturer_data[] = array_merge($manufacturer_info, ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])]);
 			}
 		}
 
@@ -184,7 +184,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($manufacturer_info + ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($manufacturer_info, ['description' => $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id'])])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

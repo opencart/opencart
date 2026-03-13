@@ -136,7 +136,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($product_info + ['description' => $this->model_catalog_product->getDescriptions($product_info['product_id'])] + ['images' => $results]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($product_info, ['description' => $this->model_catalog_product->getDescriptions($product_info['product_id'])], ['images' => $images])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

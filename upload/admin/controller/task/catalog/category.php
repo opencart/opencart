@@ -76,7 +76,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 
 			if ($category_info && $category_info['status']) {
-				$category_data[] = $category_info + ['description' => $this->model_catalog_category->getDescriptions($category_info['category_id'])];
+				$category_data[] = array_merge($category_info, ['description' => $this->model_catalog_category->getDescriptions($category_info['category_id'])]);
 			}
 		}
 
@@ -187,7 +187,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($category_info + ['description' => $this->model_catalog_category->getDescriptions($category_info['category_id'])]))) {
+		if (!file_put_contents($directory . $filename, json_encode(array_merge($category_info, ['description' => $this->model_catalog_category->getDescriptions($category_info['category_id'])])))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

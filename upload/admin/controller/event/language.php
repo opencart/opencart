@@ -11,9 +11,9 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new language list
 	 *
-	 * Triggered using admin/model/localisation/language/addLanguage/after
-	 * Triggered using admin/model/localisation/language/editLanguage/after
-	 * Triggered using admin/model/localisation/language/deleteLanguage/after
+	 * Triggered using admin/model/localisation/language.addLanguage/after
+	 * Triggered using admin/model/localisation/language.editLanguage/after
+	 * Triggered using admin/model/localisation/language.deleteLanguage/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -21,7 +21,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index(string &$route, array &$args, &$output): void {
+	public function index(string &$route, array &$args): void {
 		$task_data = [
 			'code'   => 'language',
 			'action' => 'task/catalog/language',

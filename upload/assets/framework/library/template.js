@@ -186,8 +186,11 @@ class CurlyTag {
             length: (value) => {
                 return typeof value === 'array' || typeof value === 'string' ? value.length : 0;
             },
-            limit: (value, offset, limit) => {
-                return value.slice(offset, offset + limit);
+            offset: (value, offset) => {
+                return value.slice(offset);
+            },
+            limit: (value, limit) => {
+                return value.slice(0, limit);
             },
             sum: (value, amount) => {
                 return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);

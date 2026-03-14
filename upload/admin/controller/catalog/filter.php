@@ -217,10 +217,15 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		// Filters
+		$data['filters'] = [];
+
+
 		if (!empty($filter_group_info)) {
-			$data['filters'] = $this->model_catalog_filter->getFilters(['filter_group_id' => $filter_group_info['filter_group_id']]);
-		} else {
-			$data['filters'] = [];
+			$results = $this->model_catalog_filter->getFilters(['filter_group_id' => $filter_group_info['filter_group_id']]);
+
+			foreach ($results as $result) {
+				$data['filters'][] = array_merge($result, ['description' => $this->model_catalog_filter->getFilterDescriptions($result['attribute_id'])]);
+			}
 		}
 
 		$data['header'] = $this->load->controller('common/header');

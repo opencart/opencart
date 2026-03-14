@@ -204,13 +204,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 * $attribute_group_total = $this->model_catalog_attribute_group->getTotalAttributeGroups();
 	 */
 	public function getTotalAttributeGroups(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute_group` `ag` LEFT JOIN `" . DB_PREFIX . "attribute_group_description` `agd` ON (`ag`.`attribute_group_id` = `agd`.`attribute_group_id`) WHERE `agd`.`language_id` = '" . (int)$language_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute_group` `ag`");
 
 		return (int)$query->row['total'];
 	}
@@ -356,7 +350,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 		$attribute_id = $this->db->getLastId();
 
 		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
-			$this->model_catalog_attribute->addDescription($attribute_id, $language_id, $attribute_description);
+			$this->model_catalog_attribute->addAttributeDescription($attribute_id, $language_id, $attribute_description);
 		}
 
 		return $attribute_id;
@@ -390,7 +384,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 		$this->model_catalog_attribute->deleteDescriptions($attribute_id);
 
 		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
-			$this->model_catalog_attribute->addDescription($attribute_id, $language_id, $attribute_description);
+			$this->model_catalog_attribute->addAttributeDescription($attribute_id, $language_id, $attribute_description);
 		}
 	}
 
@@ -412,7 +406,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	public function deleteAttribute(int $attribute_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
-		$this->model_catalog_attribute->deleteDescriptions($attribute_id);
+		$this->model_catalog_attribute->deleteAttributeDescriptions($attribute_id);
 	}
 
 	/**

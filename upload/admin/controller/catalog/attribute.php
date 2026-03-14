@@ -220,14 +220,12 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$data['attributes'] = [];
 
 		if (!empty($attribute_group_info)) {
-			$data['attributes'] = $this->model_catalog_attribute->getAttributes(['filter_attribute_group_id' => $attribute_group_info['attribute_group_id']]);
+			$results = $this->model_catalog_attribute->getAttributes(['filter_attribute_group_id' => $attribute_group_info['attribute_group_id']]);
 
-			$data['attributes'] = $this->model_catalog_attribute->getAttributeDescriptions();
+			foreach ($results as $result) {
+				$data['attributes'][] = array_merge($result, ['description' => $this->model_catalog_attribute->getAttributeDescriptions($result['attribute_id'])]);
+			}
 		}
-
-
-
-
 
 		$data['user_token'] = $this->session->data['user_token'];
 

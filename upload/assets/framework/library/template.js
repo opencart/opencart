@@ -171,7 +171,7 @@ class CurlyTag {
                 return value.concat(...args);
             },
             groupby: (value, type) => {
-                return Object.groupBy(value, ({type}) => type);
+                return Object.groupBy(value, ({ type }) => type);
             },
             sort: (value, key = null, direction = 'asc') => {
                 const dir = direction === 'desc' ? -1 : 1;
@@ -193,7 +193,7 @@ class CurlyTag {
                 return value.slice(0, limit);
             },
             sum: (value, amount) => {
-                return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                return value.reduce((amount, value) => amount + value, 0);
             },
             push: (value, item) => {
                 value.push(item);

@@ -55,6 +55,18 @@ Because this tab contains many settings, they are grouped into logical sub-secti
 
 <details>
 
+<summary><strong>CMS &#x26; Blog</strong></summary>
+
+**Blog & Content Management Settings**
+
+* **List Description Limit (Articles)**: Character limit for short article descriptions in list views (e.g., blog homepage, category pages).
+* **Allow Comments**: Enable or disable the comment system for articles.
+* **Auto Approve Comments**: Automatically approve comments; otherwise, first comment from each user requires manual approval.
+
+</details>
+
+<details>
+
 <summary><strong>Taxes</strong></summary>
 
 **Financial Settings**

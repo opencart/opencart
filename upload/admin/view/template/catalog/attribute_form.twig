@@ -57,7 +57,7 @@
                       {% for language in languages %}
                         <div class="input-group">
                           <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                          <input type="text" name="attribute[{{ attribute_row }}][attribute_description][{{ language.language_id }}][name]" value="{{ attribute.attribute_description[language.code] ? attribute.attribute_description[language.code].name }}" placeholder="{{ entry_name }}" id="input-attribute-{{ attribute_row }}-{{ language.language_id }}" class="form-control"/>
+                          <input type="text" name="attribute[{{ attribute_row }}][attribute_description][{{ language.language_id }}][name]" value="{{ attribute.description[language.code] ? attribute.description[language.code].name }}" placeholder="{{ entry_name }}" id="input-attribute-{{ attribute_row }}-{{ language.language_id }}" class="form-control"/>
                         </div>
                         <div id="error-attribute-{{ attribute_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
                       {% endfor %}</td>

@@ -379,10 +379,7 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_attribute->deleteDescriptionsByLanguageId($language_id);
 
-		// Attribute Group
-		$this->load->model('catalog/attribute_group');
-
-		$this->model_catalog_attribute_group->deleteDescriptionsByLanguageId($language_id);
+		$this->model_catalog_attribute->deleteAttributeDescriptionsByLanguageId($language_id);
 
 		// Banner
 		$this->load->model('design/banner');
@@ -419,11 +416,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->load->model('catalog/filter');
 
 		$this->model_catalog_filter->deleteDescriptionsByLanguageId($language_id);
-
-		// Filter Group
-		$this->load->model('catalog/filter_group');
-
-		$this->model_catalog_filter_group->deleteDescriptionsByLanguageId($language_id);
+		$this->model_catalog_filter->deleteFilterDescriptionsByLanguageId($language_id);
 
 		// Information
 		$this->load->model('catalog/information');

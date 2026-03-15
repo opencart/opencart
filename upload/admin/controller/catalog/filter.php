@@ -281,8 +281,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 			// Filter
 			$this->load->model('catalog/filter');
 
-			if (!$post_info['filter_id']) {
-				$json['filter_id'] = $this->model_catalog_filter->addFilterGroup($post_info);
+			if (!$post_info['filter_group_id']) {
+				$json['filter_group_id'] = $this->model_catalog_filter->addFilterGroup($post_info);
 			} else {
 				$this->model_catalog_filter->editFilterGroup($post_info['filter_group_id'], $post_info);
 			}

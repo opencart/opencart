@@ -661,10 +661,10 @@ class Filter extends \Opencart\System\Engine\Model {
 	public function getFilterDescriptions(int $filter_id): array {
 		$filter_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_description` WHERE `filter_id` = '" . (int)$filter_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `fd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "filter_description` `fd` WHERE `fd`.`filter_id` = '" . (int)$filter_id . "'");
 
 		foreach ($query->rows as $result) {
-			$filter_data[$result['language_id']] = $result;
+			$filter_data[$result['code']] = $result;
 		}
 
 		return $filter_data;

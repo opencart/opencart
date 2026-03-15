@@ -187,7 +187,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Filter
-		if (isset($this->request->get['filter_id'])) {
+		if (isset($this->request->get['filter_group_id'])) {
 			$this->load->model('catalog/filter');
 
 			$filter_group_info = $this->model_catalog_filter->getFilterGroup((int)$this->request->get['filter_group_id']);
@@ -205,9 +205,9 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (!empty($filter_group_info)) {
-			$data['filter_description'] = $this->model_catalog_filter->getDescriptions($filter_group_info['filter_group_id']);
+			$data['filter_group_description'] = $this->model_catalog_filter->getDescriptions($filter_group_info['filter_group_id']);
 		} else {
-			$data['filter_description'] = [];
+			$data['filter_group_description'] = [];
 		}
 
 		if (!empty($filter_group_info)) {
@@ -219,12 +219,11 @@ class Filter extends \Opencart\System\Engine\Controller {
 		// Filters
 		$data['filters'] = [];
 
-
 		if (!empty($filter_group_info)) {
 			$results = $this->model_catalog_filter->getFilters(['filter_group_id' => $filter_group_info['filter_group_id']]);
 
 			foreach ($results as $result) {
-				$data['filters'][] = array_merge($result, ['description' => $this->model_catalog_filter->getFilterDescriptions($result['attribute_id'])]);
+				$data['filters'][] = array_merge($result, ['description' => $this->model_catalog_filter->getFilterDescriptions($result['filter_id'])]);
 			}
 		}
 

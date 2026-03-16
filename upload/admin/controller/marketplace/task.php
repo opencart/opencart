@@ -188,8 +188,9 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		$task_total = $this->model_setting_task->getTotalTasks(['filter_status' => 'processing']);
 
-		//if (!$task_total) {
-		//}
+		if (!$task_total) {
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		if (!$json) {
 			if (strtoupper(substr(php_uname(), 0, 3)) == 'WIN') {
@@ -221,8 +222,6 @@ class Task extends \Opencart\System\Engine\Controller {
 			return;
 		}
 
-		ob_start();
-
 		$filter_data = [
 			'filter_status' => 'pending',
 			'start'         => 0,
@@ -234,7 +233,7 @@ class Task extends \Opencart\System\Engine\Controller {
 		while ($results) {
 			$task = array_shift($results);
 
-			//$this->model_setting_task->editStatus($task['task_id'], 'processing');
+			$this->model_setting_task->editStatus($task['task_id'], 'processing');
 
 			try {
 				$output = $this->load->controller($task['action'], $task['args']);
@@ -242,7 +241,7 @@ class Task extends \Opencart\System\Engine\Controller {
 				$output = $e;
 			}
 
-			$this->model_setting_task->addLog('test', json_encode($output), true);
+			$this->model_setting_task->addLog($task['code'], json_encode($output), true);
 
 			if ($output instanceof \Exception) {
 				$output = ['error' => $output->getMessage() . ' in ' . $output->getFile() . ' on line ' . $output->getLine()];
@@ -269,16 +268,8 @@ class Task extends \Opencart\System\Engine\Controller {
 				array_push($results, $next[0]);
 			}
 
-
-			$this->model_setting_task->addLog($task['code'], $buffer, true);
 			usleep(2000);
 		}
-
-		$buffer = ob_get_contents();
-
-		ob_end_clean();
-
-
 	}
 
 	/**

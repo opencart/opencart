@@ -1,4 +1,5 @@
 import { WebComponent } from '../component.js';
+import { loader } from '../index.js';
 
 class XZone extends WebComponent {
     static observed = ['value'];

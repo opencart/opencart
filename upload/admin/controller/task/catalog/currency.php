@@ -27,7 +27,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'currency.' . $store_id,
+				'code'   => 'currency.list.' . $store_id,
 				'action' => 'task/catalog/currency.list',
 				'args'   => ['store_id' => $store_id]
 			];
@@ -71,7 +71,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/currency');
 
-		$currency_ids = $this->model_setting_setting->getValue('config_currency_list', $store_info['store_id']);
+		$currency_ids = (array)$this->model_setting_setting->getValue('config_currency_list', $store_info['store_id']);
 
 		foreach ($currency_ids as $currency_id) {
 			$currency_info = $this->model_localisation_currency->getCurrency((int)$currency_id);

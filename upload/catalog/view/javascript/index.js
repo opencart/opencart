@@ -37,7 +37,7 @@ language.addPath('catalog/view/language/' + base.host + '/' + lang + '/');
 // Storage
 const storage = await loader.library('storage');
 
-storage.addPath('catalog/view/data/' + base.host + '/' + lang + '/');
+storage.addPath('catalog/view/data/' + base.host + '/');
 
 storage.cache.set('cms/article-1', { articles: [] });
 storage.cache.set('catalog/information', { information: [] });

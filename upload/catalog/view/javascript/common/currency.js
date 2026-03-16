@@ -13,6 +13,8 @@ const language = await loader.language('common/currency');
 // Storage
 const currencies = await loader.storage('localisation/currency');
 
+console.log(currencies);
+
 class CommonCurrency extends WebComponent {
     render() {
         let data = {};

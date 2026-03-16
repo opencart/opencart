@@ -108,7 +108,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			if ($result['status']) {
-				$data['product_codes'][] = $result;
+				$product_info['product_codes'][] = $result;
 			}
 		}
 

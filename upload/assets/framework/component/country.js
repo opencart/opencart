@@ -1,6 +1,9 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
+// Config
+const config = await loader.config('catalog');
+
 // Storage
 const countries = await loader.storage('localisation/country');
 
@@ -45,7 +48,7 @@ class XCountry extends WebComponent {
     async render() {
         this.default = this.innerHTML;
 
-        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:change" class="form-select"';
+        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:onChange" class="form-select"';
 
         if (this.hasAttribute('required')) {
             html += ' required';
@@ -59,17 +62,14 @@ class XCountry extends WebComponent {
 
         this.innerHTML = html;
 
-        this.addEventListener('[value]', this.changeValue);
-
-        this.element = this.querySelector('select');
-
-        this.addEventListener('[value]', this.changeValue);
-
         return html;
     }
 
     option() {
         let html = this.default;
+
+        console.log(this.countries);
+
 
         for (let i in this.countries) {
             html += '<option value="' + this.countries[i].country_id + '"';
@@ -77,6 +77,8 @@ class XCountry extends WebComponent {
             if (this.countries[i].country_id == this.value) {
                 html += ' selected';
             }
+
+
 
             html += '>' + this.countries[i].name + '</option>';
         }
@@ -92,12 +94,8 @@ class XCountry extends WebComponent {
         }
     }
 
-    change(e) {
+    onChange(e) {
         this.value = e.target.value;
-    }
-
-    changeValue(e) {
-        this.value = e.detail.value_new;
     }
 }
 

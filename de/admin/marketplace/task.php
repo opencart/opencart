@@ -19,6 +19,7 @@ $_['column_code']          = 'Task Code';
 $_['column_status']        = 'Status';
 $_['column_date_added']    = 'Datum hinzugefügt';
 $_['column_date_modified'] = 'Last Run';
+$_['column_comment']       = 'Kommentar';
 $_['column_action']        = 'Aktionen';
 
 // Entry

@@ -63,8 +63,4 @@ class Cli extends \Opencart\System\Engine\Controller {
 	public function usage() {
 
 	}
-
-	public function end() {
-
-	}
 }

@@ -21,8 +21,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	 */
 	public function addProduct(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'product.info.' . $output,
-			'action' => 'task/catalog/product.info',
+			'code'   => 'product.' . $output,
+			'action' => 'task/catalog/product',
 			'args'   => ['product_id' => $output]
 		];
 
@@ -30,9 +30,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-
-
-
+		/*
 		// Categories
 		$this->load->model('catalog/category');
 
@@ -62,6 +60,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 		}
+		*/
 	}
 
 	/**
@@ -79,8 +78,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	 */
 	public function editProduct(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'product.info.' . $args[0],
-			'action' => 'task/catalog/product.info',
+			'code'   => 'product.' . $args[0],
+			'action' => 'task/catalog/product',
 			'args'   => ['product_id' => $args[0]]
 		];
 

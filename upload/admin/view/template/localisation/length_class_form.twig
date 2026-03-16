@@ -25,7 +25,7 @@
               {% for language in languages %}
                 <div class="input-group">
                   <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                  <input type="text" name="length_class_description[{{ language.language_id }}][title]" value="{{ length_class_description[language.language_id] ? length_class_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title-{{ language.language_id }}" class="form-control" required/>
+                  <input type="text" name="length_class_description[{{ language.language_id }}][title]" value="{{ length_class_description[language.code] ? length_class_description[language.code].title }}" placeholder="{{ entry_title }}" id="input-title-{{ language.language_id }}" class="form-control" required/>
                 </div>
                 <div id="error-title-{{ language.language_id }}" class="invalid-feedback"></div>
               {% endfor %}
@@ -37,7 +37,7 @@
               {% for language in languages %}
                 <div class="input-group">
                   <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                  <input type="text" name="length_class_description[{{ language.language_id }}][unit]" value="{{ length_class_description[language.language_id] ? length_class_description[language.language_id].unit }}" placeholder="{{ entry_unit }}" id="input-unit-{{ language.language_id }}" class="form-control" required/>
+                  <input type="text" name="length_class_description[{{ language.language_id }}][unit]" value="{{ length_class_description[language.code] ? length_class_description[language.code].unit }}" placeholder="{{ entry_unit }}" id="input-unit-{{ language.language_id }}" class="form-control" required/>
                 </div>
                 <div id="error-unit-{{ language.language_id }}" class="invalid-feedback"></div>
               {% endfor %}

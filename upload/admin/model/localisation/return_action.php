@@ -313,7 +313,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $return_action_id): array {
 		$return_action_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `id`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `ra`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "return_action` `ra` WHERE `ra`.`return_action_id` = '" . (int)$return_action_id . "'");
 
 		foreach ($query->rows as $result) {
 			$return_action_data[$result['code']] = $result;

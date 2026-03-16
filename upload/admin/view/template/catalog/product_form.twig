@@ -49,10 +49,10 @@
                             <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                             <div class="col-sm-10">
                               <div class="input-group">
-                                <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
+                                <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.code] ? product_description[language.code].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
                                 {% if master_id %}
                                   <div class="input-group-text">
-                                    <x-switch name="override[product_description][{{ language.language_id }}][name]" value="1" checked="{{ override.product_description[language.language_id].name }}" input-class="form-switch" data-oc-target="#input-name-{{ language.language_id }}"></x-switch>
+                                    <x-switch name="override[product_description][{{ language.language_id }}][name]" value="1" checked="{{ override.product_description[language.code].name }}" input-class="form-switch" data-oc-target="#input-name-{{ language.language_id }}"></x-switch>
                                   </div>
                                 {% endif %}
                               </div>
@@ -64,11 +64,11 @@
                             <div class="col-sm-10">
                               <div class="input-group">
                                 <div class="form-control h-100 p-0 border-0 rounded-0">
-                                  <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="w-100 position-relative">{{ product_description[language.language_id] ? product_description[language.language_id].description }}</textarea>
+                                  <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="w-100 position-relative">{{ product_description[language.code] ? product_description[language.code].description }}</textarea>
                                 </div>
                                 {% if master_id %}
                                   <div class="input-group-text">
-                                    <x-switch name="override[product_description][{{ language.language_id }}][description]" value="1" checked="{{ override.product_description[language.language_id].description }}" input-class="form-switch" data-oc-target="#input-description-{{ language.language_id }}"></x-switch>
+                                    <x-switch name="override[product_description][{{ language.language_id }}][description]" value="1" checked="{{ override.product_description[language.code].description }}" input-class="form-switch" data-oc-target="#input-description-{{ language.language_id }}"></x-switch>
                                   </div>
                                 {% endif %}
                               </div>
@@ -78,10 +78,10 @@
                             <label for="input-tag-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_tag }}</label>
                             <div class="col-sm-10">
                               <div class="input-group">
-                                <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-tag-{{ language.language_id }}" class="form-control"/>
+                                <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.code] ? product_description[language.code].tag }}" placeholder="{{ entry_tag }}" id="input-tag-{{ language.language_id }}" class="form-control"/>
                                 {% if master_id %}
                                   <div class="input-group-text">
-                                    <x-switch name="override[product_description][{{ language.language_id }}][tag]" value="1" checked="{{ override.product_description[language.language_id].tag }}" input-class="form-switch" data-oc-target="#input-tag-{{ language.language_id }}"></x-switch>
+                                    <x-switch name="override[product_description][{{ language.language_id }}][tag]" value="1" checked="{{ override.product_description[language.code].tag }}" input-class="form-switch" data-oc-target="#input-tag-{{ language.language_id }}"></x-switch>
                                   </div>
                                 {% endif %}
                               </div>
@@ -95,10 +95,10 @@
                             <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                             <div class="col-sm-10">
                               <div class="input-group">
-                                <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control" required/>
+                                <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.code] ? product_description[language.code].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control" required/>
                                 {% if master_id %}
                                   <div class="input-group-text">
-                                    <x-switch name="override[product_description][{{ language.language_id }}][meta_title]" value="1" checked="{{ override.product_description[language.language_id].meta_title }}" input-class="form-switch" data-oc-target="#input-meta-title-{{ language.language_id }}"></x-switch>
+                                    <x-switch name="override[product_description][{{ language.language_id }}][meta_title]" value="1" checked="{{ override.product_description[language.code].meta_title }}" input-class="form-switch" data-oc-target="#input-meta-title-{{ language.language_id }}"></x-switch>
                                   </div>
                                 {% endif %}
                               </div>
@@ -109,10 +109,10 @@
                             <label for="input-meta-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
                             <div class="col-sm-10">
                               <div class="input-group">
-                                <textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_description }}</textarea>
+                                <textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ product_description[language.code] ? product_description[language.code].meta_description }}</textarea>
                                 {% if master_id %}
                                   <div class="input-group-text">
-                                    <x-switch name="override[product_description][{{ language.language_id }}][meta_description]" value="1" checked="{{ override.product_description[language.language_id].meta_description }}" input-class="form-switch" data-oc-target="#input-meta-description-{{ language.language_id }}"></x-switch>
+                                    <x-switch name="override[product_description][{{ language.language_id }}][meta_description]" value="1" checked="{{ override.product_description[language.code].meta_description }}" input-class="form-switch" data-oc-target="#input-meta-description-{{ language.language_id }}"></x-switch>
                                   </div>
                                 {% endif %}
                               </div>
@@ -122,10 +122,10 @@
                             <label for="input-meta-keyword-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
                             <div class="col-sm-10">
                               <div class="input-group">
-                                <textarea name="product_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_keyword }}</textarea>
+                                <textarea name="product_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ product_description[language.code] ? product_description[language.code].meta_keyword }}</textarea>
                                 {% if master_id %}
                                   <div class="input-group-text">
-                                    <x-switch name="override[product_description][{{ language.language_id }}][meta_keyword]" value="1" checked="{{ override.product_description[language.language_id].meta_keyword }}" input-class="form-switch" data-oc-target="#input-meta-keyword-{{ language.language_id }}"></x-switch>
+                                    <x-switch name="override[product_description][{{ language.language_id }}][meta_keyword]" value="1" checked="{{ override.product_description[language.code].meta_keyword }}" input-class="form-switch" data-oc-target="#input-meta-keyword-{{ language.language_id }}"></x-switch>
                                   </div>
                                 {% endif %}
                               </div>
@@ -592,7 +592,7 @@
                         <td>{% for language in languages %}
                             <div class="input-group mb-12">
                               <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                              <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" id="input-text-{{ attribute_row }}-{{ language.language_id }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
+                              <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" id="input-text-{{ attribute_row }}-{{ language.language_id }}" class="form-control">{{ product_attribute.product_attribute_description[language.code] ? product_attribute.product_attribute_description[language.code].text }}</textarea>
                             </div>
                           {% endfor %}</td>
                         <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>

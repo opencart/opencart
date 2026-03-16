@@ -113,6 +113,8 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Manufacturer
+		$this->load->model('catalog/manufacturer');
+
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($product_info['manufacturer_id']);
 
 		if ($manufacturer_info) {

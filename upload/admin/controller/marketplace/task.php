@@ -48,12 +48,12 @@ class Task extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/task', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['delete'] = $this->url->link('marketplace/task.delete', 'user_token=' . $this->session->data['user_token']);
 		$data['pending'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=pending');
 		$data['processing'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=processing');
 		$data['paused'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=paused');
 		$data['complete'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=complete');
 		$data['failed'] = $this->url->link('marketplace/task.status', 'user_token=' . $this->session->data['user_token'] . '&status=failed');
+		$data['delete'] = $this->url->link('marketplace/task.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['statues'] = [];
 
@@ -269,6 +269,8 @@ class Task extends \Opencart\System\Engine\Controller {
 				array_push($results, $next[0]);
 			}
 
+
+			$this->model_setting_task->addLog($task['code'], $buffer, true);
 			usleep(2000);
 		}
 
@@ -276,39 +278,7 @@ class Task extends \Opencart\System\Engine\Controller {
 
 		ob_end_clean();
 
-		$this->model_setting_task->addLog('test', $buffer, true);
 
-
-	}
-
-	/**
-	 * Pause
-	 *
-	 * @return void
-	 */
-	public function pause() {
-		$this->load->language('marketplace/task');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'marketplace/task')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/task');
-
-			$results = $this->model_setting_task->getTasks(['filter_status' => 'pending']);
-
-			foreach ($results as $result) {
-				$this->model_setting_task->editStatus($result['task_id'], 'paused');
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	/**

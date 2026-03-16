@@ -12,7 +12,7 @@ class XPagination extends WebComponent {
     num_links = 8;
 
     get href() {
-        return parseInt(this.getAttribute('href'));
+        return this.getAttribute('href');
     }
 
     set href(value) {
@@ -20,7 +20,7 @@ class XPagination extends WebComponent {
     }
 
     get target() {
-        return parseInt(this.getAttribute('target'));
+        return this.getAttribute('target');
     }
 
     set target(value) {
@@ -70,12 +70,12 @@ class XPagination extends WebComponent {
         let start = 0;
         let end = 0;
 
-        if (num_pages <= num_links) {
+        if (num_pages <= this.num_links) {
             start = 1;
             end = num_pages;
         } else {
-            start = this.page - Math.floor(num_links / 2);
-            end = this.page + Math.floor(num_links / 2);
+            start = this.page - Math.floor(this.num_links / 2);
+            end = this.page + Math.floor(this.num_links / 2);
         }
 
         if (start < 1) {
@@ -88,15 +88,6 @@ class XPagination extends WebComponent {
             end = num_pages;
         }
 
-        let links = [];
-
-        for (let i = start; i <= end; i++) {
-            links[i] = {
-                page: i,
-                href: this.href.replace('{page}', i)
-            };
-        }
-
         let next = '';
         let last = '';
 
@@ -105,8 +96,10 @@ class XPagination extends WebComponent {
             last = this.href.replace('{page}', num_pages);
         }
 
+        let html = '';
+
         if (num_pages > 1) {
-            let html = '<ul class="pagination">';
+            html += '<ul class="pagination">';
 
             if (first) {
                 html += '<li class="page-item"><a href="' + first +'" data-on="click:click" class="page-link">|&lt;</a></li>';
@@ -116,11 +109,11 @@ class XPagination extends WebComponent {
                 html += '<li class="page-item"><a href="' + prev + '" data-on="click:click" class="page-link">&lt;</a></li>';
             }
 
-            for (let link of links) {
-                if (link.page == this.page) {
-                    html += '<li class="page-item active"><span class="page-link">' + link.page + '</span></li>';
+            for (let i = start; i <= end; i++) {
+                if (i == this.page) {
+                    html += '<li class="page-item active"><span class="page-link">' + i + '</span></li>';
                 } else {
-                    html += '<li class="page-item"><a href="' + link.href + '" data-on="click:click" class="page-link">' + link.page + '</a></li>';
+                    html += '<li class="page-item"><a href="' + this.href.replace('{page}', i) + '" data-on="click:click" class="page-link">' + i + '</a></li>';
                 }
             }
 
@@ -133,15 +126,15 @@ class XPagination extends WebComponent {
             }
 
             html += '</ul>';
-
-            return html;
         }
+
+        return html;
     }
 
     async click(e) {
         e.preventDefault();
 
-        this.fetch(e.target.getAttribute('href')).then(this.onload);
+        this.fetch(e.target.getAttribute('href')).then(this.onload.bind(this));
     }
 
     async fetch(url) {

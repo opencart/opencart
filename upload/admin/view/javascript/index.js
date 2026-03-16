@@ -32,12 +32,12 @@ local.set('currency', 'EUR');
 // Language
 const language = await loader.library('language');
 
-language.addPath('admin/view/language/' + base.host + '/' + lang + '/');
+language.addPath('view/language/');
 
 // Storage
 const storage = await loader.library('storage');
 
-storage.addPath('admin/view/data/' + base.host + '/' + lang + '/');
+storage.addPath('view/data/');
 
 storage.cache.set('cms/article-1', { articles: [] });
 storage.cache.set('catalog/information', { information: [] });
@@ -45,7 +45,7 @@ storage.cache.set('catalog/information', { information: [] });
 // Template
 const template = await loader.library('template');
 
-template.addPath('admin/view/template/');
+template.addPath('view/template/');
 
 // Event
 const event = await loader.library('event');

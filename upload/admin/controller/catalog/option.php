@@ -382,7 +382,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $option_id) {
-			$options = $this->model_catalog_product->getValues((int)$option_id);
+			$options = $this->model_catalog_option->getValues((int)$option_id);
 
 			foreach ($options as $option) {
 				$product_total = $this->model_catalog_product->getTotalOptionsByOptionId($option['option_id']);

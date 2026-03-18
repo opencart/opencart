@@ -381,20 +381,19 @@ class Option extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/option');
 		$this->load->model('catalog/product');
 
-		// Total Options
 		foreach ($selected as $option_id) {
 			$options = $this->model_catalog_product->getValues((int)$option_id);
-			
 
-			$product_total = $this->model_catalog_product->getTotalOptionsByOptionId($option_id);
+			foreach ($options as $option) {
+				$product_total = $this->model_catalog_product->getTotalOptionsByOptionId($option['option_id']);
 
-			if ($product_total) {
-				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+				if ($product_total) {
+					$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+				}
 			}
 		}
 
 		if (!$json) {
-			// Option
 			$this->load->model('catalog/option');
 
 			foreach ($selected as $option_id) {

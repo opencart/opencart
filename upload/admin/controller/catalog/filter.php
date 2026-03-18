@@ -213,7 +213,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (!empty($filter_group_info)) {
 			$data['sort_order'] = $filter_group_info['sort_order'];
 		} else {
-			$data['sort_order'] = '';
+			$data['sort_order'] = 0;
 		}
 
 		// Filters
@@ -226,6 +226,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 				$data['filters'][] = array_merge($result, ['description' => $this->model_catalog_filter->getFilterDescriptions($result['filter_id'])]);
 			}
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -258,8 +260,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$post_info = $this->request->post + $required;
 
 		foreach ($post_info['filter_group_description'] as $language_id => $value) {
-			if (!oc_validate_length($value['name'], 1, 64)) {
-				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+			if (!oc_validate_length((string)$value['name'], 1, 64)) {
+				$json['error']['name_' . (int)$language_id] = $this->language->get('error_name');
 			}
 		}
 
@@ -267,7 +269,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			foreach ($post_info['filter'] as $key => $filter) {
 				foreach ($filter['filter_description'] as $language_id => $filter_description) {
 					if (!oc_validate_length($filter_description['name'], 1, 128)) {
-						$json['error']['name_' . $key . '_' . $language_id] = $this->language->get('error_name');
+						$json['error']['name_' . $key . '_' . (int)$language_id] = $this->language->get('error_name');
 					}
 				}
 			}
@@ -313,24 +315,26 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Product
+		$this->load->model('catalog/filter');
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $filter_group_id) {
-			// Total Attributes
-			$product_total = $this->model_catalog_product->getTotalFiltersByFilterGroupId((int)$filter_group_id);
+			$filters = $this->model_catalog_filter->getFilters(['filter_filter_group_id' => (int)$filter_group_id]);
 
-			if ($product_total) {
-				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+			foreach ($filters as $filter) {
+				$product_total = $this->model_catalog_product->getTotalFiltersByFilterId($filter['filter_id']);
+
+				if ($product_total) {
+					$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+				}
 			}
 		}
 
 		if (!$json) {
-			// Filter
 			$this->load->model('catalog/filter');
 
-			foreach ($selected as $filter_id) {
-				$this->model_catalog_filter->deleteFilterGroup($filter_id);
+			foreach ($selected as $filter_group_id) {
+				$this->model_catalog_filter->deleteFilterGroup($filter_group_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

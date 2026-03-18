@@ -306,8 +306,7 @@ function oc_db_schema() {
 			],
 			[
 				'name'    => 'attribute_group_id',
-				'type'    => 'int(11)',
-				'default' => '0'
+				'type'    => 'int(11)'
 			],
 			[
 				'name'    => 'sort_order',

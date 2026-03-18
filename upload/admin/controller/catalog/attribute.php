@@ -135,7 +135,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		// Total Attributes
-		$attribute_total = $this->model_catalog_attribute->getTotalAttributes();
+		$attribute_total = $this->model_catalog_attribute->getTotalAttributeGroups();
 
 		// Pagination
 		$data['total'] = $attribute_total;
@@ -269,7 +269,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			foreach ($post_info['attribute'] as $key => $attribute) {
 				foreach ($attribute['attribute_description'] as $language_id => $option_value_description) {
 					if (!oc_validate_length($option_value_description['name'], 1, 128)) {
-						$json['error']['name_' . $key . '_' . $language_id] = $this->language->get('error_name');
+						$json['error']['name_' . $key . '_' . (int)$language_id] = $this->language->get('error_name');
 					}
 				}
 			}
@@ -284,7 +284,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/attribute');
 
 			if (!$post_info['attribute_group_id']) {
-				$json['attribute_id'] = $this->model_catalog_attribute->addAttributeGroup($post_info);
+				$json['attribute_group_id'] = $this->model_catalog_attribute->addAttributeGroup($post_info);
 			} else {
 				$this->model_catalog_attribute->editAttributeGroup((int)$post_info['attribute_group_id'], $post_info);
 			}
@@ -316,20 +316,22 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Product
+		$this->load->model('catalog/attribute');
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $attribute_group_id) {
-			// Total Attributes
-			$product_total = $this->model_catalog_product->getTotalAttributesByAttributeGroupId((int)$attribute_group_id);
+			$attributes = $this->model_catalog_attribute->getAttributes(['filter_attribute_group_id' => (int)$attribute_group_id]);
 
-			if ($product_total) {
-				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+			foreach ($attributes as $attribute) {
+				$product_total = $this->model_catalog_product->getTotalAttributesByAttributeId($attribute['attribute_id']);
+
+				if ($product_total) {
+					$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+				}
 			}
 		}
 
 		if (!$json) {
-			// Attribute
 			$this->load->model('catalog/attribute');
 
 			foreach ($selected as $attribute_group_id) {

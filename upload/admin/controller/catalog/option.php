@@ -378,11 +378,14 @@ class Option extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Product
+		$this->load->model('catalog/option');
 		$this->load->model('catalog/product');
 
 		// Total Options
 		foreach ($selected as $option_id) {
+			$options = $this->model_catalog_product->getValues((int)$option_id);
+			
+
 			$product_total = $this->model_catalog_product->getTotalOptionsByOptionId($option_id);
 
 			if ($product_total) {

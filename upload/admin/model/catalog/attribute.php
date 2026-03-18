@@ -99,8 +99,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	public function deleteAttributeGroup(int $attribute_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
-		$this->model_catalog_attribute_group->deleteDescriptions($attribute_group_id);
-
+		$this->model_catalog_attribute->deleteDescriptions($attribute_group_id);
 		$this->model_catalog_attribute->deleteAttributes($attribute_group_id);
 	}
 
@@ -356,67 +355,27 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Attribute
-	 *
-	 * Edit attribute record in the database.
-	 *
-	 * @param int                  $attribute_id primary key of the attribute record
-	 * @param array<string, mixed> $data         array of data
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $attribute_data = [
-	 *     'attribute_description' => [],
-	 *     'attribute_group_id'    => 1,
-	 *     'sort_order'            => 0
-	 * ];
-	 *
-	 * $this->load->model('catalog/attribute');
-	 *
-	 * $this->model_catalog_attribute->editAttribute($attribute_id, $attribute_data);
-	 */
-	public function editAttribute(int $attribute_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$data['attribute_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_id` = '" . (int)$attribute_id . "'");
-
-		$this->model_catalog_attribute->deleteDescriptions($attribute_id);
-
-		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
-			$this->model_catalog_attribute->addAttributeDescription($attribute_id, $language_id, $attribute_description);
-		}
-	}
-
-	/**
-	 * Delete Attribute
+	 * Delete Attributes
 	 *
 	 * Delete attribute record in the database.
 	 *
-	 * @param int $attribute_id primary key of the attribute record
+	 * @param int $filter_id primary key of the filter record
 	 *
 	 * @return void
 	 *
 	 * @example
 	 *
-	 * $this->load->model('catalog/attribute');
+	 * $this->load->model('catalog/filter');
 	 *
-	 * $this->model_catalog_attribute->deleteAttribute($attribute_id);
+	 * $this->model_catalog_filter->deleteFilter($filter_id);
 	 */
-	public function deleteAttribute(int $attribute_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
-
-		$this->model_catalog_attribute->deleteAttributeDescriptions($attribute_id);
-	}
-
 	public function deleteAttributes(int $attribute_group_id): void {
-		$results = $this->getAttributesByAttributeGroupId($attribute_group_id);
+		$results = $this->model_catalog_attribute->getAttributes(['filter_attribute_group_id' => $attribute_group_id]);
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
-		$this->model_catalog_option->deleteValueDescriptionsByOptionId($option_id);
-
 		foreach ($results as $result) {
-
+			$this->model_catalog_attribute->deleteAttributeDescriptions($result['attribute_id']);
 		}
 	}
 
@@ -552,27 +511,6 @@ class Attribute extends \Opencart\System\Engine\Model {
 		} else {
 			return 0;
 		}
-	}
-
-	/**
-	 * Get Total Attributes By Attribute Group ID
-	 *
-	 * Get the total number of attributes by attribute group records in the database.
-	 *
-	 * @param int $attribute_group_id foreign key of the attribute group record
-	 *
-	 * @return int total number of attribute records that have attribute group ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/attribute');
-	 *
-	 * $attribute_total = $this->model_catalog_attribute->getTotalAttributesByAttributeGroupId($attribute_group_id);
-	 */
-	public function getTotalAttributesByAttributeGroupId(int $attribute_group_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
-
-		return (int)$query->row['total'];
 	}
 
 	/**

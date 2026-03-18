@@ -104,7 +104,6 @@ class Filter extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 
 		$this->model_catalog_filter->deleteDescriptions($filter_group_id);
-
 		$this->model_catalog_filter->deleteFilters($filter_group_id);
 
 		$this->cache->delete('filter_group');
@@ -377,37 +376,6 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Filter
-	 *
-	 * Edit filter record in the database.
-	 *
-	 * @param int                  $filter_id primary key of the filter record
-	 * @param array<string, mixed> $data      array of data
-	 *
-	 * @example
-	 *
-	 * $filter_data = [
-	 *     'filter_description' => [],
-	 *     'sort_order'         => 0
-	 * ];
-	 *
-	 * $this->load->model('catalog/filter');
-	 *
-	 * $this->model_catalog_filter->editFilter($filter_id, $filter_data);
-	 */
-	public function editFilter(int $filter_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "filter` SET `filter_group_id` = '" . (int)$data['filter_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `filter_id` = '" . (int)$filter_id . "'");
-
-		$this->model_catalog_filter->deleteDescriptions($filter_id);
-
-		foreach ($data['filter_description'] as $language_id => $filter_description) {
-			$this->model_catalog_filter->addDescription($filter_id, $language_id, $filter_description);
-		}
-
-		$this->cache->delete('filter');
-	}
-
-	/**
 	 * Delete Filter
 	 *
 	 * Delete filter record in the database.
@@ -422,20 +390,14 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_catalog_filter->deleteFilter($filter_id);
 	 */
-	public function deleteFilter(int $filter_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
+	public function deleteFilters(int $filter_group_id): void {
+		$results = $this->model_catalog_filter->getFilters(['filter_group_id' => $filter_group_id]);
 
-		$this->model_catalog_filter->deleteDescriptions($filter_id);
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 
-		// Category
-		$this->load->model('catalog/category');
-
-		$this->model_catalog_category->deleteFiltersByFilterId($filter_id);
-
-		// Product
-		$this->load->model('catalog/product');
-
-		$this->model_catalog_product->deleteFiltersByFilterId($filter_id);
+		foreach ($results as $result) {
+			$this->model_catalog_filter->deleteFilterDescriptions($result['filter_id']);
+		}
 
 		$this->cache->delete('filter');
 	}
@@ -494,6 +456,10 @@ class Filter extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`fd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+		}
+
+		if (!empty($data['filter_filter_group_id'])) {
+			$sql .= " AND `f`.`filter_group_id` = '" . (int)$data['filter_filter_group_id'] . "'";
 		}
 
 		$sort_data = [
@@ -586,8 +552,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * $filter_total = $this->model_catalog_filter->getTotalFiltersByFilterGroupId($filter_group_id);
 	 */
-	public function getTotalFiltersByFilterGroupId(int $filter_group_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
+	public function getTotalFiltersByFilterId(int $filter_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
 
 		return (int)$query->row['total'];
 	}

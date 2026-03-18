@@ -1877,6 +1877,10 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_attribute_data;
 	}
 
+	public function getAttributeDescriptions(int $product_id): array {
+
+	}
+
 	/**
 	 * Get Attributes By Language ID
 	 *

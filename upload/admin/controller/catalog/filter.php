@@ -334,7 +334,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/filter');
 
 			foreach ($selected as $filter_group_id) {
-				$this->model_catalog_filter->deleteFilterGroup($filter_group_id);
+				$this->model_catalog_filter->deleteFilterGroup((int)$filter_group_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -362,12 +362,13 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('catalog/filter');
 
-			$filters = $this->model_catalog_filter->getFilters($filter_data);
+			$results = $this->model_catalog_filter->getFilters($filter_data);
 
-			foreach ($filters as $filter) {
+			foreach ($results as $result) {
 				$json[] = [
-					'filter_id' => $filter['filter_id'],
-					'name'      => strip_tags(html_entity_decode($filter['filter_group'] . ' &gt; ' . $filter['name'], ENT_QUOTES, 'UTF-8'))
+					'filter_id'    => $result['filter_id'],
+					'name'         => strip_tags(html_entity_decode($result['filter_group'] . ' &gt; ' . $result['name'], ENT_QUOTES, 'UTF-8')),
+					'filter_group' => $result['filter_group']
 				];
 			}
 		}

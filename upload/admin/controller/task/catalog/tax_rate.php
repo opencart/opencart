@@ -51,7 +51,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($tax_rate_data))) {
+		if (!file_put_contents($directory . $filename, json_encode($tax_rate_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -70,7 +70,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/tax_rate');
 
-		$files = oc_directory_read( DIR_CATALOG . 'view/data/localisation/', false, '/tax_rate\-.+\.json$/');
+		$files = oc_directory_read(DIR_CATALOG . 'view/data/localisation/', false, '/tax_rate\-.+\.json$/');
 
 		foreach ($files as $file) {
 			if (is_file($file)) {

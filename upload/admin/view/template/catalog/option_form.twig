@@ -86,16 +86,13 @@
                 {% for option_value in option_values %}
                   <tr id="option-value-row-{{ option_value_row }}">
                     <td class="text-center"><input type="hidden" name="option_value[{{ option_value_row }}][option_value_id]" value="{{ option_value.option_value_id }}"/>
-
                       {% for language in languages %}
                         <div class="input-group">
                           <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                          <input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.code] ? option_value.option_value_description[language.code].name }}" placeholder="{{ entry_option_value }}" id="input-option-value-{{ option_value_row }}-{{ language.language_id }}" class="form-control"/>
+                          <input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.description[language.code] ? option_value.description[language.code].name }}" placeholder="{{ entry_option_value }}" id="input-option-value-{{ option_value_row }}-{{ language.language_id }}" class="form-control"/>
                         </div>
                         <div id="error-option-value-{{ option_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
-                      {% endfor %}
-
-                    </td>
+                      {% endfor %}</td>
                     <td class="text-center">
                       <div class="border rounded d-block" style="max-width: 300px;">
                         <img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image-{{ option_value_row }}" data-oc-placeholder="{{ placeholder }}" class="img-fluid"/> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image-{{ option_value_row }}"/>

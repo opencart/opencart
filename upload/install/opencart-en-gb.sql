@@ -1140,8 +1140,7 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.article.edit', 'Triggers article static site data creation.', 'admin/model/cms/article.editArticle/after', 'event/article.editArticle', 1),
        ('ssr.article.delete', 'Triggers article static site data creation.', 'admin/model/cms/article.deleteArticle/after', 'event/article.deleteArticle', 1),
 
-       ('ssr.attribute.edit', 'Triggers attribute static site data creation.', 'admin/model/catalog/attribute.editAttribute/after', 'event/attribute.editAttribute', 1),
-       ('ssr.attribute.delete', 'Triggers attribute static site data creation.', 'admin/model/catalog/attribute.deleteAttribute/after', 'event/attribute.deleteAttribute', 1),
+       ('ssr.attribute.edit', 'Triggers attribute static site data creation.', 'admin/model/catalog/attribute.editAttributeGroup/after', 'event/attribute.editAttribute', 1),
 
        ('ssr.banner.add', 'Triggers banner static site data creation.', 'admin/model/design/banner.addBanner/after', 'event/banner.addBanner', 1),
        ('ssr.banner.edit', 'Triggers banner static site data creation.', 'admin/model/design/banner.editBanner/after', 'event/banner.editBanner', 1),
@@ -1171,8 +1170,9 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.customer_group.edit', 'Triggers customer group static site data creation.', 'admin/model/customer/customer_group.editCustomerGroup/after', 'event/customer_group.editCustomerGroup', 1),
        ('ssr.customer_group.delete', 'Triggers customer group static site data creation.', 'admin/model/customer/customer_group.deleteCustomerGroup/after', 'event/customer_group.deleteCustomerGroup', 1),
 
-       ('ssr.filter.edit', 'Triggers filter static site data creation.', 'admin/model/catalog/filter.editFilter/after', 'event/filter.editFilter', 1),
-       ('ssr.filter.delete', 'Triggers filter static site data creation.', 'admin/model/catalog/filter.deleteFilter/after', 'event/filter.deleteFilter', 1),
+       ('ssr.filter.add', 'Triggers filter static site data creation.', 'admin/model/catalog/filter.addFilterGroup/after', 'event/filter.addFilter', 1),
+       ('ssr.filter.edit', 'Triggers filter static site data creation.', 'admin/model/catalog/filter.editFilterGroup/after', 'event/filter.editFilter', 1),
+       ('ssr.filter.delete', 'Triggers filter static site data creation.', 'admin/model/catalog/filter.deleteFilterGroup/after', 'event/filter.deleteFilter', 1),
 
        ('ssr.geo_zone.add', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.addGeoZone/after', 'event/geo_zone.addGeoZone', 1),
        ('ssr.geo_zone.edit', 'Triggers geo zone static site data creation.', 'admin/model/localisation/geo_zone.editGeoZone/before', 'event/geo_zone.editGeoZone', 1),
@@ -1195,7 +1195,6 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.manufacturer.delete', 'Triggers manufacturer static site data creation.', 'admin/model/catalog/manufacturer.deleteManufacturer/before', 'event/manufacturer.deleteManufacturer', 1),
 
        ('ssr.option.edit', 'Triggers static option site data creation.', 'admin/model/catalog/option.editOption/after', 'event/option.editOption', 1),
-       ('ssr.option.delete', 'Triggers static option site data creation.', 'admin/model/catalog/option.deleteOption/before', 'event/option.deleteOption', 1),
 
        ('ssr.product.add', 'Triggers product static site data creation.', 'admin/model/catalog/product.addProduct/after', 'event/product.addProduct', 1),
        ('ssr.product.edit', 'Triggers product static site data creation.', 'admin/model/catalog/product.editProduct/after', 'event/product.editProduct', 1),

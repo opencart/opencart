@@ -68,10 +68,10 @@ class Attribute extends \Opencart\System\Engine\Model {
 	public function editAttributeGroup(int $attribute_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
-		$this->deleteDescriptions($attribute_group_id);
+		$this->model_catalog_attribute->deleteDescriptions($attribute_group_id);
 
 		foreach ($data['attribute_group_description'] as $language_id => $attribute_group_description) {
-			$this->addDescription($attribute_group_id, $language_id, $attribute_group_description);
+			$this->model_catalog_attribute->addDescription($attribute_group_id, $language_id, $attribute_group_description);
 		}
 
 		$this->model_catalog_attribute->deleteAttributes($attribute_group_id);
@@ -101,7 +101,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_attribute_group->deleteDescriptions($attribute_group_id);
 
-		$this->deleteAttributes($attribute_group_id);
+		$this->model_catalog_attribute->deleteAttributes($attribute_group_id);
 	}
 
 	/**
@@ -208,7 +208,6 @@ class Attribute extends \Opencart\System\Engine\Model {
 
 		return (int)$query->row['total'];
 	}
-
 
 	/**
 	 * Add Description
@@ -407,6 +406,18 @@ class Attribute extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
 		$this->model_catalog_attribute->deleteAttributeDescriptions($attribute_id);
+	}
+
+	public function deleteAttributes(int $attribute_group_id): void {
+		$results = $this->getAttributesByAttributeGroupId($attribute_group_id);
+
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
+
+		$this->model_catalog_option->deleteValueDescriptionsByOptionId($option_id);
+
+		foreach ($results as $result) {
+
+		}
 	}
 
 	/**

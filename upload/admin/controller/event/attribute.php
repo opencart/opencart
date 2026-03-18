@@ -28,8 +28,8 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$task_data = [
-				'code'   => 'product.info.' . $result['product_id'],
-				'action' => 'task/catalog/product.info',
+				'code'   => 'product.' . $result['product_id'],
+				'action' => 'task/catalog/product',
 				'args'   => ['product_id' => $result['product_id']]
 			];
 

@@ -1181,6 +1181,42 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_data;
 	}
 
+	public function getProductsByAttributeId(int $attribute_id): array {
+		$product_attribute_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_attribute_data[] = $result['product_id'];
+		}
+
+		return $product_attribute_data;
+	}
+
+	public function getProductsByFilterId(int $filter_id): array {
+		$product_filter_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_filter_data[] = $result['product_id'];
+		}
+
+		return $product_filter_data;
+	}
+
+	public function getProductsByOptionId(int $option_id): array {
+		$product_option_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` WHERE `option_id` = '" . (int)$option_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_option_data[] = $result['product_id'];
+		}
+
+		return $product_option_data;
+	}
+
 	/**
 	 * Get Total Products
 	 *

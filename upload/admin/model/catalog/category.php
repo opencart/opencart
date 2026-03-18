@@ -219,12 +219,7 @@ class Category extends \Opencart\System\Engine\Model {
 			$path = implode('_', [$path_new, substr($result['value'], strlen($path_old) + 1)]);
 
 			// Replace keyword with new parents
-			$keyword = implode('/', [
-				$seo_urls[$result['store_id']][$result['language_id']][$path_new], oc_substr(
-					$result['keyword'],
-					oc_strlen($keywords_old[$result['store_id']][$result['language_id']]) + 1
-				)
-			]);
+			$keyword = implode('/', [$seo_urls[$result['store_id']][$result['language_id']][$path_new], oc_substr($result['keyword'], oc_strlen($keywords_old[$result['store_id']][$result['language_id']]) + 1)]);
 
 			$seo_urls[$result['store_id']][$result['language_id']][$path] = $keyword;
 
@@ -505,6 +500,18 @@ class Category extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return $query->rows;
+	}
+
+	public function getCategoriesByFilterId(int $filter_id): array {
+		$category_filter_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
+
+		foreach ($query->rows as $result) {
+			$category_filter_data[] = $result['category_id'];
+		}
+
+		return $category_filter_data;
 	}
 
 	/**

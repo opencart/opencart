@@ -37,6 +37,10 @@ class Filter extends \Opencart\System\Engine\Model {
 			$this->model_catalog_filter->addDescription($filter_group_id, $language_id, $filter_group_description);
 		}
 
+		foreach ($data['filter'] as $filter) {
+			$this->model_catalog_filter->addFilter($filter_group_id, $filter);
+		}
+
 		$this->cache->delete('filter_group');
 
 		return $filter_group_id;
@@ -72,6 +76,12 @@ class Filter extends \Opencart\System\Engine\Model {
 			$this->model_catalog_filter->addDescription($filter_group_id, $language_id, $filter_group_description);
 		}
 
+		$this->model_catalog_filter->deleteFilters($filter_group_id);
+
+		foreach ($data['filter'] as $filter) {
+			$this->model_catalog_filter->addFilter($filter_group_id, $filter);
+		}
+
 		$this->cache->delete('filter_group');
 	}
 
@@ -94,6 +104,8 @@ class Filter extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 
 		$this->model_catalog_filter->deleteDescriptions($filter_group_id);
+
+		$this->model_catalog_filter->deleteFilters($filter_group_id);
 
 		$this->cache->delete('filter_group');
 	}

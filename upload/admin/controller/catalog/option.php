@@ -230,16 +230,16 @@ class Option extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
-		if (!empty($option_info)) {
-			$option_values = $this->model_catalog_option->getValueDescriptions($option_info['option_id']);
-		} else {
-			$option_values = [];
-		}
-
 		// Image
 		$this->load->model('tool/image');
 
 		$data['option_values'] = [];
+
+		if (!empty($option_info)) {
+			$option_values = $this->model_catalog_option->getValues($option_info['option_id']);
+		} else {
+			$option_values = [];
+		}
 
 		foreach ($option_values as $option_value) {
 			if ($option_value['image'] && is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -251,11 +251,11 @@ class Option extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['option_values'][] = [
-				'option_value_id'          => $option_value['option_value_id'],
-				'option_value_description' => $option_value['option_value_description'],
-				'image'                    => $image,
-				'thumb'                    => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
-				'sort_order'               => $option_value['sort_order']
+				'option_value_id' => $option_value['option_value_id'],
+				'description'     => $this->model_catalog_option->getValueDescriptions($option_value['option_value_id']),
+				'image'           => $image,
+				'thumb'           => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
+				'sort_order'      => $option_value['sort_order']
 			];
 		}
 

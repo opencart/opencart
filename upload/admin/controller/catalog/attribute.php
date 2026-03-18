@@ -374,7 +374,13 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		array_multisort(array_column($json, 'name'), SORT_ASC, $json);
+		$sort_order = [];
+
+		foreach ($json as $key => $value) {
+			$sort_order[$key] = $value['name'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $json);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

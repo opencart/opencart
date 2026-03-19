@@ -361,13 +361,13 @@ class Filter extends \Opencart\System\Engine\Model {
 	 *
 	 * $filter_id = $this->model_catalog_filter->addFilter($filter_data);
 	 */
-	public function addFilter(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter` SET `filter_group_id` = '" . (int)$data['filter_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+	public function addFilter(int $filter_group_id, array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter` SET `filter_group_id` = '" . (int)$filter_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$filter_id = $this->db->getLastId();
 
 		foreach ($data['filter_description'] as $language_id => $filter_description) {
-			$this->model_catalog_filter->addDescription($filter_id, $language_id, $filter_description);
+			$this->model_catalog_filter->addFilterDescription($filter_id, $language_id, $filter_description);
 		}
 
 		$this->cache->delete('filter');

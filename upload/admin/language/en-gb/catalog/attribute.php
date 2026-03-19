@@ -25,4 +25,5 @@ $_['error_warning']         = 'Warning: Please check the form carefully for erro
 $_['error_permission']      = 'Warning: You do not have permission to modify attributes!';
 $_['error_attribute_group'] = 'Attribute Group Name must be between 1 and 64 characters!';
 $_['error_name']            = 'Attribute Name must be between 1 and 64 characters!';
+$_['error_attribute']       = 'Attributes required!';
 $_['error_product']         = 'Warning: This attribute group cannot be deleted as it is currently assigned to %s products!';

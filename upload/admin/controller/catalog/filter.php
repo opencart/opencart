@@ -215,12 +215,12 @@ class Filter extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['sort_order'] = 0;
 		}
-
+		//INSERT INTO `oc_filter_description` (`filter_id`, `language_id`, `name`) VALUES ('7', '1', 'filter 1'), ('8', '1', 'filter 2'), ('9', '1', 'filter 3');
 		// Filters
 		$data['filters'] = [];
 
 		if (!empty($filter_group_info)) {
-			$results = $this->model_catalog_filter->getFilters(['filter_group_id' => $filter_group_info['filter_group_id']]);
+			$results = $this->model_catalog_filter->getFilters(['filter_filter_group_id' => $filter_group_info['filter_group_id']]);
 
 			foreach ($results as $result) {
 				$data['filters'][] = array_merge($result, ['description' => $this->model_catalog_filter->getFilterDescriptions($result['filter_id'])]);

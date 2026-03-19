@@ -273,6 +273,8 @@ class Attribute extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
+		} else {
+			$json['error']['warning'] = $this->language->get('error_attribute');
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {

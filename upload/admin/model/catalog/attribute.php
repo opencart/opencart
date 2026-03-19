@@ -344,7 +344,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 */
 	public function addAttribute($attribute_group_id, array $data): int {
 		if ($data['attribute_id']) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute` SET attribute_id` = '" . (int)$data['attribute_id'] . "', `attribute_group_id` = '" . (int)$attribute_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute` SET `attribute_id` = '" . (int)$data['attribute_id'] . "', `attribute_group_id` = '" . (int)$attribute_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 			$attribute_id = $data['attribute_id'];
 		} else {

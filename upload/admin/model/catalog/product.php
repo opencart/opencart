@@ -1771,6 +1771,12 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_filter_data;
 	}
 
+	public function getTotalFiltersByFilterId(int $filter_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
 	/**
 	 * Add Attribute
 	 *

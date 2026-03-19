@@ -25,4 +25,5 @@ $_['error_warning']         = 'Warnung: Bitte prüfen Sie das Formular sorgfält
 $_['error_permission']      = 'Warnung: Sie sind nicht berechtigt, Eigenschaften zu ändern!';
 $_['error_attribute_group'] = 'Der Eigenschaften-Gruppe Name muss zwischen 1 und 64 Zeichen lang sein!';
 $_['error_name']            = 'Der Eigenschaft Name muss zwischen 1 und 64 Zeichen lang sein!';
+$_['error_attribute']       = 'Attributes required!';
 $_['error_product']         = 'Warnung: Diese Eigenschaften-Gruppe kann nicht gelöscht werden, da sie derzeit %s Produkten zugewiesen ist!';

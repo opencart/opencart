@@ -25,4 +25,5 @@ $_['error_warning']       = 'Warnung: Bitte prüfen Sie das Formular sorgfältig
 $_['error_permission']    = 'Warnung: Sie sind nicht berechtigt, Filter zu ändern!';
 $_['error_filter_group']  = 'Der Filter Gruppenname muss zwischen 1 und 64 Zeichen lang sein!';
 $_['error_name']          = 'Der Filter Name muss zwischen 1 und 64 Zeichen lang sein!';
-$_['error_filter']        = 'Achtung: Diese Filter Gruppe kann nicht gelöscht werden, da ihr aktuell %s Filter zugewiesen sind!';
+$_['error_filter']        = 'Filters required!';
+$_['error_product']       = 'Warning: This filter group cannot be deleted as it is currently assigned to %s filters!';

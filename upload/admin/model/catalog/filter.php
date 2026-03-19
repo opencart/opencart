@@ -363,7 +363,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 */
 	public function addFilter(int $filter_group_id, array $data): int {
 		if ($data['filter_id']) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "filter` SET filter_id` = '" . (int)$data['filter_id'] . "', `filter_group_id` = '" . (int)$filter_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "filter` SET `filter_id` = '" . (int)$data['filter_id'] . "', `filter_group_id` = '" . (int)$filter_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 			$filter_id = $data['filter_id'];
 		} else {
@@ -397,7 +397,7 @@ class Filter extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_filter->deleteFilter($filter_id);
 	 */
 	public function deleteFilters(int $filter_group_id): void {
-		$results = $this->model_catalog_filter->getFilters(['filter_group_id' => $filter_group_id]);
+		$results = $this->model_catalog_filter->getFilters(['filter_filter_group_id' => $filter_group_id]);
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE `filter_group_id` = '" . (int)$filter_group_id . "'");
 

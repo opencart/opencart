@@ -343,9 +343,15 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 * $attribute_id = $this->model_catalog_attribute->addAttribute($attribute_data);
 	 */
 	public function addAttribute($attribute_group_id, array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$attribute_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+		if ($data['attribute_id']) {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute` SET attribute_id` = '" . (int)$data['attribute_id'] . "', `attribute_group_id` = '" . (int)$attribute_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
-		$attribute_id = $this->db->getLastId();
+			$attribute_id = $data['attribute_id'];
+		} else {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$attribute_group_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+
+			$attribute_id = $this->db->getLastId();
+		}
 
 		foreach ($data['attribute_description'] as $language_id => $attribute_description) {
 			$this->model_catalog_attribute->addAttributeDescription($attribute_id, $language_id, $attribute_description);

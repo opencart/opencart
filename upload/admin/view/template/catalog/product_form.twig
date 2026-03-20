@@ -577,22 +577,20 @@
                     <tr>
                       <th>{{ entry_attribute }}</th>
                       <th>{{ entry_text }}</th>
-                      <th>{% if master_id %}
-                        <x-switch name="override[product_attribute]" value="1" checked="{{ override.product_attribute }}" input-class="form-switch float-end" data-oc-target="#product-attribute"></x-switch>{% endif %}</th>
+                      <th>{% if master_id %}<x-switch name="override[product_attribute]" value="1" checked="{{ override.product_attribute }}" input-class="form-switch float-end" data-oc-target="#product-attribute"></x-switch>{% endif %}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% set attribute_row = 0 %}
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row-{{ attribute_row }}">
-                        <td>
-                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/> <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
-                          <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul>
-                        </td>
+                        <td><input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
+                          <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
+                          <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul></td>
                         <td>{% for language in languages %}
                             <div class="input-group mb-12">
                               <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                              <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" id="input-text-{{ attribute_row }}-{{ language.language_id }}" class="form-control">{{ product_attribute.product_attribute_description[language.code] ? product_attribute.product_attribute_description[language.code].text }}</textarea>
+                              <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" id="input-text-{{ attribute_row }}-{{ language.language_id }}" class="form-control">{{ product_attribute.description[language.code] ? product_attribute.description[language.code].text }}</textarea>
                             </div>
                           {% endfor %}</td>
                         <td class="text-end"><button type="button" onclick="$('#attribute-row-{{ attribute_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>

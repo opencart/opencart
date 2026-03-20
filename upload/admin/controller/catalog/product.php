@@ -782,14 +782,14 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		// Related
 		if ($product_id) {
-			$product_relateds = $this->model_catalog_product->getRelated($product_id);
+			$product_relates = $this->model_catalog_product->getRelated($product_id);
 		} else {
-			$product_relateds = [];
+			$product_relates = [];
 		}
 
 		$data['product_relateds'] = [];
 
-		foreach ($product_relateds as $related_id) {
+		foreach ($product_relates as $related_id) {
 			$related_info = $this->model_catalog_product->getProduct($related_id);
 
 			if ($related_info) {
@@ -798,6 +798,8 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Attribute
+		$data['product_attributes'] = [];
+
 		$this->load->model('catalog/attribute');
 
 		if ($product_id) {
@@ -806,13 +808,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			$product_attributes = [];
 		}
 
-		$data['product_attributes'] = [];
-
 		foreach ($product_attributes as $product_attribute) {
 			$attribute_info = $this->model_catalog_attribute->getAttribute($product_attribute['attribute_id']);
 
 			if ($attribute_info) {
-				$data['product_attributes'][] = ['name' => $attribute_info['name']] + $product_attribute;
+				$data['product_attributes'][] = [
+					'attribute_id' => $attribute_info['attribute_id'],
+					'name'        => $attribute_info['name'],
+					'description' => $this->model_catalog_product->getAttributeDescriptions($product_id, $product_attribute['attribute_id'])
+				];
 			}
 		}
 

@@ -1864,27 +1864,21 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $product_attributes = $this->model_catalog_product->getAttributes($product_id);
 	 */
 	public function getAttributes(int $product_id): array {
-		$product_attribute_data = [];
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` `pa` WHERE `pa`.`product_id` = '" . (int)$product_id . "'");
 
-		$product_attribute_query = $this->db->query("SELECT `pa`.`attribute_id` FROM `" . DB_PREFIX . "product_attribute` `pa` LEFT JOIN `" . DB_PREFIX . "attribute` a ON (`a`.`attribute_id` = `pa`.`attribute_id`) LEFT JOIN `" . DB_PREFIX . "attribute_group` `ag` ON (`ag`.`attribute_group_id` = `a`.`attribute_group_id`) WHERE `pa`.`product_id` = '" . (int)$product_id . "' GROUP BY `pa`.`attribute_id` ORDER BY `ag`.`sort_order` ASC, `a`.`sort_order` ASC");
-
-		foreach ($product_attribute_query->rows as $product_attribute) {
-			$product_attribute_description_data = [];
-
-			$product_attribute_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' AND `attribute_id` = '" . (int)$product_attribute['attribute_id'] . "'");
-
-			foreach ($product_attribute_description_query->rows as $product_attribute_description) {
-				$product_attribute_description_data[$product_attribute_description['language_id']] = $product_attribute_description;
-			}
-
-			$product_attribute_data[] = ['product_attribute_description' => $product_attribute_description_data] + $product_attribute;
-		}
-
-		return $product_attribute_data;
+		return $query->rows;
 	}
 
-	public function getAttributeDescriptions(int $product_id): array {
+	public function getAttributeDescriptions(int $product_id, int $attribute_id): array {
+		$product_attribute_description_data = [];
 
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `pa`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "product_attribute` `pa` WHERE `pa`.`product_id` = '" . (int)$product_id . "' AND `pa`.`attribute_id` = '" . (int)$attribute_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_attribute_description_data[$result['code']] = $result;
+		}
+
+		return $product_attribute_description_data;
 	}
 
 	/**

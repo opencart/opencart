@@ -293,7 +293,7 @@ legend {
     display: inline-block;
 
     &::before {
-        font-family: "Font Awesome 6 Free";
+        font-family: "Font Awesome 7 Free";
         font-weight: 600;
         font-size: .7692rem;
         color: #BBBBBB;
@@ -383,7 +383,7 @@ legend {
 }
 
 #menu li a.parent:after {
-    font-family: 'Font Awesome 6 Free';
+    font-family: 'Font Awesome 7 Free';
     font-weight: 600;
     float: right;
     margin-right: 8px;
@@ -437,7 +437,7 @@ legend {
 }
 
 #menu li li a:before {
-    font-family: 'Font Awesome 6 Free';
+    font-family: 'Font Awesome 7 Free';
     content: "\f101";
     font-weight: 900;
     font-size: 13px;
@@ -613,7 +613,7 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
 }
 
 .table thead td span[data-toggle='tooltip']:after, label.form-label span:after {
-    font-family: 'Font Awesome 6 Free';
+    font-family: 'Font Awesome 7 Free';
     font-weight: 600;
     content: "\f059";
     color: #1E91CF;
@@ -629,13 +629,13 @@ label.required:before, label:has(+ input:required):before, label:has(+ select:re
 }
 
 .table a.asc:after {
-    font-family: 'Font Awesome 6 Free';
+    font-family: 'Font Awesome 7 Free';
     font-weight: 600;
     content: " \f106";
 }
 
 .table a.desc:after {
-    font-family: 'Font Awesome 6 Free';
+    font-family: 'Font Awesome 7 Free';
     font-weight: 600;
     content: " \f107";
 }

@@ -1,11 +1,13 @@
 import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
+// Config
+const config = await loader.config('default');
+
 class XZone extends WebComponent {
-    static observed = ['value'];
     default = HTMLInputElement;
-    element = HTMLInputElement;
-    target = HTMLInputElement;
+    country_id = 0;
+    target = '';
     zones = [];
 
     get value() {
@@ -13,79 +15,74 @@ class XZone extends WebComponent {
     }
 
     set value(value) {
-        if (this.getAttribute('value') != value) {
-            this.setAttribute('value', value);
-        }
-
-        if (this.element.value != value) {
-            this.element.value = value;
-        }
+        this.setAttribute('value', value);
     }
 
-    async connected () {
+    async connected() {
         this.default = this.innerHTML;
-
-        // Create the select element
-        this.innerHTML = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" class="form-select">' + this.default + '</select>';
-
-        this.addEventListener('[value]', this.changeValue);
-
-        this.element = this.querySelector('select');
-
-        this.element.addEventListener('change', this.onchange);
-
-        // Country Element
         this.target = document.getElementById(this.getAttribute('target'));
+        this.country_id = this.target.value;
 
-        this.target.addEventListener('[value]', this.changeCountry.bind(this));
+        console.log(this.target);
+        console.log(this.target.getAttribute('value'));
 
-        if (this.target.value != 0) {
-            let response = this.storage.fetch('localisation/country-' + this.target.value);
+        let country_info = await loader.storage('localisation/country-' + this.target.getAttribute('value'));
 
-            response.then(this.onloaded);
-            response.then(this.option);
+        console.log(country_info);
+
+        if (country_info) {
+            this.zones = country_info['zone'];
         }
+
+        //this.target.addEventListener('[value]', this.changeCountry.bind(this));
     }
 
-    onloaded(country) {
-        this.zones = country['zone'];
-    }
+    async render() {
+        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:onChange" class="form-select">' + this.default;
 
-    option() {
-        let html = this.default;
+        console.log(this.zones);
 
-        for (let i in this.zones) {
-            html += '<option value="' + this.zones[i].zone_id + '"';
+        for (let zone of this.zones) {
+            html += '<option value="' + zone.zone_id + '"';
 
-            if (this.zones[i].zone_id == this.value) {
+            if (zone.zone_id == this.value) {
                 html += ' selected';
             }
 
-            html += '>' + this.zones[i].name + '</option>';
+            let name = '';
+
+            if (this.language in zone.description) {
+                name = zone.description[this.language].name;
+            }
+
+            html += '>' + name + '</option>';
         }
 
-        this.element.innerHTML = html;
+        //if (this.target.value != 0) {
+
+        //}
+
+        html += '</select>';
+
+        console.log(html);
+
+        return html;
     }
 
     onChange(e) {
         this.value = e.target.value;
     }
 
-    changeValue(e) {
-        this.value = e.detail.value_new;
-    }
-
-    changeCountry(e) {
+    async changeCountry(e) {
         let value = e.target.value;
 
         if (value != 0) {
-            let response = this.storage.fetch('localisation/country-' + value);
+            let country_info = await loader.storage('localisation/country-' + value);
 
-            response.then(this.onloaded);
-            response.then(this.option);
-        } else {
-            this.zones = [];
-            this.option();
+
+            //if (country_info) {
+            //    this.zones = country_info['zone'];
+            //}
         }
     }
 }

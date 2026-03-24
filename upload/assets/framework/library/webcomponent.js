@@ -14,11 +14,11 @@ export class WebComponent extends HTMLElement {
         }
 
         if (this.connected !== undefined) {
-            this.connected();
+            await this.connected();
         }
 
         if (this.render !== undefined) {
-            this.update();
+            await this.update();
         }
     }
 

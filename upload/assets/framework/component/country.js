@@ -2,52 +2,45 @@ import { WebComponent } from '../component.js';
 import { loader } from '../index.js';
 
 // Config
-const config = await loader.config('catalog');
+const config = await loader.config('default');
 
 // Storage
 const countries = await loader.storage('localisation/country');
 
+/**
+ * XCountry
+ *
+ * @example <x-country name="" value="" target="" input-id=""></x-country>
+ *
+ * @tag     x-country
+ *
+ * @attr   string    name   name of the form element
+ *
+ * optional required disabled
+ */
 class XCountry extends WebComponent {
-    static observed = ['value', 'postcode'];
+    static observed = ['value'];
+
     default = HTMLInputElement;
-    element = HTMLInputElement;
     countries = [];
+    target = '';
+    language = config.config_language;
 
     get value() {
         return this.getAttribute('value');
     }
 
     set value(value) {
-        if (this.getAttribute('value') != value) {
-            this.setAttribute('value', value);
-        }
-
-        if (this.element.value != value) {
-            this.element.value = value;
-        }
+        this.setAttribute('value', value);
     }
 
-    set postcode(value) {
-        if (this.hasAttribute('target')) {
-            this.setAttribute('postcode', value);
-
-            let target = document.getElementById(this.getAttribute('target'));
-
-            if (value == 1) {
-                target.setAttribute('required', '');
-            } else {
-                target.removeAttribute('required');
-            }
-        }
-    }
-
-    get postcode() {
-        return this.getAttribute('postcode');
+    async connected() {
+        this.default = this.innerHTML;
+        this.countries = countries;
+        this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';
     }
 
     async render() {
-        this.default = this.innerHTML;
-
         let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:onChange" class="form-select"';
 
         if (this.hasAttribute('required')) {
@@ -58,40 +51,37 @@ class XCountry extends WebComponent {
             html += ' disabled';
         }
 
-        html += '>' + this.default + '</select>';
+        html += '>' + this.default;
 
-        this.innerHTML = html;
+        for (let country of this.countries) {
+            html += '<option value="' + country.country_id + '"';
 
-        return html;
-    }
-
-    option() {
-        let html = this.default;
-
-        console.log(this.countries);
-
-
-        for (let i in this.countries) {
-            html += '<option value="' + this.countries[i].country_id + '"';
-
-            if (this.countries[i].country_id == this.value) {
+            if (country.country_id == this.value) {
                 html += ' selected';
             }
 
+            let name = '';
 
+            if (this.language in country.description) {
+                name = country.description[this.language].name;
+            }
 
-            html += '>' + this.countries[i].name + '</option>';
+            html += '>' + name + '</option>';
         }
 
-        this.element.innerHTML = html;
-    }
+        html += '</select>';
 
-    postcode() {
-        if (this.countries[this.value] !== undefined) {
-            this.postcode = this.countries[this.value].postcode_required;
-        } else {
-            this.postcode = 0;
+        if (this.target) {
+            let postcode = (this.value in this.countries[this.value]) ? this.countries[this.value].postcode_required : 0;
+
+            if (postcode == 1) {
+                this.target.setAttribute('required', '');
+            } else {
+                this.target.removeAttribute('required');
+            }
         }
+
+        return html;
     }
 
     onChange(e) {

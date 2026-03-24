@@ -5,7 +5,7 @@ import { loader } from "../../../../assets/framework";
 const session= loader.library('session');
 
 // Config
-const config = loader.config('catalog');
+const config = loader.config('default');
 
 // Language
 const language = loader.language('information/contact');

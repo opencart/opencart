@@ -12,7 +12,7 @@ const config = await loader.library('config');
 config.addPath('catalog/view/data/');
 
 // Testing Code
-config.cache.set('catalog', {
+config.cache.set('default', {
     config_name: 'OpenCart Store',
     config_logo: 'catalog/opencart-logo.png',
     config_url: 'http://localhost/opencart-master/upload/',
@@ -32,7 +32,7 @@ local.set('currency', 'EUR');
 // Language
 const language = await loader.library('language');
 
-language.addPath('catalog/view/language/' + base.host + '/' + lang + '/');
+language.addPath('catalog/view/language/' + base.host + '/' + local.get('language') + '/');
 
 // Storage
 const storage = await loader.library('storage');

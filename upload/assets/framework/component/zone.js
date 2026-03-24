@@ -21,7 +21,7 @@ class XZone extends WebComponent {
     async connected() {
         this.default = this.innerHTML;
         this.target = document.getElementById(this.getAttribute('target'));
-        this.country_id = this.target.value;
+        this.country_id = this.target. value;
 
         console.log(this.target);
         console.log(this.target.getAttribute('value'));
@@ -42,20 +42,22 @@ class XZone extends WebComponent {
 
         console.log(this.zones);
 
-        for (let zone of this.zones) {
-            html += '<option value="' + zone.zone_id + '"';
+        if (this.zones !== undefined) {
+            for (let zone of this.zones) {
+                html += '<option value="' + zone.zone_id + '"';
 
-            if (zone.zone_id == this.value) {
-                html += ' selected';
+                if (zone.zone_id == this.value) {
+                    html += ' selected';
+                }
+
+                let name = '';
+
+                if (this.language in zone.description) {
+                    name = zone.description[this.language].name;
+                }
+
+                html += '>' + name + '</option>';
             }
-
-            let name = '';
-
-            if (this.language in zone.description) {
-                name = zone.description[this.language].name;
-            }
-
-            html += '>' + name + '</option>';
         }
 
         //if (this.target.value != 0) {

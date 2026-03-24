@@ -9,14 +9,14 @@ const lang = document.documentElement.lang.toLowerCase();
 // Config
 const config = await loader.library('config');
 
-config.addPath('admin/view/data/');
+config.addPath('view/data/');
 
 // Testing Code
-config.cache.set('admin', {
+config.cache.set('default', {
     config_name: 'OpenCart Store',
     config_logo: 'catalog/opencart-logo.png',
     config_url: 'http://localhost/opencart-master/upload/',
-    config_telephone: '01234 67890',
+    config_telephone: '01234 567890',
     config_language: 'en-gb',
     config_currency: 'EUR',
     config_customer_group_id: 1,
@@ -32,7 +32,7 @@ local.set('currency', 'EUR');
 // Language
 const language = await loader.library('language');
 
-language.addPath('view/language/');
+language.addPath('view/language/' + local.get('language') + '/');
 
 // Storage
 const storage = await loader.library('storage');

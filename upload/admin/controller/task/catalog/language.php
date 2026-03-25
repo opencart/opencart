@@ -71,15 +71,17 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/language');
 
-		$language_ids = (array)$this->model_setting_setting->getValue('config_language_list', $store_info['store_id']);
+		$languages = (array)$this->model_setting_setting->getValue('config_language_list', $store_info['store_id']);
 
-		foreach ($language_ids as $language_id) {
-			$language_info = $this->model_localisation_language->getLanguage((int)$language_id);
+		foreach ($languages as $code) {
+			$language_info = $this->model_localisation_language->getLanguageByCode((string)$code);
 
 			if ($language_info && $language_info['status']) {
 				$language_data[$language_info['code']] = $language_info;
 			}
 		}
+
+		$this->log->write($language_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'language.json';

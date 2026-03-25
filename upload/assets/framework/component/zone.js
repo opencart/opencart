@@ -4,11 +4,21 @@ import { loader } from '../index.js';
 // Config
 const config = await loader.config('default');
 
+/**
+ * XZone
+ *
+ * @example <x-zone name="" value="" target="" input-id=""></x-country>
+ *
+ * @tag     x-zone
+ *
+ * @attr   string    name   name of the form element
+ *
+ * optional required disabled
+ */
 class XZone extends WebComponent {
+    static observed = ['country_id'];
+
     default = HTMLInputElement;
-    country_id = 0;
-    target = '';
-    zones = [];
 
     get value() {
         return this.getAttribute('value');
@@ -20,30 +30,25 @@ class XZone extends WebComponent {
 
     async connected() {
         this.default = this.innerHTML;
-        this.target = document.getElementById(this.getAttribute('target'));
-        this.country_id = this.target. value;
-
-        console.log(this.target);
-        console.log(this.target.getAttribute('value'));
-
-        let country_info = await loader.storage('localisation/country-' + this.target.getAttribute('value'));
-
-        console.log(country_info);
-
-        if (country_info) {
-            this.zones = country_info['zone'];
-        }
-
-        //this.target.addEventListener('[value]', this.changeCountry.bind(this));
     }
 
     async render() {
-        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:onChange" class="form-select">' + this.default;
+        let html = '<select name="' + this.getAttribute('name') + '" id="' + this.getAttribute('input-id') + '" data-on="change:onChange" class="form-select"';
 
-        console.log(this.zones);
+        if (this.hasAttribute('required')) {
+            html += ' required';
+        }
 
-        if (this.zones !== undefined) {
-            for (let zone of this.zones) {
+        if (this.hasAttribute('disabled')) {
+            html += ' disabled';
+        }
+
+        html += '>' + this.default;
+
+        let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
+
+        if (country !== undefined) {
+            for (let zone of country['zone']) {
                 html += '<option value="' + zone.zone_id + '"';
 
                 if (zone.zone_id == this.value) {
@@ -52,40 +57,21 @@ class XZone extends WebComponent {
 
                 let name = '';
 
-                if (this.language in zone.description) {
-                    name = zone.description[this.language].name;
+                if (config.config_language in zone.description) {
+                    name = zone.description[config.config_language].name;
                 }
 
                 html += '>' + name + '</option>';
             }
         }
 
-        //if (this.target.value != 0) {
-
-        //}
-
         html += '</select>';
-
-        console.log(html);
 
         return html;
     }
 
     onChange(e) {
         this.value = e.target.value;
-    }
-
-    async changeCountry(e) {
-        let value = e.target.value;
-
-        if (value != 0) {
-            let country_info = await loader.storage('localisation/country-' + value);
-
-
-            //if (country_info) {
-            //    this.zones = country_info['zone'];
-            //}
-        }
     }
 }
 

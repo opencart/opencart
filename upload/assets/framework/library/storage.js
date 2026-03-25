@@ -48,7 +48,7 @@ class Storage {
             console.log('Could not load storage file ' + path);
         }
 
-        return undefined;
+        return [];
     }
 
     static getInstance() {

@@ -1222,9 +1222,9 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.tax_rate.edit', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.editTaxRate/before', 'event/tax_rate.editTaxRate', 1),
        ('ssr.tax_rate.delete', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.deleteTaxRate/before', 'event/tax_rate.deleteTaxRate', 1),
 
-       ('ssr.template.add', 'Triggers template static site data creation.', 'admin/model/localisation/template.addTemplate/after', 'event/template.addTemplate', 1),
-       ('ssr.template.edit', 'Triggers template static site data creation.', 'admin/model/localisation/template.editTemplate/before', 'event/template.editTemplate', 1),
-       ('ssr.template.delete', 'Triggers template static site data creation.', 'admin/model/localisation/template.deleteTemplate/after', 'event/template.deleteTemplate', 1),
+       ('ssr.template.add', 'Triggers template static site data creation.', 'admin/model/design/template.addTemplate/after', 'event/template.addTemplate', 1),
+       ('ssr.template.edit', 'Triggers template static site data creation.', 'admin/model/design/template.editTemplate/after', 'event/template.editTemplate', 1),
+       ('ssr.template.delete', 'Triggers template static site data creation.', 'admin/model/design/template.deleteTemplate/after', 'event/template.deleteTemplate', 1),
 
        ('ssr.topic.add', 'Triggers topic static site data creation.', 'admin/model/cms/topic.addTopic/after', 'event/topic.addTopic', 1),
        ('ssr.topic.edit', 'Triggers topic static site data creation.', 'admin/model/cms/topic.editTopic/after', 'event/topic.editTopic', 1),

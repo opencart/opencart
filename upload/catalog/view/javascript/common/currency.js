@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const local = await loader.library('local');
 
 // Config
-const config = await loader.config('catalog');
+const config = await loader.config('default');
 
 // Language
 const language = await loader.language('common/currency');
@@ -16,6 +16,8 @@ const currencies = await loader.storage('localisation/currency');
 console.log(currencies);
 
 class CommonCurrency extends WebComponent {
+    static observed = ['code'];
+
     render() {
         let data = {};
 

@@ -676,30 +676,4 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-	public function rebuild() {
-		$this->load->language('setting/store');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'setting/store')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Setting
-			$this->load->model('setting/store');
-
-			$this->load->model('setting/setting');
-
-			$this->model_setting_store->deleteStore($store_id);
-
-			$this->model_setting_setting->deleteSetting('config', $store_id);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
 }

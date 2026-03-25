@@ -5,6 +5,8 @@ const language = await loader.language('account/reset');
 
 class AccountReset extends WebComponent {
     render() {
+
+
         return loader.template('account/reset', { ...language });
     }
 }

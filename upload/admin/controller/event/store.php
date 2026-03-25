@@ -51,11 +51,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-
-
-
-
-
 		$task_data = [
 			'code'   => 'store',
 			'action' => 'task/admin/store',
@@ -81,8 +76,6 @@ class Store extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editStore(string &$route, array &$args, &$output): void {
-
-
 		// Language
 		$task_data = [
 			'code'   => 'language',
@@ -114,17 +107,11 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-
-
-
-
 		$task_data = [
 			'code'   => 'store',
 			'action' => 'task/admin/store',
 			'args'   => []
 		];
-
-		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 	}
@@ -142,7 +129,7 @@ class Store extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function deleteStore(string &$route, array &$args, &$output): void {
+	public function deleteStore(string &$route, array &$args): void {
 		// Language
 		$task_data = [
 			'code'   => 'language',
@@ -174,14 +161,11 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
-
 		$task_data = [
 			'code'   => 'store',
 			'action' => 'task/admin/store',
 			'args'   => []
 		];
-
-		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 	}

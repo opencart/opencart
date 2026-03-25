@@ -5,7 +5,7 @@ import { loader } from '../index.js';
 const local = await loader.library('local');
 
 // Config
-const config = await loader.config('catalog');
+const config = await loader.config('default');
 
 // Language
 const language = await loader.language('common/language');

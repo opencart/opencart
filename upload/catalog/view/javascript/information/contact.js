@@ -15,6 +15,12 @@ const locations = loader.storage('information/location');
 
 class InformationContact extends WebComponent {
     async connected() {
+
+    }
+
+    async render() {
+        console.log('dfdf');
+
         let data = {};
 
         // Store Details
@@ -39,10 +45,8 @@ class InformationContact extends WebComponent {
         }
 
         data.locations = locations;
-    }
 
-    render() {
-        return loader.template('information/contact', { ...data, ...language, ...config });
+        return await loader.template('information/contact', { ...data, ...language, ...config });
     }
 
     onSubmit(e) {

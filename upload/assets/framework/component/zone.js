@@ -47,6 +47,8 @@ class XZone extends WebComponent {
 
         let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
 
+        console.log(country);
+
         if (country !== undefined) {
             for (let zone of country['zone']) {
                 html += '<option value="' + zone.zone_id + '"';

@@ -153,7 +153,10 @@ class ControllerMarketplaceModification extends Controller {
 					$recovery = $modification;
 				}
 
-				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
+				if (!$modification_element = $dom->getElementsByTagName('modification')->item(0)) {
+					continue;
+				}
+				$files = $modification_element->getElementsByTagName('file');
 
 				foreach ($files as $file) {
 					$operations = $file->getElementsByTagName('operation');
@@ -230,12 +233,22 @@ class ControllerMarketplaceModification extends Controller {
 
 										$status = false;
 
+										if (!$search_element = $operation->getElementsByTagName('search')->item(0)) {
+											// There is no search element
+											continue;
+										}
+
+										if (!$add_element = $operation->getElementsByTagName('add')->item(0)) {
+											// There is no add element
+											continue;
+										}
+
 										// Search and replace
-										if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
+										if ($search_element->getAttribute('regex') != 'true') {
 											// Search
-											$search = $operation->getElementsByTagName('search')->item(0)->textContent;
-											$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
-											$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
+											$search = $search_element->textContent;
+											$trim = $search_element->getAttribute('trim');
+											$index = $search_element->getAttribute('index');
 
 											// Trim line if no trim attribute is set or is set to true.
 											if (!$trim || $trim == 'true') {
@@ -243,10 +256,10 @@ class ControllerMarketplaceModification extends Controller {
 											}
 
 											// Add
-											$add = $operation->getElementsByTagName('add')->item(0)->textContent;
-											$trim = $operation->getElementsByTagName('add')->item(0)->getAttribute('trim');
-											$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-											$offset = $operation->getElementsByTagName('add')->item(0)->getAttribute('offset');
+											$add = $add_element->textContent;
+											$trim = $add_element->getAttribute('trim');
+											$position = $add_element->getAttribute('position');
+											$offset = $add_element->getAttribute('offset');
 
 											if ($offset == '') {
 												$offset = 0;
@@ -330,9 +343,9 @@ class ControllerMarketplaceModification extends Controller {
 
 											$modification[$key] = implode("\n", $lines);
 										} else {
-											$search = trim($operation->getElementsByTagName('search')->item(0)->textContent);
-											$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
-											$replace = trim($operation->getElementsByTagName('add')->item(0)->textContent);
+											$search = trim($search_element->textContent);
+											$limit = $search_element->getAttribute('limit');
+											$replace = trim($add_element->textContent);
 
 											// Limit
 											if (!$limit) {
@@ -381,7 +394,7 @@ class ControllerMarketplaceModification extends Controller {
 											else {
 												// Log
 												$log[] = 'NOT FOUND - OPERATIONS ABORTED!';
-											 	break;
+												break;
 											}
 										}
 									}

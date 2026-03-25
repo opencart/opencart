@@ -131,9 +131,9 @@ class Store extends \Opencart\System\Engine\Model {
 		$this->model_customer_gdpr->deleteGdprsByStoreId($store_id);
 
 		// Theme
-		$this->load->model('design/theme');
+		$this->load->model('design/template');
 
-		$this->model_design_theme->deleteThemesByStoreId($store_id);
+		$this->model_design_template->deleteTemplatesByStoreId($store_id);
 
 		// Translation
 		$this->load->model('design/translation');
@@ -149,11 +149,6 @@ class Store extends \Opencart\System\Engine\Model {
 		$this->load->model('setting/setting');
 
 		$this->model_setting_setting->deleteSettingsByStoreId($store_id);
-
-		// Country
-		$this->load->model('localisation/country');
-
-		$this->model_localisation_country->deleteStoresByStoreId($store_id);
 
 		$this->cache->delete('store');
 	}

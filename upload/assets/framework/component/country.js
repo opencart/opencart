@@ -24,7 +24,6 @@ class XCountry extends WebComponent {
     default = HTMLInputElement;
     countries = [];
     target = '';
-    language = config.config_language;
 
     get value() {
         return this.getAttribute('value');
@@ -38,6 +37,7 @@ class XCountry extends WebComponent {
         this.default = this.innerHTML;
         this.countries = countries;
         this.target = this.hasAttribute('target') ? document.getElementById(this.getAttribute('target')) : '';
+        this.postcode = this.hasAttribute('postcode') ? document.getElementById(this.getAttribute('postcode')) : '';
     }
 
     async render() {
@@ -62,8 +62,8 @@ class XCountry extends WebComponent {
 
             let name = '';
 
-            if (this.language in country.description) {
-                name = country.description[this.language].name;
+            if (config.config_language in country.description) {
+                name = country.description[config.config_language].name;
             }
 
             html += '>' + name + '</option>';
@@ -71,13 +71,11 @@ class XCountry extends WebComponent {
 
         html += '</select>';
 
-        if (this.target) {
-            let postcode = (this.value in this.countries[this.value]) ? this.countries[this.value].postcode_required : 0;
-
-            if (postcode == 1) {
-                this.target.setAttribute('required', '');
+        if (this.postcode) {
+            if (this.value in this.countries[this.value] && this.countries[this.value].postcode_required == 1) {
+                this.postcode.setAttribute('required', '');
             } else {
-                this.target.removeAttribute('required');
+                this.postcode.removeAttribute('required');
             }
         }
 
@@ -86,6 +84,8 @@ class XCountry extends WebComponent {
 
     onChange(e) {
         this.value = e.target.value;
+
+        if (this.target) this.target.setAttribute('country_id', this.value);
     }
 }
 

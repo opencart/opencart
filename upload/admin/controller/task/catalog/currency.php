@@ -73,8 +73,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$currency_ids = (array)$this->model_setting_setting->getValue('config_currency_list', $store_info['store_id']);
 
-		foreach ($currency_ids as $currency_id) {
-			$currency_info = $this->model_localisation_currency->getCurrency((int)$currency_id);
+		foreach ($currency_ids as $code) {
+			$currency_info = $this->model_localisation_currency->getCurrencyByCode((string)$code);
 
 			if ($currency_info && $currency_info['status']) {
 				$currency_data[$currency_info['code']] = $currency_info;

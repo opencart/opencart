@@ -13,11 +13,7 @@ const language = await loader.language('common/currency');
 // Storage
 const currencies = await loader.storage('localisation/currency');
 
-console.log(currencies);
-
 class CommonCurrency extends WebComponent {
-    static observed = ['code'];
-
     render() {
         let data = {};
 
@@ -42,12 +38,14 @@ class CommonCurrency extends WebComponent {
         return loader.template('common/currency', { ...data, ...language });
     }
 
-    onChange(e) {
+    onClick(e) {
         e.preventDefault();
 
-        local.set('currency', e.target.getAttribute('href'));
+        let code = e.target.getAttribute('href');
 
-        this.initialize();
+        local.set('currency', code);
+
+        this.update();
 
         let elements = document.querySelectorAll('x-currency');
 

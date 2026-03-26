@@ -38,14 +38,14 @@ class CommonLanguage extends WebComponent {
         return loader.template('common/language', { ...data,  ...language });
     }
 
-    onChange(e) {
+    onClick(e) {
         e.preventDefault();
 
-        local.set('language', e.target.getAttribute('href'));
+        let code = e.target.getAttribute('href');
 
-        this.initialize();
+        local.set('language', code);
 
-
+        this.update();
     }
 }
 

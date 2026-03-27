@@ -74,11 +74,17 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$location_ids = $this->model_setting_setting->getValue('config_location_list', $store_info['store_id']);
 
+		array_filter($location_ids);
+
+		//print_r($location_ids);
+
+		$this->log->write($location_ids);
+
 		foreach ($location_ids as $location_id) {
 			$location_info = $this->model_localisation_location->getLocation($location_id);
 
 			if ($location_info && $location_info['status']) {
-				$location_data[] = $location_info;
+		 		$location_data[] = $location_info;
 			}
 		}
 

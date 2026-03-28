@@ -209,7 +209,7 @@
                               <div class="form-control" style="height: 150px; overflow: auto;">
                                 {% for location in locations %}
                                   <div class="form-check">
-                                    <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" id="input-location-{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked{% endif %}/> <label for="input-location-{{ location.location_id }}" class="form-check-label">{{ location.name }}</label>
+                                    <input type="checkbox" name="config_location_list[]" value="{{ location.location_id }}" id="input-location-{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location_list %} checked{% endif %}/> <label for="input-location-{{ location.location_id }}" class="form-check-label">{{ location.name }}</label>
                                   </div>
                                 {% endfor %}
                               </div>

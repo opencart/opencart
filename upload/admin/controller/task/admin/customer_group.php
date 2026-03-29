@@ -27,7 +27,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_groups = $this->model_customer_customer_group->getCustomerGroups();
 
 		foreach ($customer_groups as $customer_group) {
-			$customer_group_data[] = array_merge($customer_group, ['description' => $this->model_customer_customer_group->getDesciptions($customer_group['customer_group_id'])]);
+			$customer_group_data[] = array_merge($customer_group, ['description' => $this->model_customer_customer_group->getDescriptions($customer_group['customer_group_id'])]);
 		}
 
 		$directory = DIR_APPLICATION . 'view/data/customer/';
@@ -75,7 +75,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
 
 		foreach ($custom_fields as $custom_field) {
-			$custom_field_data[] = $custom_field + ['description' => $this->model_customer_custom_field->getDesciptions($custom_field['custom_field_id'])];
+			$custom_field_data[] = $custom_field + ['description' => $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id'])];
 		}
 
 		$directory = DIR_APPLICATION . 'view/data/customer/';

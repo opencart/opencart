@@ -21,7 +21,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 */
 	public function addBanner(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'banner.info.' . $output,
+			'code'   => 'banner.' . $output,
 			'action' => 'task/catalog/banner',
 			'args'   => ['banner_id' => $output]
 		];
@@ -46,7 +46,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	 */
 	public function editBanner(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'banner.info.' . $args[0],
+			'code'   => 'banner.' . $args[0],
 			'action' => 'task/catalog/banner.info',
 			'args'   => ['banner_id' => $args[0]]
 		];

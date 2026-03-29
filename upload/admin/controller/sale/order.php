@@ -797,7 +797,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 					if ($upload_info) {
 						$option_data[] = [
-							'filename' => $upload_info['mask'],
+							'filename' => $upload_info['name'],
 							'href'     => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
 						] + $option;
 					}
@@ -902,16 +902,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
-		// Countries
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
-		// Zones
-		$this->load->model('localisation/zone');
-
-		$data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
-
 		// Payment Method
 		if (!empty($order_info['payment_method'])) {
 			$data['payment_method_name'] = $order_info['payment_method']['name'];
@@ -950,12 +940,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_zone_id'] = 0;
 			$data['shipping_zone'] = '';
 			$data['shipping_custom_field'] = [];
-		}
-
-		if ($data['payment_country_id'] == $data['shipping_country_id']) {
-			$data['shipping_zones'] = $data['payment_zones'];
-		} else {
-			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 
 		// Shipping Method

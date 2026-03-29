@@ -18,6 +18,7 @@ use Twig\Node\Expression\Binary\NullCoalesceBinary;
 use Twig\Node\Expression\Test\DefinedTest;
 use Twig\Node\Expression\Test\NullTest;
 use Twig\Node\Expression\Unary\NotUnary;
+use Twig\Node\Expression\Variable\ContextVariable;
 use Twig\Node\Node;
 use Twig\TwigTest;
 
@@ -32,10 +33,10 @@ class NullCoalesceExpression extends ConditionalExpression
         trigger_deprecation('twig/twig', '3.17', \sprintf('"%s" is deprecated; use "%s" instead.', __CLASS__, NullCoalesceBinary::class));
 
         if (!$left instanceof AbstractExpression) {
-            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "left" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($left));
+            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "left" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, $left::class);
         }
         if (!$right instanceof AbstractExpression) {
-            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "right" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($right));
+            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "right" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, $right::class);
         }
 
         $test = new DefinedTest(clone $left, new TwigTest('defined'), new EmptyNode(), $left->getTemplateLine());
@@ -60,7 +61,7 @@ class NullCoalesceExpression extends ConditionalExpression
          * cases might be implemented as an optimizer node visitor, but has not been done
          * as benefits are probably not worth the added complexity.
          */
-        if ($this->getNode('expr2') instanceof NameExpression) {
+        if ($this->getNode('expr2') instanceof ContextVariable) {
             $this->getNode('expr2')->setAttribute('always_defined', true);
             $compiler
                 ->raw('((')

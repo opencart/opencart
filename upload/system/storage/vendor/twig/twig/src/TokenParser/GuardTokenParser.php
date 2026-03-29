@@ -26,15 +26,21 @@ final class GuardTokenParser extends AbstractTokenParser
     {
         $stream = $this->parser->getStream();
         $typeToken = $stream->expect(Token::NAME_TYPE);
-        if (!\in_array($typeToken->getValue(), ['function', 'filter', 'test'])) {
+        if (!\in_array($typeToken->getValue(), ['function', 'filter', 'test'], true)) {
             throw new SyntaxError(\sprintf('Supported guard types are function, filter and test, "%s" given.', $typeToken->getValue()), $typeToken->getLine(), $stream->getSourceContext());
         }
         $method = 'get'.$typeToken->getValue();
 
         $nameToken = $stream->expect(Token::NAME_TYPE);
+        $name = $nameToken->getValue();
+        if ('test' === $typeToken->getValue() && $stream->test(Token::NAME_TYPE)) {
+            // try 2-words tests
+            $name .= ' '.$stream->getCurrent()->getValue();
+            $stream->next();
+        }
 
         try {
-            $exists = null !== $this->parser->getEnvironment()->$method($nameToken->getValue());
+            $exists = null !== $this->parser->getEnvironment()->$method($name);
         } catch (SyntaxError) {
             $exists = false;
         }

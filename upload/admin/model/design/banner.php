@@ -82,26 +82,6 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Status
-	 *
-	 * Edit banner status record in the database.
-	 *
-	 * @param int  $banner_id primary key of the banner record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/category');
-	 *
-	 * $this->model_catalog_category->editStatus($category_id, $status);
-	 */
-	public function editStatus(int $banner_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "banner` SET `status` = '" . (bool)$status . "' WHERE `banner_id` = '" . (int)$banner_id . "'");
-	}
-
-	/**
 	 * Delete Banner
 	 *
 	 * Delete banner record in the database.
@@ -303,15 +283,15 @@ class Banner extends \Opencart\System\Engine\Model {
 	 * $banner_images = $this->model_design_banner->getImages($banner_id);
 	 */
 	public function getImages(int $banner_id): array {
-		$image_data = [];
+		$banner_image_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "' ORDER BY `sort_order` ASC");
+		$banner_image_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "' ORDER BY `sort_order` ASC");
 
-		foreach ($query->rows as $result) {
-			$image_data[$result['language_id']] = $result;
+		foreach ($banner_image_query->rows as $banner_image) {
+			$banner_image_data[$banner_image['language_id']][] = $banner_image;
 		}
 
-		return $image_data;
+		return $banner_image_data;
 	}
 
 	/**

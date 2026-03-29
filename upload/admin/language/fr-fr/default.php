@@ -166,19 +166,7 @@ $_['error_upload_8']                = 'Avertissement: Téléversement de fichier
 $_['error_upload_999']              = 'Avertissement: Aucun code d\'erreur disponible!';
 $_['error_upload_size']             = 'Avertissement: Le fichier téléversé dépasse la taille maximale autorisée de %s Mo!';
 $_['error_curl']                    = 'CURL: Code d\'Erreur(%s): %s';
-$_['error_session']                 = 'Attention: La session a expirée, veuillez soumettre à nouveau le formulaire!';
 $_['error_format_b']                = 'Avertissement: Le fichier téléversé dépasse la taille maximale: %s octets!';
 $_['error_format_kb']               = 'Avertissement: Le fichier téléversé dépasse la taille maximale: %s kilooctets!';
 $_['error_format_mb']               = 'Avertissement: Le fichier téléversé dépasse la taille maximale: %s mégaoctets!';
 $_['error_format_gb']               = 'Avertissement: Le fichier téléversé dépasse la taille maximale: %s gigaoctets!';
-
-// Erreurs Zip
-$_['error_zip_exists']              = 'Le fichier existe déjà!';
-$_['error_zip_incons']              = 'Le fichier Zip est incohérent!';
-$_['error_zip_inval']               = 'L\'argument est invalide!';
-$_['error_zip_memory']              = 'Échec d\'allocation de mémoire!';
-$_['error_zip_noent']               = 'Aucun fichier de ce type!';
-$_['error_zip_nozip']               = 'Ce n\'est pas une archive Zip!';
-$_['error_zip_open']                = 'Impossible d\'ouvrir le fichier!';
-$_['error_zip_read']                = 'Erreur de lecture!';
-$_['error_zip_seek']                = 'Erreur de recherche!';

@@ -42,7 +42,7 @@ class Newsletter extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('account/newsletter.save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
-		$data['newsletter'] = (int)$this->customer->getNewsletter();
+		$data['newsletter'] = $this->customer->getNewsletter();
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

@@ -21,7 +21,10 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <x-switch name="report_sale_order_status" value="1" checked="{{ report_sale_order_status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="report_sale_order_status" value="0"/>
+                <input type="checkbox" name="report_sale_order_status" value="1" id="input-status" class="form-check-input"{% if report_sale_order_status %} checked{% endif %}/>
+              </div>
             </div>
           </div>
           <div class="row mb-3">

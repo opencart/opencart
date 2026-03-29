@@ -23,5 +23,5 @@ $_['text_zone']       = 'Région / État';
 $_['text_history']    = 'Historique des connexions';
 $_['text_ip']         = 'IP';
 $_['text_date_added'] = 'Date d\'ajout';
-$_['text_contact']    = 'Pour plus d\'informations, vous pouvez contacter le propriétaire du magasin ici:';
+$_['text_contact']    = 'Pour plus d\'informations, vous pouvez contacter le propriétaire de la boutique ici:';
 $_['text_thanks']     = 'Merci,';

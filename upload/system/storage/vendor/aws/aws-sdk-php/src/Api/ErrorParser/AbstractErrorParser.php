@@ -60,7 +60,9 @@ abstract class AbstractErrorParser
                 foreach ($errors as $key => $error) {
 
                     // If error code matches a known error shape, populate the body
-                    if ($this->errorCodeMatches($data, $error)) {
+                    if ($data['code'] == $error['name']
+                        && $error instanceof StructureShape
+                    ) {
                         $modeledError = $error;
                         $data['body'] = $this->extractPayload(
                             $modeledError,
@@ -89,11 +91,5 @@ abstract class AbstractErrorParser
         }
 
         return $data;
-    }
-
-    private function errorCodeMatches(array $data, $error): bool
-    {
-        return $data['code'] == $error['name']
-            || (isset($error['error']['code']) && $data['code'] === $error['error']['code']);
     }
 }

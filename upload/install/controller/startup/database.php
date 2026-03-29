@@ -49,19 +49,7 @@ class Database extends \Opencart\System\Engine\Controller {
 				$port = ini_get('mysqli.default_port');
 			}
 
-			$option = [
-				'engine'   => DB_DRIVER, // mysqli, pdo or pgsql
-				'hostname' => DB_HOSTNAME,
-				'username' => DB_USERNAME,
-				'password' => DB_PASSWORD,
-				'database' => DB_DATABASE,
-				'port'     => DB_PORT,
-				'ssl_key'  => $db_ssl_key,
-				'ssl_cert' => $db_ssl_cert,
-				'ssl_ca'   => $db_ssl_ca
-			];
-
-			$this->registry->set('db', new \Opencart\System\Library\DB($option));
+			$this->registry->set('db', new \Opencart\System\Library\DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port, $db_ssl_key, $db_ssl_cert, $db_ssl_ca));
 		}
 	}
 }

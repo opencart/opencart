@@ -16,8 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
-        "ext-iconv": "*"
+        "php": ">=7.2"
     },
     "provide": {
         "ext-mbstring": "*"

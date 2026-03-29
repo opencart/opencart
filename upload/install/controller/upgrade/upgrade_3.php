@@ -3,8 +3,6 @@ namespace Opencart\Install\Controller\Upgrade;
 /**
  * Class Upgrade3
  *
- * Extract the contents of the upgrade zip file to the correct locations.
- *
  * @package Opencart\Install\Controller\Upgrade
  */
 class Upgrade3 extends \Opencart\System\Engine\Controller {
@@ -18,118 +16,182 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
-		} else {
-			$version = '';
-		}
+		// It makes mass changes to the DB by creating tables that are not in the current db, changes the charset and DB engine to the SQL schema.
+		try {
+			// Structure
+			$this->load->helper('db_schema');
 
-		if (isset($this->request->get['admin'])) {
-			$admin = basename($this->request->get['admin']);
-		} else {
-			$admin = 'admin';
-		}
+			$tables = oc_db_schema();
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
+			// Clear any old db foreign key constraints
+			/*
+			foreach ($tables as $table) {
+				$foreign_query = $this->db->query("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "' AND CONSTRAINT_TYPE = 'FOREIGN KEY'");
 
-		$file = DIR_OPENCART . 'config.php';
-
-		if (is_file($file)) {
-			$config = [];
-
-			$lines = file($file);
-
-			foreach ($lines as $number => $line) {
-				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
-					$config[$match[1][0]] = $match[2][0];
+				foreach ($foreign_query->rows as $foreign) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP FOREIGN KEY `" . $foreign['CONSTRAINT_NAME'] . "`");
 				}
 			}
-		} else {
-			$json['error'] = $this->language->get('error_file');
-		}
+			*/
 
-		$total = 0;
-		$limit = 200;
+			foreach ($tables as $table) {
+				$table_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "'");
 
-		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
+				if (!$table_query->num_rows) {
+					$sql = "CREATE TABLE `" . DB_PREFIX . $table['name'] . "` (" . "\n";
 
-		if (is_file($file)) {
-			// Unzip the files
-			$zip = new \ZipArchive();
+					foreach ($table['field'] as $field) {
+						$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $this->db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
+					}
 
-			if ($zip->open($file, \ZipArchive::RDONLY)) {
-				$total = $zip->numFiles;
+					if (isset($table['primary'])) {
+						$primary_data = [];
 
-				$start = ($page - 1) * $limit;
-				$end = $start > ($total - $limit) ? $total : ($start + $limit);
+						foreach ($table['primary'] as $primary) {
+							$primary_data[] = "`" . $primary . "`";
+						}
 
-				$remove = 'opencart-' . $version . '/upload/';
+						$sql .= " PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
+					}
 
-				// Check if any of the files already exist.
-				for ($i = $start; $i < $end; $i++) {
-					$source = $zip->getNameIndex($i);
+					if (isset($table['index'])) {
+						foreach ($table['index'] as $index) {
+							$index_data = [];
 
-					if (substr($source, 0, strlen($remove)) == $remove) {
-						// Only extract the contents of the upload folder
-						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
-
-						if (substr($destination, 0, 8) != 'install/') {
-							// Default copy location
-							$base = DIR_OPENCART;
-
-							// Fixes admin folder being under a different name
-							if (substr($destination, 0, 6) == 'admin/') {
-								$destination = $admin . '/' . substr($destination, 6);
+							foreach ($index['key'] as $key) {
+								$index_data[] = "`" . $key . "`";
 							}
 
-							// We need to use a different path for vendor folders.
-							if (substr($destination, 0, 15) == 'system/storage/' && isset($config['DIR_STORAGE'])) {
-								$destination = substr($destination, 15);
-								$base = $config['DIR_STORAGE'];
-							}
-
-							// Default copy location
-							$path = '';
-
-							// Must have a path before files can be moved
-							$directories = explode('/', dirname($destination));
-
-							foreach ($directories as $directory) {
-								if (!$path) {
-									$path = $directory;
-								} else {
-									$path = $path . '/' . $directory;
-								}
-
-								if (!is_dir($base . $path) && !@mkdir($base . $path, 0777)) {
-									$json['error'] = sprintf($this->language->get('error_directory'), $path);
-								}
-							}
-
-							// Check if the path is not directory, and check there is no existing file
-							if (substr($destination, -1) != '/' && !is_dir($base . $destination)) {
-								if (is_file($base . $destination)) {
-									unlink($base . $destination);
-								}
-
-								if (file_put_contents($base . $destination, $zip->getFromIndex($i)) === false) {
-									$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
-								}
-							}
+							$sql .= " KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
 						}
 					}
-				}
 
-				$zip->close();
+					$sql = rtrim($sql, ",\n") . "\n";
+					$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
+
+					$this->db->query($sql);
+				} else {
+					for ($i = 0; $i < count($table['field']); $i++) {
+						$sql = "ALTER TABLE `" . DB_PREFIX . $table['name'] . "`";
+
+						$field_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "' AND COLUMN_NAME = '" . $table['field'][$i]['name'] . "'");
+
+						if (!$field_query->num_rows) {
+							$sql .= " ADD";
+						} else {
+							$sql .= " MODIFY";
+						}
+
+						$sql .= " `" . $table['field'][$i]['name'] . "` " . $table['field'][$i]['type'];
+
+						if (!empty($table['field'][$i]['not_null'])) {
+							$sql .= " NOT NULL";
+						}
+
+						if (isset($table['field'][$i]['default'])) {
+							$sql .= " DEFAULT '" . $table['field'][$i]['default'] . "'";
+						}
+
+						if (!isset($table['field'][$i - 1])) {
+							$sql .= " FIRST";
+						} else {
+							$sql .= " AFTER `" . $table['field'][$i - 1]['name'] . "`";
+						}
+
+						$this->db->query($sql);
+					}
+
+					$keys = [];
+
+					// Remove all primary keys and indexes
+					$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
+
+					foreach ($query->rows as $result) {
+						if ($result['Key_name'] == 'PRIMARY') {
+							// We need to remove the AUTO_INCREMENT
+							$field_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "' AND COLUMN_NAME = '" . $result['Column_name'] . "'");
+
+							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` MODIFY `" . $result['Column_name'] . "` " . $field_query->row['COLUMN_TYPE'] . " NOT NULL");
+						}
+
+						if (!in_array($result['Key_name'], $keys)) {
+							// Remove indexes below
+							$keys[] = $result['Key_name'];
+						}
+					}
+
+					foreach ($keys as $key) {
+						if ($key == 'PRIMARY') {
+							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY");
+						} else {
+							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $key . "`");
+						}
+					}
+
+					// Primary Key
+					if (isset($table['primary'])) {
+						$primary_data = [];
+
+						foreach ($table['primary'] as $primary) {
+							$primary_data[] = "`" . $primary . "`";
+						}
+
+						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ADD PRIMARY KEY(" . implode(",", $primary_data) . ")");
+					}
+
+					for ($i = 0; $i < count($table['field']); $i++) {
+						if (isset($table['field'][$i]['auto_increment'])) {
+							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` MODIFY `" . $table['field'][$i]['name'] . "` " . $table['field'][$i]['type'] . " AUTO_INCREMENT");
+						}
+					}
+
+					// Indexes
+					if (isset($table['index'])) {
+						foreach ($table['index'] as $index) {
+							$index_data = [];
+
+							foreach ($index['key'] as $key) {
+								$index_data[] = "`" . $key . "`";
+							}
+
+							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ADD INDEX `" . $index['name'] . "` (" . implode(",", $index_data) . ")");
+						}
+					}
+
+					// DB Engine
+					if (isset($table['engine'])) {
+						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ENGINE = `" . $table['engine'] . "`");
+					}
+
+					// Charset
+					if (isset($table['charset'])) {
+						$sql = "ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DEFAULT CHARACTER SET `" . $table['charset'] . "`";
+
+						if (isset($table['collate'])) {
+							$sql .= " COLLATE `" . $table['collate'] . "`";
+						}
+
+						$this->db->query($sql);
+					}
+				}
 			}
+
+			/*
+			// Setup foreign keys
+			foreach ($tables as $table) {
+				if (isset($table['foreign'])) {
+					foreach ($table['foreign'] as $foreign) {
+						//$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ADD FOREIGN KEY (`" . $foreign['key'] . "`) REFERENCES `" . DB_PREFIX . $foreign['table'] . "` (`" . $foreign['field'] . "`)");
+					}
+				}
+			}
+			*/
+		} catch (\ErrorException $exception) {
+			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 3, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['text'] = sprintf($this->language->get('text_patch'), 3, 3, 11);
 
 			$url = '';
 
@@ -141,15 +203,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			if (($page * $limit) <= $total) {
-				$json['next'] = $this->url->link('upgrade/upgrade_3', $url . '&page=' . ($page + 1), true);
-			} else {
-				$json['next'] = $this->url->link('upgrade/upgrade_4', $url, true);
-
-				if (is_file($file)) {
-					unlink($file);
-				}
-			}
+			$json['next'] = $this->url->link('upgrade/upgrade_4', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

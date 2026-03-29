@@ -30,11 +30,11 @@ class Proxy {
 	 * @return mixed
 	 */
 	public function &__get(string $key) {
-		if (!isset($this->data[$key])) {
+		if (isset($this->data[$key])) {
+			return $this->data[$key];
+		} else {
 			throw new \Exception('Error: Could not call proxy key ' . $key . '!');
 		}
-
-		return $this->data[$key];
 	}
 
 	/**

@@ -17,7 +17,7 @@
             <td class="text-start">{{ marketing.code }}</td>
             <td class="text-end">{{ marketing.clicks }}</td>
             <td class="text-end">{{ marketing.orders }}</td>
-            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ marketing.total }}"></x-currency></td>
+            <td class="text-end">{{ marketing.total }}</td>
           </tr>
         {% endfor %}
       {% else %}

@@ -3,9 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-affiliate" formaction="{{ save }}" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
-      </div>
+        <button type="submit" form="form-affiliate" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -29,13 +28,13 @@
             <div id="tab-general" class="tab-pane active">
               <fieldset>
                 <legend>{{ text_affiliate }}</legend>
-                <div class="row mb-3">
+                <div class="row mb-3 required" class="tab-pane active">
                   <label for="input-customer" class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control"{% if customer_id %} disabled{% endif %} required autocomplete="off"/>
+                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/> <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control"{% if customer_id %} disabled{% endif %} autocomplete="off"/>
                     <ul id="autocomplete-customer" class="dropdown-menu"></ul>
                     <div id="error-customer" class="invalid-feedback"></div>
-                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/> <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
                   </div>
                 </div>
 
@@ -53,10 +52,10 @@
                   </div>
                 </div>
 
-                <div class="row mb-3">
+                <div class="row mb-3 required">
                   <label for="input-tracking" class="col-sm-2 col-form-label">{{ entry_tracking }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="tracking" value="{{ tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control" required/>
+                    <input type="text" name="tracking" value="{{ tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
                     <div class="form-text">{{ help_tracking }}</div>
                     <div id="error-tracking" class="invalid-feedback"></div>
                   </div>
@@ -69,7 +68,6 @@
                     <div class="form-text">{{ help_commission }}</div>
                   </div>
                 </div>
-
 
                 {% for custom_field in custom_fields %}
                   {% if custom_field.location == 'affiliate' %}
@@ -149,7 +147,7 @@
                             <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
                             <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
                             <button type="button" data-oc-toggle="download" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not affiliate_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i> {{ button_download }}</button>
-                            <button type="button" data-oc-toggle="clear" title="{{ button_clear }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not affiliate_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
+                            <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not affiliate_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
                           </div>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                         </div>
@@ -188,13 +186,6 @@
 
                   {% endif %}
                 {% endfor %}
-
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
-                  <div class="col-sm-10">
-                    <x-switch name="status" value="1" checked="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
-                  </div>
-                </div>
               </fieldset>
               <fieldset>
                 <legend>{{ text_payment }}</legend>
@@ -208,18 +199,84 @@
                   <label class="col-sm-2 col-form-label">{{ entry_payment_method }}</label>
                   <div class="col-sm-10">
                     <div class="form-check">
-                      <input type="radio" name="payment_method" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment_method == 'cheque' %} checked{% endif %}/> <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
+                      <input type="radio" name="payment_method" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment_method == 'cheque' %} checked{% endif %}/>
+                      <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
                     </div>
                     <div class="form-check">
-                      <input type="radio" name="payment_method" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment_method == 'paypal' %} checked{% endif %}/> <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
+                      <input type="radio" name="payment_method" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment_method == 'paypal' %} checked{% endif %}/>
+                      <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
                     </div>
                     <div class="form-check">
-                      <input type="radio" name="payment_method" value="bank" id="input-payment-bank" class="form-check-input"{% if payment_method == 'bank' %} checked{% endif %}/> <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
+                      <input type="radio" name="payment_method" value="bank" id="input-payment-bank" class="form-check-input"{% if payment_method == 'bank' %} checked{% endif %}/>
+                      <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
                     </div>
                     <div id="error-payment-method" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div id="payment-method"></div>
+                <div id="payment-cheque" class="payment">
+                  <div class="row mb-3 required">
+                    <label for="input-cheque" class="col-sm-2 col-form-label">{{ entry_cheque }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control"/>
+                      <div id="error-cheque" class="invalid-feedback"></div>
+                    </div>
+                  </div>
+                </div>
+                <div id="payment-paypal" class="payment">
+                  <div class="row mb-3 required">
+                    <label for="input-paypal" class="col-sm-2 col-form-label">{{ entry_paypal }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control"/>
+                      <div id="error-paypal" class="invalid-feedback"></div>
+                    </div>
+                  </div>
+                </div>
+                <div id="payment-bank" class="payment">
+                  <div class="row mb-3">
+                    <label for="input-bank-name" class="col-sm-2 col-form-label">{{ entry_bank_name }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_name" value="{{ bank_name }}" placeholder="{{ entry_bank_name }}" id="input-bank-name" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input-bank-branch-number" class="col-sm-2 col-form-label">{{ entry_bank_branch_number }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_branch_number" value="{{ bank_branch_number }}" placeholder="{{ entry_bank_branch_number }}" id="input-bank-branch-number" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input-bank-swift-code" class="col-sm-2 col-form-label">{{ entry_bank_swift_code }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="row mb-3 required">
+                    <label for="input-bank-account-name" class="col-sm-2 col-form-label">{{ entry_bank_account_name }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control"/>
+                      <div id="error-bank-account-name" class="invalid-feedback"></div>
+                    </div>
+                  </div>
+                  <div class="row mb-3 required">
+                    <label for="input-bank-account-number" class="col-sm-2 col-form-label">{{ entry_bank_account_number }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control"/>
+                      <div id="error-bank-account-number" class="invalid-feedback"></div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_other }}</legend>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="status" value="0"/>
+                      <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                    </div>
+                  </div>
+                </div>
               </fieldset>
             </div>
             <div id="tab-history" class="tab-pane">
@@ -278,57 +335,154 @@
     </div>
   </div>
 </div>
-<template id="template-cheque">
-  <div class="row mb-3">
-    <label for="input-cheque" class="col-sm-2 col-form-label">{{ entry_cheque }}</label>
-    <div class="col-sm-10">
-      <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control" required/>
-      <div id="error-cheque" class="invalid-feedback"></div>
-    </div>
-  </div>
-</template>
-<template id="template-paypal">
-  <div class="row mb-3">
-    <label for="input-paypal" class="col-sm-2 col-form-label">{{ entry_paypal }}</label>
-    <div class="col-sm-10">
-      <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control" required/>
-      <div id="error-paypal" class="invalid-feedback"></div>
-    </div>
-  </div>
-</template>
-<template id="template-bank">
-  <div class="row mb-3">
-    <label for="input-bank-name" class="col-sm-2 col-form-label">{{ entry_bank_name }}</label>
-    <div class="col-sm-10">
-      <input type="text" name="bank_name" value="{{ bank_name }}" placeholder="{{ entry_bank_name }}" id="input-bank-name" class="form-control"/>
-    </div>
-  </div>
-  <div class="row mb-3">
-    <label for="input-bank-branch-number" class="col-sm-2 col-form-label">{{ entry_bank_branch_number }}</label>
-    <div class="col-sm-10">
-      <input type="text" name="bank_branch_number" value="{{ bank_branch_number }}" placeholder="{{ entry_bank_branch_number }}" id="input-bank-branch-number" class="form-control"/>
-    </div>
-  </div>
-  <div class="row mb-3">
-    <label for="input-bank-swift-code" class="col-sm-2 col-form-label">{{ entry_bank_swift_code }}</label>
-    <div class="col-sm-10">
-      <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control"/>
-    </div>
-  </div>
-  <div class="row mb-3">
-    <label for="input-bank-account-name" class="col-sm-2 col-form-label">{{ entry_bank_account_name }}</label>
-    <div class="col-sm-10">
-      <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control" required/>
-      <div id="error-bank-account-name" class="invalid-feedback"></div>
-    </div>
-  </div>
-  <div class="row mb-3">
-    <label for="input-bank-account-number" class="col-sm-2 col-form-label">{{ entry_bank_account_number }}</label>
-    <div class="col-sm-10">
-      <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control" required/>
-      <div id="error-bank-account-number" class="invalid-feedback"></div>
-    </div>
-  </div>
-</template>
-<script type="text/javascript" src="view/javascript/affiliate.js"></script>
+<script type="text/javascript"><!--
+$('#input-customer').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        category: item['customer_group'],
+                        label: item['name'],
+                        value: item['customer_id'],
+                        customer_group_id: item['customer_group_id'],
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-customer').val(decodeHTMLEntities(item['label']));
+        $('#input-customer-id').val(item['value']);
+        $('#input-customer-group').val(item['customer_group_id']);
+
+        $('#input-customer-group').trigger('change');
+    }
+});
+
+$('#input-customer-group').on('change', function() {
+    $.ajax({
+        url: 'index.php?route=customer/customer.customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
+        dataType: 'json',
+        success: function(json) {
+            $('.custom-field').hide();
+            $('.custom-field').removeClass('required');
+
+            for (i = 0; i < json.length; i++) {
+                custom_field = json[i];
+
+                $('.custom-field-' + custom_field['custom_field_id']).show();
+
+                if (custom_field['required']) {
+                    $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#input-customer-group').trigger('change');
+
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+
+$('#button-history').on('click', function(e) {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=customer/customer.addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        type: 'post',
+        dataType: 'json',
+        data: 'comment=' + encodeURIComponent($('#input-history').val()),
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#history').load('index.php?route=customer/customer.history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+
+                $('#input-history').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#transaction').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#transaction').load(this.href);
+});
+
+$('#button-transaction').on('click', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=customer/customer.addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        type: 'post',
+        dataType: 'json',
+        data: 'description=' + encodeURIComponent($('#input-transaction').val()) + '&amount=' + encodeURIComponent($('#input-amount').val()),
+        beforeSend: function() {
+            $('#button-transaction').button('loading');
+        },
+        complete: function() {
+            $('#button-transaction').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#transaction').load('index.php?route=customer/customer.transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+
+                $('#input-transaction').val('');
+                $('#input-amount').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#report').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#report').load(this.href);
+});
+
+$('input[name=\'payment_method\']').on('change', function() {
+    $('.payment').hide();
+
+    $('#payment-' + this.value).show();
+});
+
+$('input[name=\'payment_method\']:checked').trigger('change');
+//--></script>
 {{ footer }}

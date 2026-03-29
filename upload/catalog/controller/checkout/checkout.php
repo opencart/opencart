@@ -21,8 +21,6 @@ class Checkout extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/checkout.js');
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [

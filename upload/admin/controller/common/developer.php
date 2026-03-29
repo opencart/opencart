@@ -16,17 +16,19 @@ class Developer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/developer');
 
+		$data['developer_sass'] = $this->config->get('developer_sass');
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('common/developer', $data));
 	}
 
 	/**
-	 * HTML
+	 * Edit
 	 *
 	 * @return void
 	 */
-	public function html(): void {
+	public function edit(): void {
 		$this->load->language('common/developer');
 
 		$json = [];
@@ -36,13 +38,12 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = oc_directory_read(DIR_CATALOG . 'view/html/');
+			// Setting
+			$this->load->model('setting/setting');
 
-			foreach ($files as $file) {
-				oc_directory_delete($file);
-			}
+			$this->model_setting_setting->editSetting('developer', $this->request->post, 0);
 
-			$json['success'] = $this->language->get('text_html_success');
+			$json['success'] = $this->language->get('text_developer_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -64,11 +65,13 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = oc_directory_read(DIR_CACHE);
+			$files = glob(DIR_CACHE . 'cache.*');
 
-			foreach ($files as $file) {
-				if (str_starts_with(basename($file), 'cache.') && is_file($file)) {
-					oc_file_delete($file);
+			if ($files) {
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					}
 				}
 			}
 
@@ -94,12 +97,20 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$directories = oc_directory_read(DIR_CACHE . 'template/');
+			$directories = glob(DIR_CACHE . 'template/*', GLOB_ONLYDIR);
 
 			if ($directories) {
 				foreach ($directories as $directory) {
+					$files = glob($directory . '/*');
+
+					foreach ($files as $file) {
+						if (is_file($file)) {
+							unlink($file);
+						}
+					}
+
 					if (is_dir($directory)) {
-						oc_directory_delete($directory);
+						rmdir($directory);
 					}
 				}
 			}
@@ -112,13 +123,11 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * SASS Catalog
-	 *
-	 * Generate catalog SASS file.
+	 * Sass
 	 *
 	 * @return void
 	 */
-	public function sass_catalog(): void {
+	public function sass(): void {
 		$this->load->language('common/developer');
 
 		$json = [];
@@ -127,65 +136,35 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$file = DIR_CATALOG . 'view/sass/stylesheet.scss';
-
-		if (!is_file($file)) {
-			$json['error'] = sprintf($this->language->get('error_file'), $file);
-		}
-
 		if (!$json) {
-			$task_data = [
-				'code'   => 'sass',
-				'action' => 'task/catalog/sass',
-				'args'   => []
-			];
+			// Before we delete we need to make sure there is a sass file to regenerate the css
+			$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
 
-			$this->load->model('setting/task');
+			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/scss/bootstrap.scss')) {
+				unlink($file);
+			}
 
-			$this->model_setting_task->addTask($task_data);
+			$files = glob(DIR_CATALOG . 'view/theme/*/stylesheet/scss/bootstrap.scss');
 
-			$json['success'] = $this->language->get('text_sass_catalog_success');
-		}
+			foreach ($files as $file) {
+				$file = substr($file, 0, -20) . '/bootstrap.css';
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
+				if (is_file($file)) {
+					unlink($file);
+				}
+			}
 
-	/**
-	 * SASS Admin
-	 *
-	 * Generate admin SASS file.
-	 *
-	 * @return void
-	 */
-	public function sass_admin(): void {
-		$this->load->language('common/developer');
+			$files = glob(DIR_CATALOG . 'view/theme/*/stylesheet/stylesheet.scss');
 
-		$json = [];
+			foreach ($files as $file) {
+				$file = substr($file, 0, -16) . '/stylesheet.css';
 
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+				if (is_file($file)) {
+					unlink($file);
+				}
+			}
 
-		// Before we delete we need to make sure there is a sass file to regenerate the css
-		$file = DIR_APPLICATION . 'view/sass/stylesheet.scss';
-
-		if (!is_file($file)) {
-			$json['error'] = sprintf($this->language->get('error_file'), $file);
-		}
-
-		if (!$json) {
-			$task_data = [
-				'code'   => 'sass',
-				'action' => 'task/admin/sass',
-				'args'   => []
-			];
-
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
-
-			$json['success'] = $this->language->get('text_sass_admin_success');
+			$json['success'] = $this->language->get('text_sass_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -25,7 +25,7 @@ class Total extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/total\/.+\.php$/');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/total/*.php');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');
@@ -33,7 +33,7 @@ class Total extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');

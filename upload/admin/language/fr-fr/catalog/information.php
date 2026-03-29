@@ -8,8 +8,6 @@ $_['text_list']               = 'Liste des Informations';
 $_['text_add']                = 'Ajouter des Informations';
 $_['text_edit']               = 'Modifier les Informations';
 $_['text_default']            = 'Par Défaut';
-$_['text_general']            = 'Général';
-$_['text_meta']               = 'Balises Meta';
 $_['text_keyword']            = 'N\'utilisez pas d\'espaces, remplacez plutôt les espaces par - et assurez-vous que l\'URL SEO soit unique à l\'échelle mondiale.';
 
 // Colonne

@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <a href="{{ add }}" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-        <button type="submit" form="form-seo-url" formaction="{{ delete }}" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <button type="submit" form="form-seo-url" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -34,6 +34,7 @@
               <div class="mb-3">
                 <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
                   <option value=""></option>
+                  <option value="0"{% if filter_store_id == '0' %} selected{% endif %}>{{ text_default }}</option>
                   {% for store in stores %}
                     <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>
                   {% endfor %}
@@ -48,8 +49,8 @@
                 </select>
               </div>
               <div class="text-end">
-                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
-                <button type="reset" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
           </div>
@@ -58,21 +59,55 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="list" class="card-body">{{ list }}</div>
+          <div id="seo-url" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#form-filter').on('submit', function(e) {
+$('#seo-url').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    let url = $(this).serialize();
+    $('#seo-url').load(this.href);
+});
 
-    window.history.pushState({}, null, 'index.php?route=design/seo_url&user_token={{ user_token }}&' + url);
+$('#button-filter').on('click', function() {
+    var url = '';
 
-    $('#list').load('index.php?route=design/seo_url.list&user_token={{ user_token }}&' + url);
+    var filter_keyword = $('#input-keyword').val();
+
+    if (filter_keyword) {
+        url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
+    }
+
+    var filter_key = $('#input-key').val();
+
+    if (filter_key) {
+        url += '&filter_key=' + encodeURIComponent(filter_key);
+    }
+
+    var filter_value = $('#input-value').val();
+
+    if (filter_value) {
+        url += '&filter_value=' + encodeURIComponent(filter_value);
+    }
+
+    var filter_store_id = $('#input-store').val();
+
+    if (filter_store_id) {
+        url += '&filter_store_id=' + filter_store_id;
+    }
+
+    var filter_language_id = $('#input-language').val();
+
+    if (filter_language_id) {
+        url += '&filter_language_id=' + filter_language_id;
+    }
+
+    window.history.pushState({}, null, 'index.php?route=design/seo_url&user_token={{ user_token }}' + url);
+
+    $('#seo-url').load('index.php?route=design/seo_url.list&user_token={{ user_token }}' + url);
 });
 //--></script>
 {{ footer }}

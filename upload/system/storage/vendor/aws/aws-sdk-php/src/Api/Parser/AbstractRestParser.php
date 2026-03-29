@@ -55,9 +55,8 @@ abstract class AbstractRestParser extends AbstractParser
             }
         }
 
-        $body = $response->getBody();
         if (!$payload
-            && (!$body->isSeekable() || $body->getSize())
+            && $response->getBody()->getSize() > 0
             && count($output->getMembers()) > 0
         ) {
             // if no payload was found, then parse the contents of the body
@@ -74,26 +73,20 @@ abstract class AbstractRestParser extends AbstractParser
         array &$result
     ) {
         $member = $output->getMember($payload);
-        $body = $response->getBody();
 
         if (!empty($member['eventstream'])) {
             $result[$payload] = new EventParsingIterator(
-                $body,
+                $response->getBody(),
                 $member,
                 $this
             );
-        } elseif ($member instanceof StructureShape) {
-            //Unions must have at least one member set to a non-null value
-            // If the body is empty, we can assume it is unset
-            if (!empty($member['union']) && ($body->isSeekable() && !$body->getSize())) {
-                return;
-            }
-
+        } else if ($member instanceof StructureShape) {
+            // Structure members parse top-level data into a specific key.
             $result[$payload] = [];
             $this->payload($response, $member, $result[$payload]);
         } else {
-            // Always set the payload to the body stream, regardless of content
-            $result[$payload] = $body;
+            // Streaming data is just the stream from the response body.
+            $result[$payload] = $response->getBody();
         }
     }
 
@@ -107,21 +100,13 @@ abstract class AbstractRestParser extends AbstractParser
         &$result
     ) {
         $value = $response->getHeaderLine($shape['locationName'] ?: $name);
-        // Empty headers should not be deserialized
-        if ($value === null || $value === '') {
-            return;
-        }
 
         switch ($shape->getType()) {
             case 'float':
             case 'double':
-                $value = match ($value) {
-                    'NaN', 'Infinity', '-Infinity' => $value,
-                    default => (float) $value
-                };
+                $value = (float) $value;
                 break;
             case 'long':
-            case 'integer':
                 $value = (int) $value;
                 break;
             case 'boolean':
@@ -158,23 +143,6 @@ abstract class AbstractRestParser extends AbstractParser
                     //output structure.
                     return;
                 }
-            case 'list':
-                $listMember = $shape->getMember();
-                $type = $listMember->getType();
-
-                // Only boolean lists require special handling
-                // other types can be returned as-is
-                if ($type !== 'boolean') {
-                    break;
-                }
-
-                $items = array_map('trim', explode(',', $value));
-                $value = array_map(
-                    static fn($item) => filter_var($item, FILTER_VALIDATE_BOOLEAN),
-                    $items
-                );
-
-                break;
         }
 
         $result[$name] = $value;

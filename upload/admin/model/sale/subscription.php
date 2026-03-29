@@ -161,11 +161,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * $filter_data = [
 	 *     'filter_subscription_id'        => 1,
 	 *     'filter_order_id'               => 1,
-	 *     'filter_order_product_id'       => 1,
-	 *     'filter_customer_payment_id'    => 1,
-	 *     'filter_customer_id'            => 1,
 	 *     'filter_customer'               => 'John Doe',
-	 *     'filter_date_next'              => '2022-01-01',
 	 *     'filter_subscription_status_id' => 1,
 	 *     'filter_date_from'              => '2021-01-01',
 	 *     'filter_date_to'                => '2021-01-31',
@@ -229,16 +225,16 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'subscription_id'     => 's.subscription_id',
-			'order_id'            => 's.order_id',
-			'reference'           => 's.reference',
-			'customer'            => 'customer',
-			'subscription_status' => 's.subscription_status',
-			'date_added'          => 's.date_added'
+			's.subscription_id',
+			's.order_id',
+			's.reference',
+			'customer',
+			's.subscription_status',
+			's.date_added'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `s`.`subscription_id`";
 		}
@@ -280,14 +276,14 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * $filter_data = [
 	 *     'filter_subscription_id'        => 1,
 	 *     'filter_order_id'               => 1,
-	 *     'filter_order_product_id'       => 1,
-	 *     'filter_customer_payment_id'    => 1,
-	 *     'filter_customer_id'            => 1,
 	 *     'filter_customer'               => 'John Doe',
-	 *     'filter_date_next'              => '2022-01-01',
 	 *     'filter_subscription_status_id' => 1,
 	 *     'filter_date_from'              => '2021-01-01',
 	 *     'filter_date_to'                => '2021-01-31',
+	 *     'order'                         => 's.subscription_id',
+	 *     'sort'                          => 'DESC',
+	 *     'start'                         => 0,
+	 *     'limit'                         => 10
 	 * ];
 	 *
 	 * $this->load->model('sale/subscription');
@@ -307,24 +303,12 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
-		if (!empty($data['filter_order_product_id'])) {
-			$implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
-		}
-
-		if (!empty($data['filter_customer_payment_id'])) {
-			$implode[] = "`s`.`customer_payment_id` = " . (int)$data['filter_customer_payment_id'];
-		}
-
 		if (!empty($data['filter_customer_id'])) {
 			$implode[] = "`s`.`customer_id` = " . (int)$data['filter_customer_id'];
 		}
 
 		if (!empty($data['filter_customer'])) {
 			$implode[] = "LCASE(CONCAT(`o`.`firstname`, ' ', `o`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_date_next'])) {
-			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape((string)$data['filter_date_next']) . "')";
 		}
 
 		if (!empty($data['filter_subscription_status_id'])) {
@@ -435,8 +419,10 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the subscription option records in the database.
 	 *
-	 * @param  int  $subscription_id  primary key of the subscription record
-	 * @param  int  $subscription_product_id  primary key of the subscription product record
+	 * @param int $subscription_id         primary key of the subscription record
+	 * @param int $subscription_product_id primary key of the subscription product record
+	 * @param int $order_id                primary key of the order record
+	 * @param int $order_product_id        primary key of the order product record
 	 *
 	 * @return array<int, array<string, mixed>> option records that have subscription ID, subscription product ID
 	 *

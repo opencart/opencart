@@ -46,7 +46,6 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			$this->customer->logout();
 
-			unset($this->session->data['order_id']);
 			unset($this->session->data['customer']);
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
@@ -55,6 +54,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['comment']);
+			unset($this->session->data['order_id']);
 			unset($this->session->data['coupon']);
 			unset($this->session->data['reward']);
 			unset($this->session->data['customer_token']);
@@ -164,8 +164,6 @@ class Login extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $customer_info['custom_field']
 			];
 
-			$json['customer'] = $this->session->data['customer'];
-
 			// Unset any previous data stored in the session.
 			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_method']);
@@ -224,10 +222,10 @@ class Login extends \Opencart\System\Engine\Controller {
 			$email = '';
 		}
 
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+		if (isset($this->request->get['login_token'])) {
+			$token = $this->request->get['login_token'];
 		} else {
-			$code = '';
+			$token = '';
 		}
 
 		// Login override for admin users
@@ -249,13 +247,21 @@ class Login extends \Opencart\System\Engine\Controller {
 		// Customer
 		$this->load->model('account/customer');
 
-		$customer_info = $this->model_account_customer->getTokenByCode($code);
+		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
-		if ($customer_info && $customer_info['email'] == $email && $customer_info['type'] == 'login' && $this->customer->login($customer_info['email'], '', true)) {
+		if ($customer_info && $customer_info['token'] && $customer_info['token'] == $token && $this->customer->login($customer_info['email'], '', true)) {
 			// Add customer details into session
-			$this->session->data['customer'] = $customer_info;
+			$this->session->data['customer'] = [
+				'customer_id'       => $customer_info['customer_id'],
+				'customer_group_id' => $customer_info['customer_group_id'],
+				'firstname'         => $customer_info['firstname'],
+				'lastname'          => $customer_info['lastname'],
+				'email'             => $customer_info['email'],
+				'telephone'         => $customer_info['telephone'],
+				'custom_field'      => $customer_info['custom_field']
+			];
 
-			// Default Address
+			// Default Addresses
 			$this->load->model('account/address');
 
 			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $this->customer->getAddressId());
@@ -268,7 +274,7 @@ class Login extends \Opencart\System\Engine\Controller {
 				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $address_info;
 			}
 
-			$this->model_account_customer->deleteTokenByCode($code);
+			$this->model_account_customer->editToken($email, '');
 
 			// Create customer token
 			$this->session->data['customer_token'] = oc_token(26);
@@ -277,7 +283,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		} else {
 			$this->session->data['error'] = $this->language->get('error_login');
 
-			$this->model_account_customer->deleteTokenByCode($code);
+			$this->model_account_customer->editToken($email, '');
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}

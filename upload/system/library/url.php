@@ -19,31 +19,6 @@ class Url {
 	 */
 	private string $url;
 	/**
-	 * @var string
-	 */
-	private string $scheme;
-	/**
-	 * @var string
-	 */
-	private string $host;
-	/**
-	 * @var int
-	 */
-	private int $port;
-	/**
-	 * @var string
-	 */
-	private string $path;
-	/**
-	 * @var string
-	 */
-	private string $query;
-	/**
-	 * @var string
-	 */
-	private string $fragment;
-
-	/**
 	 * @var array<int, object>
 	 */
 	private array $rewrite = [];
@@ -55,12 +30,6 @@ class Url {
 	 */
 	public function __construct(string $url) {
 		$this->url = $url;
-
-		$parts = parse_url($url);
-
-		foreach ($parts as $key => $value) {
-			$this->{$key} = $value;
-		}
 	}
 
 	/**

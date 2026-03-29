@@ -104,7 +104,7 @@ final class ChainLoader implements LoaderInterface
             try {
                 return $loader->getCacheKey($name);
             } catch (LoaderError $e) {
-                $exceptions[] = $loader::class.': '.$e->getMessage();
+                $exceptions[] = \get_class($loader).': '.$e->getMessage();
             }
         }
 
@@ -123,7 +123,7 @@ final class ChainLoader implements LoaderInterface
             try {
                 return $loader->isFresh($name, $time);
             } catch (LoaderError $e) {
-                $exceptions[] = $loader::class.': '.$e->getMessage();
+                $exceptions[] = \get_class($loader).': '.$e->getMessage();
             }
         }
 

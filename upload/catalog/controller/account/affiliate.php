@@ -24,8 +24,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/affiliate.js');
-
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
@@ -124,7 +122,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['bank_account_number'] = '';
 		}
 
-		// Custom Fields
+		// Custom Field
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
@@ -223,7 +221,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Custom fields validation
+			// Custom field validation
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));

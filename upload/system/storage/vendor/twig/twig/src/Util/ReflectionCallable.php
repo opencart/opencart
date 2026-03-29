@@ -80,9 +80,6 @@ final class ReflectionCallable
         return $this->reflector;
     }
 
-    /**
-     * @return callable
-     */
     public function getCallable()
     {
         return $this->callable;

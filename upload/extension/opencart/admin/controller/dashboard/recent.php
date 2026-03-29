@@ -105,9 +105,13 @@ class Recent extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['orders'][] = [
+				'order_id'   => $result['order_id'],
+				'customer'   => $result['customer'],
+				'status'     => $result['order_status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'view'       => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'])
-			] + $result;
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];

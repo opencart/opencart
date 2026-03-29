@@ -18,13 +18,19 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -72,7 +78,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'name';
+			$sort = 'od.name';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -87,17 +93,23 @@ class Option extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Options
+		// Option
 		$data['options'] = [];
 
 		$filter_data = [
@@ -123,25 +135,27 @@ class Option extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		// Sorts
-		$data['sort_name'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+		$data['sort_name'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url);
 
-		$allowed = [
-			'sort',
-			'order'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
 
-		// Total Options
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		$option_total = $this->model_catalog_option->getTotalOptions();
 
-		// Pagination
-		$data['total'] = $option_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $option_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($option_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($option_total - $this->config->get('config_pagination_admin'))) ? $option_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $option_total, ceil($option_total / $this->config->get('config_pagination_admin')));
 
@@ -161,17 +175,21 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('view/javascript/option.js');
-
 		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -188,7 +206,6 @@ class Option extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/option.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Option
 		if (isset($this->request->get['option_id'])) {
 			$this->load->model('catalog/option');
 
@@ -201,7 +218,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			$data['option_id'] = 0;
 		}
 
-		// Languages
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -230,16 +247,16 @@ class Option extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
+		if (!empty($option_info)) {
+			$option_values = $this->model_catalog_option->getValueDescriptions($option_info['option_id']);
+		} else {
+			$option_values = [];
+		}
+
 		// Image
 		$this->load->model('tool/image');
 
 		$data['option_values'] = [];
-
-		if (!empty($option_info)) {
-			$option_values = $this->model_catalog_option->getValues($option_info['option_id']);
-		} else {
-			$option_values = [];
-		}
 
 		foreach ($option_values as $option_value) {
 			if ($option_value['image'] && is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -251,11 +268,11 @@ class Option extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['option_values'][] = [
-				'option_value_id' => $option_value['option_value_id'],
-				'description'     => $this->model_catalog_option->getValueDescriptions($option_value['option_value_id']),
-				'image'           => $image,
-				'thumb'           => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
-				'sort_order'      => $option_value['sort_order']
+				'option_value_id'          => $option_value['option_value_id'],
+				'option_value_description' => $option_value['option_value_description'],
+				'image'                    => $image,
+				'thumb'                    => $this->model_tool_image->resize($thumb, $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
+				'sort_order'               => $option_value['sort_order']
 			];
 		}
 
@@ -342,7 +359,6 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Option
 			$this->load->model('catalog/option');
 
 			if (!$post_info['option_id']) {
@@ -378,18 +394,14 @@ class Option extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('catalog/option');
+		// Product
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $option_id) {
-			$options = $this->model_catalog_option->getValues((int)$option_id);
+			$product_total = $this->model_catalog_product->getTotalOptionsByOptionId($option_id);
 
-			foreach ($options as $option) {
-				$product_total = $this->model_catalog_product->getTotalOptionsByOptionId($option['option_id']);
-
-				if ($product_total) {
-					$json['error'] = sprintf($this->language->get('error_product'), $product_total);
-				}
+			if ($product_total) {
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
 			}
 		}
 

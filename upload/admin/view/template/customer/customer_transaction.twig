@@ -13,13 +13,13 @@
           <tr>
             <td>{{ transaction.date_added }}</td>
             <td>{{ transaction.description }}</td>
-            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ transaction.amount }}"></x-currency></td>
+            <td class="text-end">{{ transaction.amount }}</td>
           </tr>
         {% endfor %}
         <tr>
           <td>&nbsp;</td>
           <td class="text-end"><b>{{ text_balance }}</b></td>
-          <td class="text-end"><x-currency code="{{ currency }}" amount="{{ balance }}"></x-currency></td>
+          <td class="text-end">{{ balance }}</td>
         </tr>
       {% else %}
         <tr>
@@ -30,6 +30,6 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#transaction" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
   <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

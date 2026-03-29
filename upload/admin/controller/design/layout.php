@@ -16,13 +16,19 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -85,17 +91,22 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Layouts
 		$data['layouts'] = [];
 
 		$filter_data = [
@@ -105,6 +116,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
+		// Layout
 		$this->load->model('design/layout');
 
 		$results = $this->model_design_layout->getLayouts($filter_data);
@@ -121,24 +133,26 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		// Sort
 		$data['sort_name'] = $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
-		$allowed = [
-			'sort',
-			'order'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
 
-		// Total Layouts
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		$layout_total = $this->model_design_layout->getTotalLayouts();
 
-		// Pagination
-		$data['total'] = $layout_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $layout_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('design/layout.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($layout_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($layout_total - $this->config->get('config_pagination_admin'))) ? $layout_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $layout_total, ceil($layout_total / $this->config->get('config_pagination_admin')));
 
@@ -160,13 +174,19 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['layout_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -202,17 +222,10 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$data['name'] = '';
 		}
 
-		// Setting
-		$data['stores'] = [];
-
-		$data['stores'][] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
+		// Store
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
+		$data['stores'] = $this->model_setting_store->getStores();
 
 		if (!empty($layout_info)) {
 			$data['layout_routes'] = $this->model_design_layout->getRoutes($layout_info['layout_id']);
@@ -326,7 +339,6 @@ class Layout extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Layout
 			$this->load->model('design/layout');
 
 			if (!$post_info['layout_id']) {
@@ -385,7 +397,6 @@ class Layout extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
-			// Total Layouts
 			$product_total = $this->model_catalog_product->getTotalLayoutsByLayoutId($layout_id);
 
 			if ($product_total) {
@@ -425,7 +436,6 @@ class Layout extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Layout
 			$this->load->model('design/layout');
 
 			foreach ($selected as $layout_id) {

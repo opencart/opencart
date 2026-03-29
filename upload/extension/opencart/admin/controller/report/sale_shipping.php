@@ -83,12 +83,11 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
-		// Order Statuses
+		// Order Status
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		// Groups
 		$data['groups'] = [];
 
 		$data['groups'][] = [
@@ -175,10 +174,8 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination')
 		];
 
-		// Extension
 		$this->load->model('extension/opencart/report/sale');
 
-		// Total Orders
 		$order_total = $this->model_extension_opencart_report_sale->getTotalShipping($filter_data);
 
 		$results = $this->model_extension_opencart_report_sale->getShipping($filter_data);
@@ -189,24 +186,34 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'title'      => $result['title'],
 				'orders'     => $result['orders'],
-				'total'      => $result['total']
+				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			];
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'code',
-			'page'
-		];
+		$url = '';
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		if (isset($this->request->get['filter_date_start'])) {
+			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
+		}
 
-		// Pagination
-		$data['total'] = $order_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('extension/opencart/report/sale_shipping.list', 'user_token=' . $this->session->data['user_token'] . '&code=sale_shipping' . $url . '&page={page}');
+		if (isset($this->request->get['filter_date_end'])) {
+			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
+		}
+
+		if (isset($this->request->get['filter_group'])) {
+			$url .= '&filter_group=' . $this->request->get['filter_group'];
+		}
+
+		if (isset($this->request->get['filter_order_status_id'])) {
+			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+		}
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $order_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination'),
+			'url'   => $this->url->link('extension/opencart/report/sale_shipping.list', 'user_token=' . $this->session->data['user_token'] . '&code=sale_shipping' . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($order_total - $this->config->get('config_pagination'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $order_total, ceil($order_total / $this->config->get('config_pagination')));
 
@@ -214,8 +221,6 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

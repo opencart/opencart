@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-fraud" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
-        <a class="btn btn-light" href="{{ back }}" title="{{ button_back }}"><i class="fa-solid fa-reply"></i></a></div>
+        <button type="submit" form="form-fraud" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+        <a class="btn btn-light" data-bs-toggle="tooltip" href="{{ back }}" title="{{ button_back }}"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -32,16 +32,19 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label"> {{ entry_status }} </label>
             <div class="col-sm-10">
-              <x-switch name="fraud_ip_status" value="1" checked="{{ fraud_ip_status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="fraud_ip_status" value="0"/>
+                <input type="checkbox" name="fraud_ip_status" value="1" id="input-status" class="form-check-input"{% if fraud_ip_status %} checked{% endif %}/>
+              </div>
             </div>
           </div>
           <fieldset>
             <legend> {{ text_ip_add }} </legend>
-            <div class="row mb-3">
+            <div class="row mb-3 required">
               <label for="input-ip" class="col-sm-2 col-form-label">{{ entry_ip }}</label>
               <div class="col-sm-10">
                 <div class="input-group">
-                  <input type="text" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control" required/>
+                  <input type="text" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control"/>
                   <button class="btn btn-primary" id="button-ip-add" type="button">{{ button_ip_add }}</button>
                 </div>
               </div>
@@ -49,8 +52,8 @@
           </fieldset>
           <br/>
           <fieldset>
-            <legend>{{ text_ip_list }}</legend>
-            <div id="ip">{{ ip }}</div>
+            <legend> {{ text_ip_list }}</legend>
+            <div id="ip"></div>
           </fieldset>
         </form>
       </div>
@@ -63,6 +66,8 @@ $('#ip').on('click', '.pagination a', function(e) {
 
     $('#ip').load(this.href);
 });
+
+$('#ip').load('index.php?route=extension/opencart/fraud/ip.ip&user_token={{ user_token }}');
 
 $('#button-ip-add').on('click', function() {
     $.ajax({

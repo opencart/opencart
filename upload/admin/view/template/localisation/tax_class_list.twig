@@ -1,10 +1,10 @@
-<form id="form-tax-class" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+<form id="form-tax-class" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#tax-class">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
-          <th>{{ column_title }}</th>
+          <th><a href="{{ sort_title }}"{% if sort == 'title' %} class="{{ order|lower }}"{% endif %}>{{ column_title }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -14,7 +14,7 @@
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ tax_class.tax_class_id }}" class="form-check-input"/></td>
               <td>{{ tax_class.title }}</td>
-              <td class="text-end"><a href="{{ tax_class.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end"><a href="{{ tax_class.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}
@@ -26,7 +26,7 @@
     </table>
   </div>
   <div class="row">
-    <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>

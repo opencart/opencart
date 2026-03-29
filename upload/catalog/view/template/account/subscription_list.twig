@@ -1,0 +1,53 @@
+{{ header }}
+<div id="account-subscription" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">
+    {{ column_left }}
+    <div id="content" class="col">
+      {{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      {% if subscriptions %}
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th class="text-end">{{ column_subscription_id }}</th>
+                <th class="text-end">{{ column_product_total }}</th>
+                <th>{{ column_description }}</th>
+                <th>{{ column_status }}</th>
+                <th>{{ column_date_added }}</th>
+                <th class="text-end"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for subscription in subscriptions %}
+                <tr>
+                  <td class="text-end">#{{ subscription.subscription_id }}</td>
+                  <td class="text-end">{{ subscription.product_total }}</td>
+                  <td>{{ subscription.description }}</td>
+                  <td>{{ subscription.status }}</td>
+                  <td>{{ subscription.date_added }}</td>
+                  <td class="text-end"><a href="{{ subscription.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
+        </div>
+      {% else %}
+        <p>{{ text_no_subscription }}</p>
+      {% endif %}
+      <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+{{ footer }}

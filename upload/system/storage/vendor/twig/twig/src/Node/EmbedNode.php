@@ -36,12 +36,14 @@ class EmbedNode extends IncludeNode
     protected function addGetTemplate(Compiler $compiler, string $template = ''): void
     {
         $compiler
-            ->raw('$this->load(')
+            ->raw('$this->loadTemplate(')
             ->string($this->getAttribute('name'))
+            ->raw(', ')
+            ->repr($this->getTemplateName())
             ->raw(', ')
             ->repr($this->getTemplateLine())
             ->raw(', ')
-            ->repr($this->getAttribute('index'))
+            ->string($this->getAttribute('index'))
             ->raw(')')
         ;
         if ($this->getAttribute('ignore_missing')) {

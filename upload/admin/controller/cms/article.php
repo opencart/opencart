@@ -16,41 +16,19 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = (string)$this->request->get['filter_name'];
-		} else {
-			$filter_name = '';
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = (int)$this->request->get['filter_store_id'];
-		} else {
-			$filter_store_id = '';
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		if (isset($this->request->get['filter_language_id'])) {
-			$filter_language_id = $this->request->get['filter_language_id'];
-		} else {
-			$filter_language_id = '';
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = $this->request->get['filter_status'];
-		} else {
-			$filter_status = '';
-		}
-
-		$allowed = [
-			'filter_name',
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status',
-			'sort',
-			'order',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 
@@ -66,32 +44,8 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('cms/article.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('cms/article.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('cms/article.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('cms/article.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
-
-		// Stores
-		$data['stores'] = [];
-
-		$data['stores'][] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		$this->load->model('setting/store');
-
-		$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
-
-		// Languages
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
-
-		$data['filter_name'] = $filter_name;
-		$data['filter_store_id'] = $filter_store_id;
-		$data['filter_language_id'] = $filter_language_id;
-		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -119,34 +73,10 @@ class Article extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = (string)$this->request->get['filter_name'];
-		} else {
-			$filter_name = '';
-		}
-
-		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = (int)$this->request->get['filter_store_id'];
-		} else {
-			$filter_store_id = '';
-		}
-
-		if (isset($this->request->get['filter_language_id'])) {
-			$filter_language_id = $this->request->get['filter_language_id'];
-		} else {
-			$filter_language_id = '';
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = $this->request->get['filter_status'];
-		} else {
-			$filter_status = '';
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'date_added';
+			$sort = 'a.date_added';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -161,31 +91,30 @@ class Article extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$allowed = [
-			'filter_name',
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status',
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Articles
+		// Article
 		$data['articles'] = [];
 
 		$filter_data = [
-			'filter_name'     => $filter_name,
-			'filter_store_id' => $filter_store_id,
-			'filter_status'   => $filter_status,
-			'sort'            => $sort,
-			'order'           => $order,
-			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'           => $this->config->get('config_pagination_admin')
+			'sort'  => $sort,
+			'order' => $order,
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('cms/article');
@@ -200,14 +129,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$allowed = [
-			'filter_name',
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status'
-		];
-
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		$url = '';
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -215,32 +137,29 @@ class Article extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		// Sorts
-		$data['sort_name'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_author'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=author' . $url);
-		$data['sort_rating'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=rating' . $url);
-		$data['sort_status'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
-		$data['sort_date_added'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
+		$data['sort_name'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ad.name' . $url);
+		$data['sort_author'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.author' . $url);
+		$data['sort_rating'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.rating' . $url);
+		$data['sort_date_added'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.date_added' . $url);
 
-		$allowed = [
-			'filter_name',
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status',
-			'sort',
-			'order'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
 
-		// Total Articles
-		$article_total = $this->model_cms_article->getTotalArticles($filter_data);
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
 
-		// Pagination
-		$data['total'] = $article_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$article_total = $this->model_cms_article->getTotalArticles();
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $article_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('cms/article.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($article_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($article_total - $this->config->get('config_pagination_admin'))) ? $article_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $article_total, ceil($article_total / $this->config->get('config_pagination_admin')));
 
@@ -260,22 +179,24 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('assets/ckeditor/ckeditor.js');
-		$this->document->addScript('assets/ckeditor/adapters/jquery.js');
+		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
+		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
 
 		$data['text_form'] = !isset($this->request->get['article_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$allowed = [
-			'filter_name',
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status',
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -292,7 +213,6 @@ class Article extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('cms/article.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('cms/article', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Article
 		if (isset($this->request->get['article_id'])) {
 			$this->load->model('cms/article');
 
@@ -305,7 +225,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['article_id'] = 0;
 		}
 
-		// Languages
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -348,17 +268,21 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['topic_id'] = 0;
 		}
 
-		// Stores
+		// Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
 			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
+			'name'     => $this->language->get('text_default')
 		];
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
+		$results = $this->model_setting_store->getStores();
+
+		foreach ($results as $result) {
+			$data['stores'][] = $result;
+		}
 
 		if (!empty($article_info)) {
 			$data['article_store'] = $this->model_cms_article->getStores($article_info['article_id']);
@@ -381,7 +305,7 @@ class Article extends \Opencart\System\Engine\Controller {
 			$data['article_seo_url'] = [];
 		}
 
-		// Layouts
+		// Layout
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -467,111 +391,12 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Article
 			$this->load->model('cms/article');
 
 			if (!$post_info['article_id']) {
 				$json['article_id'] = $this->model_cms_article->addArticle($post_info);
 			} else {
 				$this->model_cms_article->editArticle($post_info['article_id'], $post_info);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Rating
-	 *
-	 * @return void
-	 */
-	public function rating(): void {
-		$this->load->language('cms/article');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'cms/article')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$task_data = [
-				'code'   => 'article',
-				'action' => 'task/catalog/article.rating',
-				'args'   => []
-			];
-
-			$this->model_setting_task->addTask($task_data);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
-	public function enable(): void {
-		$this->load->language('cms/article');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'cms/article')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('cms/article');
-
-			foreach ($selected as $topic_id) {
-				$this->model_cms_article->editStatus((int)$topic_id, true);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('cms/article');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'cms/article')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('cms/article');
-
-			foreach ($selected as $topic_id) {
-				$this->model_cms_article->editStatus((int)$topic_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -602,7 +427,6 @@ class Article extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Article
 			$this->load->model('cms/article');
 
 			foreach ($selected as $article_id) {
@@ -610,6 +434,80 @@ class Article extends \Opencart\System\Engine\Controller {
 			}
 
 			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Rating
+	 *
+	 * @return void
+	 */
+	public function rating(): void {
+		$this->load->language('cms/article');
+
+		$json = [];
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		if (!$this->user->hasPermission('modify', 'cms/article')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$limit = 100;
+
+			$filter_data = [
+				'sort'  => 'date_added',
+				'order' => 'ASC',
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
+			];
+
+			// Article
+			$this->load->model('cms/article');
+
+			$results = $this->model_cms_article->getArticles($filter_data);
+
+			foreach ($results as $result) {
+				$like = 0;
+				$dislike = 0;
+
+				$ratings = $this->model_cms_article->getRatings($result['article_id']);
+
+				foreach ($ratings as $rating) {
+					if ($rating['rating'] == 1) {
+						$like = $rating['total'];
+					}
+
+					if ($rating['rating'] == 0) {
+						$dislike = $rating['total'];
+					}
+				}
+
+				$this->model_cms_article->editRating($result['article_id'], $like - $dislike);
+			}
+
+			$article_total = $this->model_cms_article->getTotalArticles();
+
+			$start = ($page - 1) * $limit;
+			$end = ($start > ($article_total - $limit)) ? $article_total : ($start + $limit);
+
+			if ($end < $article_total) {
+				$json['text'] = sprintf($this->language->get('text_next'), $start ?: 1, $end, $article_total);
+
+				$json['next'] = $this->url->link('cms/article.rating', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+			} else {
+				$json['success'] = $this->language->get('text_success');
+
+				$json['next'] = '';
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

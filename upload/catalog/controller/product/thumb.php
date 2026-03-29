@@ -38,8 +38,6 @@ class Thumb extends \Opencart\System\Engine\Controller {
 
 		$data['review_status'] = (int)$this->config->get('config_review_status');
 
-		$data['currency'] = $this->session->data['currency'];
-
 		return $this->load->view('product/thumb', $data);
 	}
 }

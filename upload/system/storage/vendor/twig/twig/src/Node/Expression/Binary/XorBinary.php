@@ -13,9 +13,8 @@
 namespace Twig\Node\Expression\Binary;
 
 use Twig\Compiler;
-use Twig\Node\Expression\ReturnBoolInterface;
 
-class XorBinary extends AbstractBinary implements ReturnBoolInterface
+class XorBinary extends AbstractBinary
 {
     public function operator(Compiler $compiler): Compiler
     {

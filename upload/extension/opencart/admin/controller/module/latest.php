@@ -73,6 +73,18 @@ class Latest extends \Opencart\System\Engine\Controller {
 			$data['limit'] = 5;
 		}
 
+		if (isset($module_info['width'])) {
+			$data['width'] = $module_info['width'];
+		} else {
+			$data['width'] = 200;
+		}
+
+		if (isset($module_info['height'])) {
+			$data['height'] = $module_info['height'];
+		} else {
+			$data['height'] = 200;
+		}
+
 		if (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
@@ -108,13 +120,23 @@ class Latest extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'module_id' => 0,
-			'name'      => ''
+			'name'      => '',
+			'width'     => 0,
+			'height'    => 0
 		];
 
 		$post_info = $this->request->post + $required;
 
 		if (!oc_validate_length($post_info['name'], 3, 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
+		}
+
+		if (!$post_info['width']) {
+			$json['error']['width'] = $this->language->get('error_width');
+		}
+
+		if (!$post_info['height']) {
+			$json['error']['height'] = $this->language->get('error_height');
 		}
 
 		if (!$json) {
@@ -128,66 +150,6 @@ class Latest extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->cache->delete('product');
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Add
-	 *
-	 * @return void
-	 */
-	public function add(): void {
-		$this->load->language('extension/opencart/module/latest');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'extension/opencart/module/latest')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Extension
-			$this->load->model('setting/module');
-
-			$this->model_setting_module->addModule('opencart.latest', ['name' => $this->language->get('heading_title')]);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(): void {
-		$this->load->language('extension/opencart/module/latest');
-
-		$json = [];
-
-		if (isset($this->request->get['module_id'])) {
-			$module_id = $this->request->get['module_id'];
-		} else {
-			$module_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'extension/opencart/module/latest')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Extension
-			$this->load->model('setting/module');
-
-			$this->model_setting_module->deleteModule($module_id);
 
 			$json['success'] = $this->language->get('text_success');
 		}

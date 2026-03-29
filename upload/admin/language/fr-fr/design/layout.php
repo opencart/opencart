@@ -36,5 +36,3 @@ $_['error_product']       = 'Attention: Cette mise en page ne peut pas être sup
 $_['error_category']      = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s catégories!';
 $_['error_manufacturer']  = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s fabricants!';
 $_['error_information']   = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s pages d\'informations!';
-$_['error_article']       = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s articles!';
-$_['error_topic']         = 'Attention: Cette mise en page ne peut pas être supprimée car elle est actuellement assignée à %s topiques!';

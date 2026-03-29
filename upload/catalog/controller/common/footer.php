@@ -16,14 +16,13 @@ class Footer extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/footer');
 
-		// Articles
+		// Article
 		$this->load->model('cms/article');
 
-		// Total Articles
 		$article_total = $this->model_cms_article->getTotalArticles();
 
 		if ($article_total) {
-			$data['blog'] = $this->url->link('cms/topic', 'language=' . $this->config->get('config_language'));
+			$data['blog'] = $this->url->link('cms/blog', 'language=' . $this->config->get('config_language'));
 		} else {
 			$data['blog'] = '';
 		}
@@ -84,7 +83,8 @@ class Footer extends \Opencart\System\Engine\Controller {
 			$this->model_tool_online->addOnline(oc_get_ip(), $this->customer->getId(), $url, $referer);
 		}
 
-		// Hard coding scripts, so they can be replaced via the event's system.
+		$data['bootstrap'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
+		$data['scripts'] = $this->document->getScripts('footer');
 		$data['cookie'] = $this->load->controller('common/cookie');
 
 		return $this->load->view('common/footer', $data);

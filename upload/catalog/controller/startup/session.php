@@ -17,7 +17,7 @@ class Session extends \Opencart\System\Engine\Controller {
 		$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
 		$this->registry->set('session', $session);
 
-		// Api
+		// API
 		if (isset($this->request->get['route']) && substr((string)$this->request->get['route'], 0, 4) == 'api/' && isset($this->request->get['api_token'])) {
 			$this->load->model('setting/api');
 
@@ -43,6 +43,15 @@ class Session extends \Opencart\System\Engine\Controller {
 		Is it not better to have multiple cookies when accessing parts of the system
 		that requires different cookie sessions for security reasons.
 		*/
+
+		// Update the session lifetime
+		if ($this->config->get('config_session_expire')) {
+			$this->config->set('session_expire', $this->config->get('config_session_expire'));
+		}
+
+		// Update the session SameSite
+		$this->config->set('session_samesite', $this->config->get('config_session_samesite'));
+
 		if (isset($this->request->cookie[$this->config->get('session_name')])) {
 			$session_id = $this->request->cookie[$this->config->get('session_name')];
 		} else {
@@ -52,7 +61,7 @@ class Session extends \Opencart\System\Engine\Controller {
 		$session->start($session_id);
 
 		$option = [
-			'expires'  => time() + (int)$this->config->get('session_expire'),
+			'expires'  => time() + (int)$this->config->get('config_session_expire'),
 			'path'     => $this->config->get('session_path'),
 			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => false,

@@ -44,7 +44,7 @@ class Pagination extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($setting['url'])) {
-			$url = str_replace('{page}', '%d', (string)$setting['url']);
+			$url = str_replace('%7Bpage%7D', '{page}', (string)$setting['url']);
 		} else {
 			$url = '';
 		}
@@ -52,7 +52,7 @@ class Pagination extends \Opencart\System\Engine\Controller {
 		$num_links = 8;
 		$num_pages = ceil($total / $limit);
 
-		if ($page > 1 && $num_pages < $page) {
+		if ($url && $page > 1 && $num_pages < $page) {
 			$back = true;
 		} else {
 			$back = false;
@@ -61,12 +61,12 @@ class Pagination extends \Opencart\System\Engine\Controller {
 		$data['page'] = $page;
 
 		if ($page > 1) {
-			$data['first'] = sprintf($url, 0);
+			$data['first'] = str_replace(['&amp;page={page}', '?page={page}', '&page={page}'], '', $url);
 
 			if ($page - 1 === 1) {
-				$data['prev'] = sprintf($url, 0);
+				$data['prev'] = str_replace(['&amp;page={page}', '?page={page}', '&page={page}'], '', $url);
 			} else {
-				$data['prev'] = sprintf($url, $page - 1);
+				$data['prev'] = str_replace('{page}', $page - 1, $url);
 			}
 		} else {
 			$data['first'] = '';
@@ -97,14 +97,14 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			for ($i = $start; $i <= $end; $i++) {
 				$data['links'][] = [
 					'page' => $i,
-					'href' => sprintf($url, $i)
+					'href' => str_replace('{page}', $i, $url)
 				];
 			}
 		}
 
 		if ($num_pages > $page) {
-			$data['next'] = sprintf($url, $page + 1);
-			$data['last'] = sprintf($url, $num_pages);
+			$data['next'] = str_replace('{page}', $page + 1, $url);
+			$data['last'] = str_replace('{page}', $num_pages, $url);
 		} else {
 			$data['next'] = '';
 			$data['last'] = '';

@@ -50,8 +50,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 
 		$data['fraud_ip_status'] = $this->config->get('fraud_ip_status');
 
-		$data['ip'] = $this->getIps();
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -95,7 +93,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/fraud')) {
-			// Extension
 			$this->load->model('extension/opencart/fraud/ip');
 
 			$this->model_extension_opencart_fraud_ip->install();
@@ -109,7 +106,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/fraud')) {
-			// Extension
 			$this->load->model('extension/opencart/fraud/ip');
 
 			$this->model_extension_opencart_fraud_ip->uninstall();
@@ -117,22 +113,11 @@ class Ip extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * List
+	 * Ip
 	 *
 	 * @return void
 	 */
 	public function ip(): void {
-		$this->load->language('extension/opencart/fraud/ip');
-
-		$this->response->setOutput($this->load->controller('extension/opencart/fraud/ip.getIps'));
-	}
-
-	/**
-	 * Ip
-	 *
-	 * @return string
-	 */
-	public function getIps(): string {
 		$this->load->language('extension/opencart/fraud/ip');
 
 		if (isset($this->request->get['page'])) {
@@ -145,7 +130,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 
 		$data['ips'] = [];
 
-		// Extension
 		$this->load->model('extension/opencart/fraud/ip');
 
 		// Customer
@@ -162,18 +146,18 @@ class Ip extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Total Customers
 		$ip_total = $this->model_extension_opencart_fraud_ip->getTotalIps();
 
-		// Pagination
-		$data['total'] = $ip_total;
-		$data['page'] = $page;
-		$data['limit'] = $limit;
-		$data['pagination'] = $this->url->link('extension/opencart/fraud/ip.ip', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $ip_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('extension/opencart/fraud/ip.ip', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($ip_total - $limit)) ? $ip_total : ((($page - 1) * $limit) + $limit), $ip_total, ceil($ip_total / $limit));
 
-		return $this->load->view('extension/opencart/fraud/ip_ip', $data);
+		$this->response->setOutput($this->load->view('extension/opencart/fraud/ip_ip', $data));
 	}
 
 	/**
@@ -203,7 +187,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('extension/opencart/fraud/ip');
 
 			if (!$this->model_extension_opencart_fraud_ip->getTotalIpsByIp($ip)) {
@@ -232,7 +215,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Extension
 			$this->load->model('extension/opencart/fraud/ip');
 
 			$this->model_extension_opencart_fraud_ip->removeIp($this->request->post['ip']);

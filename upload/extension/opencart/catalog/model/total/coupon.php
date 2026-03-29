@@ -12,13 +12,12 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * Get Total
 	 *
 	 * @param array<int, array<string, mixed>> $totals
-	 * @param  array<int, float>               &$taxes
-	 * @param  float                           &$total
+	 * @param array<int, float>                $taxes
+	 * @param float                            $total
 	 *
 	 * @return void
 	 */
 	public function getTotal(array &$totals, array &$taxes, float &$total): void {
-		// Coupon
 		if (isset($this->session->data['coupon'])) {
 			$this->load->language('extension/opencart/total/coupon', 'coupon');
 
@@ -68,7 +67,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {
-									$taxes[(int)$tax_rate['tax_rate_id']] -= (float)$tax_rate['amount'];
+									$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
 								}
 							}
 						}
@@ -83,7 +82,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 						foreach ($tax_rates as $tax_rate) {
 							if ($tax_rate['type'] == 'P') {
-								$taxes[(int)$tax_rate['tax_rate_id']] -= (float)$tax_rate['amount'];
+								$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
 							}
 						}
 					}
@@ -130,7 +129,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 		}
 
 		if ($code) {
-			// Coupon
 			$this->load->model('marketing/coupon');
 
 			$status = true;
@@ -138,7 +136,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 			$coupon_info = $this->model_marketing_coupon->getCouponByCode($code);
 
 			if ($coupon_info) {
-				// Total Coupons
 				$coupon_total = $this->model_marketing_coupon->getTotalHistories($coupon_info['coupon_id']);
 
 				if ($coupon_info['uses_total'] > 0 && ($coupon_total >= $coupon_info['uses_total'])) {
@@ -146,7 +143,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 				}
 
 				if ($order_info['customer_id']) {
-					// Total Customers
 					$customer_total = $this->model_marketing_coupon->getTotalHistoriesByCustomerId($coupon_info['coupon_id'], $order_info['customer_id']);
 
 					if ($coupon_info['uses_customer'] > 0 && ($customer_total >= $coupon_info['uses_customer'])) {
@@ -175,7 +171,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function unconfirm(array $order_info): void {
-		// Histories
 		$this->load->model('marketing/coupon');
 
 		$this->model_marketing_coupon->deleteHistoriesByOrderId($order_info['order_id']);

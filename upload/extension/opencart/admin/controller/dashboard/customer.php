@@ -104,7 +104,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['percentage'] = 0;
 		}
 
-		// Total Customers
 		$customer_total = $this->model_customer_customer->getTotalCustomers();
 
 		if ($customer_total > 1000000000000) {

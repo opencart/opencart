@@ -11,23 +11,19 @@ class Special extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function index() {
-		if (isset($this->request->get['product_id'])) {
-			return $this->load->controller('product/product');
-		}
-
+	public function index(): void {
 		$this->load->language('product/special');
 
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'sort_order';
+			$sort = 'p.sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
-			$order = 'asc';
+			$order = 'ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -78,7 +74,7 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 
-		// Products
+		// Product
 		$data['products'] = [];
 
 		$filter_data = [
@@ -109,31 +105,31 @@ class Special extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$price = $this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
+				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 			} else {
 				$price = false;
 			}
 
 			if ((float)$result['special']) {
-				$special = $this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax'));
+				$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 			} else {
 				$special = false;
 			}
 
 			if ($this->config->get('config_tax')) {
-				$tax = (float)$result['special'] ? $result['special'] : $result['price'];
+				$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
 			} else {
 				$tax = false;
 			}
 
 			$product_data = [
-				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')),
+				'thumb'       => $this->model_tool_image->resize($image, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height')),
 				'description' => $description,
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-				'href'        => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'] . $url)
+				'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'] . $url)
 			] + $result;
 
 			$data['products'][] = $this->load->controller('product/thumb', $product_data);
@@ -149,58 +145,58 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_default'),
-			'value' => 'sort_order-asc',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=sort_order&order=asc' . $url)
+			'value' => 'p.sort_order-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.sort_order&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_name_asc'),
-			'value' => 'name-asc',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=name&order=asc' . $url)
+			'value' => 'pd.name-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=pd.name&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_name_desc'),
-			'value' => 'name-desc',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=name&order=desc' . $url)
+			'value' => 'pd.name-DESC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=pd.name&order=DESC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_price_asc'),
-			'value' => 'price-asc',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=price&order=asc' . $url)
+			'value' => 'ps.price-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=ps.price&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_price_desc'),
-			'value' => 'price-desc',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=price&order=desc' . $url)
+			'value' => 'ps.price-DESC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=ps.price&order=DESC' . $url)
 		];
 
 		if ($this->config->get('config_review_status')) {
 			$data['sorts'][] = [
 				'text'  => $this->language->get('text_rating_desc'),
-				'value' => 'rating-desc',
-				'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=rating&order=desc' . $url)
+				'value' => 'rating-DESC',
+				'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=rating&order=DESC' . $url)
 			];
 
 			$data['sorts'][] = [
 				'text'  => $this->language->get('text_rating_asc'),
-				'value' => 'rating-asc',
-				'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=rating&order=asc' . $url)
+				'value' => 'rating-ASC',
+				'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=rating&order=ASC' . $url)
 			];
 		}
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_model_asc'),
-			'value' => 'model-asc',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=model&order=asc' . $url)
+			'value' => 'p.model-ASC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.model&order=ASC' . $url)
 		];
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_model_desc'),
-			'value' => 'model-desc',
-			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=model&order=desc' . $url)
+			'value' => 'p.model-DESC',
+			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=p.model&order=DESC' . $url)
 		];
 
 		$url = '';
@@ -241,15 +237,13 @@ class Special extends \Opencart\System\Engine\Controller {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
-		// Total Specials
 		$product_total = $this->model_catalog_product->getTotalSpecials();
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . $url . '&page=' . $page)
+			'url'   => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));

@@ -28,7 +28,7 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 
 		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
-		if ($total <= 0.00) {
+		if ($this->currency->format($total, $this->config->get('config_currency'), false, false) <= 0.00) {
 			$status = true;
 		} elseif ($this->cart->hasSubscription()) {
 			$status = false;

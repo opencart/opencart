@@ -4,7 +4,7 @@
     <div class="container-fluid">
       {% if developer_status %}
         <div class="float-end">
-          <button type="button" id="button-setting" title="{{ button_developer }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
+          <button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
         </div>
       {% endif %}
       <h1>{{ heading_title }}</h1>
@@ -32,17 +32,28 @@
   </div>
   {{ security }}
 </div>
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', async () => {
-    let response = await fetch('index.php?route=common/developer&user_token={{ user_token }}');
+<script type="text/javascript"><!--
+$('#button-setting').on('click', function() {
+    $.ajax({
+        url: 'index.php?route=common/developer&user_token={{ user_token }}',
+        dataType: 'html',
+        beforeSend: function() {
+            $('#button-setting').button('loading');
+        },
+        complete: function() {
+            $('#button-setting').button('reset');
+        },
+        success: function(html) {
+            $('#modal-developer').remove();
 
-    let html = await response.text();
+            $('body').prepend(html);
 
-    document.body.insertAdjacentHTML('beforeend', html);
-
-    let modal = new bootstrap.Modal('#modal-developer');
-
-    modal.show();
+            $('#modal-developer').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
-</script>
+//--></script>
 {{ footer }}

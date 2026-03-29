@@ -3,15 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
-          <ul class="dropdown-menu">
-            <li><button type="submit" form="form-startup" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
-            <li><button type="submit" form="form-startup" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><button type="submit" form="form-startup" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
-          </ul>
-        </div>
+        <button type="submit" form="form-startup" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -24,8 +16,48 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="list" class="card-body">{{ list }}</div>
+      <div id="startup" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#startup').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#startup').load(this.href);
+});
+
+$('#startup').on('click', '.btn-success, .btn-danger', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').after('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#startup').load($('#form-startup').attr('data-oc-load'));
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
 {{ footer }}

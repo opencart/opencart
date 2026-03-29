@@ -16,8 +16,6 @@ class Review extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('product/review');
 
-		$this->document->addScript('catalog/view/javascript/review.js');
-
 		if (isset($this->request->get['product_id'])) {
 			$data['product_id'] = (int)$this->request->get['product_id'];
 		} else {
@@ -90,7 +88,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$limit = 5;
 
-		// Reviews
+		// Review
 		$data['reviews'] = [];
 
 		$this->load->model('catalog/review');
@@ -105,15 +103,13 @@ class Review extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		// Total Reviews
 		$review_total = $this->model_catalog_review->getTotalReviewsByProductId($product_id);
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $review_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('product/review.list', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id . '&page=' . $page)
+			'url'   => $this->url->link('product/review.list', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($review_total - $limit)) ? $review_total : ((($page - 1) * $limit) + $limit), $review_total, ceil($review_total / $limit));
@@ -178,8 +174,8 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_login');
 		}
 
-		// Order
 		if ($this->customer->isLogged() && $this->config->get('config_review_purchased')) {
+			// Order
 			$this->load->model('account/order');
 
 			if (!$this->model_account_order->getTotalOrdersByProductId($product_id)) {
@@ -201,7 +197,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Review
 			$this->load->model('catalog/review');
 
 			$this->model_catalog_review->addReview($product_id, $this->request->post);

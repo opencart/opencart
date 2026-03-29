@@ -1,10 +1,10 @@
 <?php
 // Text
-$_['text_items']                 = '%s item(s) - <x-currency code="%s" amount="%f"></x-currency>';
+$_['text_items']                 = '%s item(s) - %s';
 $_['text_points']                = 'Reward Points';
 $_['text_subscription']          = 'Subscription';
-$_['text_subscription_duration'] = '<x-currency code="%s" amount="%f"></x-currency> every %d %s(s) for %d payment(s)';
-$_['text_subscription_cancel']   = '<x-currency code="%s" amount="%f"></x-currency> every %d %s(s) until canceled';
+$_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';
+$_['text_subscription_cancel']   = '%s every %d %s(s) until canceled';
 $_['text_day']                   = 'day';
 $_['text_week']                  = 'week';
 $_['text_semi_month']            = 'half-month';

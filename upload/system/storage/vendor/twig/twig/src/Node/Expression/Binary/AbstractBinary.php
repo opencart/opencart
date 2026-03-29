@@ -16,7 +16,7 @@ use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Node;
 
-abstract class AbstractBinary extends AbstractExpression implements BinaryInterface
+abstract class AbstractBinary extends AbstractExpression
 {
     /**
      * @param AbstractExpression $left
@@ -25,10 +25,10 @@ abstract class AbstractBinary extends AbstractExpression implements BinaryInterf
     public function __construct(Node $left, Node $right, int $lineno)
     {
         if (!$left instanceof AbstractExpression) {
-            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "left" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, $left::class);
+            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "left" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($left));
         }
         if (!$right instanceof AbstractExpression) {
-            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "right" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, $right::class);
+            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "right" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($right));
         }
 
         parent::__construct(['left' => $left, 'right' => $right], [], $lineno);

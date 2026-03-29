@@ -9,8 +9,6 @@ class Event extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Adds events from the DB to the event object.
-	 *
 	 * @return void
 	 */
 	public function index(): void {

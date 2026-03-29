@@ -48,29 +48,29 @@ class Image {
 			exit('Error: PHP GD is not installed!');
 		}
 
-		if (!is_file($file)) {
+		if (is_file($file)) {
+			$this->file = $file;
+
+			$info = getimagesize($file);
+
+			$this->width = $info[0];
+			$this->height = $info[1];
+			$this->bits = $info['bits'] ?? '';
+			$this->mime = $info['mime'] ?? '';
+
+			if ($this->mime == 'image/gif') {
+				$this->image = imagecreatefromgif($file);
+			} elseif ($this->mime == 'image/png') {
+				$this->image = imagecreatefrompng($file);
+
+				imageinterlace($this->image, false);
+			} elseif ($this->mime == 'image/jpeg') {
+				$this->image = imagecreatefromjpeg($file);
+			} elseif ($this->mime == 'image/webp') {
+				$this->image = imagecreatefromwebp($file);
+			}
+		} else {
 			throw new \Exception('Error: Could not load image ' . $file . '!');
-		}
-
-		$this->file = $file;
-
-		$info = getimagesize($file);
-
-		$this->width = $info[0];
-		$this->height = $info[1];
-		$this->bits = $info['bits'] ?? '';
-		$this->mime = $info['mime'] ?? '';
-
-		if ($this->mime == 'image/gif') {
-			$this->image = imagecreatefromgif($file);
-		} elseif ($this->mime == 'image/png') {
-			$this->image = imagecreatefrompng($file);
-
-			imageinterlace($this->image, false);
-		} elseif ($this->mime == 'image/jpeg') {
-			$this->image = imagecreatefromjpeg($file);
-		} elseif ($this->mime == 'image/webp') {
-			$this->image = imagecreatefromwebp($file);
 		}
 	}
 

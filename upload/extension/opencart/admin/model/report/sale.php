@@ -49,7 +49,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Day
 	 *
-	 * @return array<int, array<string, string|int>> total number of order records by day
+	 * @return array<int, array<string, int>> total number of order records by day
 	 *
 	 * @example
 	 *
@@ -76,7 +76,7 @@ class Sale extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			$order_data[$result['hour']] = [
 				'hour'  => $result['hour'],
-				'total' => (int)$result['total']
+				'total' => $result['total']
 			];
 		}
 
@@ -86,7 +86,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Week
 	 *
-	 * @return array<int, array<string, string|int>> total number of order records by week
+	 * @return array<int, array<string, int>> total number of order records by week
 	 *
 	 * @example
 	 *
@@ -117,7 +117,7 @@ class Sale extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			$order_data[date('w', strtotime($result['date_added']))] = [
 				'day'   => date('D', strtotime($result['date_added'])),
-				'total' => (int)$result['total']
+				'total' => $result['total']
 			];
 		}
 
@@ -127,7 +127,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Month
 	 *
-	 * @return array<int, array<string, string|int>> total number of order records by month
+	 * @return array<int, array<string, int>> total number of order records by month
 	 *
 	 * @example
 	 *
@@ -156,7 +156,7 @@ class Sale extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			$order_data[date('j', strtotime($result['date_added']))] = [
 				'day'   => date('d', strtotime($result['date_added'])),
-				'total' => (int)$result['total']
+				'total' => $result['total']
 			];
 		}
 
@@ -166,7 +166,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Orders By Year
 	 *
-	 * @return array<int, array<string, string|int>> total number of order records by year
+	 * @return array<int, array<string, int>> total number of order records by year
 	 *
 	 * @example
 	 *
@@ -193,7 +193,7 @@ class Sale extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			$order_data[date('n', strtotime($result['date_added']))] = [
 				'month' => date('M', strtotime($result['date_added'])),
-				'total' => (int)$result['total']
+				'total' => $result['total']
 			];
 		}
 

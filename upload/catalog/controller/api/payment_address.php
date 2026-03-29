@@ -62,17 +62,16 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$output['error']['payment_country'] = $this->language->get('error_country');
 		}
 
-		// Zones
+		// Zone
 		$this->load->model('localisation/zone');
 
-		// Total Zones
 		$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['payment_country_id']);
 
 		if ($zone_total && !$post_info['payment_zone_id']) {
 			$output['error']['payment_zone'] = $this->language->get('error_zone');
 		}
 
-		// Custom fields validation
+		// Custom field validation
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));

@@ -31,34 +31,32 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		if ($results) {
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $result['image'];
+					$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $setting['width'], $setting['height']);
 				} else {
-					$image = 'placeholder.png';
+					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
 				}
 
-				$thumb = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
-
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
+					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
 					$price = false;
 				}
 
 				if ((float)$result['special']) {
-					$special = $this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax'));
+					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
 					$special = false;
 				}
 
 				if ($this->config->get('config_tax')) {
-					$tax = (float)$result['special'] ? $result['special'] : $result['price'];
+					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
 				} else {
 					$tax = false;
 				}
 
 				$product_data = [
 					'product_id'  => $result['product_id'],
-					'thumb'       => $thumb,
+					'thumb'       => $image,
 					'name'        => $result['name'],
 					'description' => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
 					'price'       => $price,

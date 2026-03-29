@@ -263,23 +263,6 @@ class GeoZone extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 	}
 
-	/*
-	 * Get Zone
-	 *
-	 * @param int $geo_zone_id primary key of the geo zone record
-	 *
-	 * @return array<int, array<string, mixed>> geo zone records that have geo zone ID
-	 *
-	 * $this->load->model('localisation/geo_zone');
-	 *
-	 * $results = $this->model_localisation_geo_zone->getZone($zone_to_geo_zone_id);
-	 */
-	public function getZone($zone_to_geo_zone_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `zone_to_geo_zone_id` = '" . (int)$zone_to_geo_zone_id . "'");
-
-		return $query->row;
-	}
-
 	/**
 	 * Get Zones
 	 *
@@ -295,35 +278,8 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 *
 	 * $results = $this->model_localisation_geo_zone->getGeoZones($geo_zone_id);
 	 */
-	public function getZones(int $geo_zone_id = 0): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone`";
-
-		if ($geo_zone_id) {
-			$sql .= " WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'";
-		}
-
-		$query = $this->db->query($sql);
-
-		return $query->rows;
-	}
-
-	/**
-	 * Get Zones
-	 *
-	 * Get the record of the zone to geo zone records in the database.
-	 *
-	 * @param int $geo_zone_id primary key of the geo zone record
-	 *
-	 * @return array<int, array<string, mixed>> geo zone records that have geo zone ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/geo_zone');
-	 *
-	 * $results = $this->model_localisation_geo_zone->getGeoZones($geo_zone_id);
-	 */
-	public function getZonesByCountryId(int $country_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `country_id` = '" . (int)$country_id . "'");
+	public function getZones(int $geo_zone_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 
 		return $query->rows;
 	}
@@ -344,54 +300,48 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZones($geo_zone_id);
 	 */
 	public function getTotalZones(int $geo_zone_id): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone`";
-
-		if ($geo_zone_id) {
-			$sql .= " WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'";
-		}
-
-		$query = $this->db->query($sql);
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 
 		return (int)$query->row['total'];
 	}
 
 	/**
-	 * Get Total Zone To Geo Zone By Country ID
+	 * Get Total Zones By Country ID
 	 *
 	 * Get the total number of zone to geo zone by country records in the database.
 	 *
 	 * @param int $country_id primary key of the country record
 	 *
-	 * @return int total number of zone to geo zone records that have country ID
+	 * @return int total number of zone records that have country ID
 	 *
 	 * @example
 	 *
 	 * $this->load->model('localisation/geo_zone');
 	 *
-	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByCountryId($country_id);
+	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZonesByCountryId($country_id);
 	 */
-	public function getTotalZoneToGeoZoneByCountryId(int $country_id): int {
+	public function getTotalZonesByCountryId(int $country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		return (int)$query->row['total'];
 	}
 
 	/**
-	 * Get Total Zone To Geo Zone By Zone ID
+	 * Get Total Zones By Zone ID
 	 *
 	 * Get the total number of zone to geo zone by zone records in the database.
 	 *
 	 * @param int $zone_id primary key of the zone record
 	 *
-	 * @return int total number of zone to geo zone records that have zone ID
+	 * @return int total number of zone records that have zone ID
 	 *
 	 * @example
 	 *
 	 * $this->load->model('localisation/geo_zone');
 	 *
-	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByZoneId($zone_id);
+	 * $geo_zone_total = $this->model_localisation_geo_zone->getTotalZonesByZoneId($zone_id);
 	 */
-	public function getTotalZoneToGeoZoneByZoneId(int $zone_id): int {
+	public function getTotalZonesByZoneId(int $zone_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		return (int)$query->row['total'];

@@ -76,18 +76,15 @@ class XmlParser
 
     private function memberKey(Shape $shape, $name)
     {
-        // Check if locationName came from shape definition
-        if ($shape instanceof StructureShape && isset($shape['locationName'])) {
-            $originalDef = $shape->getOriginalDefinition($shape->getName());
-
-            if ($originalDef && isset($originalDef['locationName'])
-                && $originalDef['locationName'] === $shape['locationName']
-            ) {
-                return $name;
-            }
+        if (null !== $shape['locationName']) {
+            return $shape['locationName'];
         }
 
-        return $shape['locationName'] ?? $name;
+        if ($shape instanceof ListShape && $shape['flattened']) {
+            return $shape->getMember()['locationName'] ?: $name;
+        }
+
+        return $name;
     }
 
     private function parse_list(ListShape $shape, \SimpleXMLElement  $value)
@@ -135,12 +132,7 @@ class XmlParser
 
     private function parse_float(Shape $shape, $value)
     {
-        $value = (string) $value;
-
-        return match ($value) {
-            'NaN', 'Infinity', '-Infinity' => $value,
-            default => (float) $value
-        };
+        return (float) (string) $value;
     }
 
     private function parse_integer(Shape $shape, $value)
@@ -170,8 +162,12 @@ class XmlParser
 
     private function parse_xml_attribute(Shape $shape, Shape $memberShape, $value)
     {
-        $namespace = $shape['xmlNamespace']['uri'] ?? '';
-        $prefix = $shape['xmlNamespace']['prefix'] ?? '';
+        $namespace = $shape['xmlNamespace']['uri']
+            ? $shape['xmlNamespace']['uri']
+            : '';
+        $prefix = $shape['xmlNamespace']['prefix']
+            ? $shape['xmlNamespace']['prefix']
+            : '';
         if (!empty($prefix)) {
             $prefix .= ':';
         }

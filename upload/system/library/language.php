@@ -64,16 +64,10 @@ class Language {
 	 *
 	 * Get language text string
 	 *
-	 * @link https://www.php.net/sprintf
-	 *
 	 * @param string $key
 	 */
 	public function get(string $key): string {
-		if (!isset($this->data[$key])) {
-			return $key;
-		}
-
-		return $this->data[$key];
+		return $this->data[$key] ?? $key;
 	}
 
 	/**
@@ -81,7 +75,7 @@ class Language {
 	 *
 	 * Set language text string
 	 *
-	 * @param string $key 
+	 * @param string $key
 	 * @param string $value
 	 *
 	 * @return void

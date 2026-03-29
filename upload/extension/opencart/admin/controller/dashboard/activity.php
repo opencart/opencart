@@ -89,9 +89,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/activity');
 
-		// Activities
 		$data['activities'] = [];
 
+		// Activity
 		$this->load->model('extension/opencart/report/activity');
 
 		$results = $this->model_extension_opencart_report_activity->getActivities();

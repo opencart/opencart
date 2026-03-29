@@ -78,23 +78,19 @@ class IncludeNode extends Node implements NodeOutputInterface
         }
     }
 
-    /**
-     * @return void
-     */
     protected function addGetTemplate(Compiler $compiler/* , string $template = '' */)
     {
         $compiler
-            ->raw('$this->load(')
+            ->raw('$this->loadTemplate(')
             ->subcompile($this->getNode('expr'))
+            ->raw(', ')
+            ->repr($this->getTemplateName())
             ->raw(', ')
             ->repr($this->getTemplateLine())
             ->raw(')')
         ;
     }
 
-    /**
-     * @return void
-     */
     protected function addTemplateArguments(Compiler $compiler)
     {
         if (!$this->hasNode('variables')) {

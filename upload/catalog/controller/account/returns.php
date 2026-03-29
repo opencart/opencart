@@ -53,7 +53,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
 		];
 
-		// Returns
 		$data['returns'] = [];
 
 		$this->load->model('account/returns');
@@ -61,18 +60,19 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_returns->getReturns(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
-			$data['returns'][] = ['href' => $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $result['return_id'] . $url)] + $result;
+			$data['returns'][] = [
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'href'       => $this->url->link('account/returns.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $result['return_id'] . $url)
+			] + $result;
 		}
 
-		// Total Returns
 		$return_total = $this->model_account_returns->getTotalReturns();
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page=%d')
+			'url'   => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($return_total - $limit)) ? $return_total : ((($page - 1) * $limit) + $limit), $return_total, ceil($return_total / $limit));
@@ -94,7 +94,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function info() {
+	public function info(): ?\Opencart\System\Engine\Action {
 		$this->load->language('account/returns');
 
 		if (isset($this->request->get['return_id'])) {
@@ -109,15 +109,12 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
-		// Returns
 		$this->load->model('account/returns');
 
 		$return_info = $this->model_account_returns->getReturn($return_id);
 
 		if ($return_info) {
 			$this->document->setTitle($this->language->get('text_return'));
-
-			$this->document->addScript('catalog/view/javascript/return.js');
 
 			$data['breadcrumbs'] = [];
 
@@ -196,8 +193,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/return.js');
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -215,7 +210,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['config_telephone_status'] = $this->config->get('config_telephone_status');
+		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
 		$this->session->data['return_token'] = oc_token(26);
@@ -290,7 +285,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['model'] = '';
 		}
 
-		// Return Reasons
+		// Return Reason
 		$this->load->model('localisation/return_reason');
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
@@ -416,7 +411,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Return
 			$this->load->model('account/returns');
 
 			$this->model_account_returns->addReturn($post_info);
@@ -506,16 +500,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 			return '';
 		}
 
-		$this->load->model('account/returns');
-
-		$subscription_info = $this->model_account_returns->getReturns($return_id);
-
-		if (!$subscription_info) {
-			return '';
-		}
-
-		// Histories
 		$data['histories'] = [];
+
+		$this->load->model('account/returns');
 
 		$results = $this->model_account_returns->getHistories($return_id, ($page - 1) * $limit, $limit);
 
@@ -526,15 +513,13 @@ class Returns extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		// Total Histories
 		$return_total = $this->model_account_returns->getTotalHistories($return_id);
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('account/return.history', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $return_id  . '&page=' . $page)
+			'url'   => $this->url->link('account/return.history', 'customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $return_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($return_total - $limit)) ? $return_total : ((($page - 1) * $limit) + $limit), $return_total, ceil($return_total / $limit));

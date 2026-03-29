@@ -12,8 +12,8 @@ class SubTotal extends \Opencart\System\Engine\Model {
 	 * Get Total
 	 *
 	 * @param array<int, array<string, mixed>> $totals
-	 * @param  array<int, float>               &$taxes
-	 * @param  float                           &$total
+	 * @param array<int, float>                $taxes
+	 * @param float                            $total
 	 *
 	 * @return void
 	 */

@@ -25,7 +25,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/shipping\/.+\.php$/');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/shipping/*.php');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');
@@ -33,7 +33,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('shipping');
@@ -48,25 +48,26 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$data['extensions'] = [];
 
-		foreach ($results as $result) {
-			$path = substr($result, strlen(DIR_EXTENSION));
+		if ($results) {
+			foreach ($results as $result) {
+				$path = substr($result, strlen(DIR_EXTENSION));
 
-			$extension = substr($path, 0, strpos($path, '/'));
+				$extension = substr($path, 0, strpos($path, '/'));
 
-			$code = basename($result, '.php');
+				$code = basename($result, '.php');
 
-			$this->load->language('extension/' . $extension . '/shipping/' . $code, $code);
+				$this->load->language('extension/' . $extension . '/shipping/' . $code, $code);
 
-			$data['extensions'][] = [
-				'name'       => $this->language->get($code . '_heading_title'),
-				'code'       => $code,
-				'status'     => $this->config->get('shipping_' . $code . '_status'),
-				'sort_order' => $this->config->get('shipping_' . $code . '_sort_order'),
-				'install'    => $this->url->link('extension/shipping.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-				'uninstall'  => $this->url->link('extension/shipping.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-				'installed'  => in_array($code, $installed),
-				'edit'       => $this->url->link('extension/' . $extension . '/shipping/' . $code, 'user_token=' . $this->session->data['user_token'])
-			];
+				$data['extensions'][] = [
+					'name'       => $this->language->get($code . '_heading_title'),
+					'status'     => $this->config->get('shipping_' . $code . '_status'),
+					'sort_order' => $this->config->get('shipping_' . $code . '_sort_order'),
+					'install'    => $this->url->link('extension/shipping.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall'  => $this->url->link('extension/shipping.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'installed'  => in_array($code, $installed),
+					'edit'       => $this->url->link('extension/' . $extension . '/shipping/' . $code, 'user_token=' . $this->session->data['user_token'])
+				];
+			}
 		}
 
 		$data['promotion'] = $this->load->controller('marketplace/promotion');

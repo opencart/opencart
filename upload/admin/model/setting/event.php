@@ -177,21 +177,26 @@ class Event extends \Opencart\System\Engine\Model {
 	public function getEvents(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "event`";
 
-		$implode = [];
+		$sort_data = [
+			'code',
+			'trigger',
+			'action',
+			'sort_order',
+			'status',
+			'date_added'
+		];
 
-		if (!empty($data['filter_code'])) {
-			$implode[] = "LCASE(`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code'])) . "'";
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
+		} else {
+			$sql .= " ORDER BY `sort_order`";
 		}
 
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "`status` = '" . (int)$data['filter_status'] . "'";
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
 		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$sql .= " ORDER BY `code` ASC, `sort_order` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -223,24 +228,8 @@ class Event extends \Opencart\System\Engine\Model {
 	 *
 	 * $event_total = $this->model_setting_event->getTotalEvents();
 	 */
-	public function getTotalEvents(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "event`";
-
-		$implode = [];
-
-		if (!empty($data['filter_code'])) {
-			$implode[] = "LCASE(`code`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_code'])) . "'";
-		}
-
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "`status` = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$query = $this->db->query($sql);
+	public function getTotalEvents(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "event`");
 
 		return (int)$query->row['total'];
 	}

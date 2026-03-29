@@ -215,18 +215,18 @@ class Returns extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'return_id'     => 'r.return_id',
-			'order_id'      => 'r.order_id',
-			'customer'      => 'customer',
-			'product'       => 'r.product',
-			'model'         => 'r.model',
-			'return_status' => 'return_status',
-			'date_added'    => 'r.date_added',
-			'date_modified' => 'r.date_modified'
+			'r.return_id',
+			'r.order_id',
+			'customer',
+			'r.product',
+			'r.model',
+			'return_status',
+			'r.date_added',
+			'r.date_modified'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `r`.`return_id`";
 		}

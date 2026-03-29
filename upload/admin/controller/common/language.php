@@ -14,7 +14,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
-		// Languages
+		// Language
 		$data['languages'] = [];
 
 		$this->load->model('localisation/language');
@@ -95,7 +95,7 @@ class Language extends \Opencart\System\Engine\Controller {
 				'expires'  => time() + 60 * 60 * 24 * 365 * 10,
 				'path'     => $this->config->get('session_path'),
 				'secure'   => $this->request->server['HTTPS'],
-				'SameSite' => $this->config->get('session_samesite')
+				'SameSite' => $this->config->get('config_session_samesite')
 			];
 
 			setcookie('language', $code, $option);

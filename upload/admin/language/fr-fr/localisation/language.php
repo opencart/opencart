@@ -31,7 +31,6 @@ $_['error_permission']  = 'Attention: Vous n\'avez pas la permission de modifier
 $_['error_exists']      = 'Attention: Vous avez déjà ajouté cette langue!';
 $_['error_name']        = 'Le nom de la langue doit contenir entre 1 et 32 caractères!';
 $_['error_code']        = 'Le code de la langue doit contenir entre 2 et 5 caractères!';
-$_['error_file']        = 'Le fichier est introuvable!';
 $_['error_locale']      = 'Locale requis!';
 $_['error_default']     = 'Attention: Cette langue ne peut pas être supprimée car elle est actuellement définie comme la langue par défaut du magasin!';
 $_['error_admin']       = 'Attention: Cette langue ne peut pas être supprimée car elle est actuellement définie comme langue d\'administration!';

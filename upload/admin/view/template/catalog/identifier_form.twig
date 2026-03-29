@@ -1,0 +1,60 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-identifier" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-identifier" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3 required">
+            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <div class="form-text">{{ help_name }}</div>
+              <div id="error-name" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3 required">
+            <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+              <div class="form-text">{{ help_code }}</div>
+              <div id="error-code" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-validation" class="col-sm-2 col-form-label">{{ entry_validation }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="validation" value="{{ validation }}" placeholder="{{ text_regex }}" id="input-validation" class="form-control"/>
+              <div class="form-text">{{ help_regex }}</div>
+              <div id="error-validation" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="status" value="0"/>
+                <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+              </div>
+              <div class="form-text">{{ help_status }}</div>
+            </div>
+          </div>
+          <input type="hidden" name="identifier_id" value="{{ identifier_id }}" id="input-identifier-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{ footer }}

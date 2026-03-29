@@ -87,8 +87,6 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 	}
 
 	throw new \ErrorException($message, 0, $code, $file, $line);
-
-	return true;
 });
 
 /**
@@ -212,14 +210,8 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$error .= 'ERROR: OpenCart will not work with session.auto_start enabled!' . "\n";
 		}
 
-		$db = [
-			'mysqli',
-			'pdo',
-			'pgsql'
-		];
-
-		if (!array_filter($db, 'extension_loaded')) {
-			$error .= 'ERROR: A database extension needs to be loaded in the php.ini for OpenCart to work!' . "\n";
+		if (!extension_loaded('mysqli')) {
+			$error .= 'ERROR: MySQLi extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!extension_loaded('gd')) {
@@ -230,12 +222,12 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$error .= 'ERROR: CURL extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
-		if (!function_exists('iconv') && !extension_loaded('mbstring')) {
-			$error .= 'ERROR: iconv OR mbstring extension needs to be loaded for OpenCart to work!' . "\n";
-		}
-
 		if (!function_exists('openssl_encrypt')) {
 			$error .= 'ERROR: OpenSSL extension needs to be loaded for OpenCart to work!' . "\n";
+		}
+
+		if (!extension_loaded('zlib')) {
+			$error .= 'ERROR: ZLIB extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!is_file(DIR_OPENCART . 'config.php')) {
@@ -299,20 +291,8 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 
 		try {
 			// Database
-			$db = new \Opencart\System\Library\DB([
-				'engine'   => $db_driver,
-				'hostname' => $db_hostname,
-				'username' => $db_username,
-				'password' => $db_password,
-				'database' => $db_database,
-				'port'     => $db_port,
-				'ssl_key'  => $db_ssl_key,
-				'ssl_cert' => $db_ssl_cert,
-				'ssl_ca'   => $db_ssl_ca
-			]);
+			$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port, $db_ssl_key, $db_ssl_cert, $db_ssl_ca);
 		} catch (\Exception $e) {
-			echo $e->getMessage();
-
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
 
@@ -444,22 +424,16 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
 
-		if (!empty($option['db_ssl_key'])) {
+		if ($option['db_ssl_key']) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
-		} else {
-			$output .= 'define(\'DB_SSL_KEY\', \'\');' . "\n";
 		}
 
-		if (!empty($option['db_ssl_cert'])) {
+		if ($option['db_ssl_cert']) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
-		} else {
-			$output .= 'define(\'DB_SSL_CERT\', \'\');' . "\n";
 		}
 
-		if (!empty($option['db_ssl_ca'])) {
+		if ($option['db_ssl_ca']) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
-		} else {
-			$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
 		}
 
 		$file = fopen(DIR_OPENCART . 'config.php', 'w');
@@ -503,22 +477,16 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n\n";
 
-		if (!empty($option['db_ssl_key'])) {
+		if ($option['db_ssl_key']) {
 			$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($option['db_ssl_key']) . '\');' . "\n";
-		} else {
-			$output .= 'define(\'DB_SSL_KEY\', \'\');' . "\n";
 		}
 
-		if (!empty($option['db_ssl_cert'])) {
+		if ($option['db_ssl_cert']) {
 			$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes($option['db_ssl_cert']) . '\');' . "\n";
-		} else {
-			$output .= 'define(\'DB_SSL_CERT\', \'\');' . "\n";
 		}
 
-		if (!empty($option['db_ssl_ca'])) {
+		if ($option['db_ssl_ca']) {
 			$output .= 'define(\'DB_SSL_CA\', \'' . addslashes($option['db_ssl_ca']) . '\');' . "\n";
-		} else {
-			$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
 		}
 
 		$output .= '// OpenCart API' . "\n";

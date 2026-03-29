@@ -23,21 +23,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		// Storing some sub queries so that we are not typing them out multiple times.
 		$this->statement['discount'] = "(SELECT (CASE WHEN `pd2`.`type` = 'P' THEN (`p`.`price` - (`p`.`price` * (`pd2`.`price` / 100))) WHEN `pd2`.`type` = 'S' THEN (`p`.`price` - `pd2`.`price`) ELSE `pd2`.`price` END) FROM `" . DB_PREFIX . "product_discount` `pd2` WHERE `pd2`.`product_id` = `p`.`product_id` AND `pd2`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `pd2`.`quantity` = '1' AND `pd2`.`special` = '0' AND ((`pd2`.`date_start` = '0000-00-00' OR `pd2`.`date_start` < NOW()) AND (`pd2`.`date_end` = '0000-00-00' OR `pd2`.`date_end` > NOW())) ORDER BY `pd2`.`priority` ASC, `pd2`.`price` ASC LIMIT 1) AS `discount`";
-
-		$this->statement['special'] = "(SELECT (
-		CASE WHEN `ps`.`type` = 'P'
-		THEN (`p`.`price` - (`p`.`price` * (`ps`.`price` / 100)))
-		WHEN `ps`.`type` = 'S' THEN (`p`.`price` - `ps`.`price`)
-		ELSE `ps`.`price` END)
-		FROM `" . DB_PREFIX . "product_discount` `ps`
-		WHERE `ps`.`product_id` = `p`.`product_id`
-		AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "'
-		AND `ps`.`quantity` = '1'
-		AND `ps`.`special` = '1'
-		AND ((`ps`.`date_start` = '0000-00-00' OR `ps`.`date_start` < NOW()) AND (`ps`.`date_end` = '0000-00-00' OR `ps`.`date_end` > NOW()))
-		ORDER BY `ps`.`priority` ASC, `ps`.`price` ASC LIMIT 1) AS `special`";
-
-
+		$this->statement['special'] = "(SELECT (CASE WHEN `ps`.`type` = 'P' THEN (`p`.`price` - (`p`.`price` * (`ps`.`price` / 100))) WHEN `ps`.`type` = 'S' THEN (`p`.`price` - `ps`.`price`) ELSE `ps`.`price` END) FROM `" . DB_PREFIX . "product_discount` `ps` WHERE `ps`.`product_id` = `p`.`product_id` AND `ps`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `ps`.`quantity` = '1' AND `ps`.`special` = '1' AND ((`ps`.`date_start` = '0000-00-00' OR `ps`.`date_start` < NOW()) AND (`ps`.`date_end` = '0000-00-00' OR `ps`.`date_end` > NOW())) ORDER BY `ps`.`priority` ASC, `ps`.`price` ASC LIMIT 1) AS `special`";
 		$this->statement['reward'] = "(SELECT `pr`.`points` FROM `" . DB_PREFIX . "product_reward` `pr` WHERE `pr`.`product_id` = `p`.`product_id` AND `pr`.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "') AS `reward`";
 		$this->statement['review'] = "(SELECT COUNT(*) FROM `" . DB_PREFIX . "review` `r` WHERE `r`.`product_id` = `p`.`product_id` AND `r`.`status` = '1' GROUP BY `r`.`product_id`) AS `reviews`";
 	}
@@ -47,10 +33,11 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * Edit product quantity record in the database.
 	 *
-	 * @param int $product_id primary key of the product record
-	 * @param int $quantity
+	 * @param int                  $product_id primary key of the product record
+	 * @param int                  $quantity
+	 * @param array<string, mixed> $data       array of data
 	 *
-	 * @return void
+	 * @return int
 	 *
 	 * @example
 	 *
@@ -214,43 +201,19 @@ class Product extends \Opencart\System\Engine\Model {
 		$sql .= " GROUP BY `p`.`product_id`";
 
 		$sort_data = [
-			'name',
-			'model',
-			'quantity',
-			'price',
+			'pd.name',
+			'p.model',
+			'p.quantity',
+			'p.price',
 			'rating',
-			'sort_order',
-			'date_added'
+			'p.sort_order',
+			'p.date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			switch ($data['sort']) {
-				case 'name':
-					$sort = 'pd.name';
-					break;
-				case 'model':
-					$sort = 'p.model';
-					break;
-				case 'quantity':
-					$sort = 'p.quantity';
-					break;
-				case 'price':
-					$sort = 'p.price';
-					break;
-				case 'rating':
-					$sort = 'rating';
-					break;
-				case 'sort_order':
-					$sort = 'p.sort_order';
-					break;
-				case 'date_added':
-					$sort = 'p.date_added';
-					break;
-			}
-
-			if ($data['sort'] == 'name' || $data['sort'] == 'model') {
-				$sql .= " ORDER BY LCASE(" . $sort . ")";
-			} elseif ($data['sort'] == 'price') {
+			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
+				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+			} elseif ($data['sort'] == 'p.price') {
 				$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
 			} else {
 				$sql .= " ORDER BY " . $data['sort'];
@@ -330,10 +293,6 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `p`.`date_available` <= NOW())";
 		}
 
-		if (!empty($data['filter_search'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
-		}
-
 		$sql .= " LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_category_id'])) {
@@ -398,7 +357,13 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 
 			if (!empty($data['filter_search'])) {
-				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "' OR `pc`.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
+				$sql .= " OR LCASE(`p`.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "'";
 			}
 
 			$sql .= ")";
@@ -494,7 +459,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $codes = $this->model_catalog_product->getCodes($product_id);
 	 */
 	public function getCodes(int $product_id): array {
-		$query = $this->db->query("SELECT `i`.`code`, `pc`.`value`, `i`.`status` FROM `" . DB_PREFIX . "product_code` `pc` LEFT JOIN `" . DB_PREFIX . "identifier` `i` ON (`pc`.`identifier_id` = `i`.`identifier_id`) WHERE `product_id` = '" . (int)$product_id . "' AND `pc`.`value` != ''");
+		$query = $this->db->query("SELECT `pc`.`code`, `pc`.`value`, `i`.`status` FROM `" . DB_PREFIX . "product_code` `pc` LEFT JOIN `" . DB_PREFIX . "identifier` `i` ON (`pc`.code = `i`.`code`) WHERE `product_id` = '" . (int)$product_id . "' AND `pc`.`value` != ''");
 
 		return $query->rows;
 	}
@@ -805,20 +770,20 @@ class Product extends \Opencart\System\Engine\Model {
 		$sql = "SELECT *, `p`.`price`, `ps`.`price` as `special`, " . $this->statement['discount'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM (SELECT DISTINCT * FROM `" . DB_PREFIX . "product_discount` WHERE `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` = '1' AND `special` = '1' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) GROUP BY `product_id` ORDER BY `priority` ASC) `ps` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`ps`.`product_id` = `p2s`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p2s`.`product_id` = `p`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()";
 
 		$sort_data = [
-			'name'        => 'pd.name',
-			'model'       => 'p.model',
-			'sort_order'  => 'p.price',
-			'rating'      => 'rating',
-			'sort_order'  => 'p.sort_order',
+			'pd.name',
+			'p.model',
+			'p.price',
+			'rating',
+			'p.sort_order'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			if ($data['sort'] == 'name' || $data['sort'] == 'model') {
-				$sql .= " ORDER BY LCASE(" . $sort_data[$data['sort']] . ")";
-			} elseif ($data['sort'] == 'price') {
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
+				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+			} elseif ($data['sort'] == 'p.price') {
 				$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE `p`.`price` END)";
 			} else {
-				$sql .= " ORDER BY " . $sort_data[$data['sort']];
+				$sql .= " ORDER BY " . $data['sort'];
 			}
 		} else {
 			$sql .= " ORDER BY `p`.`sort_order`";

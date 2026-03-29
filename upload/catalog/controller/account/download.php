@@ -47,7 +47,6 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
-		// Downloads
 		$data['downloads'] = [];
 
 		$this->load->model('account/download');
@@ -85,15 +84,13 @@ class Download extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Total Downloads
 		$download_total = $this->model_account_download->getTotalDownloads();
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $download_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page=' . $page)
+			'url'   => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($download_total - $limit)) ? $download_total : ((($page - 1) * $limit) + $limit), $download_total, ceil($download_total / $limit));
@@ -128,7 +125,6 @@ class Download extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
 
-		// Download
 		$this->load->model('account/download');
 
 		$download_info = $this->model_account_download->getDownload($download_id);

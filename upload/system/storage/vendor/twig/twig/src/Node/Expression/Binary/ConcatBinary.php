@@ -13,9 +13,8 @@
 namespace Twig\Node\Expression\Binary;
 
 use Twig\Compiler;
-use Twig\Node\Expression\ReturnStringInterface;
 
-class ConcatBinary extends AbstractBinary implements ReturnStringInterface
+class ConcatBinary extends AbstractBinary
 {
     public function operator(Compiler $compiler): Compiler
     {

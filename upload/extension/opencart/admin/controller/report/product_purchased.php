@@ -83,7 +83,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
-		// Order Statuses
+		// Order Status
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -145,36 +145,47 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination')
 		];
 
-		// Extension
 		$this->load->model('extension/opencart/report/product_purchased');
 
-		// Total Products
 		$product_total = $this->model_extension_opencart_report_product_purchased->getTotalPurchased($filter_data);
 
-		$data['products'] = $this->model_extension_opencart_report_product_purchased->getPurchased($filter_data);
+		$results = $this->model_extension_opencart_report_product_purchased->getPurchased($filter_data);
 
-		$remove = [
-			'route',
-			'user_token',
-			'code',
-			'page'
-		];
+		foreach ($results as $result) {
+			$data['products'][] = [
+				'name'     => $result['name'],
+				'model'    => $result['model'],
+				'quantity' => $result['quantity'],
+				'total'    => $this->currency->format($result['total'], $this->config->get('config_currency'))
+			];
+		}
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		$url = '';
 
-		// Pagination
-		$data['total'] = $product_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('extension/opencart/report/product_purchased.list', 'user_token=' . $this->session->data['user_token'] . '&code=product_purchased' . $url . '&page={page}');
+		if (isset($this->request->get['filter_date_start'])) {
+			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
+		}
+
+		if (isset($this->request->get['filter_date_end'])) {
+			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
+		}
+
+		if (isset($this->request->get['filter_order_status_id'])) {
+			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+		}
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $product_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination'),
+			'url'   => $this->url->link('extension/opencart/report/product_purchased.report', 'user_token=' . $this->session->data['user_token'] . '&code=product_purchased' . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($product_total - $this->config->get('config_pagination'))) ? $product_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $product_total, ceil($product_total / $this->config->get('config_pagination')));
 
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_order_status_id'] = $filter_order_status_id;
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

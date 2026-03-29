@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{ title }}</title>
+  <base href="{{ base }}"/>
+  {% if description %}
+    <meta name="description" content="{{ description }}"/>
+  {% endif %}
+  {% if keywords %}
+    <meta name="keywords" content="{{ keywords }}"/>
+  {% endif %}
+  <script src="{{ jquery }}" type="text/javascript"></script>
+  <link href="{{ bootstrap }}" type="text/css" rel="stylesheet" media="screen"/>
+  <link href="{{ icons }}" rel="stylesheet" type="text/css"/>
+  <link href="{{ stylesheet }}" type="text/css" rel="stylesheet"/>
+  <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+  {% if icon %}
+    <link rel="icon" href="{{ icon }}" type="image/png">
+  {% endif %}
+  {% for style in styles %}
+    <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
+  {% endfor %}
+  {% for script in scripts %}
+    <script src="{{ script.href }}" type="text/javascript"></script>
+  {% endfor %}
+  {% for link in links %}
+    <link href="{{ link.href }}" rel="{{ link.rel }}"/>
+  {% endfor %}
+  {% for analytic in analytics %}
+    {{ analytic }}
+  {% endfor %}
+</head>
+<body>
+<div id="container">
+  <div id="alert"></div>
+  <nav id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-4">
+          <ul class="list-inline">
+            <li class="list-inline-item me-3">{{ currency }}</li>
+            <li class="list-inline-item">{{ language }}</li>
+          </ul>
+        </div>
+        <div class="col text-end">
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="{{ contact }}"><i class="fa-solid fa-phone"></i> <span class="d-none d-lg-inline">{{ telephone }}</span></a></li>
+            <li class="list-inline-item">
+              <div class="dropdown">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i> <span class="d-none d-lg-inline">{{ text_account }}</span> <i class="fa-solid fa-caret-down"></i></a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  {% if not logged %}
+                    <li><a href="{{ register }}" class="dropdown-item">{{ text_register }}</a></li>
+                    <li><a href="{{ login }}" class="dropdown-item">{{ text_login }}</a></li>
+                  {% else %}
+                    <li><a href="{{ account }}" class="dropdown-item">{{ text_account }}</a></li>
+                    <li><a href="{{ order }}" class="dropdown-item">{{ text_order }}</a></li>
+                    <li><a href="{{ transaction }}" class="dropdown-item">{{ text_transaction }}</a></li>
+                    <li><a href="{{ download }}" class="dropdown-item">{{ text_download }}</a></li>
+                    <li><a href="{{ logout }}" class="dropdown-item">{{ text_logout }}</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </li>
+            <li class="list-inline-item"><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa-solid fa-heart"></i> <span class="d-none d-lg-inline">{{ text_wishlist }}</span></a></li>
+            <li class="list-inline-item"><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa-solid fa-cart-shopping"></i> <span class="d-none d-lg-inline">{{ text_shopping_cart }}</span></a></li>
+            <li class="list-inline-item"><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa-solid fa-share"></i> <span class="d-none d-lg-inline">{{ text_checkout }}</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-lg-4">
+          <div id="logo">
+            {% if logo %}
+              <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-fluid"/></a>
+            {% else %}
+              <h1><a href="{{ home }}">{{ name }}</a></h1>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-5">{{ search }}</div>
+        <div id="cart" class="col-md-4 col-lg-3 mb-2">{{ cart }}</div>
+      </div>
+    </div>
+  </header>
+  <main>
+    {{ menu }}

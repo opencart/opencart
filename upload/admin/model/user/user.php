@@ -257,18 +257,17 @@ class User extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'username'   => 'username',
-			'name'       => 'name',
-			'customer'   => 'customer',
-			'email'      => 'u.email',
-			'user_group' => 'user_group',
-			'status'     => 'status',
-			'ip'         => 'ip',
-			'date_added' => 'u.date_added'
+			'username',
+			'name',
+			'u.email',
+			'user_group',
+			'status',
+			'ip',
+			'u.date_added'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `username`";
 		}
@@ -664,9 +663,11 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * Get the record of the user authorize records in the database.
 	 *
-	 * @param  int  $user_id  primary key of the user record
-	 * @param  int  $start
-	 * @param  int  $limit
+	 * @param int $user_id
+	 * @param int $start
+	 * @param int $limit
+	 * @param int $us      \
+	 *                     'er_id primary key of the user record
 	 *
 	 * @return array<int, array<string, mixed>> authorize records
 	 *
@@ -720,19 +721,33 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Reset User Authorizes
+	 * Reset Customer Au
+	 * th
+	 * o
+	 * ri
+	 * zes
 	 *
-	 * Reset user authorize record in the database.
+	 * @
+	 * para
+	 * m
+	 * int
+	 * $
+	 * us
+	 * er
+	 * _id pr
+	 * imary
+	 * key of th
+	 * e customer recor
+	 * d
 	 *
-	 * @param int $user_id primary key of the user record
+	 * @ret
+	 * urn void
 	 *
-	 * @return void
+	 * @
+	 * exa
+	 * mple
 	 *
-	 * @example
-	 *
-	 * $this->load->model('user/user');
-	 *
-	 * $this->model_user_user->resetAuthorizes($user_id);
+	 * @param int $user_id
 	 */
 	public function resetAuthorizes(int $user_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "user_authorize` SET `total` = '0' WHERE `user_id` = '" . (int)$user_id . "'");
@@ -743,11 +758,12 @@ class User extends \Opencart\System\Engine\Model {
 	 *
 	 * Create a new user token record in the database.
 	 *
-	 * @param  int  $user_id  primary key of the user record
-	 * @param  string  $type
-	 * @param  string  $code
+	 * @param int    $user_id primary key of the user record
+	 * @param string $type
+	 * @param string $code
+	 * @param string $codev
 	 *
-	 * @return void
+	 * @return int total number of authorize records that have user ID, token
 	 *
 	 * @example
 	 *
@@ -786,6 +802,7 @@ class User extends \Opencart\System\Engine\Model {
 	 * Delete Token By Code
 	 *
 	 * @param string $code
+	 * @param int    $customer_id primary key of the customer record
 	 *
 	 * @return void
 	 *

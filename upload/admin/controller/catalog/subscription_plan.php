@@ -18,13 +18,19 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,8 +47,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['copy'] = $this->url->link('catalog/subscription_plan.copy', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/subscription_plan.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('catalog/subscription_plan.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('catalog/subscription_plan.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -75,7 +79,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'name';
+			$sort = 'rd.name';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -90,17 +94,23 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Subscription Plans
+		// Subscription Plan
 		$data['subscription_plans'] = [];
 
 		$filter_data = [
@@ -115,11 +125,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_subscription_plan->getSubscriptionPlans($filter_data);
 
 		foreach ($results as $result) {
-			$data['subscription_plans'][] = [
-				'edit'    => $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url),
-				'enable'  => $this->url->link('catalog/subscription_plan.enable', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url),
-				'disable' => $this->url->link('catalog/subscription_plan.disable', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url)
-			] + $result;
+			$data['subscription_plans'][] = ['edit' => $this->url->link('catalog/subscription_plan.form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $result['subscription_plan_id'] . $url)] + $result;
 		}
 
 		$url = '';
@@ -130,26 +136,27 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		// Sorts
-		$data['sort_name'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
-		$data['sort_status'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_name'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=spd.name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sp.sort_order' . $url);
 
-		$allowed = [
-			'sort',
-			'order'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
 
-		// Total Subscription Plans
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		$subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
 
-		// Pagination
-		$data['total'] = $subscription_plan_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $subscription_plan_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('catalog/subscription_plan.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_plan_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($subscription_plan_total - $this->config->get('config_pagination_admin'))) ? $subscription_plan_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $subscription_plan_total, ceil($subscription_plan_total / $this->config->get('config_pagination_admin')));
 
@@ -171,13 +178,19 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['subscription_plan_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -194,7 +207,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/subscription_plan.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/subscription_plan', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Subscription Plan
 		if (isset($this->request->get['subscription_plan_id'])) {
 			$this->load->model('catalog/subscription_plan');
 
@@ -207,7 +219,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$data['subscription_plan_id'] = 0;
 		}
 
-		// Languages
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -288,15 +300,15 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($subscription_info)) {
-			$data['sort_order'] = $subscription_info['sort_order'];
-		} else {
-			$data['sort_order'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
 			$data['status'] = $subscription_info['status'];
 		} else {
 			$data['status'] = 0;
+		}
+
+		if (!empty($subscription_info)) {
+			$data['sort_order'] = $subscription_info['sort_order'];
+		} else {
+			$data['sort_order'] = 0;
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -352,7 +364,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription Plan
 			$this->load->model('catalog/subscription_plan');
 
 			if (!$post_info['subscription_plan_id']) {
@@ -389,81 +400,10 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription Plan
 			$this->load->model('catalog/subscription_plan');
 
 			foreach ($selected as $subscription_plan_id) {
 				$this->model_catalog_subscription_plan->copySubscriptionPlan($subscription_plan_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
-	public function enable(): void {
-		$this->load->language('catalog/subscription_plan');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/subscription_plan')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// subscription_plan
-			$this->load->model('catalog/subscription_plan');
-
-			foreach ($selected as $subscription_plan_id) {
-				$this->model_catalog_subscription_plan->editStatus((int)$subscription_plan_id, true);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('catalog/subscription_plan');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/subscription_plan')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// subscription_plan
-			$this->load->model('catalog/subscription_plan');
-
-			foreach ($selected as $subscription_plan_id) {
-				$this->model_catalog_subscription_plan->editStatus((int)$subscription_plan_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -497,7 +437,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $subscription_plan_id) {
-			// Total Subscriptions
 			$product_total = $this->model_catalog_product->getTotalSubscriptionsBySubscriptionPlanId($subscription_plan_id);
 
 			if ($product_total) {
@@ -506,7 +445,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Subscription Plan
 			$this->load->model('catalog/subscription_plan');
 
 			foreach ($selected as $subscription_plan_id) {

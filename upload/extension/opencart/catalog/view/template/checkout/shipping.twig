@@ -4,28 +4,29 @@
     <div class="accordion-body">
       <form id="form-quote">
         <p>{{ text_destination }}</p>
-        <div class="row mb-3">
+        <div class="row mb-3 required">
           <label for="input-country" class="col-md-4 col-form-label">{{ entry_country }}</label>
           <div class="col-md-8">
-            <x-country name="country_id" value="{{ country_id }}" id="x-country" postcode-required="1" target="input-postcode" input-id="input-country" input-class="form-select" required>
-              <option value="0">{{ text_select }}</option>
-            </x-country>
+            <select name="country_id" id="input-country" class="form-select">
+              <option value="">{{ text_select }}</option>
+              {% for country in countries %}
+                <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
+              {% endfor %}
+            </select>
             <div id="error-country" class="invalid-feedback"></div>
           </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3 required">
           <label for="input-zone" class="col-md-4 col-form-label">{{ entry_zone }}</label>
           <div class="col-md-8">
-            <x-zone name="zone_id" value="{{ zone_id }}" target="x-country" input-id="input-zone" input-class="form-select" required>
-              <option value="0">{{ text_select }}</option>
-            </x-zone>
+            <select name="zone_id" id="input-zone" class="form-select"></select>
             <div id="error-zone" class="invalid-feedback"></div>
           </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3 required">
           <label for="input-postcode" class="col-md-4 col-form-label">{{ entry_postcode }}</label>
           <div class="col-md-8">
-            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" required/>
+            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
             <div id="error-postcode" class="invalid-feedback"></div>
           </div>
         </div>
@@ -35,5 +36,180 @@
       </form>
     </div>
   </div>
-  <script src="extension/opencart/view/javascript/shipping.js" type="text/javascript"></script>
+  <script type="text/javascript"><!--
+  $('#form-quote').on('submit', function(e) {
+      e.preventDefault();
+
+      $.ajax({
+          url: 'index.php?route=extension/opencart/checkout/shipping.quote&language={{ language }}',
+          type: 'post',
+          data: $('#form-quote').serialize(),
+          dataType: 'json',
+          beforeSend: function() {
+              $('#button-quote').button('loading');
+          },
+          complete: function() {
+              $('#button-quote').button('reset');
+          },
+          success: function(json) {
+              console.log(json);
+
+              $('.alert-dismissible').remove();
+              $('#form-shipping').find('.is-invalid').removeClass('is-invalid');
+              $('#form-shipping').find('.invalid-feedback').removeClass('d-block');
+
+              if (json['error']) {
+                  if (json['error']['warning']) {
+                      $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                  }
+
+                  for (key in json['error']) {
+                      $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                      $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                  }
+              }
+
+              if (json['shipping_methods']) {
+                  $('#modal-shipping').remove();
+
+                  html = '<div id="modal-shipping" class="modal">';
+                  html += '  <div class="modal-dialog">';
+                  html += '    <div class="modal-content">';
+                  html += '      <div class="modal-header">';
+                  html += '        <h4 class="modal-title">{{ text_shipping_method|escape('js') }}</h4>';
+                  html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+                  html += '      </div>';
+                  html += '      <div class="modal-body">';
+                  html += '        <form id="form-shipping">';
+                  html += '          <p>{{ text_estimate|escape('js') }}</p>';
+
+                  for (i in json['shipping_methods']) {
+                      html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
+
+                      if (!json['shipping_methods'][i]['error']) {
+                          for (j in json['shipping_methods'][i]['quote']) {
+                              html += '<div class="form-check">';
+
+                              var code = i + '-' + j.replaceAll('_', '-');
+
+                              html += '<input type="radio" name="shipping_method" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + code + '"';
+
+                              if (json['shipping_methods'][i]['quote'][j]['code'] == '{{ code }}') {
+                                  html += ' checked';
+                              }
+
+                              html += '/>';
+                              html += '  <label for="input-shipping-method-' + code + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
+                              html += '</div>';
+                          }
+                      } else {
+                          html += '<div class="alert alert-danger alert-dismissible">' + json['shipping_methods'][i]['error'] + '</div>';
+                      }
+                  }
+
+                  html += '          <div class="text-end">';
+                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping|escape('js') }}</button>';
+                  html += '          </div>';
+                  html += '        </form>';
+                  html += '      </div>';
+                  html += '    </div>';
+                  html += '  </div>';
+                  html += '</div>';
+
+                  $('body').append(html);
+
+                  $('#modal-shipping').modal('show');
+              }
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
+      });
+  });
+
+  $(document).on('submit', '#form-shipping', function(e) {
+      e.preventDefault();
+
+      $.ajax({
+          url: 'index.php?route=extension/opencart/checkout/shipping.save&language={{ language }}',
+          type: 'post',
+          data: $('#form-shipping').serialize(),
+          dataType: 'json',
+          contentType: 'application/x-www-form-urlencoded',
+          beforeSend: function() {
+              $('#button-shipping-method').button('loading');
+          },
+          complete: function() {
+              $('#button-shipping-method').button('reset');
+          },
+          success: function(json) {
+              console.log(json);
+
+              $('.alert-dismissible').remove();
+
+              if (json['error']) {
+                  $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+              }
+
+              if (json['success']) {
+                  $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                  $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
+
+                  $('#modal-shipping').modal('hide');
+              }
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
+      });
+  });
+
+  $('#input-country').on('change', function() {
+      var element = this;
+
+      $.ajax({
+          url: 'index.php?route=localisation/country&country_id=' + this.value + '&language={{ language }}',
+          dataType: 'json',
+          beforeSend: function() {
+              $(element).prop('disabled', true);
+              $('#input-zone').prop('disabled', true);
+          },
+          complete: function() {
+              $(element).prop('disabled', false);
+              $('#input-zone').prop('disabled', false);
+          },
+          success: function(json) {
+              if (json['postcode_required'] == '1') {
+                  $('#input-postcode').parent().parent().addClass('required');
+              } else {
+                  $('#input-postcode').parent().parent().removeClass('required');
+              }
+
+              html = '<option value="">{{ text_select|escape('js') }}</option>';
+
+              if (json['zone'] && json['zone'] != '') {
+                  for (i = 0; i < json['zone'].length; i++) {
+                      html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+                      if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
+                          html += ' selected';
+                      }
+
+                      html += '>' + json['zone'][i]['name'] + '</option>';
+                  }
+              } else {
+                  html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
+              }
+
+              $('#input-zone').html(html);
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
+      });
+  });
+
+  $('#input-country').trigger('change');
+  //--></script>
 </div>

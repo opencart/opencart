@@ -11,15 +11,9 @@ class Curl {
 	 */
 	private string $url = '';
 	/**
-	 * @var array<int, mixed>
+	 * @var array<string, mixed>
 	 */
-	private array $option = [
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_HEADER         => false,
-		CURLOPT_CONNECTTIMEOUT => 30,
-		CURLOPT_TIMEOUT        => 30,
-		CURLOPT_POST           => true,
-	];
+	private array $option = [];
 
 	/**
 	 * Constructor
@@ -33,39 +27,35 @@ class Curl {
 	/**
 	 * Set Option
 	 *
-	 * @see https://www.php.net/manual/en/curl.constants.php
-	 *
-	 * @param int   $key
-	 * @param mixed $value
+	 * @param string $key
+	 * @param array  $data<string, mixed> array of data
 	 *
 	 * @return void
 	 */
-	public function setOption(int $key, mixed $value): void {
-		$this->option[$key] = $value;
+	public function setOption(string $key, array $data = []): void {
+		$this->option[$key] = $data;
 	}
 
-	/**
-	 * Send
-	 *
-	 * @param string               $route
-	 * @param array<string, mixed> $data
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function send(string $url, array $data = []): array {
+	public function send(string $route, $data = []) {
+		// Make remote call
+		$url  = 'http://' . $this->domain . $this->path . 'index.php?route=' . $route;
+
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL, $url);
-
-		foreach ($this->option as $key => $value) {
-			curl_setopt($curl, $key, $value);
-		}
-
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
 		$response = curl_exec($curl);
 
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+		curl_close($curl);
 
 		if ($status == 200) {
 			$response_info = json_decode($response, true);

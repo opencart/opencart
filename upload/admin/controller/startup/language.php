@@ -17,15 +17,11 @@ class Language extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		// Languages
+		// Language
 		$this->load->model('localisation/language');
 
-		$results = $this->model_localisation_language->getLanguages();
+		self::$languages = $this->model_localisation_language->getLanguages();
 
-		foreach ($results as $result) {
-			self::$languages[$result['code']] = $result;
-		}
-		
 		$language_info = [];
 
 		// Set default language

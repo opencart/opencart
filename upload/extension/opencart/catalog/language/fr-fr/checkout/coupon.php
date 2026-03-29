@@ -10,4 +10,4 @@ $_['entry_coupon']  = 'Entrez votre coupon ici';
 
 // Erreur
 $_['error_coupon']  = 'Attention: Le coupon est soit invalide, expiré, ou a atteint sa limite d\'utilisation!';
-$_['error_status']  = 'Attention: Les coupons ne sont pas activés dans ce magasin!';
+$_['error_status']  = 'Attention: Les coupons ne sont pas activés dans cette boutique!';

@@ -29,17 +29,20 @@ use Twig\Template;
  * Whenever possible, you must set these information (original template name
  * and line number) yourself by passing them to the constructor. If some or all
  * these information are not available from where you throw the exception, then
- * this class will guess them automatically.
+ * this class will guess them automatically (when the line number is set to -1
+ * and/or the name is set to null). As this is a costly operation, this
+ * can be disabled by passing false for both the name and the line number
+ * when creating a new instance of this class.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
 class Error extends \Exception
 {
     private $lineno;
+    private $name;
     private $rawMessage;
-    private ?Source $source;
-    private string $phpFile;
-    private int $phpLine;
+    private $sourcePath;
+    private $sourceCode;
 
     /**
      * Constructor.
@@ -54,10 +57,16 @@ class Error extends \Exception
     {
         parent::__construct('', 0, $previous);
 
-        $this->phpFile = $this->getFile();
-        $this->phpLine = $this->getLine();
+        if (null === $source) {
+            $name = null;
+        } else {
+            $name = $source->getName();
+            $this->sourceCode = $source->getCode();
+            $this->sourcePath = $source->getPath();
+        }
+
         $this->lineno = $lineno;
-        $this->source = $source;
+        $this->name = $name;
         $this->rawMessage = $message;
         $this->updateRepr();
     }
@@ -75,26 +84,30 @@ class Error extends \Exception
     public function setTemplateLine(int $lineno): void
     {
         $this->lineno = $lineno;
+
         $this->updateRepr();
     }
 
     public function getSourceContext(): ?Source
     {
-        return $this->source;
+        return $this->name ? new Source($this->sourceCode, $this->name, $this->sourcePath) : null;
     }
 
     public function setSourceContext(?Source $source = null): void
     {
-        $this->source = $source;
+        if (null === $source) {
+            $this->sourceCode = $this->name = $this->sourcePath = null;
+        } else {
+            $this->sourceCode = $source->getCode();
+            $this->name = $source->getName();
+            $this->sourcePath = $source->getPath();
+        }
+
         $this->updateRepr();
     }
 
     public function guess(): void
     {
-        if ($this->lineno > -1) {
-            return;
-        }
-
         $this->guessTemplateInfo();
         $this->updateRepr();
     }
@@ -107,49 +120,80 @@ class Error extends \Exception
 
     private function updateRepr(): void
     {
-        if ($this->source && $this->source->getPath()) {
-            // we only update the file and the line together
-            $this->file = $this->source->getPath();
-            if ($this->lineno > 0) {
-                $this->line = $this->lineno;
-            } else {
-                $this->line = -1;
-            }
+        $this->message = $this->rawMessage;
+
+        if ($this->sourcePath && $this->lineno > 0) {
+            $this->file = $this->sourcePath;
+            $this->line = $this->lineno;
+
+            return;
         }
 
-        $this->message = $this->rawMessage;
-        $last = substr($this->message, -1);
-        if ($punctuation = '.' === $last || '?' === $last ? $last : '') {
+        $dot = false;
+        if (str_ends_with($this->message, '.')) {
             $this->message = substr($this->message, 0, -1);
+            $dot = true;
         }
-        if ($this->source && $this->source->getName()) {
-            $this->message .= \sprintf(' in "%s"', $this->source->getName());
+
+        $questionMark = false;
+        if (str_ends_with($this->message, '?')) {
+            $this->message = substr($this->message, 0, -1);
+            $questionMark = true;
         }
-        if ($this->lineno > 0) {
+
+        if ($this->name) {
+            if (\is_string($this->name) || $this->name instanceof \Stringable) {
+                $name = \sprintf('"%s"', $this->name);
+            } else {
+                $name = json_encode($this->name);
+            }
+            $this->message .= \sprintf(' in %s', $name);
+        }
+
+        if ($this->lineno && $this->lineno >= 0) {
             $this->message .= \sprintf(' at line %d', $this->lineno);
         }
-        if ($punctuation) {
-            $this->message .= $punctuation;
+
+        if ($dot) {
+            $this->message .= '.';
+        }
+
+        if ($questionMark) {
+            $this->message .= '?';
         }
     }
 
     private function guessTemplateInfo(): void
     {
-        // $this->source is never null here (see guess() usage in Template)
-
-        $this->lineno = 0;
         $template = null;
+        $templateClass = null;
+
         $backtrace = debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS | \DEBUG_BACKTRACE_PROVIDE_OBJECT);
         foreach ($backtrace as $trace) {
-            if (isset($trace['object']) && $trace['object'] instanceof Template && $this->source->getName() === $trace['object']->getTemplateName()) {
-                $template = $trace['object'];
-
-                break;
+            if (isset($trace['object']) && $trace['object'] instanceof Template) {
+                $currentClass = \get_class($trace['object']);
+                $isEmbedContainer = null === $templateClass ? false : str_starts_with($templateClass, $currentClass);
+                if (null === $this->name || ($this->name == $trace['object']->getTemplateName() && !$isEmbedContainer)) {
+                    $template = $trace['object'];
+                    $templateClass = \get_class($trace['object']);
+                }
             }
         }
 
-        if (null === $template) {
-            return; // Impossible to guess the info as the template was not found in the backtrace
+        // update template name
+        if (null !== $template && null === $this->name) {
+            $this->name = $template->getTemplateName();
+        }
+
+        // update template path if any
+        if (null !== $template && null === $this->sourcePath) {
+            $src = $template->getSourceContext();
+            $this->sourceCode = $src->getCode();
+            $this->sourcePath = $src->getPath();
+        }
+
+        if (null === $template || $this->lineno > -1) {
+            return;
         }
 
         $r = new \ReflectionObject($template);
@@ -162,7 +206,8 @@ class Error extends \Exception
 
         while ($e = array_pop($exceptions)) {
             $traces = $e->getTrace();
-            array_unshift($traces, ['file' => $e instanceof self ? $e->phpFile : $e->getFile(), 'line' => $e instanceof self ? $e->phpLine : $e->getLine()]);
+            array_unshift($traces, ['file' => $e->getFile(), 'line' => $e->getLine()]);
+
             while ($trace = array_shift($traces)) {
                 if (!isset($trace['file']) || !isset($trace['line']) || $file != $trace['file']) {
                     continue;

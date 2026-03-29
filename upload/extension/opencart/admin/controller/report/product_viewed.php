@@ -80,7 +80,6 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/report')) {
-			// Extension
 			$this->load->model('extension/opencart/report/product_viewed');
 
 			$this->model_extension_opencart_report_product_viewed->install();
@@ -94,7 +93,6 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/report')) {
-			// Extension
 			$this->load->model('extension/opencart/report/product_viewed');
 
 			$this->model_extension_opencart_report_product_viewed->uninstall();
@@ -149,7 +147,6 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 
 		$total = $this->model_extension_opencart_report_product_viewed->getTotal();
 
-		// Total Viewed
 		$viewed_total = $this->model_extension_opencart_report_product_viewed->getTotalViewed();
 
 		$results = $this->model_extension_opencart_report_product_viewed->getViewed(($page - 1) * $this->config->get('config_pagination'), $this->config->get('config_pagination'));
@@ -173,20 +170,18 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'code',
-			'page'
-		];
+		$url = '';
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
-		// Pagination
-		$data['total'] = $viewed_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('extension/opencart/report/product_viewed.list', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed' . $url . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $viewed_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination'),
+			'url'   => $this->url->link('extension/opencart/report/product_viewed.list', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($viewed_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($viewed_total - $this->config->get('config_pagination'))) ? $viewed_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $viewed_total, ceil($viewed_total / $this->config->get('config_pagination')));
 
@@ -216,11 +211,35 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('extension/opencart/report/product_viewed');
 
+			if ($page == 1) {
+				$this->model_extension_opencart_report_product_viewed->clear();
+			}
 
+			$filter_data = [
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
+			];
 
+			// Product
+			$this->load->model('catalog/product');
 
-			$json['success'] = $this->language->get('text_success');
+			$product_total = $this->model_catalog_product->getTotalProducts();
+
+			$products = $this->model_catalog_product->getProducts($filter_data);
+
+			foreach ($products as $product) {
+				$this->model_extension_opencart_report_product_viewed->addReport($product['product_id'], $this->model_catalog_product->getTotalReports($product['product_id']));
+			}
+
+			if (($page * $limit) <= $product_total) {
+				$json['text'] = sprintf($this->language->get('text_progress'), ($page - 1) * $limit, $product_total);
+
+				$json['next'] = $this->url->link('extension/opencart/report/product_viewed.generate', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+			} else {
+				$json['success'] = $this->language->get('text_success');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

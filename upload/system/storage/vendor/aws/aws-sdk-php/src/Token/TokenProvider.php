@@ -2,6 +2,7 @@
 namespace Aws\Token;
 
 use Aws;
+use Aws\Api\DateTimeResult;
 use Aws\CacheInterface;
 use Aws\Exception\TokenException;
 use GuzzleHttp\Promise;
@@ -27,9 +28,8 @@ use GuzzleHttp\Promise;
  */
 class TokenProvider
 {
-    const ENV_PROFILE = 'AWS_PROFILE';
-
     use ParsesIniTrait;
+    const ENV_PROFILE = 'AWS_PROFILE';
 
     /**
      * Create a default token provider tha checks for cached a SSO token from
@@ -44,13 +44,15 @@ class TokenProvider
      */
     public static function defaultProvider(array $config = [])
     {
+
         $cacheable = [
             'sso',
         ];
 
         $defaultChain = [];
 
-        if (!isset($config['use_aws_shared_config_files'])
+        if (
+            !isset($config['use_aws_shared_config_files'])
             || $config['use_aws_shared_config_files'] !== false
         ) {
             $profileName = getenv(self::ENV_PROFILE) ?: 'default';
@@ -77,7 +79,7 @@ class TokenProvider
 
         return self::memoize(
             call_user_func_array(
-                [__CLASS__, 'chain'],
+                [TokenProvider::class, 'chain'],
                 array_values($defaultChain)
             )
         );
@@ -94,7 +96,7 @@ class TokenProvider
     {
         $promise = Promise\Create::promiseFor($token);
 
-        return static function () use ($promise) {
+        return function () use ($promise) {
             return $promise;
         };
     }
@@ -111,12 +113,12 @@ class TokenProvider
         $links = func_get_args();
         //Common use case for when aws_shared_config_files is false
         if (empty($links)) {
-            return static function () {
+            return function () {
                 return Promise\Create::promiseFor(false);
             };
         }
 
-        return static function () use ($links) {
+        return function () use ($links) {
             /** @var callable $parent */
             $parent = array_shift($links);
             $promise = $parent();
@@ -136,7 +138,7 @@ class TokenProvider
      */
     public static function memoize(callable $provider)
     {
-        return static function () use ($provider) {
+        return function () use ($provider) {
             static $result;
             static $isConstant;
 
@@ -188,10 +190,10 @@ class TokenProvider
         callable $provider,
         CacheInterface $cache,
         $cacheKey = null
-    ){
+    ) {
         $cacheKey = $cacheKey ?: 'aws_cached_token';
 
-        return static function () use ($provider, $cache, $cacheKey) {
+        return function () use ($provider, $cache, $cacheKey) {
             $found = $cache->get($cacheKey);
             if (is_array($found) && isset($found['token'])) {
                 $foundToken = $found['token'];
@@ -212,7 +214,7 @@ class TokenProvider
                 ) {
                     $cache->set(
                         $cacheKey,
-                        ['token' => $token],
+                        $token,
                         null === $token->getExpiration() ?
                             0 : $token->getExpiration() - time()
                     );
@@ -225,8 +227,7 @@ class TokenProvider
     /**
      * Gets profiles from the ~/.aws/config ini file
      */
-    private static function loadDefaultProfiles()
-    {
+    private static function loadDefaultProfiles() {
         $profiles = [];
         $configFile = self::getHomeDir() . '/.aws/config';
 
@@ -259,13 +260,11 @@ class TokenProvider
      * @return SsoTokenProvider
      * @see Aws\Token\SsoTokenProvider for $config details.
      */
-    public static function sso(
-        $profileName,
-        $filename,
-        $config = []
-    ){
-        $ssoClient = $config['ssoClient'] ?? null;
+    public static function sso($profileName, $filename, $config = [])
+    {
+        $ssoClient = isset($config['ssoClient']) ? $config['ssoClient'] : null;
 
         return new SsoTokenProvider($profileName, $filename, $ssoClient);
     }
 }
+

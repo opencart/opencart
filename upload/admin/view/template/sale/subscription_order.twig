@@ -14,7 +14,7 @@
           <tr>
             <td class="text-end"><a href="{{ order.view }}" target="_blank">{{ order.order_id }}</a></td>
             <td>{{ order.order_status }}</td>
-            <td class="text-end"><x-currency code="{{ order.currency_code }}" amount="{{ order.total }}" value="{{ order.currency_value }}"></x-currency></td>
+            <td class="text-end">{{ order.total }}</td>
             <td>{{ order.date_added }}</td>
           </tr>
         {% endfor %}
@@ -27,6 +27,6 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
   <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

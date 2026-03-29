@@ -9,8 +9,6 @@ $_['text_list']               = 'Liste des Articles';
 $_['text_add']                = 'Ajouter un Article';
 $_['text_edit']               = 'Modifier l\'Article';
 $_['text_default']            = 'Par Défaut';
-$_['text_general']            = 'Général';
-$_['text_meta']               = 'Balises Meta';
 $_['text_keyword']            = 'N\'utilisez pas d\'espaces, remplacez-les par des - et assurez-vous que l\'URL SEO soit unique à l\'échelle mondiale.';
 
 // Colonne
@@ -44,7 +42,7 @@ $_['error_warning']           = 'Attention: Veuillez vérifier le formulaire att
 $_['error_permission']        = 'Attention: Vous n\'avez pas la permission de modifier les articles!';
 $_['error_name']              = 'Le nom de l\'article doit contenir entre 1 et 255 caractères!';
 $_['error_meta_title']        = 'Le titre Meta doit contenir plus de 1 caractère et moins de 255 caractères!';
-$_['error_author']            = 'L\'auteur doit contenir entre 3 et 64 caractères!';
 $_['error_keyword']           = 'L\'URL SEO doit contenir entre 1 et 64 caractères!';
 $_['error_keyword_exists']    = 'L\'URL SEO doit être unique!';
 $_['error_keyword_character'] = 'Le mot-clé ne peut utiliser que les caractères a-z, 0-9, - et _ !';
+$_['error_author']            = 'L\'auteur doit contenir entre 3 et 64 caractères!';

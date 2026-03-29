@@ -3,7 +3,7 @@
  * @package		OpenCart
  *
  * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license		https://opensource.org/licenses/GPL-3.0
  *
  * @see		https://www.opencart.com
@@ -38,9 +38,9 @@ class Document {
 	 */
 	private array $scripts = [];
 	/**
-	 * @var array<int, array<string, string>> Meta tags with their attributes
+	 * @var array<string, string>
 	 */
-	private array $metas = [];
+	private array $meta = [];
 
 	/**
 	 * Set Title
@@ -158,8 +158,8 @@ class Document {
 	 *
 	 * @return void
 	 */
-	public function addScript(string $href): void {
-		$this->scripts[$href] = ['href'  => $href];
+	public function addScript(string $href, string $position = 'header'): void {
+		$this->scripts[$position][$href] = ['href' => $href];
 	}
 
 	/**
@@ -169,39 +169,31 @@ class Document {
 	 *
 	 * @return array<string, array<string, string>>
 	 */
-	public function getScripts(): array {
-		return $this->scripts;
+	public function getScripts(string $position = 'header'): array {
+		if (isset($this->scripts[$position])) {
+			return $this->scripts[$position];
+		} else {
+			return [];
+		}
 	}
 
 	/**
 	 * Add Meta
 	 *
-	 * Adds a meta tag with specified attributes to the document.
-	 *
-	 * @param array<string, string> $attributes Associative array of meta tag attributes
-	 *                                          Common attributes:
-	 *                                          - 'name' => 'description' (for standard meta tags)
-	 *                                          - 'property' => 'og:title' (for Open Graph)
-	 *                                          - 'content' => 'The content value'
-	 *                                          - 'media' => '(prefers-color-scheme: dark)' (for conditional meta tags)
+	 * @param string $meta
 	 *
 	 * @return void
-	 *
-	 * @example
-	 * $this->document->addMeta(['name' => 'description', 'content' => 'Page description']);
-	 * $this->document->addMeta(['property' => 'og:title', 'content' => 'Page Title']);
-	 * $this->document->addMeta(['name' => 'theme-color', 'content' => '#000', 'media' => '(prefers-color-scheme: dark)']);
 	 */
-	public function addMeta(array $attributes): void {
-		$this->metas[] = $attributes;
+	public function addMeta(string $meta): void {
+		$this->meta[$meta] = $meta;
 	}
 
 	/**
-	 * Get Metas
+	 * Get Meta
 	 *
-	 * @return array<int, array<string, string>>
+	 * @return array<string, string>
 	 */
-	public function getMetas(): array {
-		return $this->metas;
+	public function getMeta() {
+		return $this->meta;
 	}
 }

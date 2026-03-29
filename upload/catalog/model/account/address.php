@@ -90,9 +90,9 @@ class Address extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Addresses
+	 * Delete Address
 	 *
-	 * Delete address records in the database.
+	 * Delete address record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $address_id  primary key of the address record
@@ -103,9 +103,9 @@ class Address extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/address');
 	 *
-	 * $this->model_account_address->deleteAddresses($customer_id, $address_id);
+	 * $this->model_account_address->deleteAddress($customer_id, $address_id);
 	 */
-	public function deleteAddresses(int $customer_id, int $address_id = 0): void {
+	public function deleteAddress(int $customer_id, int $address_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		if ($address_id) {

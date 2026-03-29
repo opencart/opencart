@@ -45,7 +45,7 @@ class Free extends \Opencart\System\Engine\Model {
 				'name'         => $this->language->get('text_description'),
 				'cost'         => 0.00,
 				'tax_class_id' => 0,
-				'text'         => 0.00
+				'text'         => $this->currency->format(0.00, $this->session->data['currency'])
 			];
 
 			$method_data = [

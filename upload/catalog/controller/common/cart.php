@@ -35,7 +35,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$price_status = false;
 		}
 
-		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->session->data['currency'], $total);
+		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($total, $this->session->data['currency']));
 
 		// Products
 		$data['products'] = [];
@@ -65,31 +65,33 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			if ($product['subscription']) {
 				if ($product['subscription']['duration']) {
-					$subscription .= sprintf($this->language->get('text_subscription_duration'), $this->session->data['currency'], $price_status ?? $product['subscription']['price'], $product['subscription']['cycle'], $product['subscription']['frequency'], $product['subscription']['duration']);
+					$subscription .= sprintf($this->language->get('text_subscription_duration'), $price_status ?? $product['subscription']['price_text'], $product['subscription']['cycle'], $product['subscription']['frequency'], $product['subscription']['duration']);
 				} else {
-					$subscription .= sprintf($this->language->get('text_subscription_cancel'), $this->session->data['currency'], $price_status ?? $product['subscription']['price'], $product['subscription']['cycle'], $product['subscription']['frequency']);
+					$subscription .= sprintf($this->language->get('text_subscription_cancel'), $price_status ?? $product['subscription']['price_text'], $product['subscription']['cycle'], $product['subscription']['frequency']);
 				}
 			}
 
 			$data['products'][] = [
-				'thumb'        => $this->model_tool_image->resize($product['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height')),
+				'thumb'        => $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height')),
 				'subscription' => $subscription,
-				'price'        => $price_status ? $product['price'] : '',
-				'total'        => $price_status ? $product['total'] : '',
+				'price'        => $price_status ? $product['price_text'] : '',
+				'total'        => $price_status ? $product['total_text'] : '',
 				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			] + $product;
 		}
 
 		// Totals
-		$data['totals'] = $totals;
+		$data['totals'] = [];
+
+		foreach ($totals as $total) {
+			$data['totals'][] = ['text' => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
+		}
 
 		$data['list'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
 		$data['remove'] = $this->url->link('common/cart.remove', 'language=' . $this->config->get('config_language'));
 
 		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
-
-		$data['currency'] = $this->session->data['currency'];
 
 		return $this->load->view('common/cart', $data);
 	}
@@ -128,7 +130,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_remove');
 
-			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);

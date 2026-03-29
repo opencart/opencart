@@ -48,18 +48,39 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$allowed = [
-			'filter_product',
-			'filter_author',
-			'filter_status',
-			'filter_date_from',
-			'filter_date_to',
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['filter_product'])) {
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_author'])) {
+			$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -75,8 +96,6 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('catalog/review.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/review.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('catalog/review.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('catalog/review.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -151,7 +170,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'date_added';
+			$sort = 'r.date_added';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -160,22 +179,43 @@ class Review extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$allowed = [
-			'filter_product',
-			'filter_author' ,
-			'filter_status',
-			'filter_date_from',
-			'filter_date_to',
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['filter_product'])) {
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_author'])) {
+			$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Reviews
+		// Review
 		$data['reviews'] = [];
 
 		$filter_data = [
@@ -197,27 +237,31 @@ class Review extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['reviews'][] = [
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'enable'  => $this->url->link('catalog/review.enable', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url),
-				'disable' => $this->url->link('catalog/review.disable', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url),
 				'edit'       => $this->url->link('catalog/review.form', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url)
 			] + $result;
 		}
 
-		$allowed = [
-			'filter_name',
-			'filter_model' ,
-			'filter_category_id',
-			'filter_manufacturer_id',
-			'filter_price_from',
-			'filter_price_to',
-			'filter_quantity_from',
-			'filter_quantity_to',
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['filter_product'])) {
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_author'])) {
+			$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -225,39 +269,49 @@ class Review extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		// Sorts
-		$data['sort_product'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_author'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=author' . $url);
-		$data['sort_rating'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=rating' . $url);
-		$data['sort_date_added'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
-		$data['sort_status'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_product'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=pd.name' . $url);
+		$data['sort_author'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.author' . $url);
+		$data['sort_rating'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.rating' . $url);
+		$data['sort_date_added'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_added' . $url);
 
-		$allowed = [
-			'filter_name',
-			'filter_model' ,
-			'filter_category_id',
-			'filter_manufacturer_id',
-			'filter_price_from',
-			'filter_price_to',
-			'filter_quantity_from',
-			'filter_quantity_to',
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status',
-			'sort',
-			'order'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['filter_product'])) {
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		}
 
-		// Total Reviews
+		if (isset($this->request->get['filter_author'])) {
+			$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		$review_total = $this->model_catalog_review->getTotalReviews($filter_data);
 
-		// Pagination
-		$data['total'] = $review_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $review_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('catalog/review.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($review_total - $this->config->get('config_pagination_admin'))) ? $review_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $review_total, ceil($review_total / $this->config->get('config_pagination_admin')));
 
@@ -285,18 +339,39 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['review_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$allowed = [
-			'filter_product',
-			'filter_author' ,
-			'filter_status',
-			'filter_date_from',
-			'filter_date_to',
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['filter_product'])) {
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_author'])) {
+			$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -313,7 +388,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/review.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Review
 		if (isset($this->request->get['review_id'])) {
 			$this->load->model('catalog/review');
 
@@ -423,115 +497,12 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Review
 			$this->load->model('catalog/review');
 
 			if (!$post_info['review_id']) {
 				$json['review_id'] = $this->model_catalog_review->addReview($post_info);
 			} else {
 				$this->model_catalog_review->editReview($post_info['review_id'], $post_info);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Rating
-	 *
-	 * @return void
-	 */
-	public function rating(): void {
-		$this->load->language('catalog/review');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'catalog/review')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$task_data = [
-				'code'   => 'review',
-				'action' => 'task/report/rating',
-				'args'   => []
-			];
-
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
-	public function enable(): void {
-		$this->load->language('catalog/review');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/review')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// review
-			$this->load->model('catalog/review');
-
-			foreach ($selected as $review_id) {
-				$this->model_catalog_review->editStatus((int)$review_id, true);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('catalog/review');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/review')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// review
-			$this->load->model('catalog/review');
-
-			foreach ($selected as $review_id) {
-				$this->model_catalog_review->editStatus((int)$review_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -562,7 +533,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Review
 			$this->load->model('catalog/review');
 
 			foreach ($selected as $review_id) {
@@ -570,6 +540,66 @@ class Review extends \Opencart\System\Engine\Controller {
 			}
 
 			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Sync
+	 *
+	 * @return void
+	 */
+	public function sync(): void {
+		$this->load->language('catalog/review');
+
+		$json = [];
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/review')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Product
+			$this->load->model('catalog/product');
+
+			// Review
+			$this->load->model('catalog/review');
+
+			$limit = 10;
+
+			$product_data = [
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
+			];
+
+			$results = $this->model_catalog_product->getProducts($product_data);
+
+			foreach ($results as $result) {
+				$this->model_catalog_product->editRating($result['product_id'], $this->model_catalog_review->getRating($result['product_id']));
+			}
+
+			$product_total = $this->model_catalog_product->getTotalProducts();
+
+			$start = ($page - 1) * $limit;
+			$end = $start > ($product_total - $limit) ? $product_total : ($start + $limit);
+
+			if ($end < $product_total) {
+				$json['text'] = sprintf($this->language->get('text_next'), $start, $end, $product_total);
+
+				$json['next'] = $this->url->link('catalog/review.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+			} else {
+				$json['success'] = $this->language->get('text_success');
+
+				$json['next'] = '';
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -21,11 +21,11 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($status) {
+			// Store
 			$this->load->language('extension/opencart/module/store');
 
 			$data['store_id'] = $this->config->get('config_store_id');
 
-			// Stores
 			$data['stores'] = [];
 
 			$data['stores'][] = [

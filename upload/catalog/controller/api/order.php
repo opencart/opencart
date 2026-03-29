@@ -75,7 +75,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Set customer
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function setCustomer(): array {
 		return $this->load->controller('api/customer');
@@ -84,7 +84,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Set Payment Address
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function setPaymentAddress(): array {
 		return $this->load->controller('api/payment_address');
@@ -93,7 +93,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Set Shipping Address
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function setShippingAddress(): array {
 		$output = $this->load->controller('api/cart');
@@ -108,7 +108,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Shipping Methods
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function getShippingMethods(): array {
 		$this->load->controller('api/customer');
@@ -128,7 +128,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Set Shipping Method
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function setShippingMethod(): array {
 		$this->load->controller('api/customer');
@@ -144,7 +144,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = $this->load->controller('api/shipping_method');
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -163,7 +163,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Payment Methods
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function getPaymentMethods(): array {
 		$this->load->controller('api/customer');
@@ -184,7 +184,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Set Payment Method
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function setPaymentMethod(): array {
 		$this->load->controller('api/customer');
@@ -201,7 +201,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = $this->load->controller('api/payment_method');
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -220,7 +220,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Extension
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function extension(): array {
 		$this->load->controller('api/customer');
@@ -239,7 +239,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -262,7 +262,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Set Affiliate
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function setAffiliate(): array {
 		return $this->load->controller('api/affiliate');
@@ -271,7 +271,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Cart
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function getCart(): array {
 		$this->load->controller('api/customer');
@@ -282,7 +282,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/payment_address');
 		$this->load->controller('api/shipping_address');
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -304,7 +304,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Product
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function addProduct(): array {
 		$this->load->controller('api/customer');
@@ -323,7 +323,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->controller('api/shipping_method');
 		$this->load->controller('api/payment_method');
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('total');
@@ -342,7 +342,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Confirm Order
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function confirm(): array {
 		$this->load->controller('api/customer');
@@ -388,12 +388,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$output['error']['product'] = $this->language->get('error_stock');
 		}
 
-		// 4. Validate payment address, if required
+		// 4. Validate payment address if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$output['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
-		// 5. Validate shipping address and method, if required
+		// 5. Validate shipping address and method if required
 		if ($this->cart->hasShipping()) {
 			// Shipping Address
 			if (!isset($this->session->data['shipping_address'])) {
@@ -415,7 +415,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// 7. Validate affiliate if set
-		if (isset($this->request->post['affiliate_id']) && !isset($this->session->data['affiliate_id'])) {
+		if (isset($thid->request->post['affiliate_id']) && !isset($this->session->data['affiliate_id'])) {
 			$output['error']['affiliate'] = $this->language->get('error_affiliate');
 		}
 
@@ -674,7 +674,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add History
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function addHistory(): array {
 		$this->load->language('api/order');
@@ -687,7 +687,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'order_status_id' => 0,
 			'comment'         => '',
 			'notify'          => 0,
-			'override'        => 0
+			'override'        => 0,
 		];
 
 		$post_info = $this->request->post + $required;

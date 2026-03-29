@@ -12,8 +12,8 @@ class Reward extends \Opencart\System\Engine\Model {
 	 * Get Total
 	 *
 	 * @param array<int, array<string, mixed>> $totals
-	 * @param  array<int, float>               &$taxes
-	 * @param  float                           &$total
+	 * @param array<int, float>                $taxes
+	 * @param float                            $total
 	 *
 	 * @return void
 	 */
@@ -47,7 +47,7 @@ class Reward extends \Opencart\System\Engine\Model {
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {
-									$taxes[(int)$tax_rate['tax_rate_id']] -= (float)$tax_rate['amount'];
+									$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
 								}
 							}
 						}
@@ -109,7 +109,6 @@ class Reward extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function unconfirm(array $order_info): void {
-		// Reward
 		$this->load->model('account/reward');
 
 		$this->model_account_reward->deleteRewardByOrderId($order_info['order_id']);

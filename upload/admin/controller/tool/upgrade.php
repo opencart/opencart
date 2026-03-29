@@ -44,14 +44,16 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade');
 
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 
 		$response = curl_exec($curl);
 
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+		curl_close($curl);
 
 		if ($status == 200) {
 			$response_info = json_decode($response, true);
@@ -88,7 +90,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 	/**
 	 * Download
 	 *
-	 * @return array
+	 * @return void
 	 */
 	public function download(): void {
 		$this->load->language('tool/upgrade');
@@ -119,9 +121,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
 
 			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 300);
 			curl_setopt($curl, CURLOPT_FILE, $handle);
 
@@ -134,6 +136,8 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			if ($status != 200) {
 				$json['error'] = $this->language->get('error_download');
 			}
+
+			curl_close($curl);
 		}
 
 		if (!$json) {
@@ -148,8 +152,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Install
-	 *
-	 * Copy the installer directory from the upgrade zip
 	 *
 	 * @return void
 	 */

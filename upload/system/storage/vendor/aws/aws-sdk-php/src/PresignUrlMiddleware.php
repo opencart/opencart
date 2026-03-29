@@ -114,7 +114,7 @@ class PresignUrlMiddleware
         if (!empty($this->extraQueryParams[$cmdName])) {
             foreach ($this->extraQueryParams[$cmdName] as $param) {
                 if (!strpos($currentQueryParams, $param)) {
-                    $paramsToAdd =  "&{$param}=" . urlencode($cmd[$param]);
+                    $paramsToAdd =  "&{$param}={$cmd[$param]}";
                 }
             }
         }

@@ -1,0 +1,15 @@
+{% if addresses %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      {% for address in addresses %}
+        <tr>
+          <td>{{ address.address }}</td>
+          <td>{% if address.default %}<strong>{{ text_default }}</strong>{% endif %}</td>
+          <td class="text-end"><a href="{{ address.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-regular fa-solid fa-pencil"></i></a> <a href="{{ address.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% else %}
+  <p>{{ text_no_results }}</p>
+{% endif %}

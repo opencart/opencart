@@ -35,14 +35,13 @@ class Session {
 	public function __construct(string $adaptor, \Opencart\System\Engine\Registry $registry) {
 		$class = 'Opencart\System\Library\Session\\' . $adaptor;
 
-		if (!class_exists($class)) {
+		if (class_exists($class)) {
+			$this->adaptor = new $class($registry);
+			register_shutdown_function([&$this, 'close']);
+			register_shutdown_function([&$this, 'gc']);
+		} else {
 			throw new \Exception('Error: Could not load session adaptor ' . $adaptor . ' session!');
 		}
-
-		$this->adaptor = new $class($registry);
-
-		register_shutdown_function([&$this, 'close']);
-		register_shutdown_function([&$this, 'gc']);
 	}
 
 	/**
@@ -68,11 +67,11 @@ class Session {
 			$session_id = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 		}
 
-		if (!preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $session_id)) {
+		if (preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $session_id)) {
+			$this->session_id = $session_id;
+		} else {
 			throw new \Exception('Error: Invalid session ID!');
 		}
-
-		$this->session_id = $session_id;
 
 		$this->data = $this->adaptor->read($session_id);
 

@@ -102,7 +102,6 @@ class Sale extends \Opencart\System\Engine\Controller {
 			$data['percentage'] = 0;
 		}
 
-		// Total Sales
 		$sale_total = $this->model_extension_opencart_report_sale->getTotalSales();
 
 		if ($sale_total > 1000000000000) {

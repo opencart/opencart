@@ -314,12 +314,12 @@ class Order extends \Opencart\System\Engine\Model {
 		$this->model_checkout_order->deleteTotals($order_id);
 		$this->model_checkout_order->deleteHistories($order_id);
 
-		// Transactions
+		// Transaction
 		$this->load->model('account/transaction');
 
 		$this->model_account_transaction->deleteTransactionsByOrderId($order_id);
 
-		// Rewards
+		// Reward
 		$this->load->model('account/reward');
 
 		$this->model_account_reward->deleteRewardsByOrderId($order_id);
@@ -440,7 +440,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * Delete order product record in the database.
 	 *
-	 * @param int $order_id primary key of the order record
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return void
 	 *
@@ -534,7 +535,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * Delete order option records in the database.
 	 *
-	 * @param int $order_id primary key of the order record
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return void
 	 *
@@ -612,7 +614,8 @@ class Order extends \Opencart\System\Engine\Model {
 	 *
 	 * Delete order subscription record in the database.
 	 *
-	 * @param int $order_id primary key of the order record
+	 * @param int $order_id         primary key of the order record
+	 * @param int $order_product_id primary key of the order product record
 	 *
 	 * @return void
 	 *
@@ -794,7 +797,7 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			// Only do the fraud check if the customer is not on the safe list and the order status is changing into the complete or process order status
-			if (!$safe && !$override && in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
+			if (!$safe && !$override && in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
 				// Anti-Fraud
 				$this->load->model('setting/extension');
 
@@ -827,7 +830,7 @@ class Order extends \Opencart\System\Engine\Model {
 			$order_totals = $this->model_checkout_order->getTotals($order_id);
 
 			// If current order status is not processing or complete but new status is processing or complete then commence completing the order
-			if (!in_array($order_info['order_status_id'], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status'))) && in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
+			if (!in_array($order_info['order_status_id'], (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status')) && in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
 				// Redeem coupon and reward points
 				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
@@ -867,10 +870,10 @@ class Order extends \Opencart\System\Engine\Model {
 				// Affiliate add commission if complete status
 				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
 					// Add commission if sale is linked to affiliate referral.
-					$this->load->model('account/transaction');
+					$this->load->model('account/customer');
 
-					if (!$this->model_account_transaction->getTotalTransactionsByOrderId($order_id)) {
-						$this->model_account_transaction->addTransaction($order_info['affiliate_id'], $order_id, $this->language->get('text_order_id') . ' #' . $order_id, (float)$order_info['commission']);
+					if (!$this->model_account_customer->getTotalTransactionsByOrderId($order_id)) {
+						$this->model_account_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
 					}
 				}
 
@@ -901,8 +904,7 @@ class Order extends \Opencart\System\Engine\Model {
 						'tax'                  => array_sum(array_column($subscription_product_data, 'tax')),
 						'subscription_product' => $subscription_product_data,
 						'language'             => $order_info['language_code'],
-						'currency_code'        => $order_info['currency_code'],
-						'currency_value'       => $order_info['currency_value']
+						'currency'             => $order_info['currency_code']
 					] + $order_info + $order_subscription;
 
 					$subscription_info = $this->model_checkout_subscription->getProductByOrderProductId($order_id, $order_subscription['order_product_id']);
@@ -921,7 +923,7 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon and reward history
-			if (in_array($order_info['order_status_id'], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
+			if (in_array($order_info['order_status_id'], (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status')) && !in_array($order_status_id, (array)$this->config->get('config_processing_status') + (array)$this->config->get('config_complete_status'))) {
 				// Restock
 				foreach ($order_products as $order_product) {
 					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` + " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `subtract` = '1'");
@@ -969,7 +971,7 @@ class Order extends \Opencart\System\Engine\Model {
 				if ($order_info['affiliate_id']) {
 					$this->load->model('account/transaction');
 
-					$this->model_account_transaction->deleteTransactions($order_info['customer_id'], $order_id);
+					$this->model_account_transaction->deleteTransaction($order_info['customer_id'], $order_id);
 				}
 			}
 

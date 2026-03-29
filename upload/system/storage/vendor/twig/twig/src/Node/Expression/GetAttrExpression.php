@@ -14,49 +14,37 @@ namespace Twig\Node\Expression;
 
 use Twig\Compiler;
 use Twig\Extension\SandboxExtension;
-use Twig\Node\Expression\Variable\ContextVariable;
 use Twig\Template;
 
-class GetAttrExpression extends AbstractExpression implements SupportDefinedTestInterface
+class GetAttrExpression extends AbstractExpression
 {
-    use SupportDefinedTestDeprecationTrait;
-    use SupportDefinedTestTrait;
-
     /**
      * @param ArrayExpression|NameExpression|null $arguments
      */
-    public function __construct(AbstractExpression $node, AbstractExpression $attribute, ?AbstractExpression $arguments, string $type, int $lineno, bool $nullSafe = false)
+    public function __construct(AbstractExpression $node, AbstractExpression $attribute, ?AbstractExpression $arguments, string $type, int $lineno)
     {
         $nodes = ['node' => $node, 'attribute' => $attribute];
         if (null !== $arguments) {
             $nodes['arguments'] = $arguments;
         }
 
-        if ($arguments && !$arguments instanceof ArrayExpression && !$arguments instanceof ContextVariable) {
+        if ($arguments && !$arguments instanceof ArrayExpression && !$arguments instanceof NameExpression) {
             trigger_deprecation('twig/twig', '3.15', \sprintf('Not passing a "%s" instance as the "arguments" argument of the "%s" constructor is deprecated ("%s" given).', ArrayExpression::class, static::class, $arguments::class));
         }
 
-        parent::__construct($nodes, ['type' => $type, 'ignore_strict_check' => false, 'optimizable' => !$nullSafe, 'null_safe' => $nullSafe], $lineno);
-    }
-
-    public function enableDefinedTest(): void
-    {
-        $this->definedTest = true;
-        $this->changeIgnoreStrictCheck($this);
+        parent::__construct($nodes, ['type' => $type, 'is_defined_test' => false, 'ignore_strict_check' => false, 'optimizable' => true], $lineno);
     }
 
     public function compile(Compiler $compiler): void
     {
         $env = $compiler->getEnvironment();
         $arrayAccessSandbox = false;
-        $nullSafe = $this->getAttribute('null_safe');
-        $objectVar = null;
 
         // optimize array calls
         if (
             $this->getAttribute('optimizable')
             && (!$env->isStrictVariables() || $this->getAttribute('ignore_strict_check'))
-            && !$this->definedTest
+            && !$this->getAttribute('is_defined_test')
             && Template::ARRAY_CALL === $this->getAttribute('type')
         ) {
             $var = '$'.$compiler->getVarName();
@@ -95,27 +83,14 @@ class GetAttrExpression extends AbstractExpression implements SupportDefinedTest
             ;
         }
 
+        $compiler->raw('CoreExtension::getAttribute($this->env, $this->source, ');
+
         if ($this->getAttribute('ignore_strict_check')) {
             $this->getNode('node')->setAttribute('ignore_strict_check', true);
         }
 
-        if ($nullSafe) {
-            $objectVar = '$'.$compiler->getVarName();
-            $compiler
-                ->raw('((null === ('.$objectVar.' = ')
-                ->subcompile($this->getNode('node'))
-                ->raw(')) ? null : ');
-        }
-
-        $compiler->raw('CoreExtension::getAttribute($this->env, $this->source, ');
-
-        if ($nullSafe) {
-            $compiler->raw($objectVar);
-        } else {
-            $compiler->subcompile($this->getNode('node'));
-        }
-
         $compiler
+            ->subcompile($this->getNode('node'))
             ->raw(', ')
             ->subcompile($this->getNode('attribute'))
         ;
@@ -128,7 +103,7 @@ class GetAttrExpression extends AbstractExpression implements SupportDefinedTest
 
         $compiler->raw(', ')
             ->repr($this->getAttribute('type'))
-            ->raw(', ')->repr($this->definedTest)
+            ->raw(', ')->repr($this->getAttribute('is_defined_test'))
             ->raw(', ')->repr($this->getAttribute('ignore_strict_check'))
             ->raw(', ')->repr($env->hasExtension(SandboxExtension::class))
             ->raw(', ')->repr($this->getNode('node')->getTemplateLine())
@@ -137,20 +112,6 @@ class GetAttrExpression extends AbstractExpression implements SupportDefinedTest
 
         if ($arrayAccessSandbox) {
             $compiler->raw(')');
-        }
-
-        if ($nullSafe) {
-            $compiler->raw(')');
-        }
-    }
-
-    private function changeIgnoreStrictCheck(self $node): void
-    {
-        $node->setAttribute('optimizable', false);
-        $node->setAttribute('ignore_strict_check', true);
-
-        if ($node->getNode('node') instanceof self) {
-            $this->changeIgnoreStrictCheck($node->getNode('node'));
         }
     }
 }

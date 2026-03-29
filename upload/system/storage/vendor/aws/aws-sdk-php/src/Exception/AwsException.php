@@ -11,7 +11,6 @@ use Aws\ResultInterface;
 use JmesPath\Env as JmesPath;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
-use Throwable;
 
 /**
  * Represents an AWS exception that is thrown when a command fails.
@@ -40,29 +39,35 @@ class AwsException extends \RuntimeException implements
 
 
     /**
-     * @param string $message Exception message
+     * @param string           $message Exception message
      * @param CommandInterface $command
-     * @param array $context Exception context
-     * @param Throwable|null $previous Previous exception (if any)
+     * @param array            $context Exception context
+     * @param \Exception       $previous  Previous exception (if any)
      */
     public function __construct(
         $message,
         CommandInterface $command,
         array $context = [],
-        ?Throwable $previous = null
+        ?\Exception $previous = null
     ) {
-        $this->data = $context['body'] ?? [];
+        $this->data = isset($context['body']) ? $context['body'] : [];
         $this->command = $command;
-        $this->response = $context['response'] ?? null;
-        $this->request = $context['request'] ?? null;
-        $this->requestId = $context['request_id'] ?? null;
-        $this->errorType = $context['type'] ?? null;
-        $this->errorCode = $context['code'] ?? null;
-        $this->errorShape = $context['error_shape'] ?? null;
+        $this->response = isset($context['response']) ? $context['response'] : null;
+        $this->request = isset($context['request']) ? $context['request'] : null;
+        $this->requestId = isset($context['request_id'])
+            ? $context['request_id']
+            : null;
+        $this->errorType = isset($context['type']) ? $context['type'] : null;
+        $this->errorCode = isset($context['code']) ? $context['code'] : null;
+        $this->errorShape = isset($context['error_shape']) ? $context['error_shape'] : null;
         $this->connectionError = !empty($context['connection_error']);
-        $this->result = $context['result'] ?? null;
-        $this->transferInfo = $context['transfer_stats'] ?? [];
-        $this->errorMessage = $context['message'] ?? null;
+        $this->result = isset($context['result']) ? $context['result'] : null;
+        $this->transferInfo = isset($context['transfer_stats'])
+            ? $context['transfer_stats']
+            : [];
+        $this->errorMessage = isset($context['message'])
+            ? $context['message']
+            : null;
         $this->monitoringEvents = [];
         $this->maxRetriesExceeded = false;
         parent::__construct($message, 0, $previous);
@@ -215,7 +220,9 @@ class AwsException extends \RuntimeException implements
             return $this->transferInfo;
         }
 
-        return $this->transferInfo[$name] ?? null;
+        return isset($this->transferInfo[$name])
+            ? $this->transferInfo[$name]
+            : null;
     }
 
     /**

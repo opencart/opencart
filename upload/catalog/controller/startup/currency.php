@@ -14,7 +14,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$code = '';
 
-		// Currencies
+		// Currency
 		$this->load->model('localisation/currency');
 
 		$currencies = $this->model_localisation_currency->getCurrencies();

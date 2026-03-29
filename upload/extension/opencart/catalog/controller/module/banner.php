@@ -16,8 +16,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 	public function index(array $setting): string {
 		static $module = 0;
 
-		//$this->document->addScript('extension/opencart/catalog/view/javascript/banner.js');
-
 		// Banner
 		$this->load->model('design/banner');
 
@@ -33,7 +31,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 				$data['banners'][] = [
 					'title' => $result['title'],
 					'link'  => $result['link'],
-					'image' => $this->config->get('config_url') . 'image/' . $result['image']
+					'image' => $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $setting['width'], $setting['height'])
 				];
 			}
 		}

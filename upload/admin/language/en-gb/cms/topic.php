@@ -7,14 +7,11 @@ $_['text_success']            = 'Success: You have modified topics!';
 $_['text_list']               = 'Topic List';
 $_['text_add']                = 'Add Topic';
 $_['text_edit']               = 'Edit Topic';
-$_['text_filter']             = 'Filter';
-$_['text_general']            = 'General';
-$_['text_meta']               = 'Meta Tags';
+$_['text_default']            = 'Default';
 $_['text_keyword']            = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 
 // Column
 $_['column_name']             = 'Topic Name';
-$_['column_status']           = 'Status';
 $_['column_sort_order']       = 'Sort Order';
 $_['column_action']           = 'Action';
 
@@ -26,9 +23,8 @@ $_['entry_meta_title']        = 'Meta Tag Title';
 $_['entry_meta_keyword']      = 'Meta Tag Keywords';
 $_['entry_meta_description']  = 'Meta Tag Description';
 $_['entry_store']             = 'Stores';
-$_['entry_language']          = 'Language';
-$_['entry_status']            = 'Status';
 $_['entry_sort_order']        = 'Sort Order';
+$_['entry_status']            = 'Status';
 $_['entry_keyword']           = 'Keyword';
 $_['entry_layout']            = 'Layout Override';
 

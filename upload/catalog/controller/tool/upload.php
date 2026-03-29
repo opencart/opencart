@@ -32,12 +32,32 @@ class Upload extends \Opencart\System\Engine\Controller {
 				}
 
 				// Allowed file extension types
-				if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $this->config->get('upload_type_allowed'))) {
+				$allowed = [];
+
+				$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
+
+				$filetypes = explode("\n", $extension_allowed);
+
+				foreach ($filetypes as $filetype) {
+					$allowed[] = trim($filetype);
+				}
+
+				if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
 					$json['error'] = $this->language->get('error_file_type');
 				}
 
 				// Allowed file mime types
-				if (!in_array($this->request->files['file']['type'], $this->config->get('upload_mime_allowed'))) {
+				$allowed = [];
+
+				$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
+
+				$filetypes = explode("\n", $mime_allowed);
+
+				foreach ($filetypes as $filetype) {
+					$allowed[] = trim($filetype);
+				}
+
+				if (!in_array($this->request->files['file']['type'], $allowed)) {
 					$json['error'] = $this->language->get('error_file_type');
 				}
 

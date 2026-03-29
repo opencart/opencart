@@ -4,6 +4,10 @@
   <meta charset="UTF-8"/>
   <title>{{ title }}</title>
   <base href="{{ base }}"/>
+  <link href="{{ bootstrap_css }}" type="text/css" rel="stylesheet"/>
+  <link href="{{ icons }}" type="text/css" rel="stylesheet"/>
+  <script src="{{ jquery }}" type="text/javascript"></script>
+  <script src="{{ bootstrap_js }}" type="text/javascript"></script>
   <link href="{{ stylesheet }}" type="text/css" rel="stylesheet"/>
 </head>
 <body>
@@ -147,14 +151,14 @@
 
               <td>{{ product.model }}</td>
               <td class="text-end">{{ product.quantity }}</td>
-              <td class="text-end"><x-currency code="{{ order.currency_code }}" amount="{{ product.price }}" value="{{ order.currency_value }}"></x-currency></td>
-              <td class="text-end"><x-currency code="{{ order.currency_code }}" amount="{{ product.total }}" value="{{ order.currency_value }}"></x-currency></td>
+              <td class="text-end">{{ product.price }}</td>
+              <td class="text-end">{{ product.total }}</td>
             </tr>
           {% endfor %}
           {% for total in order.total %}
             <tr>
               <td class="text-end" colspan="4"><b>{{ total.title }}</b></td>
-              <td class="text-end"><x-currency code="{{ order.currency_code }}" amount="{{ total.value }}" value="{{ order.currency_value }}"></x-currency></td>
+              <td class="text-end">{{ total.text }}</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -174,6 +178,5 @@
     </div>
   {% endfor %}
 </div>
-<script src="./view/javascript/framework/webcomponent.js" type="module"></script>
 </body>
 </html>

@@ -12,7 +12,6 @@
 
 namespace Twig\TokenParser;
 
-use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\IncludeNode;
 use Twig\Node\Node;
 use Twig\Token;
@@ -30,16 +29,13 @@ class IncludeTokenParser extends AbstractTokenParser
 {
     public function parse(Token $token): Node
     {
-        $expr = $this->parser->parseExpression();
+        $expr = $this->parser->getExpressionParser()->parseExpression();
 
         [$variables, $only, $ignoreMissing] = $this->parseArguments();
 
         return new IncludeNode($expr, $variables, $only, $ignoreMissing, $token->getLine());
     }
 
-    /**
-     * @return array{0: ?AbstractExpression, 1: bool, 2: bool}
-     */
     protected function parseArguments()
     {
         $stream = $this->parser->getStream();
@@ -53,7 +49,7 @@ class IncludeTokenParser extends AbstractTokenParser
 
         $variables = null;
         if ($stream->nextIf(Token::NAME_TYPE, 'with')) {
-            $variables = $this->parser->parseExpression();
+            $variables = $this->parser->getExpressionParser()->parseExpression();
         }
 
         $only = false;

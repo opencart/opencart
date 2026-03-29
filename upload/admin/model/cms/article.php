@@ -231,41 +231,21 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_cms_article->getArticles($filter_data);
 	 */
 	public function getArticles(array $data = []): array {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`)";
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`)";
-		}
-
-		$sql .= " WHERE `ad`.`language_id` = '" . (int)$language_id . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`) WHERE `ad`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
 		}
 
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " AND `a2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
-		}
-
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND `a`.`status` = '" . (int)$data['filter_status'] . "'";
-		}
-
 		$sort_data = [
-			'name'       => 'ad.name',
-			'author'     => 'a.author',
-			'rating'     => 'a.rating',
-			'date_added' => 'a.date_added'
+			'ad.name',
+			'a.author',
+			'a.rating',
+			'a.date_added'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `a`.`date_added`";
 		}
@@ -326,30 +306,10 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $article_total = $this->model_cms_article->getTotalArticles($filter_data);
 	 */
 	public function getTotalArticles(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article` `a` LEFT JOIN `" . DB_PREFIX . "article_description` `ad` ON (`a`.`article_id` = `ad`.`article_id`)";
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "article_to_store` `a2s` ON (`a`.`article_id` = `a2s`.`article_id`)";
-		}
-
-		$sql .= " WHERE `ad`.`language_id` = '" . (int)$language_id . "'";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "article`";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`ad`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
-		}
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " AND `a2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
-		}
-
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND `a`.`status` = '" . (int)$data['filter_status'] . "'";
+			$sql .= " AND LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
 		}
 
 		$query = $this->db->query($sql);
@@ -444,10 +404,10 @@ class Article extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $article_id): array {
 		$article_description_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `ad`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "article_description` `ad` WHERE `ad`.`article_id` = '" . (int)$article_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "article_description` WHERE `article_id` = '" . (int)$article_id . "'");
 
 		foreach ($query->rows as $result) {
-			$article_description_data[$result['code']] = $result;
+			$article_description_data[$result['language_id']] = $result;
 		}
 
 		return $article_description_data;

@@ -20,18 +20,15 @@ use Twig\Node\Node;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class BlockReferenceExpression extends AbstractExpression implements SupportDefinedTestInterface
+class BlockReferenceExpression extends AbstractExpression
 {
-    use SupportDefinedTestDeprecationTrait;
-    use SupportDefinedTestTrait;
-
     /**
      * @param AbstractExpression $name
      */
     public function __construct(Node $name, ?Node $template, int $lineno)
     {
         if (!$name instanceof AbstractExpression) {
-            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "node" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, $name::class);
+            trigger_deprecation('twig/twig', '3.15', 'Not passing a "%s" instance to the "node" argument of "%s" is deprecated ("%s" given).', AbstractExpression::class, static::class, \get_class($name));
         }
 
         $nodes = ['name' => $name];
@@ -39,12 +36,12 @@ class BlockReferenceExpression extends AbstractExpression implements SupportDefi
             $nodes['template'] = $template;
         }
 
-        parent::__construct($nodes, ['output' => false], $lineno);
+        parent::__construct($nodes, ['is_defined_test' => false, 'output' => false], $lineno);
     }
 
     public function compile(Compiler $compiler): void
     {
-        if ($this->definedTest) {
+        if ($this->getAttribute('is_defined_test')) {
             $this->compileTemplateCall($compiler, 'hasBlock');
         } else {
             if ($this->getAttribute('output')) {
@@ -66,8 +63,10 @@ class BlockReferenceExpression extends AbstractExpression implements SupportDefi
             $compiler->write('$this');
         } else {
             $compiler
-                ->write('$this->load(')
+                ->write('$this->loadTemplate(')
                 ->subcompile($this->getNode('template'))
+                ->raw(', ')
+                ->repr($this->getTemplateName())
                 ->raw(', ')
                 ->repr($this->getTemplateLine())
                 ->raw(')')

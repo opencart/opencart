@@ -42,7 +42,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customers By Week
 	 *
-	 * @return array<int, array<string, string|int>>
+	 * @return array<int, array<string, int>>
 	 *
 	 * @example
 	 *
@@ -67,7 +67,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			$customer_data[date('w', strtotime($result['date_added']))] = [
 				'day'   => date('D', strtotime($result['date_added'])),
-				'total' => (int)$result['total']
+				'total' => $result['total']
 			];
 		}
 
@@ -77,7 +77,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customers By Month
 	 *
-	 * @return array<int, array<string, string|int>>
+	 * @return array<int, array<string, int>>
 	 *
 	 * @example
 	 *
@@ -100,7 +100,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			$customer_data[date('j', strtotime($result['date_added']))] = [
 				'day'   => date('d', strtotime($result['date_added'])),
-				'total' => (int)$result['total']
+				'total' => $result['total']
 			];
 		}
 
@@ -110,7 +110,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Total Customers By Year
 	 *
-	 * @return array<int, array<string, string|int>>
+	 * @return array<int, array<string, int>>
 	 *
 	 * @example
 	 *
@@ -131,7 +131,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			$customer_data[date('n', strtotime($result['date_added']))] = [
 				'month' => date('M', strtotime($result['date_added'])),
-				'total' => (int)$result['total']
+				'total' => $result['total']
 			];
 		}
 

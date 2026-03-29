@@ -21,8 +21,18 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['base'] = HTTP_SERVER;
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
-		$data['styles'] = $this->document->getStyles();
+
+		// Hard coding css so they can be replaced via the event's system.
+		$data['bootstrap'] = 'view/stylesheet/bootstrap.css';
+		$data['icons'] = 'view/stylesheet/fonts/fontawesome/css/all.min.css';
+		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
+
+		// Hard coding scripts so they can be replaced via the event's system.
+		$data['jquery'] = 'view/javascript/jquery/jquery-3.7.1.min.js';
+
 		$data['links'] = $this->document->getLinks();
+		$data['styles'] = $this->document->getStyles();
+		$data['scripts'] = $this->document->getScripts();
 
 		$this->load->language('common/header');
 
@@ -83,17 +93,24 @@ class Header extends \Opencart\System\Engine\Controller {
 				$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
 			}
 
-			// Stores
+			// Store
 			$data['stores'] = [];
 
 			$data['stores'][] = [
-				'store_id' => 0,
-				'name'     => $this->config->get('config_name')
+				'name' => $this->config->get('config_name'),
+				'href' => HTTP_CATALOG
 			];
 
 			$this->load->model('setting/store');
 
-			$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
+			$results = $this->model_setting_store->getStores();
+
+			foreach ($results as $result) {
+				$data['stores'][] = [
+					'name' => $result['name'],
+					'href' => $result['url']
+				];
+			}
 
 			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token']);
 		}

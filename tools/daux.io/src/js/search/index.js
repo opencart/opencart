@@ -8,7 +8,7 @@ const originalTitle = document.title;
 
 function getURLP(name) {
     const elements = new RegExp(`[?|&]${name}=([^&;]+?)(&|#|;|$)`).exec(
-        window.location.search
+        window.location.search,
     );
 
     return (
@@ -39,6 +39,8 @@ class SearchEngine {
 
     loadData() {
         if (!this.loadingPromise) {
+            // We do this as jsonp instead of an XHR or fetch request
+            // to be compatible with usage from filesystem
             const po = document.createElement("script");
             po.type = "text/javascript";
             po.async = true;
@@ -60,10 +62,11 @@ class SearchEngine {
 
                 let pages = json.pages;
 
+                // Only keep the pages related to the current language
                 if (window.searchLanguage) {
                     const pagePrefix = `${window.searchLanguage}/`;
                     pages = pages.filter(
-                        (item) => item.url.indexOf(pagePrefix) === 0
+                        (item) => item.url.indexOf(pagePrefix) === 0,
                     );
                 }
 
@@ -77,61 +80,36 @@ class SearchEngine {
     }
 
     run() {
-        const query = getURLP("q");
-        if (query) {
-            this.settings.field.value = query;
+        if (getURLP("q")) {
+            this.settings.field.value = getURLP("q");
 
             this.loadData().then(() => {
                 this.displaySearch();
             });
         }
 
-        window.addEventListener("popstate", () => {
-            const query = getURLP("q");
-            if (query) {
-                this.settings.field.value = query;
-
-                this.loadData().then(() => {
-                    this.displaySearch();
-                });
-            } else {
-                this.handleClose();
-            }
-        });
-
         this.settings.field.addEventListener("keyup", (event) => {
+            // Start loading index once the user types text in the field, not before
             this.loadData();
 
             if (parseInt(event.keyCode, 10) === 13) {
-                const query = this.settings.field.value.trim();
-                if (query.length >= this.settings.minimumLength) {
-                    history.pushState(
-                        null,
-                        "",
-                        `?q=${encodeURIComponent(query)}`
-                    );
-                    this.loadData().then(() => {
-                        this.displaySearch();
-                    });
-                }
+                this.loadData().then(() => {
+                    this.displaySearch();
+                });
             }
         });
 
         this.settings.form.addEventListener("submit", (event) => {
             event.preventDefault();
-
-            const query = this.settings.field.value.trim();
-            if (query.length >= this.settings.minimumLength) {
-                history.pushState(null, "", `?q=${encodeURIComponent(query)}`);
-                this.loadData().then(() => {
-                    this.displaySearch();
-                });
-            }
+            this.loadData().then(() => {
+                this.displaySearch();
+            });
         });
     }
 
     keyUpHandler = (e) => {
         if (e.which === 27) {
+            //escape
             this.handleClose();
         }
     };
@@ -144,9 +122,6 @@ class SearchEngine {
         document.body.classList.remove("with-search");
         preact.render(null, this.resultContainer);
         this.resultContainer = null;
-
-        this.settings.field.value = "";
-        history.pushState(null, "", window.location.pathname);
     };
 
     displaySearch() {
@@ -156,8 +131,6 @@ class SearchEngine {
         }
 
         document.addEventListener("keyup", this.keyUpHandler);
-
-        const searchTerm = this.settings.field.value;
 
         preact.render(
             <Search
@@ -169,9 +142,8 @@ class SearchEngine {
                     document.title = `${title} ${originalTitle}`;
                 }}
                 settings={this.settings}
-                searchTerm={searchTerm}
             />,
-            this.resultContainer
+            this.resultContainer,
         );
 
         document.body.classList.add("with-search");
@@ -179,9 +151,12 @@ class SearchEngine {
     }
 }
 
+// Main containers
+
 function search(options) {
     const instance = new SearchEngine(options);
     instance.run();
 }
 
+// Declare globally
 window.search = search;

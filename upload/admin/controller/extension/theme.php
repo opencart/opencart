@@ -25,7 +25,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/theme\/.+\.php$/');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/theme/*.php');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');
@@ -33,7 +33,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
@@ -46,19 +46,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Store
+		$this->load->model('setting/store');
+
 		// Setting
 		$this->load->model('setting/setting');
 
-		$stores = [];
-
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		$this->load->model('setting/store');
-
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$stores = $this->model_setting_store->getStores();
 
 		$data['extensions'] = [];
 
@@ -76,15 +70,15 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 				$store_data[] = [
 					'name'   => $this->config->get('config_name'),
-					'status' => $this->config->get('theme_' . $code . '_status'),
-					'edit'   => $this->url->link('extension/' . $extension . '/theme/' . $code, 'user_token=' . $this->session->data['user_token'] . '&store_id=0')
+					'edit'   => $this->url->link('extension/' . $extension . '/theme/' . $code, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
+					'status' => $this->config->get('theme_' . $code . '_status')
 				];
 
 				foreach ($stores as $store) {
 					$store_data[] = [
 						'name'   => $store['name'],
-						'status' => $this->model_setting_setting->getValue('theme_' . $code . '_status', $store['store_id']),
-						'edit'   => $this->url->link('extension/' . $extension . '/theme/' . $code, 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id'])
+						'edit'   => $this->url->link('extension/' . $extension . '/theme/' . $code, 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
+						'status' => $this->model_setting_setting->getValue('theme_' . $code . '_status', $store['store_id'])
 					];
 				}
 

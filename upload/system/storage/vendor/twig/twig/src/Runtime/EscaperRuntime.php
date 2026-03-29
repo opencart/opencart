@@ -17,7 +17,7 @@ use Twig\Markup;
 
 final class EscaperRuntime implements RuntimeExtensionInterface
 {
-    /** @var array<string, callable(string, string): string> */
+    /** @var array<string, callable(string $string, string $charset): string> */
     private $escapers = [];
 
     /** @internal */
@@ -36,8 +36,6 @@ final class EscaperRuntime implements RuntimeExtensionInterface
      *
      * @param string                                            $strategy The strategy name that should be used as a strategy in the escape call
      * @param callable(string $string, string $charset): string $callable A valid PHP callable
-     *
-     * @return void
      */
     public function setEscaper($strategy, callable $callable)
     {
@@ -56,8 +54,6 @@ final class EscaperRuntime implements RuntimeExtensionInterface
 
     /**
      * @param array<class-string<\Stringable>, string[]> $safeClasses
-     *
-     * @return void
      */
     public function setSafeClasses(array $safeClasses = [])
     {
@@ -71,8 +67,6 @@ final class EscaperRuntime implements RuntimeExtensionInterface
     /**
      * @param class-string<\Stringable> $class
      * @param string[]                  $strategies
-     *
-     * @return void
      */
     public function addSafeClass(string $class, array $strategies)
     {
@@ -106,7 +100,7 @@ final class EscaperRuntime implements RuntimeExtensionInterface
         if (!\is_string($string)) {
             if ($string instanceof \Stringable) {
                 if ($autoescape) {
-                    $c = $string::class;
+                    $c = \get_class($string);
                     if (!isset($this->safeClasses[$c])) {
                         $this->safeClasses[$c] = [];
                         foreach (class_parents($string) + class_implements($string) as $class) {
@@ -124,7 +118,7 @@ final class EscaperRuntime implements RuntimeExtensionInterface
                 }
 
                 $string = (string) $string;
-            } elseif (\in_array($strategy, ['html', 'js', 'css', 'html_attr', 'url'], true)) {
+            } elseif (\in_array($strategy, ['html', 'js', 'css', 'html_attr', 'url'])) {
                 // we return the input as is (which can be of any type)
                 return $string;
             }
@@ -139,10 +133,6 @@ final class EscaperRuntime implements RuntimeExtensionInterface
         switch ($strategy) {
             case 'html':
                 // see https://www.php.net/htmlspecialchars
-
-                if ('UTF-8' === $charset) {
-                    return htmlspecialchars($string, \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
-                }
 
                 // Using a static variable to avoid initializing the array
                 // each time the function is called. Moving the declaration on the
@@ -199,7 +189,7 @@ final class EscaperRuntime implements RuntimeExtensionInterface
                     * Escape sequences supported only by JavaScript, not JSON, are omitted.
                     * \" is also supported but omitted, because the resulting string is not HTML safe.
                     */
-                    $short = match ($char) {
+                    static $shortMap = [
                         '\\' => '\\\\',
                         '/' => '\\/',
                         "\x08" => '\b',
@@ -207,11 +197,10 @@ final class EscaperRuntime implements RuntimeExtensionInterface
                         "\x0A" => '\n',
                         "\x0D" => '\r',
                         "\x09" => '\t',
-                        default => false,
-                    };
+                    ];
 
-                    if ($short) {
-                        return $short;
+                    if (isset($shortMap[$char])) {
+                        return $shortMap[$char];
                     }
 
                     $codepoint = mb_ord($char, 'UTF-8');
@@ -272,7 +261,7 @@ final class EscaperRuntime implements RuntimeExtensionInterface
                      * @license   https://framework.zend.com/license/new-bsd New BSD License
                      */
                     $chr = $matches[0];
-                    $ord = \ord($chr[0]);
+                    $ord = \ord($chr);
 
                     /*
                     * The following replaces characters undefined in HTML with the
@@ -293,13 +282,18 @@ final class EscaperRuntime implements RuntimeExtensionInterface
                         * entities that XML supports. Using HTML entities would result in this error:
                         *     XML Parsing Error: undefined entity
                         */
-                        return match ($ord) {
+                        static $entityMap = [
                             34 => '&quot;', /* quotation mark */
                             38 => '&amp;',  /* ampersand */
                             60 => '&lt;',   /* less-than sign */
                             62 => '&gt;',   /* greater-than sign */
-                            default => \sprintf('&#x%02X;', $ord),
-                        };
+                        ];
+
+                        if (isset($entityMap[$ord])) {
+                            return $entityMap[$ord];
+                        }
+
+                        return \sprintf('&#x%02X;', $ord);
                     }
 
                     /*

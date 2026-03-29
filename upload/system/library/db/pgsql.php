@@ -9,79 +9,49 @@ class PgSQL {
 	/**
 	 * @var mixed
 	 */
-	private $db;
+	private $connection;
 
 	/**
 	 * Constructor
 	 *
-	 * @param array<string, mixed> $option Database connection options array with keys:
-	 *                                     - 'hostname' (string, required): Database server hostname
-	 *                                     - 'username' (string, required): Database username
-	 *                                     - 'password' (string, required): Database password
-	 *                                     - 'database' (string, required): Database name
-	 *                                     - 'port' (string, optional): Database port (default: '5432')
-	 *
-	 * @throws \Exception If database connection fails
-	 *
-	 * @example
-	 * $pgsql = new PgSQL([
-	 *     'hostname' => 'localhost',
-	 *     'username' => 'postgres',
-	 *     'password' => 'password',
-	 *     'database' => 'opencart',
-	 *     'port'     => '5432'
-	 * ]);
+	 * @param string $hostname
+	 * @param string $username
+	 * @param string $password
+	 * @param string $database
+	 * @param string $port
 	 */
-	public function __construct(array $option = []) {
-		$required = [
-			'hostname',
-			'username',
-			'database'
-		];
-
-		foreach ($required as $key) {
-			if (empty($option[$key])) {
-				throw new \Exception('Error: Database ' . $key . ' required!');
-			}
-		}
-
-		if (isset($option['port'])) {
-			$port = $option['port'];
-		} else {
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
+		if (!$port) {
 			$port = '5432';
 		}
 
 		try {
-			$pg = @pg_connect('host=' . $option['hostname'] . ' port=' . $port . ' user=' . $option['username'] . ' password=' . $option['password'] . ' dbname=' . $option['database'] . ' options=\'--client_encoding=UTF8\' ');
+			$pg = @pg_connect('host=' . $hostname . ' port=' . $port . ' user=' . $username . ' password=' . $password . ' dbname=' . $database . ' options=\'--client_encoding=UTF8\' ');
 		} catch (\Exception $e) {
-			throw new \Exception('Error: Could not connect to the database please make sure the database server, username and password is correct!');
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
 		if ($pg) {
-			$this->db = $pg;
-			pg_query($this->db, "SET CLIENT_ENCODING TO 'UTF8'");
+			$this->connection = $pg;
+			pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
 
 			// Sync PHP and DB time zones
-			pg_query($this->db, "SET TIMEZONE = '" . $this->escape(date('P')) . "'");
+			pg_query($this->connection, "SET TIMEZONE = '" . $this->escape(date('P')) . "'");
 		}
 	}
 
 	/**
 	 * Query
 	 *
-	 * Execute SQL query and return result object
+	 * @param string $sql
 	 *
-	 * @param string $sql SQL query to execute
-	 *
-	 * @return \stdClass Query result with row, rows, and num_rows properties
-	 *
-	 * @throws \Exception If query execution fails
+	 * @return \stdClass
 	 */
 	public function query(string $sql): \stdClass {
-		$resource = pg_query($this->db, $sql);
+		$resource = pg_query($this->connection, $sql);
 
 		if ($resource === false) {
-			throw new \Exception('Error: ' . pg_last_error($this->db) . '<br/>' . $sql);
+			throw new \Exception('Error: ' . pg_last_error($this->connection) . '<br/>' . $sql);
 		}
 
 		$data = [];
@@ -103,35 +73,27 @@ class PgSQL {
 	/**
 	 * Escape
 	 *
-	 * Escape string value for safe SQL usage
+	 * @param string $value
 	 *
-	 * @param string $value String value to escape
-	 *
-	 * @return string Escaped string value
+	 * @return string
 	 */
 	public function escape(string $value): string {
-		return pg_escape_string($this->db, $value);
+		return pg_escape_string($this->connection, $value);
 	}
 
 	/**
 	 * Count Affected
 	 *
-	 * Get number of rows affected by the last query
-	 *
-	 * @return int Number of affected rows
+	 * @return int
 	 */
 	public function countAffected(): int {
-		return pg_affected_rows($this->db);
+		return pg_affected_rows($this->connection);
 	}
 
 	/**
 	 * Get Last Id
 	 *
-	 * Get the last inserted sequence value
-	 *
-	 * @return int Last inserted ID
-	 *
-	 * @throws \Exception If sequence value cannot be retrieved
+	 * @return int
 	 */
 	public function getLastId(): int {
 		$query = $this->query("SELECT LASTVAL() AS `id`");
@@ -142,26 +104,22 @@ class PgSQL {
 	/**
 	 * Is Connected
 	 *
-	 * Check if database connection is active
-	 *
-	 * @return bool True if connected, false otherwise
+	 * @return bool
 	 */
 	public function isConnected(): bool {
-		return pg_connection_status($this->db) == PGSQL_CONNECTION_OK;
+		return pg_connection_status($this->connection) == PGSQL_CONNECTION_OK;
 	}
 
 	/**
 	 * Destructor
 	 *
-	 * Closes the database connection when object is destroyed
-	 *
-	 * @return void
+	 * Closes the DB connection when this object is destroyed.
 	 */
 	public function __destruct() {
-		if ($this->db) {
-			pg_close($this->db);
+		if ($this->connection) {
+			pg_close($this->connection);
 
-			$this->db = null;
+			$this->connection = null;
 		}
 	}
 }

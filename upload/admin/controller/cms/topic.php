@@ -16,34 +16,19 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = (int)$this->request->get['filter_store_id'];
-		} else {
-			$filter_store_id = '';
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		if (isset($this->request->get['filter_language_id'])) {
-			$filter_language_id = $this->request->get['filter_language_id'];
-		} else {
-			$filter_language_id = '';
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = $this->request->get['filter_status'];
-		} else {
-			$filter_status = '';
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 		}
-
-		$allowed = [
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status',
-			'sort',
-			'order',
-			'page'
-		];
-
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
 
 		$data['breadcrumbs'] = [];
 
@@ -59,31 +44,8 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('cms/topic.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('cms/topic.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('cms/topic.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
-
-		// Stores
-		$data['stores'] = [];
-
-		$data['stores'][] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		$this->load->model('setting/store');
-
-		$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
-
-		// Languages
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
-
-		$data['filter_store_id'] = $filter_store_id;
-		$data['filter_language_id'] = $filter_language_id;
-		$data['filter_status'] = $filter_status;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -111,28 +73,10 @@ class Topic extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
-		if (isset($this->request->get['filter_store_id'])) {
-			$filter_store_id = (int)$this->request->get['filter_store_id'];
-		} else {
-			$filter_store_id = '';
-		}
-
-		if (isset($this->request->get['filter_language_id'])) {
-			$filter_language_id = $this->request->get['filter_language_id'];
-		} else {
-			$filter_language_id = '';
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = $this->request->get['filter_status'];
-		} else {
-			$filter_status = '';
-		}
-
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'sort_order';
+			$sort = 't.sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -147,29 +91,30 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$allowed = [
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status',
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Topics
+		// Topic
 		$data['topics'] = [];
 
 		$filter_data = [
-			'filter_store_id' => $filter_store_id,
-			'filter_status'   => $filter_status,
-			'sort'            => $sort,
-			'order'           => $order,
-			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'           => $this->config->get('config_pagination_admin')
+			'sort'  => $sort,
+			'order' => $order,
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('cms/topic');
@@ -180,13 +125,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['topics'][] = ['edit' => $this->url->link('cms/topic.form', 'user_token=' . $this->session->data['user_token'] . '&topic_id=' . $result['topic_id'] . $url)] + $result;
 		}
 
-		$allowed = [
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status'
-		];
-
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		$url = '';
 
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
@@ -194,29 +133,27 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		// Sorts
-		$data['sort_name'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_status'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
-		$data['sort_sort_order'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+		$data['sort_name'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=bcd.name' . $url);
+		$data['sort_sort_order'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . '&sort=bc.sort_order' . $url);
 
-		$allowed = [
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status',
-			'sort',
-			'order'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
 
-		// Total Topics
-		$topic_total = $this->model_cms_topic->getTotalTopics($filter_data);
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
 
-		// Pagination
-		$data['total'] = $topic_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$topic_total = $this->model_cms_topic->getTotalTopics();
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $topic_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('cms/topic.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($topic_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($topic_total - $this->config->get('config_pagination_admin'))) ? $topic_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $topic_total, ceil($topic_total / $this->config->get('config_pagination_admin')));
 
@@ -241,16 +178,19 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['topic_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$allowed = [
-			'filter_store_id',
-			'filter_language_id',
-			'filter_status',
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -267,7 +207,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('cms/topic.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('cms/topic', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Topic
 		if (isset($this->request->get['topic_id'])) {
 			$this->load->model('cms/topic');
 
@@ -280,7 +219,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['topic_id'] = 0;
 		}
 
-		// Languages
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -306,17 +245,21 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Stores
+		// Store
 		$data['stores'] = [];
 
 		$data['stores'][] = [
 			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
+			'name'     => $this->language->get('text_default')
 		];
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
+		$results = $this->model_setting_store->getStores();
+
+		foreach ($results as $result) {
+			$data['stores'][] = $result;
+		}
 
 		if (!empty($topic_info)) {
 			$data['topic_store'] = $this->model_cms_topic->getStores($topic_info['topic_id']);
@@ -336,7 +279,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
-		// SEO
 		if (!empty($topic_info)) {
 			$this->load->model('design/seo_url');
 
@@ -345,7 +287,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$data['topic_seo_url'] = [];
 		}
 
-		// Layouts
+		// Layout
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -401,7 +343,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// SEO
 		if ($post_info['topic_seo_url']) {
 			$this->load->model('design/seo_url');
 
@@ -429,81 +370,12 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Topic
 			$this->load->model('cms/topic');
 
 			if (!$post_info['topic_id']) {
 				$json['topic_id'] = $this->model_cms_topic->addTopic($post_info);
 			} else {
 				$this->model_cms_topic->editTopic($post_info['topic_id'], $post_info);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
-	public function enable(): void {
-		$this->load->language('cms/topic');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'cms/topic')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('cms/topic');
-
-			foreach ($selected as $topic_id) {
-				$this->model_cms_topic->editStatus((int)$topic_id, true);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('cms/topic');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'cms/topic')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('cms/topic');
-
-			foreach ($selected as $topic_id) {
-				$this->model_cms_topic->editStatus((int)$topic_id, false);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -534,7 +406,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Topic
 			$this->load->model('cms/topic');
 
 			foreach ($selected as $topic_id) {

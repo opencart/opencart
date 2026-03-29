@@ -26,11 +26,11 @@ class Template {
 	public function __construct(string $adaptor) {
 		$class = 'Opencart\System\Library\Template\\' . $adaptor;
 
-		if (!class_exists($class)) {
+		if (class_exists($class)) {
+			$this->adaptor = new $class();
+		} else {
 			throw new \Exception('Error: Could not load template adaptor ' . $adaptor . '!');
 		}
-
-		$this->adaptor = new $class();
 	}
 
 	/**

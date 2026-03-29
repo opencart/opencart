@@ -62,26 +62,23 @@ class JsonRpcSerializer
         $operationName = $command->getName();
         $operation = $this->api->getOperation($operationName);
         $commandArgs = $command->toArray();
-        $body = $this->jsonFormatter->build($operation->getInput(), $commandArgs);
         $headers = [
                 'X-Amz-Target' => $this->api->getMetadata('targetPrefix') . '.' . $operationName,
-                'Content-Type' => $this->contentType,
-                'Content-Length' => strlen($body)
-        ];
+                'Content-Type' => $this->contentType
+            ];
 
         if ($endpoint instanceof RulesetEndpoint) {
             $this->setEndpointV2RequestOptions($endpoint, $headers);
         }
 
-        $requestUri = $operation['http']['requestUri'] ?? null;
-        $absoluteUri = str_ends_with($this->endpoint, '/')
-            ? $this->endpoint : $this->endpoint . $requestUri;
-
         return new Request(
             $operation['http']['method'],
-            $absoluteUri,
+            $this->endpoint,
             $headers,
-            $body
+            $this->jsonFormatter->build(
+                $operation->getInput(),
+                $commandArgs
+            )
         );
     }
 }

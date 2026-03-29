@@ -3,18 +3,10 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" title="{{ button_filter }}" onclick="$('#filter-review').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <a href="{{ add }}" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-        <button type="button" id="button-rating" title="{{ button_rating }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button>
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
-          <ul class="dropdown-menu">
-            <li><button type="submit" form="form-review" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
-            <li><button type="submit" form="form-review" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><button type="submit" form="form-review" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
-          </ul>
-        </div>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-review').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <button type="button" id="button-rating" data-bs-toggle="tooltip" title="{{ button_rating }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <button type="submit" form="form-review" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -37,26 +29,26 @@
                 <ul id="autocomplete-product" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-author" class="form-label">{{ entry_author }}</label>
-                <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+                <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label for="input-status" class="form-label">{{ entry_status }}</label>
-                <select name="filter_status" id="input-status" class="form-select">
+                <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
                   <option value=""></option>
                   <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
                   <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
               <div class="mb-3">
-                <label for="input-date-from" class="form-label">{{ entry_date_from }}</label> <input type="date" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control"/>
+                <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
+                <input type="date" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control"/>
               </div>
               <div class="mb-3">
-                <label for="input-date-to" class="form-label">{{ entry_date_to }}</label> <input type="date" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control"/>
+                <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
+                <input type="date" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
-                <button type="reset" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
           </div>
@@ -65,11 +57,124 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="list" class="card-body">{{ list }}</div>
+          <div id="review" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/review.js"></script>
+<script type="text/javascript"><!--
+$('#review').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#review').load(this.href);
+});
+
+$('#button-filter').on('click', function() {
+    url = '';
+
+    var filter_product = $('#input-product').val();
+
+    if (filter_product) {
+        url += '&filter_product=' + encodeURIComponent(filter_product);
+    }
+
+    var filter_author = $('#input-author').val();
+
+    if (filter_author) {
+        url += '&filter_author=' + encodeURIComponent(filter_author);
+    }
+
+    var filter_status = $('#input-status').val();
+
+    if (filter_status !== '') {
+        url += '&filter_status=' + filter_status;
+    }
+
+    var filter_date_from = $('#input-date-from').val();
+
+    if (filter_date_from) {
+        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
+    }
+
+    var filter_date_to = $('#input-date-to').val();
+
+    if (filter_date_to) {
+        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
+    }
+
+    window.history.pushState({}, null, 'index.php?route=catalog/review&user_token={{ user_token }}' + url);
+
+    $('#review').load('index.php?route=catalog/review.list&user_token={{ user_token }}' + url);
+});
+
+$('#input-product').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-product').val(decodeHTMLEntities(item['label']));
+    }
+});
+
+$('#button-rating').on('click', function() {
+    var element = this;
+
+    $(element).button('loading');
+
+    var next = 'index.php?route=catalog/review.sync&user_token={{ user_token }}';
+
+    var rating = function() {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
+                }
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(rating);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).button('reset');
+            }
+        });
+    };
+
+    chain.attach(rating);
+});
+//--></script>
 {{ footer }}

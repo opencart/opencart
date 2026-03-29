@@ -72,7 +72,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$output['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
-		// Custom fields validation
+		// Custom field validation
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);

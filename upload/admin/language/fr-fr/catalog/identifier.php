@@ -30,5 +30,4 @@ $_['help_status']      = 'Activer les identifiants de produits sur la page de d�
 $_['error_warning']    = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';
 $_['error_permission'] = 'Attention: Vous n\'avez pas la permission de modifier les identifiants!';
 $_['error_name']       = 'Le nom de l\'identifiant doit contenir entre 1 et 64 caractères!';
-$_['error_exists']     = 'L\'identifiant n\'existe pas!';
 $_['error_code']       = 'Le code de l\'identifiant doit contenir entre 3 et 48 caractères!';

@@ -89,7 +89,6 @@ class Ddos extends \Opencart\System\Engine\Controller {
 	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/fraud')) {
-			// Extension
 			$this->load->model('extension/opencart/fraud/ddos');
 
 			$this->model_extension_opencart_fraud_ddos->install();
@@ -103,7 +102,6 @@ class Ddos extends \Opencart\System\Engine\Controller {
 	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/fraud')) {
-			// Extension
 			$this->load->model('extension/opencart/fraud/ddos');
 
 			$this->model_extension_opencart_fraud_ddos->uninstall();
@@ -128,7 +126,6 @@ class Ddos extends \Opencart\System\Engine\Controller {
 
 		$data['ips'] = [];
 
-		// Extension
 		$this->load->model('extension/opencart/fraud/ddos');
 
 		// Customer
@@ -147,11 +144,12 @@ class Ddos extends \Opencart\System\Engine\Controller {
 
 		$ip_total = $this->model_extension_opencart_fraud_ddos->getTotalDdos();
 
-		// Pagination
-		$data['total'] = $ip_total;
-		$data['page'] = $page;
-		$data['limit'] = $limit;
-		$data['pagination'] = $this->url->link('extension/opencart/fraud/ip.ip', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $ip_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('extension/opencart/fraud/ip.ip', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($ip_total - $limit)) ? $ip_total : ((($page - 1) * $limit) + $limit), $ip_total, ceil($ip_total / $limit));
 

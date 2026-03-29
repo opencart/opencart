@@ -104,26 +104,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Status
-	 *
-	 * Edit information status record in the database.
-	 *
-	 * @param int  $information_id primary key of the information record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/information');
-	 *
-	 * $this->model_catalog_information->editStatus($information_id, $status);
-	 */
-	public function editStatus(int $coupon_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "coupon` SET `status` = '" . (bool)$status . "' WHERE `coupon_id` = '" . (int)$coupon_id . "'");
-	}
-
-	/**
 	 * Delete Coupon
 	 *
 	 * Delete coupon record in the database.

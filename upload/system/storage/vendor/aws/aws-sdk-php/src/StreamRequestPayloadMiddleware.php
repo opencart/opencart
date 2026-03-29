@@ -73,7 +73,7 @@ class StreamRequestPayloadMiddleware
                             . ' calculated.');
                     }
                     $request = $request->withHeader(
-                        'Content-Length',
+                        'content-length',
                         $size
                     );
                 }

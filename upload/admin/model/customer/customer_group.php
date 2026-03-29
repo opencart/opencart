@@ -149,21 +149,15 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	 * $customer_groups = $this->model_customer_customer_group->getCustomerGroups($filter_data);
 	 */
 	public function getCustomerGroups(array $data = []): array {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_group` `cg` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`cg`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$language_id . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_group` `cg` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`cg`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$sort_data = [
-			'name'       => 'cgd.name',
-			'sort_order' => 'cg.sort_order'
+			'cgd.name',
+			'cg.sort_order'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `cgd`.`name`";
 		}
@@ -189,31 +183,6 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return $query->rows;
-	}
-
-	/**
-	 * Get Total Customer Groups
-	 *
-	 * Get the total number of customer group records in the database.
-	 *
-	 * @return int total number of customer group records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('customer/customer_group');
-	 *
-	 * $customer_group_total = $this->model_customer_customer_group->getTotalCustomerGroups();
-	 */
-	public function getTotalCustomerGroups(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_group` `cg` LEFT JOIN `" . DB_PREFIX . "customer_group_description` `cgd` ON (`cg`.`customer_group_id` = `cgd`.`customer_group_id`) WHERE `cgd`.`language_id` = '" . (int)$language_id . "'");
-
-		return (int)$query->row['total'];
 	}
 
 	/**
@@ -281,28 +250,6 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Description
-	 *
-	 * Get the record of the country description records in the database.
-	 *
-	 * @param int $customer_group_id
-	 * @param int $language_id
-	 *
-	 * @return array<string, mixed>
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/country');
-	 *
-	 * $country_description = $this->model_customer_customer_group->getDescriptions($customer_group_id, $language_id);
-	 */
-	public function getDescription(int $customer_group_id, int $language_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group_description` WHERE `customer_group_id` = '" . (int)$customer_group_id . "' AND `language_id` = '" . (int)$language_id . "'");
-
-		return $query->row;
-	}
-
-	/**
 	 * Get Descriptions
 	 *
 	 * Get the record of the customer group description records in the database.
@@ -320,10 +267,10 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $customer_group_id): array {
 		$customer_group_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `cgd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "customer_group_description` `cgd` WHERE `cgd`.`customer_group_id` = '" . (int)$customer_group_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group_description` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 
 		foreach ($query->rows as $result) {
-			$customer_group_data[$result['code']] = $result;
+			$customer_group_data[$result['language_id']] = $result;
 		}
 
 		return $customer_group_data;
@@ -348,5 +295,24 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
+	}
+
+	/**
+	 * Get Total Customer Groups
+	 *
+	 * Get the total number of customer group records in the database.
+	 *
+	 * @return int total number of customer group records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer_group');
+	 *
+	 * $customer_group_total = $this->model_customer_customer_group->getTotalCustomerGroups();
+	 */
+	public function getTotalCustomerGroups(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_group`");
+
+		return (int)$query->row['total'];
 	}
 }

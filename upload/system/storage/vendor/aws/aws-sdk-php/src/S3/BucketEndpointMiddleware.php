@@ -2,7 +2,6 @@
 namespace Aws\S3;
 
 use Aws\CommandInterface;
-use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -17,36 +16,22 @@ class BucketEndpointMiddleware
 {
     private static $exclusions = ['GetBucketLocation' => true];
     private $nextHandler;
-    private bool $useEndpointV2;
-    private ?string $endpoint;
 
     /**
      * Create a middleware wrapper function.
      *
-     * @param bool $useEndpointV2
-     * @param string|null $endpoint
-     *
      * @return callable
      */
-    public static function wrap(
-        bool $useEndpointV2 = false,
-        ?string $endpoint = null
-    ): callable
+    public static function wrap()
     {
-        return function (callable $handler) use ($useEndpointV2, $endpoint) {
-            return new self($handler, $useEndpointV2, $endpoint);
+        return function (callable $handler) {
+            return new self($handler);
         };
     }
 
-    public function __construct(
-        callable $nextHandler,
-        bool $useEndpointV2,
-        ?string $endpoint = null
-    )
+    public function __construct(callable $nextHandler)
     {
         $this->nextHandler = $nextHandler;
-        $this->useEndpointV2 = $useEndpointV2;
-        $this->endpoint = $endpoint;
     }
 
     public function __invoke(CommandInterface $command, RequestInterface $request)
@@ -62,50 +47,74 @@ class BucketEndpointMiddleware
     }
 
     /**
-     * @param string $path
-     * @param string $bucket
+     * Performs a one-time removal of Bucket from path, then if
+     * the bucket name is duplicated in the path, performs additional
+     * removal which is dependent on the number of occurrences of the bucket
+     * name in a path-like format in the key name.
      *
      * @return string
      */
-    private function removeBucketFromPath(string $path, string $bucket): string
+    private function removeBucketFromPath($path, $bucket, $key)
     {
-        $len = strlen($bucket) + 1;
-        if (str_starts_with($path, "/{$bucket}")) {
-            $path = substr($path, $len);
-        }
+        $occurrencesInKey = $this->getBucketNameOccurrencesInKey($key, $bucket);
+        do {
+            $len = strlen($bucket) + 1;
+            if (substr($path, 0, $len) === "/{$bucket}") {
+                $path = substr($path, $len);
+            }
+        } while (substr_count($path, "/{$bucket}") > $occurrencesInKey + 1);
 
         return $path ?: '/';
     }
 
-    /**
-     * @param RequestInterface $request
-     * @param CommandInterface $command
-     *
-     * @return RequestInterface
-     */
+    private function removeDuplicateBucketFromHost($host, $bucket)
+    {
+        if (substr_count($host, $bucket) > 1) {
+            while (strpos($host, "{$bucket}.{$bucket}") === 0) {
+                $hostArr = explode('.', $host);
+                array_shift($hostArr);
+                $host = implode('.', $hostArr);
+            }
+        }
+        return $host;
+    }
+
+    private function getBucketNameOccurrencesInKey($key, $bucket)
+    {
+        $occurrences = 0;
+        if (empty($key)) {
+            return $occurrences;
+        }
+
+        $segments = explode('/', $key);
+        foreach($segments as $segment) {
+            if (strpos($segment, $bucket) === 0) {
+                $occurrences++;
+            }
+        }
+        return $occurrences;
+    }
+
     private function modifyRequest(
         RequestInterface $request,
         CommandInterface $command
-    ): RequestInterface
-    {
+    ) {
+        $key = isset($command['Key']) ? $command['Key'] : null;
         $uri = $request->getUri();
         $path = $uri->getPath();
         $host = $uri->getHost();
         $bucket = $command['Bucket'];
-
-        if ($this->useEndpointV2 && !empty($this->endpoint)) {
-            // V2 provider adds bucket name to host by default
-            // preserve original host
-            $host = (new Uri($this->endpoint))->getHost();
-        }
-
-        $path = $this->removeBucketFromPath($path, $bucket);
+        $path = $this->removeBucketFromPath($path, $bucket, $key);
+        $host = $this->removeDuplicateBucketFromHost($host, $bucket);
 
         // Modify the Key to make sure the key is encoded, but slashes are not.
-        if ($command['Key']) {
+        if ($key) {
             $path = S3Client::encodeKey(rawurldecode($path));
         }
 
-        return $request->withUri($uri->withPath($path)->withHost($host));
+        return $request->withUri(
+            $uri->withHost($host)
+                ->withPath($path)
+        );
     }
 }

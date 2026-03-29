@@ -7,8 +7,8 @@ $_['text_success']             = 'Success: You have modified customers!';
 $_['text_list']                = 'Customer List';
 $_['text_add']                 = 'Add Customer';
 $_['text_edit']                = 'Edit Customer';
+$_['text_default']             = 'Default';
 $_['text_store']               = 'Store';
-$_['text_general']             = 'General';
 $_['text_customer']            = 'Customer Details';
 $_['text_password']            = 'Password';
 $_['text_other']               = 'Other';
@@ -29,9 +29,6 @@ $_['text_option']              = 'Options';
 $_['text_login']               = 'Login into Store';
 $_['text_unlock']              = 'Unlock Account';
 $_['text_filter']              = 'Filter';
-$_['text_order']               = 'Orders';
-$_['text_return']              = 'Returns';
-$_['text_subscription']        = 'Subscriptions';
 
 // Column
 $_['column_name']              = 'Customer Name';

@@ -3,8 +3,6 @@ namespace Opencart\Install\Controller\Upgrade;
 /**
  * Class Upgrade2
  *
- * Create any missing directories and move files.
- *
  * @package Opencart\Install\Controller\Upgrade
  */
 class Upgrade2 extends \Opencart\System\Engine\Controller {
@@ -30,156 +28,103 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			$admin = 'admin';
 		}
 
-		$file = DIR_OPENCART . 'config.php';
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		// Get directory constants
+		$config = [];
+
+		$lines = file(DIR_OPENCART . 'config.php');
+
+		foreach ($lines as $number => $line) {
+			if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+				$config[$match[1][0]] = $match[2][0];
+			}
+		}
+
+		$total = 0;
+		$limit = 200;
+
+		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 		if (is_file($file)) {
-			$config = [];
+			// Unzip the files
+			$zip = new \ZipArchive();
 
-			$lines = file($file);
+			if ($zip->open($file, \ZipArchive::RDONLY)) {
+				$total = $zip->numFiles;
 
-			foreach ($lines as $number => $line) {
-				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
-					$config[$match[1][0]] = $match[2][0];
+				$start = ($page - 1) * $limit;
+				$end = $start > ($total - $limit) ? $total : ($start + $limit);
+
+				$remove = 'opencart-' . $version . '/upload/';
+
+				// Check if any of the files already exist.
+				for ($i = $start; $i < $end; $i++) {
+					$source = $zip->getNameIndex($i);
+
+					if (substr($source, 0, strlen($remove)) == $remove) {
+						// Only extract the contents of the upload folder
+						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
+
+						if (substr($destination, 0, 8) != 'install/') {
+							// Default copy location
+							$base = DIR_OPENCART;
+
+							// Fixes admin folder being under a different name
+							if (substr($destination, 0, 6) == 'admin/') {
+								$destination = $admin . '/' . substr($destination, 6);
+							}
+
+							// We need to use a different path for vendor folders.
+							if (substr($destination, 0, 15) == 'system/storage/' && isset($config['DIR_STORAGE'])) {
+								$destination = substr($destination, 15);
+								$base = $config['DIR_STORAGE'];
+							}
+
+							// Default copy location
+							$path = '';
+
+							// Must have a path before files can be moved
+							$directories = explode('/', dirname($destination));
+
+							foreach ($directories as $directory) {
+								if (!$path) {
+									$path = $directory;
+								} else {
+									$path = $path . '/' . $directory;
+								}
+
+								if (!is_dir($base . $path) && !@mkdir($base . $path, 0777)) {
+									$json['error'] = sprintf($this->language->get('error_directory'), $path);
+								}
+							}
+
+							// Check if the path is not directory, and check there is no existing file
+							if (substr($destination, -1) != '/' && !is_dir($base . $destination)) {
+								if (is_file($base . $destination)) {
+									unlink($base . $destination);
+								}
+
+								if (file_put_contents($base . $destination, $zip->getFromIndex($i)) === false) {
+									$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
+								}
+							}
+						}
+					}
 				}
-			}
-		} else {
-			$json['error'] = sprintf($this->language->get('error_file'), $file);
-		}
 
-		if (!$json) {
-			// Create any missing storage directories
-			$directories = [
-				'backup',
-				'cache',
-				'download',
-				'logs',
-				'marketplace',
-				'session',
-				'upload'
-			];
-
-			if (isset($config['DIR_STORAGE'])) {
-				$storage = $config['DIR_STORAGE'];
+				$zip->close();
 			} else {
-				$storage = DIR_SYSTEM . 'storage/';
-			}
-
-			foreach ($directories as $directory) {
-				if (!is_dir($storage . $directory)) {
-					mkdir($storage . $directory, 0644);
-
-					$handle = fopen($storage . $directory . '/index.html', 'w');
-
-					fclose($handle);
-				}
-			}
-
-			// Move files from old directories to new ones.
-			$move = [
-				DIR_IMAGE . 'data/'      => DIR_IMAGE . 'catalog/', // Merge image/data to image/catalog
-				DIR_SYSTEM . 'upload/'   => $storage . 'upload/', // Merge system/upload to system/storage/upload
-				DIR_SYSTEM . 'download/' => $storage . 'download/' // Merge system/download to system/storage/download
-			];
-
-			foreach ($move as $source => $destination) {
-				$files = [];
-
-				$directory = [$source];
-
-				while (count($directory) != 0) {
-					$next = array_shift($directory);
-
-					foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-						// If directory add to path array
-						if (is_dir($file)) {
-							$directory[] = $file;
-						}
-
-						// Add the file to the files to be deleted array
-						$files[] = $file;
-					}
-				}
-
-				foreach ($files as $file) {
-					$path = substr($file, strlen($source));
-
-					if (is_dir($source . $path) && !is_dir($destination . $path)) {
-						mkdir($destination . $path, 0777);
-					}
-
-					if (is_file($source . $path) && !is_file($destination . $path)) {
-						copy($source . $path, $destination . $path);
-					}
-				}
-
-				// Start deleting old storage location files.
-				rsort($files);
-
-				foreach ($files as $file) {
-					// If file just delete
-					if (is_file($file)) {
-						unlink($file);
-					}
-
-					// If directory use the remove directory function
-					if (is_dir($file)) {
-						rmdir($file);
-					}
-				}
-			}
-
-			// Remove files in old directories
-			$remove = [
-				DIR_SYSTEM . 'logs/',
-				DIR_SYSTEM . 'cache/',
-			];
-
-			$files = [];
-
-			foreach ($remove as $directory) {
-				if (is_dir($directory)) {
-					// Make path into an array
-					$path = [$directory . '*'];
-
-					// While the path array is still populated keep looping through
-					while (count($path) != 0) {
-						$next = array_shift($path);
-
-						foreach (glob($next) as $file) {
-							// If directory add to path array
-							if (is_dir($file)) {
-								$path[] = $file . '/*';
-							}
-
-							// Add the file to the files to be deleted array
-							$files[] = $file;
-						}
-
-						// Reverse sort the file array
-						rsort($files);
-
-						// Clear all modification files
-						foreach ($files as $file) {
-							if ($file != $directory . 'index.html') {
-								// If file just delete
-								if (is_file($file)) {
-									@unlink($file);
-
-								}
-
-								// If directory use the remove directory function
-								if (is_dir($file)) {
-									@rmdir($file);
-								}
-							}
-						}
-					}
-				}
+				$json['error'] = $this->language->get('error_unzip');
 			}
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 2, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['text'] = sprintf($this->language->get('text_patch'), 2, 2, 11);
 
 			$url = '';
 
@@ -191,7 +136,15 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['next'] = $this->url->link('upgrade/upgrade_3', $url, true);
+			if (($page * $limit) <= $total) {
+				$json['next'] = $this->url->link('upgrade/upgrade_2', $url . '&page=' . ($page + 1), true);
+			} else {
+				$json['next'] = $this->url->link('upgrade/upgrade_3', $url, true);
+
+				if (is_file($file)) {
+					unlink($file);
+				}
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

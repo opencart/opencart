@@ -16,7 +16,7 @@ $_['text_failed']   = 'Could not reset your security code!';
 // Entry
 $_['entry_code']    = 'Security Code';
 
-// Buttons
+// Button
 $_['button_send']   = 'Send';
 $_['button_reset']  = 'Reset';
 

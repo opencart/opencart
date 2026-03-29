@@ -1,6 +1,6 @@
 <?php
 // Locale
-$_['code']                          = 'en-GB';
+$_['code']                          = 'en';
 $_['direction']                     = 'ltr';
 $_['date_format_short']             = 'd/m/Y';
 $_['date_format_long']              = 'l jS F Y';
@@ -14,22 +14,15 @@ $_['text_yes']                      = 'Yes';
 $_['text_no']                       = 'No';
 $_['text_on']                       = 'On';
 $_['text_off']                      = 'Off';
-$_['text_enable']                   = 'Enable';
 $_['text_enabled']                  = 'Enabled';
-$_['text_disable']                  = 'Disable';
 $_['text_disabled']                 = 'Disabled';
-$_['text_copy']                     = 'Copy';
-$_['text_delete']                   = 'Delete';
-$_['text_csv']                      = 'Download CSV';
-$_['text_complete']                 = 'Complete Payments';
 $_['text_none']                     = ' --- None --- ';
 $_['text_select']                   = ' --- Please Select --- ';
 $_['text_select_all']               = 'Select All';
 $_['text_all']                      = 'All';
 $_['text_unselect_all']             = 'Unselect All';
-$_['text_with_selected']            = 'With Selected';
 $_['text_all_zones']                = 'All Zones';
-$_['text_default']                  = 'Default';
+$_['text_default']                  = ' <b>(Default)</b>';
 $_['text_close']                    = 'Close';
 $_['text_pagination']               = 'Showing %d to %d of %d (%d Pages)';
 $_['text_loading']                  = 'Loading...';
@@ -56,7 +49,6 @@ $_['button_add']                    = 'Add New';
 $_['button_delete']                 = 'Delete';
 $_['button_save']                   = 'Save';
 $_['button_cancel']                 = 'Cancel';
-$_['button_action']                 = 'Actions';
 $_['button_subscription_cancel']    = 'Cancel Subscription';
 $_['button_continue']               = 'Continue';
 $_['button_confirm']                = 'Confirm';
@@ -124,6 +116,7 @@ $_['button_order']                  = 'View Order';
 $_['button_subscription']           = 'View Subscription';
 $_['button_buy']                    = 'Buy';
 $_['button_restore']                = 'Restore';
+$_['button_run']                    = 'Run Cron Job';
 $_['button_backup']                 = 'Backup';
 $_['button_developer']              = 'Developer Setting';
 $_['button_master']                 = 'Master Product';
@@ -173,22 +166,10 @@ $_['error_upload_8']                = 'Warning: File upload stopped by extension
 $_['error_upload_999']              = 'Warning: No error code available!';
 $_['error_upload_size']             = 'Warning: The uploaded file exceeds the %smb max file size!';
 $_['error_curl']                    = 'CURL: Error Code(%s): %s';
-$_['error_session']                 = 'Warning: Session has expired please submit the form again!';
 $_['error_format_b']				= 'Warning: The uploaded file exceeds the max file size: %s bytes!';
 $_['error_format_kb']				= 'Warning: The uploaded file exceeds the max file size: %s kilobytes!';
 $_['error_format_mb']				= 'Warning: The uploaded file exceeds the max file size: %s megabytes!';
 $_['error_format_gb']				= 'Warning: The uploaded file exceeds the max file size: %s gigabytes!';
-
-// Zip errors
-$_['error_zip_exists']       		= 'File already exists!';
-$_['error_zip_incons']       		= 'Zip archive inconsistent!';
-$_['error_zip_inval']        		= 'Invalid argument!';
-$_['error_zip_memory']       		= 'Memory allocation failure!';
-$_['error_zip_noent']        		= 'No such file!';
-$_['error_zip_nozip']        		= 'Not a zip archive!';
-$_['error_zip_open']         		= 'Can not open file!';
-$_['error_zip_read']        		= 'Read error!';
-$_['error_zip_seek']         		= 'Seek error!';
 
 // When doing translations only include the matching language code
 

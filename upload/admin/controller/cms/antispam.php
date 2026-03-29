@@ -22,12 +22,19 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$filter_keyword = '';
 		}
 
-		$allowed = [
-			'filter_keyword',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -80,26 +87,51 @@ class Antispam extends \Opencart\System\Engine\Controller {
 			$filter_keyword = '';
 		}
 
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
+		} else {
+			$sort = 'keyword';
+		}
+
+		if (isset($this->request->get['order'])) {
+			$order = (string)$this->request->get['order'];
+		} else {
+			$order = 'ASC';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
 
-		$allowed = [
-			'filter_keyword',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['filter_keyword'])) {
+			$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Anti-Spams
+		// Anti-Spam
 		$data['antispams'] = [];
 
 		$filter_data = [
 			'filter_keyword' => $filter_keyword,
+			'sort'           => $sort,
+			'order'          => $order,
 			'start'          => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'          => $this->config->get('config_pagination_admin')
 		];
@@ -115,18 +147,44 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_keyword'])) {
-			$url = '&filter_keyword' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+			$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		// Total Anti-Spams
+		if ($order == 'ASC') {
+			$url .= '&order=DESC';
+		} else {
+			$url .= '&order=ASC';
+		}
+
+		$data['sort_keyword'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . '&sort=keyword' . $url);
+
+		$url = '';
+
+		if (isset($this->request->get['filter_keyword'])) {
+			$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		$antispam_total = $this->model_cms_antispam->getTotalAntispams($filter_data);
 
-		$data['total'] = $antispam_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $antispam_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('cms/antispam.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($antispam_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($antispam_total - $this->config->get('config_pagination_admin'))) ? $antispam_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $antispam_total, ceil($antispam_total / $this->config->get('config_pagination_admin')));
+
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		return $this->load->view('cms/antispam_list', $data);
 	}
@@ -143,12 +201,23 @@ class Antispam extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['antispam_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$allowed = [
-			'filter_keyword',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['filter_keyword'])) {
+			$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -165,7 +234,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('cms/antispam.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('cms/antispam', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Anti-spam
 		if (isset($this->request->get['antispam_id'])) {
 			$this->load->model('cms/antispam');
 
@@ -217,7 +285,6 @@ class Antispam extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Anti-Spam
 			$this->load->model('cms/antispam');
 
 			if (!$post_info['antispam_id']) {

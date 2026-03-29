@@ -122,8 +122,6 @@ class Returns extends \Opencart\System\Engine\Model {
 	 * Get the record of the return history records in the database.
 	 *
 	 * @param int $return_id primary key of the return record
-	 * @param int $start
-	 * @param int $limit
 	 *
 	 * @return array<int, array<string, mixed>> history records
 	 *
@@ -131,18 +129,10 @@ class Returns extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/returns');
 	 *
-	 * $results = $this->model_account_returns->getHistories($return_id, $start, $limit);
+	 * $results = $this->model_account_returns->getHistories($return_id);
 	 */
-	public function getHistories(int $return_id, int $start = 0, int $limit = 10): array {
-		if ($start < 0) {
-			$start = 0;
-		}
-
-		if ($limit < 1) {
-			$limit = 10;
-		}
-
-		$query = $this->db->query("SELECT `rh`.`date_added`, `rs`.`name` AS `status`, `rh`.`comment` FROM `" . DB_PREFIX . "return_history` `rh` LEFT JOIN `" . DB_PREFIX . "return_status` `rs` ON (`rh`.`return_status_id` = `rs`.`return_status_id`) WHERE `rh`.`return_id` = '" . (int)$return_id . "' AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `rh`.`date_added` ASC LIMIT " . (int)$start . "," . (int)$limit);
+	public function getHistories(int $return_id): array {
+		$query = $this->db->query("SELECT `rh`.`date_added`, `rs`.`name` AS `status`, `rh`.`comment` FROM `" . DB_PREFIX . "return_history` `rh` LEFT JOIN `" . DB_PREFIX . "return_status` `rs` ON (`rh`.`return_status_id` = `rs`.`return_status_id`) WHERE `rh`.`return_id` = '" . (int)$return_id . "' AND `rs`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `rh`.`date_added` ASC");
 
 		return $query->rows;
 	}

@@ -6,8 +6,6 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **AWS IoT Data Plane** service.
  *
- * @method \Aws\Result deleteConnection(array $args = [])
- * @method \GuzzleHttp\Promise\Promise deleteConnectionAsync(array $args = [])
  * @method \Aws\Result deleteThingShadow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteThingShadowAsync(array $args = [])
  * @method \Aws\Result getRetainedMessage(array $args = [])

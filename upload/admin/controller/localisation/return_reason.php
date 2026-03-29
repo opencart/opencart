@@ -18,6 +18,14 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -65,6 +73,18 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
+		} else {
+			$sort = 'name';
+		}
+
+		if (isset($this->request->get['order'])) {
+			$order = (string)$this->request->get['order'];
+		} else {
+			$order = 'ASC';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -73,16 +93,26 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['action'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Return Reasons
+		// Return Reason
 		$data['return_reasons'] = [];
 
 		$filter_data = [
+			'sort'  => $sort,
+			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
@@ -95,16 +125,39 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$data['return_reasons'][] = ['edit' => $this->url->link('localisation/return_reason.form', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $result['return_reason_id'] . $url)] + $result;
 		}
 
-		// Total Return Reasons
+		$url = '';
+
+		if ($order == 'ASC') {
+			$url .= '&order=DESC';
+		} else {
+			$url .= '&order=ASC';
+		}
+
+		$data['sort_name'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		$return_reason_total = $this->model_localisation_return_reason->getTotalReturnReasons();
 
-		// Pagination
-		$data['total'] = $return_reason_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $return_reason_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_reason_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_reason_total - $this->config->get('config_pagination_admin'))) ? $return_reason_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_reason_total, ceil($return_reason_total / $this->config->get('config_pagination_admin')));
+
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		return $this->load->view('localisation/return_reason_list', $data);
 	}
@@ -122,6 +175,14 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['return_reason_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -142,14 +203,13 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/return_reason.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Return Reason
 		if (isset($this->request->get['return_reason_id'])) {
 			$data['return_reason_id'] = (int)$this->request->get['return_reason_id'];
 		} else {
 			$data['return_reason_id'] = 0;
 		}
 
-		// Languages
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -197,7 +257,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Return Reason
 			$this->load->model('localisation/return_reason');
 
 			if (!$post_info['return_reason_id']) {
@@ -236,7 +295,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		// Returns
 		$this->load->model('sale/returns');
 
-		// Total Returns
 		foreach ($selected as $return_reason_id) {
 			$return_total = $this->model_sale_returns->getTotalReturnsByReturnReasonId($return_reason_id);
 
@@ -246,7 +304,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Return Reason
 			$this->load->model('localisation/return_reason');
 
 			foreach ($selected as $return_reason_id) {

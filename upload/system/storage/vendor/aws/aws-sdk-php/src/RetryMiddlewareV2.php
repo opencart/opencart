@@ -6,7 +6,6 @@ use Aws\Retry\ConfigurationInterface;
 use Aws\Retry\QuotaManager;
 use Aws\Retry\RateLimiter;
 use Aws\Retry\RetryHelperTrait;
-use Exception;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
@@ -201,7 +200,7 @@ class RetryMiddlewareV2
                     $value->prependMonitoringEvent($event);
                 }
             }
-            if ($value instanceof Exception || $value instanceof \Throwable) {
+            if ($value instanceof \Exception || $value instanceof \Throwable) {
                 if (!$decider($attempts, $cmd, $value)) {
                     return Promise\Create::rejectionFor(
                         $this->bindStatsToReturn($value, $requestStats)
@@ -246,14 +245,7 @@ class RetryMiddlewareV2
      */
     public function exponentialDelayWithJitter($attempts)
     {
-        $max = mt_getrandmax();
-        try {
-            $rand = random_int(0, $max) / $max;
-        } catch (Exception $_) {
-            // fallback to prevent failing
-            $rand = mt_rand(0, $max) / $max;
-        }
-
+        $rand = mt_rand() / mt_getrandmax();
         return min(1000 * $rand * pow(2, $attempts) , $this->maxBackoff);
     }
 
@@ -295,7 +287,7 @@ class RetryMiddlewareV2
             }
         }
 
-        if ($result instanceof Exception || $result instanceof \Throwable) {
+        if ($result instanceof \Exception || $result instanceof \Throwable) {
             $isError = true;
         } else {
             $isError = false;
@@ -316,13 +308,11 @@ class RetryMiddlewareV2
             return true;
         }
 
-        $awsCode = $result->getAwsErrorCode();
-        if (!is_null($awsCode) && isset($errorCodes[$awsCode])) {
+        if (!empty($errorCodes[$result->getAwsErrorCode()])) {
             return true;
         }
 
-        $status = $result->getStatusCode();
-        if (!is_null($status) && isset($statusCodes[$status])) {
+        if (!empty($statusCodes[$result->getStatusCode()])) {
             return true;
         }
 

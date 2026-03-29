@@ -31,7 +31,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order']) && $this->request->get['route'] == 'cms/comment') {
 			$order = $this->request->get['order'];
 		} else {
-			$order = 'desc';
+			$order = 'DESC';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -65,8 +65,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_date_added_desc'),
-			'value' => 'date_added-desc',
-			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=date_added&order=desc')
+			'value' => 'date_added-DESC',
+			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=date_added&order=DESC')
 		];
 
 		$data['sorts'][] = [
@@ -77,8 +77,8 @@ class Comment extends \Opencart\System\Engine\Controller {
 
 		$data['sorts'][] = [
 			'text'  => $this->language->get('text_rating_desc'),
-			'value' => 'rating-desc',
-			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=rating&order=desc')
+			'value' => 'rating-DESC',
+			'href'  => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $data['article_id'] . '&sort=rating&order=DESC')
 		];
 
 		$data['sort'] = $sort;
@@ -132,7 +132,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['order']) && $this->request->get['route'] == 'cms/comment.list') {
 			$order = $this->request->get['order'];
 		} else {
-			$order = 'desc';
+			$order = 'DESC';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -170,15 +170,13 @@ class Comment extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		// Total Articles
 		$comment_total = $this->model_cms_article->getTotalComments($article_id, $filter_data);
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $comment_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&article_id=' . $article_id . '&page=' . $page)
+			'url'   => $this->url->link('cms/comment.list', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($comment_total - $limit)) ? $comment_total : ((($page - 1) * $limit) + $limit), $comment_total, ceil($comment_total / $limit));
@@ -250,7 +248,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		// Total Articles
 		$reply_total = $this->model_cms_article->getTotalComments($article_id, $filter_data);
 
 		$data['refresh'] = $this->url->link('cms/comment.reply', 'language=' . $this->config->get('config_language') . '&article_id=' . $article_id . '&parent_id=' . $parent_id . '&page=' . $page, true);
@@ -325,7 +322,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$filter_data = [
 				'customer_id' => $this->customer->getId(),
 				'sort'        => 'date_added',
-				'order'       => 'desc',
+				'order'       => 'DESC',
 				'start'       => 0,
 				'limit'       => 1
 			];

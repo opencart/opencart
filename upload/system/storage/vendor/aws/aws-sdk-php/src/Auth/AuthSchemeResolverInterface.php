@@ -13,9 +13,9 @@ interface AuthSchemeResolverInterface
      * Selects an auth scheme for request signing.
      *
      * @param array $authSchemes a priority-ordered list of authentication schemes.
-     * @param array $args
+     * @param IdentityInterface $identity Credentials to be used in request signing.
      *
-     * @return string|null
+     * @return string
      */
     public function selectAuthScheme(
         array $authSchemes,

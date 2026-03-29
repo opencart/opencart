@@ -14,6 +14,22 @@ class Header extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function index(): string {
+		// Analytics
+		$data['analytics'] = [];
+
+		if (!$this->config->get('config_cookie_id') || (isset($this->request->cookie['policy']) && $this->request->cookie['policy'])) {
+			// Extension
+			$this->load->model('setting/extension');
+
+			$analytics = $this->model_setting_extension->getExtensionsByType('analytics');
+
+			foreach ($analytics as $analytic) {
+				if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {
+					$data['analytics'][] = $this->load->controller('extension/' . $analytic['extension'] . '/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
+				}
+			}
+		}
+
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
 
@@ -22,9 +38,17 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
 
-		$data['styles'] = $this->document->getStyles();
+		// Hard coding css, so they can be replaced via the event's system.
+		$data['bootstrap'] = 'catalog/view/stylesheet/bootstrap.css';
+		$data['icons'] = 'catalog/view/stylesheet/fonts/fontawesome/css/all.min.css';
+		$data['stylesheet'] = 'catalog/view/stylesheet/stylesheet.css';
+
+		// Hard coding scripts, so they can be replaced via the event's system.
+		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.7.1.min.js';
+
 		$data['links'] = $this->document->getLinks();
-		$data['scripts'] = $this->document->getScripts();
+		$data['styles'] = $this->document->getStyles();
+		$data['scripts'] = $this->document->getScripts('header');
 
 		$data['name'] = $this->config->get('config_name');
 

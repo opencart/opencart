@@ -3,15 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
-          <ul class="dropdown-menu">
-            <li><button type="submit" form="form-cron" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
-            <li><button type="submit" form="form-cron" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><button type="submit" form="form-cron" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
-          </ul>
-        </div>
+        <button type="submit" form="form-cron" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -30,17 +22,65 @@
         <div class="mb-3">
           <div class="input-group">
             <div class="input-group-text">{{ entry_cron }}</div>
-            <input type="text" value="wget -O /dev/null --timeout=0 &quot;{{ cron }}&quot; &gt; /dev/null 2&gt;&1" id="input-cron" class="form-control"/>
-            <button type="button" id="button-copy" title="{{ button_copy }}" class="btn btn-light"><i class="fa-regular fa-copy"></i></button>
+            <input type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" id="input-cron" class="form-control"/>
+            <button type="button" id="button-copy" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fa-regular fa-copy"></i></button>
           </div>
         </div>
       </div>
     </div>
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="list" class="card-body">{{ list }}</div>
+      <div id="cron" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/cron.js"></script>
+<script type="text/javascript"><!--
+$('#cron').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#cron').load(this.href);
+});
+
+$('#button-copy').on('click', function() {
+    var copyText = document.getElementById('input-cron');
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value);
+});
+
+$('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#cron').load($('#form-cron').attr('data-oc-load'));
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
 {{ footer }}

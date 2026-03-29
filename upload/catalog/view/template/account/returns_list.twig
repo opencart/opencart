@@ -1,0 +1,47 @@
+{{ header }}
+<div id="account-return" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      {% if returns %}
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th class="text-end">{{ column_return_id }}</th>
+                <th>{{ column_status }}</th>
+                <th>{{ column_date_added }}</th>
+                <th class="text-end">{{ column_order_id }}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for return in returns %}
+                <tr>
+                  <td class="text-end">#{{ return.return_id }}</td>
+                  <td>{{ return.status }}</td>
+                  <td>{{ return.date_added }}</td>
+                  <td class="text-end">{{ return.order_id }}</td>
+                  <td class="text-end"><a href="{{ return.href }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
+        </div>
+      {% else %}
+        <p>{{ text_no_results }}</p>
+      {% endif %}
+      <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

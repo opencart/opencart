@@ -89,7 +89,7 @@ abstract class Template
         }
 
         if (!isset($this->parents[$parent])) {
-            $this->parents[$parent] = $this->load($parent, -1);
+            $this->parents[$parent] = $this->loadTemplate($parent);
         }
 
         return $this->parents[$parent];
@@ -270,15 +270,21 @@ abstract class Template
     /**
      * @param string|TemplateWrapper|array<string|TemplateWrapper> $template
      */
-    protected function load(string|TemplateWrapper|array $template, int $line, ?int $index = null): self
+    protected function loadTemplate($template, $templateName = null, $line = null, $index = null): self|TemplateWrapper
     {
         try {
             if (\is_array($template)) {
-                return $this->env->resolveTemplate($template)->unwrap();
+                return $this->env->resolveTemplate($template);
             }
 
             if ($template instanceof TemplateWrapper) {
-                return $template->unwrap();
+                return $template;
+            }
+
+            if ($template instanceof self) {
+                trigger_deprecation('twig/twig', '3.9', 'Passing a "%s" instance to "%s" is deprecated.', self::class, __METHOD__);
+
+                return $template;
             }
 
             if ($template === $this->getTemplateName()) {
@@ -293,14 +299,14 @@ abstract class Template
             return $this->env->loadTemplate($class, $template, $index);
         } catch (Error $e) {
             if (!$e->getSourceContext()) {
-                $e->setSourceContext($this->getSourceContext());
+                $e->setSourceContext($templateName ? new Source('', $templateName) : $this->getSourceContext());
             }
 
             if ($e->getTemplateLine() > 0) {
                 throw $e;
             }
 
-            if (-1 === $line) {
+            if (!$line) {
                 $e->guess();
             } else {
                 $e->setTemplateLine($line);
@@ -311,28 +317,7 @@ abstract class Template
     }
 
     /**
-     * @param string|TemplateWrapper|array<string|TemplateWrapper> $template
-     *
-     * @deprecated since Twig 3.21 and will be removed in 4.0. Use Template::load() instead.
-     */
-    protected function loadTemplate($template, $templateName = null, ?int $line = null, ?int $index = null): self|TemplateWrapper
-    {
-        trigger_deprecation('twig/twig', '3.21', 'The "%s" method is deprecated.', __METHOD__);
-
-        if (null === $line) {
-            $line = -1;
-        }
-
-        if ($template instanceof self) {
-            return $template;
-        }
-
-        return $this->load($template, $line, $index);
-    }
-
-    /**
      * @internal
-     *
      * @return $this
      */
     public function unwrap(): self
@@ -507,7 +492,7 @@ abstract class Template
         return $parent->hasMacro($name, $context);
     }
 
-    protected function getTemplateForMacro(string $name, array $context, int $line, Source $source): self
+    protected function getTemplateForMacro(string $name, array $context, int $line, Source $source): Template
     {
         if (method_exists($this, $name)) {
             return $this;

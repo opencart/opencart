@@ -12,4 +12,3 @@ $_['error_product']          = 'Warning: Products required!';
 $_['error_stock']            = 'Warning: Products marked with *** are not available in the desired quantity or not in stock!';
 $_['error_minimum']          = 'Warning: Minimum order amount for %s is %s!';
 $_['error_call']             = 'API call not found';
-$_['error_subscription']     = 'Subscription Plan is not valid!';

@@ -120,27 +120,6 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Length Class
-	 *
-	 * Get the record of the length class record in the database.
-	 *
-	 * @param int $length_class_id primary key of the length class record
-	 *
-	 * @return array<string, mixed> length class record that has length class ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/length_class');
-	 *
-	 * $length_class_info = $this->model_localisation_length_class->getLengthClass($length_class_id);
-	 */
-	public function getLengthClass(int $length_class_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lc`.`length_class_id` = '" . (int)$length_class_id . "' AND `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		return $query->row;
-	}
-
-	/**
 	 * Get Length Classes
 	 *
 	 * Get the record of the length class records in the database.
@@ -163,13 +142,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	 * $length_classes = $this->model_localisation_length_class->getLengthClasses($filter_data);
 	 */
 	public function getLengthClasses(array $data = []): array {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$language_id . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$sort_data = [
 			'title',
@@ -217,28 +190,24 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Length Classes
+	 * Get Length Class
 	 *
-	 * Get the total number of length class records in the database.
+	 * Get the record of the length class record in the database.
 	 *
-	 * @return int total number of length class records
+	 * @param int $length_class_id primary key of the length class record
+	 *
+	 * @return array<string, mixed> length class record that has length class ID
 	 *
 	 * @example
 	 *
 	 * $this->load->model('localisation/length_class');
 	 *
-	 * $length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
+	 * $length_class_info = $this->model_localisation_length_class->getLengthClass($length_class_id);
 	 */
-	public function getTotalLengthClasses(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
+	public function getLengthClass(int $length_class_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lc`.`length_class_id` = '" . (int)$length_class_id . "' AND `lcd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "length_class` `lc` LEFT JOIN `" . DB_PREFIX . "length_class_description` `lcd` ON (`lc`.`length_class_id` = `lcd`.`length_class_id`) WHERE `lcd`.`language_id` = '" . (int)$language_id . "'");
-
-		return (int)$query->row['total'];
+		return $query->row;
 	}
 
 	/**
@@ -308,28 +277,6 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Description
-	 *
-	 * Get the record of the country description in the database.
-	 *
-	 * @param int $country_id  primary key of the country record
-	 * @param int $language_id primary key of the language record
-	 *
-	 * @return array<string, mixed> country description record
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/country');
-	 *
-	 * $description = $this->model_localisation_country->getDescription($country_id, $language_id);
-	 */
-	public function getDescription(int $length_class_id, int $language_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "' AND `language_id` = '" . (int)$language_id . "'");
-
-		return $query->row;
-	}
-
-	/**
 	 * Get Descriptions
 	 *
 	 * Get the record of the length class description records in the database.
@@ -347,10 +294,10 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $length_class_id): array {
 		$length_class_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `lcd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "length_class_description` `lcd` WHERE `lcd`.`length_class_id` = '" . (int)$length_class_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 
 		foreach ($query->rows as $result) {
-			$length_class_data[$result['code']] = $result;
+			$length_class_data[$result['language_id']] = $result;
 		}
 
 		return $length_class_data;
@@ -394,5 +341,24 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `unit` = '" . $this->db->escape($unit) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
+	}
+
+	/**
+	 * Get Total Length Classes
+	 *
+	 * Get the total number of length class records in the database.
+	 *
+	 * @return int total number of length class records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/length_class');
+	 *
+	 * $length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
+	 */
+	public function getTotalLengthClasses(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "length_class`");
+
+		return (int)$query->row['total'];
 	}
 }

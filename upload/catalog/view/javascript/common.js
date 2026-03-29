@@ -1,11 +1,45 @@
-import { registry, factory, loader } from './index.js';
+function getURLVar(key) {
+    var value = [];
 
-/*
+    var query = String(document.location).split('?');
+
+    if (query[1]) {
+        var part = query[1].split('&');
+
+        for (i = 0; i < part.length; i++) {
+            var data = part[i].split('=');
+
+            if (data[0] && data[1]) {
+                value[data[0]] = data[1];
+            }
+        }
+
+        if (value[key]) {
+            return value[key];
+        } else {
+            return '';
+        }
+    }
+}
+
+// Observe
++function($) {
+    $.fn.observe = function(callback) {
+        observer = new MutationObserver(callback);
+
+        observer.observe($(this)[0], {
+            characterData: false,
+            childList: true,
+            attributes: false
+        });
+    };
+}(jQuery);
+
 $(document).ready(function() {
     // Tooltip
-    let oc_tooltip = function() {
+    var oc_tooltip = function() {
         // Get tooltip instance
-        let tooltip = bootstrap.Tooltip.getInstance(this);
+        tooltip = bootstrap.Tooltip.getInstance(this);
 
         if (!tooltip) {
             // Apply to current element
@@ -19,21 +53,6 @@ $(document).ready(function() {
     $(document).on('click', 'button', function() {
         $('.tooltip').remove();
     });
-});
-
-$(document).ready(function() {
-    // Observe
-    +function($) {
-        $.fn.observe = function(callback) {
-            observer = new MutationObserver(callback);
-
-            observer.observe($(this)[0], {
-                characterData: false,
-                childList: true,
-                attributes: false
-            });
-        };
-    }(jQuery);
 
     $('#alert').observe(function() {
         window.setTimeout(function() {
@@ -42,51 +61,24 @@ $(document).ready(function() {
             });
         }, 3000);
     });
+});
 
-    // Button
+// Button
+$(document).ready(function() {
     +function($) {
         $.fn.button = function(state) {
             return this.each(function() {
-                let element = this;
+                var element = this;
 
                 if (state == 'loading') {
                     this.html = $(element).html();
+                    this.state = $(element).prop('disabled');
 
-                    $(element).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
+                    $(element).prop('disabled', true).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
                 }
 
                 if (state == 'reset') {
-                    $(element).width('').html(this.html);
-                }
-
-                // If button
-                if ($(element).is('button')) {
-                    if (state == 'loading') {
-                        this.state = $(element).prop('disabled');
-
-                        $(element).prop('disabled', true);
-                    }
-
-                    if (state == 'reset') {
-                        $(element).prop('disabled', this.state);
-                    }
-                }
-
-                // If link
-                if ($(element).is('a')) {
-                    if (state == 'loading') {
-                        this.state = $(element).hasClass('disabled');
-
-                        $(element).addClass('disabled');
-                    }
-
-                    if (state == 'reset') {
-                        if (this.state) {
-                            $(element).addClass('disabled');
-                        } else {
-                            $(element).removeClass('disabled');
-                        }
-                    }
+                    $(element).prop('disabled', this.state).width('').html(this.html);
                 }
             });
         };
@@ -154,7 +146,7 @@ $(document).on('submit', 'form', function (e) {
                         $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
-                    for (let key in json['error']) {
+                    for (key in json['error']) {
                         $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
@@ -248,6 +240,40 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
         }, 500);
     }
 });
+
+// Chain ajax calls.
+class Chain {
+    constructor() {
+        this.start = false;
+        this.data = [];
+    }
+
+    attach(call) {
+        this.data.push(call);
+
+        if (!this.start) {
+            this.execute();
+        }
+    }
+
+    execute() {
+        if (this.data.length) {
+            this.start = true;
+
+            var call = this.data.shift();
+
+            var jqxhr = call();
+
+            jqxhr.done(function() {
+                chain.execute();
+            });
+        } else {
+            this.start = false;
+        }
+    }
+}
+
+var chain = new Chain();
 
 // Autocomplete
 +function($) {
@@ -348,6 +374,24 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
 }(jQuery);
 
 $(document).ready(function() {
+    // Currency
+    $('#form-currency .dropdown-item').on('click', function(e) {
+        e.preventDefault();
+
+        $('#form-currency input[name=\'code\']').val($(this).attr('href'));
+
+        $('#form-currency').submit();
+    });
+
+    // Language
+    $('#form-language .dropdown-item').on('click', function(e) {
+        e.preventDefault();
+
+        $('#form-language input[name=\'code\']').val($(this).attr('href'));
+
+        $('#form-language').submit();
+    });
+
     // Product List
     $('#button-list').on('click', function() {
         var element = this;
@@ -382,7 +426,7 @@ $(document).ready(function() {
         $('#button-grid').addClass('active');
     }
 
-
+    /* Agree to Terms */
     $('body').on('click', '.modal-link', function(e) {
         e.preventDefault();
 
@@ -401,5 +445,30 @@ $(document).ready(function() {
         });
     });
 
+    // Cookie Policy
+    $('#cookie button').on('click', function() {
+        var element = this;
+
+        $.ajax({
+            url: $(this).val(),
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                if (json['success']) {
+                    $('#cookie').fadeOut(400, function() {
+                        $('#cookie').remove();
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
 });
-*/

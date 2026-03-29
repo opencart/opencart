@@ -147,14 +147,14 @@ class TaxRate extends \Opencart\System\Engine\Model {
 		$sql = "SELECT `tr`.`tax_rate_id`, `tr`.`name` AS `name`, `tr`.`rate`, `tr`.`type`, `gz`.`name` AS `geo_zone` FROM `" . DB_PREFIX . "tax_rate` `tr` LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr`.`geo_zone_id` = `gz`.`geo_zone_id`)";
 
 		$sort_data = [
-			'name'     => 'tr.name',
-			'rate'     => 'tr.rate',
-			'type'     => 'tr.type',
-			'geo_zone' => 'gz.name'
+			'tr.name',
+			'tr.rate',
+			'tr.type',
+			'gz.name'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `tr`.`name`";
 		}
@@ -178,15 +178,6 @@ class TaxRate extends \Opencart\System\Engine\Model {
 		}
 
 		$query = $this->db->query($sql);
-
-		return $query->rows;
-	}
-
-	/*
-	 * Get Tax Rates By Geo Zone ID
-	 */
-	public function getTaxRatesByGeoZoneId(int $geo_zone_id): array {
-		$query = $this->db->query("SELECT `tr1`.`tax_rule_id`, `tr1`.`tax_rate_id`, `tr1`.`tax_class_id`, `tr2`.`name`, `tr2`.`rate`, `tr2`.`type`, `tr1`.`priority`, `gz`.`name` AS `geo_zone`  FROM `" . DB_PREFIX . "tax_rule` `tr1` LEFT JOIN `" . DB_PREFIX . "tax_rate` `tr2` ON (`tr1`.`tax_rate_id` = `tr2`.`tax_rate_id`) LEFT JOIN `" . DB_PREFIX . "geo_zone` `gz` ON (`tr2`.`geo_zone_id` = `gz`.`geo_zone_id`) WHERE `tr2`.`geo_zone_id` = '" . (int)$geo_zone_id . "'");
 
 		return $query->rows;
 	}

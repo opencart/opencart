@@ -3,17 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" title="{{ button_filter }}" onclick="$('#filter-user').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
-        <a href="{{ add }}" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-list-check"></i> {{ button_action }} <i class="fa-solid fa-caret-down fa-fw"></i></button>
-          <ul class="dropdown-menu">
-            <li><button type="submit" form="form-user" formaction="{{ enable }}" class="dropdown-item"><i class="fa-solid fa-toggle-on text-success"></i> {{ text_enable }}</button></li>
-            <li><button type="submit" form="form-user" formaction="{{ disable }}" class="dropdown-item"><i class="fa-solid fa-toggle-off text-danger"></i> {{ text_disable }}</button></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><button type="submit" form="form-user" formaction="{{ delete }}" onclick="return confirm('{{ text_confirm }}');" class="dropdown-item"><i class="fa-regular fa-trash-can text-danger"></i> {{ text_delete }}</button></li>
-          </ul>
-        </div>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-user').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <button type="submit" form="form-user" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -61,8 +53,8 @@
                 <label for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
-                <button type="reset" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
           </div>
@@ -71,10 +63,121 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="list" class="card-body">{{ list }}</div>
+          <div id="user" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#user').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#user').load(this.href);
+});
+
+$('#button-filter').on('click', function() {
+    url = '';
+
+    var filter_username = $('#input-username').val();
+
+    if (filter_username) {
+        url += '&filter_username=' + encodeURIComponent(filter_username);
+    }
+
+    var filter_name = $('#input-name').val();
+
+    if (filter_name) {
+        url += '&filter_name=' + encodeURIComponent(filter_name);
+    }
+
+    var filter_email = $('#input-email').val();
+
+    if (filter_email) {
+        url += '&filter_email=' + encodeURIComponent(filter_email);
+    }
+
+    var filter_user_group_id = $('#input-user-group').val();
+
+    if (filter_user_group_id !== '') {
+        url += '&filter_user_group_id=' + filter_user_group_id;
+    }
+
+    var filter_status = $('#input-status').val();
+
+    if (filter_status !== '') {
+        url += '&filter_status=' + filter_status;
+    }
+
+    var filter_ip = $('#input-ip').val();
+
+    if (filter_ip) {
+        url += '&filter_ip=' + encodeURIComponent(filter_ip);
+    }
+
+    window.history.pushState({}, null, 'index.php?route=user/user&user_token={{ user_token }}' + url);
+
+    $('#user').load('index.php?route=user/user.list&user_token={{ user_token }}' + url);
+});
+
+$('#input-username').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=user/user.autocomplete&user_token={{ user_token }}&filter_username=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['username'],
+                        value: item['user_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-username').val(decodeHTMLEntities(item['label']));
+    }
+});
+
+$('#input-name').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=user/user.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['user_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-name').val(decodeHTMLEntities(item['label']));
+    }
+});
+
+$('#input-email').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=user/user.autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['email'],
+                        value: item['user_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-email').val(decodeHTMLEntities(item['label']));
+    }
+});
+//--></script>
 {{ footer }}

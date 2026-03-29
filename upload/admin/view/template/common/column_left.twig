@@ -1,10 +1,10 @@
 <nav id="column-left">
-	<div id="navigation"><i class="fa-solid fa-bars"></i> {{ text_navigation }}</div>
+	<div id="navigation"><span class="fa-solid fa-bars"></span> {{ text_navigation }}</div>
 	<ul id="menu">
 		{% set i = 0 %}
 		{% for menu in menus %}
-			<li id="menu-{{ menu.code }}">
-        {% if menu.href %}
+			<li id="{{ menu.id }}">
+				{% if menu.href %}
 					<a href="{{ menu.href }}"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
 				{% else %}
 					<a href="#collapse-{{ i }}" data-bs-toggle="collapse" class="parent collapsed"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
@@ -13,18 +13,16 @@
 					<ul id="collapse-{{ i }}" class="collapse">
 						{% set j = 0 %}
 						{% for children_1 in menu.children %}
-							<li>
-                {% if children_1.href %}
+							<li>{% if children_1.href %}
 									<a href="{{ children_1.href }}">{{ children_1.name }}</a>
 								{% else %}
 									<a href="#collapse-{{ i }}-{{ j }}" data-bs-toggle="collapse" class="parent collapsed">{{ children_1.name }}</a>
 								{% endif %}
 								{% if children_1.children %}
 									<ul id="collapse-{{ i }}-{{ j }}" class="collapse">
-                    {% set k = 0 %}
+										{% set k = 0 %}
 										{% for children_2 in children_1.children %}
-											<li>
-                        {% if children_2.href %}
+											<li>{% if children_2.href %}
 													<a href="{{ children_2.href }}">{{ children_2.name }}</a>
 												{% else %}
 													<a href="#collapse-{{ i }}-{{ j }}-{{ k }}" data-bs-toggle="collapse" class="parent collapsed">{{ children_2.name }}</a>
@@ -35,8 +33,7 @@
 															<li><a href="{{ children_3.href }}">{{ children_3.name }}</a></li>
 														{% endfor %}
 													</ul>
-												{% endif %}
-                      </li>
+												{% endif %}</li>
 											{% set k = k + 1 %}
 										{% endfor %}
 									</ul>

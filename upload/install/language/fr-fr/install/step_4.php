@@ -4,9 +4,9 @@ $_['heading_title']               = 'Installation terminée';
 
 // Texte
 $_['text_step_4']                 = 'Prêt à commencer à vendre !';
-$_['text_catalog']                = 'Accédez à votre magasin en ligne';
+$_['text_catalog']                = 'Accédez à votre boutique en ligne';
 $_['text_admin']                  = 'Connectez-vous à votre administration';
-$_['text_extension']              = 'Visitez le magasin des extensions';
+$_['text_extension']              = 'Visitez la boutique des extensions';
 $_['text_mail']                   = 'Rejoignez la liste de diffusion';
 $_['text_mail_description']       = 'Restez informé des mises à jour et des événements OpenCart.';
 $_['text_facebook']               = 'Aimez-nous sur Facebook';

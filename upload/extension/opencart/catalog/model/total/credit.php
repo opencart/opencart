@@ -12,8 +12,8 @@ class Credit extends \Opencart\System\Engine\Model {
 	 * Get Total
 	 *
 	 * @param array<int, array<string, mixed>> $totals
-	 * @param  array<int, float>               &$taxes
-	 * @param  float                           &$total
+	 * @param array<int, float>                $taxes
+	 * @param float                            $total
 	 *
 	 * @return void
 	 */
@@ -66,7 +66,6 @@ class Credit extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function unconfirm(array $order_info): void {
-		// Transaction
 		$this->load->model('account/transaction');
 
 		$this->model_account_transaction->deleteTransactionByOrderId($order_info['order_id']);

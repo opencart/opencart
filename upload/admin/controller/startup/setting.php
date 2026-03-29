@@ -32,5 +32,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 			// Sync PHP and DB time zones.
 			$this->db->query("SET `time_zone` = '" . $this->db->escape(date('P')) . "'");
 		}
+
+		// Response output compression level
+		if ($this->config->get('config_compression')) {
+			$this->response->setCompression((int)$this->config->get('config_compression'));
+		}
 	}
 }

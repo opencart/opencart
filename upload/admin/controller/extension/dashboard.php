@@ -30,7 +30,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = oc_directory_read(DIR_EXTENSION, true, '/admin\/controller\/dashboard\/.+\.php$/');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/dashboard/*.php');
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');
@@ -38,7 +38,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 
 		$installed = [];
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('dashboard');
@@ -53,25 +53,27 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 
 		$data['extensions'] = [];
 
-		foreach ($results as $result) {
-			$path = substr($result, strlen(DIR_EXTENSION));
+		if ($results) {
+			foreach ($results as $result) {
+				$path = substr($result, strlen(DIR_EXTENSION));
 
-			$extension = substr($path, 0, strpos($path, '/'));
+				$extension = substr($path, 0, strpos($path, '/'));
 
-			$code = basename($result, '.php');
+				$code = basename($result, '.php');
 
-			$this->load->language('extension/' . $extension . '/dashboard/' . $code, $code);
+				$this->load->language('extension/' . $extension . '/dashboard/' . $code, $code);
 
-			$data['extensions'][] = [
-				'name'       => $this->language->get($code . '_heading_title'),
-				'width'      => $this->config->get('dashboard_' . $code . '_width'),
-				'status'     => $this->config->get('dashboard_' . $code . '_status'),
-				'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order'),
-				'install'    => $this->url->link('extension/dashboard.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-				'uninstall'  => $this->url->link('extension/dashboard.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-				'installed'  => in_array($code, $installed),
-				'edit'       => $this->url->link('extension/' . $extension . '/dashboard/' . $code, 'user_token=' . $this->session->data['user_token'])
-			];
+				$data['extensions'][] = [
+					'name'       => $this->language->get($code . '_heading_title'),
+					'width'      => $this->config->get('dashboard_' . $code . '_width'),
+					'status'     => $this->config->get('dashboard_' . $code . '_status'),
+					'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order'),
+					'install'    => $this->url->link('extension/dashboard.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall'  => $this->url->link('extension/dashboard.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'installed'  => in_array($code, $installed),
+					'edit'       => $this->url->link('extension/' . $extension . '/dashboard/' . $code, 'user_token=' . $this->session->data['user_token'])
+				];
+			}
 		}
 
 		$data['promotion'] = $this->load->controller('marketplace/promotion');

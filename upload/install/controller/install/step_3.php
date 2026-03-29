@@ -116,22 +116,9 @@ class Step3 extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			try {
-				$option = [
-					'engine'   => $this->request->post['db_driver'],
-					'hostname' => html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'),
-					'username' => html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'),
-					'password' => html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'),
-					'database' => html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'),
-					'port'     => $this->request->post['db_port'],
-					'prefix'   => $this->request->post['db_prefix'],
-					'ssl_key'  => html_entity_decode($this->request->post['db_ssl_key'], ENT_QUOTES, 'UTF-8'),
-					'ssl_cert' => html_entity_decode($this->request->post['db_ssl_cert'], ENT_QUOTES, 'UTF-8'),
-					'ssl_ca'   => html_entity_decode($this->request->post['db_ssl_ca'], ENT_QUOTES, 'UTF-8')
-				];
-
-				$this->db = new \Opencart\System\Library\DB($option);
+				$db = new \Opencart\System\Library\DB($this->request->post['db_driver'], html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_port'], $this->request->post['db_ssl_key'], $this->request->post['db_ssl_cert'], $this->request->post['db_ssl_ca']);
 			} catch (\Exception $e) {
-				$json['error']['warning'] = $this->language->get('error_db_connect');
+				$json['error']['warning'] = $e->getMessage();
 			}
 		}
 
@@ -252,7 +239,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
 			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
 			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n\n";
 
 			if ((isset($this->request->post['db_ssl_key']) && $this->request->post['db_ssl_key'] !== '')) {
 				$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes($this->request->post['db_ssl_key']) . '\');' . "\n";

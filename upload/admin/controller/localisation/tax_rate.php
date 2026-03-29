@@ -18,6 +18,14 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -65,6 +73,18 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
+		} else {
+			$sort = 'tr.name';
+		}
+
+		if (isset($this->request->get['order'])) {
+			$order = (string)$this->request->get['order'];
+		} else {
+			$order = 'ASC';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -73,16 +93,26 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['action'] = $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Tax Rates
+		// Tax Rate
 		$data['tax_rates'] = [];
 
 		$filter_data = [
+			'sort'  => $sort,
+			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
@@ -92,19 +122,48 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_tax_rate->getTaxRates($filter_data);
 
 		foreach ($results as $result) {
-			$data['tax_rates'][] = ['edit' => $this->url->link('localisation/tax_rate.form', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $result['tax_rate_id'] . $url)] + $result;
+			$data['tax_rates'][] = [
+				'type' => ($result['type'] == 'F' ? $this->language->get('text_amount') : $this->language->get('text_percent')),
+				'edit' => $this->url->link('localisation/tax_rate.form', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $result['tax_rate_id'] . $url)
+			] + $result;
 		}
 
-		// Total Tax Rates
+		$url = '';
+
+		if ($order == 'ASC') {
+			$url .= '&order=DESC';
+		} else {
+			$url .= '&order=ASC';
+		}
+
+		$data['sort_name'] = $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.name' . $url);
+		$data['sort_rate'] = $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.rate' . $url);
+		$data['sort_type'] = $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=tr.type' . $url);
+		$data['sort_geo_zone'] = $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=gz.name' . $url);
+
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRates();
 
-		// Pagination
-		$data['total'] = $tax_rate_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $tax_rate_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('localisation/tax_rate.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($tax_rate_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($tax_rate_total - $this->config->get('config_pagination_admin'))) ? $tax_rate_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $tax_rate_total, ceil($tax_rate_total / $this->config->get('config_pagination_admin')));
+
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		return $this->load->view('localisation/tax_rate_list', $data);
 	}
@@ -122,6 +181,14 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['tax_rate_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -142,7 +209,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/tax_rate.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Tax Rate
 		if (isset($this->request->get['tax_rate_id'])) {
 			$this->load->model('localisation/tax_rate');
 
@@ -173,19 +239,18 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$data['type'] = '';
 		}
 
-		// Customer Groups
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
-		// Tax Rate
 		if (isset($this->request->get['tax_rate_id'])) {
 			$data['tax_rate_customer_group'] = $this->model_localisation_tax_rate->getCustomerGroups($this->request->get['tax_rate_id']);
 		} else {
 			$data['tax_rate_customer_group'] = [$this->config->get('config_customer_group_id')];
 		}
 
-		// Geo Zones
+		// Geo Zone
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -236,7 +301,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Tax Rate
 			$this->load->model('localisation/tax_rate');
 
 			if (!$post_info['tax_rate_id']) {
@@ -276,7 +340,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/tax_class');
 
 		foreach ($selected as $tax_rate_id) {
-			// Total Tax Rules
 			$tax_rule_total = $this->model_localisation_tax_class->getTotalTaxRulesByTaxRateId($tax_rate_id);
 
 			if ($tax_rule_total) {
@@ -285,7 +348,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Tax Rate
 			$this->load->model('localisation/tax_rate');
 
 			foreach ($selected as $tax_rate_id) {

@@ -1,13 +1,13 @@
-<form id="form-tax-rate" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+<form id="form-tax-rate" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#tax-rate">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
-          <th>{{ column_name }}</th>
-          <th class="text-end">{{ column_rate }}</th>
-          <th>{{ column_type }}</th>
-          <th>{{ column_geo_zone }}</th>
+          <th><a href="{{ sort_name }}"{% if sort == 'tr.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th class="text-end"><a href="{{ sort_rate }}"{% if sort == 'tr.rate' %} class="{{ order|lower }}"{% endif %}>{{ column_rate }}</a></th>
+          <th><a href="{{ sort_type }}"{% if sort == 'tr.type' %} class="{{ order|lower }}"{% endif %}>{{ column_type }}</a></th>
+          <th><a href="{{ sort_geo_zone }}"{% if sort == 'gz.name' %} class="{{ order|lower }}"{% endif %}>{{ column_geo_zone }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -18,9 +18,9 @@
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ tax_rate.tax_rate_id }}" class="form-check-input"/></td>
               <td>{{ tax_rate.name }}</td>
               <td class="text-end">{{ tax_rate.rate }}</td>
-              <td>{% if tax_rate.type == 'F' %}{{ text_amount }}{{ tax_rate.type }}{ text_percent }}{% endif %}</td>
+              <td>{{ tax_rate.type }}</td>
               <td>{{ tax_rate.geo_zone }}</td>
-              <td class="text-end"><a href="{{ tax_rate.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end"><a href="{{ tax_rate.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}
@@ -32,7 +32,7 @@
     </table>
   </div>
   <div class="row">
-    <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>

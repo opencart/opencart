@@ -36,7 +36,7 @@ final class UseTokenParser extends AbstractTokenParser
 {
     public function parse(Token $token): Node
     {
-        $template = $this->parser->parseExpression();
+        $template = $this->parser->getExpressionParser()->parseExpression();
         $stream = $this->parser->getStream();
 
         if (!$template instanceof ConstantExpression) {

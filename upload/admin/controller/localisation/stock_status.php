@@ -16,13 +16,19 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['breadcrumbs'] = [];
 
@@ -85,17 +91,23 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$allowed = [
-			'sort',
-			'order',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Stock Statuses
+		// Stock Status
 		$data['stock_statuses'] = [];
 
 		$filter_data = [
@@ -113,14 +125,34 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$data['stock_statuses'][] = ['edit' => $this->url->link('localisation/stock_status.form', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . $url)] + $result;
 		}
 
-		// Total Stock Statuses
+		$url = '';
+
+		if ($order == 'ASC') {
+			$url .= '&order=DESC';
+		} else {
+			$url .= '&order=ASC';
+		}
+
+		$data['sort_name'] = $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		$stock_status_total = $this->model_localisation_stock_status->getTotalStockStatuses();
 
-		// Pagination
-		$data['total'] = $stock_status_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $stock_status_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('localisation/stock_status.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($stock_status_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($stock_status_total - $this->config->get('config_pagination_admin'))) ? $stock_status_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $stock_status_total, ceil($stock_status_total / $this->config->get('config_pagination_admin')));
 
@@ -143,6 +175,14 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['stock_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -169,7 +209,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$data['stock_status_id'] = 0;
 		}
 
-		// Languages
+		// Language
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -217,7 +257,6 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Stock Status
 			$this->load->model('localisation/stock_status');
 
 			if (!$post_info['stock_status_id']) {
@@ -257,7 +296,6 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $stock_status_id) {
-			// Total Products
 			$product_total = $this->model_catalog_product->getTotalProductsByStockStatusId($stock_status_id);
 
 			if ($product_total) {
@@ -266,7 +304,6 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Stock Status
 			$this->load->model('localisation/stock_status');
 
 			foreach ($selected as $stock_status_id) {

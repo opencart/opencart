@@ -1,4 +1,4 @@
-<div class="card mb-3">
+<div class="card">
   <div class="card-header"><i class="fa-solid fa-filter"></i> {{ heading_title }}</div>
   <div class="list-group list-group-flush">
     {% for filter_group in filter_groups %}
@@ -15,8 +15,18 @@
       </div>
     {% endfor %}
   </div>
-  <div class="card-footer text-end">
+  <div class="card-footer text-right">
     <button type="button" id="button-filter" class="btn btn-primary"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
   </div>
 </div>
-<script src="extension/opencart/view/javascript/filter.js" type="text/javascript"></script>
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+    filter = [];
+
+    $('input[name^=\'filter\']:checked').each(function(element) {
+        filter.push(this.value);
+    });
+
+    location = '{{ action|escape('js') }}&filter=' + filter.join(',');
+});
+//--></script>

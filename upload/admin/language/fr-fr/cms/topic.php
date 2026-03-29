@@ -8,8 +8,6 @@ $_['text_list']               = 'Liste des Sujets';
 $_['text_add']                = 'Ajouter un Sujet';
 $_['text_edit']               = 'Modifier le Sujet';
 $_['text_default']            = 'Par Défaut';
-$_['text_general']            = 'Général';
-$_['text_meta']               = 'Balises Meta';
 $_['text_keyword']            = 'N\'utilisez pas d\'espaces, remplacez-les par des - et assurez-vous que l\'URL SEO soit unique à l\'échelle mondiale.';
 
 // Colonne
@@ -28,7 +26,6 @@ $_['entry_store']             = 'Magasins';
 $_['entry_sort_order']        = 'Ordre de Tri';
 $_['entry_status']            = 'Statut';
 $_['entry_keyword']           = 'Mot-clé';
-$_['entry_layout']            = 'Disposition de Remplacement';
 
 // Erreur
 $_['error_warning']           = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';

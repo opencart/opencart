@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-location" formaction="{{ save }}" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+        <button type="submit" form="form-location" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -19,25 +19,32 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-location" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3">
+          <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required/>
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
               <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3">
+          <div class="row mb-3 required">
             <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
             <div class="col-sm-10">
-              <textarea type="text" name="address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control" required>{{ address }}</textarea>
+              <textarea type="text" name="address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ address }}</textarea>
               <div id="error-address" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3">
+          <div class="row mb-3 required">
             <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
             <div class="col-sm-10">
-              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" required/>
+              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
               <div class="form-text">{{ help_telephone }}</div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
+              <div class="form-text">{{ help_geocode }}</div>
             </div>
           </div>
           <div class="row mb-3">

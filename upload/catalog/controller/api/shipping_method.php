@@ -80,7 +80,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$output['error'] = $this->language->get('error_customer');
 		}
 
-		// 2. Validate shipping, if required
+		// 2. Validate shipping if required
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
 				$output['error'] = $this->language->get('error_shipping_address');
@@ -90,7 +90,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$output) {
-			// Shipping Methods
+			// Shipping Method
 			$this->load->model('checkout/shipping_method');
 
 			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);

@@ -24,7 +24,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$affiliate_id = 0;
 		}
 
-		// Affiliate
 		if ($affiliate_id) {
 			$this->load->model('account/affiliate');
 

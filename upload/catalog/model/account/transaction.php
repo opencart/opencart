@@ -31,9 +31,9 @@ class Transaction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Transactions
+	 * Delete Transaction
 	 *
-	 * Delete customer transaction records in the database.
+	 * Delete customer transaction record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $order_id    primary key of the order record
@@ -44,9 +44,9 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/transaction');
 	 *
-	 * $this->model_account_transaction->deleteTransactions($customer_id, $order_id);
+	 * $this->model_account_transaction->deleteTransaction($customer_id, $order_id);
 	 */
-	public function deleteTransactions(int $customer_id, int $order_id = 0): void {
+	public function deleteTransaction(int $customer_id, int $order_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'";
 
 		if ($order_id) {
@@ -57,9 +57,9 @@ class Transaction extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Transactions By Order ID
+	 * Delete Transaction By Order ID
 	 *
-	 * Delete customer transactions by order record in the database.
+	 * Delete customer transaction by order id record in the database.
 	 *
 	 * @param int $order_id primary key of the order record
 	 *
@@ -69,9 +69,9 @@ class Transaction extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/transaction');
 	 *
-	 * $this->model_account_transaction->deleteTransactionsByOrderId($order_id);
+	 * $this->model_account_transaction->deleteTransactionByOrderId($order_id);
 	 */
-	public function deleteTransactionsByOrderId(int $order_id): void {
+	public function deleteTransactionByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "' AND `amount` < 0");
 	}
 

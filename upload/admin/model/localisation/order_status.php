@@ -161,13 +161,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_localisation_order_status->getOrderStatuses($filter_data);
 	 */
 	public function getOrderStatuses(array $data = []): array {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$language_id . "' ORDER BY `name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";
@@ -203,31 +197,6 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Order Statuses
-	 *
-	 * Get the total number of order status records in the database.
-	 *
-	 * @return int total number of order status records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/order_status');
-	 *
-	 * $order_status_total = $this->model_localisation_order_status->getTotalOrderStatuses();
-	 */
-	public function getTotalOrderStatuses(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$language_id . "'");
-
-		return (int)$query->row['total'];
-	}
-
-	/**
 	 * Add Description
 	 *
 	 * Create a new order status description record in the database.
@@ -253,47 +222,6 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Descriptions By Language ID
-	 *
-	 * Delete country descriptions by language records in the database.
-	 *
-	 * @param int $language_id primary key of the language record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/country');
-	 *
-	 * $this->model_localisation_country->deleteDescriptionsByLanguageId($language_id);
-	 */
-	public function deleteDescriptionsByLanguageId(int $language_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$language_id . "'");
-	}
-
-	/**
-	 * Get Description
-	 *
-	 * Get the record of the country description in the database.
-	 *
-	 * @param int $country_id  primary key of the country record
-	 * @param int $language_id primary key of the language record
-	 *
-	 * @return array<string, mixed> country description record
-	 *
-	 * @example
-	 *
-	 * $this->load->model('localisation/country');
-	 *
-	 * $description = $this->model_localisation_country->getDescription($order_status_id, $language_id);
-	 */
-	public function getDescription(int $order_status_id, int $language_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$language_id . "'");
-
-		return $query->row;
-	}
-
-	/**
 	 * Get Descriptions
 	 *
 	 * Get the record of the order status description records in the database.
@@ -311,10 +239,10 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $order_status_id): array {
 		$order_status_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `os`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = '" . (int)$order_status_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$order_status_data[$result['code']] = $result;
+			$order_status_data[$result['language_id']] = $result;
 		}
 
 		return $order_status_data;
@@ -339,5 +267,24 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
+	}
+
+	/**
+	 * Get Total Order Statuses
+	 *
+	 * Get the total number of order status records in the database.
+	 *
+	 * @return int total number of order status records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('localisation/order_status');
+	 *
+	 * $order_status_total = $this->model_localisation_order_status->getTotalOrderStatuses();
+	 */
+	public function getTotalOrderStatuses(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return (int)$query->row['total'];
 	}
 }

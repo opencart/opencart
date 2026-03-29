@@ -17,6 +17,7 @@ use Closure;
  */
 class QueryCompatibleInputMiddleware
 {
+
     /** @var callable */
     private $nextHandler;
 

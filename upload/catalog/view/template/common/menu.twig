@@ -1,0 +1,45 @@
+{% if categories %}
+  <div class="container">
+    <nav id="menu" class="navbar navbar-expand-lg bg-primary">
+      <div id="category" class="d-block d-sm-block d-lg-none">{{ text_category }}</div>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" class="navbar-toggler d-lg-none"><i class="fa-solid fa-bars"></i></button>
+      <div id="navbar-menu" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          {% for category in categories %}
+            {% if category.children %}
+              {% set total = category.children|length %}
+              {% if total > 20 %}
+                {% set batch = (total / 4)|round(0, 'ceil') %}
+                {% set column = 4 %}
+              {% else %}
+                {% set batch = 5 %}
+                {% set column = (total / 5)|round(0, 'ceil') %}
+              {% endif %}
+              <li class="nav-item dropdown"><a href="{{ category.href }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ category.name }}</a>
+                <div class="dropdown-menu dropdown-column-{{ column }}">
+                  <div class="dropdown-inner">
+                    {% for children in category.children|batch(batch) %}
+                      <ul class="list-unstyled">
+                        {% for child in children %}
+                          <li><a href="{{ child.href }}" class="dropdown-item">{{ child.name }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    {% endfor %}
+                  </div>
+                  <ul class="list-unstyled">
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a href="{{ category.href }}" class="dropdown-item">{{ text_all }} {{ category.name }}</a></li>
+                  </ul>
+                </div>
+              </li>
+            {% else %}
+              <li class="nav-item"><a href="{{ category.href }}" class="dropdown-item">{{ category.name }}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+{% endif %}

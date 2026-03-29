@@ -65,7 +65,6 @@ class SignatureProvider
         $result = $provider($version, $service, $region);
         if ($result instanceof SignatureInterface
             || $result instanceof BearerTokenAuthorization
-            || $result instanceof DpopSignature
         ) {
             return $result;
         }
@@ -140,8 +139,6 @@ class SignatureProvider
                     return new BearerTokenAuthorization();
                 case 'anonymous':
                     return new AnonymousSignature();
-                case 'dpop':
-                    return new DpopSignature($service);
                 default:
                     return null;
             }

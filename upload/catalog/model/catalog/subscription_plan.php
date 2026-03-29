@@ -52,12 +52,12 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name'       => 'spd.name',
-			'sort_order' => 'sp.order_id'
+			'spd.name',
+			'sp.sort_order'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `spd`.`name`";
 		}

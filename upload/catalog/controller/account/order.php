@@ -55,7 +55,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['orders'] = [];
 
-		// Orders
+		// Order
 		$this->load->model('account/order');
 
 		// Order Status
@@ -73,25 +73,21 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['orders'][] = [
-				'status'         => $order_status,
-				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'product_total'  => $this->model_account_order->getTotalProductsByOrderId($result['order_id']),
-				'total'          => $result['total'],
-				'currency_code'  => $result['currency_code'],
-				'currency_value' => $result['currency_value'],
-				'view'           => $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id']),
+				'status'        => $order_status,
+				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'product_total' => $this->model_account_order->getTotalProductsByOrderId($result['order_id']),
+				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+				'view'          => $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id']),
 			] + $result;
 		}
 
-		// Total Orders
 		$order_total = $this->model_account_order->getTotalOrders();
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']  . '&page=' . $page)
+			'url'   => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
@@ -113,7 +109,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return \Opencart\System\Engine\Action|null
 	 */
-	public function info() {
+	public function info(): ?\Opencart\System\Engine\Action {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
@@ -137,8 +133,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$heading_title = sprintf($this->language->get('text_order'), $order_info['order_id']);
 
 			$this->document->setTitle($heading_title);
-
-			$this->document->addScript('catalog/view/javascript/order.js');
 
 			$url = '';
 
@@ -286,7 +280,11 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// Subscription
 			$this->load->model('account/subscription');
+
+			// Product
 			$this->load->model('catalog/product');
+
+			// Upload
 			$this->load->model('tool/upload');
 
 			// Products
@@ -321,23 +319,23 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				if ($order_subscription_info) {
 					if ($order_subscription_info['trial_status']) {
-						$trial_price = $order_subscription_info['trial_price'] + ($this->config->get('config_tax') ? $order_subscription_info['trial_tax'] : 0);
+						$trial_price = $this->currency->format($order_subscription_info['trial_price'] + ($this->config->get('config_tax') ? $order_subscription_info['trial_tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
 						$trial_cycle = $order_subscription_info['trial_cycle'];
 						$trial_frequency = $this->language->get('text_' . $order_subscription_info['trial_frequency']);
 						$trial_duration = $order_subscription_info['trial_duration'];
 
-						$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $order_info['currency_code'], $trial_price, $order_info['currency_value'], $trial_cycle, $trial_frequency, $trial_duration);
+						$subscription_plan .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 					}
 
-					$price = $order_subscription_info['price'] + ($this->config->get('config_tax') ? $order_subscription_info['tax'] : 0);
+					$price = $this->currency->format($order_subscription_info['price'] + ($this->config->get('config_tax') ? $order_subscription_info['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
 					$cycle = $order_subscription_info['cycle'];
 					$frequency = $this->language->get('text_' . $order_subscription_info['frequency']);
 					$duration = $order_subscription_info['duration'];
 
 					if ($order_subscription_info['duration']) {
-						$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency, $duration);
+						$subscription_plan .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
 					} else {
-						$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $order_info['currency_code'], $price, $order_info['currency_value'], $cycle, $frequency);
+						$subscription_plan .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 					}
 
 					$subscription_plan_id = $order_subscription_info['subscription_plan_id'];
@@ -358,15 +356,21 @@ class Order extends \Opencart\System\Engine\Controller {
 					'subscription_plan_id' => $subscription_plan_id,
 					'subscription_plan'    => $subscription_plan,
 					'subscription'         => $subscription,
-					'price'                => $product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0),
-					'total'                => $product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0),
+					'price'                => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'                => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'view'                 => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
 					'return'               => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'])
 				] + $product;
 			}
 
 			// Totals
-			$data['totals'] = $this->model_account_order->getTotals($order_id);
+			$data['totals'] = [];
+
+			$totals = $this->model_account_order->getTotals($order_id);
+
+			foreach ($totals as $total) {
+				$data['totals'][] = ['text' => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])] + $total;
+			}
 
 			$data['comment'] = nl2br($order_info['comment']);
 
@@ -374,10 +378,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['history'] = $this->getHistory();
 
 			$data['continue'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
-
-			$data['language'] = $this->config->get('config_language');
-			$data['currency_code'] = $order_info['currency_code'];
-			$data['currency_value'] = $order_info['currency_value'];
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -450,20 +450,18 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['histories'][] = [
-				'comment'    => $result['notify'] ? nl2br($result['comment']) : '',
+				'comment'    => nl2br($result['comment']),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			] + $result;
 		}
 
-		// Total Histories
 		$history_total = $this->model_account_order->getTotalHistories($order_id);
 
-		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('account/order.history', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . '&page=' . $page)
+			'url'   => $this->url->link('account/order.history', 'customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($history_total - $limit)) ? $history_total : ((($page - 1) * $limit) + $limit), $history_total, ceil($history_total / $limit));

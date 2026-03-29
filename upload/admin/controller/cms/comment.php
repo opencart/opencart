@@ -79,7 +79,7 @@ class Comment extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_status'])) {
-			$filter_status = $this->request->get['filter_status'];
+			$filter_status = (int)$this->request->get['filter_status'];
 		} else {
 			$filter_status = '';
 		}
@@ -102,17 +102,35 @@ class Comment extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$allowed = [
-			'filter_keyword',
-			'filter_article',
-			'filter_customer',
-			'filter_status',
-			'filter_date_from',
-			'filter_date_to',
-			'page'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['filter_keyword'])) {
+			$url .= '&filter_keyword=' . urlencode(html_entity_decode((string)$this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_article'])) {
+			$url .= '&filter_article=' . urlencode(html_entity_decode((string)$this->request->get['filter_article'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$url .= '&filter_customer=' . urlencode(html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . (int)$this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . (int)$this->request->get['page'];
+		}
 
 		$data['action'] = $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -161,25 +179,40 @@ class Comment extends \Opencart\System\Engine\Controller {
 			] + $result;
 		}
 
-		$allowed = [
-			'filter_keyword',
-			'filter_article',
-			'filter_customer',
-			'filter_status',
-			'filter_date_from',
-			'filter_date_to'
-		];
+		$url = '';
 
-		$url = '&' . http_build_query(array_intersect_key($this->request->get, array_flip($allowed)));
+		if (isset($this->request->get['filter_keyword'])) {
+			$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
+		}
 
-		// Total Comments
+		if (isset($this->request->get['filter_article'])) {
+			$url .= '&filter_article=' . urlencode(html_entity_decode($this->request->get['filter_article'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
+
 		$comment_total = $this->model_cms_article->getTotalComments($filter_data);
 
-		// Pagination
-		$data['total'] = $comment_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $comment_total,
+			'page'  => $page,
+			'limit' => 10,
+			'url'   => $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($comment_total - $this->config->get('config_pagination_admin'))) ? $comment_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $comment_total, ceil($comment_total / $this->config->get('config_pagination_admin')));
 
@@ -398,7 +431,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 				$this->model_cms_article->editCommentRating($result['article_id'], $result['article_comment_id'], $like - $dislike);
 			}
 
-			// Total Comments
 			$comment_total = $this->model_cms_article->getTotalComments();
 
 			$start = ($page - 1) * $limit;

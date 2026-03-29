@@ -163,13 +163,11 @@ class RetryMiddleware
             return true;
         }
 
-        $awsCode = $error->getAwsErrorCode();
-        if (!is_null($awsCode) && isset($errorCodes[$awsCode])) {
+        if (isset($errorCodes[$error->getAwsErrorCode()])) {
             return true;
         }
 
-        $status = $error->getStatusCode();
-        if (!is_null($status) && isset($statusCodes[$status])) {
+        if (isset($statusCodes[$error->getStatusCode()])) {
             return true;
         }
 

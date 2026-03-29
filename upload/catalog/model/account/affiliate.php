@@ -98,7 +98,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/affiliate');
 	 *
-	 * $this->model_account_affiliate->deleteAffiliate($customer_id);
+	 * $this->model_account_affiliate->editAffiliate($customer_id);
 	 */
 	public function deleteAffiliate(int $customer_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");

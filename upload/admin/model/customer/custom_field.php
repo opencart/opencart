@@ -11,7 +11,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Custom Field
 	 *
-	 * Create a new custom field record in the database.R
+	 * Create a new custom field record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *
@@ -114,26 +114,6 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Status
-	 *
-	 * Edit information status record in the database.
-	 *
-	 * @param int  $information_id primary key of the information record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/information');
-	 *
-	 * $this->model_catalog_information->editStatus($information_id, $status);
-	 */
-	public function editStatus(int $custom_field_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET `status` = '" . (bool)$status . "' WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
-	}
-
-	/**
 	 * Delete Custom Field
 	 *
 	 * Delete custom field record in the database.
@@ -200,19 +180,11 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * $custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 	 */
 	public function getCustomFields(array $data = []): array {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
 		if (empty($data['filter_customer_group_id'])) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` `cf`";
+			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` `cf` LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cfd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		} else {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` `cfcg` LEFT JOIN `" . DB_PREFIX . "custom_field` `cf` ON (`cfcg`.`custom_field_id` = `cf`.`custom_field_id`)";
+			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` `cfcg` LEFT JOIN `" . DB_PREFIX . "custom_field` `cf` ON (`cfcg`.`custom_field_id` = `cf`.`custom_field_id`) LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cfd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}
-
-		$sql .= " LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cfd`.`language_id` = '" . (int)$language_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cfd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
@@ -231,15 +203,15 @@ class CustomField extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name'       => 'cfd.name',
-			'type'       => 'cf.type',
-			'location'   => 'cf.location',
-			'status'     => 'cf.status',
-			'date_added' => 'cf.date_added'
+			'cfd.name',
+			'cf.type',
+			'cf.location',
+			'cf.status',
+			'cf.sort_order'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `cfd`.`name`";
 		}
@@ -287,20 +259,8 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * $custom_field_total = $this->model_customer_custom_field->getTotalCustomFields($filter_data);
 	 */
-	public function getTotalCustomFields(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		if (empty($data['filter_customer_group_id'])) {
-			$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field` `cf`";
-		} else {
-			$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field_customer_group` `cfcg` LEFT JOIN `" . DB_PREFIX . "custom_field` `cf` ON (`cfcg`.`custom_field_id` = `cf`.`custom_field_id`)";
-		}
-
-		$query = $this->db->query($sql . " LEFT JOIN `" . DB_PREFIX . "custom_field_description` `cfd` ON (`cf`.`custom_field_id` = `cfd`.`custom_field_id`) WHERE `cfd`.`language_id` = '" . (int)$language_id . "'");
+	public function getTotalCustomFields(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`");
 
 		return (int)$query->row['total'];
 	}
@@ -386,10 +346,10 @@ class CustomField extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $custom_field_id): array {
 		$custom_field_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `cfd`.`language_id` = `l`.`language_id`) AS `code` FROM `cfd` `" . DB_PREFIX . "custom_field_description` WHERE `cfd`.`custom_field_id` = '" . (int)$custom_field_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_description` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 
 		foreach ($query->rows as $result) {
-			$custom_field_data[$result['code']] = $result;
+			$custom_field_data[$result['language_id']] = $result;
 		}
 
 		return $custom_field_data;
@@ -494,10 +454,9 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @example
 	 *
 	 * $custom_field_data['custom_field_value'] = [
-	 *     'custom_field_value_description' => [],
-	 *     'custom_field_value_id'          => 0,
-	 *     'custom_field_id'                => 1,
-	 *     'sort_order'                     => 0
+	 *     'custom_field_value_id' => 0,
+	 *     'custom_field_id'       => 1,
+	 *     'sort_order'            => 0
 	 * ];
 	 *
 	 * $this->load->model('customer/custom_field');
@@ -602,12 +561,6 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 * @return void
 	 *
 	 * @example
-	 * 
-	 * $custom_field_value_description_data[1] = [
-	 *     'custom_field_value_id' => 1,
-	 *     'custom_field_id'       => 1,
-	 *     'name'                  => 'Custom Field Value Description Name'
-	 * ];
 	 *
 	 * $this->load->model('customer/custom_field');
 	 *

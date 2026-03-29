@@ -12,9 +12,6 @@
 namespace Twig\Node\Expression;
 
 use Twig\Compiler;
-use Twig\Error\SyntaxError;
-use Twig\Node\Expression\Variable\AssignContextVariable;
-use Twig\Node\Expression\Variable\ContextVariable;
 use Twig\Node\Node;
 
 /**
@@ -26,14 +23,6 @@ class ArrowFunctionExpression extends AbstractExpression
 {
     public function __construct(AbstractExpression $expr, Node $names, $lineno)
     {
-        if (!$names instanceof ListExpression && !$names instanceof ContextVariable) {
-            throw new SyntaxError('The arrow function argument must be a list of variables or a single variable.', $names->getTemplateLine(), $names->getSourceContext());
-        }
-
-        if ($names instanceof ContextVariable) {
-            $names = new ListExpression([new AssignContextVariable($names->getAttribute('name'), $names->getTemplateLine())], $lineno);
-        }
-
         parent::__construct(['expr' => $expr, 'names' => $names], [], $lineno);
     }
 
@@ -42,7 +31,19 @@ class ArrowFunctionExpression extends AbstractExpression
         $compiler
             ->addDebugInfo($this)
             ->raw('function (')
-            ->subcompile($this->getNode('names'))
+        ;
+        foreach ($this->getNode('names') as $i => $name) {
+            if ($i) {
+                $compiler->raw(', ');
+            }
+
+            $compiler
+                ->raw('$__')
+                ->raw($name->getAttribute('name'))
+                ->raw('__')
+            ;
+        }
+        $compiler
             ->raw(') use ($context, $macros) { ')
         ;
         foreach ($this->getNode('names') as $name) {

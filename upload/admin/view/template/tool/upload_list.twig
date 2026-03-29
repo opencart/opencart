@@ -1,12 +1,12 @@
-<form id="form-upload" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+<form id="form-upload" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#upload">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
-          <th>{{ column_name }}</th>
-          <th>{{ column_code }}</th>
-          <th class="text-end">{{ column_date_added }}</th>
+          <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
+          <th><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></th>
+          <th class="text-end"><a href="{{ sort_date_added }}"{% if sort == 'date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -18,7 +18,7 @@
               <td>{{ upload.name }}</td>
               <td>{{ upload.code }}</td>
               <td class="text-end">{{ upload.date_added }}</td>
-              <td class="text-end"><a href="{{ upload.download }}" title="{{ button_download }}" class="btn btn-info"><i class="fa-solid fa-download"></i></a></td>
+              <td class="text-end"><a href="{{ upload.download }}" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fa-solid fa-download"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}
@@ -30,7 +30,7 @@
     </table>
   </div>
   <div class="row">
-    <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>

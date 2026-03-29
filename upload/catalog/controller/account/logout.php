@@ -15,7 +15,6 @@ class Logout extends \Opencart\System\Engine\Controller {
 		if ($this->customer->isLogged()) {
 			$this->customer->logout();
 
-			unset($this->session->data['order_id']);
 			unset($this->session->data['customer']);
 			unset($this->session->data['customer_token']);
 			unset($this->session->data['shipping_address']);
@@ -25,6 +24,7 @@ class Logout extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['comment']);
+			unset($this->session->data['order_id']);
 			unset($this->session->data['coupon']);
 			unset($this->session->data['reward']);
 

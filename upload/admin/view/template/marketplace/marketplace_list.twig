@@ -1,83 +1,185 @@
-{% if promotions %}
-  <h3>{{ text_featured }}</h3>
-  <div class="row">
-    {% for extension in promotions %}
-      {% if extension %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-          <section>
-            <div class="extension-preview text-center">
-              <a href="{{ extension.href }}">
-                <div class="extension-description"></div>
-                <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-fluid"/> </a>
-            </div>
-            <div class="extension-name">
-              <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
-              {{ extension.price }}
-            </div>
-            <div class="extension-rate">
-              <div class="row">
-                <div class="col-6">
-                  {% for i in 1..5 %}
-                    {% if extension.rating < i %}
-                      <i class="fa-regular fa-star"></i>
-                    {% else %}
-                      <i class="fa-solid fa-star"></i>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-                <div class="col-6">
-                  <div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      {% endif %}
-    {% endfor %}
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        {% if signature %}
+          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
+        {% else %}
+          <button type="button" id="button-api" data-bs-toggle="tooltip" title="{{ button_api }}" data-placement="left" class="btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i></button>
+        {% endif %}
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
   </div>
-  <hr/>
-{% endif %}
-
-{% if extensions %}
-  <div class="row">
-    {% for extension in extensions %}
-
-      <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
-        <section>
-          <div class="extension-preview text-center">
-            <a href="{{ extension.href }}">
-              <div class="extension-description"></div>
-              <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-fluid"/> </a>
-          </div>
-          <div class="extension-name">
-            <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
-            {{ extension.price }}
-          </div>
-          <div class="extension-rate">
-            <div class="row">
-              <div class="col-6">
-                {% for i in 1..5 %}
-                  {% if extension.rating < i %}
-                    <i class="fa-regular fa-star"></i>
-                  {% else %}
-                    <i class="fa-solid fa-star"></i>
-                  {% endif %}
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fa-solid fa-triangle-exclamation"></i> {{ error_warning }}</div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-puzzle-piece"></i> {{ text_list }}</div>
+      <div class="card-body">
+        <div class="card bg-light">
+          <div class="card-body">
+            <div id="extension-filter" class="input-group dropdown">
+              <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" id="input-search" class="form-control"/>
+              {% for category in categories %}
+                {% if category.value == filter_category %}
+                  <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fa-solid fa-caret-down"></i></button>
+                {% endif %}
+              {% endfor %}
+              <div class="dropdown-menu dropdown-menu-end">
+                {% for category in categories %}
+                  <a href="{{ category.href }}" class="dropdown-item">{{ category.text }}</a>
                 {% endfor %}
               </div>
-              <div class="col-6">
-                <div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
-              </div>
+              <button type="button" id="button-filter" data-bs-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary"><i class="fa-solid fa-filter"></i></button>
+            </div>
+            <input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control"/> <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control"/> <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control"/> <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control"/> <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control"/> <input type="hidden" name="sort" value="{{ sort }}" class="form-control"/>
+          </div>
+        </div>
+        <br/>
+        <div class="row mb-4">
+          <div class="col-sm-auto me-sm-auto mb-2 mb-lg-0">
+            <div class="btn-group">{% for license in licenses %}
+                {% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-light active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-light">{{ license.text }}</a>{% endif %}
+              {% endfor %}
             </div>
           </div>
-        </section>
+          <div class="col-xl-3 col-lg-5 col-sm-auto">
+            <div class="input-group float-end">
+              <div class="input-group-text"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+              <select onchange="location = this.value;" class="form-select">
+              {% for sorts in sorts %}
+                <option value="{{ sorts.href }}"{% if sorts.value == sort %} selected{% endif %}>{{ sorts.text }}</option>
+              {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div>
+          {% if promotions %}
+            <h3>{{ text_featured }}</h3>
+            <div class="row">
+              {% for extension in promotions %}
+                {% if extension %}
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <section>
+                      <div class="extension-preview text-center">
+                        <a href="{{ extension.href }}"><div class="extension-description"></div><img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-fluid"/></a>
+                      </div>
+                      <div class="extension-name">
+                        <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
+                        {{ extension.price }}
+                      </div>
+                      <div class="extension-rate">
+                        <div class="row">
+                          <div class="col-6">{% for i in 1..5 %}
+                              {% if extension.rating < i %}<i class="fa-regular fa-star"></i>{% else %}<i class="fa-solid fa-star"></i>{% endif %}
+                            {% endfor %}
+                          </div>
+                          <div class="col-6">
+                            <div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <hr/>
+          {% endif %}
+          {% if extensions %}
+            <div class="row">
+              {% for extension in extensions %}
+                {% if extension %}
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <section>
+                      <div class="extension-preview text-center"><a href="{{ extension.href }}"><div class="extension-description"></div><img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-fluid"/></a></div>
+                      <div class="extension-name">
+                        <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
+                        {{ extension.price }}
+                      </div>
+                      <div class="extension-rate">
+                        <div class="row">
+                          <div class="col-6">{% for i in 1..5 %}
+                              {% if extension.rating < i %}<i class="fa-regular fa-star"></i>{% else %}<i class="fa-solid fa-star"></i>{% endif %}
+                            {% endfor %}
+                          </div>
+                          <div class="col-6">
+                            <div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% else %}
+            <p class="text-center">{{ text_no_results }}</p>
+          {% endif %}
+        </div>
+        <div class="row">
+          <div class="col-sm-12 text-center">{{ pagination }}</div>
+        </div>
       </div>
-
-    {% endfor %}
+    </div>
   </div>
-{% else %}
-  <p class="text-center">{{ text_no_results }}</p>
-{% endif %}
-
-<div class="row">
-  <div class="col-sm-12 text-center">{{ pagination }}</div>
 </div>
+<script type="text/javascript"><!--
+$('#button-api').on('click', function(e) {
+    $('#modal-api').remove();
+
+    $.ajax({
+        url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
+        dataType: 'html',
+        beforeSend: function() {
+            $('#button-api').button('loading');
+        },
+        complete: function() {
+            $('#button-api').button('reset');
+        },
+        success: function(html) {
+            $('body').append(html);
+
+            $('#modal-api').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function(e) {
+    var url = 'index.php?route=marketplace/marketplace&user_token={{ user_token }}';
+
+    var input = $('#extension-filter :input');
+
+    for (i = 0; i < input.length; i++) {
+        if ($(input[i]).val() !== '') {
+            url += '&' + $(input[i]).attr('name') + '=' + $(input[i]).val()
+        }
+    }
+
+    download();
+
+    location = url;
+});
+
+$('#input-search').keydown(function(e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+
+        $('#button-filter').trigger('click');
+    }
+});
+//--></script>
+{{ footer }}

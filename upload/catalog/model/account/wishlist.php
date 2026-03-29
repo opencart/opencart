@@ -30,9 +30,9 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Wishlists
+	 * Delete Wishlist
 	 *
-	 * Delete customer wishlist records in the database.
+	 * Delete customer wishlist record in the database.
 	 *
 	 * @param int $customer_id primary key of the customer record
 	 * @param int $product_id  primary key of the product record
@@ -43,9 +43,9 @@ class Wishlist extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('account/wishlist');
 	 *
-	 * $this->model_account_wishlist->deleteWishlists($customer_id, $product_id);
+	 * $this->model_account_wishlist->deleteWishlist($customer_id, $product_id);
 	 */
-	public function deleteWishlists(int $customer_id, int $product_id = 0): void {
+	public function deleteWishlist(int $customer_id, int $product_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$customer_id . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "'";
 
 		if ($product_id) {

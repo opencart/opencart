@@ -1,4 +1,4 @@
-<form id="form-country" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+<form id="form-country" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#country">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -7,24 +7,18 @@
           <th><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></th>
           <th><a href="{{ sort_iso_code_2 }}"{% if sort == 'iso_code_2' %} class="{{ order|lower }}"{% endif %}>{{ column_iso_code_2 }}</a></th>
           <th><a href="{{ sort_iso_code_3 }}"{% if sort == 'iso_code_3' %} class="{{ order|lower }}"{% endif %}>{{ column_iso_code_3 }}</a></th>
-          <th class="text-center"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
       <tbody>
         {% if countries %}
           {% for country in countries %}
-            <tr{% if not country.status %} class="table-disabled"{% endif %}>
+            <tr{% if not country.status %} class="table-active opacity-50"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ country.country_id }}" class="form-check-input"/></td>
-              <td>{{ country.name }}{% if country.country_id == country_id %} <strong>({{ text_default }})</strong>{% endif %}</td>
+              <td>{{ country.name }}</td>
               <td>{{ country.iso_code_2 }}</td>
               <td>{{ country.iso_code_3 }}</td>
-              <td class="text-center">{% if country.status %}
-                  <span class="badge bg-success">{{ text_enabled }}</span>
-                {% else %}
-                  <span class="badge bg-danger">{{ text_disabled }}</span>
-                {% endif %}</td>
-              <td class="text-end text-nowrap"><a href="{{ country.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end"><a href="{{ country.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}
@@ -36,7 +30,7 @@
     </table>
   </div>
   <div class="row">
-    <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>

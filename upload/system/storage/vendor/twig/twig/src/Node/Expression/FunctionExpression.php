@@ -17,11 +17,8 @@ use Twig\Node\NameDeprecation;
 use Twig\Node\Node;
 use Twig\TwigFunction;
 
-class FunctionExpression extends CallExpression implements SupportDefinedTestInterface
+class FunctionExpression extends CallExpression
 {
-    use SupportDefinedTestDeprecationTrait;
-    use SupportDefinedTestTrait;
-
     #[FirstClassTwigCallableReady]
     public function __construct(TwigFunction|string $function, Node $arguments, int $lineno)
     {
@@ -32,7 +29,7 @@ class FunctionExpression extends CallExpression implements SupportDefinedTestInt
             trigger_deprecation('twig/twig', '3.12', 'Not passing an instance of "TwigFunction" when creating a "%s" function of type "%s" is deprecated.', $name, static::class);
         }
 
-        parent::__construct(['arguments' => $arguments], ['name' => $name, 'type' => 'function'], $lineno);
+        parent::__construct(['arguments' => $arguments], ['name' => $name, 'type' => 'function', 'is_defined_test' => false], $lineno);
 
         if ($function instanceof TwigFunction) {
             $this->setAttribute('twig_callable', $function);
@@ -47,16 +44,6 @@ class FunctionExpression extends CallExpression implements SupportDefinedTestInt
         $this->deprecateAttribute('dynamic_name', new NameDeprecation('twig/twig', '3.12'));
     }
 
-    public function enableDefinedTest(): void
-    {
-        if ('constant' === $this->getAttribute('name')) {
-            $this->definedTest = true;
-        }
-    }
-
-    /**
-     * @return void
-     */
     public function compile(Compiler $compiler)
     {
         $name = $this->getAttribute('name');
@@ -72,7 +59,7 @@ class FunctionExpression extends CallExpression implements SupportDefinedTestInt
             $this->setAttribute('twig_callable', $compiler->getEnvironment()->getFunction($name));
         }
 
-        if ('constant' === $name && $this->isDefinedTestEnabled()) {
+        if ('constant' === $name && $this->getAttribute('is_defined_test')) {
             $this->getNode('arguments')->setNode('checkDefined', new ConstantExpression(true, $this->getTemplateLine()));
         }
 

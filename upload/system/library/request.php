@@ -55,14 +55,19 @@ class Request {
 		switch ($type) {
 			case 'string':
 				return (string)$value;
+				break;
 			case 'int':
 				return (int)$value;
+				break;
 			case 'float':
 				return (float)$value;
+				break;
 			case 'bool':
 				return (bool)$value;
+				break;
 			case 'array':
 				return (array)$value;
+				break;
 			default:
 				return $value;
 		}
@@ -78,14 +83,19 @@ class Request {
 		switch ($type) {
 			case 'string':
 				return (string)$value;
+				break;
 			case 'int':
 				return (int)$value;
+				break;
 			case 'float':
 				return (float)$value;
+				break;
 			case 'bool':
 				return (bool)$value;
+				break;
 			case 'array':
 				return (array)$value;
+				break;
 			default:
 				return $value;
 		}

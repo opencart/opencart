@@ -346,9 +346,7 @@ class SignatureV4 implements SignatureInterface
         }
 
         $qs = '';
-        uksort($query, static function (string $a, string $b): int {
-            return strcmp(rawurlencode($a), rawurlencode($b));
-        });
+        ksort($query);
         foreach ($query as $k => $v) {
             if (!is_array($v)) {
                 $qs .= rawurlencode($k) . '=' . rawurlencode($v !== null ? $v : '') . '&';

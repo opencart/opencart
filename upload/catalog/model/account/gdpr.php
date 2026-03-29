@@ -35,7 +35,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 * Edit gdpr status record in the database.
 	 *
 	 * @param int  $gdpr_id primary key of the gdpr record
-	 * @param int  $status  status code (0=unverified, 1=pending, 2=processing, 3=complete/delete, -1=denied)
+	 * @param bool $status
 	 *
 	 * @return void
 	 *
@@ -45,8 +45,8 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_account_gdpr->editStatus($gdpr_id, $status);
 	 */
-	public function editStatus(int $gdpr_id, int $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET `status` = '" . (int)$status . "' WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
+	public function editStatus(int $gdpr_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET `status` = '" . (bool)$status . "' WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 	}
 
 	/**

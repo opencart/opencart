@@ -12,9 +12,8 @@
 namespace Twig\Node\Expression\Binary;
 
 use Twig\Compiler;
-use Twig\Node\Expression\ReturnNumberInterface;
 
-class FloorDivBinary extends AbstractBinary implements ReturnNumberInterface
+class FloorDivBinary extends AbstractBinary
 {
     public function compile(Compiler $compiler): void
     {

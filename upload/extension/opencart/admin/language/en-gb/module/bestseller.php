@@ -19,6 +19,8 @@ $_['column_total']     = 'Total';
 $_['entry_name']       = 'Module Name';
 $_['entry_axis']       = 'Axis';
 $_['entry_limit']      = 'Limit';
+$_['entry_width']      = 'Image Width';
+$_['entry_height']     = 'Image Height';
 $_['entry_status']     = 'Status';
 
 // Button
@@ -27,3 +29,5 @@ $_['button_sync']      = 'Generate Best Sellers List';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify best sellers module!';
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';
+$_['error_width']      = 'Width required!';
+$_['error_height']     = 'Height required!';

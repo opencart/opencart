@@ -17,7 +17,6 @@ $registry->set('autoloader', $autoloader);
 // Config
 $config = new \Opencart\System\Engine\Config();
 $config->addPath(DIR_CONFIG);
-
 // Load the default config
 $config->load('default');
 $config->load(strtolower(APPLICATION));
@@ -34,25 +33,63 @@ $log = new \Opencart\System\Library\Log($config->get('error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
-set_error_handler(function(int $code, string $message, string $file, int $line) {
-	// error suppressed with @
-	if (!(error_reporting() & $code)) {
-		return false;
+set_error_handler(function(int $code, string $message, string $file, int $line) use ($log, $config) {
+	switch ($code) {
+		case E_NOTICE:
+		case E_USER_NOTICE:
+			$error = 'Notice';
+			break;
+		case E_WARNING:
+		case E_USER_WARNING:
+			$error = 'Warning';
+			break;
+		case E_ERROR:
+		case E_USER_ERROR:
+			$error = 'Fatal Error';
+			break;
+		default:
+			$error = 'Unknown';
+			break;
 	}
 
-	throw new \ErrorException($message, 0, $code, $file, $line);
-});
-
-// Exception Handler
-set_exception_handler(function(object $e) use ($log, $config): void {
-	$message = $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
-
 	if ($config->get('error_log')) {
-		$log->write($message);
+		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
 	}
 
 	if ($config->get('error_display')) {
-		echo $message;
+		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+	} else {
+		header('Location: ' . $config->get('error_page'));
+		exit();
+	}
+
+	return true;
+});
+
+// Exception Handler
+set_exception_handler(function(\Throwable $e) use ($log, $config): void {
+	$output  = 'Error: ' . $e->getMessage() . "\n";
+	$output .= 'File: ' . $e->getFile() . "\n";
+	$output .= 'Line: ' . $e->getLine() . "\n\n";
+
+	foreach ($e->getTrace() as $key => $trace) {
+		$output .= 'Backtrace: ' . $key . "\n";
+		$output .= 'File: ' . $trace['file'] . "\n";
+		$output .= 'Line: ' . $trace['line'] . "\n";
+
+		if (isset($trace['class'])) {
+			$output .= 'Class: ' . $trace['class'] . "\n";
+		}
+
+		$output .= 'Function: ' . $trace['function'] . "\n\n";
+	}
+
+	if ($config->get('error_log')) {
+		$log->write(trim($output));
+	}
+
+	if ($config->get('error_display')) {
+		echo $output;
 	} else {
 		header('Location: ' . $config->get('error_page'));
 		exit();
@@ -93,25 +130,22 @@ if (isset($request->get['route'])) {
 $response = new \Opencart\System\Library\Response();
 $registry->set('response', $response);
 
-// For none command line
-if (php_sapi_name() != 'cli') {
-	foreach ($config->get('response_header') as $header) {
-		$response->addHeader($header);
-	}
-
-	$response->addHeader('Access-Control-Allow-Origin: *');
-	$response->addHeader('Access-Control-Allow-Credentials: true');
-	$response->addHeader('Access-Control-Max-Age: 1000');
-	$response->addHeader('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding');
-	$response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE');
-	$response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-	$response->addHeader('Pragma: no-cache');
-	$response->setCompression((int)$config->get('response_compression'));
+foreach ($config->get('response_header') as $header) {
+	$response->addHeader($header);
 }
+
+$response->addHeader('Access-Control-Allow-Origin: *');
+$response->addHeader('Access-Control-Allow-Credentials: true');
+$response->addHeader('Access-Control-Max-Age: 1000');
+$response->addHeader('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding');
+$response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE');
+$response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+$response->addHeader('Pragma: no-cache');
+$response->setCompression((int)$config->get('response_compression'));
 
 // Database
 if ($config->get('db_autostart')) {
-	$db = new \Opencart\System\Library\DB($config->get('db_option'));
+	$db = new \Opencart\System\Library\DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'), $config->get('db_ssl_key'), $config->get('db_ssl_cert'), $config->get('db_ssl_ca'));
 	$registry->set('db', $db);
 }
 

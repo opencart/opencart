@@ -41,8 +41,6 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise copyObjectAsync(array $args = [])
  * @method \Aws\Result createBucket(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createBucketAsync(array $args = [])
- * @method \Aws\Result createBucketMetadataConfiguration(array $args = [])
- * @method \GuzzleHttp\Promise\Promise createBucketMetadataConfigurationAsync(array $args = [])
  * @method \Aws\Result createBucketMetadataTableConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createBucketMetadataTableConfigurationAsync(array $args = [])
  * @method \Aws\Result createMultipartUpload(array $args = [])
@@ -63,8 +61,6 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteBucketInventoryConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteBucketLifecycle(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketLifecycleAsync(array $args = [])
- * @method \Aws\Result deleteBucketMetadataConfiguration(array $args = [])
- * @method \GuzzleHttp\Promise\Promise deleteBucketMetadataConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteBucketMetadataTableConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketMetadataTableConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteBucketMetricsConfiguration(array $args = [])
@@ -87,8 +83,6 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteObjectsAsync(array $args = [])
  * @method \Aws\Result deletePublicAccessBlock(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deletePublicAccessBlockAsync(array $args = [])
- * @method \Aws\Result getBucketAbac(array $args = [])
- * @method \GuzzleHttp\Promise\Promise getBucketAbacAsync(array $args = [])
  * @method \Aws\Result getBucketAccelerateConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketAccelerateConfigurationAsync(array $args = [])
  * @method \Aws\Result getBucketAcl(array $args = [])
@@ -111,8 +105,6 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise getBucketLocationAsync(array $args = [])
  * @method \Aws\Result getBucketLogging(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketLoggingAsync(array $args = [])
- * @method \Aws\Result getBucketMetadataConfiguration(array $args = [])
- * @method \GuzzleHttp\Promise\Promise getBucketMetadataConfigurationAsync(array $args = [])
  * @method \Aws\Result getBucketMetadataTableConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketMetadataTableConfigurationAsync(array $args = [])
  * @method \Aws\Result getBucketMetricsConfiguration(array $args = [])
@@ -181,8 +173,6 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise listObjectsV2Async(array $args = [])
  * @method \Aws\Result listParts(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPartsAsync(array $args = [])
- * @method \Aws\Result putBucketAbac(array $args = [])
- * @method \GuzzleHttp\Promise\Promise putBucketAbacAsync(array $args = [])
  * @method \Aws\Result putBucketAccelerateConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putBucketAccelerateConfigurationAsync(array $args = [])
  * @method \Aws\Result putBucketAcl(array $args = [])
@@ -237,18 +227,10 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise putObjectTaggingAsync(array $args = [])
  * @method \Aws\Result putPublicAccessBlock(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putPublicAccessBlockAsync(array $args = [])
- * @method \Aws\Result renameObject(array $args = [])
- * @method \GuzzleHttp\Promise\Promise renameObjectAsync(array $args = [])
  * @method \Aws\Result restoreObject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreObjectAsync(array $args = [])
  * @method \Aws\Result selectObjectContent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise selectObjectContentAsync(array $args = [])
- * @method \Aws\Result updateBucketMetadataInventoryTableConfiguration(array $args = [])
- * @method \GuzzleHttp\Promise\Promise updateBucketMetadataInventoryTableConfigurationAsync(array $args = [])
- * @method \Aws\Result updateBucketMetadataJournalTableConfiguration(array $args = [])
- * @method \GuzzleHttp\Promise\Promise updateBucketMetadataJournalTableConfigurationAsync(array $args = [])
- * @method \Aws\Result updateObjectEncryption(array $args = [])
- * @method \GuzzleHttp\Promise\Promise updateObjectEncryptionAsync(array $args = [])
  * @method \Aws\Result uploadPart(array $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadPartAsync(array $args = [])
  * @method \Aws\Result uploadPartCopy(array $args = [])
@@ -438,7 +420,6 @@ class S3Client extends AwsClient implements S3ClientInterface
         $this->addBuiltIns($args);
         parent::__construct($args);
         $stack = $this->getHandlerList();
-        $config = $this->getConfig();
         $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
         $stack->appendBuild(
             ApplyChecksumMiddleware::wrap($this->getApi(), $this->getConfig()),
@@ -450,9 +431,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         );
 
         if ($this->getConfig('bucket_endpoint')) {
-            $stack->appendBuild(BucketEndpointMiddleware::wrap(
-                $this->isUseEndpointV2(), $args['endpoint'] ?? null), 's3.bucket_endpoint'
-            );
+            $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
         } elseif (!$this->isUseEndpointV2()) {
             $stack->appendBuild(
                 S3EndpointMiddleware::wrap(
@@ -935,10 +914,6 @@ class S3Client extends AwsClient implements S3ClientInterface
                         $requestUri = str_replace('/{Bucket}', '/', $requestUri);
                     } else {
                         $requestUri = str_replace('/{Bucket}', '', $requestUri);
-                        // If we're left with just a query string, prepend '/'
-                        if (str_starts_with($requestUri, '?')) {
-                            $requestUri = '/' . $requestUri;
-                        }
                     }
                     $operation['http']['requestUri'] = $requestUri;
                 }
@@ -947,7 +922,7 @@ class S3Client extends AwsClient implements S3ClientInterface
 
         foreach ($definition['shapes'] as $key => &$value) {
             $suffix = 'Output';
-            if (str_ends_with($key, $suffix)) {
+            if (substr($key, -strlen($suffix)) === $suffix) {
                 if (isset($value['members']['Expires'])) {
                     $value['members']['Expires']['deprecated'] = true;
                     $value['members']['ExpiresString'] = [

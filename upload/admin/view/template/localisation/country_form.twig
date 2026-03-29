@@ -2,8 +2,8 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><button type="submit" form="form-country" formaction="{{ save }}" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <div class="float-end"><button type="submit" form="form-country" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -17,29 +17,29 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-country" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <div class="row mb-3">
+          <div class="row mb-3 required">
             <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
                 <div class="input-group">
                   <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}" alt="{{ language.name }}"/></div>
-                  <input type="text" name="country_description[{{ language.language_id }}][name]" value="{{ country_description[language.code] ? country_description[language.code].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
+                  <input type="text" name="country_description[{{ language.language_id }}][name]" value="{{ country_description[language.language_id] ? country_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
                 </div>
                 <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
               {% endfor %}
             </div>
           </div>
-          <div class="row mb-3">
+          <div class="row mb-3 required">
             <label for="input-iso-code-2" class="col-sm-2 col-form-label">{{ entry_iso_code_2 }}</label>
             <div class="col-sm-10">
-              <input type="text" name="iso_code_2" value="{{ iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control" required/>
+              <input type="text" name="iso_code_2" value="{{ iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control"/>
               <div id="error-iso-code-2" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3">
+          <div class="row mb-3 required">
             <label for="input-iso-code-3" class="col-sm-2 col-form-label">{{ entry_iso_code_3 }}</label>
             <div class="col-sm-10">
-              <input type="text" name="iso_code_3" value="{{ iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control" required/>
+              <input type="text" name="iso_code_3" value="{{ iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
               <div id="error-iso-code-3" class="invalid-feedback"></div>
             </div>
           </div>
@@ -56,15 +56,21 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
             <div class="col-sm-10">
-              <x-switch name="postcode_required" value="1" checked="{{ postcode_required }}" input-id="input-postcode" input-class="form-switch form-switch-lg"></x-switch>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="postcode_required" value="0"/> <input type="checkbox" name="postcode_required" value="1" id="input-status" class="form-check-input"{% if postcode_required %} checked{% endif %}/>
+              </div>
             </div>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <x-switch name="status" value="1" checked="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+              </div>
             </div>
           </div>
+
+
           <input type="hidden" name="country_id" value="{{ country_id }}" id="input-country-id"/>
         </form>
       </div>

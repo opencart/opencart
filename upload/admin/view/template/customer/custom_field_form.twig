@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-custom-field" formaction="{{ save }}" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+        <button type="submit" form="form-custom-field" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -20,13 +20,13 @@
         <form id="form-custom-field" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <fieldset>
             <legend>{{ text_custom_field }}</legend>
-            <div class="row mb-3">
+            <div class="row mb-3 required">
               <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
               <div class="col-sm-10">
                 {% for language in languages %}
                   <div class="input-group">
                     <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
-                    <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{{ custom_field_description[language.language_id] ? custom_field_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control" required/>
+                    <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{{ custom_field_description[language.language_id] ? custom_field_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
                   </div>
                   <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                 {% endfor %}
@@ -110,7 +110,10 @@
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
               <div class="col-sm-10">
-                <x-switch name="status" value="1" checked="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
+                <div class="form-check form-switch form-switch-lg">
+                  <input type="hidden" name="status" value="0"/>
+                  <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                </div>
               </div>
             </div>
             <div class="row mb-3">
@@ -146,7 +149,7 @@
                           <div id="error-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
                         {% endfor %}</td>
                       <td class="text-end"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-                      <td class="text-end"><button type="button" onclick="$('#custom-field-value-row-{{ custom_field_value_row }}').remove();" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                      <td class="text-end"><button type="button" onclick="$('#custom-field-value-row-{{ custom_field_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                     </tr>
                     {% set custom_field_value_row = custom_field_value_row + 1 %}
                   {% endfor %}
@@ -154,7 +157,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2"></td>
-                    <td class="text-end"><button type="button" onclick="addCustomFieldValue();" title="{{ button_custom_field_value_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                    <td class="text-end"><button type="button" onclick="addCustomFieldValue();" data-bs-toggle="tooltip" title="{{ button_custom_field_value_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -166,5 +169,51 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/custom_field.js"></script>
+<script type="text/javascript"><!--
+$('#input-type').on('change', function() {
+    if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox') {
+        $('#custom-field-value').show();
+        $('#display-value, #display-validation').hide();
+    } else {
+        $('#custom-field-value').hide();
+        $('#display-value, #display-validation').show();
+    }
+
+    if (this.value == 'date') {
+        $('#display-value > div').html('<input type="date" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control"/>');
+    } else if (this.value == 'time') {
+        $('#display-value > div').html('<input type="time" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control"/>');
+    } else if (this.value == 'datetime') {
+        $('#display-value > div').html('<input type="datetime-local" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control"/>');
+    } else if (this.value == 'textarea') {
+        $('#display-value > div').html('<textarea name="value" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control">' + $('#input-value').val() + '</textarea>');
+    } else {
+        $('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control"/>');
+    }
+});
+
+$('#input-type').trigger('change');
+
+var custom_field_value_row = {{ custom_field_value_row }};
+
+function addCustomFieldValue() {
+    html = '<tr id="custom-field-value-row-' + custom_field_value_row + '">';
+    html += '  <td style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
+  {% for language in languages %}
+    html += '    <div class="input-group">';
+    html += '      <div class="input-group-text"><img src="{{ language.image|escape('js') }}" title="{{ language.name|escape('js') }}" /></div>';
+    html += '      <input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value|escape('js') }}" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="form-control"/>';
+    html += '    </div>';
+    html += '    <div id="error-custom-field-value-{{ custom_field_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>';
+  {% endfor %}
+    html += '  </td>';
+    html += '  <td class="text-end"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order|escape('js') }}" class="form-control"/></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#custom-field-value-row-' + custom_field_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+
+    $('#custom-field-value tbody').append(html);
+
+    custom_field_value_row++;
+}
+//--></script>
 {{ footer }} 

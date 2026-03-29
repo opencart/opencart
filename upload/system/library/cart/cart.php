@@ -49,7 +49,7 @@ class Cart {
 		$this->weight = $registry->get('weight');
 
 		// Remove all the expired carts for visitors who never registered
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "cart` WHERE `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `customer_id` = '0' AND `date_added` < DATE_SUB(NOW(), INTERVAL " . (int)$this->config->get('session_expire') . " SECOND)");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "cart` WHERE `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `customer_id` = '0' AND `date_added` < DATE_SUB(NOW(), INTERVAL " . (int)$this->config->get('config_session_expire') . " SECOND)");
 
 		if ($this->customer->isLogged()) {
 			// We want to change the session ID on all the old items in the customers cart
@@ -90,10 +90,10 @@ class Cart {
 
 					$option_data = [];
 
-					$product_options = (array) json_decode(!empty($cart['option']) ? $cart['option'] : '{}', true);
+					$product_options = (array)json_decode($cart['option'], true);
 
-					$variant = json_decode(!empty($product_query->row['variant']) ? $product_query->row['variant'] : '{}', true);
-
+					// Merge variant code with options
+					$variant = json_decode($product_query->row['variant'], true);
 
 					if ($variant) {
 						foreach ($variant as $key => $value) {
@@ -306,11 +306,12 @@ class Cart {
 	/**
 	 * Add
 	 *
-	 * @param int                  $product_id primary key of the product record
-	 * @param int                  $quantity
-	 * @param array<string, mixed> $option
-	 * @param int                  $subscription_plan_id primary key of the subscription plan record
-	 * @param array<string, mixed> $override
+	 * @param int          $product_id           primary key of the product record
+	 * @param int          $quantity
+	 * @param array<mixed> $option
+	 * @param int          $subscription_plan_id primary key of the subscription plan record
+	 * @param array        $override
+	 * @param float        $price
 	 *
 	 * @return void
 	 *
@@ -473,16 +474,10 @@ class Cart {
 				$tax_rates = $this->tax->getRates($product['price'], $product['tax_class_id']);
 
 				foreach ($tax_rates as $tax_rate) {
-					if ($tax_rate['type'] == 'P') {
-						$quantity = $product['quantity'];
-					} else {
-						$quantity = 1;
-					}
-
 					if (!isset($tax_data[$tax_rate['tax_rate_id']])) {
-						$tax_data[$tax_rate['tax_rate_id']] = ($tax_rate['amount'] * $quantity);
+						$tax_data[$tax_rate['tax_rate_id']] = ($tax_rate['amount'] * $product['quantity']);
 					} else {
-						$tax_data[$tax_rate['tax_rate_id']] += ($tax_rate['amount'] * $quantity);
+						$tax_data[$tax_rate['tax_rate_id']] += ($tax_rate['amount'] * $product['quantity']);
 					}
 				}
 			}

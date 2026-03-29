@@ -73,6 +73,18 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			$data['limit'] = 5;
 		}
 
+		if (isset($module_info['width'])) {
+			$data['width'] = $module_info['width'];
+		} else {
+			$data['width'] = 200;
+		}
+
+		if (isset($module_info['height'])) {
+			$data['height'] = $module_info['height'];
+		} else {
+			$data['height'] = 200;
+		}
+
 		if (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
@@ -112,7 +124,9 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'module_id' => 0,
-			'name'      => ''
+			'name'      => '',
+			'width'     => 0,
+			'height'    => 0
 		];
 
 		$post_info = $this->request->post + $required;
@@ -121,8 +135,16 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
+		if (!$post_info['width']) {
+			$json['error']['width'] = $this->language->get('error_width');
+		}
+
+		if (!$post_info['height']) {
+			$json['error']['height'] = $this->language->get('error_height');
+		}
+
 		if (!$json) {
-	  		// Extension
+			// Extension
 			$this->load->model('setting/module');
 
 			if (!$post_info['module_id']) {
@@ -147,7 +169,6 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
-			// Extension
 			$this->load->model('extension/opencart/module/bestseller');
 
 			$this->model_extension_opencart_module_bestseller->install();
@@ -161,71 +182,10 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
-			// Extension
 			$this->load->model('extension/opencart/module/bestseller');
 
 			$this->model_extension_opencart_module_bestseller->uninstall();
 		}
-	}
-
-	/**
-	 * Add
-	 *
-	 * @return void
-	 */
-	public function add(): void {
-		$this->load->language('extension/opencart/module/bestseller');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Extension
-			$this->load->model('setting/module');
-
-			$this->model_setting_module->addModule('opencart.bestseller', ['name' => $this->language->get('heading_title')]);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
-	public function delete(): void {
-		$this->load->language('extension/opencart/module/bestseller');
-
-		$json = [];
-
-		if (isset($this->request->get['module_id'])) {
-			$module_id = $this->request->get['module_id'];
-		} else {
-			$module_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Extension
-			$this->load->model('setting/module');
-
-			$this->model_setting_module->deleteModule($module_id);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	/**
@@ -253,10 +213,9 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		$limit = 10;
 
-		// Reports
 		$data['reports'] = [];
 
-		// Extension
+		// Bestseller
 		$this->load->model('extension/opencart/module/bestseller');
 
 		// Product
@@ -280,14 +239,14 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Total Reports
 		$report_total = $this->model_extension_opencart_module_bestseller->getTotalReports();
 
-		// Pagination
-		$data['total'] = $report_total;
-		$data['page'] = $page;
-		$data['limit'] = $limit;
-		$data['pagination'] = $this->url->link('extension/opencart/module/bestseller.report', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $report_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('extension/opencart/module/bestseller.report', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));
 
@@ -338,7 +297,6 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			$results = $this->model_catalog_product->getProducts($product_data);
 
 			foreach ($results as $result) {
-				// Total Products
 				$product_total = $this->model_sale_order->getTotalProductsByProductId($result['product_id']);
 
 				if ($product_total) {

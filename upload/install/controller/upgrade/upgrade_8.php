@@ -17,338 +17,256 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-			// Rename events
-			$replace = [];
+			// customer_activity
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_activity' AND COLUMN_NAME = 'activity_id'");
 
-			$replace[] = [
-				'code_old' => 'subscription',
-				'code_new' => 'mail_subscription'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_customer_approve',
-				'code_new' => 'mail_admin_customer_approve'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_affiliate_deny',
-				'code_new' => 'mail_admin_affiliate_deny'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_customer_approve',
-				'code_new' => 'mail_admin_customer_approve'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_customer_deny',
-				'code_new' => 'mail_admin_customer_deny'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_customer_transaction',
-				'code_new' => 'mail_admin_customer_transaction'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_forgotten',
-				'code_new' => 'mail_admin_forgotten'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_gdpr',
-				'code_new' => 'mail_admin_gdpr'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_return',
-				'code_new' => 'mail_admin_return'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_reward',
-				'code_new' => 'mail_admin_reward'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_transaction',
-				'code_new' => 'mail_admin_transaction'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_user_authorize',
-				'code_new' => 'mail_admin_user_authorize'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_user_authorize_reset',
-				'code_new' => 'mail_admin_user_authorize_reset'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_mail_user_forgotten',
-				'code_new' => 'mail_admin_user_forgotten'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_currency_add',
-				'code_new' => 'currency_add'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_currency_edit',
-				'code_new' => 'currency_edit'
-			];
-
-			$replace[] = [
-				'code_old' => 'admin_currency_setting',
-				'code_new' => 'currency_setting'
-			];
-
-			foreach ($replace as $result) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($result['code_new']) . "' WHERE `code` = '" . $this->db->escape($result['code_old']) . "'");
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `customer_activity_id` = `activity_id` WHERE `customer_activity_id` IS NULL or `customer_activity_id` = ''");
 			}
 
-			// Add missing default events
-			$events = [];
+			// Customer Group
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
 
-			// Activity
-			$events[] = [
-				'code'    => 'activity_customer_add',
-				'trigger' => 'catalog/model/account/customer.addCustomer/after',
-				'action'  => 'event/activity.addCustomer'
-			];
+			if ($query->num_rows) {
+				$customer_group_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group`");
 
-			$events[] = [
-				'code'    => 'activity_customer_edit',
-				'trigger' => 'catalog/model/account/customer.editCustomer/after',
-				'action'  => 'event/activity.editCustomer'
-			];
+				foreach ($customer_group_query->rows as $customer_group) {
+					$language_query = $this->db->query("SELECT `language_id` FROM `" . DB_PREFIX . "language`");
 
-			$events[] = [
-				'code'    => 'activity_customer_password',
-				'trigger' => 'catalog/model/account/customer.editPassword/after',
-				'action'  => 'event/activity.editPassword'
-			];
-
-			$events[] = [
-				'code'    => 'activity_customer_forgotten',
-				'trigger' => 'catalog/model/account/customer.addToken/after',
-				'action'  => 'event/activity.forgotten'
-			];
-
-			$events[] = [
-				'code'    => 'activity_customer_transaction',
-				'trigger' => 'catalog/model/account/customer.addTransaction/after',
-				'action'  => 'event/activity.addTransaction'
-			];
-
-			$events[] = [
-				'code'    => 'activity_customer_login',
-				'trigger' => 'catalog/model/account/customer.deleteLoginAttempts/after',
-				'action'  => 'event/activity.login'
-			];
-
-			$events[] = [
-				'code'    => 'activity_address_add',
-				'trigger' => 'catalog/model/account/address.addAddress/after',
-				'action'  => 'event/activity.addAddress'
-			];
-
-			$events[] = [
-				'code'    => 'activity_address_edit',
-				'trigger' => 'catalog/model/account/address.editAddress/after',
-				'action'  => 'event/activity.editAddress'
-			];
-
-			$events[] = [
-				'code'    => 'activity_address_delete',
-				'trigger' => 'catalog/model/account/address.deleteAddress/after',
-				'action'  => 'event/activity.deleteAddress'
-			];
-
-			$events[] = [
-				'code'    => 'activity_affiliate_add',
-				'trigger' => 'catalog/model/account/customer.addAffiliate/after',
-				'action'  => 'event/activity.addAffiliate'
-			];
-
-			$events[] = [
-				'code'    => 'activity_affiliate_edit',
-				'trigger' => 'catalog/model/account/customer.editAffiliate/after',
-				'action'  => 'event/activity.editAffiliate'
-			];
-
-			$events[] = [
-				'code'    => 'activity_order_add',
-				'trigger' => 'catalog/model/checkout/order.addHistory/before',
-				'action'  => 'event/activity.addHistory'
-			];
-
-			$events[] = [
-				'code'    => 'activity_return_add',
-				'trigger' => 'catalog/model/account/returns.addReturn/after',
-				'action'  => 'event/activity.addReturn'
-			];
-
-			$events[] = [
-				'code'    => 'currency_setting',
-				'trigger' => 'admin/model/setting/setting.editSetting/after',
-				'action'  => 'event/currency'
-			];
-
-			// Mail
-			$events[] = [
-				'code'    => 'mail_customer_transaction',
-				'trigger' => 'catalog/model/account/customer.addTransaction/after',
-				'action'  => 'mail/transaction'
-			];
-
-			$events[] = [
-				'code'    => 'mail_customer_forgotten',
-				'trigger' => 'catalog/model/account/customer.addToken/after',
-				'action'  => 'mail/forgotten'
-			];
-
-			$events[] = [
-				'code'    => 'mail_customer_add',
-				'trigger' => 'catalog/model/account/customer.addCustomer/after',
-				'action'  => 'mail/register'
-			];
-
-			$events[] = [
-				'code'    => 'mail_customer_alert',
-				'trigger' => 'catalog/model/account/customer.addCustomer/after',
-				'action'  => 'mail/register.alert'
-			];
-
-			$events[] = [
-				'code'    => 'mail_affiliate_add',
-				'trigger' => 'catalog/model/account/customer.addAffiliate/after',
-				'action'  => 'mail/affiliate'
-			];
-
-			$events[] = [
-				'code'    => 'mail_affiliate_alert',
-				'trigger' => 'catalog/model/account/customer.addAffiliate/after',
-				'action'  => 'mail/affiliate.alert'
-			];
-
-			$events[] = [
-				'code'    => 'mail_order',
-				'trigger' => 'catalog/model/checkout/order.addHistory/before',
-				'action'  => 'mail/order'
-			];
-
-			$events[] = [
-				'code'    => 'mail_order_alert',
-				'trigger' => 'catalog/model/checkout/order.addHistory/before',
-				'action'  => 'mail/order.alert'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_affiliate_approve',
-				'trigger' => 'admin/model/customer/customer_approval.approveAffiliate/after',
-				'action'  => 'mail/affiliate.approve'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_affiliate_deny',
-				'trigger' => 'admin/model/customer/customer_approval.denyAffiliate/after',
-				'action'  => 'mail/affiliate.deny'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_customer_approve',
-				'trigger' => 'admin/model/customer/customer_approval.approveCustomer/after',
-				'action'  => 'mail/customer.approve'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_customer_deny',
-				'trigger' => 'admin/model/customer/customer_approval.denyCustomer/after',
-				'action'  => 'mail/customer.deny'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_reward',
-				'trigger' => 'admin/model/customer/customer.addReward/after',
-				'action'  => 'mail/reward'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_customer_transaction',
-				'trigger' => 'admin/model/customer/customer.addTransaction/after',
-				'action'  => 'mail/transaction'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_return',
-				'trigger' => 'admin/model/sale/return.addReturn/after',
-				'action'  => 'mail/returns'
-			];
-
-			$events[] = [
-				'code'    => 'mail_admin_forgotten',
-				'trigger' => 'admin/model/user/user.addToken/after',
-				'action'  => 'mail/forgotten'
-			];
-
-			// Statistics
-			$events[] = [
-				'code'    => 'statistics_review_add',
-				'trigger' => 'catalog/model/catalog/review.addReview/after',
-				'action'  => 'event/statistics.addReview'
-			];
-
-			$events[] = [
-				'code'    => 'statistics_return_add',
-				'trigger' => 'catalog/model/account/returns.addReturn/after',
-				'action'  => 'event/statistics.addReturn'
-			];
-
-			$events[] = [
-				'code'    => 'statistics_order_history',
-				'trigger' => 'catalog/model/checkout/order.addHistory/after',
-				'action'  => 'event/statistics.addHistory'
-			];
-
-			foreach ($events as $event) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($event['code']) . "'");
-
-				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($event['code']) . "', `trigger` = '" . $this->db->escape($event['trigger']) . "', `action` = '" . $this->db->escape($event['action']) . "', `status` = '1', `sort_order` = '0'");
+					foreach ($language_query->rows as $language) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
+					}
 				}
 			}
+
+			// Affiliate customer merge code
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate'");
+
+			if ($query->num_rows) {
+				// Removing affiliate and moving to the customer account.
+				$config = new \Opencart\System\Engine\Config();
+
+				$setting_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0'");
+
+				foreach ($setting_query->rows as $setting) {
+					$config->set($setting['key'], $setting['value']);
+				}
+
+				$affiliate_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate`");
+
+				foreach ($affiliate_query->rows as $affiliate) {
+					$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `email` = '" . $this->db->escape($affiliate['email']) . "'");
+
+					if (!$customer_query->num_rows) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `customer_group_id` = '" . (int)$config->get('config_customer_group_id') . "', `language_id` = '" . (int)$config->get('config_customer_group_id') . "', `firstname` = '" . $this->db->escape($affiliate['firstname']) . "', `lastname` = '" . $this->db->escape($affiliate['lastname']) . "', `email` = '" . $this->db->escape($affiliate['email']) . "', `password` = '" . $this->db->escape($affiliate['password']) . "', `newsletter` = '0', `custom_field` = '" . $this->db->escape(json_encode([])) . "', `ip` = '" . $this->db->escape($affiliate['ip']) . "', `status` = '" . $this->db->escape($affiliate['status']) . "', `date_added` = '" . $this->db->escape($affiliate['date_added']) . "'");
+
+						$customer_id = $this->db->getLastId();
+
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "address` SET `customer_id` = '" . (int)$customer_id . "', `firstname` = '" . $this->db->escape($affiliate['firstname']) . "', `lastname` = '" . $this->db->escape($affiliate['lastname']) . "', `company` = '" . $this->db->escape($affiliate['company']) . "', `address_1` = '" . $this->db->escape($affiliate['address_1']) . "', `address_2` = '" . $this->db->escape($affiliate['address_2']) . "', `city` = '" . $this->db->escape($affiliate['city']) . "', `postcode` = '" . $this->db->escape($affiliate['postcode']) . "', `zone_id` = '" . (int)$affiliate['zone_id'] . "', `country_id` = '" . (int)$affiliate['country_id'] . "', `custom_field` = '" . $this->db->escape(json_encode([])) . "'");
+					} else {
+						$customer_id = $customer_query->row['customer_id'];
+					}
+
+					$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");
+
+					if (!$customer_query->num_rows) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_affiliate` SET `customer_id` = '" . (int)$customer_id . "', `company` = '" . $this->db->escape($affiliate['company']) . "', `tracking` = '" . $this->db->escape($affiliate['code']) . "', `commission` = '" . (float)$affiliate['commission'] . "', `tax` = '" . $this->db->escape($affiliate['tax']) . "', `payment_method` = '" . $this->db->escape($affiliate['payment_method']) . "', `cheque` = '" . $this->db->escape($affiliate['cheque']) . "', `paypal` = '" . $this->db->escape($affiliate['paypal']) . "', `bank_name` = '" . $this->db->escape($affiliate['bank_name']) . "', `bank_branch_number` = '" . $this->db->escape($affiliate['bank_branch_number']) . "', `bank_account_name` = '" . $this->db->escape($affiliate['bank_account_name']) . "', `bank_account_number` = '" . $this->db->escape($affiliate['bank_account_number']) . "', `status` = '" . (int)($affiliate['approved'] ?? $affiliate['status']) . "', `date_added` = '" . $this->db->escape($affiliate['date_added']) . "'");
+					}
+
+					$affiliate_transaction_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_transaction` WHERE `affiliate_id` = '" . (int)$affiliate['affiliate_id'] . "'");
+
+					foreach ($affiliate_transaction_query->rows as $affiliate_transaction) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_transaction` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$affiliate_transaction['order_id'] . "', `description` = '" . $this->db->escape($affiliate_transaction['description']) . "', `amount` = '" . (float)$affiliate_transaction['amount'] . "', `date_added` = '" . $this->db->escape($affiliate_transaction['date_added']) . "'");
+
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_transaction` WHERE `affiliate_transaction_id` = '" . (int)$affiliate_transaction['affiliate_transaction_id'] . "'");
+					}
+
+					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `affiliate_id` = '" . (int)$customer_id . "' WHERE `affiliate_id` = '" . (int)$affiliate['affiliate_id'] . "'");
+				}
+			}
+
+			// affiliate payment > payment_method
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_affiliate' AND COLUMN_NAME = 'payment'");
+
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer_affiliate` SET `payment_method` = `payment`");
+
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_affiliate` DROP COLUMN `payment`");
+			}
+
+			// Country address_format_id
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "country' AND COLUMN_NAME = 'address_format_id'");
+
+			if (!$query->num_rows) {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "country` ADD COLUMN `address_format_id` int(11) NOT NULL AFTER `address_format`");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "country` DROP COLUMN `address_format`");
+			}
+
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "address_format'");
+
+			if ($query->num_rows) {
+				$address_format_total = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address_format`");
+
+				if (!$address_format_total->row['total']) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "address_format` SET `name` = 'Address Format', `address_format` = '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{city}, {zone} {postcode}\r\n{country}'");
+				}
+			}
+
+			// Country
+			$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `address_format_id` = '1' WHERE `address_format_id` = '0'");
+
+			// Api
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "api' AND COLUMN_NAME = 'name'");
+
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `name` = `username` WHERE `username` IS NULL or `username` = ''");
+			}
+
+			// Cart - Subscriptions
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "cart' AND COLUMN_NAME = 'subscription_plan_id'");
+
+			if (!$query->num_rows) {
+				$this->db->query("TRUNCATE TABLE `" . DB_PREFIX . "cart`");
+
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` DROP COLUMN `recurring_id`");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` ADD COLUMN `subscription_plan_id` int(11) NOT NULL AFTER `product_id`");
+			}
+
+			// Addresses
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "address' AND COLUMN_NAME = 'default'");
+
+			if (!$query->num_rows) {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "address` ADD COLUMN `default` tinyint(1) NOT NULL AFTER `custom_field`");
+			}
+
+			// Drop Fields
+			$remove = [];
+
+			$remove[] = [
+				'table' => 'affiliate',
+				'field' => 'payment'
+			];
+
+			$remove[] = [
+				'table' => 'api',
+				'field' => 'name'
+			];
+
+			$remove[] = [
+				'table' => 'api',
+				'field' => 'firstname'
+			];
+
+			$remove[] = [
+				'table' => 'api',
+				'field' => 'lastname'
+			];
+
+			$remove[] = [
+				'table' => 'api',
+				'field' => 'password'
+			];
+
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'cart'
+			];
+
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'fax'
+			];
+
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'approved'
+			];
+
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'code'
+			];
+
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'token'
+			];
+
+			$remove[] = [
+				'table' => 'customer_activity',
+				'field' => 'activity_id'
+			];
+
+			$remove[] = [
+				'table' => 'customer_group',
+				'field' => 'name'
+			];
+
+			$remove[] = [
+				'table' => 'order',
+				'field' => 'fax'
+			];
+
+			$remove[] = [
+				'table' => 'language',
+				'field' => 'directory'
+			];
+
+			$remove[] = [
+				'table' => 'location',
+				'field' => 'fax'
+			];
+
+			$remove[] = [
+				'table' => 'store',
+				'field' => 'ssl'
+			];
+
+			$remove[] = [
+				'table' => 'user_login',
+				'field' => 'token'
+			];
+
+			$remove[] = [
+				'table' => 'user_login',
+				'field' => 'total'
+			];
+
+			$remove[] = [
+				'table' => 'user_login',
+				'field' => 'status'
+			];
 
 			$this->load->model('upgrade/upgrade');
 
-			$events = $this->model_upgrade_upgrade->getRecords('event');
-
-			foreach ($events as $event) {
-				if (!str_contains($event['trigger'], '.')) {
-					$parts = explode('/', $event['trigger']);
-
-					$string_1 = implode('/', array_slice($parts, 0, -2));
-					$string_2 = implode('/', array_slice($parts, -2));
-
-					$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = '" . $this->db->escape($string_1 . '.' . $string_2) . "' WHERE `event_id` = '" . (int)$event['event_id'] . "'");
-				}
+			foreach ($remove as $result) {
+				$this->model_upgrade_upgrade->dropField($result['table'], $result['field']);
 			}
 
-			// Alter events table
-			if ($this->model_upgrade_upgrade->hasField('event', 'date_added')) {
-				$this->model_upgrade_upgrade->dropField('event', 'date_added');
-			}
+			// Drop Tables
+			$remove = [
+				'affiliate',
+				'affiliate_activity',
+				'affiliate_login',
+				'affiliate_transaction',
+				'banner_image_description',
+				'customer_ban_ip',
+				'customer_field',
+				'customer_payment',
+				'order_field',
+				'order_custom_field',
+				'url_alias'
+			];
 
-			// Event - Remove admin promotion from OC 3.x, since it is no longer required to have in OC v4.x releases.
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `action` = 'extension/extension/promotion.getList'");
+			foreach ($remove as $table) {
+				$this->model_upgrade_upgrade->dropTable($table);
+			}
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 8, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['text'] = sprintf($this->language->get('text_patch'), 8, 8, 11);
 
 			$url = '';
 

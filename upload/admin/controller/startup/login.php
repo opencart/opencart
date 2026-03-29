@@ -29,8 +29,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			'common/login',
 			'common/forgotten',
 			'common/language',
-			'common/authorize',
-			'cron/cron'
+			'common/authorize'
 		];
 
 		// User
@@ -46,7 +45,6 @@ class Login extends \Opencart\System\Engine\Controller {
 			'common/forgotten',
 			'common/language',
 			'common/authorize',
-			'cron/cron',
 			'error/not_found',
 			'error/permission'
 		];

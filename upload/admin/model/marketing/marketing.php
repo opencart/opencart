@@ -188,13 +188,13 @@ class Marketing extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name'       => 'm.name',
-			'code'       => 'm.code',
-			'date_added' => 'm.date_added'
+			'm.name',
+			'm.code',
+			'm.date_added'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `m`.`name`";
 		}

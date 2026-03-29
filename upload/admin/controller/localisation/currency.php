@@ -18,6 +18,14 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -37,8 +45,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$data['refresh'] = $this->url->link('localisation/currency.refresh', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['add'] = $this->url->link('localisation/currency.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/currency.delete', 'user_token=' . $this->session->data['user_token']);
-		$data['enable']	= $this->url->link('localisation/currency.enable', 'user_token=' . $this->session->data['user_token']);
-		$data['disable'] = $this->url->link('localisation/currency.disable', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -68,6 +74,18 @@ class Currency extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		if (isset($this->request->get['sort'])) {
+			$sort = (string)$this->request->get['sort'];
+		} else {
+			$sort = 'title';
+		}
+
+		if (isset($this->request->get['order'])) {
+			$order = (string)$this->request->get['order'];
+		} else {
+			$order = 'ASC';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -75,6 +93,14 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -94,10 +120,12 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Currencies
+		// Currency
 		$data['currencies'] = [];
 
 		$filter_data = [
+			'sort'  => $sort,
+			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
@@ -107,22 +135,50 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_currency->getCurrencies($filter_data);
 
 		foreach ($results as $result) {
-			$data['currencies'][] = ['edit' => $this->url->link('localisation/currency.form', 'user_token=' . $this->session->data['user_token'] . '&currency_id=' . $result['currency_id'] . $url)] + $result;
+			$data['currencies'][] = [
+				'title'         => $result['title'] . (($result['code'] == $this->config->get('config_currency')) ? $this->language->get('text_default') : ''),
+				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
+				'edit'          => $this->url->link('localisation/currency.form', 'user_token=' . $this->session->data['user_token'] . '&currency_id=' . $result['currency_id'] . $url)
+			] + $result;
 		}
 
-		// Default
-		$data['code'] = $this->config->get('config_currency');
+		$url = '';
 
-		// Total Currencies
+		if ($order == 'ASC') {
+			$url .= '&order=DESC';
+		} else {
+			$url .= '&order=ASC';
+		}
+
+		$data['sort_title'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
+		$data['sort_code'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
+		$data['sort_value'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
+		$data['sort_status'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_date_modified'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_modified' . $url);
+
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
 		$currency_total = $this->model_localisation_currency->getTotalCurrencies();
 
-		// Pagination
-		$data['total'] = $currency_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $currency_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('localisation/currency.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($currency_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($currency_total - $this->config->get('config_pagination_admin'))) ? $currency_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $currency_total, ceil($currency_total / $this->config->get('config_pagination_admin')));
+
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		return $this->load->view('localisation/currency_list', $data);
 	}
@@ -140,6 +196,14 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['currency_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -160,7 +224,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/currency.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Currency
 		if (isset($this->request->get['currency_id'])) {
 			$this->load->model('localisation/currency');
 
@@ -259,7 +322,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
-		// Currency
 		$this->load->model('localisation/currency');
 
 		$currency_info = $this->model_localisation_currency->getCurrencyByCode($post_info['code']);
@@ -283,65 +345,30 @@ class Currency extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Enable
+	 * Refresh
 	 *
 	 * @return void
 	 */
-	public function enable(): void {
+	public function refresh(): void {
 		$this->load->language('localisation/currency');
 
 		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
 
 		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!$json) {
-			$this->load->model('localisation/currency');
+		// Extension
+		$this->load->model('setting/extension');
 
-			foreach ($selected as $currency_id) {
-				$this->model_localisation_currency->editStatus((int)$currency_id, true);
-			}
+		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
 
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
-	public function disable(): void {
-		$this->load->language('localisation/currency');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
-			$json['error'] = $this->language->get('error_permission');
+		if (!$extension_info) {
+			$json['error'] = $this->language->get('error_extension');
 		}
 
 		if (!$json) {
-			$this->load->model('localisation/currency');
-
-			foreach ($selected as $currency_id) {
-				$this->model_localisation_currency->editStatus((int)$currency_id, false);
-			}
+			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '.currency', $this->config->get('config_currency'));
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -373,10 +400,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 		// Currency
 		$this->load->model('localisation/currency');
 
-		// Setting
+		// Store
 		$this->load->model('setting/store');
 
-		// Orders
+		// Order
 		$this->load->model('sale/order');
 
 		foreach ($selected as $currency_id) {
@@ -394,7 +421,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Total Orders
 			$order_total = $this->model_sale_order->getTotalOrdersByCurrencyId($currency_id);
 
 			if ($order_total) {
@@ -406,38 +432,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 			foreach ($selected as $currency_id) {
 				$this->model_localisation_currency->deleteCurrency($currency_id);
 			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Refresh
-	 *
-	 * @return void
-	 */
-	public function refresh(): void {
-		$this->load->language('localisation/currency');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$task_data = [
-				'code'   => 'currency',
-				'action' => 'task/admin/currency.refresh',
-				'args'   => []
-			];
-
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
 
 			$json['success'] = $this->language->get('text_success');
 		}

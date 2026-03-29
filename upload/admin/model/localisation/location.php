@@ -22,6 +22,7 @@ class Location extends \Opencart\System\Engine\Model {
 	 * $location_data = [
 	 *     'name'      => 'Location Name',
 	 *     'address'   => '',
+	 *     'geocode'   => '',
 	 *     'telephone' => '1234567890',
 	 *     'image'     => 'location_image',
 	 *     'open'      => '',
@@ -33,7 +34,7 @@ class Location extends \Opencart\System\Engine\Model {
 	 * $location_id = $this->model_localisation_location->addLocation($location_data);
 	 */
 	public function addLocation(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "location` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `address` = '" . $this->db->escape((string)$data['address']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "location` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `address` = '" . $this->db->escape((string)$data['address']) . "', `geocode` = '" . $this->db->escape((string)$data['geocode']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "'");
 
 		return $this->db->getLastId();
 	}
@@ -53,6 +54,7 @@ class Location extends \Opencart\System\Engine\Model {
 	 * $location_data = [
 	 *     'name'      => 'Location Name',
 	 *     'address'   => '',
+	 *     'geocode'   => '',
 	 *     'telephone' => '1234567890',
 	 *     'image'     => 'location_image',
 	 *     'open'      => '',
@@ -64,7 +66,7 @@ class Location extends \Opencart\System\Engine\Model {
 	 * $this->model_localisation_location->editLocation($location_id, $location_data);
 	 */
 	public function editLocation(int $location_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "location` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `address` = '" . $this->db->escape((string)$data['address']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "' WHERE `location_id` = '" . (int)$location_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "location` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `address` = '" . $this->db->escape((string)$data['address']) . "', `geocode` = '" . $this->db->escape((string)$data['geocode']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "' WHERE `location_id` = '" . (int)$location_id . "'");
 	}
 
 	/**

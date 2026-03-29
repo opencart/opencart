@@ -83,7 +83,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
-		// Subscription Statuses
+		// Subscription Status
 		$this->load->model('localisation/subscription_status');
 
 		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
@@ -162,7 +162,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		// Subscriptions
+		// Subscription
 		$data['subscriptions'] = [];
 
 		$filter_data = [
@@ -174,35 +174,47 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'limit'                         => $this->config->get('config_pagination')
 		];
 
-		// Extension
 		$this->load->model('extension/opencart/report/subscription');
 
-		// Total Subscriptions
 		$subscription_total = $this->model_extension_opencart_report_subscription->getTotalSubscriptions($filter_data);
 
 		$results = $this->model_extension_opencart_report_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
 			$data['subscriptions'][] = [
-				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
-				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end']))
-			] + $result;
+				'date_start'    => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
+				'date_end'      => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
+				'subscriptions' => $result['subscriptions'],
+				'products'      => $result['products'],
+				'tax'           => $this->currency->format((float)$result['tax'], $this->config->get('config_currency')),
+				'total'         => $this->currency->format((float)$result['total'], $this->config->get('config_currency'))
+			];
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'code',
-			'page'
-		];
+		$url = '';
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		if (isset($this->request->get['filter_date_start'])) {
+			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
+		}
 
-		// Pagination
-		$data['total'] = $subscription_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('extension/opencart/report/subscription', 'user_token=' . $this->session->data['user_token'] . '&code=sale_tax' . $url . '&page={page}');
+		if (isset($this->request->get['filter_date_end'])) {
+			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
+		}
+
+		if (isset($this->request->get['filter_group'])) {
+			$url .= '&filter_group=' . $this->request->get['filter_group'];
+		}
+
+		if (isset($this->request->get['filter_subscription_status_id'])) {
+			$url .= '&filter_subscription_status_id=' . $this->request->get['filter_subscription_status_id'];
+		}
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $subscription_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination'),
+			'url'   => $this->url->link('extension/opencart/report/subscription', 'user_token=' . $this->session->data['user_token'] . '&code=subscription' . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($subscription_total - $this->config->get('config_pagination'))) ? $subscription_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $subscription_total, ceil($subscription_total / $this->config->get('config_pagination')));
 
@@ -210,8 +222,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_subscription_status_id'] = $filter_subscription_status_id;
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

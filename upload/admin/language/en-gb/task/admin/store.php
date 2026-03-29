@@ -1,8 +1,0 @@
-<?php
-// Text
-$_['text_list']       = 'Generating %s store data!';
-$_['text_clear']      = 'Store data cleared!';
-
-// Error
-$_['error_directory'] = 'Error: Directory %s does not exist or is not writable!';
-$_['error_file']      = 'Error: File %s could not be written!';

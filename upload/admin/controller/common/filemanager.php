@@ -40,8 +40,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$data['ckeditor'] = '';
 		}
 
-		$data['list'] = $this->getList();
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
@@ -55,25 +53,16 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	public function list(): void {
 		$this->load->language('common/filemanager');
 
-		$this->response->setOutput($this->getList());
-	}
-
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
-	public function getList(): string {
 		$base = DIR_IMAGE . 'catalog/';
 
 		// Make sure we have the correct directory
-		if (!empty($this->request->get['directory'])) {
+		if (isset($this->request->get['directory'])) {
 			$directory = $base . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
 			$directory = $base;
 		}
 
-		if (!empty($this->request->get['filter_name'])) {
+		if (isset($this->request->get['filter_name'])) {
 			$filter_name = basename(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filter_name = '';
@@ -85,84 +74,84 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$url = '';
+		$allowed = [];
 
-		if (isset($this->request->get['target'])) {
-			$url .= '&target=' . $this->request->get['target'];
+		foreach (explode("\r\n", $this->config->get('config_file_ext_allowed')) as $key => $extension) {
+			$allowed[] = '.' . \strtolower($extension);
+			$allowed[] = '.' . \strtoupper($extension);
 		}
 
-		if (isset($this->request->get['thumb'])) {
-			$url .= '&thumb=' . $this->request->get['thumb'];
+		$directories = [];
+		$files = [];
+
+		// Get directories and files
+		$paths = array_diff(scandir($directory), ['..', '.']);
+
+		foreach ($paths as $value) {
+			if ($filter_name && !str_starts_with($value, $filter_name)) {
+				continue;
+			}
+
+			$path = str_replace('\\', '/', realpath($directory . $value));
+
+			if (is_dir($path)) {
+				$directories[] = $path;
+			}
+
+			if (is_file($path) && in_array(substr($value, strrpos($value, '.')), $allowed)) {
+				$files[] = $path;
+			}
 		}
 
-		if (isset($this->request->get['ckeditor'])) {
-			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
-		}
-
-		$allowed = [
-			'ico',
-			'gif',
-			'jpg',
-			'jpe',
-			'jpeg',
-			'png',
-			'webp',
-		];
-
+		$total = count($paths);
 		$limit = 16;
 		$start = ($page - 1) * $limit;
 
-		$files = [];
-		$directories = [];
-
-		// Get directories and files
-		$paths = oc_directory_read($directory);
-
-		foreach (array_slice($paths, $start, $limit) as $path) {
-			if (substr($path, 0, strlen($base)) !== $base) {
-				continue;
-			}
-
-			if (substr($path, -1) == '/') {
-				$directories[] = $path;
-
-				continue;
-			}
-
-			if (!in_array(\strtolower(substr($path, strrpos($path, '.') + 1)), $allowed)) {
-				continue;
-			}
-
-			if ($filter_name && !str_starts_with(basename($path), $filter_name)) {
-				continue;
-			}
-
-			$files[] = $path;
-		}
-
 		$data['directories'] = [];
-
-		// Split the array based on current page number and max number of items per page of 10
-		foreach ($directories as $directory) {
-			$data['directories'][] = [
-				'name' => basename($directory),
-				'path' => oc_substr($directory, oc_strlen($base)) . '/',
-				'href' => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(oc_substr($directory, oc_strlen($base))) . $url)
-			];
-		}
 
 		// Image
 		$data['images'] = [];
 
 		$this->load->model('tool/image');
 
-		foreach ($files as $file) {
-			$data['images'][] = [
-				'name'  => basename($file),
-				'thumb' => $this->model_tool_image->resize(oc_substr($file, oc_strlen(DIR_IMAGE)), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height')),
-				'path'  => oc_substr($file, oc_strlen($base)),
-				'href'  => HTTP_CATALOG . 'image/catalog/' . oc_substr($file, oc_strlen($base))
-			];
+		if ($paths) {
+			$url = '';
+
+			if (isset($this->request->get['target'])) {
+				$url .= '&target=' . $this->request->get['target'];
+			}
+
+			if (isset($this->request->get['thumb'])) {
+				$url .= '&thumb=' . $this->request->get['thumb'];
+			}
+
+			if (isset($this->request->get['ckeditor'])) {
+				$url .= '&ckeditor=' . $this->request->get['ckeditor'];
+			}
+
+			// Split the array based on current page number and max number of items per page of 10
+			foreach (array_slice($directories + $files, $start, $limit) as $path) {
+				if (substr($path, 0, strlen($base)) == $base) {
+					$name = basename($path);
+
+					if (is_dir($path)) {
+						$data['directories'][] = [
+							'name' => $name,
+							'path' => oc_substr($path, oc_strlen($base)) . '/',
+							'href' => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(oc_substr($path, oc_strlen($base))) . $url)
+						];
+					}
+
+					if (is_file($path)) {
+						$data['images'][] = [
+							'name'  => $name,
+							'path'  => oc_substr($path, oc_strlen($base)),
+							'href'  => HTTP_CATALOG . 'image/catalog/' . oc_substr($path, oc_strlen($base)),
+							'thumb' => $this->model_tool_image->resize(oc_substr($path, oc_strlen(DIR_IMAGE)), $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'))
+						];
+					}
+				}
+			}
 		}
 
 		if (isset($this->request->get['directory'])) {
@@ -183,7 +172,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['directory'])) {
 			$pos = strrpos($this->request->get['directory'], '/');
 
-			if ($pos !== false) {
+			if ($pos) {
 				$url .= '&directory=' . urlencode(substr($this->request->get['directory'], 0, $pos));
 			}
 		}
@@ -255,13 +244,13 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		// Get total number of files and directories
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => count($paths),
+			'total' => $total,
 			'page'  => $page,
 			'limit' => $limit,
 			'url'   => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		return $this->load->view('common/filemanager_list', $data);
+		$this->response->setOutput($this->load->view('common/filemanager_list', $data));
 	}
 
 	/**
@@ -274,12 +263,12 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$base = DIR_IMAGE . 'catalog/';
+
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
-
-		$base = DIR_IMAGE . 'catalog/';
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
@@ -320,30 +309,14 @@ class FileManager extends \Opencart\System\Engine\Controller {
 					}
 
 					// Allowed file extension types
-					$allowed = [
-						'ico',
-						'gif',
-						'jpg',
-						'jpe',
-						'jpeg',
-						'png',
-						'webp',
-					];
+					$allowed = explode("\r\n", \strtolower($this->config->get('config_file_ext_allowed')));
 
 					if (!in_array(\strtolower(substr($filename, strrpos($filename, '.') + 1)), $allowed)) {
 						$json['error'] = $this->language->get('error_file_type');
 					}
 
 					// Allowed file mime types
-					$allowed = [
-						'image/x-icon',
-						'image/jpeg',
-						'image/pjpeg',
-						'image/png',
-						'image/x-png',
-						'image/gif',
-						'image/webp'
-					];
+					$allowed = explode("\r\n", $this->config->get('config_file_mime_allowed'));
 
 					if (!in_array($file['type'], $allowed)) {
 						$json['error'] = $this->language->get('error_file_type');
@@ -467,7 +440,40 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Loop through each path
 			foreach ($paths as $path) {
-				oc_directory_delete(rtrim($base . html_entity_decode($path, ENT_QUOTES, 'UTF-8'), '/'));
+				$path = rtrim($base . html_entity_decode($path, ENT_QUOTES, 'UTF-8'), '/');
+
+				// Make path into an array
+				$directory = [$path];
+
+				// While the path array is still populated keep looping through
+				while (count($directory) != 0) {
+					$next = array_shift($directory);
+
+					if (is_dir($next)) {
+						foreach (array_diff(scandir($next), ['..', '.']) as $file) {
+							// If directory add to path array
+							$directory[] = $next . '/' . $file;
+						}
+					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $next;
+				}
+
+				// Reverse sort the file array
+				rsort($files);
+
+				foreach ($files as $file) {
+					// If file just delete
+					if (is_file($file)) {
+						unlink($file);
+					}
+
+					// If directory use the remove directory function
+					if (is_dir($file)) {
+						rmdir($file);
+					}
+				}
 			}
 
 			$json['success'] = $this->language->get('text_delete');

@@ -23,56 +23,24 @@ class DB {
 	/**
 	 * Constructor
 	 *
-	 * Initialize database connection with provided options.
-	 *
-	 * @param array<string, mixed> $option database connection options
-	 *                                     - engine: Database engine (required)
-	 *                                     - hostname: Database server hostname (required)
-	 *                                     - username: Database username (required)
-	 *                                     - password: Database password (optional)
-	 *                                     - database: Database name (required)
-	 *                                     - port: Database port (required)
-	 *                                     - ssl_key: SSL key file path (optional)
-	 *                                     - ssl_cert: SSL certificate file path (optional)
-	 *                                     - ssl_ca: SSL CA file path (optional)
-	 *
-	 * @throws \Exception when required database parameters are missing or database engine cannot be loaded
-	 *
-	 * @example
-	 *
-	 * $db_config = [
-	 *     'engine'   => 'mysqli',
-	 *     'hostname' => 'localhost',
-	 *     'username' => 'user',
-	 *     'password' => 'pass',
-	 *     'database' => 'opencart',
-	 *     'port'     => '3306'
-	 * ];
-	 *
-	 * $db = new DB($db_config);
+	 * @param string $adaptor
+	 * @param string $hostname
+	 * @param string $username
+	 * @param string $password
+	 * @param string $database
+	 * @param string $port
+	 * @param string $ssl_key
+	 * @param string $ssl_cert
+	 * @param string $ssl_ca
 	 */
-	public function __construct(array $option = []) {
-		$required = [
-			'engine',
-			'hostname',
-			'username',
-			'database',
-			'port'
-		];
+	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '', string $ssl_key = '', string $ssl_cert = '', string $ssl_ca = '') {
+		$class = 'Opencart\System\Library\DB\\' . $adaptor;
 
-		foreach ($required as $key) {
-			if (empty($option[$key])) {
-				throw new \Exception('Error: Database ' . $key . ' required!');
-			}
+		if (class_exists($class)) {
+			$this->adaptor = new $class($hostname, $username, $password, $database, $port, $ssl_key, $ssl_cert, $ssl_ca);
+		} else {
+			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
 		}
-
-		$class = 'Opencart\System\Library\DB\\' . $option['engine'];
-
-		if (!class_exists($class)) {
-			throw new \Exception('Error: Could not load database adaptor ' . $option['engine'] . '!');
-		}
-
-		$this->adaptor = new $class($option);
 	}
 
 	/**
@@ -109,7 +77,7 @@ class DB {
 	}
 
 	/**
-	 * Get Last ID
+	 * Get Last Id
 	 *
 	 * Get the last ID gets the primary key that was returned after creating a row in a table.
 	 *

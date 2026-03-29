@@ -34,8 +34,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise requestCertificateAsync(array $args = [])
  * @method \Aws\Result resendValidationEmail(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resendValidationEmailAsync(array $args = [])
- * @method \Aws\Result revokeCertificate(array $args = [])
- * @method \GuzzleHttp\Promise\Promise revokeCertificateAsync(array $args = [])
  * @method \Aws\Result updateCertificateOptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCertificateOptionsAsync(array $args = [])
  */

@@ -63,7 +63,6 @@ $_['error_customer']       = 'Le client n\'a pu être trouvé!';
 $_['error_firstname']      = 'Le prénom doit contenir entre 1 et 32 caractères!';
 $_['error_lastname']       = 'Le nom doit contenir entre 1 et 32 caractères!';
 $_['error_email']          = 'L\'adresse e-mail ne semble pas être valide!';
-$_['error_return']         = 'Les demandes de retour n\'ont pu être trouvées!';
 $_['error_telephone']      = 'Le téléphone doit contenir entre 3 et 32 caractères!';
 $_['error_product']        = 'Le nom du produit doit contenir entre 1 et 255 caractères!';
 $_['error_name']           = 'Le nom du produit doit contenir plus de 1 et moins de 255 caractères!';

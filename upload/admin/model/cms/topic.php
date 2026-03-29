@@ -220,40 +220,15 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * $topics = $this->model_cms_topic->getTopics($filter_data);
 	 */
 	public function getTopics(array $data = []): array {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT * FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`)";
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "topic_to_store` `t2s` ON (`t`.`topic_id` = `t2s`.`topic_id`)";
-		}
-
-		$sql .= " WHERE `td`.`language_id` = '" . (int)$language_id . "'";
-
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`td`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-		}
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " AND `t2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
-		}
-
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND `t`.`status` = '" . (int)$data['filter_status'] . "'";
-		}
+		$sql = "SELECT * FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`) WHERE `td`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$sort_data = [
-			'name'       => 'td.name',
-			'status'     => 't.status',
-			'sort_order' => 't.sort_order'
+			'td.name',
+			't.sort_order'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `t`.`sort_order`";
 		}
@@ -311,34 +286,8 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * $topic_total = $this->model_cms_topic->getTotalTopics($filter_data);
 	 */
-	public function getTotalTopics(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic` `t` LEFT JOIN `" . DB_PREFIX . "topic_description` `td` ON (`t`.`topic_id` = `td`.`topic_id`)";
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "topic_to_store` `t2s` ON (`t`.`topic_id` = `t2s`.`topic_id`)";
-		}
-
-		$sql .= " WHERE `td`.`language_id` = '" . (int)$language_id . "'";
-
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`td`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-		}
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " AND `t2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
-		}
-
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND `t`.`status` = '" . (int)$data['filter_status'] . "'";
-		}
-
-		$query = $this->db->query($sql);
+	public function getTotalTopics(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "topic`");
 
 		return (int)$query->row['total'];
 	}
@@ -429,10 +378,10 @@ class Topic extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $topic_id): array {
 		$topic_description_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `td`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "topic_description` `td` WHERE `td`.`topic_id` = '" . (int)$topic_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "topic_description` WHERE `topic_id` = '" . (int)$topic_id . "'");
 
 		foreach ($query->rows as $result) {
-			$topic_description_data[$result['code']] = $result;
+			$topic_description_data[$result['language_id']] = $result;
 		}
 
 		return $topic_description_data;
@@ -543,7 +492,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * $this->model_cms_topic->addLayout($topic_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $topic_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `topic_id` = '" . (int)$topic_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**
@@ -559,10 +508,10 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('cms/topic');
 	 *
-	 * $this->model_cms_topic->deleteLayouts($topic_id);
+	 * $this->model_cms_topic->deleteLayouts($article_id);
 	 */
 	public function deleteLayouts(int $topic_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `topic_id` = '" . (int)$topic_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$topic_id . "'");
 	}
 
 	/**

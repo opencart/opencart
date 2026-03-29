@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" title="{{ button_filter }}" onclick="$('#filter-marketing').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa-solid fa-filter"></i></button>
-        <a href="{{ add }}" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-        <button type="submit" form="form-marketing" formaction="{{ delete }}" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-marketing').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fa-solid fa-filter"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <button type="submit" form="form-marketing" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -37,8 +37,8 @@
                 <input type="date" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="submit" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
-                <button type="reset" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
+                <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+                <button type="reset" data-bs-toggle="tooltip" title="{{ button_reset }}" class="btn btn-outline-secondary"><i class="fa-solid fa-filter-circle-xmark"></i></button>
               </div>
             </form>
           </div>
@@ -47,11 +47,49 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="list" class="card-body">{{ list }}</div>
+          <div id="marketing" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/marketing.js"></script>
+<script type="text/javascript"><!--
+$('#marketing').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#marketing').load(this.href);
+});
+
+$('#button-filter').on('click', function() {
+    url = '';
+
+    var filter_name = $('#input-name').val();
+
+    if (filter_name) {
+        url += '&filter_name=' + encodeURIComponent(filter_name);
+    }
+
+    var filter_code = $('#input-code').val();
+
+    if (filter_code) {
+        url += '&filter_code=' + encodeURIComponent(filter_code);
+    }
+
+    var filter_date_from = $('#input-date-from').val();
+
+    if (filter_date_from) {
+        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
+    }
+
+    var filter_date_to = $('#input-date-to').val();
+
+    if (filter_date_to) {
+        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
+    }
+
+    window.history.pushState({}, null, 'index.php?route=marketing/marketing&user_token={{ user_token }}' + url);
+
+    $('#marketing').load('index.php?route=marketing/marketing.list&user_token={{ user_token }}' + url);
+});
+//--></script>
 {{ footer }}

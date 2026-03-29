@@ -73,7 +73,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$date_next = date('Y-m-d', strtotime('+' . $data['cycle'] . ' ' . $data['frequency']));
 		}
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription` SET `order_id` = '" . (isset($data['order_id']) ? (int)$data['order_id'] : 0) . "', `store_id` = '" . (int)$data['store_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `payment_address_id` = '" . (int)$data['payment_address_id'] . "', `payment_method` = '" . $this->db->escape($data['payment_method'] ? json_encode($data['payment_method']) : '') . "', `shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', `shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_tax` = '" . (float)$data['trial_tax'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$trial_remaining . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `tax` = '" . (float)$data['tax'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$remaining . "', `date_next` = '" . $this->db->escape($date_next) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `language` = '" . $this->db->escape($data['language']) . "', `currency_code` = '" . $this->db->escape($data['currency_code']) . "', `currency_value` = '" . (float)$data['currency_value'] . "', `date_added` = NOW(), `date_modified` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription` SET `order_id` = '" . (isset($data['order_id']) ? (int)$data['order_id'] : 0) . "', `store_id` = '" . (int)$data['store_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `payment_address_id` = '" . (int)$data['payment_address_id'] . "', `payment_method` = '" . $this->db->escape($data['payment_method'] ? json_encode($data['payment_method']) : '') . "', `shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', `shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_tax` = '" . (float)$data['trial_tax'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$trial_remaining . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `tax` = '" . (float)$data['tax'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$remaining . "', `date_next` = '" . $this->db->escape($date_next) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `language` = '" . $this->db->escape($data['language']) . "', `currency` = '" . $this->db->escape($data['currency']) . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		$subscription_id = $this->db->getLastId();
 
@@ -150,7 +150,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$date_next = date('Y-m-d', strtotime('+' . $data['cycle'] . ' ' . $data['frequency']));
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `order_id` = '" . (isset($data['order_id']) ? (int)$data['order_id'] : 0) . "', `store_id` = '" . (int)$data['store_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `payment_address_id` = '" . (int)$data['payment_address_id'] . "', `payment_method` = '" . $this->db->escape($data['payment_method'] ? json_encode($data['payment_method']) : '') . "', `shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', `shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_tax` = '" . (float)$data['trial_tax'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$trial_remaining . "',`trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `tax` = '" . (float)$data['tax'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$remaining . "', `date_next` = '" . $this->db->escape($date_next) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `language` = '" . $this->db->escape($data['language']) . "', `currency_code` = '" . $this->db->escape($data['currency_code']) . "', `currency_value` = '" . (float)$data['currency_value'] . "', `date_modified` = NOW() WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `order_id` = '" . (isset($data['order_id']) ? (int)$data['order_id'] : 0) . "', `store_id` = '" . (int)$data['store_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `payment_address_id` = '" . (int)$data['payment_address_id'] . "', `payment_method` = '" . $this->db->escape($data['payment_method'] ? json_encode($data['payment_method']) : '') . "', `shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', `shipping_method` = '" . $this->db->escape($data['shipping_method'] ? json_encode($data['shipping_method']) : '') . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_tax` = '" . (float)$data['trial_tax'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$trial_remaining . "',`trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `tax` = '" . (float)$data['tax'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$remaining . "', `date_next` = '" . $this->db->escape($date_next) . "', `comment` = '" . $this->db->escape($data['comment']) . "', `language` = '" . $this->db->escape($data['language']) . "', `currency` = '" . $this->db->escape($data['currency']) . "', `date_modified` = NOW() WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
 		$this->deleteProducts($subscription_id);
 
@@ -296,19 +296,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>> subscription records
 	 *
 	 * @example
-	 * 
-	 * $filter_data = [
-	 *     'filter_subscription_id'        => 1,
-	 *     'filter_order_id'               => 1,
-	 *     'filter_order_product_id'       => 1,
-	 *     'filter_customer_payment_id'    => 1,
-	 *     'filter_customer_id'            => 1,
-	 *     'filter_customer'               => 'John Doe',
-	 *     'filter_date_next'              => '2022-01-01',
-	 *     'filter_subscription_status_id' => 1,
-	 *     'filter_date_from'              => '2021-01-01',
-	 *     'filter_date_to'                => '2021-01-31',
-	 * ];
 	 *
 	 * $this->load->model('checkout/subscription');
 	 *
@@ -326,25 +313,16 @@ class Subscription extends \Opencart\System\Engine\Model {
 		if (!empty($data['filter_order_id'])) {
 			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
-
 		if (!empty($data['filter_order_product_id'])) {
 			$implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
 		}
 
-		if (!empty($data['filter_customer_payment_id'])) {
-			$implode[] = "`s`.`customer_payment_id` = " . (int)$data['filter_customer_payment_id'];
-		}
-
-		if (!empty($data['filter_customer_id'])) {
-			$implode[] = "`s`.`customer_id` = " . (int)$data['filter_customer_id'];
-		}
-
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "LCASE(CONCAT(`o`.`firstname`, ' ', `o`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
+			$implode[] = "CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) LIKE '" . $this->db->escape($data['filter_customer'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_date_next'])) {
-			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape((string)$data['filter_date_next']) . "')";
+			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape($data['filter_date_next']) . "')";
 		}
 
 		if (!empty($data['filter_subscription_status_id'])) {
@@ -352,11 +330,11 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(`s`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+			$implode[] = "DATE(`s`.`date_added`) >= DATE('" . $this->db->escape($data['filter_date_from']) . "')";
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`s`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
+			$implode[] = "DATE(`s`.`date_added`) <= DATE('" . $this->db->escape($data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -364,16 +342,16 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'subscription_id'     => 's.subscription_id',
-			'order_id'            => 's.order_id',
-			'reference'           => 's.reference',
-			'customer'            => 'customer',
-			'subscription_status' => 's.subscription_status',
-			'date_added'          => 's.date_added'
+			's.subscription_id',
+			's.order_id',
+			's.reference',
+			'customer',
+			's.subscription_status',
+			's.date_added'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `s`.`subscription_id`";
 		}
@@ -408,88 +386,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		return $order_data;
-	}
-
-	/**
-	 * Get Total Subscriptions
-	 *
-	 * Get the total number of total subscription records in the database.
-	 *
-	 * @param array<string, mixed> $data array of filters
-	 *
-	 * @return int total number of subscription records
-	 *
-	 * @example
-	 *
-	 * $filter_data = [
-	 *     'filter_subscription_id'        => 1,
-	 *     'filter_order_id'               => 1,
-	 *     'filter_order_product_id'       => 1,
-	 *     'filter_customer_payment_id'    => 1,
-	 *     'filter_customer_id'            => 1,
-	 *     'filter_customer'               => 'John Doe',
-	 *     'filter_date_next'              => '2022-01-01',
-	 *     'filter_subscription_status_id' => 1,
-	 *     'filter_date_from'              => '2021-01-01',
-	 *     'filter_date_to'                => '2021-01-31',
-	 * ];
-	 *
-	 * $this->load->model('sale/subscription');
-	 *
-	 * $subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
-	 */
-	public function getTotalSubscriptions(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
-
-		$implode = [];
-
-		if (!empty($data['filter_subscription_id'])) {
-			$implode[] = "`s`.`subscription_id` = '" . (int)$data['filter_subscription_id'] . "'";
-		}
-
-		if (!empty($data['filter_order_id'])) {
-			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
-		}
-
-		if (!empty($data['filter_order_product_id'])) {
-			$implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
-		}
-
-		if (!empty($data['filter_customer_payment_id'])) {
-			$implode[] = "`s`.`customer_payment_id` = " . (int)$data['filter_customer_payment_id'];
-		}
-
-		if (!empty($data['filter_customer_id'])) {
-			$implode[] = "`s`.`customer_id` = " . (int)$data['filter_customer_id'];
-		}
-
-		if (!empty($data['filter_customer'])) {
-			$implode[] = "LCASE(CONCAT(`o`.`firstname`, ' ', `o`.`lastname`)) LIKE '" . $this->db->escape(oc_strtolower($data['filter_customer']) . '%') . "'";
-		}
-
-		if (!empty($data['filter_date_next'])) {
-			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape((string)$data['filter_date_next']) . "')";
-		}
-
-		if (!empty($data['filter_subscription_status_id'])) {
-			$implode[] = "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
-		}
-
-		if (!empty($data['filter_date_from'])) {
-			$implode[] = "DATE(`s`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
-		}
-
-		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`s`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
 	}
 
 	/**

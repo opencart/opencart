@@ -1,20 +1,32 @@
-import { registry, loader, config, storage, language, template, url, session, local, db, cart, tax, currency } from './index.js';
+function getURLVar(key) {
+    var value = [];
 
-console.log(currency.format(1.00, 'USD'));
+    var query = String(document.location).split('?');
 
-function decodeHTMLEntities(html) {
-    var d = document.createElement('div');
+    if (query[1]) {
+        var part = query[1].split('&');
 
-    d.innerHTML = html;
+        for (i = 0; i < part.length; i++) {
+            var data = part[i].split('=');
 
-    return d.textContent;
+            if (data[0] && data[1]) {
+                value[data[0]] = data[1];
+            }
+        }
+
+        if (value[key]) {
+            return value[key];
+        } else {
+            return '';
+        }
+    }
 }
 
 $(document).ready(function() {
     // Tooltip
     var oc_tooltip = function() {
         // Get tooltip instance
-        let tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
+        tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
 
         if (!tooltip) {
             // Apply to current element
@@ -26,6 +38,16 @@ $(document).ready(function() {
 
     $(document).on('click', 'button', function() {
         $('.tooltip').remove();
+    });
+
+    $(document).on('click', '[data-bs-toggle=\'pagination\'] a', function(e) {
+        e.preventDefault();
+
+        var element = this;
+
+        //[data-bs-target='pagination']
+
+        $(this.target).load(this.href);
     });
 
     // Alert Fade
@@ -41,56 +63,35 @@ $(document).ready(function() {
     +function($) {
         $.fn.button = function(state) {
             return this.each(function() {
-                let element = this;
+                var element = this;
 
                 if (state == 'loading') {
                     this.html = $(element).html();
+                    this.state = $(element).prop('disabled');
 
-                    $(element).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
+                    $(element).prop('disabled', true).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
                 }
 
                 if (state == 'reset') {
-                    $(element).width('').html(this.html);
-                }
-
-                // If button
-                if ($(element).is('button')) { 
-                    if (state == 'loading') {
-                        this.state = $(element).prop('disabled');
-
-                        $(element).prop('disabled', true);
-                    }
-
-                    if (state == 'reset') {
-                        $(element).prop('disabled', this.state);
-                    }
-                }
-
-                // If link
-                if ($(element).is('a')) {
-                    if (state == 'loading') {
-                        this.state = $(element).hasClass('disabled');
-
-                        $(element).addClass('disabled');
-                    }
-
-                    if (state == 'reset') {
-                        if (this.state) {
-                            $(element).addClass('disabled');
-                        } else {
-                            $(element).removeClass('disabled');
-                        }
-                    }
+                    $(element).prop('disabled', this.state).width('').html(this.html);
                 }
             });
         }
     }(jQuery);
 });
 
+function decodeHTMLEntities(html) {
+    var d = document.createElement('div');
+
+    d.innerHTML = html;
+
+    return d.textContent;
+}
+
 // Observe
 +function($) {
     $.fn.observe = function(callback) {
-        let observer = new MutationObserver(callback);
+        observer = new MutationObserver(callback);
 
         observer.observe($(this)[0], {
             characterData: false,
@@ -99,6 +100,40 @@ $(document).ready(function() {
         });
     };
 }(jQuery);
+
+// Chain ajax calls.
+class Chain {
+    constructor() {
+        this.start = false;
+        this.data = [];
+    }
+
+    attach(call) {
+        this.data.push(call);
+
+        if (!this.start) {
+            this.execute();
+        }
+    }
+
+    execute() {
+        if (this.data.length) {
+            this.start = true;
+
+            var call = this.data.shift();
+
+            var jqxhr = call();
+
+            jqxhr.done(function() {
+                chain.execute();
+            });
+        } else {
+            this.start = false;
+        }
+    }
+}
+
+var chain = new Chain();
 
 // Forms
 $(document).on('submit', 'form', function(e) {
@@ -112,6 +147,14 @@ $(document).on('submit', 'form', function(e) {
         var action = $(button).attr('formaction') || $(form).attr('action');
         var method = $(button).attr('formmethod') || $(form).attr('method') || 'post';
         var enctype = $(button).attr('formenctype') || $(form).attr('enctype') || 'application/x-www-form-urlencoded';
+
+        console.log(e);
+        console.log(element);
+        console.log('action ' + action);
+        console.log('button ' + button);
+        console.log('method ' + method);
+        console.log('enctype ' + enctype);
+        console.log($(element).serialize());
 
         // https://github.com/opencart/opencart/issues/9690
         if (typeof CKEDITOR != 'undefined') {
@@ -134,6 +177,7 @@ $(document).on('submit', 'form', function(e) {
             },
             success: function(json, textStatus) {
                 console.log(json);
+                console.log(textStatus);
 
                 $('.alert-dismissible').remove();
                 $(element).find('.is-invalid').removeClass('is-invalid');
@@ -456,7 +500,7 @@ $(document).ready(function() {
         var element = this;
 
         $.ajax({
-            url: 'index.php?route=common/language.save&user_token=' + getURLVar('user_token'),
+            url: 'index.php?route=common/language.save&user_token={{ user_token }}',
             type: 'post',
             data: 'code=' + $(element).attr('href') + '&redirect=' + encodeURIComponent($('#input-redirect').val()),
             dataType: 'json',

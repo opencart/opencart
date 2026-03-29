@@ -1,0 +1,40 @@
+<div class="product-thumb">
+  <div class="image"><a href="{{ href }}"><img src="{{ thumb }}" alt="{{ name }}" title="{{ name }}" class="img-fluid"/></a></div>
+  <div class="content">
+    <div class="description">
+      <h4><a href="{{ href }}">{{ name }}</a></h4>
+      <p>{{ description }}</p>
+      {% if price %}
+        <div class="price">
+          {% if not special %}
+            <span class="price-new">{{ price }}</span>
+          {% else %}
+            <span class="price-new">{{ special }}</span> <span class="price-old">{{ price }}</span>
+          {% endif %}
+          {% if tax %}
+            <span class="price-tax">{{ text_tax }} {{ tax }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
+      {% if review_status and rating %}
+        <div class="rating">
+          {% for i in 1..5 %}
+            {% if rating < i %}
+              <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span>
+            {% else %}
+              <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <form method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
+      <div class="button">
+        <button type="submit" formaction="{{ cart_add }}" data-bs-toggle="tooltip" title="{{ button_cart }}"><i class="fa-solid fa-shopping-cart"></i></button>
+        <button type="submit" formaction="{{ wishlist_add }}" data-bs-toggle="tooltip" title="{{ button_wishlist }}" ><i class="fa-solid fa-heart"></i></button>
+        <button type="submit" formaction="{{ compare_add }}" data-bs-toggle="tooltip" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+      </div>
+      <input type="hidden" name="product_id" value="{{ product_id }}"/> <input type="hidden" name="quantity" value="{{ minimum }}"/>
+    </form>
+  </div>
+</div>

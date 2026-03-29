@@ -31,19 +31,12 @@ class Contact extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		// Setting
-		$data['stores'] = [];
-
-		$data['stores'][] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
+		// Store
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($data['stores'], $this->model_setting_store->getStores());
+		$data['stores'] = $this->model_setting_store->getStores();
 
-		// Customer Groups
+		// Customer Group
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
@@ -74,13 +67,13 @@ class Contact extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'store_id'          => 0,
-			'customer'          => [],
-			'customer_group_id' => 0,
-			'affiliate'         => [],
 			'to'                => '',
 			'subject'           => '',
 			'message'           => '',
+			'store_id'          => 0,
+			'customer'          => [],
+			'customer_group_id' => 0,
+			'affiliate'         => []
 		];
 
 		$post_info = $this->request->post + $required;
@@ -94,9 +87,10 @@ class Contact extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Setting
+			// Store
 			$this->load->model('setting/store');
 
+			// Setting
 			$this->load->model('setting/setting');
 
 			// Customer
@@ -126,7 +120,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$page = 1;
 			}
 
-			$limit = 200;
+			$limit = 10;
 
 			$email_total = 0;
 
@@ -256,26 +250,29 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$message .= '  <body>' . html_entity_decode($post_info['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
 				$message .= '</html>' . "\n";
 
-				$this->load->model('setting/task');
+				if ($this->config->get('config_mail_engine')) {
+					$mail_option = [
+						'parameter'     => $this->config->get('config_mail_parameter'),
+						'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
+						'smtp_username' => $this->config->get('config_mail_smtp_username'),
+						'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
+						'smtp_port'     => $this->config->get('config_mail_smtp_port'),
+						'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
+					];
 
-				foreach ($emails as $email) {
-					if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-						$task_data = [
-							'code'   => 'mail_affiliate',
-							'action' => 'task/system/mail',
-							'args'   => [
-								'to'      => trim($email),
-								'from'    => $store_email,
-								'sender'  => html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'),
-								'subject' => html_entity_decode($post_info['subject'], ENT_QUOTES, 'UTF-8'),
-								'content' => $message
-							]
-						];
+					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
 
-						$this->model_setting_task->addTask($task_data);
+					foreach ($emails as $email) {
+						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+							$mail->setTo(trim($email));
+							$mail->setFrom($store_email);
+							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+							$mail->setSubject(html_entity_decode($post_info['subject'], ENT_QUOTES, 'UTF-8'));
+							$mail->setHtml($message);
+							$mail->send();
+						}
 					}
 				}
-
 			} else {
 				$json['error']['warning'] = $this->language->get('error_email');
 			}

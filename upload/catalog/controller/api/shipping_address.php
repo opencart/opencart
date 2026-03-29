@@ -63,17 +63,16 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$output['error']['shipping_country'] = $this->language->get('error_country');
 			}
 
-			// Zones
+			// Zone
 			$this->load->model('localisation/zone');
 
-			// Total Zones
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['shipping_country_id']);
 
 			if ($zone_total && !$post_info['shipping_zone_id']) {
 				$output['error']['shipping_zone'] = $this->language->get('error_zone');
 			}
 
-			// Custom fields validation
+			// Custom field validation
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));

@@ -1,4 +1,4 @@
-<form id="form-address-format" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#list">
+<form id="form-address-format" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#address-format">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -14,9 +14,9 @@
           {% for address_format in address_formats %}
             <tr>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ address_format.address_format_id }}" class="form-check-input"/></td>
-              <td>{{ address_format.name }}{% if address_format.address_format_id == address_format_id %} <strong>({{ text_default }})</strong>{% endif %}</td>
+              <td>{{ address_format.name }}</td>
               <td>{{ address_format.address_format }}</td>
-              <td class="text-end"><a href="{{ address_format.edit }}" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
+              <td class="text-end"><a href="{{ address_format.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}
@@ -28,7 +28,7 @@
     </table>
   </div>
   <div class="row">
-    <div class="col-sm-6 text-start"><x-pagination href="{{ pagination }}" target="#list" page="{{ page }}" limit="{{ limit }}" total="{{ total }}"></x-pagination></div>
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
     <div class="col-sm-6 text-end">{{ results }}</div>
   </div>
 </form>

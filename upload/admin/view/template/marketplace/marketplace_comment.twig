@@ -18,7 +18,7 @@
                 </div>
               {% endfor %}
               {% if comment.next %}
-                <div class="text-center"><a href="{{ comment.next }}" class="btn btn-outline-secondary">{{ text_more }}</a></div>
+                <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">{{ text_more }}</a></div>
               {% endif %}
             {% endif %}<a href="{{ comment.refresh }}" class="reply-refresh hide">{{ text_refresh }}</a>
           </div>

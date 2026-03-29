@@ -3,17 +3,11 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-receipt"></i> <i class="fa-solid fa-caret-down fa-fw"></i></button>
-          <ul class="dropdown-menu">
-            <li><a href="{{ order }}" class="dropdown-item"><i class="fa-solid fa-receipt"></i> {{ text_order }}</a></li>
-            <li><a href="{{ subscription }}" class="dropdown-item"><i class="fa-solid fa-repeat"></i> {{ text_subscription }}</a></li>
-            <li><a href="{{ return }}" class="dropdown-item"><i class="fa-solid fa-arrow-rotate-left"></i> {{ text_return }}</a></li>
-          </ul>
-        </div>
-        <button type="submit" id="button-save" form="form-customer" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
-        <a href="{{ back }}" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
-      </div>
+        {% if orders %}
+          <a href="{{ orders }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-warning"><i class="fa-solid fa-receipt"></i></a>
+        {% endif %}
+        <button type="submit" id="button-save" form="form-customer" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -40,7 +34,7 @@
           <div id="tab-general" class="tab-pane active">
             <form id="form-customer" action="{{ save }}" method="post">
               <fieldset>
-                <legend>{{ text_general }}</legend>
+                <legend>{{ text_customer }}</legend>
                 <div class="row mb-3">
                   <label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
                   <div class="col-sm-10">
@@ -51,6 +45,7 @@
                     </select>
                   </div>
                 </div>
+
                 <div class="row mb-3">
                   <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
                   <div class="col-sm-10">
@@ -61,10 +56,7 @@
                     </select>
                   </div>
                 </div>
-              </fieldset>
 
-              <fieldset>
-                <legend>{{ text_customer }}</legend>
                 <div class="row mb-3">
                   <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
                   <div class="col-sm-10">
@@ -75,31 +67,31 @@
                     </select>
                   </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 required">
                   <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" required/>
+                    <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
                     <div id="error-firstname" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 required">
                   <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" required/>
+                    <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
                     <div id="error-lastname" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 required">
                   <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" required/>
+                    <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                     <div id="error-email" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3{% if config_telephone_required %} required{% endif %}">
                   <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"{% if config_telephone_required %} required{% endif %}/>
+                    <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
                     <div id="error-telephone" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -182,7 +174,7 @@
                             <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
                             <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
                             <button type="button" data-oc-toggle="download" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i> {{ button_download }}</button>
-                            <button type="button" data-oc-toggle="clear" title="{{ button_clear }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
+                            <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
                           </div>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                         </div>
@@ -224,17 +216,17 @@
               </fieldset>
               <fieldset>
                 <legend>{{ text_password }}</legend>
-                <div class="row mb-3">
+                <div class="row mb-3 required">
                   <label for="input-password" class="col-sm-2 col-form-label">{{ entry_password }}</label>
                   <div class="col-sm-10">
-                    <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"{% if not customer_id %} required{% endif %} autocomplete="new-password"/>
+                    <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" autocomplete="new-password"/>
                     <div id="error-password" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 required">
                   <label for="input-confirm" class="col-sm-2 col-form-label">{{ entry_confirm }}</label>
                   <div class="col-sm-10">
-                    <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control"{% if not customer_id %} required{% endif %} autocomplete="new-password"/>
+                    <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control"/>
                     <div id="error-confirm" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -244,26 +236,38 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="newsletter" value="1" checked="{{ newsletter }}" input-id="input-newsletter" input-class="form-switch form-switch-lg"></x-switch>
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="newsletter" value="0"/>
+                      <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"{% if newsletter %} checked{% endif %}/>
+                    </div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="status" value="1" checked="{{ status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="status" value="0"/>
+                      <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                    </div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_safe }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="safe" value="1" checked="{{ safe }}" input-id="input-safe" input-class="form-switch form-switch-lg"></x-switch>
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="safe" value="0"/>
+                      <input type="checkbox" name="safe" value="1" id="input-safe" class="form-check-input"{% if safe %} checked{% endif %}/>
+                    </div>
                     <div class="form-text">{{ help_safe }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_commenter }}</label>
                   <div class="col-sm-10">
-                    <x-switch name="commenter" value="1" checked="{{ commenter }}" input-id="input-commenter" input-class="form-switch form-switch-lg"></x-switch>
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="commenter" value="0"/>
+                      <input type="checkbox" name="commenter" value="1" id="input-commenter" class="form-check-input"{% if commenter %} checked{% endif %}/>
+                    </div>
                     <div class="form-text">{{ help_commenter }}</div>
                   </div>
                 </div>
@@ -367,4 +371,371 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#form-customer').on('submit', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('action'),
+        type: 'post',
+        data: $(element).serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-save').button('loading');
+        },
+        complete: function() {
+            $('#button-save').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $(element).find('.is-invalid').removeClass('is-invalid');
+            $(element).find('.invalid-feedback').removeClass('d-block');
+
+            if (typeof json['error'] == 'object') {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                if (json['customer_id']) {
+                    $('#input-customer-id').val(json['customer_id']);
+
+                    $('#address').load('index.php?route=customer/address&user_token={{ user_token }}&customer_id=' + json['customer_id']);
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#input-customer-group').on('change', function() {
+    $.ajax({
+        url: 'index.php?route=customer/customer.customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
+        dataType: 'json',
+        success: function(json) {
+            $('.custom-field').hide();
+            $('.custom-field').removeClass('required');
+
+            for (i = 0; i < json.length; i++) {
+                custom_field = json[i];
+
+                $('.custom-field-' + custom_field['custom_field_id']).show();
+
+                if (custom_field['required']) {
+                    $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#input-customer-group').trigger('change');
+
+$('#address').on('click', '.btn-primary', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $('#modal-address').remove();
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $('body').append(html);
+
+            var modal = new bootstrap.Modal(document.querySelector('#modal-address'));
+
+            modal.show();
+        }
+    });
+});
+
+$('#payment-method').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#payment-method').load(this.href);
+});
+
+$('#payment-method').on('click', 'button', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#payment-method').load('index.php?route=customer/customer.getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#payment-method').on('change', 'input[name=\'status\']', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=customer/customer.disablePayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#payment-method').load('index.php?route=customer/customer.getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+
+$('#button-history').on('click', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=customer/customer.addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        type: 'post',
+        data: 'comment=' + encodeURIComponent($('#input-history').val()),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-history').button('loading');
+        },
+        complete: function() {
+            $('#button-history').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#history').load('index.php?route=customer/customer.history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+
+                $('#input-history').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#transaction').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#transaction').load(this.href);
+});
+
+$('#button-transaction').on('click', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=customer/customer.addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        type: 'post',
+        data: 'description=' + encodeURIComponent($('#input-transaction').val()) + '&amount=' + $('#input-amount').val(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-transaction').button('loading');
+        },
+        complete: function() {
+            $('#button-transaction').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#transaction').load('index.php?route=customer/customer.transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+
+                $('#input-transaction').val('');
+                $('#input-amount').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#reward').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#reward').load(this.href);
+});
+
+$('#button-reward').on('click', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=customer/customer.addReward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        type: 'post',
+        data: 'description=' + encodeURIComponent($('#input-reward').val()) + '&points=' + $('#input-points').val(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-reward').button('loading');
+        },
+        complete: function() {
+            $('#button-reward').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#reward').load('index.php?route=customer/customer.reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+
+                $('#input-reward').val('');
+                $('#input-points').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#ip').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#ip').load(this.href);
+});
+
+$('#authorize').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#authorize').load(this.href);
+});
+
+$('#authorize').on('click', 'a', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: $(element).attr('href'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#authorize').load('index.php?route=customer/customer.authorize&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
 {{ footer }}

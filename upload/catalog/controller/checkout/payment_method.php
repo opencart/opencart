@@ -31,7 +31,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['agree'])) {
 			$data['agree'] = $this->session->data['agree'];
 		} else {
-			$data['agree'] = 0;
+			$data['agree'] = '';
 		}
 
 		// Information
@@ -98,7 +98,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				$payment_address = $this->session->data['shipping_address'];
 			}
 
-			// Payment Methods
+			// Payment method
 			$this->load->model('checkout/payment_method');
 
 			$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
@@ -130,7 +130,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Validate payment address, if required
+			// Validate has payment address if required
 			if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 				$json['error'] = $this->language->get('error_payment_address');
 			}

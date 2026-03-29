@@ -37,7 +37,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$data['addresses'] = [];
 
-		// Addresses
+		// Customer
 		$this->load->model('customer/customer');
 
 		$results = $this->model_customer_customer->getAddresses($customer_id);
@@ -76,11 +76,10 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
+		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 		$data['save'] = $this->url->link('customer/address.save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
 		$data['action'] = $this->url->link('customer/address', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id);
 		$data['upload'] = $this->url->link('tool/upload.upload', 'user_token=' . $this->session->data['user_token']);
-
-		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
 		// Customer
 		if (isset($this->request->get['address_id'])) {
@@ -146,8 +145,13 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (!empty($address_info)) {
 			$data['zone_id'] = $address_info['zone_id'];
 		} else {
-			$data['zone_id'] = 0;
+			$data['zone_id'] = '';
 		}
+
+		// Country
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom Fields
 		$data['custom_fields'] = [];
@@ -260,23 +264,22 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error']['address_country'] = $this->language->get('error_country');
 			}
 
-			// Zones
+			// Zone
 			$this->load->model('localisation/zone');
 
-			// Total Zones
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
 
 			if ($zone_total && !$post_info['zone_id']) {
 				$json['error']['address_zone'] = $this->language->get('error_zone');
 			}
 
-			// Custom Fields
 			$filter_data = [
 				'filter_location'          => 'address',
 				'filter_customer_group_id' => $customer_info['customer_group_id'],
 				'filter_status'            => 1
 			];
 
+			// Custom Field
 			$this->load->model('customer/custom_field');
 
 			$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);

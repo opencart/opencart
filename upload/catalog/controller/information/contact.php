@@ -34,15 +34,15 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		if ($this->config->get('config_image') && is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_image'), ENT_QUOTES, 'UTF-8'))) {
-			$data['image'] = $this->model_tool_image->resize($this->config->get('config_image'), $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+			$data['image'] = $this->model_tool_image->resize($this->config->get('config_image'), $this->config->get('config_image_location_width'), $this->config->get('config_image_location_height'));
 		} else {
 			$data['image'] = '';
 		}
 
 		$data['store'] = $this->config->get('config_name');
 		$data['address'] = nl2br($this->config->get('config_address'));
-		$data['map'] = 'https://maps.google.com/maps?q=' . urlencode(str_replace("\n", "\s", $this->config->get('config_address'))) . '&hl=' . $this->config->get('config_language') . '&t=m&z=15';
-		$data['language'] = $this->config->get('config_language');
+		$data['geocode'] = $this->config->get('config_geocode');
+		$data['geocode_hl'] = $this->config->get('config_language');
 		$data['telephone'] = $this->config->get('config_telephone');
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = nl2br($this->config->get('config_comment'));
@@ -57,15 +57,14 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 			if ($location_info) {
 				if ($location_info['image'] && is_file(DIR_IMAGE . html_entity_decode($location_info['image'], ENT_QUOTES, 'UTF-8'))) {
-					$image = $this->model_tool_image->resize($location_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+					$image = $this->model_tool_image->resize($location_info['image'], $this->config->get('config_image_location_width'), $this->config->get('config_image_location_height'));
 				} else {
 					$image = '';
 				}
 
 				$data['locations'][] = [
-					'image'   => $image,
 					'address' => nl2br($location_info['address']),
-					'map'     => 'https://maps.google.com/maps?q=' . urlencode(str_replace("\n", "\s", $location_info['address'])) . '&hl=' . $this->config->get('config_language') . '&t=m&z=15',
+					'image'   => $image,
 					'open'    => nl2br($location_info['open'])
 				] + $location_info;
 			}
@@ -141,22 +140,26 @@ class Contact extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$task_data = [
-				'code'   => 'mail_alert',
-				'action' => 'task/system/mail',
-				'args'   => [
-					'to'       => $this->config->get('config_email'),
-					'from'     => $this->config->get('config_email'),
-					'reply_to' => $post_info['email'],
-					'sender'   => html_entity_decode($post_info['name'], ENT_QUOTES, 'UTF-8'),
-					'subject'  => html_entity_decode(sprintf($this->language->get('email_subject'), $post_info['name']), ENT_QUOTES, 'UTF-8'),
-					'content'  => $post_info['enquiry']
-				]
-			];
+			if ($this->config->get('config_mail_engine')) {
+				$mail_option = [
+					'parameter'     => $this->config->get('config_mail_parameter'),
+					'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
+					'smtp_username' => $this->config->get('config_mail_smtp_username'),
+					'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
+					'smtp_port'     => $this->config->get('config_mail_smtp_port'),
+					'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
+				];
 
-			$this->load->model('setting/task');
-
-			$this->model_setting_task->addTask($task_data);
+				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);
+				$mail->setTo($this->config->get('config_email'));
+				// Less spam and fix bug when using SMTP like sendgrid.
+				$mail->setFrom($this->config->get('config_email'));
+				$mail->setReplyTo($post_info['email']);
+				$mail->setSender(html_entity_decode($post_info['name'], ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $post_info['name']), ENT_QUOTES, 'UTF-8'));
+				$mail->setText($post_info['enquiry']);
+				$mail->send();
+			}
 
 			$json['redirect'] = $this->url->link('information/contact.success', 'language=' . $this->config->get('config_language'), true);
 		}

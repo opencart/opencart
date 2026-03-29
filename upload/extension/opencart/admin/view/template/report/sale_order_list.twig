@@ -4,7 +4,7 @@
       <tr>
         <th class="text-start">{{ column_date_start }}</th>
         <th class="text-start">{{ column_date_end }}</th>
-        <th class="text-end">{{ column_orders }}</th>
+        <th class="text-end">{{ column_orders }}</td>
         <th class="text-end">{{ column_products }}</th>
         <th class="text-end">{{ column_tax }}</th>
         <th class="text-end">{{ column_total }}</th>
@@ -19,7 +19,7 @@
             <td class="text-end">{{ order.orders }}</td>
             <td class="text-end">{{ order.products }}</td>
             <td class="text-end">{{ order.tax }}</td>
-            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ order.total }}"></x-currency></td>
+            <td class="text-end">{{ order.total }}</td>
           </tr>
         {% endfor %}
       {% else %}

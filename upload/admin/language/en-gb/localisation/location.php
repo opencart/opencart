@@ -7,6 +7,7 @@ $_['text_success']     = 'Success: You have modified store locations!';
 $_['text_list']        = 'Store Location List';
 $_['text_add']         = 'Add Store Location';
 $_['text_edit']        = 'Edit Store Location';
+$_['text_geocode']     = 'Geocode was not successful for the following reason:';
 
 // Column
 $_['column_name']      = 'Store Name';
@@ -16,6 +17,7 @@ $_['column_action']    = 'Action';
 // Entry
 $_['entry_name']       = 'Store Name';
 $_['entry_address']    = 'Address';
+$_['entry_geocode']    = 'Geocode';
 $_['entry_telephone']  = 'Telephone';
 $_['entry_image']      = 'Image';
 $_['entry_open']       = 'Opening Times';
@@ -23,6 +25,7 @@ $_['entry_comment']    = 'Comment';
 
 // Help
 $_['help_telephone']   = 'Please enter your store location telephone number.';
+$_['help_geocode']     = 'Please enter your store location geocode manually.';
 $_['help_open']        = 'Fill in your stores opening times.';
 $_['help_comment']     = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
 

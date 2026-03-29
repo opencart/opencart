@@ -152,17 +152,13 @@ class Setting extends \Opencart\System\Engine\Model {
 	 *
 	 * $value = $this->model_setting_setting->getValue($key, $store_id);
 	 */
-	public function getValue(string $key, int $store_id = 0) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
+	public function getValue(string $key, int $store_id = 0): string {
+		$query = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
 
-		if (!$query->num_rows) {
-			return '';
-		}
-
-		if (!$query->row['serialized']) {
+		if ($query->num_rows) {
 			return $query->row['value'];
 		} else {
-			return $query->row['value'] ? json_decode($query->row['value'], true) : [];
+			return '';
 		}
 	}
 

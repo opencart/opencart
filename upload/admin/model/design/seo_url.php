@@ -75,10 +75,10 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Delete Seo Urls by Key Value pair
 	 *
-	 * @param string   $key
-	 * @param string   $value
-	 * @param int|null $store_id    primary key of the store record
-	 * @param int      $language_id primary key of the language record
+	 * @param string $key
+	 * @param string $value
+	 * @param int    $store_id    primary key of the store record
+	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return void
 	 *
@@ -88,10 +88,10 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->model_design_seo_url->deleteSeoUrlsByKeyValue($key, $value, $store_id, $language_id);
 	 */
-	public function deleteSeoUrlsByKeyValue(string $key, string $value, int|null $store_id = null, int $language_id = 0): void {
+	public function deleteSeoUrlsByKeyValue(string $key, string $value, int $store_id = 0, int $language_id = 0): void {
 		$sql = "DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'";
 
-		if ($store_id !== null) {
+		if ($store_id) {
 			$sql .= " AND `store_id` = '" . (int)$store_id . "'";
 		}
 
@@ -158,10 +158,10 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
 	 * Get Seo Url By Key Value
 	 *
-	 * @param string   $key
-	 * @param string   $value
-	 * @param int|null $store_id    primary key of the store record
-	 * @param int      $language_id primary key of the language record
+	 * @param string $key
+	 * @param string $value
+	 * @param int    $store_id    primary key of the store record
+	 * @param int    $language_id primary key of the language record
 	 *
 	 * @return array<string, mixed>
 	 *
@@ -171,10 +171,10 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * $seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($key, $value, $store_id, $language_id);
 	 */
-	public function getSeoUrlByKeyValue(string $key, string $value, int|null $store_id = null, int $language_id = 0): array {
+	public function getSeoUrlByKeyValue(string $key, string $value, int $store_id = 0, int $language_id = 0): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'";
 
-		if ($store_id !== null) {
+		if ($store_id) {
 			$sql .= " AND `store_id` = '" . (int)$store_id . "'";
 		}
 
@@ -248,7 +248,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id'])) {
+		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
@@ -298,8 +298,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 * Get Seo Urls By Key Value
 	 *
 	 * @param string $key
-	 * @param int|string $value
-     *
+	 * @param string $value
+	 *
 	 * @return array<int, array<int, string>>
 	 *
 	 * @example
@@ -308,7 +308,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	 *
 	 * $results = $this->model_design_seo_url->getSeoUrlsByKeyValue($key, $value);
 	 */
-	public function getSeoUrlsByKeyValue(string $key, int|string $value): array {
+	public function getSeoUrlsByKeyValue(string $key, string $value): array {
 		$seo_url_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'");
@@ -388,11 +388,11 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 			$implode[] = "LCASE(`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_value'])) . "'";
 		}
 
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+		if (!empty($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id'])) {
+		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 

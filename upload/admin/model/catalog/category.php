@@ -219,7 +219,12 @@ class Category extends \Opencart\System\Engine\Model {
 			$path = implode('_', [$path_new, substr($result['value'], strlen($path_old) + 1)]);
 
 			// Replace keyword with new parents
-			$keyword = implode('/', [$seo_urls[$result['store_id']][$result['language_id']][$path_new], oc_substr($result['keyword'], oc_strlen($keywords_old[$result['store_id']][$result['language_id']]) + 1)]);
+			$keyword = implode('/', [
+				$seo_urls[$result['store_id']][$result['language_id']][$path_new], oc_substr(
+					$result['keyword'],
+					oc_strlen($keywords_old[$result['store_id']][$result['language_id']]) + 1
+				)
+			]);
 
 			$seo_urls[$result['store_id']][$result['language_id']][$path] = $keyword;
 
@@ -267,26 +272,6 @@ class Category extends \Opencart\System\Engine\Model {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Edit Status
-	 *
-	 * Edit category status record in the database.
-	 *
-	 * @param int  $category_id primary key of the category record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/category');
-	 *
-	 * $this->model_catalog_category->editStatus($category_id, $status);
-	 */
-	public function editStatus(int $category_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `status` = '" . (bool)$status . "' WHERE `category_id` = '" . (int)$category_id . "'");
 	}
 
 	/**
@@ -399,7 +384,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $category_info = $this->model_catalog_category->getCategory($category_id);
 	 */
 	public function getCategory(int $category_id): array {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT GROUP_CONCAT(`cd1`.`name` ORDER BY `level` SEPARATOR ' &gt ') FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = cd1.`category_id` AND `cp`.`category_id` != `cp`.`path_id`) WHERE `cp`.`category_id` = `c`.`category_id` AND `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' GROUP BY `cp`.`category_id`) AS `path` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`c`.`category_id` = `cd2`.`category_id`) WHERE `c`.`category_id` = '" . (int)$category_id . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT GROUP_CONCAT(`cd1`.`name` ORDER BY `level` SEPARATOR ' > ') FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = cd1.`category_id` AND `cp`.`category_id` != `cp`.`path_id`) WHERE `cp`.`category_id` = `c`.`category_id` AND `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' GROUP BY `cp`.`category_id`) AS `path` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`c`.`category_id` = `cd2`.`category_id`) WHERE `c`.`category_id` = '" . (int)$category_id . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
@@ -420,17 +405,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_category->getCategories();
 	 */
 	public function getCategories(array $data = []): array {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT `cp`.`category_id` AS `category_id`, `c1`.`image`, GROUP_CONCAT(`cd1`.`name` ORDER BY `cp`.`level` SEPARATOR ' &gt ') AS `name`, `c1`.`parent_id`, `c1`.`sort_order`, `c1`.`status` FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category` `c1` ON (`cp`.`category_id` = `c1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category` `c2` ON (`cp`.`path_id` = `c2`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = `cd1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`cp`.`category_id` = `cd2`.`category_id`) WHERE `cd1`.`language_id` = '" . (int)$language_id . "' AND `cd2`.`language_id` = '" . (int)$language_id . "'";
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "category_to_store` `c2s` ON (`c1`.`category_id` = `c2s`.`category_id`)";
-		}
+		$sql = "SELECT `cp`.`category_id` AS `category_id`, `c1`.`image`, GROUP_CONCAT(`cd1`.`name` ORDER BY `cp`.`level` SEPARATOR ' > ') AS `name`, `c1`.`parent_id`, `c1`.`sort_order`, `c1`.`status` FROM `" . DB_PREFIX . "category_path` `cp` LEFT JOIN `" . DB_PREFIX . "category` `c1` ON (`cp`.`category_id` = `c1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category` `c2` ON (`cp`.`path_id` = `c2`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd1` ON (`cp`.`path_id` = `cd1`.`category_id`) LEFT JOIN `" . DB_PREFIX . "category_description` `cd2` ON (`cp`.`category_id` = `cd2`.`category_id`) WHERE `cd1`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `cd2`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cd2`.`name`) LIKE '" . $this->db->escape(oc_strtolower((string)$data['filter_name'])) . "'";
@@ -438,10 +413,6 @@ class Category extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_parent_id'])) {
 			$sql .= " AND `c1`.`parent_id` = '" . (int)$data['filter_parent_id'] . "'";
-		}
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " AND `c2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
@@ -467,14 +438,12 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name'            => 'name',
-			'attribute_group' => 'attribute_group',
-			'status'          => 'c1.status',
-			'sort_order'      => 'sort_order'
+			'name',
+			'sort_order'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `sort_order`";
 		}
@@ -502,18 +471,6 @@ class Category extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getCategoriesByFilterId(int $filter_id): array {
-		$category_filter_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
-
-		foreach ($query->rows as $result) {
-			$category_filter_data[] = $result['category_id'];
-		}
-
-		return $category_filter_data;
-	}
-
 	/**
 	 * Get Total Categories
 	 *
@@ -539,19 +496,7 @@ class Category extends \Opencart\System\Engine\Model {
 	 * $category_total = $this->model_catalog_category->getTotalCategories($filter_data);
 	 */
 	public function getTotalCategories(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`)";
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "category_to_store` `c2s` ON (`c`.`category_id` = `c2s`.`category_id`)";
-		}
-
-		$sql .= " WHERE `cd`.`language_id` = '" . (int)$language_id . "'";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category` `c` LEFT JOIN `" . DB_PREFIX . "category_description` `cd` ON (`c`.`category_id` = `cd`.`category_id`) WHERE `cd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`cd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
@@ -559,10 +504,6 @@ class Category extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_parent_id'])) {
 			$sql .= " AND `c`.`parent_id` = '" . (int)$data['filter_parent_id'] . "'";
-		}
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " AND `c2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
@@ -659,10 +600,10 @@ class Category extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $category_id): array {
 		$category_description_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `cd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "category_description` `cd` WHERE `cd`.`category_id` = '" . (int)$category_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		foreach ($query->rows as $result) {
-			$category_description_data[$result['code']] = $result;
+			$category_description_data[$result['language_id']] = $result;
 		}
 
 		return $category_description_data;

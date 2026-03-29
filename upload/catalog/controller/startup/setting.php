@@ -14,7 +14,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$hostname = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST']) . rtrim(dirname($this->request->server['PHP_SELF']), '/.\\') . '/';
 
-		// Setting
+		// Store
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStoreByHostname($hostname);
@@ -36,6 +36,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Setting
 		$this->load->model('setting/setting');
 
 		$results = $this->model_setting_setting->getSettings((int)$this->config->get('config_store_id'));
@@ -57,6 +58,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 			// Sync PHP and DB time zones.
 			$this->db->query("SET `time_zone` = '" . $this->db->escape(date('P')) . "'");
+		}
+
+		// Response output compression level
+		if ($this->config->get('config_compression')) {
+			$this->response->setCompression((int)$this->config->get('config_compression'));
 		}
 	}
 }

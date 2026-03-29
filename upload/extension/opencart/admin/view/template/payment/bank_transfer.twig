@@ -19,11 +19,11 @@
       <div class="card-body">
         <form id="form-payment" action="{{ save }}" method="post" data-oc-toggle="ajax">
           {% for language in languages %}
-            <div class="row mb-3">
+            <div class="row mb-3 required">
               <label for="input-bank{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_bank }}</label>
               <div class="col-sm-10">
                 <div class="input-group">
-                  <span class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></span> <textarea name="payment_bank_transfer_bank_{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank-{{ language.language_id }}" class="form-control" required>{{ payment_bank_transfer_bank[language.language_id] ? payment_bank_transfer_bank[language.language_id] }}</textarea>
+                  <span class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></span> <textarea name="payment_bank_transfer_bank_{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank-{{ language.language_id }}" class="form-control">{{ payment_bank_transfer_bank[language.language_id] ? payment_bank_transfer_bank[language.language_id] }}</textarea>
                 </div>
                 <div id="error-bank-{{ language.language_id }}" class="invalid-feedback"></div>
               </div>
@@ -53,7 +53,10 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <x-switch name="payment_bank_transfer_status" value="1" checked="{{ payment_bank_transfer_status }}" input-id="input-status" input-class="form-switch form-switch-lg"></x-switch>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="payment_bank_transfer_status" value="0"/>
+                <input type="checkbox" name="payment_bank_transfer_status" value="1" id="input-status" class="form-check-input"{% if payment_bank_transfer_status %} checked{% endif %}/>
+              </div>
             </div>
           </div>
           <div class="row mb-3">

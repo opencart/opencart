@@ -14,8 +14,8 @@ use XMLWriter;
  */
 class XmlBody
 {
-    /** @var Service */
-    private Service $api;
+    /** @var \Aws\Api\Service */
+    private $api;
 
     /**
      * @param Service $api API being used to create the XML body.
@@ -38,10 +38,7 @@ class XmlBody
         $xml = new XMLWriter();
         $xml->openMemory();
         $xml->startDocument('1.0', 'UTF-8');
-
-        $rootElementName = $this->determineRootElementName($shape);
-
-        $this->format($shape, $rootElementName, $args, $xml);
+        $this->format($shape, $shape['locationName'] ?: $shape['name'], $args, $xml);
         $xml->endDocument();
 
         return $xml->outputMemory();
@@ -54,7 +51,7 @@ class XmlBody
         if ($ns = $shape['xmlNamespace']) {
             $xml->writeAttribute(
                 isset($ns['prefix']) ? "xmlns:{$ns['prefix']}" : 'xmlns',
-                $ns['uri']
+                $shape['xmlNamespace']['uri']
             );
         }
     }
@@ -96,17 +93,9 @@ class XmlBody
         $this->startElement($shape, $name, $xml);
 
         foreach ($this->getStructureMembers($shape, $value) as $k => $definition) {
-            // Default to member name
-            $elementName = $k;
-
-            if ($definition['member']['locationName']
-                && !isset($definition['member']['locationNameAtStructureLevel'])) {
-                $elementName = $definition['member']['locationName'];
-            }
-
             $this->format(
                 $definition['member'],
-                $elementName,
+                $definition['member']['locationName'] ?: $k,
                 $definition['value'],
                 $xml
             );
@@ -168,13 +157,11 @@ class XmlBody
         array $value,
         XMLWriter $xml
     ) {
-        $xmlEntry = $shape['flattened'] ? $name : 'entry';
+        $xmlEntry = $shape['flattened'] ? $shape['locationName'] : 'entry';
         $xmlKey = $shape->getKey()['locationName'] ?: 'key';
         $xmlValue = $shape->getValue()['locationName'] ?: 'value';
 
-        if (!$shape['flattened']) {
-            $this->startElement($shape, $name, $xml);
-        }
+        $this->startElement($shape, $name, $xml);
 
         foreach ($value as $key => $v) {
             $this->startElement($shape, $xmlEntry, $xml);
@@ -183,9 +170,7 @@ class XmlBody
             $xml->endElement();
         }
 
-        if (!$shape['flattened']) {
-            $xml->endElement();
-        }
+        $xml->endElement();
     }
 
     private function add_blob(Shape $shape, $name, $value, XMLWriter $xml)
@@ -231,24 +216,5 @@ class XmlBody
         } else {
             $this->defaultShape($shape, $name, $value, $xml);
         }
-    }
-
-    private function determineRootElementName(Shape $shape): string
-    {
-        $shapeName = $shape->getName();
-
-        // Look up the shape definition first
-        if ($shapeName && $shapeMap = $shape->getShapeMap()) {
-            if (isset($shapeMap[$shapeName]['locationName'])) {
-                return $shapeMap[$shapeName]['locationName'];
-            }
-        }
-
-        // Fall back to shape's current locationName
-        if ($shape['locationName']) {
-            return $shape['locationName'];
-        }
-
-        return $shapeName;
     }
 }

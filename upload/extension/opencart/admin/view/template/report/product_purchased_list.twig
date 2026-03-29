@@ -4,7 +4,7 @@
       <tr>
         <th class="text-start">{{ column_name }}</th>
         <th class="text-start">{{ column_model }}</th>
-        <th class="text-end">{{ column_quantity }}</th>
+        <th class="text-end">{{ column_quantity }}</td>
         <th class="text-end">{{ column_total }}</th>
       </tr>
     </thead>
@@ -15,7 +15,7 @@
             <td class="text-start">{{ product.name }}</td>
             <td class="text-start">{{ product.model }}</td>
             <td class="text-end">{{ product.quantity }}</td>
-            <td class="text-end"><x-currency code="{{ currency }}" amount="{{ product.total }}"></x-currency></td>
+            <td class="text-end">{{ product.total }}</td>
           </tr>
         {% endfor %}
       {% else %}

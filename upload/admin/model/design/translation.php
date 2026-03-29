@@ -32,7 +32,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * $this->model_design_translation->addTranslation($translation_data);
 	 */
 	public function addTranslation(array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `date_added` = NOW()");
 	}
 
 	/**
@@ -60,27 +60,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * $this->model_design_translation->editTranslation($translation_id, $translation_data);
 	 */
 	public function editTranslation(int $translation_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `status` = '" . (bool)$data['status'] . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
-	}
-
-	/**
-	 * Edit Status
-	 *
-	 * Edit category status record in the database.
-	 *
-	 * @param int  $category_id primary key of the category record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/category');
-	 *
-	 * $this->model_catalog_category->editStatus($category_id, $status);
-	 */
-	public function editStatus(int $translation_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `status` = '" . (bool)$status . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "' WHERE `translation_id` = '" . (int)$translation_id . "'");
 	}
 
 	/**
@@ -186,25 +166,25 @@ class Translation extends \Opencart\System\Engine\Model {
 	public function getTranslations(array $data = []): array {
 		$sql = "SELECT *, (SELECT `s`.`name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store`, (SELECT `l`.`name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `t`.`language_id`) AS `language` FROM `" . DB_PREFIX . "translation` `t`";
 
-		$implode = [];
+		$sort_data = [
+			'store',
+			'language',
+			'route',
+			'key',
+			'value'
+		];
 
-		if (!empty($data['filter_store_id'])) {
-			$implode[] = "`t`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
+		} else {
+			$sql .= " ORDER BY store";
 		}
 
-		if (!empty($data['filter_language_id'])) {
-			$implode[] = "`t`.`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
 		}
-
-		if (!empty($data['filter_route'])) {
-			$implode[] = "`t`.`route` = '" .  $this->db->escape($data['filter_route'])  . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$sql .= " ORDER BY store ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -237,27 +217,7 @@ class Translation extends \Opencart\System\Engine\Model {
 	 * $translation_total = $this->model_design_translation->getTotalTranslations();
 	 */
 	public function getTotalTranslations(): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "translation`";
-
-		$implode = [];
-
-		if (!empty($data['filter_store_id'])) {
-			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
-		}
-
-		if (!empty($data['filter_language_id'])) {
-			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
-		}
-
-		if (!empty($data['filter_route'])) {
-			$implode[] = "`route` = '" .  $this->db->escape($data['filter_route'])  . "'";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$query = $this->db->query($sql);
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "translation`");
 
 		return (int)$query->row['total'];
 	}

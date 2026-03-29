@@ -13,9 +13,8 @@
 namespace Twig\Node\Expression\Binary;
 
 use Twig\Compiler;
-use Twig\Node\Expression\ReturnNumberInterface;
 
-class BitwiseAndBinary extends AbstractBinary implements ReturnNumberInterface
+class BitwiseAndBinary extends AbstractBinary
 {
     public function operator(Compiler $compiler): Compiler
     {

@@ -47,12 +47,12 @@ $_['error_upload']           = 'Le fichier n\'a pu être téléchargé!';
 $_['error_unknown']          = 'Une erreur inconnue s’est produite!';
 
 // Zip erreur
-$_['error_zip_exists']       = 'Le fichier existe déjà!';
-$_['error_zip_incons']       = 'Archive zip incohérente!';
-$_['error_zip_inval']        = 'Argument invalide!';
-$_['error_zip_memory']       = 'Échec de l’allocation de mémoire!';
-$_['error_zip_noent']        = 'Aucun fichier trouvé!';
-$_['error_zip_nozip']        = 'Ce n’est pas une archive zip!';
-$_['error_zip_open']         = 'Impossible d’ouvrir le fichier!';
-$_['error_zip_read']         = 'Erreur de lecture!';
-$_['error_zip_seek']         = 'Erreur de positionnement!';
+$_['zip_error_exists']       = 'Le fichier existe déjà!';
+$_['zip_error_incons']       = 'Archive zip incohérente!';
+$_['zip_error_inval']        = 'Argument invalide!';
+$_['zip_error_memory']       = 'Échec de l’allocation de mémoire!';
+$_['zip_error_noent']        = 'Aucun fichier trouvé!';
+$_['zip_error_nozip']        = 'Ce n’est pas une archive zip!';
+$_['zip_error_open']         = 'Impossible d’ouvrir le fichier!';
+$_['zip_error_read']         = 'Erreur de lecture!';
+$_['zip_error_seek']         = 'Erreur de positionnement!';

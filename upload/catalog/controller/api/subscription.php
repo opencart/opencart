@@ -162,7 +162,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Shipping Methods
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function getShippingMethods(): array {
 		$this->setCustomer();
@@ -182,7 +182,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Get Payment Methods
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function getPaymentMethods(): array {
 		$this->setCustomer();
@@ -279,7 +279,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	/**
 	 * Confirm
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	protected function confirm(): array {
 		$this->setCustomer();
@@ -337,7 +337,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$output['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
-		// 5. Validate shipping address and method, if required
+		// 5. Validate shipping address and method if required
 		if ($this->cart->hasShipping()) {
 			// Shipping Address
 			if (!isset($this->session->data['shipping_address'])) {

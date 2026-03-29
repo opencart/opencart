@@ -5,8 +5,6 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Data Automation for Amazon Bedrock** service.
- * @method \Aws\Result copyBlueprintStage(array $args = [])
- * @method \GuzzleHttp\Promise\Promise copyBlueprintStageAsync(array $args = [])
  * @method \Aws\Result createBlueprint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createBlueprintAsync(array $args = [])
  * @method \Aws\Result createBlueprintVersion(array $args = [])
@@ -19,12 +17,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteDataAutomationProjectAsync(array $args = [])
  * @method \Aws\Result getBlueprint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBlueprintAsync(array $args = [])
- * @method \Aws\Result getBlueprintOptimizationStatus(array $args = [])
- * @method \GuzzleHttp\Promise\Promise getBlueprintOptimizationStatusAsync(array $args = [])
  * @method \Aws\Result getDataAutomationProject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataAutomationProjectAsync(array $args = [])
- * @method \Aws\Result invokeBlueprintOptimizationAsync(array $args = [])
- * @method \GuzzleHttp\Promise\Promise invokeBlueprintOptimizationAsyncAsync(array $args = [])
  * @method \Aws\Result listBlueprints(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBlueprintsAsync(array $args = [])
  * @method \Aws\Result listDataAutomationProjects(array $args = [])

@@ -83,7 +83,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
-		// Order Statuses
+		// Order Status
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -140,7 +140,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		// Customers
+		// Customer
 		$data['customers'] = [];
 
 		$filter_data = [
@@ -154,7 +154,6 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('extension/opencart/report/customer');
 
-		// Total Customers
 		$customer_total = $this->model_extension_opencart_report_customer->getTotalOrders($filter_data);
 
 		$results = $this->model_extension_opencart_report_customer->getOrders($filter_data);
@@ -167,25 +166,35 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'orders'         => $result['orders'],
 				'products'       => $result['products'],
-				'total'          => $result['total'],
+				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
 				'edit'           => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
 		}
 
-		$remove = [
-			'route',
-			'user_token',
-			'code',
-			'page'
-		];
+		$url = '';
 
-		$url = http_build_query(array_diff_key($this->request->get, array_flip($remove)));
+		if (isset($this->request->get['filter_date_start'])) {
+			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
+		}
 
-		// Pagination
-		$data['total'] = $customer_total;
-		$data['page'] = $page;
-		$data['limit'] = $this->config->get('config_pagination_admin');
-		$data['pagination'] = $this->url->link('extension/opencart/report/customer_order.list', 'user_token=' . $this->session->data['user_token'] . '&code=customer_order' . $url . '&page={page}');
+		if (isset($this->request->get['filter_date_end'])) {
+			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
+		}
+
+		if (isset($this->request->get['filter_order_status_id'])) {
+			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+		}
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $customer_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination'),
+			'url'   => $this->url->link('extension/opencart/report/customer_order.report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_order' . $url . '&page={page}')
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_total - $this->config->get('config_pagination'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_total, ceil($customer_total / $this->config->get('config_pagination')));
 
@@ -193,8 +202,6 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_order_status_id'] = $filter_order_status_id;
-
-		$data['currency'] = $this->config->get('config_currency');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

@@ -17,7 +17,7 @@ class Cart extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('checkout/cart');
 	 *
-	 * $products = $this->model_checkout_cart->getProducts();
+	 * $cart = $this->model_checkout_cart->getProducts();
 	 */
 	public function getProducts(): array {
 		$this->load->language('checkout/cart');
@@ -70,9 +70,9 @@ class Cart extends \Opencart\System\Engine\Model {
 			if ($product['subscription']) {
 				$subscription_data = [
 					'trial_frequency_text' => $this->language->get('text_' . $product['subscription']['trial_frequency']),
-					'trial_price'          => $this->tax->calculate($product['subscription']['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')),
+					'trial_price_text'     => $this->currency->format($this->tax->calculate($product['subscription']['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
 					'frequency_text'       => $this->language->get('text_' . $product['subscription']['frequency']),
-					'price'                => $this->tax->calculate($product['subscription']['price'], $product['tax_class_id'], $this->config->get('config_tax'))
+					'price_text'           => $this->currency->format($this->tax->calculate($product['subscription']['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
 				] + $product['subscription'];
 			}
 
@@ -80,8 +80,8 @@ class Cart extends \Opencart\System\Engine\Model {
 				'image'        => $image,
 				'subscription' => $subscription_data,
 				'option'       => $option_data,
-				'price'        => $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')),
-				'total'        => $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']
+				'price_text'   => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+				'total_text'   => $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
 			] + $product;
 		}
 
@@ -93,14 +93,14 @@ class Cart extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<int, array<string, mixed>> $totals
 	 * @param array<int, float>                $taxes
-	 * @param float                            $total
+	 * @param int                              $total
 	 *
 	 * @return void
 	 */
-	public function getTotals(array &$totals, array &$taxes, float &$total): void {
+	public function getTotals(array &$totals, array &$taxes, int &$total): void {
 		$sort_order = [];
 
-		// Extensions
+		// Extension
 		$this->load->model('setting/extension');
 
 		$results = $this->model_setting_extension->getExtensionsByType('total');

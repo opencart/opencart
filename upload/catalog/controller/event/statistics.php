@@ -9,9 +9,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add Review
 	 *
-	 * Trigger
-	 *
-	 * catalog/model/catalog/review.addReview/after
+	 * catalog/model/catalog/review/addReview/after
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -20,7 +18,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addReview(string &$route, array &$args, &$output): void {
-		// Stats
+		// Statistics
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('review', 1);
@@ -28,8 +26,6 @@ class Statistics extends \Opencart\System\Engine\Controller {
 
 	/**
 	 * Add Return
-	 *
-	 * Trigger
 	 *
 	 * catalog/model/account/returns.addReturn/after
 	 *
@@ -40,7 +36,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addReturn(string &$route, array &$args, &$output): void {
-		// Stats
+		// Statistics
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('returns', 1);
@@ -49,8 +45,6 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	/**
 	 * Add History
 	 *
-	 * Trigger
-	 * 
 	 * catalog/model/checkout/order.addHistory/before
 	 *
 	 * @param string            $route

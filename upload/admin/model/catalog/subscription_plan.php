@@ -172,26 +172,19 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	 * $subscription_plan = $this->model_catalog_subscription_plan->getSubscriptionPlans($filter_data);
 	 */
 	public function getSubscriptionPlans(array $data = []): array {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription_plan` `sp` LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `spd`.`language_id` = '" . (int)$language_id . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription_plan` `sp` LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND LCASE(`spd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
 		}
 
 		$sort_data = [
-			'name'       => 'spd.name',
-			'status'     => 'sp.status',
-			'sort_order' => 'sp.sort_order'
+			'spd.name',
+			'sp.sort_order'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `spd`.`name`";
 		}
@@ -217,57 +210,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return $query->rows;
-	}
-
-	/**
-	 * Edit Status
-	 *
-	 * Edit subscription_plan status record in the database.
-	 *
-	 * @param int  $subscription_plan_id primary key of the subscription_plan record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/subscription_plan');
-	 *
-	 * $this->model_catalog_subscription_plan->editStatus($subscription_plan_id, $status);
-	 */
-	public function editStatus(int $subscription_plan_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription_plan` SET `status` = '" . (bool)$status . "' WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
-	}
-
-	/**
-	 * Get Total Subscription Plans
-	 *
-	 * Get the total number of subscription plan records in the database.
-	 *
-	 * @return int total number of subscription plan records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/subscription_plan');
-	 *
-	 * $subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
-	 */
-	public function getTotalSubscriptionPlans(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_plan` `sp` LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `spd`.`language_id` = '" . (int)$language_id . "'";
-
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`spd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
 	}
 
 	/**
@@ -351,10 +293,10 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $subscription_plan_id): array {
 		$subscription_plan_description_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `spd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "subscription_plan_description` `spd` WHERE `spd`.`subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
 		foreach ($query->rows as $result) {
-			$subscription_plan_description_data[$result['code']] = $result;
+			$subscription_plan_description_data[$result['language_id']] = $result;
 		}
 
 		return $subscription_plan_description_data;
@@ -379,5 +321,24 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->rows;
+	}
+
+	/**
+	 * Get Total Subscription Plans
+	 *
+	 * Get the total number of subscription plan records in the database.
+	 *
+	 * @return int total number of subscription plan records
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/subscription_plan');
+	 *
+	 * $subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
+	 */
+	public function getTotalSubscriptionPlans(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_plan`");
+
+		return (int)$query->row['total'];
 	}
 }

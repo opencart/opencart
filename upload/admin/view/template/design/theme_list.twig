@@ -1,0 +1,36 @@
+<form id="form-theme" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#theme">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></th>
+          <th>{{ column_route }}</th>
+          <th>{{ column_store }}</th>
+          <th>{{ column_date_added }}</th>
+          <th class="text-end">{{ column_action }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if themes %}
+          {% for theme in themes %}
+            <tr{% if not theme.status %} class="table-active opacity-50"{% endif %}>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ theme.theme_id }}" class="form-check-input"/></td>
+              <td>{{ theme.route }}</td>
+              <td>{{ theme.store }}</td>
+              <td>{{ theme.date_added }}</td>
+              <td class="text-end text-nowrap"><a href="{{ theme.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a> <button type="button" value="{{ theme.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

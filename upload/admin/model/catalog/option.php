@@ -162,13 +162,13 @@ class Option extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name'       => 'od.name',
-			'type'       => 'o.type',
-			'sort_order' => 'o.sort_order'
+			'od.name',
+			'o.type',
+			'o.sort_order'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `od`.`name`";
 		}
@@ -296,10 +296,10 @@ class Option extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $option_id): array {
 		$description_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `od`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "option_description` `od` WHERE `od`.`option_id` = '" . (int)$option_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");
 
 		foreach ($query->rows as $result) {
-			$description_data[$result['code']] = $result;
+			$description_data[$result['language_id']] = $result;
 		}
 
 		return $description_data;
@@ -340,10 +340,10 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * $option_value_data = [
 	 *     'option_value_description' => [],
-	 *     'option_value_id'          => 0,
-	 *     'option_id'                => 1,
-	 *     'image'                    => 'option_image',
-	 *     'sort_order'               => 0
+	 *     'option_value_id' => 0,
+	 *     'option_id'       => 1,
+	 *     'image'           => 'option_image',
+	 *     'sort_order'      => 0
 	 * ];
 	 *
 	 * $this->load->model('catalog/option');
@@ -447,7 +447,7 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * @example
 	 *
-	 * $option_value_description_data[1] = [
+	 * $option_value_description_data = [
 	 *     'name' => 'Option Value Name'
 	 * ];
 	 *
@@ -512,16 +512,24 @@ class Option extends \Opencart\System\Engine\Model {
 	 *
 	 * $option_values = $this->model_catalog_option->getValueDescriptions($option_id);
 	 */
-	public function getValueDescriptions(int $option_value_id): array {
-		$option_value_description_data = [];
+	public function getValueDescriptions(int $option_id): array {
+		$option_value_data = [];
 
-		$option_value_description_query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `ovd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "option_value_description` `ovd` WHERE `ovd`.`option_value_id` = '" . (int)$option_value_id . "'");
+		$option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "' ORDER BY `sort_order`");
 
-		foreach ($option_value_description_query->rows as $option_value_description) {
-			$option_value_description_data[$option_value_description['code']] = ['name' => $option_value_description['name']];
+		foreach ($option_value_query->rows as $option_value) {
+			$option_value_description_data = [];
+
+			$option_value_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value_description` WHERE `option_value_id` = '" . (int)$option_value['option_value_id'] . "'");
+
+			foreach ($option_value_description_query->rows as $option_value_description) {
+				$option_value_description_data[$option_value_description['language_id']] = ['name' => $option_value_description['name']];
+			}
+
+			$option_value_data[] = ['option_value_description' => $option_value_description_data] + $option_value;
 		}
 
-		return $option_value_description_data;
+		return $option_value_data;
 	}
 
 	/**

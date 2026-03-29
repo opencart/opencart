@@ -140,7 +140,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token = '';
 		}
 
-		// 3. If token already exists, check if it's valid
+		// If token already exists, check if it's valid
 		$this->load->model('user/user');
 
 		$token_info = $this->model_user_user->getAuthorizeByToken($this->user->getId(), $token);
@@ -292,7 +292,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$data['text_unlock'] = $this->language->get('text_failed');
 		}
 
-		// Reset token so it can't be used again
+		// Reset token so it cant be used again
 		$this->model_user_user->deleteTokenByCode($code);
 
 		// Logout user

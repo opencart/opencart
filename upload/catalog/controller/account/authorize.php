@@ -20,7 +20,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token = '';
 		}
 
-		// Make sure the customer is logged in.
+		// Make se the customer is logged in.
 		if (!$this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
 		}
@@ -35,8 +35,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->document->addScript('catalog/view/javascript/authorize.js');
 
 		$data['action'] = $this->url->link('account/authorize.save', 'language=' . $this->config->get('config_language'));
 
@@ -101,7 +99,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token = '';
 		}
 
-		// 1. Making sure the customer is logged in.
+		// 1. Make sure the customer is logged in.
 		if ($this->customer->isLogged()) {
 			// 2. If token already exists check its valid
 			$this->load->model('account/customer');
@@ -194,7 +192,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			}
 
 			// Register the cookie for security.
-			if ($redirect && str_starts_with($redirect, $this->config->get('config_url'))) {
+			if ($redirect && str_starts_with($redirect, HTTP_SERVER)) {
 				$json['redirect'] = $redirect . '&customer_token=' . $this->session->data['customer_token'];
 			} else {
 				$json['redirect'] = $this->url->link('account/account', 'customer_token=' . $this->session->data['customer_token'], true);
@@ -234,8 +232,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->document->addScript('catalog/view/javascript/authorize.js');
 
 		$data['language'] = $this->config->get('config_language');
 
@@ -322,13 +318,12 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$data['text_unlock'] = $this->language->get('text_failed');
 		}
 
-		// Reset token so it can't be used again
+		// Reset token so it cant be used again
 		$this->model_account_customer->deleteTokenByCode($code);
 
 		// Logout customer
 		$this->customer->logout();
 
-		unset($this->session->data['order_id']);
 		unset($this->session->data['customer']);
 		unset($this->session->data['shipping_address']);
 		unset($this->session->data['shipping_method']);
@@ -337,6 +332,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		unset($this->session->data['payment_method']);
 		unset($this->session->data['payment_methods']);
 		unset($this->session->data['comment']);
+		unset($this->session->data['order_id']);
 		unset($this->session->data['coupon']);
 		unset($this->session->data['reward']);
 

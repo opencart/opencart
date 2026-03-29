@@ -56,7 +56,7 @@ function oc_generate_vendor(): void {
 						$next = array_shift($directories);
 
 						if (is_dir($next)) {
-							foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+							foreach (oc_glob(trim($next, '/') . '/{*,.[!.]*,..?*}') as $file) {
 								if (is_dir($file)) {
 									$directories[] = $file . '/';
 								}

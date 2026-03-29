@@ -386,7 +386,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $custom_field_id): array {
 		$custom_field_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `cfd`.`language_id` = `l`.`language_id`) AS `code` FROM `cfd` `" . DB_PREFIX . "custom_field_description` WHERE `cfd`.`custom_field_id` = '" . (int)$custom_field_id . "'");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `cfd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "custom_field_description` `cfd` WHERE `cfd`.`custom_field_id` = '" . (int)$custom_field_id . "'");
 
 		foreach ($query->rows as $result) {
 			$custom_field_data[$result['code']] = $result;

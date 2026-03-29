@@ -30,10 +30,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'limit'                         => 10
 		];
 
-		// Subscription
+		// Subscriptions
 		$this->load->model('checkout/subscription');
 
-		// Store
+		// Setting
 		$this->load->model('setting/store');
 
 		// Language
@@ -143,6 +143,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					if (!isset($error['shipping_method'])) {
 						$store->session->data['shipping_method'] = $result['shipping_method'];
 					}
+				} else {
+					$shipping_address_info = [];
 				}
 
 				// Validate payment method

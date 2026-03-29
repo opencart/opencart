@@ -178,11 +178,12 @@
                         {% for identifier in identifiers %}
                           <option value="{{ identifier.code }}">{{ identifier.code }}</option>
                         {% endfor %}
-                      </select> <input type="text" value="" placeholder="{{ entry_product_code }}" id="input-value" class="form-control w-75"/>
+                      </select>
+                      <input type="text" value="" placeholder="{{ entry_product_code }}" id="input-value" class="form-control w-75"/>
                       <button type="button" id="button-code" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button>
                     </div>
                     <div class="input-group">
-                      <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                      <div class="form-control p-0" style="height: 100px; overflow: auto;">
                         <table id="product-code" class="table m-0">
                           <tbody>
                             {% set code_row = 0 %}
@@ -325,6 +326,23 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="row mb-3">
+                    <label for="input-date-available" class="col-sm-2 col-form-label">{{ entry_date_added }}</label>
+                    <div class="col-sm-10 col-md-4">
+                        <div class="input-group">
+                            <input type="date" name="date_added" value="{{ date_added }}" placeholder="{{ date_added }}" id="input-date-added" class="form-control"/>
+                            {% if master_id %}
+                                <div class="input-group-text">
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" name="override[date_added]" value="1" id="input-variant-date-added" data-oc-toggle="switch" data-oc-target="#input-date-added" class="form-check-input"{% if override.date_added %} checked{% endif %}/> <label for="input-variant-date-added" class="form-check-label"></label>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row mb-3">
                   <label for="input-date-available" class="col-sm-2 col-form-label">{{ entry_date_available }}</label>
                   <div class="col-sm-10 col-md-4">

@@ -20,8 +20,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 */
 	public function addCustomerGroup(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'customer_group.list',
-			'action' => 'task/catalog/customer_group.list',
+			'code'   => 'customer_group',
+			'action' => 'task/catalog/customer_group',
 			'args'   => []
 		];
 
@@ -54,8 +54,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 */
 	public function editCustomerGroup(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'customer_group.list',
-			'action' => 'task/catalog/customer_group.list',
+			'code'   => 'customer_group',
+			'action' => 'task/catalog/customer_group',
 			'args'   => []
 		];
 
@@ -105,8 +105,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 */
 	public function deleteCustomerGroup(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'customer_group.list',
-			'action' => 'task/catalog/customer_group.list',
+			'code'   => 'customer_group',
+			'action' => 'task/catalog/customer_group',
 			'args'   => []
 		];
 

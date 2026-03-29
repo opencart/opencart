@@ -351,6 +351,24 @@ class Country extends \Opencart\System\Engine\Controller {
 			$data['postcode_required'] = 0;
 		}
 
+		// Stores
+		$stores = [];
+
+		$stores[] = [
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		];
+
+		$this->load->model('setting/store');
+
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+
+		if (!empty($country_info)) {
+			$data['country_store'] = $this->model_localisation_country->getStores($country_info['country_id']);
+		} else {
+			$data['country_store'] = [0];
+		}
+
 		if (!empty($country_info)) {
 			$data['status'] = $country_info['status'];
 		} else {

@@ -68,24 +68,17 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['delete'] = $this->url->link('catalog/manufacturer.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->load->controller('catalog/manufacturer.getList');
-		
-		$data['stores'] = [];
 
-		$data['stores'][] = [
+		$stores = [];
+
+		$stores[] = [
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
+			'name'     => $this->config->get('config_name')
 		];
 
 		$this->load->model('setting/store');
 
-		$stores = $this->model_setting_store->getStores();
-
-		foreach ($stores as $store) {
-			$data['stores'][] = [
-				'store_id' => $store['store_id'],
-				'name'     => $store['name']
-			];
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_store_id'] = $filter_store_id;
@@ -182,23 +175,16 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$data['stores'] = [];
+		$stores = [];
 
-		$data['stores'][] = [
+		$stores[] = [
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
+			'name'     => $this->config->get('config_name')
 		];
 
 		$this->load->model('setting/store');
 
-		$stores = $this->model_setting_store->getStores();
-
-		foreach ($stores as $store) {
-			$data['stores'][] = [
-				'store_id' => $store['store_id'],
-				'name'     => $store['name']
-			];
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		// Image
 		$this->load->model('tool/image');
@@ -331,20 +317,16 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		// Stores
-		$data['stores'] = [];
+		$stores = [];
 
-		$data['stores'][] = [
+		$stores[] = [
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
+			'name'     => $this->config->get('config_name')
 		];
 
 		$this->load->model('setting/store');
 
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = $result;
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		if (!empty($manufacturer_info)) {
 			$data['manufacturer_store'] = $this->model_catalog_manufacturer->getStores($manufacturer_info['manufacturer_id']);

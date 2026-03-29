@@ -1453,7 +1453,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
+			$filter_name = '%' . $this->request->get['filter_name'] . '%';
 		} else {
 			$filter_name = '';
 		}

@@ -584,11 +584,17 @@ class Category extends \Opencart\System\Engine\Controller {
 	public function autocomplete(): void {
 		$json = [];
 
+        if (isset($this->request->get['filter_name'])) {
+            $filter_name = '%' . $this->request->get['filter_name'] . '%';
+        } else {
+            $filter_name = '';
+        }
+
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('catalog/category');
 
 			$filter_data = [
-				'filter_name' => $this->request->get['filter_name'] . '%',
+				'filter_name' => $filter_name,
 				'sort'        => 'name',
 				'order'       => 'ASC',
 				'start'       => 0,

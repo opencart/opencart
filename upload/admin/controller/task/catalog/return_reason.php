@@ -67,6 +67,16 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$return_reason_data = [];
+
+		$this->load->model('localisation/return_reason');
+
+		$results = $this->model_localisation_return_reason->getReturnReasons();
+
+		foreach ($results as $result) {
+			$return_reason_data[] = array_merge($result, ['description' => $this->model_localisation_return_reason->getDescriptions($result['return_reason_id'])]);
+		}
+
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'return_reason.json';
 
@@ -74,9 +84,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		$this->load->model('localisation/return_reason');
-
-		if (!file_put_contents($directory . $filename, json_encode($this->model_localisation_return_reason->getReturnReasons()))) {
+		if (!file_put_contents($directory . $filename, json_encode($return_reason_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

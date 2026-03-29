@@ -8,22 +8,24 @@ class CurlyTag {
         this.cache = new Map();
 
         this.handler = {
-            set: this.handleSet.bind(this),
+            assign: this.handleAssign.bind(this),
+            capture: this.handleCapture.bind(this),
+            endcapture: this.handleEndcapture.bind(this),
             if: this.handleIf.bind(this),
             endif: this.handleEndif.bind(this),
-            elseif: this.handleElseif.bind(this),
             else: this.handleElse.bind(this),
+            elseif: this.handleElseif.bind(this),
             unless: this.handleUnless.bind(this),
             endunless: this.handleEndunless.bind(this),
+            case: this.handleCase.bind(this),
+            endcase: this.handleEndcase.bind(this),
+            when: this.handleWhen.bind(this),
             for: this.handleFor.bind(this),
             endfor: this.handleEndfor.bind(this),
             continue: this.handleContinue.bind(this),
             break: this.handleBreak.bind(this),
-            switch: this.handleSwitch.bind(this),
-            case: this.handleCase.bind(this),
-            endswitch: this.handleEndswitch.bind(this),
-            block: this.handleBlock.bind(this),
-            endblock: this.handleEndblock.bind(this),
+            cycle: this.handleCycle.bind(this),
+            echo: this.handleEcho.bind(this),
             include: this.handleInclude.bind(this),
             filter: this.handleFilter.bind(this),
             endfilter: this.handleEndfilter.bind(this),
@@ -588,11 +590,11 @@ class CurlyTag {
      *
      * set var = expression | filter1 | filter2
      */
-    handleSet(token, stack, ctx, index) {
-        let match = token.value.match(/^set\s(\w+)\s=\s([^\|]+?)\s*(?:\s*\|\s*(.+))?$/);
+    handleAssign(token, stack, ctx, index) {
+        let match = token.value.match(/^assign\s(\w+)\s=\s([^\|]+?)\s*(?:\s*\|\s*(.+))?$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'set' syntax line ${token.line} column ${token.column}`);
+            console.log(`[Template] Invalid 'assign' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -614,7 +616,7 @@ class CurlyTag {
         let match = token.value.match(/^include\s(.+)$/);
 
         if (!match) {
-            console.warn(`[Template] Invalid 'capture' syntax line ${token.line} column ${token.column}`);
+            console.warn(`[Template] Invalid 'include' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -624,6 +626,30 @@ class CurlyTag {
         stack.push({
             type: 'output',
             output: output
+        });
+    }
+
+    handleEcho(token, stack, ctx, index) {
+        let match = token.value.match(/^echo\s([^\|]+?)\s*(?:\s*\|\s*(.+))?$/);
+
+        if (!match) {
+            console.log(`[Template] Invalid echo line ${token.line} column ${token.column}`);
+
+            return;
+        }
+
+        let [, name, filter] = match;
+
+        let value = this.evaluate(name, ctx);
+
+        // Apply Filters
+        if (filter !== undefined) {
+            value = this.parseFilter(value, filter, ctx);
+        }
+
+        stack.push({
+            type: 'output',
+            output: value
         });
     }
 
@@ -767,7 +793,7 @@ class CurlyTag {
     handleElse(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || (top.type !== 'if' && top.type !== 'unless' && top.type !== 'switch' && top.type !== 'for')) {
+        if (!top || (top.type !== 'if' && top.type !== 'unless' && top.type !== 'case' && top.type !== 'for')) {
             console.log(`[Template] Unexpected 'else' tag line ${token.line} column ${token.column}`);
 
             return;
@@ -886,24 +912,8 @@ class CurlyTag {
         return top.end + 1;
     }
 
-    handleSwitch(token, stack, ctx, index) {
-        let match = token.value.match(/^switch\s(\w+)$/);
-
-        if (!match) {
-            console.log(`[Template] Invalid 'switch' syntax line ${token.line} column ${token.column}`);
-
-            return;
-        }
-
-        stack.push({
-            type: 'switch',
-            value: match[1],
-            active: false
-        });
-    }
-
     handleCase(token, stack, ctx, index) {
-        let match = token.value.match(/^case\s(.+)$/);
+        let match = token.value.match(/^case\s(\w+)$/);
 
         if (!match) {
             console.log(`[Template] Invalid 'case' syntax line ${token.line} column ${token.column}`);
@@ -911,10 +921,26 @@ class CurlyTag {
             return;
         }
 
+        stack.push({
+            type: 'case',
+            value: match[1],
+            active: false
+        });
+    }
+
+    handleWhen(token, stack, ctx, index) {
+        let match = token.value.match(/^when\s(.+)$/);
+
+        if (!match) {
+            console.log(`[Template] Invalid 'when' syntax line ${token.line} column ${token.column}`);
+
+            return;
+        }
+
         let top = stack[stack.length - 1];
 
-        if (!top || top.type !== 'switch') {
-            console.log(`[Template] Unexpected 'switch' tag line ${token.line} column ${token.column}`);
+        if (!top || top.type !== 'case') {
+            console.log(`[Template] Unexpected 'when' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -925,11 +951,11 @@ class CurlyTag {
         top.active = true;
     }
 
-    handleEndswitch(token, stack, ctx, index) {
+    handleEndcase(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
-        if (!top || top.type !== 'switch') {
-            console.log(`[Template] Unexpected 'switch' tag line ${token.line} column ${token.column}`);
+        if (!top || top.type !== 'case') {
+            console.log(`[Template] Unexpected 'case' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -937,44 +963,11 @@ class CurlyTag {
         stack.pop();
     }
 
-    handleFilter(token, stack, ctx, index) {
-        let match = token.value.match(/^filter\s(\w+)$/);
+    handleCapture(token, stack, ctx, index) {
+        let match = token.value.match(/^capture\s(.+)$/);
 
         if (!match) {
-            console.log(`[Template] Invalid 'filter' syntax line ${token.line} column ${token.column}`);
-
-            return;
-        }
-
-        stack.push({
-            type: 'capture',
-            filter: match[1],
-            output: ''
-        });
-    }
-
-    handleEndfilter(token, stack, ctx, index) {
-        let top = stack[stack.length - 1];
-
-        if (!top || top.type !== 'capture') {
-            console.log(`[Template] Unexpected 'endfilter' tag line ${token.line} column ${token.column}`);
-
-            return;
-        }
-
-        stack.pop();
-
-        stack.push({
-            type: 'output',
-            output: this.parseFilter(top.value, top.filter, ctx)
-        });
-    }
-
-    handleBlock(token, stack, ctx, index) {
-        let match = token.value.match(/^block\s(.+)$/);
-
-        if (!match) {
-            console.warn(`[Template] Invalid 'block' syntax line ${token.line} column ${token.column}`);
+            console.warn(`[Template] Invalid 'capture' syntax line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -986,11 +979,11 @@ class CurlyTag {
         });
     }
 
-    handleEndblock(token, stack, ctx, index) {
+    handleEndcapture(token, stack, ctx, index) {
         let top = stack[stack.length - 1];
 
         if (!top || top.type !== 'capture') {
-            console.log(`[Template] Unexpected 'endblock' tag line ${token.line} column ${token.column}`);
+            console.log(`[Template] Unexpected 'endcapture' tag line ${token.line} column ${token.column}`);
 
             return;
         }
@@ -1037,6 +1030,39 @@ class CurlyTag {
         stack.pop();
     }
 
+    handleFilter(token, stack, ctx, index) {
+        let match = token.value.match(/^filter\s(\w+)$/);
+
+        if (!match) {
+            console.log(`[Template] Invalid 'filter' syntax line ${token.line} column ${token.column}`);
+
+            return;
+        }
+
+        stack.push({
+            type: 'capture',
+            filter: match[1],
+            output: ''
+        });
+    }
+
+    handleEndfilter(token, stack, ctx, index) {
+        let top = stack[stack.length - 1];
+
+        if (!top || top.type !== 'capture') {
+            console.log(`[Template] Unexpected 'endfilter' tag line ${token.line} column ${token.column}`);
+
+            return;
+        }
+
+        stack.pop();
+
+        stack.push({
+            type: 'output',
+            output: this.parseFilter(top.value, top.filter, ctx)
+        });
+    }
+
     static getInstance() {
         if (!this.instance) {
             this.instance = new CurlyTag();
@@ -1048,4 +1074,4 @@ class CurlyTag {
 
 const template = CurlyTag.getInstance();
 
-export {template};
+export { template };

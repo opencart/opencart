@@ -258,9 +258,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
-		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
-
 		$data['text_form'] = !isset($this->request->get['manufacturer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -305,28 +302,27 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['manufacturer_id'] = 0;
 		}
 
-		// Languages
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
-
 		if (!empty($manufacturer_info)) {
-			$data['manufacturer_description'] = $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id']);
+			$data['name'] = $manufacturer_info['name'];
 		} else {
-			$data['manufacturer_description'] = [];
+			$data['name'] = '';
 		}
 
-		// Stores
-		$stores = [];
+		// Store
+		$data['stores'] = [];
 
-		$stores[] = [
+		$data['stores'][] = [
 			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
+			'name'     => $this->language->get('text_default')
 		];
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+		$results = $this->model_setting_store->getStores();
+
+		foreach ($results as $result) {
+			$data['stores'][] = $result;
+		}
 
 		if (!empty($manufacturer_info)) {
 			$data['manufacturer_store'] = $this->model_catalog_manufacturer->getStores($manufacturer_info['manufacturer_id']);
@@ -406,21 +402,15 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'manufacturer_id'          => 0,
-			'manufacturer_description' => [],
-			'manufacturer_seo_url'     => []
+			'manufacturer_id'      => 0,
+			'name'                 => '',
+			'manufacturer_seo_url' => []
 		];
 
 		$post_info = $this->request->post + $required;
 
-		foreach ($post_info['manufacturer_description'] as $language_id => $value) {
-			if (!oc_validate_length($value['name'], 1, 64)) {
-				$json['error']['name_' . $language_id] = $this->language->get('error_name');
-			}
-
-			if (!oc_validate_length($value['meta_title'], 1, 255)) {
-				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
-			}
+		if (!oc_validate_length($post_info['name'], 1, 64)) {
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		// SEO

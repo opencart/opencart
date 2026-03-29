@@ -183,7 +183,7 @@ class Order extends \Opencart\System\Engine\Model {
 		if (!empty($data['filter_order_status'])) {
 			$implode = [];
 
-			$order_statuses = explode(',', $data['filter_order_status']);
+			$order_statuses = explode(',', (string)$data['filter_order_status']);
 			$order_statuses = array_filter($order_statuses);
 
 			foreach ($order_statuses as $order_status_id) {

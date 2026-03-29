@@ -48,18 +48,18 @@ class CurlyTag {
             ],
             else: [
                 'endif',
-                'endswitch'
+                'endcase'
             ],
-            case: [
-                'case',
+            when: [
+                'when',
                 'else',
-                'endswitch'
+                'endcase'
             ],
             for: [
                 'endfor'
             ],
-            block: [
-                'endblock'
+            capture: [
+                'endcapture'
             ],
             filter: [
                 'endfilter'

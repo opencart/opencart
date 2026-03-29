@@ -28,7 +28,8 @@ CKEDITOR.editorConfig = function( config ) {
 	config.resize_enabled = true;
 	config.resize_dir = 'vertical';
 	config.versionCheck = false;
-
+    config.removePlugins = 'iframe';
+    
 	config.toolbar_Custom = [
 		['Source'],
 		['ShowBlocks'],

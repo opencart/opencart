@@ -104,7 +104,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_wishlist->getWishlist($this->customer->getId());
 
 		foreach ($results as $result) {
-			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+			$product_info = $this->model_catalog_product->getProduct((int)$result['product_id']);
 
 			if ($product_info) {
 				if ($product_info['image'] && is_file(DIR_IMAGE . html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'))) {

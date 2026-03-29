@@ -492,7 +492,7 @@ class Topic extends \Opencart\System\Engine\Model {
 	 * $this->model_cms_topic->addLayout($topic_id, $store_id, $layout_id);
 	 */
 	public function addLayout(int $topic_id, int $store_id, int $layout_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `article_id` = '" . (int)$topic_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "topic_to_layout` SET `topic_id` = '" . (int)$topic_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
 	}
 
 	/**
@@ -508,10 +508,10 @@ class Topic extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('cms/topic');
 	 *
-	 * $this->model_cms_topic->deleteLayouts($article_id);
+	 * $this->model_cms_topic->deleteLayouts($topic_id);
 	 */
 	public function deleteLayouts(int $topic_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `article_id` = '" . (int)$topic_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "topic_to_layout` WHERE `topic_id` = '" . (int)$topic_id . "'");
 	}
 
 	/**

@@ -522,12 +522,12 @@
                   <ul id="autocomplete-category" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                      <table id="product-category" class="table m-0">
+                      <table id="product-category" class="table table-sm table-hover table-borderless m-0">
                         <tbody>
                           {% for product_category in product_categories %}
                             <tr id="product-category-{{ product_category.category_id }}">
                               <td>{{ product_category.name }}<input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/></td>
-                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
                             </tr>
                           {% endfor %}
                         </tbody>
@@ -551,12 +551,12 @@
                   <ul id="autocomplete-filter" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                      <table id="product-filter" class="table m-0">
+                      <table id="product-filter" class="table table-sm table-hover table-borderless m-0">
                         <tbody>
                           {% for product_filter in product_filters %}
                             <tr id="product-filter-{{ product_filter.filter_id }}">
                               <td>{{ product_filter.name }}<input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}"/></td>
-                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
                             </tr>
                           {% endfor %}
                         </tbody>
@@ -601,12 +601,12 @@
                   <ul id="autocomplete-download" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                      <table id="product-download" class="table m-0">
+                      <table id="product-download" class="table table-sm table-hover table-borderless m-0">
                         <tbody>
                           {% for product_download in product_downloads %}
                             <tr id="product-download-{{ product_download.download_id }}">
                               <td>{{ product_download.name }}<input type="hidden" name="product_download[]" value="{{ product_download.download_id }}"/></td>
-                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
                             </tr>
                           {% endfor %}
                         </tbody>
@@ -630,12 +630,12 @@
                   <ul id="autocomplete-related" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                      <table id="product-related" class="table m-0">
+                      <table id="product-related" class="table table-sm table-hover table-borderless m-0">
                         <tbody>
                           {% for product_related in product_relateds %}
                             <tr id="product-related-{{ product_related.product_id }}">
                               <td>{{ product_related.name }}<input type="hidden" name="product_related[]" value="{{ product_related.product_id }}"/></td>
-                              <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
                             </tr>
                           {% endfor %}
                         </tbody>

@@ -47,7 +47,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 	public function editBanner(string &$route, array &$args, &$output): void {
 		$task_data = [
 			'code'   => 'banner.' . $args[0],
-			'action' => 'task/catalog/banner.info',
+			'action' => 'task/catalog/banner',
 			'args'   => ['banner_id' => $args[0]]
 		];
 

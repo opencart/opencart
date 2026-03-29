@@ -40,11 +40,15 @@ class Autoloader {
 	 *
 	 * @psr-4 filename standard is stupid composer has lower case file structure than its packages have camelcase file names!
 	 */
-	public function register(string $namespace, string $directory, bool $psr4 = false): void {
-		$this->path[$namespace] = [
-			'directory' => $directory,
-			'psr4'      => $psr4
-		];
+	public function register(string $namespace, string $directory, $psr4 = false): void {
+		if (isset($this->path[$namespace])) {
+			$this->path[$namespace]['directories'][] = $directory;
+		} else {
+			$this->path[$namespace] = [
+				'directories' => [$directory],
+				'psr4'      => $psr4
+			];
+		}
 	}
 
 	/**
@@ -67,20 +71,28 @@ class Autoloader {
 			}
 
 			if (isset($this->path[$namespace])) {
+				$files = [];
+
 				if (!$this->path[$namespace]['psr4']) {
-					$file = $this->path[$namespace]['directory'] . trim(str_replace('\\', '/', strtolower(preg_replace('~([a-z])([A-Z]|[0-9])~', '\1_\2', substr($class, strlen($namespace))))), '/') . '.php';
+					foreach ($this->path[$namespace]['directories'] as $directory) {
+						$files[] = $directory . trim(str_replace('\\', '/', strtolower(preg_replace('~([a-z])([A-Z]|[0-9])~', '\\1_\\2', substr($class, strlen($namespace))))), '/') . '.php';
+					}
 				} else {
-					$file = $this->path[$namespace]['directory'] . trim(str_replace('\\', '/', substr($class, strlen($namespace))), '/') . '.php';
+					foreach ($this->path[$namespace]['directories'] as $directory) {
+						$files[] = $directory . trim(str_replace('\\', '/', substr($class, strlen($namespace))), '/') . '.php';
+					}
 				}
 			}
 		}
 
-		if (isset($file) && is_file($file)) {
-			include_once($file);
+		if (isset($files)) {
+			foreach ($files as $file) {
+				if (isset($file) && is_file($file)) include_once($file);
+			}
 
 			return true;
-		} else {
-			return false;
 		}
+
+		return false;
 	}
 }

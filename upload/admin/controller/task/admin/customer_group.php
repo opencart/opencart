@@ -30,6 +30,14 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$customer_group_data[] = array_merge($customer_group, ['description' => $this->model_customer_customer_group->getDescriptions($customer_group['customer_group_id'])]);
 		}
 
+		$sort_order = [];
+
+		foreach ($customer_group_data as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $customer_group_data);
+
 		$directory = DIR_APPLICATION . 'view/data/customer/';
 		$filename = 'customer_group.json';
 
@@ -75,7 +83,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
 
 		foreach ($custom_fields as $custom_field) {
-			$custom_field_data[] = $custom_field + ['description' => $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id'])];
+			$custom_field_data[] = array_merge($custom_field, ['description' => $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id'])]);
 		}
 
 		$directory = DIR_APPLICATION . 'view/data/customer/';
@@ -104,6 +112,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/admin/customer_group');
 
+		if (!array_key_exists('customer_group_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$this->load->model('customer/customer_group');
 
 		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
@@ -112,8 +124,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' =>$this->language->get('error_customer_group')];
 		}
 
-		$directory = DIR_APPLICATION . 'view/data/customer/';
-		$file = $directory . 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
+		$file = DIR_APPLICATION . 'view/data/customer/customer_group-' . $customer_group_info['customer_group_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

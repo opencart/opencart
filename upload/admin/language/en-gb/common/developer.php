@@ -4,13 +4,13 @@ $_['heading_title']          = 'Developer Options';
 
 // Text
 $_['text_developer_success'] = 'Success: You have modified developer settings!';
-$_['text_cache_success']     = 'Success: You have cleared the cache!';
-$_['text_theme_success']     = 'Success: You have cleared the theme cache!';
+$_['text_systemcache_success'] = 'Success: You have cleared the system cache!';
+$_['text_imagecache_success']  = 'Success: You have cleared the image cache!';
 $_['text_sass_success']      = 'Success: You have cleared the SASS cache!';
 $_['text_vendor_success']    = 'Success: You have cleared the vendor cache!';
-$_['text_theme']             = 'Theme';
+$_['text_imagecache']        = 'Image Cache';
 $_['text_sass']              = 'SASS';
-$_['text_cache']             = 'Cache';
+$_['text_systemcache']       = 'System Cache';
 $_['text_vendor']            = 'Vendor';
 
 // Column

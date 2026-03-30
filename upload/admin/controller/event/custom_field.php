@@ -22,6 +22,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	public function addCustomField(string &$route, array &$args, &$output): void {
 		$this->load->model('setting/task');
 
+		//custom_field_customer_group[1][customer_group_id]
+
 		$this->load->model('setting/custom_field');
 
 		$results = $this->model_setting_custom_field->getCustomerGroups($output);

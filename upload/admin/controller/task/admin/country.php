@@ -125,7 +125,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_country')];
 		}
 
-		$file = DIR_APPLICATION . 'view/data/localisation/country-' + $country_info['country_id'] + '.json';
+		$file = DIR_APPLICATION . 'view/data/localisation/country-' . $country_info['country_id'] . '.json';
 
 		if (is_file($file)) {
 			unlink($file);

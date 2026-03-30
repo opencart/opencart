@@ -87,10 +87,10 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$sort_order = [];
 
 		foreach ($customer_group_data as $key => $value) {
-			$sort_order[$key] = $value['name'];
+			$sort_order[$key] = $value['sort_order'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $country_data);
+		array_multisort($sort_order, SORT_ASC, $customer_group_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
 		$filename = 'customer_group.json';
@@ -126,7 +126,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
 
-		if (!$customer_group_info) {
+		if (!$customer_group_info || !$customer_group_info['status']) {
 			return ['error' => $this->language->get('error_customer_group')];
 		}
 
@@ -187,7 +187,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup((int)$args['customer_group_id']);
 
-		if (!$customer_group_info) {
+		if (!$customer_group_info || !$customer_group_info['status']) {
 			return ['error' => $this->language->get('error_customer_group')];
 		}
 
@@ -218,7 +218,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**
 	 * Delete
 	 *
-	 * Delete generated JSON country files.
+	 * Delete generated JSON customer group files.
 	 *
 	 * @param array<string, string> $args
 	 *

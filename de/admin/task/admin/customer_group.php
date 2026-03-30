@@ -1,8 +1,8 @@
 <?php
 // Text
-$_['text_list']            = 'Generating %s customer group data!';
-$_['text_info']            = 'Generating %s %s customer group data!';
-$_['text_delete']          = 'Customer Group %s data cleared!';
+$_['text_list']            = 'Generating customer group list!';
+$_['text_info']            = 'Generating %s customer group info !';
+$_['text_delete']          = 'Customer Group %s info deleted!';
 
 // Error
 $_['error_required']       = 'Error: %s required!';

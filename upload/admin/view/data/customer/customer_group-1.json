@@ -1,1 +1,585 @@
-{"customer_group_id":"1","approval":"0","sort_order":"1","language_id":"1","name":"Default","description":{"en-gb":{"customer_group_id":"1","language_id":"1","name":"Default","description":"Default customer group","code":"en-gb"}},"custom_field":[{"custom_field_id":"3","customer_group_id":"1","required":"1","type":"checkbox","value":"","validation":"","location":"account","status":"0","sort_order":"3","language_id":"1","name":"Checkbox","description":{"en-gb":{"custom_field_id":"3","language_id":"1","name":"Checkbox","code":"en-gb"}}},{"custom_field_id":"11","customer_group_id":"1","required":"1","type":"checkbox","value":"","validation":"","location":"address","status":"0","sort_order":"3","language_id":"1","name":"Checkbox","description":{"en-gb":{"custom_field_id":"11","language_id":"1","name":"Checkbox","code":"en-gb"}}},{"custom_field_id":"20","customer_group_id":"1","required":"1","type":"checkbox","value":"","validation":"","location":"affiliate","status":"0","sort_order":"3","language_id":"1","name":"Checkbox","description":{"en-gb":{"custom_field_id":"20","language_id":"1","name":"Checkbox","code":"en-gb"}}},{"custom_field_id":"7","customer_group_id":"1","required":"1","type":"date","value":"","validation":"","location":"account","status":"0","sort_order":"7","language_id":"1","name":"Date","description":{"en-gb":{"custom_field_id":"7","language_id":"1","name":"Date","code":"en-gb"}}},{"custom_field_id":"13","customer_group_id":"1","required":"1","type":"date","value":"","validation":"","location":"address","status":"0","sort_order":"7","language_id":"1","name":"Date","description":{"en-gb":{"custom_field_id":"13","language_id":"1","name":"Date","code":"en-gb"}}},{"custom_field_id":"21","customer_group_id":"1","required":"1","type":"date","value":"","validation":"","location":"affiliate","status":"0","sort_order":"8","language_id":"1","name":"Date","description":{"en-gb":{"custom_field_id":"21","language_id":"1","name":"Date","code":"en-gb"}}},{"custom_field_id":"9","customer_group_id":"1","required":"1","type":"datetime","value":"","validation":"","location":"account","status":"0","sort_order":"9","language_id":"1","name":"Date &amp; Time","description":{"en-gb":{"custom_field_id":"9","language_id":"1","name":"Date &amp; Time","code":"en-gb"}}},{"custom_field_id":"14","customer_group_id":"1","required":"1","type":"datetime","value":"","validation":"","location":"address","status":"0","sort_order":"9","language_id":"1","name":"Date &amp; Time","description":{"en-gb":{"custom_field_id":"14","language_id":"1","name":"Date &amp; Time","code":"en-gb"}}},{"custom_field_id":"22","customer_group_id":"1","required":"1","type":"datetime","value":"","validation":"","location":"affiliate","status":"0","sort_order":"9","language_id":"1","name":"Date &amp; Time","description":{"en-gb":{"custom_field_id":"22","language_id":"1","name":"Date &amp; Time","code":"en-gb"}}},{"custom_field_id":"6","customer_group_id":"1","required":"1","type":"file","value":"","validation":"","location":"account","status":"1","sort_order":"6","language_id":"1","name":"File","description":{"en-gb":{"custom_field_id":"6","language_id":"1","name":"File","code":"en-gb"}}},{"custom_field_id":"15","customer_group_id":"1","required":"1","type":"file","value":"","validation":"","location":"address","status":"0","sort_order":"6","language_id":"1","name":"File","description":{"en-gb":{"custom_field_id":"15","language_id":"1","name":"File","code":"en-gb"}}},{"custom_field_id":"23","customer_group_id":"1","required":"1","type":"file","value":"","validation":"","location":"affiliate","status":"0","sort_order":"6","language_id":"1","name":"File","description":{"en-gb":{"custom_field_id":"23","language_id":"1","name":"File","code":"en-gb"}}},{"custom_field_id":"2","customer_group_id":"1","required":"1","type":"radio","value":"","validation":"","location":"account","status":"0","sort_order":"2","language_id":"1","name":"Radio","description":{"en-gb":{"custom_field_id":"2","language_id":"1","name":"Radio","code":"en-gb"}}},{"custom_field_id":"16","customer_group_id":"1","required":"1","type":"radio","value":"","validation":"","location":"address","status":"0","sort_order":"2","language_id":"1","name":"Radio","description":{"en-gb":{"custom_field_id":"16","language_id":"1","name":"Radio","code":"en-gb"}}},{"custom_field_id":"24","customer_group_id":"1","required":"1","type":"radio","value":"","validation":"","location":"affiliate","status":"0","sort_order":"2","language_id":"1","name":"Radio","description":{"en-gb":{"custom_field_id":"24","language_id":"1","name":"Radio","code":"en-gb"}}},{"custom_field_id":"1","customer_group_id":"1","required":"1","type":"select","value":"","validation":"","location":"account","status":"0","sort_order":"1","language_id":"1","name":"Select","description":{"en-gb":{"custom_field_id":"1","language_id":"1","name":"Select","code":"en-gb"}}},{"custom_field_id":"17","customer_group_id":"1","required":"1","type":"select","value":"","validation":"","location":"address","status":"0","sort_order":"1","language_id":"1","name":"Select","description":{"en-gb":{"custom_field_id":"17","language_id":"1","name":"Select","code":"en-gb"}}},{"custom_field_id":"25","customer_group_id":"1","required":"1","type":"select","value":"","validation":"","location":"affiliate","status":"0","sort_order":"1","language_id":"1","name":"Select","description":{"en-gb":{"custom_field_id":"25","language_id":"1","name":"Select","code":"en-gb"}}},{"custom_field_id":"4","customer_group_id":"1","required":"1","type":"text","value":"","validation":"","location":"account","status":"0","sort_order":"4","language_id":"1","name":"Text","description":{"en-gb":{"custom_field_id":"4","language_id":"1","name":"Text","code":"en-gb"}}},{"custom_field_id":"18","customer_group_id":"1","required":"1","type":"text","value":"","validation":"","location":"address","status":"0","sort_order":"4","language_id":"1","name":"Text","description":{"en-gb":{"custom_field_id":"18","language_id":"1","name":"Text","code":"en-gb"}}},{"custom_field_id":"26","customer_group_id":"1","required":"1","type":"text","value":"","validation":"","location":"affiliate","status":"0","sort_order":"4","language_id":"1","name":"Text","description":{"en-gb":{"custom_field_id":"26","language_id":"1","name":"Text","code":"en-gb"}}},{"custom_field_id":"5","customer_group_id":"1","required":"1","type":"textarea","value":"","validation":"","location":"account","status":"0","sort_order":"5","language_id":"1","name":"Textarea","description":{"en-gb":{"custom_field_id":"5","language_id":"1","name":"Textarea","code":"en-gb"}}},{"custom_field_id":"19","customer_group_id":"1","required":"1","type":"textarea","value":"","validation":"","location":"address","status":"0","sort_order":"5","language_id":"1","name":"Textarea","description":{"en-gb":{"custom_field_id":"19","language_id":"1","name":"Textarea","code":"en-gb"}}},{"custom_field_id":"27","customer_group_id":"1","required":"1","type":"textarea","value":"","validation":"","location":"affiliate","status":"0","sort_order":"5","language_id":"1","name":"Textarea","description":{"en-gb":{"custom_field_id":"27","language_id":"1","name":"Textarea","code":"en-gb"}}},{"custom_field_id":"8","customer_group_id":"1","required":"1","type":"time","value":"","validation":"","location":"account","status":"0","sort_order":"8","language_id":"1","name":"Time","description":{"en-gb":{"custom_field_id":"8","language_id":"1","name":"Time","code":"en-gb"}}},{"custom_field_id":"12","customer_group_id":"1","required":"1","type":"time","value":"","validation":"","location":"address","status":"0","sort_order":"8","language_id":"1","name":"Time","description":{"en-gb":{"custom_field_id":"12","language_id":"1","name":"Time","code":"en-gb"}}},{"custom_field_id":"28","customer_group_id":"1","required":"1","type":"time","value":"","validation":"","location":"affiliate","status":"0","sort_order":"8","language_id":"1","name":"Time","description":{"en-gb":{"custom_field_id":"28","language_id":"1","name":"Time","code":"en-gb"}}}]}
+{
+  "customer_group_id": "1",
+  "approval": "0",
+  "sort_order": "1",
+  "language_id": "1",
+  "name": "Default",
+  "description": {
+    "en-gb": {
+      "customer_group_id": "1",
+      "language_id": "1",
+      "name": "Default",
+      "description": "Default customer group",
+      "code": "en-gb"
+    }
+  },
+  "custom_field": [
+    {
+      "custom_field_id": "3",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "checkbox",
+      "value": "",
+      "validation": "",
+      "location": "account",
+      "status": "0",
+      "sort_order": "3",
+      "language_id": "1",
+      "name": "Checkbox",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "3",
+          "language_id": "1",
+          "name": "Checkbox",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "11",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "checkbox",
+      "value": "",
+      "validation": "",
+      "location": "address",
+      "status": "0",
+      "sort_order": "3",
+      "language_id": "1",
+      "name": "Checkbox",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "11",
+          "language_id": "1",
+          "name": "Checkbox",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "20",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "checkbox",
+      "value": "",
+      "validation": "",
+      "location": "affiliate",
+      "status": "0",
+      "sort_order": "3",
+      "language_id": "1",
+      "name": "Checkbox",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "20",
+          "language_id": "1",
+          "name": "Checkbox",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "7",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "date",
+      "value": "",
+      "validation": "",
+      "location": "account",
+      "status": "0",
+      "sort_order": "7",
+      "language_id": "1",
+      "name": "Date",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "7",
+          "language_id": "1",
+          "name": "Date",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "13",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "date",
+      "value": "",
+      "validation": "",
+      "location": "address",
+      "status": "0",
+      "sort_order": "7",
+      "language_id": "1",
+      "name": "Date",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "13",
+          "language_id": "1",
+          "name": "Date",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "21",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "date",
+      "value": "",
+      "validation": "",
+      "location": "affiliate",
+      "status": "0",
+      "sort_order": "8",
+      "language_id": "1",
+      "name": "Date",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "21",
+          "language_id": "1",
+          "name": "Date",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "9",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "datetime",
+      "value": "",
+      "validation": "",
+      "location": "account",
+      "status": "0",
+      "sort_order": "9",
+      "language_id": "1",
+      "name": "Date &amp; Time",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "9",
+          "language_id": "1",
+          "name": "Date &amp; Time",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "14",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "datetime",
+      "value": "",
+      "validation": "",
+      "location": "address",
+      "status": "0",
+      "sort_order": "9",
+      "language_id": "1",
+      "name": "Date &amp; Time",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "14",
+          "language_id": "1",
+          "name": "Date &amp; Time",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "22",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "datetime",
+      "value": "",
+      "validation": "",
+      "location": "affiliate",
+      "status": "0",
+      "sort_order": "9",
+      "language_id": "1",
+      "name": "Date &amp; Time",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "22",
+          "language_id": "1",
+          "name": "Date &amp; Time",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "6",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "file",
+      "value": "",
+      "validation": "",
+      "location": "account",
+      "status": "1",
+      "sort_order": "6",
+      "language_id": "1",
+      "name": "File",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "6",
+          "language_id": "1",
+          "name": "File",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "15",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "file",
+      "value": "",
+      "validation": "",
+      "location": "address",
+      "status": "0",
+      "sort_order": "6",
+      "language_id": "1",
+      "name": "File",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "15",
+          "language_id": "1",
+          "name": "File",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "23",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "file",
+      "value": "",
+      "validation": "",
+      "location": "affiliate",
+      "status": "0",
+      "sort_order": "6",
+      "language_id": "1",
+      "name": "File",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "23",
+          "language_id": "1",
+          "name": "File",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "2",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "radio",
+      "value": "",
+      "validation": "",
+      "location": "account",
+      "status": "0",
+      "sort_order": "2",
+      "language_id": "1",
+      "name": "Radio",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "2",
+          "language_id": "1",
+          "name": "Radio",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "16",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "radio",
+      "value": "",
+      "validation": "",
+      "location": "address",
+      "status": "0",
+      "sort_order": "2",
+      "language_id": "1",
+      "name": "Radio",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "16",
+          "language_id": "1",
+          "name": "Radio",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "24",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "radio",
+      "value": "",
+      "validation": "",
+      "location": "affiliate",
+      "status": "0",
+      "sort_order": "2",
+      "language_id": "1",
+      "name": "Radio",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "24",
+          "language_id": "1",
+          "name": "Radio",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "1",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "select",
+      "value": "",
+      "validation": "",
+      "location": "account",
+      "status": "0",
+      "sort_order": "1",
+      "language_id": "1",
+      "name": "Select",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "1",
+          "language_id": "1",
+          "name": "Select",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "17",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "select",
+      "value": "",
+      "validation": "",
+      "location": "address",
+      "status": "0",
+      "sort_order": "1",
+      "language_id": "1",
+      "name": "Select",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "17",
+          "language_id": "1",
+          "name": "Select",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "25",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "select",
+      "value": "",
+      "validation": "",
+      "location": "affiliate",
+      "status": "0",
+      "sort_order": "1",
+      "language_id": "1",
+      "name": "Select",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "25",
+          "language_id": "1",
+          "name": "Select",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "4",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "text",
+      "value": "",
+      "validation": "",
+      "location": "account",
+      "status": "0",
+      "sort_order": "4",
+      "language_id": "1",
+      "name": "Text",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "4",
+          "language_id": "1",
+          "name": "Text",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "18",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "text",
+      "value": "",
+      "validation": "",
+      "location": "address",
+      "status": "0",
+      "sort_order": "4",
+      "language_id": "1",
+      "name": "Text",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "18",
+          "language_id": "1",
+          "name": "Text",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "26",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "text",
+      "value": "",
+      "validation": "",
+      "location": "affiliate",
+      "status": "0",
+      "sort_order": "4",
+      "language_id": "1",
+      "name": "Text",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "26",
+          "language_id": "1",
+          "name": "Text",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "5",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "textarea",
+      "value": "",
+      "validation": "",
+      "location": "account",
+      "status": "0",
+      "sort_order": "5",
+      "language_id": "1",
+      "name": "Textarea",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "5",
+          "language_id": "1",
+          "name": "Textarea",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "19",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "textarea",
+      "value": "",
+      "validation": "",
+      "location": "address",
+      "status": "0",
+      "sort_order": "5",
+      "language_id": "1",
+      "name": "Textarea",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "19",
+          "language_id": "1",
+          "name": "Textarea",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "27",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "textarea",
+      "value": "",
+      "validation": "",
+      "location": "affiliate",
+      "status": "0",
+      "sort_order": "5",
+      "language_id": "1",
+      "name": "Textarea",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "27",
+          "language_id": "1",
+          "name": "Textarea",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "8",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "time",
+      "value": "",
+      "validation": "",
+      "location": "account",
+      "status": "0",
+      "sort_order": "8",
+      "language_id": "1",
+      "name": "Time",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "8",
+          "language_id": "1",
+          "name": "Time",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "12",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "time",
+      "value": "",
+      "validation": "",
+      "location": "address",
+      "status": "0",
+      "sort_order": "8",
+      "language_id": "1",
+      "name": "Time",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "12",
+          "language_id": "1",
+          "name": "Time",
+          "code": "en-gb"
+        }
+      }
+    },
+    {
+      "custom_field_id": "28",
+      "customer_group_id": "1",
+      "required": "1",
+      "type": "time",
+      "value": "",
+      "validation": "",
+      "location": "affiliate",
+      "status": "0",
+      "sort_order": "8",
+      "language_id": "1",
+      "name": "Time",
+      "description": {
+        "en-gb": {
+          "custom_field_id": "28",
+          "language_id": "1",
+          "name": "Time",
+          "code": "en-gb"
+        }
+      }
+    }
+  ]
+}

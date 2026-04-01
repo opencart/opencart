@@ -9690,7 +9690,7 @@ textarea.form-control-lg {
   padding-left: var(--bs-breadcrumb-item-padding-x);
 }
 .breadcrumb-item + .breadcrumb-item::before {
-  font-family: "Font Awesome 6 Free";
+  font-family: "Font Awesome 7 Free";
   font-weight: 600;
   font-size: 0.7692rem;
   color: #ced4da;

@@ -20,8 +20,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 */
 	public function addTaxRate(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'tax_rate.info.' . $args[1]['geo_zone_id'],
-			'action' => 'task/catalog/tax_rate.info',
+			'code'   => 'tax_rate.' . $args[1]['geo_zone_id'],
+			'action' => 'task/catalog/tax_rate',
 			'args'   => ['geo_zone_id' => $args[1]['geo_zone_id']]
 		];
 
@@ -35,17 +35,17 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate new tax rate data with updated geo zone ID.
 	 *
-	 * Trigger admin/model/localisation/zone/editZone/before/before
+	 * Trigger admin/model/localisation/tax_rate/editTaxRate/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
 	 *
 	 * @return void
 	 */
-	public function editTaxRate(string &$route, array &$args, &$output): void {
+	public function editTaxRate(string &$route, array &$args): void {
 		$task_data = [
-			'code'   => 'tax_rate.info.' . $args[1]['geo_zone_id'],
-			'action' => 'task/catalog/tax_rate.info',
+			'code'   => 'tax_rate.' . $args[1]['geo_zone_id'],
+			'action' => 'task/catalog/tax_rate',
 			'args'   => ['geo_zone_id' => $args[1]['geo_zone_id']]
 		];
 
@@ -59,8 +59,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		if ($args[1]['geo_zone_id'] != $tax_rate_info['geo_zone_id']) {
 			$task_data = [
-				'code'   => 'tax_rate.info.' . $tax_rate_info['geo_zone_id'],
-				'action' => 'task/catalog/tax_rate.info',
+				'code'   => 'tax_rate.' . $tax_rate_info['geo_zone_id'],
+				'action' => 'task/catalog/tax_rate',
 				'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
 			];
 
@@ -80,7 +80,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function deleteTaxRate(string &$route, array &$args, &$output): void {
+	public function deleteTaxRate(string &$route, array &$args): void {
 		$this->load->model('localisation/tax_rate');
 
 		$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($args[0]);
@@ -88,7 +88,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		if ($tax_rate_info) {
 			$task_data = [
 				'code'   => 'tax_rate.delete.' . $tax_rate_info['geo_zone_id'],
-				'action' => 'task/admin/tax_rate.info',
+				'action' => 'task/admin/tax_rate.delete',
 				'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
 			];
 

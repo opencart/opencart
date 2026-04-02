@@ -18,22 +18,37 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	public function index(array $args = []): array {
 		$this->load->language('task/catalog/tax_class');
 
+		if (!array_key_exists('tax_class_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
 		$this->load->model('localisation/tax_class');
+
+		$tax_class_info = $this->model_localisation_tax_class->getTaxClass((int)$args['tax_class_id']);
+
+		if (!$tax_class_info) {
+			return ['error' => $this->language->get('error_tax_class')];
+		}
+
+		$this->load->model('setting/store');
 		$this->load->model('setting/task');
 
-		$tax_classes = $this->model_localisation_tax_class->getTaxClasses();
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
 
-		foreach ($tax_classes as $tax_class) {
+		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'tax_class',
+				'code'   => 'tax_class.info.' . $tax_class_info['tax_class_id'],
 				'action' => 'task/catalog/tax_class.info',
-				'args'   => ['tax_class_id' => $tax_class['tax_class_id']]
+				'args'   => [
+					'tax_class_id' => $tax_class_info['tax_class_id'],
+					'store_id'     => $store_id
+				]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => $this->language->get('text_task')];
+		return ['success' => sprintf($this->language->get('text_info'), $tax_class_info['name'])];
 	}
 
 	/**
@@ -52,6 +67,23 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
 		// Tax Class
 		$this->load->model('localisation/tax_class');
 
@@ -61,7 +93,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_tax_class')];
 		}
 
-		$directory = DIR_CATALOG . 'view/data/localisation/';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'tax_class-' . $tax_class_info['tax_class_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
@@ -84,17 +116,33 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
+	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/tax_class');
 
-		$files = oc_directory_read( DIR_CATALOG . 'view/data/localisation/', false, '/tax_class\-.+\.json$/');
+		if (!array_key_exists('tax_class_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
-		foreach ($files as $file) {
+		$this->load->model('localisation/tax_class');
+
+		$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($args['tax_class_id']);
+
+		if (!$geo_zone_info) {
+			return ['error' => $this->language->get('error_geo_zone')];
+		}
+
+		$this->load->model('setting/store');
+
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
+
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/tax_rate-' . $geo_zone_info['geo_zone_id'] . '.json';
+
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' => sprintf($this->language->get('text_delete'), $geo_zone_info['name'])];
 	}
 }

@@ -7,9 +7,9 @@ namespace Opencart\Admin\Controller\Task\Catalog;
  */
 class TaxRate extends \Opencart\System\Engine\Controller {
 	/**
-	 * Info
+	 * Index
 	 *
-	 * Generate tax rate information.
+	 * Generate tax class task list.
 	 *
 	 * @param array<string, string> $args
 	 *
@@ -22,6 +22,69 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_required')];
 		}
 
+		$this->load->model('localisation/geo_zone');
+
+		$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone((int)$args['geo_zone_id']);
+
+		if (!$geo_zone_info) {
+			return ['error' => $this->language->get('error_geo_zone')];
+		}
+
+		$this->load->model('setting/store');
+		$this->load->model('setting/task');
+
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+		foreach ($store_ids as $store_id) {
+			$task_data = [
+				'code'   => 'tax_rate.info.' . $store_id . '.' . $geo_zone_info['geo_zone_id'],
+				'action' => 'task/catalog/tax_rate.info',
+				'args'   => [
+					'geo_zone_id' => $geo_zone_info['geo_zone_id'],
+					'store_id'    => $store_id
+				]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		return ['success' => sprintf($this->language->get('text_info'), $geo_zone_info['name'])];
+	}
+
+	/**
+	 * Info
+	 *
+	 * Generate tax rate information.
+	 *
+	 * @param array<string, string> $args
+	 *
+	 * @return array
+	 */
+	public function info(array $args = []): array {
+		$this->load->language('task/catalog/tax_rate');
+
+		if (!array_key_exists('geo_zone_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
+
+		// Store
+		$store_info = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name'),
+			'url'      => HTTP_CATALOG
+		];
+
+		if ($args['store_id']) {
+			$this->load->model('setting/store');
+
+			$store_info = $this->model_setting_store->getStore($args['store_id']);
+
+			if (!$store_info) {
+				return ['error' => $this->language->get('error_store')];
+			}
+		}
+
+		// Geo Zone
 		$this->load->model('localisation/geo_zone');
 
 		$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($args['geo_zone_id']);
@@ -44,8 +107,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$directory = DIR_CATALOG . 'view/data/localisation/';
-		$filename = 'tax_rate-' . $geo_zone_info['geo_zone_id'] . '.yaml';
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
+		$filename = 'tax_rate-' . $geo_zone_info['geo_zone_id'] . '.json';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -59,7 +122,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Clear
+	 * Delete
 	 *
 	 * Delete generated JSON tax rate files.
 	 *
@@ -67,18 +130,34 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
+	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/tax_rate');
 
-		$files = oc_directory_read(DIR_CATALOG . 'view/data/localisation/', false, '/tax_rate\-.+\.json$/');
+		if (!array_key_exists('geo_zone_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
-		foreach ($files as $file) {
+		$this->load->model('localisation/geo_zone');
+
+		$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($args['geo_zone_id']);
+
+		if (!$geo_zone_info) {
+			return ['error' => $this->language->get('error_geo_zone')];
+		}
+
+		$this->load->model('setting/store');
+
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
+
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/tax_rate-' . $geo_zone_info['geo_zone_id'] . '.json';
+
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' => sprintf($this->language->get('text_delete'), $geo_zone_info['name'])];
 	}
 }
 

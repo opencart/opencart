@@ -1137,8 +1137,8 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('mail.admin.user.authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'admin/model/user/user.addToken/after', 'mail/authorize.reset', 1),
 
        ('ssr.article.add', 'Triggers article static site data creation.', 'admin/model/cms/article.addArticle/after', 'event/article.addArticle', 1),
-       ('ssr.article.edit', 'Triggers article static site data creation.', 'admin/model/cms/article.editArticle/after', 'event/article.editArticle', 1),
-       ('ssr.article.delete', 'Triggers article static site data creation.', 'admin/model/cms/article.deleteArticle/after', 'event/article.deleteArticle', 1),
+       ('ssr.article.edit', 'Triggers article static site data creation.', 'admin/model/cms/article.editArticle/before', 'event/article.editArticle', 1),
+       ('ssr.article.delete', 'Triggers article static site data creation.', 'admin/model/cms/article.deleteArticle/before', 'event/article.deleteArticle', 1),
 
        ('ssr.attribute.edit', 'Triggers attribute static site data creation.', 'admin/model/catalog/attribute.editAttributeGroup/after', 'event/attribute.editAttribute', 1),
 
@@ -1215,7 +1215,7 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.store.delete', 'Triggers store static site data creation.', 'admin/model/setting/store.deleteStore/before', 'event/store.deleteStore', 1),
 
        ('ssr.tax_class.add', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.addTaxClass/after', 'event/tax_class.addTaxClass', 1),
-       ('ssr.tax_class.edit', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.editTaxClass/after', 'event/tax_class.editTaxClass', 1),
+       ('ssr.tax_class.edit', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.editTaxClass/before', 'event/tax_class.editTaxClass', 1),
        ('ssr.tax_class.delete', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.deleteTaxClass/before', 'event/tax_class.deleteTaxClass', 1),
 
        ('ssr.tax_rate.add', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.addTaxRate/after', 'event/tax_rate.addTaxRate', 1),

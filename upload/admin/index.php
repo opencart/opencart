@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '4.1.0.4');
+define('VERSION', '4.2.0.0');
 
 // Added dirname function so the system will work from command line.
 if (is_file(dirname(__FILE__)  . '/config.php')) {

@@ -51,7 +51,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		$part = explode('/', $args['route']);
 
 		if ($part[0] == 'extension' && count($part) > 2) {
-			$language->addPath('extension/' . $part[1], DIR_EXTENSION . $part[1] . '/admin/language/');
+			$language->addPath('extension/' . $part[1], DIR_EXTENSION . $part[1] . '/catalog/language/');
 		}
 
 		$language->load($args['route']);

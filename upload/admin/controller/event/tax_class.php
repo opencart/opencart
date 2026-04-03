@@ -32,7 +32,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/tax_class');
 		$this->load->model('localisation/tax_rate');
 
-		$results = $this->model_localisation_tax_class->getTaxRules($args[0]);
+		$results = $this->model_localisation_tax_class->getTaxRules($output);
 
 		foreach ($results as $result) {
 			$tax_rule_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
@@ -74,28 +74,49 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/tax_class');
 		$this->load->model('localisation/tax_rate');
-		
+
+		if (isset($args[1]['tax_rule'])) {
+			foreach ($args[1]['tax_rule'] as $result) {
+				$tax_rule_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
+
+				if ($tax_rule_info) {
+					$task_data = [
+						'code'   => 'tax_rate.' . $tax_rule_info['geo_zone_id'],
+						'action' => 'task/catalog/tax_rate',
+						'args'   => ['geo_zone_id' => $tax_rule_info['geo_zone_id']]
+					];
+
+					$this->model_setting_task->addTask($task_data);
+				}
+			}
+		}
+
 		$results = $this->model_localisation_tax_class->getTaxRules($args[0]);
 
 		foreach ($results as $result) {
-			$tax_rule_info = $this->model_localisation_tax_rate->getTaxRule($result['tax_rule_id']);
+			unset($result['tax_rule_id']);
+			unset($result['tax_class_id']);
 
-			if ($tax_rule_info) {
-				$task_data = [
-					'code'   => 'tax_rate.' . $tax_rule_info['geo_zone_id'],
-					'action' => 'task/catalog/tax_rate',
-					'args'   => ['geo_zone_id' => $tax_rule_info['geo_zone_id']]
-				];
+			if (!in_array($result, $args[1]['tax_rule'])) {
+				$tax_rule_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
 
-				$this->model_setting_task->addTask($task_data);
+				if ($tax_rule_info) {
+					$task_data = [
+						'code'   => 'tax_rate.delete.' . $tax_rate_info['geo_zone_id'],
+						'action' => 'task/admin/tax_rate.delete',
+						'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
+					];
+
+					$this->model_setting_task->addTask($task_data);
+				}
 			}
 		}
 	}
 
 	/**
-	 * Delete Tax Rate
+	 * Delete Tax Class
 	 *
-	 * Generate new country info page with deleted zone.
+	 * Generate new tax class info page with deleted zone.
 	 *
 	 * Trigger admin/model/localisation/tax_class/deleteTaxClass/before
 	 *
@@ -105,20 +126,33 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteTaxClass(string &$route, array &$args): void {
+		$task_data = [
+			'code'   => 'tax_class.delete.' . $args[0],
+			'action' => 'task/catalog/tax_class.delete',
+			'args'   => ['tax_class_id' => $args[0]]
+		];
+
+		$this->load->model('setting/task');
+
+		$this->model_setting_task->addTask($task_data);
+
+		$this->load->model('localisation/tax_class');
 		$this->load->model('localisation/tax_rate');
 
-		$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($args[0]);
+		$results = $this->model_localisation_tax_class->getTaxRules($args[0]);
 
-		if ($tax_rate_info) {
-			$task_data = [
-				'code'   => 'tax_rate.delete.' . $tax_rate_info['geo_zone_id'],
-				'action' => 'task/admin/tax_rate.delete',
-				'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
-			];
+		foreach ($results as $result) {
+			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
 
-			$this->load->model('setting/task');
+			if ($tax_rate_info) {
+				$task_data = [
+					'code'   => 'tax_rate.delete.' . $tax_rate_info['geo_zone_id'],
+					'action' => 'task/admin/tax_rate.delete',
+					'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
+				];
 
-			$this->model_setting_task->addTask($task_data);
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 }

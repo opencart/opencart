@@ -93,7 +93,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/review');
 
-		$results = $this->model_catalog_review->getReviewsByProductId($product_id, ($page - 1) * $limit, $limit);
+		$results = $this->model_catalog_review->getReviewsByProductId($product_id, intval(($page - 1) * $limit), $limit);
 
 		foreach ($results as $result) {
 			$data['reviews'][] = [

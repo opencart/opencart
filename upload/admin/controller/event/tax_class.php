@@ -35,13 +35,13 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_tax_class->getTaxRules($output);
 
 		foreach ($results as $result) {
-			$tax_rule_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
+			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
 
-			if ($tax_rule_info) {
+			if ($tax_rate_info) {
 				$task_data = [
-					'code'   => 'tax_rate.' . $tax_rule_info['geo_zone_id'],
+					'code'   => 'tax_rate.' . $tax_rate_info['geo_zone_id'],
 					'action' => 'task/catalog/tax_rate',
-					'args'   => ['geo_zone_id' => $tax_rule_info['geo_zone_id']]
+					'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
 				];
 
 				$this->model_setting_task->addTask($task_data);
@@ -77,13 +77,13 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		if (isset($args[1]['tax_rule'])) {
 			foreach ($args[1]['tax_rule'] as $result) {
-				$tax_rule_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
+				$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
 
-				if ($tax_rule_info) {
+				if ($tax_rate_info) {
 					$task_data = [
-						'code'   => 'tax_rate.' . $tax_rule_info['geo_zone_id'],
+						'code'   => 'tax_rate.' . $tax_rate_info['geo_zone_id'],
 						'action' => 'task/catalog/tax_rate',
-						'args'   => ['geo_zone_id' => $tax_rule_info['geo_zone_id']]
+						'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
 					];
 
 					$this->model_setting_task->addTask($task_data);
@@ -98,12 +98,12 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			unset($result['tax_class_id']);
 
 			if (!in_array($result, $args[1]['tax_rule'])) {
-				$tax_rule_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
+				$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
 
-				if ($tax_rule_info) {
+				if ($tax_rate_info) {
 					$task_data = [
 						'code'   => 'tax_rate.delete.' . $tax_rate_info['geo_zone_id'],
-						'action' => 'task/admin/tax_rate.delete',
+						'action' => 'task/catalog/tax_rate.delete',
 						'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
 					];
 

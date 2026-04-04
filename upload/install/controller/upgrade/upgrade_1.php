@@ -234,7 +234,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 					$next = array_shift($directory);
 
 					if (is_dir($next)) {
-						foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $delete) {
+						foreach (oc_glob(trim($next, '/') . '/{*,.[!.]*,..?*}') as $delete) {
 							// If directory add to path array
 							$directory[] = $delete;
 						}
@@ -387,7 +387,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+				foreach (oc_glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}') as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
 						$directory[] = $file;

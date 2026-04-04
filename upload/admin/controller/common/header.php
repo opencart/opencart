@@ -93,24 +93,17 @@ class Header extends \Opencart\System\Engine\Controller {
 				$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
 			}
 
-			// Store
-			$data['stores'] = [];
+			// Stores
+			$stores = [];
 
-			$data['stores'][] = [
+			$stores[] = [
 				'name' => $this->config->get('config_name'),
 				'href' => HTTP_CATALOG
 			];
 
 			$this->load->model('setting/store');
 
-			$results = $this->model_setting_store->getStores();
-
-			foreach ($results as $result) {
-				$data['stores'][] = [
-					'name' => $result['name'],
-					'href' => $result['url']
-				];
-			}
+			$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token']);
 		}

@@ -22,10 +22,9 @@
     "vendor-dir": "upload/system/storage/vendor/"
   },
   "require": {
-    "php": ">=8.0.2",
-    "scssphp/scssphp": "^1.10.0",
-    "twig/twig": "^3.18.0",
-    "aws/aws-sdk-php": "^3.336.13"
+    "php": ">=8.1",
+    "scssphp/scssphp": "^1.13",
+    "twig/twig": "^3.24"
   },
   "autoload-dev": {
       "psr-4": {

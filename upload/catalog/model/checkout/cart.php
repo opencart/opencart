@@ -81,7 +81,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'subscription' => $subscription_data,
 				'option'       => $option_data,
 				'price_text'   => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-				'total_text'   => $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+				'total_text'   => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))*$product['quantity'], $this->session->data['currency'])
 			] + $product;
 		}
 
@@ -93,14 +93,14 @@ class Cart extends \Opencart\System\Engine\Model {
 	 *
 	 * @param array<int, array<string, mixed>> $totals
 	 * @param array<int, float>                $taxes
-	 * @param int                              $total
+	 * @param float                            $total
 	 *
 	 * @return void
 	 */
-	public function getTotals(array &$totals, array &$taxes, int &$total): void {
+	public function getTotals(array &$totals, array &$taxes, float &$total): void {
 		$sort_order = [];
 
-		// Extension
+		// Extensions
 		$this->load->model('setting/extension');
 
 		$results = $this->model_setting_extension->getExtensionsByType('total');

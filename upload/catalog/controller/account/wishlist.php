@@ -70,9 +70,9 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/wishlist');
 
 		if (!$this->load->controller('account/login.validate')) {
-			$this->session->data['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
+            $token = isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : '';
 
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true));
+            $this->session->data['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . $token);
 		}
 
 		$this->response->setOutput($this->getList());
@@ -104,7 +104,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_wishlist->getWishlist($this->customer->getId());
 
 		foreach ($results as $result) {
-			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+			$product_info = $this->model_catalog_product->getProduct((int)$result['product_id']);
 
 			if ($product_info) {
 				if ($product_info['image'] && is_file(DIR_IMAGE . html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -241,7 +241,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_remove');
 		}
-
+        $json['customer_token'] = $this->session->data['customer_token'];
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

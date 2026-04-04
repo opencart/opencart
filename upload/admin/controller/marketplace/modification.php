@@ -307,7 +307,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 						}
 
 						if ($path) {
-							$files = glob($path, GLOB_BRACE);
+							$files = oc_glob($path);
 
 							if ($files) {
 								foreach ($files as $file) {

@@ -52,11 +52,15 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $store_name);
 
-			$data['reset'] = $this->url->link('account/forgotten.reset', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($customer_info['email']) . '&code=' . $code, true);
+            $resetUrl = $this->url->link('account/forgotten.reset', 'language=' . $this->config->get('config_language')
+                . '&email=' . urlencode($customer_info['email'])
+                . '&code=' . $code, true);
+			$data['reset'] = '<a href="' . $resetUrl . '">' . $resetUrl . '</a>';
 			$data['ip'] = oc_get_ip();
 
-			$data['store'] = $store_name;
-			$data['store_url'] = $this->config->get('config_url');
+            $data['store'] = $store_name;
+            $storeUrl = $this->config->get('config_url');
+            $data['store_url'] = '<a href="' . $storeUrl . '">' . $storeUrl . '</a>';
 
 			if ($this->config->get('config_mail_engine')) {
 				$mail_option = [

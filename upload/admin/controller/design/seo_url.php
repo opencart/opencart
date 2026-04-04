@@ -419,21 +419,17 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$data['seo_url_id'] = 0;
 		}
 
-		// Store
-		$data['stores'] = [];
+		// Stores
+		$stores = [];
 
-		$data['stores'][] = [
+		$stores[] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		];
 
 		$this->load->model('setting/store');
 
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = $result;
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		if (!empty($seo_url_info)) {
 			$data['store_id'] = $seo_url_info['store_id'];
@@ -587,72 +583,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			}
 
 			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Refresh
-	 *
-	 * @return void
-	 */
-	public function refresh(): void {
-		$this->load->language('design/seo_url');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'design/seo_url')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$data['seo_urls'] = [];
-
-			$filter_data = [
-				'filter_keyword'     => $filter_keyword,
-				'filter_key'         => $filter_key,
-				'filter_value'       => $filter_value,
-				'filter_store_id'    => $filter_store_id,
-				'filter_language_id' => $filter_language_id,
-				'sort'               => $sort,
-				'order'              => $order,
-				'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
-				'limit'              => $this->config->get('config_pagination_admin')
-			];
-
-			$this->load->model('design/seo_url');
-
-			$results = $this->model_catalog_product->getProducts($filter_data);
-
-			foreach ($results as $result) {
-				$this->model_design_seo_url->deleteSeoUrl($seo_url_id);
-			}
-
-			// Language
-			$this->load->model('localisation/language');
-
-			$results = $this->model_design_seo_url->getSeoUrls($filter_data);
-
-			foreach ($results as $result) {
-				$this->model_design_seo_url->deleteSeoUrl($seo_url_id);
-			}
-
-			$email_total = $this->model_design_seo_url->getTotalEmailsByProductsOrdered($this->request->post['product']);
-
-			$start = ($page - 1) * $limit;
-			$end = $start > ($email_total - $limit) ? $email_total : ($start + $limit);
-
-			if ($end < $total) {
-				$json['text'] = sprintf($this->language->get('text_install'), $start, $end, $total);
-
-				$json['next'] = $this->url->link('marketplace/installer.install', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . ($page + 1), true);
-			} else {
-				$json['success'] = $this->language->get('text_success');
-
-				$json['next'] = $this->url->link('marketplace/installer.xml', 'user_token=' . $this->session->data['user_token'] . $url, true);
-			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

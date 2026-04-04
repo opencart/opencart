@@ -63,17 +63,13 @@ class Session {
 	 * @return string returns the current session ID
 	 */
 	public function start(string $session_id = ''): string {
-		if (!$session_id) {
+		if (!$session_id || !preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $session_id)) {
 			$session_id = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
-		}
-
-		if (preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $session_id)) {
-			$this->session_id = $session_id;
 		} else {
-			throw new \Exception('Error: Invalid session ID!');
-		}
+            $this->data = $this->adaptor->read($session_id);
+        }
 
-		$this->data = $this->adaptor->read($session_id);
+        $this->session_id = $session_id;
 
 		return $session_id;
 	}

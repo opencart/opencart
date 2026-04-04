@@ -86,26 +86,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Token
-	 *
-	 * Edit customer token record in the database.
-	 *
-	 * @param int    $customer_id primary key of the customer record
-	 * @param string $token
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('customer/customer');
-	 *
-	 * $this->model_customer_customer->editToken($customer_id, $token);
-	 */
-	public function editToken(int $customer_id, string $token): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
-	}
-
-	/**
 	 * Edit Commenter
 	 *
 	 * Edit customer commenter record in the database.
@@ -152,6 +132,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->deleteTransactions($customer_id);
 		$this->deleteWishlists($customer_id);
 		$this->deleteIps($customer_id);
+		$this->deleteTokens($customer_id);
 
 		// Affiliate
 		$this->load->model('marketing/affiliate');
@@ -1343,25 +1324,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Reset Authorizes
-	 *
-	 * Edit customer authorize record in the database.
-	 *
-	 * @param int $customer_id primary key of the customer record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('customer/customer');
-	 *
-	 * $this->model_account_customer->resetAuthorizes($customer_id);
-	 */
-	public function resetAuthorizes(int $customer_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
-	}
-
-	/**
 	 * Delete Authorizes
 	 *
 	 * Delete customer authorize records in the database.
@@ -1385,6 +1347,25 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 
 		$this->db->query($sql);
+	}
+
+	/**
+	 * Reset Authorizes
+	 *
+	 * Edit customer authorize record in the database.
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $this->model_account_customer->resetAuthorizes($customer_id);
+	 */
+	public function resetAuthorizes(int $customer_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
 	/**
@@ -1489,5 +1470,36 @@ class Customer extends \Opencart\System\Engine\Model {
 		} else {
 			return 0;
 		}
+	}
+
+	/*
+	 * Add Token
+	 */
+	public function addToken(int $customer_id, string $type, string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `customer_id` = '" . (int)$customer_id . "' AND `type` = '" . $this->db->escape($type) . "'");
+
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_token` SET `customer_id` = '" . (int)$customer_id . "', `code` = '" . $this->db->escape($code) . "', `type` = '" . $this->db->escape($type) . "', `date_added` = NOW()");
+	}
+
+	public function deleteTokens(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
+	 * Delete Token By Code
+	 *
+	 * @param string $code
+	 * @param int    $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('account/customer');
+	 *
+	 * $this->model_account_customer->deleteToken($customer_id);
+	 */
+	public function deleteTokenByCode(string $code): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 }

@@ -357,7 +357,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$special = '';
 
-			$product_discounts = $this->model_catalog_product->getDiscounts($result['product_id']);
+			$product_discounts = $this->model_catalog_product->getDiscounts((int)$result['product_id']);
 
 			foreach ($product_discounts as $product_discount) {
 				if (($product_discount['date_start'] == '0000-00-00' || strtotime($product_discount['date_start']) < time()) && ($product_discount['date_end'] == '0000-00-00' || strtotime($product_discount['date_end']) > time())) {
@@ -748,6 +748,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['location'] = '';
 		}
 
+        if (!empty($product_info)) {
+            $data['date_added'] = date('Y-m-d', strtotime($product_info['date_added']));
+        } else {
+            $data['date_added'] = date('Y-m-d');
+        }
+
 		if (!empty($product_info)) {
 			$data['date_available'] = ($product_info['date_available'] != '0000-00-00') ? $product_info['date_available'] : '';
 		} else {
@@ -877,21 +883,17 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Store
-		$data['stores'] = [];
+		// Stores
+		$stores = [];
 
-		$data['stores'][] = [
+		$stores[] = [
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
+			'name'     => $this->config->get('config_name')
 		];
 
 		$this->load->model('setting/store');
 
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = $result;
-		}
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		if ($product_id) {
 			$data['product_store'] = $this->model_catalog_product->getStores($product_id);
@@ -1187,6 +1189,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			'minimum'             => 0,
 			'subtract'            => 0,
 			'stock_status_id'     => 0,
+			'date_added'          => '',
 			'date_available'      => '',
 			'manufacturer_id'     => 0,
 			'shipping'            => 0,
@@ -1450,7 +1453,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
+			$filter_name = '%' . $this->request->get['filter_name'] . '%';
 		} else {
 			$filter_name = '';
 		}

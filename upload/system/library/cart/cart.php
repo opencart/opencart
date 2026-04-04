@@ -90,10 +90,10 @@ class Cart {
 
 					$option_data = [];
 
-					$product_options = (array)json_decode($cart['option'], true);
+					$product_options = (array) json_decode(!empty($cart['option']) ? $cart['option'] : '{}', true);
 
-					// Merge variant code with options
-					$variant = json_decode($product_query->row['variant'], true);
+					$variant = json_decode(!empty($product_query->row['variant']) ? $product_query->row['variant'] : '{}', true);
+
 
 					if ($variant) {
 						foreach ($variant as $key => $value) {
@@ -474,10 +474,16 @@ class Cart {
 				$tax_rates = $this->tax->getRates($product['price'], $product['tax_class_id']);
 
 				foreach ($tax_rates as $tax_rate) {
-					if (!isset($tax_data[$tax_rate['tax_rate_id']])) {
-						$tax_data[$tax_rate['tax_rate_id']] = ($tax_rate['amount'] * $product['quantity']);
+					if ($tax_rate['type'] == 'P') {
+						$quantity = $product['quantity'];
 					} else {
-						$tax_data[$tax_rate['tax_rate_id']] += ($tax_rate['amount'] * $product['quantity']);
+						$quantity = 1;
+					}
+
+					if (!isset($tax_data[$tax_rate['tax_rate_id']])) {
+						$tax_data[$tax_rate['tax_rate_id']] = ($tax_rate['amount'] * $quantity);
+					} else {
+						$tax_data[$tax_rate['tax_rate_id']] += ($tax_rate['amount'] * $quantity);
 					}
 				}
 			}

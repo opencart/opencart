@@ -18,7 +18,27 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = (string)$this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (string)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
 		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . urlencode(html_entity_decode($this->request->get['filter_store_id'], ENT_QUOTES, 'UTF-8'));
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
@@ -49,6 +69,20 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->load->controller('catalog/manufacturer.getList');
 
+		$stores = [];
+
+		$stores[] = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name')
+		];
+
+		$this->load->model('setting/store');
+
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
+
+		$data['filter_name'] = $filter_name;
+		$data['filter_store_id'] = $filter_store_id;
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -75,10 +109,22 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = $this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = $this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
-			$sort = 'name';
+			$sort = 'md.name';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -95,6 +141,14 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . urlencode(html_entity_decode($this->request->get['filter_store_id'], ENT_QUOTES, 'UTF-8'));
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -109,15 +163,28 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Manufacturer
+		// Manufacturers
 		$data['manufacturers'] = [];
 
 		$filter_data = [
+			'filter_name'     => $filter_name,
+			'filter_store_id' => $filter_store_id,
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$stores = [];
+
+		$stores[] = [
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name')
+		];
+
+		$this->load->model('setting/store');
+
+		$data['stores'] = array_merge($stores, $this->model_setting_store->getStores());
 
 		// Image
 		$this->load->model('tool/image');
@@ -127,9 +194,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 
 		foreach ($results as $result) {
-			$image = $result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))
-				? $result['image']
-				: 'no_image.png';
+			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
+				$image = $result['image'];
+			} else {
+				$image = 'no_image.png';
+			}
 
 			$data['manufacturers'][] = [
 				'image' => $this->model_tool_image->resize($image, 40, 40),
@@ -145,8 +214,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+		// Sorts
+		$data['sort_name'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=md.name' . $url);
+		$data['sort_store'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=store' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.sort_order' . $url);
 
 		$url = '';
 
@@ -158,8 +229,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
+		// Total Manufacturers
 		$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
 
+		// Pagination
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $manufacturer_total,
 			'page'  => $page,
@@ -216,6 +289,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('catalog/manufacturer.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		// Manufacturer
 		if (isset($this->request->get['manufacturer_id'])) {
 			$this->load->model('catalog/manufacturer');
 
@@ -279,7 +353,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
-		// Language
+		// Languages
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -293,7 +367,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['manufacturer_seo_url'] = [];
 		}
 
-		// Layout
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -367,6 +441,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Manufacturer
 			$this->load->model('catalog/manufacturer');
 
 			if (!$post_info['manufacturer_id']) {
@@ -406,6 +481,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $manufacturer_id) {
+			// Total Products
 			$product_total = $this->model_catalog_product->getTotalProductsByManufacturerId($manufacturer_id);
 
 			if ($product_total) {
@@ -414,6 +490,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Manufacturer
 			$this->load->model('catalog/manufacturer');
 
 			foreach ($selected as $manufacturer_id) {
@@ -435,6 +512,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	public function autocomplete(): void {
 		$json = [];
 
+		// Manufacturers
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('catalog/manufacturer');
 

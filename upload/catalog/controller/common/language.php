@@ -18,24 +18,24 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('common/language.save', 'language=' . $this->config->get('config_language'));
 
-		$data['code'] = $this->request->get['language'] ?? $this->config->get('config_language');
-
-		$data['languages'] = [];
-
 		$this->load->model('localisation/language');
-
 		$results = $this->model_localisation_language->getLanguages();
 
-		foreach ($results as $result) {
-			if ($result['status']) {
-				$data['languages'][$result['code']] = $result;
-			}
-		}
+        $data['languages'] = [];
+        $code = $this->config->get('config_language');
+        $requestLng = $this->request->get['language'] ?? '';
 
-		$code = $data['code'];
+		foreach ($results as $result) {
+            $data['languages'][$result['code']] = $result;
+
+            if ($result['code'] == $requestLng) {
+                $code = $result['code'];
+            }
+		}
 
 		$data['name'] = $data['languages'][$code]['name'];
 		$data['image'] = $data['languages'][$code]['image'];
+        $data['code'] = $code;
 
 		// Build the url
 		$url_data = $this->request->get;
@@ -79,6 +79,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$post_info = $this->request->post + $required;
 
+		// Language
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguageByCode($post_info['code']);
@@ -88,6 +89,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 

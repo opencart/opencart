@@ -89,7 +89,7 @@ abstract class Template
         }
 
         if (!isset($this->parents[$parent])) {
-            $this->parents[$parent] = $this->loadTemplate($parent);
+            $this->parents[$parent] = $this->load($parent, -1);
         }
 
         return $this->parents[$parent];
@@ -158,7 +158,7 @@ abstract class Template
             if ($this->env->isDebug()) {
                 ob_start();
             } else {
-                ob_start(function () { return ''; });
+                ob_start(static function () { return ''; });
             }
             $this->displayParentBlock($name, $context, $blocks);
 
@@ -193,7 +193,7 @@ abstract class Template
             if ($this->env->isDebug()) {
                 ob_start();
             } else {
-                ob_start(function () { return ''; });
+                ob_start(static function () { return ''; });
             }
             try {
                 $this->displayBlock($name, $context, $blocks, $useBlocks);
@@ -270,21 +270,15 @@ abstract class Template
     /**
      * @param string|TemplateWrapper|array<string|TemplateWrapper> $template
      */
-    protected function loadTemplate($template, $templateName = null, $line = null, $index = null): self|TemplateWrapper
+    protected function load(string|TemplateWrapper|array $template, int $line, ?int $index = null): self
     {
         try {
             if (\is_array($template)) {
-                return $this->env->resolveTemplate($template);
+                return $this->env->resolveTemplate($template)->unwrap();
             }
 
             if ($template instanceof TemplateWrapper) {
-                return $template;
-            }
-
-            if ($template instanceof self) {
-                trigger_deprecation('twig/twig', '3.9', 'Passing a "%s" instance to "%s" is deprecated.', self::class, __METHOD__);
-
-                return $template;
+                return $template->unwrap();
             }
 
             if ($template === $this->getTemplateName()) {
@@ -299,14 +293,14 @@ abstract class Template
             return $this->env->loadTemplate($class, $template, $index);
         } catch (Error $e) {
             if (!$e->getSourceContext()) {
-                $e->setSourceContext($templateName ? new Source('', $templateName) : $this->getSourceContext());
+                $e->setSourceContext($this->getSourceContext());
             }
 
             if ($e->getTemplateLine() > 0) {
                 throw $e;
             }
 
-            if (!$line) {
+            if (-1 === $line) {
                 $e->guess();
             } else {
                 $e->setTemplateLine($line);
@@ -317,7 +311,28 @@ abstract class Template
     }
 
     /**
+     * @param string|TemplateWrapper|array<string|TemplateWrapper> $template
+     *
+     * @deprecated since Twig 3.21 and will be removed in 4.0. Use Template::load() instead.
+     */
+    protected function loadTemplate($template, $templateName = null, ?int $line = null, ?int $index = null): self|TemplateWrapper
+    {
+        trigger_deprecation('twig/twig', '3.21', 'The "%s" method is deprecated.', __METHOD__);
+
+        if (null === $line) {
+            $line = -1;
+        }
+
+        if ($template instanceof self) {
+            return $template;
+        }
+
+        return $this->load($template, $line, $index);
+    }
+
+    /**
      * @internal
+     *
      * @return $this
      */
     public function unwrap(): self
@@ -352,7 +367,7 @@ abstract class Template
             if ($this->env->isDebug()) {
                 ob_start();
             } else {
-                ob_start(function () { return ''; });
+                ob_start(static function () { return ''; });
             }
             try {
                 $this->display($context);
@@ -492,7 +507,7 @@ abstract class Template
         return $parent->hasMacro($name, $context);
     }
 
-    protected function getTemplateForMacro(string $name, array $context, int $line, Source $source): Template
+    protected function getTemplateForMacro(string $name, array $context, int $line, Source $source): self
     {
         if (method_exists($this, $name)) {
             return $this;

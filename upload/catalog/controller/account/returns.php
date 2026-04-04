@@ -228,7 +228,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		if (isset($this->request->get['product_id'])) {
-			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+			$product_info = $this->model_catalog_product->getProduct((int)$this->request->get['product_id']);
 		}
 
 		if (!empty($order_info)) {

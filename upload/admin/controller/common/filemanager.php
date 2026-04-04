@@ -62,7 +62,7 @@ class ControllerCommonFileManager extends Controller {
 		$images = array_splice($images, ($page - 1) * 16, 16);
 
 		foreach ($images as $image) {
-			$name = str_split(basename($image), 14);
+			$name = basename($image);
 
 			if (is_dir($image)) {
 				$url = '';
@@ -77,7 +77,7 @@ class ControllerCommonFileManager extends Controller {
 
 				$data['images'][] = array(
 					'thumb' => '',
-					'name'  => implode(' ', $name),
+					'name'  => $name,
 					'type'  => 'directory',
 					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 					'href'  => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url, true)
@@ -85,7 +85,7 @@ class ControllerCommonFileManager extends Controller {
 			} elseif (is_file($image)) {
 				$data['images'][] = array(
 					'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
-					'name'  => implode(' ', $name),
+					'name'  => $name,
 					'type'  => 'image',
 					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 					'href'  => $server . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))

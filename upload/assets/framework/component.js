@@ -1,10 +1,11 @@
 export { WebComponent } from './library/webcomponent.js';
 
-// Components
+// General
 import('./component/alert.js');
 import('./component/button.js');
 import('./component/date.js');
 //import './component/modal.js';
+import('./component/include.js');
 import('./component/pagination.js');
 
 // Custom

@@ -19,16 +19,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addTaxClass(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'tax_class.' . $output,
-			'action' => 'task/catalog/tax_class',
-			'args'   => ['tax_class_id' => $output]
-		];
-
 		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
 		$this->load->model('localisation/tax_class');
 		$this->load->model('localisation/tax_rate');
 
@@ -62,19 +53,10 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editTaxClass(string &$route, array &$args, &$output): void {
-		$task_data = [
-			'code'   => 'tax_class.' . $args[0],
-			'action' => 'task/catalog/tax_class',
-			'args'   => ['tax_class_id' => $args[0]]
-		];
-
 		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-		$this->load->model('localisation/tax_class');
 		$this->load->model('localisation/tax_rate');
 
+		// Add tax rates
 		if (isset($args[1]['tax_rule'])) {
 			foreach ($args[1]['tax_rule'] as $result) {
 				$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($result['tax_rate_id']);
@@ -90,6 +72,9 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
+
+		// Remove any old rates not in the new rates.
+		$this->load->model('localisation/tax_class');
 
 		$results = $this->model_localisation_tax_class->getTaxRules($args[0]);
 
@@ -126,16 +111,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function deleteTaxClass(string &$route, array &$args): void {
-		$task_data = [
-			'code'   => 'tax_class.delete.' . $args[0],
-			'action' => 'task/catalog/tax_class.delete',
-			'args'   => ['tax_class_id' => $args[0]]
-		];
-
 		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
 		$this->load->model('localisation/tax_class');
 		$this->load->model('localisation/tax_rate');
 

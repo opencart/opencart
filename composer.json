@@ -22,7 +22,7 @@
     "vendor-dir": "upload/system/storage/vendor/"
   },
   "require": {
-    "php": ">=8.0.2",
+    "php": ">=8.1",
     "scssphp/scssphp": "^1.13",
     "twig/twig": "^3.24"
   },

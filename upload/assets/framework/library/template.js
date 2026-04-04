@@ -1,3 +1,4 @@
+const IS_NODE = typeof process !== 'undefined' && !!process.versions?.node;
 /* OpenCart Twig replacement. Based on Django, Nunjucks template syntax. */
 class CurlyTag {
     static instance = null;
@@ -69,6 +70,9 @@ class CurlyTag {
             ],
             comment: [
                 'endcomment'
+            ],
+            unless: [
+                'endunless'
             ]
         };
 
@@ -186,7 +190,7 @@ class CurlyTag {
                 });
             },
             length: (value) => {
-                return typeof value === 'array' || typeof value === 'string' ? value.length : 0;
+                return Array.isArray(value) || typeof value === 'string' ? value.length : 0;
             },
             offset: (value, offset) => {
                 return value.slice(offset);
@@ -307,6 +311,18 @@ class CurlyTag {
 
             if (this.path.has(namespace)) {
                 file = this.path.get(namespace) + path.substr(path, namespace.length) + '.html';
+            }
+        }
+
+        if (IS_NODE) {
+            const fs = await import('node:fs/promises');
+
+            try {
+                return await fs.readFile(file, 'utf-8');
+            } catch {
+                console.log(`[Template] Could not load template file ${path}!`);
+
+                return '';
             }
         }
 
@@ -574,11 +590,11 @@ class CurlyTag {
         value = this.filter.escape(value ?? '');
 
         // Trim whitespace
-        if (token.raw[3] == '-') {
+        if (token.raw[2] == '-') {
             value = value.trimStart();
         }
 
-        if (token.raw[-3] == '-') {
+        if (token.raw.at(-3) == '-') {
             value = value.trimEnd();
         }
 
@@ -894,11 +910,9 @@ class CurlyTag {
         let top = {};
 
         for (let i = stack.length - 1; i >= 0; i--) {
-            let top = stack[i];
+            top = stack[i];
 
             if (top.type == 'for') {
-                top = stack[i];
-
                 break;
             }
 
@@ -1042,7 +1056,7 @@ class CurlyTag {
         stack.push({
             type: 'capture',
             filter: match[1],
-            output: ''
+            value: ''
         });
     }
 

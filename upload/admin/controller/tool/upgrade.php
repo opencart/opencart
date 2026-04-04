@@ -44,10 +44,10 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade');
 
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
 		$response = curl_exec($curl);
 
@@ -121,9 +121,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
 
 			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
+			curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 300);
 			curl_setopt($curl, CURLOPT_FILE, $handle);
 

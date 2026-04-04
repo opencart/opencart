@@ -1219,8 +1219,8 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.tax_class.delete', 'Triggers tax class static site data creation.', 'admin/model/localisation/tax_class.deleteTaxClass/before', 'event/tax_class.deleteTaxClass', 1),
 
        ('ssr.tax_rate.add', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.addTaxRate/after', 'event/tax_rate.addTaxRate', 1),
-       ('ssr.tax_rate.edit', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.editTaxRate/after', 'event/tax_rate.editTaxRate', 1),
-       ('ssr.tax_rate.delete', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.deleteTaxRate/after', 'event/tax_rate.deleteTaxRate', 1),
+       ('ssr.tax_rate.edit', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.editTaxRate/before', 'event/tax_rate.editTaxRate', 1),
+       ('ssr.tax_rate.delete', 'Triggers tax rate static site data creation.', 'admin/model/localisation/tax_rate.deleteTaxRate/before', 'event/tax_rate.deleteTaxRate', 1),
 
        ('ssr.template.add', 'Triggers template static site data creation.', 'admin/model/design/template.addTemplate/after', 'event/template.addTemplate', 1),
        ('ssr.template.edit', 'Triggers template static site data creation.', 'admin/model/design/template.editTemplate/after', 'event/template.editTemplate', 1),

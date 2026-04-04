@@ -45,7 +45,8 @@ class PDO {
 		$required = [
 			'hostname',
 			'username',
-			'database'
+			'database',
+			'password'
 		];
 
 		foreach ($required as $key) {

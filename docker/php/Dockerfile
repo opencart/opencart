@@ -26,9 +26,17 @@ RUN install-php-extensions \
     redis \
     zip
 
-# Configure www-data user home directory
-RUN usermod -d /home/www-data -m www-data
-RUN mkdir -p /home/www-data && chown www-data:www-data /home/www-data
+# Configure user home directory
+ARG PHP_UNAME
+ARG PHP_UID
+ENV PHP_UNAME=${PHP_UNAME}
+ENV PHP_UID=${PHP_UID}
+
+RUN useradd -m -G www-data,root -u $PHP_UID -d /home/$PHP_UNAME $PHP_UNAME && \
+    chown -R $PHP_UNAME:www-data /var/www && \
+    chmod -R g+w /var/www
+
+ENV HOME=/home/$PHP_UNAME
 
 # Copy OpenCart's original php.ini
 COPY upload/php.ini /usr/local/etc/php/conf.d/opencart.ini

@@ -136,6 +136,10 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				continue;
 			}
 
+			if ($key == 'path' || $key == 'product_id') {
+				return $link;
+			}
+			
 			// Run through the regexes to match and replace queries to a path
 			if (isset($this->regex[$key])) {
 				foreach ((array)$this->regex[$key] as $result) {

@@ -894,7 +894,16 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
-		// Payment Method
+        // Countries
+        $this->load->model('localisation/country');
+        $data['countries'] = $this->model_localisation_country->getCountries();
+
+        // Zones
+        $this->load->model('localisation/zone');
+        $data['payment_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['payment_country_id']);
+
+
+        // Payment Method
 		if (!empty($order_info['payment_method'])) {
 			$data['payment_method_name'] = $order_info['payment_method']['name'];
 			$data['payment_method_code'] = $order_info['payment_method']['code'];

@@ -75,14 +75,14 @@ class Error extends \Opencart\System\Engine\Controller {
 
 		foreach ($e->getTrace() as $key => $trace) {
 			$output .= 'Backtrace: ' . $key . "\n";
-			$output .= 'File: ' . $trace['file'] . "\n";
-			$output .= 'Line: ' . $trace['line'] . "\n";
+			$output .= 'File: ' . ($trace['file'] ?? '[internal]') . "\n";
+			$output .= 'Line: ' . ($trace['line'] ?? '') . "\n";
 
 			if (isset($trace['class'])) {
 				$output .= 'Class: ' . $trace['class'] . "\n";
 			}
 
-			$output .= 'Function: ' . $trace['function'] . "\n\n";
+			$output .= 'Function: ' . ($trace['function'] ?? '') . "\n\n";
 		}
 
 		if ($this->config->get('config_error_log')) {

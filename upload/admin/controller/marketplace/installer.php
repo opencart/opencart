@@ -99,7 +99,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		// Look for any new extensions
-		$files = glob(DIR_STORAGE . 'marketplace/*.ocmod.zip');
+		$files = glob(DIR_STORAGE . 'marketplace/*.ocmod.zip') ?: [];
 
 		foreach ($files as $file) {
 			$code = basename($file, '.ocmod.zip');
@@ -223,6 +223,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->load->language('marketplace/installer');
 
 		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+
+			return;
+		}
 
 		// 1. Validate the file uploaded.
 		if (isset($this->request->files['file']['name'])) {
@@ -421,6 +430,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$source = $zip->getNameIndex($i);
 
 					$destination = str_replace('\\', '/', $source);
+
+					// ZipSlip defense: reject entries with path traversal or absolute paths
+					if (str_contains($destination, '..') || substr($destination, 0, 1) === '/') {
+						continue;
+					}
 
 					// Only extract the contents of the upload folder
 					$path = $extension_install_info['code'] . '/' . $destination;

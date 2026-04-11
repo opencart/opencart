@@ -208,7 +208,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach (glob($next) as $file) {
+				foreach ((array)glob($next) as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
 						$path[] = $file . '/*';
@@ -610,7 +610,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach (glob($next) as $file) {
+				foreach ((array)glob($next) as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
 						$path[] = $file . '/*';

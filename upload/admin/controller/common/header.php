@@ -87,7 +87,7 @@ class Header extends \Opencart\System\Engine\Controller {
 			// Image
 			$this->load->model('tool/image');
 
-			if ($user_info['image'] && is_file(DIR_IMAGE . html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'))) {
+			if (!empty($user_info['image']) && is_file(DIR_IMAGE . html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'))) {
 				$data['image'] = $this->model_tool_image->resize($user_info['image'], 45, 45);
 			} else {
 				$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);

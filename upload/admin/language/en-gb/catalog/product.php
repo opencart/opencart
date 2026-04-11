@@ -114,6 +114,7 @@ $_['entry_layout']               = 'Layout Override';
 $_['entry_subscription']         = 'Subscription Plan';
 
 // Help
+$_['help_product_code']          = 'Product identification codes (SKU, UPC, EAN, JAN, ISBN, MPN)';
 $_['help_tag']                   = 'Comma separated';
 $_['help_minimum']               = 'Force a minimum ordered amount';
 $_['help_stock_status']          = 'Status shown when a product is out of stock';

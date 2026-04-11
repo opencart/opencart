@@ -264,7 +264,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		while (count($path) != 0) {
 			$next = array_shift($path);
 
-			foreach (glob($next . '/*') as $file) {
+			foreach ((array)glob($next . '/*') as $file) {
 				// If directory add to path array
 				if (is_dir($file)) {
 					$path[] = $file;
@@ -295,7 +295,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$data['extensions'] = [];
 
 		// Extension permissions
-		$results = glob(DIR_EXTENSION . '*/admin/controller/*/*.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/*/*.php') ?: [];
 
 		foreach ($results as $result) {
 			$path = substr($result, strlen(DIR_EXTENSION));

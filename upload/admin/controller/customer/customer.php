@@ -601,8 +601,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['status']) {
 				$data['custom_fields'][] = [
-					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
-					'value'              => ['value'],
+					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id'])
 				] + $custom_field;
 			}
 		}

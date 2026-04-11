@@ -25,7 +25,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/currency/*.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/currency/*.php') ?: [];
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

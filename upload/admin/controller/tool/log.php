@@ -44,7 +44,7 @@ class Log extends \Opencart\System\Engine\Controller {
 
 		$data['log'] = [];
 
-		$files = glob(DIR_LOGS . '*.log');
+		$files = glob(DIR_LOGS . '*.log') ?: [];
 
 		foreach ($files as $file) {
 			$error = '';

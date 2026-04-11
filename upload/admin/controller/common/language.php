@@ -94,7 +94,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$option = [
 				'expires'  => time() + 60 * 60 * 24 * 365 * 10,
 				'path'     => $this->config->get('session_path'),
-				'secure'   => $this->request->server['HTTPS'],
+				'secure'   => !empty($this->request->server['HTTPS']),
 				'SameSite' => $this->config->get('config_session_samesite')
 			];
 

@@ -107,7 +107,7 @@ function oc_strtolower(string $string): string {
 function oc_glob($pattern, $flags = 0) {
     // If there are no curly braces — just call glob()
     if (strpos($pattern, '{') === false) {
-        return glob($pattern, $flags);
+        return glob($pattern, $flags) ?: [];
     }
 
     // Find the first pair of {}

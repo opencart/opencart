@@ -7,3 +7,5 @@ $_['text_success']  = 'Success: You have modified extensions!';
 $_['text_list']     = 'Extension List';
 $_['text_type']     = 'Choose the extension type';
 $_['text_filter']   = 'Filter';
+$_['text_install']  = 'Install';
+$_['text_delete']   = 'Delete';

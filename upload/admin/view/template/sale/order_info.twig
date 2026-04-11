@@ -546,14 +546,14 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] is not iterable and account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ account_custom_field[custom_field.custom_field_id] is not iterable and account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -563,7 +563,7 @@
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
                     <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] is not iterable and account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <button type="button" data-oc-toggle="download" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i> {{ button_download }}</button>
                     <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
                   </div>
@@ -573,21 +573,21 @@
 
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="date" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="date" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] is not iterable and account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'time' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="time" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="time" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] is not iterable and account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'datetime' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="datetime-local" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="datetime-local" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] is not iterable and account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -738,14 +738,14 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] is not iterable and payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="payment_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="payment_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ payment_custom_field[custom_field.custom_field_id] is not iterable and payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -755,7 +755,7 @@
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
                     <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
-                    <input type="text" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
+                    <input type="text" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] is not iterable and payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
                     <button type="button" data-oc-toggle="download" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}"{% if not payment_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i> {{ button_download }}</button>
                     <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}"{% if not payment_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
                   </div>
@@ -765,21 +765,21 @@
 
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="date" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="date" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] is not iterable and payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'time' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="time" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="time" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] is not iterable and payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'datetime' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="datetime-local" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="datetime-local" name="payment_custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] is not iterable and payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -901,14 +901,14 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] is not iterable and shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="shipping_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="shipping_custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] is not iterable and shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -918,7 +918,7 @@
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div class="input-group">
                     <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
-                    <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
+                    <input type="text" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] is not iterable and shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
                     <button type="button" data-oc-toggle="download" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}"{% if not shipping_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fa-solid fa-download"></i> {{ button_download }}</button>
                     <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}"{% if not shipping_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fa-solid fa-eraser"></i></button>
                   </div>
@@ -928,21 +928,21 @@
 
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="date" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="date" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] is not iterable and shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'time' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="time" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="time" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] is not iterable and shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'datetime' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="datetime-local" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="datetime-local" name="shipping_custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] is not iterable and shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}

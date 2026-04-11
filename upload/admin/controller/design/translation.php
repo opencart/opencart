@@ -377,7 +377,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
 
 		if (!empty($language_info)) {
-			$path = glob(DIR_CATALOG . 'language/' . $language_info['code'] . '/*');
+			$path = glob(DIR_CATALOG . 'language/' . $language_info['code'] . '/*') ?: [];
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
@@ -393,7 +393,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$path = glob(DIR_EXTENSION . '*/catalog/language/' . $language_info['code'] . '/*');
+			$path = glob(DIR_EXTENSION . '*/catalog/language/' . $language_info['code'] . '/*') ?: [];
 
 			while (count($path) != 0) {
 				$next = array_shift($path);

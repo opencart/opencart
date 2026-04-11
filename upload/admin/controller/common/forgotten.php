@@ -191,7 +191,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$post_info = $this->request->post;
+			$post_info = ['password' => '', 'confirm' => ''] + $this->request->post;
 
 			$password = html_entity_decode((string)$post_info['password'], ENT_QUOTES, 'UTF-8');
 

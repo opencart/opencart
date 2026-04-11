@@ -28,7 +28,7 @@ class Analytics extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/analytics/*.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/analytics/*.php') ?: [];
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

@@ -85,7 +85,11 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$files = [];
 
 		// Get directories and files
-		$paths = array_diff(scandir($directory), ['..', '.']);
+		if (is_dir($directory)) {
+			$paths = array_diff(scandir($directory), ['..', '.']);
+		} else {
+			$paths = [];
+		}
 
 		foreach ($paths as $value) {
 			if ($filter_name && !str_starts_with($value, $filter_name)) {
@@ -429,8 +433,10 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			// Convert any html encoded characters.
 			$path = html_entity_decode($path, ENT_QUOTES, 'UTF-8');
 
+			$real = realpath($base . $path);
+
 			// Check path exists
-			if (($path == $base) || (substr(str_replace('\\', '/', realpath($base . $path)) . '/', 0, strlen($base)) != $base)) {
+			if (($path == $base) || !$real || (substr(str_replace('\\', '/', $real) . '/', 0, strlen($base)) != $base)) {
 				$json['error'] = $this->language->get('error_delete');
 
 				break;
@@ -444,6 +450,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 				// Make path into an array
 				$directory = [$path];
+				$files = [];
 
 				// While the path array is still populated keep looping through
 				while (count($directory) != 0) {

@@ -25,7 +25,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/marketplace/*.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/marketplace/*.php') ?: [];
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

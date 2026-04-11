@@ -213,7 +213,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		// We grab the files from the extension template directory
 		$data['extensions'] = [];
 
-		$extensions = glob(DIR_EXTENSION . '*', GLOB_ONLYDIR);
+		$extensions = glob(DIR_EXTENSION . '*', GLOB_ONLYDIR) ?: [];
 
 		foreach ($extensions as $extension) {
 			$extension = basename($extension);

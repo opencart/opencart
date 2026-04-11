@@ -25,7 +25,7 @@ class Fraud extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/fraud/*.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/fraud/*.php') ?: [];
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

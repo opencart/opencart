@@ -3,12 +3,16 @@
 function oc_generate_vendor(): void {
 	$code = '<?php' . "\n";
 
-	$files = glob(DIR_STORAGE . 'vendor/*/*/composer.json');
+	$composer_files = glob(DIR_STORAGE . 'vendor/*/*/composer.json') ?: [];
 
-	foreach ($files as $file) {
-		$output = json_decode(file_get_contents($file), true);
+	foreach ($composer_files as $file) {
+		$output = json_decode((string)file_get_contents($file), true);
 
-		$code .= '// ' . $output['name'] . "\n";
+		if (!is_array($output)) {
+			continue;
+		}
+
+		$code .= '// ' . ($output['name'] ?? '') . "\n";
 
 		if (isset($output['autoload'])) {
 			$directory = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
@@ -56,16 +60,16 @@ function oc_generate_vendor(): void {
 						$next = array_shift($directories);
 
 						if (is_dir($next)) {
-							foreach (oc_glob(trim($next, '/') . '/{*,.[!.]*,..?*}') as $file) {
-								if (is_dir($file)) {
-									$directories[] = $file . '/';
+							foreach (oc_glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}') as $class_file) {
+								if (is_dir($class_file)) {
+									$directories[] = $class_file . '/';
 								}
 
-								if (is_file($file)) {
-									$namespace = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1);
+								if (is_file($class_file)) {
+									$namespace = substr(dirname($class_file), strlen(DIR_STORAGE . 'vendor/' . $directory . '/' . $classmap) + 1);
 
 									if ($namespace) {
-										$autoload[$namespace] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+										$autoload[$namespace] = substr(dirname($class_file), strlen(DIR_STORAGE . 'vendor/'));
 									}
 								}
 							}
@@ -80,11 +84,11 @@ function oc_generate_vendor(): void {
 
 			// Autoload files
 			if (isset($output['autoload']['files'])) {
-				$files = $output['autoload']['files'];
+				$autoload_files = $output['autoload']['files'];
 
-				foreach ($files as $file) {
-					$code .= 'if (is_file(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\')) {' . "\n";
-					$code .= '	require_once(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\');' . "\n";
+				foreach ($autoload_files as $autoload_file) {
+					$code .= 'if (is_file(DIR_STORAGE . \'vendor/' . $directory . '/' . $autoload_file . '\')) {' . "\n";
+					$code .= '	require_once(DIR_STORAGE . \'vendor/' . $directory . '/' . $autoload_file . '\');' . "\n";
 					$code .= '}' . "\n";
 				}
 			}

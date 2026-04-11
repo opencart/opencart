@@ -5,7 +5,7 @@
       <div class="float-end">
         <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-info"><i class="fa-solid fa-refresh"></i></button>
         <button type="button" id="button-clear" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-warning"><i class="fa-solid fa-eraser"></i></button>
-        <button type="submit" form="form-modification" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+        <button type="submit" form="form-modification" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm|escape('js') }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">

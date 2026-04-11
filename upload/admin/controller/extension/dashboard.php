@@ -30,7 +30,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 
 		$available = [];
 
-		$results = glob(DIR_EXTENSION . '*/admin/controller/dashboard/*.php');
+		$results = glob(DIR_EXTENSION . '*/admin/controller/dashboard/*.php') ?: [];
 
 		foreach ($results as $result) {
 			$available[] = basename($result, '.php');

@@ -114,6 +114,7 @@ $_['entry_layout']               = 'Remplacement de la Disposition';
 $_['entry_subscription']         = 'Plan d\'Abonnement';
 
 // Aide
+$_['help_product_code']          = 'Codes d\'identification du produit (SKU, UPC, EAN, JAN, ISBN, MPN)';
 $_['help_tag']                   = 'Séparés par des virgules';
 $_['help_minimum']               = 'Forcer une quantité minimum commandée';
 $_['help_stock_status']          = 'Statut affiché lorsqu\'un produit est en rupture de stock';

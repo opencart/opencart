@@ -917,7 +917,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				header('Content-Description: File Transfer');
 				header('Content-Type: application/octet-stream');
 				header('Content-Transfer-Encoding: binary');
-				header('Content-Disposition: attachment; filename=payout-' . date('d-m-Y') . '.csv"');
+				header('Content-Disposition: attachment; filename="payout-' . date('d-m-Y') . '.csv"');
 				header('Content-Length: ' . strlen($csv));
 
 				echo $csv;

@@ -45,7 +45,7 @@
             <div class="input-group input-group-lg mb-3">
               <div class="input-group-text">{{ entry_route }}</div>
               <select name="route" id="input-route" class="form-select">
-                <option value=""></option>
+                <option value="">{{ text_select }}</option>
                 <optgroup label="{{ text_default }}">
                   {% for template in templates %}
                     <option value="{{ template }}"{% if template == route %} selected{% endif %}>{{ template }}</option>

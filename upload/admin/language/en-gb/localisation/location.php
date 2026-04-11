@@ -7,7 +7,6 @@ $_['text_success']     = 'Success: You have modified store locations!';
 $_['text_list']        = 'Store Location List';
 $_['text_add']         = 'Add Store Location';
 $_['text_edit']        = 'Edit Store Location';
-$_['text_geocode']     = 'Geocode was not successful for the following reason:';
 
 // Column
 $_['column_name']      = 'Store Name';

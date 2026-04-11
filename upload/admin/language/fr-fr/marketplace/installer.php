@@ -10,7 +10,6 @@ $_['text_installed']         = 'Extensions installées';
 $_['text_info']              = 'Information sur les extensions';
 $_['text_install']           = 'Installation des fichiers à partir de %s envers %s de %s';
 $_['text_vendor']            = 'Refraîchir les fichiers fournisseurs';
-$_['text_xml']               = 'Installer les fichiers OCMOD';
 
 // Colonne
 $_['column_image']           = 'Image';
@@ -35,7 +34,6 @@ $_['error_uninstall']        = 'Il y a %s extensions qui doivent être désinsta
 $_['error_name']             = 'Le nom doit comporter entre 3 et 128 caractères!';
 $_['error_version']          = 'La version doit comporter entre 3 et 128 caractères!';
 $_['error_author']           = 'l\'auteur doit comporter entre 3 et 128 caractères!';
-$_['error_link']             = 'Le lien doit comporter entre 3 et 128 caractères!';
 $_['error_filename']         = 'Le nom du fichier doit comporter entre 3 et 128 caractères!';
 $_['error_file']             = 'Le fichier d\'installation %s est introuvable!';
 $_['error_file_exists']      = 'Le fichier existe déjà!';

@@ -17,7 +17,6 @@ $_['entry_email']              = 'E-Mail Address';
 // Error
 $_['error_email']              = 'Warning: The E-Mail Address was not found in our records!';
 $_['error_code']               = 'Reset code does not match!';
-$_['error_disabled']           = 'Password reset has been disabled!';
 $_['error_password']           = 'Password must contain %s and be between %d and 20 characters!';
 $_['error_password_uppercase'] = 'uppercase';
 $_['error_password_lowercase'] = 'lowercase';

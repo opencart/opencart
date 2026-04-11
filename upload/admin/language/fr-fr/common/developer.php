@@ -19,8 +19,6 @@ $_['column_action']          = 'Action';
 $_['entry_cache']            = 'Cache';
 
 // Bouton
-$_['button_on']              = 'Activé';
-$_['button_off']             = 'Désactivé';
 
 // Erreur
 $_['error_permission']       = 'Attention: Vous n\'avez pas la permission de modifier les paramètres développeur!';

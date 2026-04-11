@@ -17,7 +17,6 @@ $_['entry_email']              = 'Adresse E-Mail';
 // Erreur
 $_['error_email']              = 'Attention: L\'adresse e-mail n\'a pas été trouvée dans nos dossiers!';
 $_['error_code']               = 'Le code de réinitialisation ne correspond pas!';
-$_['error_disabled']           = 'La réinitialisation du mot de passe a été désactivée!';
 $_['error_password']           = 'Le mot de passe doit contenir entre 4 et 20 caractères!';
 $_['error_password_uppercase'] = 'majuscule';
 $_['error_password_lowercase'] = 'minuscule';

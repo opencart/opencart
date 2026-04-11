@@ -20,9 +20,6 @@ $_['text_transaction']          = 'Transactions';
 $_['text_transaction_add']      = 'Add Transaction';
 $_['text_report']               = 'Reports';
 $_['text_filter']               = 'Filter';
-$_['text_payment_cheque']       = 'Cheque Payment';
-$_['text_payment_paypal']       = 'PayPal Payment';
-$_['text_payment_bank']         = 'Bank Transfer Payment';
 
 // Column
 $_['column_name']               = 'Customer Name';
@@ -71,7 +68,6 @@ $_['help_commission']           = 'Percentage the affiliate receives on each ord
 $_['error_warning']             = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']          = 'Warning: You do not have permission to modify affiliates!';
 $_['error_customer']            = 'Warning: Customer required!';
-$_['error_already']             = 'Warning: Customer is already registered as an affiliate!';
 $_['error_tracking']            = 'Tracking Code required!';
 $_['error_exists']              = 'Tracking code is being used by another affiliate!';
 $_['error_payment_method']      = 'Payment method required!';

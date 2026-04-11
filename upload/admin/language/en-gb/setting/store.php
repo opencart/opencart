@@ -10,7 +10,6 @@ $_['text_add']                         = 'Add Store';
 $_['text_edit']                        = 'Edit Store';
 $_['text_site']                        = 'Site Details';
 $_['text_meta']                        = 'Meta Tags';
-$_['text_items']                       = 'Items';
 $_['text_shipping']                    = 'Shipping Address';
 $_['text_payment']                     = 'Payment Address';
 $_['text_product']                     = 'Products';

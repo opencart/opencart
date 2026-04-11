@@ -329,6 +329,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$required = [
 			'theme_id' => 0,
+			'store_id' => 0,
 			'route'    => '',
 			'code'     => '',
 			'status'   => 0

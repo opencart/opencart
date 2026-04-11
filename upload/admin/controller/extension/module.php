@@ -191,6 +191,18 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['extension'])) {
+			$extension = basename($this->request->get['extension']);
+		} else {
+			$extension = '';
+		}
+
+		if (isset($this->request->get['code'])) {
+			$code = basename($this->request->get['code']);
+		} else {
+			$code = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -199,14 +211,14 @@ class Module extends \Opencart\System\Engine\Controller {
 			// Extension
 			$this->load->model('setting/extension');
 
-			$this->model_setting_extension->uninstall('module', $this->request->get['code']);
+			$this->model_setting_extension->uninstall('module', $code);
 
 			$this->load->model('setting/module');
 
-			$this->model_setting_module->deleteModulesByCode($this->request->get['extension'] . '.' . $this->request->get['code']);
+			$this->model_setting_module->deleteModulesByCode($extension . '.' . $code);
 
 			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/module/' . $this->request->get['code'] . '.uninstall');
+			$this->load->controller('extension/' . $extension . '/module/' . $code . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -225,17 +237,29 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['extension'])) {
+			$extension = basename($this->request->get['extension']);
+		} else {
+			$extension = '';
+		}
+
+		if (isset($this->request->get['code'])) {
+			$code = basename($this->request->get['code']);
+		} else {
+			$code = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$this->load->language('extension/' . $this->request->get['extension'] . '/module/' . $this->request->get['code'], 'extension');
+			$this->load->language('extension/' . $extension . '/module/' . $code, 'extension');
 
 			// Extension
 			$this->load->model('setting/module');
 
-			$this->model_setting_module->addModule($this->request->get['extension'] . '.' . $this->request->get['code'], ['name' => $this->language->get('extension_heading_title')]);
+			$this->model_setting_module->addModule($extension . '.' . $code, ['name' => $this->language->get('extension_heading_title')]);
 
 			$json['success'] = $this->language->get('text_success');
 		}

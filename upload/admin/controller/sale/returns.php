@@ -617,6 +617,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
+			'return_id'        => 0,
 			'order_id'         => 0,
 			'product_id'       => 0,
 			'customer_id'      => 0,
@@ -630,6 +631,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'opened'           => 0,
 			'return_reason_id' => 0,
 			'return_action_id' => 0,
+			'return_status_id' => 0,
 			'comment'          => '',
 			'date_ordered'     => ''
 		];

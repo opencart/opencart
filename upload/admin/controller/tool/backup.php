@@ -263,7 +263,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['position'])) {
-			$position = $this->request->get['position'];
+			$position = (int)$this->request->get['position'];
 		} else {
 			$position = 0;
 		}

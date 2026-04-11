@@ -12,18 +12,15 @@ $_['text_storage_move']               = 'Déplacement de %s envers %s de %s fich
 $_['text_storage_success']            = 'Succès: Le répertoire de stockage a été déplacé!';
 $_['text_storage_delete']             = 'Supprimer le répertoire de stockage précédent';
 $_['text_storage_delete_description'] = 'Le répertoire de stockage précédent doit être supprimé!';
-$_['text_storage_delete_success']     = 'Succès: Le répertoire de stockage précédent a été supprimé!';
 $_['text_admin']                      = 'Renommer le répertoire admin';
 $_['text_admin_description']          = 'Veuillez saisir un nouveau nom de répertoire admin dans le champ ci-dessous.';
 $_['text_admin_move']                 = 'Déplacement de %s envers %s de %s fichiers admin';
 $_['text_admin_success']              = 'Succès: Le répertoire admin a été renommé!';
 $_['text_admin_delete']               = 'Supprimer le répertoire admin précédent';
 $_['text_admin_delete_description']   = 'Le répertoire admin précédent doit être supprimé!';
-$_['text_admin_delete_success']       = 'Succès: Le répertoire admin précédent a été supprimé!';
 $_['text_path']                       = 'Chemin';
 
 // Entrée
-$_['entry_path']                      = 'Chemin';
 $_['entry_path_current']              = 'Chemin Actuel';
 $_['entry_path_new']                  = 'Nouveau Chemin';
 $_['entry_name']                      = 'Nom du Répertoire';

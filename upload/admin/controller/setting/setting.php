@@ -592,11 +592,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->request->post['config_image_article_width'] || !$this->request->post['config_image_article_height']) {
-			$json['error']['image_article'] = $this->language->get('error_image_cart');
+			$json['error']['image_article'] = $this->language->get('error_image_article');
 		}
 
 		if (!$this->request->post['config_image_topic_width'] || !$this->request->post['config_image_topic_height']) {
-			$json['error']['image_topic'] = $this->language->get('error_image_cart');
+			$json['error']['image_topic'] = $this->language->get('error_image_topic');
 		}
 
 		if (!$this->request->post['config_image_compare_width'] || !$this->request->post['config_image_compare_height']) {

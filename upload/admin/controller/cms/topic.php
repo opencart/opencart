@@ -210,7 +210,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['topic_id'])) {
 			$this->load->model('cms/topic');
 
-			$topic_info = $this->model_cms_topic->getTopic($this->request->get['topic_id']);
+			$topic_info = $this->model_cms_topic->getTopic((int)$this->request->get['topic_id']);
 		}
 
 		if (!empty($topic_info)) {

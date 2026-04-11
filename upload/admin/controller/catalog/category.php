@@ -450,7 +450,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			'image'                => '',
 			'parent_id'            => 0,
 			'sort_order'           => 0,
-			'status'               => 0
+			'status'               => 0,
+			'category_seo_url'     => []
 		];
 
 		$post_info = $this->request->post + $required;

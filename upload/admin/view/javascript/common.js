@@ -25,13 +25,8 @@ function getURLVar(key) {
 $(document).ready(function() {
     // Tooltip
     var oc_tooltip = function() {
-        // Get tooltip instance
-        tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
-
-        if (!tooltip) {
-            // Apply to current element
-            tooltip.show();
-        }
+        // Get or create tooltip instance, then show it
+        bootstrap.Tooltip.getOrCreateInstance(this).show();
     }
 
     $(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', oc_tooltip);
@@ -500,7 +495,7 @@ $(document).ready(function() {
         var element = this;
 
         $.ajax({
-            url: 'index.php?route=common/language.save&user_token={{ user_token }}',
+            url: 'index.php?route=common/language.save&user_token=' + getURLVar('user_token'),
             type: 'post',
             data: 'code=' + $(element).attr('href') + '&redirect=' + encodeURIComponent($('#input-redirect').val()),
             dataType: 'json',

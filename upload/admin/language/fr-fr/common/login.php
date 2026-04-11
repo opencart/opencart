@@ -3,7 +3,6 @@
 $_['heading_title']  = 'Administration';
 
 // Texte
-$_['text_heading']   = 'Administration';
 $_['text_login']     = 'Veuillez entrer vos identifiants de connexion.';
 $_['text_forgotten'] = 'Mot de passe oublié';
 

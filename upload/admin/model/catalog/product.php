@@ -306,7 +306,7 @@ class Product extends \Opencart\System\Engine\Model {
 		// Attributes
 		$this->model_catalog_product->deleteAttributes($product_id);
 
-		if (!empty($data['product_attribute'])) {
+		if (isset($data['product_attribute'])) {
 			foreach ($data['product_attribute'] as $product_attribute) {
 				if ($product_attribute['attribute_id']) {
 					// Removes duplicates

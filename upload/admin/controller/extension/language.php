@@ -152,6 +152,18 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['extension'])) {
+			$extension = basename($this->request->get['extension']);
+		} else {
+			$extension = '';
+		}
+
+		if (isset($this->request->get['code'])) {
+			$code = basename($this->request->get['code']);
+		} else {
+			$code = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'extension/language')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -159,7 +171,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		// Language
 		$this->load->model('localisation/language');
 
-		$results = $this->model_localisation_language->getLanguagesByExtension($this->request->get['extension']);
+		$results = $this->model_localisation_language->getLanguagesByExtension($extension);
 
 		foreach ($results as $result) {
 			if ($result['code'] == $this->config->get('config_language_admin')) {
@@ -173,10 +185,10 @@ class Language extends \Opencart\System\Engine\Controller {
 			// Extension
 			$this->load->model('setting/extension');
 
-			$this->model_setting_extension->uninstall('language', $this->request->get['code']);
+			$this->model_setting_extension->uninstall('language', $code);
 
 			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/language/' . $this->request->get['code'] . '.uninstall');
+			$this->load->controller('extension/' . $extension . '/language/' . $code . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
 		}

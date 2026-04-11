@@ -10,10 +10,15 @@ $_['text_locked']   = 'Votre compte a été verrouillé!';
 $_['text_unlock']   = 'Votre compte a été verrouillé en raison de trop nombreuses tentatives incorrectes pour entrer le code de sécurité. Cliquez sur le bouton de réinitialisation pour recevoir un lien de réinitialisation via votre compte e-mail.';
 $_['text_unlocked'] = 'Succès: Votre compte a été déverrouillé!';
 $_['text_link']     = 'Succès: Un e-mail avec un lien de réinitialisation a été envoyé à votre adresse e-mail!';
-$_['text_resend']   = 'Succès: Un e-mail avec un code de sécurité a été envoyé à votre compte e-mail!';
+$_['text_reset']    = 'Votre compte a été verrouillé en raison de trop nombreuses tentatives incorrectes pour entrer le code de sécurité. Cliquez sur le bouton de réinitialisation pour recevoir un lien de réinitialisation via votre compte e-mail.';
+$_['text_failed']   = 'Impossible de réinitialiser votre code de sécurité!';
 
 // Entrée
 $_['entry_code']    = 'Code de Sécurité';
+
+// Bouton
+$_['button_send']   = 'Envoyer';
+$_['button_reset']  = 'Réinitialiser';
 
 // Erreur
 $_['error_code']    = 'Le code de sécurité ne correspond pas!';

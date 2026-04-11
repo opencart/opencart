@@ -20,9 +20,6 @@ $_['text_transaction']          = 'Transactions';
 $_['text_transaction_add']      = 'Ajouter une transaction';
 $_['text_report']               = 'Rapports';
 $_['text_filter']               = 'Filtrer';
-$_['text_payment_cheque']       = 'Paiement par chèque';
-$_['text_payment_paypal']       = 'Paiement PayPal';
-$_['text_payment_bank']         = 'Paiement par virement bancaire';
 
 // Colonne
 $_['column_name']               = 'Nom du client';
@@ -71,7 +68,6 @@ $_['help_commission']           = 'Pourcentage que l\'affilié reçoit sur chaqu
 $_['error_warning']             = 'Attention: Veuillez vérifier attentivement le formulaire pour les erreurs!';
 $_['error_permission']          = 'Attention: Vous n\'avez pas la permission de modifier les affiliés!';
 $_['error_customer']            = 'Attention: Client requis!';
-$_['error_already']             = 'Attention: Le client est déjà enregistré en tant qu\'affilié!';
 $_['error_tracking']            = 'Code de suivi requis!';
 $_['error_exists']              = 'Le code de suivi est déjà utilisé par un autre affilié!';
 $_['error_payment_method']      = 'Mode de paiement requis!';

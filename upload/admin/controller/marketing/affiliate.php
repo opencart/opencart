@@ -733,17 +733,13 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliate((int)$post_info['customer_id']);
 
-		if ($affiliate_info && (!$post_info['customer_id'] || ($post_info['customer_id'] != $affiliate_info['customer_id']))) {
-			$json['error']['warning'] = $this->language->get('error_already');
-		}
-
 		if (!$post_info['tracking']) {
 			$json['error']['tracking'] = $this->language->get('error_tracking');
 		}
 
-		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByTracking($post_info['tracking']);
+		$tracking_info = $this->model_marketing_affiliate->getAffiliateByTracking($post_info['tracking']);
 
-		if ($affiliate_info && (!$post_info['customer_id'] || ($post_info['customer_id'] != $affiliate_info['customer_id']))) {
+		if ($tracking_info && (!$post_info['customer_id'] || ($post_info['customer_id'] != $tracking_info['customer_id']))) {
 			$json['error']['tracking'] = $this->language->get('error_exists');
 		}
 

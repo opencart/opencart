@@ -153,6 +153,18 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['extension'])) {
+			$extension = basename($this->request->get['extension']);
+		} else {
+			$extension = '';
+		}
+
+		if (isset($this->request->get['code'])) {
+			$code = basename($this->request->get['code']);
+		} else {
+			$code = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'extension/shipping')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -161,10 +173,10 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			// Extension
 			$this->load->model('setting/extension');
 
-			$this->model_setting_extension->uninstall('shipping', $this->request->get['code']);
+			$this->model_setting_extension->uninstall('shipping', $code);
 
 			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/shipping/' . $this->request->get['code'] . '.uninstall');
+			$this->load->controller('extension/' . $extension . '/shipping/' . $code . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
 		}

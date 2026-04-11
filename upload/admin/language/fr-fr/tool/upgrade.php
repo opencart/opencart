@@ -21,7 +21,6 @@ $_['button_upgrade']       = 'Mettre à niveau';
 
 // Erreur
 $_['error_permission']     = 'Attention: Vous n\'avez pas la permission de modifier les mises à niveau!';
-$_['error_connection']     = 'Impossible de se connecter au serveur de mise à niveau!';
 $_['error_version']        = 'La version est inférieure à la version actuelle!';
 $_['error_download']       = 'La mise à niveau n\'a pas pu être téléchargée!';
 $_['error_file']           = 'Le fichier de mise à niveau est introuvable!';

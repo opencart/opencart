@@ -26,6 +26,7 @@ $_['entry_store']             = 'Magasins';
 $_['entry_sort_order']        = 'Ordre de Tri';
 $_['entry_status']            = 'Statut';
 $_['entry_keyword']           = 'Mot-clé';
+$_['entry_layout']            = 'Remplacement de la Mise en Page';
 
 // Erreur
 $_['error_warning']           = 'Attention: Veuillez vérifier le formulaire attentivement pour les erreurs!';

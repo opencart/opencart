@@ -10,7 +10,6 @@ $_['text_installed']         = 'Installed Extensions';
 $_['text_info']              = 'Extension Information';
 $_['text_install']           = 'Installing files %s to %s of %s';
 $_['text_vendor']            = 'Refresh vendor files';
-$_['text_xml']               = 'Install OCMOD files';
 
 // Column
 $_['column_image']           = 'Image';
@@ -35,7 +34,6 @@ $_['error_uninstall']        = 'There are %s extensions that need to be uninstal
 $_['error_name']             = 'Name must be between 3 and 128 characters!';
 $_['error_version']          = 'Version must be between 3 and 128 characters!';
 $_['error_author']           = 'Author must be between 3 and 128 characters!';
-$_['error_link']             = 'Link must be between 3 and 128 characters!';
 $_['error_filename']         = 'Filename must be between 3 and 128 characters!';
 $_['error_file']             = 'Install file %s could not be found!';
 $_['error_file_exists']      = 'File already exist!';

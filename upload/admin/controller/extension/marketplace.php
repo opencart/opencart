@@ -60,7 +60,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
-					'status'    => $this->config->get('language_' . $code . '_status'),
+					'status'    => $this->config->get('marketplace_' . $code . '_status'),
 					'install'   => $this->url->link('extension/marketplace.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/marketplace.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
@@ -152,6 +152,18 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['extension'])) {
+			$extension = basename($this->request->get['extension']);
+		} else {
+			$extension = '';
+		}
+
+		if (isset($this->request->get['code'])) {
+			$code = basename($this->request->get['code']);
+		} else {
+			$code = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'extension/marketplace')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -160,10 +172,10 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			// Extension
 			$this->load->model('setting/extension');
 
-			$this->model_setting_extension->uninstall('marketplace', $this->request->get['code']);
+			$this->model_setting_extension->uninstall('marketplace', $code);
 
 			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/marketplace/' . $this->request->get['code'] . '.uninstall');
+			$this->load->controller('extension/' . $extension . '/marketplace/' . $code . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -10,7 +10,6 @@ $_['text_add']                         = 'Ajouter une boutique';
 $_['text_edit']                        = 'Modifier une boutique';
 $_['text_site']                        = 'Détails du Site';
 $_['text_meta']                        = 'Méta-Tags';
-$_['text_items']                       = 'Articles';
 $_['text_shipping']                    = 'Adresse d\'expédition';
 $_['text_payment']                     = 'Adresse de facturation';
 $_['text_product']                     = 'Produits';

@@ -7,7 +7,6 @@ $_['text_success']     = 'Succès: Vous avez modifié les emplacements des magas
 $_['text_list']        = 'Liste des Emplacements des Magasins';
 $_['text_add']         = 'Ajouter un Emplacement de Magasin';
 $_['text_edit']        = 'Modifier un Emplacement de Magasin';
-$_['text_geocode']     = 'Le géocodage n\'a pas réussi pour la raison suivante:';
 
 // Colonne
 $_['column_name']      = 'Nom du Magasin';

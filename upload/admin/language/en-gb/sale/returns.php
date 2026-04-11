@@ -34,7 +34,6 @@ $_['column_action']       = 'Action';
 // Entry
 $_['entry_customer']      = 'Customer';
 $_['entry_order_id']      = 'Order ID';
-$_['entry_date_ordered']  = 'Order Date';
 $_['entry_firstname']     = 'First Name';
 $_['entry_lastname']      = 'Last Name';
 $_['entry_email']         = 'E-Mail';

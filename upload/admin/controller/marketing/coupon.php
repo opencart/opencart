@@ -365,16 +365,19 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'coupon_id'  => 0,
-			'name'       => '',
-			'code'       => '',
-			'discount'   => 0.0,
-			'type'       => '',
-			'total'      => 0.0,
-			'logged'     => 0,
-			'shipping'   => 0,
-			'date_start' => '',
-			'date_end'   => ''
+			'coupon_id'     => 0,
+			'name'          => '',
+			'code'          => '',
+			'discount'      => 0.0,
+			'type'          => '',
+			'total'         => 0.0,
+			'logged'        => 0,
+			'shipping'      => 0,
+			'date_start'    => '',
+			'date_end'      => '',
+			'uses_total'    => 0,
+			'uses_customer' => 0,
+			'status'        => 0
 		];
 
 		$post_info = $this->request->post + $required;

@@ -518,12 +518,16 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'user_id'   => 0,
-			'username'  => '',
-			'firstname' => '',
-			'lastname'  => '',
-			'email'     => '',
-			'password'  => '',
+			'user_id'       => 0,
+			'user_group_id' => 0,
+			'username'      => '',
+			'firstname'     => '',
+			'lastname'      => '',
+			'email'         => '',
+			'image'         => '',
+			'password'      => '',
+			'confirm'       => '',
+			'status'        => 0
 		];
 
 		$post_info = $this->request->post + $required;

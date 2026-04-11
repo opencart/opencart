@@ -23,7 +23,6 @@ $_['entry_export']       = 'Exporter';
 
 // Erreur
 $_['error_permission']   = 'Attention: Vous n\'avez pas la permission de modifier la sauvegarde &amp; restauration!';
-$_['error_export']       = 'Attention: Vous devez sélectionner au moins une table à exporter!';
 $_['error_table']        = 'La table %s n\'est pas dans la liste autorisée!';
 $_['error_file']         = 'Le fichier est introuvable!';
 $_['error_directory']    = 'Le répertoire est introuvable!';

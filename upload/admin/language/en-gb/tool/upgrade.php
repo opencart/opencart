@@ -21,7 +21,6 @@ $_['button_upgrade']       = 'Upgrade';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify upgrades!';
-$_['error_connection']     = 'Could not connect to the upgrade server!';
 $_['error_version']        = 'Version is lower than the current version!';
 $_['error_download']       = 'Upgrade could not be downloaded!';
 $_['error_file']           = 'Upgrade file could not be found!';

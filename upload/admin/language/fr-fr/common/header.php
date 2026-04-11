@@ -3,9 +3,7 @@
 $_['heading_title']          = 'OpenCart';
 
 // Texte
-$_['text_notification']      = 'Notifications';
 $_['text_notification_all']  = 'Afficher tout';
-$_['text_notification_none'] = 'Aucune notification';
 $_['text_profile']           = 'Votre Profil';
 $_['text_store']             = 'Magasins';
 $_['text_help']              = 'Aide';

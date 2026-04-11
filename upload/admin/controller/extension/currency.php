@@ -152,6 +152,18 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['extension'])) {
+			$extension = basename($this->request->get['extension']);
+		} else {
+			$extension = '';
+		}
+
+		if (isset($this->request->get['code'])) {
+			$code = basename($this->request->get['code']);
+		} else {
+			$code = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'extension/currency')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -160,10 +172,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 			// Extension
 			$this->load->model('setting/extension');
 
-			$this->model_setting_extension->uninstall('currency', $this->request->get['code']);
+			$this->model_setting_extension->uninstall('currency', $code);
 
 			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/currency/' . $this->request->get['code'] . '.uninstall');
+			$this->load->controller('extension/' . $extension . '/currency/' . $code . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
 		}

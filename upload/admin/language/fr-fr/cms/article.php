@@ -9,6 +9,8 @@ $_['text_list']               = 'Liste des Articles';
 $_['text_add']                = 'Ajouter un Article';
 $_['text_edit']               = 'Modifier l\'Article';
 $_['text_default']            = 'Par Défaut';
+$_['text_general']            = 'Général';
+$_['text_meta']               = 'Balises Méta';
 $_['text_keyword']            = 'N\'utilisez pas d\'espaces, remplacez-les par des - et assurez-vous que l\'URL SEO soit unique à l\'échelle mondiale.';
 
 // Colonne

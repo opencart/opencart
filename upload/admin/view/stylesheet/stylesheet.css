@@ -874,11 +874,7 @@ div.required .col-form-label:not(span):before, div.required .form-label:before, 
     color: #02afe9;
 }
 
-.table-responsive {
-    overflow: visible;
-}
-
 td {
     position: relative;
-	vertical-align: middle;
+    vertical-align: middle;
 }

@@ -11852,7 +11852,7 @@ textarea.form-control-lg {
   display: inline-block;
 }
 .breadcrumb-item + .breadcrumb-item::before {
-  font-family: "Font Awesome 6 Free";
+  font-family: "Font Awesome 7 Free";
   font-weight: 600;
   font-size: 0.7692rem;
   color: #BBBBBB;

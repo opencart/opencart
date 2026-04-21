@@ -41,6 +41,9 @@ $carousel-indicator-opacity:         .5;
 $carousel-indicator-active-bg:       rgba(0, 0, 0, 0.9);
 $carousel-indicator-active-opacity:  .9;
 
+$min-contrast-ratio:                 1.2 !default;
+$link-decoration:                    none !default;
+
 
 
 @import "scss/bootstrap";

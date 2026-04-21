@@ -1,0 +1,15 @@
+{
+    "name": "paythefly/opencart-payment",
+    "description": "PayTheFly cryptocurrency payment gateway for OpenCart 4.x",
+    "type": "opencart-extension",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.0",
+        "kornrunner/keccak": "^1.1",
+        "simplito/elliptic-php": "^1.0"
+    },
+    "suggest": {
+        "ext-gmp": "Required for big number operations in EIP-712 signing",
+        "ext-bcmath": "Alternative to GMP for amount calculations"
+    }
+}

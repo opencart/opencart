@@ -1,9 +1,9 @@
 <ul class="pagination">
   {% if first %}
-    <li class="page-item"><a href="{{ first }}" class="page-link">|&lt;</a></li>
+    <li class="page-item"><a href="{{ first }}" class="page-link"><i class="fa-solid fa-angles-left"></i></a></li>
   {% endif %}
   {% if prev %}
-    <li class="page-item"><a href="{{ prev }}" class="page-link">&lt;</a></li>
+    <li class="page-item"><a href="{{ prev }}" class="page-link"><i class="fa-solid fa-angle-left"></i></a></li>
   {% endif %}
   {% for link in links %}
     {% if link.page == page %}
@@ -13,9 +13,9 @@
     {% endif %}
   {% endfor %}
   {% if next %}
-    <li class="page-item"><a href="{{ next }}" class="page-link">&gt;</a></li>
+    <li class="page-item"><a href="{{ next }}" class="page-link"><i class="fa-solid fa-angle-right"></i></a></li>
   {% endif %}
   {% if last %}
-    <li class="page-item"><a href="{{ last }}" class="page-link">&gt;|</a></li>
+    <li class="page-item"><a href="{{ last }}" class="page-link"><i class="fa-solid fa-angles-right"></i></a></li>
   {% endif %}
 </ul>

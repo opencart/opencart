@@ -148,7 +148,6 @@ $_['entry_stock_warning']                 = 'Warnung „Nicht vorrätig“ anzei
 $_['entry_stock_checkout']                = 'Lagerkasse';
 $_['entry_stock_status']                  = 'Lagerstatus';
 $_['entry_affiliate_status']              = 'Partnerstatus';
-$_['entry_affiliate_group']               = 'Partnergruppe';
 $_['entry_affiliate_approval']            = 'Partner benötigt Genehmigung';
 $_['entry_affiliate_auto']                = 'Automatische Provision';
 $_['entry_affiliate_commission']          = 'Partnerprovision (%)';

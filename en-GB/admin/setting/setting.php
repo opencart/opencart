@@ -148,7 +148,6 @@ $_['entry_stock_warning']                 = 'Show Out Of Stock Warning';
 $_['entry_stock_checkout']                = 'Stock Checkout';
 $_['entry_stock_status']                  = 'Stock Status';
 $_['entry_affiliate_status']              = 'Affiliate Status';
-$_['entry_affiliate_group']               = 'Affiliate Group';
 $_['entry_affiliate_approval']            = 'Affiliate Requires Approval';
 $_['entry_affiliate_auto']                = 'Automatic Commission';
 $_['entry_affiliate_commission']          = 'Affiliate Commission (%)';

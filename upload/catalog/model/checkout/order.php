@@ -194,12 +194,15 @@ class Order extends \Opencart\System\Engine\Model {
 	 * $this->model_checkout_order->editOrder($order_id, $order_data);
 	 */
 	public function editOrder(int $order_id, array $data): void {
-		// 1. Void the order first
-		$this->addHistory($order_id, (int)$this->config->get('config_void_status_id'));
-
 		$order_info = $this->getOrder($order_id);
 
 		if ($order_info) {
+
+			// 1. Void the order first if it has already been confirmed
+			if ($order_info['order_status_id']) {
+				$this->addHistory($order_id, (int)$this->config->get('config_void_status_id'), '', true);
+			}
+
 			// 2. Merge the old order data with the new data
 			foreach ($order_info as $key => $value) {
 				if (!isset($data[$key])) {

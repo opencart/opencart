@@ -52,7 +52,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		// Storage directory exists
 		$path = DIR_SYSTEM . 'storage/';
 
-		if (DIR_STORAGE == $path) {
+		if ($this->samePath(DIR_STORAGE, $path)) {
 			$data['storage'] = $path;
 
 			$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../')) . '/';
@@ -77,7 +77,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		// Storage delete
 		$path = DIR_SYSTEM . 'storage/';
 
-		if (is_dir($path) && DIR_STORAGE != $path) {
+		if (is_dir($path) && !$this->samePath(DIR_STORAGE, $path)) {
 			$data['storage_delete'] = $path;
 		} else {
 			$data['storage_delete'] = '';
@@ -86,7 +86,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		// Check admin directory is renamed
 		$path = DIR_OPENCART . 'admin/';
 
-		if (DIR_APPLICATION == $path) {
+		if ($this->samePath(DIR_APPLICATION, $path)) {
 			$data['admin'] = 'admin';
 		} else {
 			$data['admin'] = '';
@@ -95,7 +95,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		// Admin delete
 		$path = DIR_OPENCART . 'admin/';
 
-		if (is_dir($path) && DIR_APPLICATION != $path) {
+		if (is_dir($path) && !$this->samePath(DIR_APPLICATION, $path)) {
 			$data['admin_delete'] = $path;
 		} else {
 			$data['admin_delete'] = '';
@@ -254,7 +254,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// Create the new storage folder
 			if (!is_dir($base_new)) {
-				mkdir($base_new, 0755);
+				mkdir($base_new, 0o755);
 			}
 
 			$total = count($files);
@@ -280,7 +280,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 					// To fix storage location
 					if (!is_dir($base_new . $path_new)) {
-						mkdir($base_new . $path_new, 0755);
+						mkdir($base_new . $path_new, 0o755);
 					}
 				}
 
@@ -421,7 +421,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// 2. Create the new admin folder name
 			if (!is_dir($base_new)) {
-				mkdir($base_new, 0755);
+				mkdir($base_new, 0o755);
 			}
 
 			// 3. Split the file copies into chunks.
@@ -448,7 +448,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					}
 
 					if (!is_dir($base_new . $path_new)) {
-						mkdir($base_new . $path_new, 0755);
+						mkdir($base_new . $path_new, 0o755);
 					}
 				}
 
@@ -472,13 +472,13 @@ class Security extends \Opencart\System\Engine\Controller {
 				foreach ($lines as $line_id => $line) {
 					$status = true;
 
-					if (strpos($line, 'define(\'HTTP_SERVER') !== false) {
+					if (str_contains($line, 'define(\'HTTP_SERVER')) {
 						$output .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, '/admin/')) . '/' . $name . '/\');' . "\n";
 
 						$status = false;
 					}
 
-					if (strpos($line, 'define(\'DIR_APPLICATION') !== false) {
+					if (str_contains($line, 'define(\'DIR_APPLICATION')) {
 						$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $name . '/\');' . "\n";
 
 						$status = false;
@@ -533,7 +533,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				// Storage directory exists
 				$path = DIR_SYSTEM . 'storage/';
 
-				if (!is_dir($path) || DIR_STORAGE == $path) {
+				if (!is_dir($path) || $this->samePath(DIR_STORAGE, $path)) {
 					$json['error'] = $this->language->get('error_storage');
 				}
 			}
@@ -542,7 +542,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			if ($remove == 'admin') {
 				$path = DIR_OPENCART . 'admin/';
 
-				if (!is_dir($path) || DIR_APPLICATION == $path) {
+				if (!is_dir($path) || $this->samePath(DIR_APPLICATION, $path)) {
 					$json['error'] = $this->language->get('error_admin');
 				}
 			}
@@ -595,5 +595,26 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Compare two OpenCart paths after normalizing slashes and trailing separators.
+	 *
+	 * @param string $first
+	 * @param string $second
+	 *
+	 * @return bool
+	 */
+	private function samePath(string $first, string $second): bool {
+		return $this->normalizePath($first) === $this->normalizePath($second);
+	}
+
+	/**
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	private function normalizePath(string $path): string {
+		return rtrim(str_replace('\\', '/', $path), '/') . '/';
 	}
 }

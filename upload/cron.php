@@ -19,7 +19,6 @@ if (!is_file('config.php')) {
 }
 
 // Config
-/** @phpstan-ignore-next-line requireOnce.fileNotFound */
 require_once('config.php');
 
 // Startup
@@ -99,11 +98,11 @@ set_error_handler(function(int $code, string $message, string $file, int $line) 
 // Exception Handler
 set_exception_handler(function(\Throwable $e) use ($log, $config): void {
 	if ($config->get('error_log')) {
-		$log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+		$log->write($e::class . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
 	}
 
 	if ($config->get('error_display')) {
-		echo '<b>' . get_class($e) . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+		echo '<b>' . $e::class . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
 	} else {
 		header('Location: ' . $config->get('error_page'));
 		exit();

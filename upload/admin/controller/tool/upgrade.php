@@ -56,8 +56,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-		curl_close($curl);
-
 		if ($status == 200) {
 			$response_info = json_decode((string)$response, true);
 
@@ -216,7 +214,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 									$path = $path . '/' . $directory;
 								}
 
-								if (!is_dir(DIR_OPENCART . $path) && !@mkdir(DIR_OPENCART . $path, 0755)) {
+								if (!is_dir(DIR_OPENCART . $path) && !@mkdir(DIR_OPENCART . $path, 0o755)) {
 									$json['error'] = sprintf($this->language->get('error_directory'), $path);
 								}
 							}

@@ -95,8 +95,6 @@ class ECB extends \Opencart\System\Engine\Controller {
 
 			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-			curl_close($curl);
-
 			if ($status == 200 && is_string($response) && $response !== '') {
 				$dom = new \DOMDocument('1.0', 'UTF-8');
 				// LIBXML_NONET prevents network access during XML parsing

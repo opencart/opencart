@@ -4,7 +4,6 @@ define('VERSION', '4.1.0.4');
 
 // Configuration
 if (is_file('config.php')) {
-	/** @phpstan-ignore-next-line requireOnce.fileNotFound */
 	require_once('config.php');
 }
 

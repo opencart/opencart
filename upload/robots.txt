@@ -1,4 +1,8 @@
 user-agent: *
+Disallow: /admin/
+Disallow: /install/
+Disallow: /system/
+Disallow: /extension/
 Disallow: /*?page=$
 Disallow: /*&page=$
 Disallow: /*?sort=

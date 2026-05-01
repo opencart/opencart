@@ -24,10 +24,13 @@
   Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-## Suppress mime type detection in browsers for unknown types and prevent FLOC
+## Security headers
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "interest-cohort=()"
+  # Enable HSTS only when the site is fully served over HTTPS
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
 ## Can be commented out if causes errors, see notes above.
@@ -42,6 +45,16 @@ Options -Indexes
 ## For apache 2.2 and older, replace "Require all denied" with these two lines :
 # Order deny,allow
 # Deny from all
+</FilesMatch>
+
+## Block direct web access to cron.php (must be invoked from CLI / scheduler)
+<Files "cron.php">
+ Require all denied
+</Files>
+
+## Block access to dotfiles (.git, .env, .htpasswd, etc.)
+<FilesMatch "^\.">
+ Require all denied
 </FilesMatch>
 
 ## SEO URL Settings

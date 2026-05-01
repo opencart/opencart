@@ -168,3 +168,7 @@ if (!function_exists('str_contains')) {
 		return $find === '' || strpos($string, $find) !== false;
 	}
 }
+
+function oc_image_exists(string $image): bool {
+	return $image && is_file(DIR_IMAGE . html_entity_decode($image, ENT_QUOTES, 'UTF-8'));
+}

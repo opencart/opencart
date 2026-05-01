@@ -237,11 +237,7 @@ class Category extends \Opencart\System\Engine\Controller {
 					$description = oc_substr($description, 0, $this->config->get('config_product_description_length')) . '..';
 				}
 
-				if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-					$image = $result['image'];
-				} else {
-					$image = 'placeholder.png';
-				}
+				$image = oc_image_exists($result['image']) ? $result['image'] : 'placeholder.png';
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);

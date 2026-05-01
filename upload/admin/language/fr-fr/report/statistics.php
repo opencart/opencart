@@ -9,6 +9,11 @@ $_['text_customer']         = 'Clients en attente d\'approbation';
 $_['text_affiliate']        = 'Affiliés en attente d\'approbation';
 $_['text_product']          = 'Produits en rupture de stock';
 $_['text_review']           = 'Avis en attente';
+$_['text_order_sale']       = 'Ventes totales';
+$_['text_order_processing'] = 'Commandes en cours';
+$_['text_order_complete']   = 'Commandes terminées';
+$_['text_order_other']      = 'Autres commandes';
+$_['text_returns']          = 'Retours';
 
 // Colonne
 $_['column_name']           = 'Nom des statistiques';

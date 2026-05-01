@@ -458,7 +458,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 						}
 
 						// To fix storage location
-						if (!is_dir($base . $path_new . '/') && mkdir($base . $path_new . '/', 0777)) {
+						if (!is_dir($base . $path_new . '/') && mkdir($base . $path_new . '/', 0755)) {
 							$this->model_setting_extension->addPath($extension_install_id, $prefix . $path_new);
 						}
 					}
@@ -559,7 +559,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 							if ($xml) {
 								try {
 									$dom = new \DOMDocument('1.0', 'UTF-8');
-									$dom->loadXml($xml);
+
+									if (!@$dom->loadXml($xml, LIBXML_NONET)) {
+										continue;
+									}
 
 									$name = $dom->getElementsByTagName('name')->item(0);
 

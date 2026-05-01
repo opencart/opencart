@@ -39,7 +39,7 @@ class Log extends \Opencart\System\Engine\Controller {
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 
 		if (!is_file($file)) {
-			file_put_contents($file, '', FILE_APPEND);
+			file_put_contents($file, '', FILE_APPEND | LOCK_EX);
 		}
 
 		$data['log'] = [];

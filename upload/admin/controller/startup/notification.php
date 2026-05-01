@@ -19,7 +19,10 @@ class Notification extends \Opencart\System\Engine\Controller {
 			curl_setopt($curl, CURLOPT_URL, OPENCART_SERVER . 'index.php?route=api/notification');
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_HEADER, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
 			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 
@@ -27,10 +30,14 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-			unset($curl);
+			curl_close($curl);
 
 			if ($status == 200) {
-				$notification = json_decode($response, true);
+				$notification = json_decode((string)$response, true);
+
+				if (!is_array($notification)) {
+					$notification = [];
+				}
 			} else {
 				$notification = [];
 			}
@@ -47,12 +54,11 @@ class Notification extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Only grab the
 			$option = [
 				'expires'  => time() + 3600 * 24 * 7,
 				'path'     => $this->config->get('session_path'),
 				'secure'   => $this->request->server['HTTPS'],
-				'httponly' => false,
+				'httponly' => true,
 				'SameSite' => $this->config->get('config_session_samesite')
 			];
 

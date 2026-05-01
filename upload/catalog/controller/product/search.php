@@ -69,9 +69,9 @@ class Search extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['search'])) {
-			$this->document->setTitle($this->language->get('heading_title') . ' - ' . $this->request->get['search']);
+			$this->document->setTitle($this->language->get('heading_title') . ' - ' . htmlspecialchars((string)$this->request->get['search'], ENT_QUOTES, 'UTF-8'));
 		} elseif (isset($this->request->get['tag'])) {
-			$this->document->setTitle($this->language->get('heading_title') . ' - ' . $this->language->get('heading_tag') . $this->request->get['tag']);
+			$this->document->setTitle($this->language->get('heading_title') . ' - ' . $this->language->get('heading_tag') . htmlspecialchars((string)$this->request->get['tag'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$this->document->setTitle($this->language->get('heading_title'));
 		}
@@ -127,7 +127,7 @@ class Search extends \Opencart\System\Engine\Controller {
 		];
 
 		if (isset($this->request->get['search'])) {
-			$data['heading_title'] = $this->language->get('heading_title') . ' - ' . $this->request->get['search'];
+			$data['heading_title'] = $this->language->get('heading_title') . ' - ' . htmlspecialchars((string)$this->request->get['search'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$data['heading_title'] = $this->language->get('heading_title');
 		}

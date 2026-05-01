@@ -254,7 +254,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// Create the new storage folder
 			if (!is_dir($base_new)) {
-				mkdir($base_new, 0777);
+				mkdir($base_new, 0755);
 			}
 
 			$total = count($files);
@@ -280,7 +280,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 					// To fix storage location
 					if (!is_dir($base_new . $path_new)) {
-						mkdir($base_new . $path_new, 0777);
+						mkdir($base_new . $path_new, 0755);
 					}
 				}
 
@@ -421,7 +421,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// 2. Create the new admin folder name
 			if (!is_dir($base_new)) {
-				mkdir($base_new, 0777);
+				mkdir($base_new, 0755);
 			}
 
 			// 3. Split the file copies into chunks.
@@ -448,7 +448,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					}
 
 					if (!is_dir($base_new . $path_new)) {
-						mkdir($base_new . $path_new, 0777);
+						mkdir($base_new . $path_new, 0755);
 					}
 				}
 

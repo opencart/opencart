@@ -166,15 +166,22 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
 		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
 
 		$response = curl_exec($curl);
 
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-		unset($curl);
+		curl_close($curl);
 
 		if ($status == 200) {
-			$response_info = json_decode($response, true);
+			$response_info = json_decode((string)$response, true);
+
+			if (!is_array($response_info)) {
+				$response_info = [];
+			}
 		} else {
 			$response_info = [];
 		}
@@ -555,15 +562,22 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
 		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
 
 		$response = curl_exec($curl);
 
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-		unset($curl);
+		curl_close($curl);
 
 		if ($status == 200) {
-			$response_info = json_decode($response, true);
+			$response_info = json_decode((string)$response, true);
+
+			if (!is_array($response_info)) {
+				$response_info = [];
+			}
 		} else {
 			$response_info = [];
 		}

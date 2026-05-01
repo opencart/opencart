@@ -271,7 +271,10 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 				$dom = new \DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
-				$dom->loadXml($xml);
+
+				if (!@$dom->loadXml($xml, LIBXML_NONET)) {
+					continue;
+				}
 
 				// Log
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
@@ -539,7 +542,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 						$path = $path . '/' . $directory;
 
 						if (!is_dir(DIR_EXTENSION . 'ocmod/' . $path)) {
-							@mkdir(DIR_EXTENSION . 'ocmod/' . $path, 0777);
+							@mkdir(DIR_EXTENSION . 'ocmod/' . $path, 0755);
 						}
 					}
 

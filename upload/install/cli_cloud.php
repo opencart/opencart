@@ -179,17 +179,29 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 			return 'ERROR: Could not load SQL file: ' . $file;
 		}
 
-		$db_driver   = getenv('DB_DRIVER', true);
-		$db_hostname = getenv('DB_HOSTNAME', true);
-		$db_username = getenv('DB_USERNAME', true);
-		$db_password = getenv('DB_PASSWORD', true);
-		$db_database = getenv('DB_DATABASE', true);
-		$db_port     = getenv('DB_PORT', true);
-		$db_prefix   = getenv('DB_PREFIX', true);
+		$db_driver   = (string)getenv('DB_DRIVER', true);
+		$db_hostname = (string)getenv('DB_HOSTNAME', true);
+		$db_username = (string)getenv('DB_USERNAME', true);
+		$db_password = (string)getenv('DB_PASSWORD', true);
+		$db_database = (string)getenv('DB_DATABASE', true);
+		$db_port     = (string)getenv('DB_PORT', true);
+		$db_prefix   = (string)getenv('DB_PREFIX', true);
 
-		$db_ssl_key  = getenv('DB_SSL_KEY', true);
-		$db_ssl_cert = getenv('DB_SSL_CERT', true);
-		$db_ssl_ca   = getenv('DB_SSL_CA', true);
+		$db_ssl_key  = (string)getenv('DB_SSL_KEY', true);
+		$db_ssl_cert = (string)getenv('DB_SSL_CERT', true);
+		$db_ssl_ca   = (string)getenv('DB_SSL_CA', true);
+
+		$missing_env = [];
+
+		foreach (['DB_DRIVER' => $db_driver, 'DB_HOSTNAME' => $db_hostname, 'DB_USERNAME' => $db_username, 'DB_DATABASE' => $db_database] as $name => $value) {
+			if ($value === '') {
+				$missing_env[] = $name;
+			}
+		}
+
+		if ($missing_env) {
+			return 'ERROR: Missing environment variables: ' . implode(', ', $missing_env) . "\n";
+		}
 
 		try {
 			// Database
@@ -202,7 +214,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		$tables = oc_db_schema();
 
 		foreach ($tables as $table) {
-			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db_database . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");
+			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db->escape($db_database) . "' AND TABLE_NAME = '" . $db->escape($db_prefix . $table['name']) . "'");
 
 			if ($table_query->num_rows) {
 				$db->query("DROP TABLE `" . $db_prefix . $table['name'] . "`");
@@ -268,7 +280,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$db->query("SET CHARACTER SET utf8");
+			$db->query("SET CHARACTER SET utf8mb4");
 
 			$db->query("SET @@session.sql_mode = ''");
 

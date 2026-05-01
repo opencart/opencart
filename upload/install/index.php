@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Check if SSL
-if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) || $_SERVER['SERVER_PORT'] == 443) {
+if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)) {
 	$protocol = 'https://';
 } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
 	$protocol = 'https://';
@@ -12,12 +12,19 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 	$protocol = 'http://';
 }
 
+// Validate Host header to prevent host header injection during install
+$host = $_SERVER['HTTP_HOST'] ?? '';
+
+if (!preg_match('/^[A-Za-z0-9.\-:]{1,255}$/', $host)) {
+	exit('Error: Invalid Host header.');
+}
+
 // APPLICATION
 define('APPLICATION', 'Install');
 
 // HTTP
-define('HTTP_SERVER', $protocol . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
-define('HTTP_OPENCART', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
+define('HTTP_SERVER', $protocol . $host . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
+define('HTTP_OPENCART', $protocol . $host . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
 // DIR
 define('DIR_OPENCART', str_replace('\\', '/', realpath(__DIR__ . '/../') . '/'));

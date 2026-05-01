@@ -16,14 +16,14 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
+		if (isset($this->request->get['version']) && preg_match('/^[0-9]+(?:\.[0-9]+){0,3}(?:[\-\.][a-zA-Z0-9]+)*$/', (string)$this->request->get['version'])) {
+			$version = (string)$this->request->get['version'];
 		} else {
 			$version = '';
 		}
 
-		if (isset($this->request->get['admin'])) {
-			$admin = basename($this->request->get['admin']);
+		if (isset($this->request->get['admin']) && preg_match('/^[a-zA-Z0-9_\-]+$/', (string)$this->request->get['admin'])) {
+			$admin = basename((string)$this->request->get['admin']);
 		} else {
 			$admin = 'admin';
 		}
@@ -98,7 +98,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 									$path = $path . '/' . $directory;
 								}
 
-								if (!is_dir($base . $path) && !@mkdir($base . $path, 0777)) {
+								if (!is_dir($base . $path) && !@mkdir($base . $path, 0755)) {
 									$json['error'] = sprintf($this->language->get('error_directory'), $path);
 								}
 							}
@@ -129,11 +129,11 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			$url = '';
 
 			if (isset($this->request->get['version'])) {
-				$url .= '&version=' . $this->request->get['version'];
+				$url .= '&version=' . urlencode((string)$this->request->get['version']);
 			}
 
 			if (isset($this->request->get['admin'])) {
-				$url .= '&admin=' . $this->request->get['admin'];
+				$url .= '&admin=' . urlencode((string)$this->request->get['admin']);
 			}
 
 			if (($page * $limit) <= $total) {

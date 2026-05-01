@@ -196,11 +196,11 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$url = '';
 
 			if (isset($this->request->get['version'])) {
-				$url .= '&version=' . $this->request->get['version'];
+				$url .= '&version=' . urlencode((string)$this->request->get['version']);
 			}
 
 			if (isset($this->request->get['admin'])) {
-				$url .= '&admin=' . $this->request->get['admin'];
+				$url .= '&admin=' . urlencode((string)$this->request->get['admin']);
 			}
 
 			$json['next'] = $this->url->link('upgrade/upgrade_4', $url, true);

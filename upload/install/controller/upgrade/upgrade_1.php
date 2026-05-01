@@ -22,8 +22,8 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$version = '';
 		}
 
-		if (isset($this->request->get['admin'])) {
-			$admin = basename($this->request->get['admin']);
+		if (isset($this->request->get['admin']) && preg_match('/^[a-zA-Z0-9_\-]+$/', (string)$this->request->get['admin'])) {
+			$admin = basename((string)$this->request->get['admin']);
 		} else {
 			$admin = 'admin';
 		}
@@ -92,21 +92,21 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 				$output .= 'define(\'HTTP_SERVER\', HOST_NAME . \'/\');' . "\n\n";
 			} else {
 				if (!empty($config['HTTPS_SERVER'])) {
-					$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTPS_SERVER'] . '\');' . "\n\n";
+					$output .= 'define(\'HTTP_SERVER\', \'' . addslashes($config['HTTPS_SERVER']) . '\');' . "\n\n";
 				} elseif (!empty($config['HTTP_SERVER'])) {
-					$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTP_SERVER'] . '\');' . "\n\n";
+					$output .= 'define(\'HTTP_SERVER\', \'' . addslashes($config['HTTP_SERVER']) . '\');' . "\n\n";
 				}
 			}
 
 			$output .= '// DIR' . "\n";
-			$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
+			$output .= 'define(\'DIR_OPENCART\', \'' . addslashes(DIR_OPENCART) . '\');' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'catalog/\');' . "\n";
 			$output .= 'define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', DIR_OPENCART . \'image/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', DIR_OPENCART . \'system/\');' . "\n";
 
 			if (isset($config['DIR_STORAGE'])) {
-				$output .= 'define(\'DIR_STORAGE\', \'' . $config['DIR_STORAGE'] . '\');' . "\n";
+				$output .= 'define(\'DIR_STORAGE\', \'' . addslashes($config['DIR_STORAGE']) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 			}
@@ -121,35 +121,35 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', \'' . DB_DRIVER . '\');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', \'' . DB_HOSTNAME . '\');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', \'' . DB_USERNAME . '\');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', \'' . DB_PASSWORD . '\');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . addslashes(DB_DRIVER) . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes(DB_HOSTNAME) . '\');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', \'' . addslashes(DB_USERNAME) . '\');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(DB_PASSWORD) . '\');' . "\n";
 
-			$output .= 'define(\'DB_DATABASE\', \'' . DB_DATABASE . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . addslashes(DB_DATABASE) . '\');' . "\n";
 
 			if (defined('DB_PORT')) {
-				$output .= 'define(\'DB_PORT\', \'' . DB_PORT . '\');' . "\n";
+				$output .= 'define(\'DB_PORT\', \'' . addslashes(DB_PORT) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
 
-			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes(DB_PREFIX) . '\');' . "\n";
 
 			if (defined('DB_SSL_KEY')) {
-				$output .= 'define(\'DB_SSL_KEY\', \'' . DB_SSL_KEY . '\');' . "\n";
+				$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes(DB_SSL_KEY) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_SSL_KEY\', \'\');' . "\n";
 			}
 
 			if (defined('DB_SSL_CERT')) {
-				$output .= 'define(\'DB_SSL_CERT\', \'' . DB_SSL_CERT . '\');' . "\n";
+				$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes(DB_SSL_CERT) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_SSL_CERT\', \'\');' . "\n";
 			}
 
 			if (defined('DB_SSL_CA')) {
-				$output .= 'define(\'DB_SSL_CA\', \'' . DB_SSL_CA . '\');' . "\n";
+				$output .= 'define(\'DB_SSL_CA\', \'' . addslashes(DB_SSL_CA) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n";
 			}
@@ -271,19 +271,19 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$output .= '// HTTP' . "\n";
 
 			if (!empty($config['HTTPS_SERVER'])) {
-				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTPS_SERVER'] . '\');' . "\n";
+				$output .= 'define(\'HTTP_SERVER\', \'' . addslashes($config['HTTPS_SERVER']) . '\');' . "\n";
 			} elseif (!empty($config['HTTP_SERVER'])) {
-				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTP_SERVER'] . '\');' . "\n";
+				$output .= 'define(\'HTTP_SERVER\', \'' . addslashes($config['HTTP_SERVER']) . '\');' . "\n";
 			}
 
 			if (!empty($config['HTTPS_CATALOG'])) {
-				$output .= 'define(\'HTTP_CATALOG\', \'' . $config['HTTPS_CATALOG'] . '\');' . "\n\n";
+				$output .= 'define(\'HTTP_CATALOG\', \'' . addslashes($config['HTTPS_CATALOG']) . '\');' . "\n\n";
 			} elseif (!empty($config['HTTP_CATALOG'])) {
-				$output .= 'define(\'HTTP_CATALOG\', \'' . $config['HTTP_CATALOG'] . '\');' . "\n\n";
+				$output .= 'define(\'HTTP_CATALOG\', \'' . addslashes($config['HTTP_CATALOG']) . '\');' . "\n\n";
 			}
 
 			$output .= '// DIR' . "\n";
-			$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
+			$output .= 'define(\'DIR_OPENCART\', \'' . addslashes(DIR_OPENCART) . '\');' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $admin . '/\');' . "\n";
 			$output .= 'define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', DIR_OPENCART . \'image/\');' . "\n";
@@ -291,7 +291,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_CATALOG\', DIR_OPENCART . \'catalog/\');' . "\n";
 
 			if (isset($config['DIR_STORAGE'])) {
-				$output .= 'define(\'DIR_STORAGE\', \'' . $config['DIR_STORAGE'] . '\');' . "\n";
+				$output .= 'define(\'DIR_STORAGE\', \'' . addslashes($config['DIR_STORAGE']) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 			}
@@ -306,34 +306,34 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', \'' . DB_DRIVER . '\');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', \'' . DB_HOSTNAME . '\');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', \'' . DB_USERNAME . '\');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', \'' . DB_PASSWORD . '\');' . "\n";
-			$output .= 'define(\'DB_DATABASE\', \'' . DB_DATABASE . '\');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . addslashes(DB_DRIVER) . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes(DB_HOSTNAME) . '\');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', \'' . addslashes(DB_USERNAME) . '\');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(DB_PASSWORD) . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . addslashes(DB_DATABASE) . '\');' . "\n";
 
 			if (defined('DB_PORT')) {
-				$output .= 'define(\'DB_PORT\', \'' . DB_PORT . '\');' . "\n";
+				$output .= 'define(\'DB_PORT\', \'' . addslashes(DB_PORT) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
 
-			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes(DB_PREFIX) . '\');' . "\n";
 
 			if (defined('DB_SSL_KEY')) {
-				$output .= 'define(\'DB_SSL_KEY\', \'' . DB_SSL_KEY . '\');' . "\n";
+				$output .= 'define(\'DB_SSL_KEY\', \'' . addslashes(DB_SSL_KEY) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_SSL_KEY\', \'\');' . "\n";
 			}
 
 			if (defined('DB_SSL_CERT')) {
-				$output .= 'define(\'DB_SSL_CERT\', \'' . DB_SSL_CERT . '\');' . "\n";
+				$output .= 'define(\'DB_SSL_CERT\', \'' . addslashes(DB_SSL_CERT) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_SSL_CERT\', \'\');' . "\n";
 			}
 
 			if (defined('DB_SSL_CA')) {
-				$output .= 'define(\'DB_SSL_CA\', \'' . DB_SSL_CA . '\');' . "\n\n";
+				$output .= 'define(\'DB_SSL_CA\', \'' . addslashes(DB_SSL_CA) . '\');' . "\n\n";
 			} else {
 				$output .= 'define(\'DB_SSL_CA\', \'\');' . "\n\n";
 			}
@@ -364,11 +364,13 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		foreach ($directories as $directory) {
 			if (!is_dir($storage . $directory)) {
-				mkdir($storage . $directory, 0644);
+				mkdir($storage . $directory, 0755);
 
 				$handle = fopen($storage . $directory . '/index.html', 'w');
 
-				fclose($handle);
+				if ($handle) {
+					fclose($handle);
+				}
 			}
 		}
 
@@ -402,7 +404,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 				$path = substr($file, strlen($source));
 
 				if (is_dir($source . $path) && !is_dir($destination . $path)) {
-					mkdir($destination . $path, 0777);
+					mkdir($destination . $path, 0755);
 				}
 
 				if (is_file($source . $path) && !is_file($destination . $path)) {
@@ -481,11 +483,11 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$url = '';
 
 			if (isset($this->request->get['version'])) {
-				$url .= '&version=' . $this->request->get['version'];
+				$url .= '&version=' . urlencode((string)$this->request->get['version']);
 			}
 
 			if (isset($this->request->get['admin'])) {
-				$url .= '&admin=' . $this->request->get['admin'];
+				$url .= '&admin=' . urlencode((string)$this->request->get['admin']);
 			}
 
 			$json['next'] = $this->url->link('upgrade/upgrade_2', $url, true);

@@ -78,7 +78,7 @@ class Upgrade11 extends \Opencart\System\Engine\Controller {
 			$url = '';
 
 			if (isset($this->request->get['admin'])) {
-				$url .= '&admin=' . $this->request->get['admin'];
+				$url .= '&admin=' . urlencode((string)$this->request->get['admin']);
 			}
 
 			$json['redirect'] = $this->url->link('install/step_4', $url, true);

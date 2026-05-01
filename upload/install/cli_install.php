@@ -198,8 +198,8 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		// Pre-installation check
 		$error = '';
 
-		if (version_compare(PHP_VERSION, '8.0', '<')) {
-			$error .= 'ERROR: You need to use PHP8.0+ or above for OpenCart to work!' . "\n";
+		if (version_compare(PHP_VERSION, '8.1', '<')) {
+			$error .= 'ERROR: You need to use PHP8.1+ or above for OpenCart to work!' . "\n";
 		}
 
 		if (!ini_get('file_uploads')) {
@@ -262,11 +262,12 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$error .= 'ERROR: Install language not available!' . "\n";
 		}
 
-		// If not cloud then we validate the password
-		if ($option['db_password']) {
-			if (!oc_validate_length(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), 5, 20)) {
-				$error .= 'ERROR: Password must be between 5 and 20 characters!' . "\n";
-			}
+		if (!oc_validate_length(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), 5, 20)) {
+			$error .= 'ERROR: Password must be between 5 and 20 characters!' . "\n";
+		}
+
+		if (!preg_match('#^https?://[^\s\'"\\\\]+/$#i', (string)$option['http_server'])) {
+			$error .= 'ERROR: HTTP server URL must be a valid http(s):// URL ending with /!' . "\n";
 		}
 
 		if ($error) {
@@ -300,7 +301,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$tables = oc_db_schema();
 
 		foreach ($tables as $table) {
-			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db_database . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");
+			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db->escape($db_database) . "' AND TABLE_NAME = '" . $db->escape($db_prefix . $table['name']) . "'");
 
 			if ($table_query->num_rows) {
 				$db->query("DROP TABLE `" . $db_prefix . $table['name'] . "`");
@@ -397,10 +398,10 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'APPLICATION\', \'Catalog\');' . "\n\n";
 
 		$output .= '// HTTP' . "\n";
-		$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . '\');' . "\n\n";
+		$output .= 'define(\'HTTP_SERVER\', \'' . addslashes($option['http_server']) . '\');' . "\n\n";
 
 		$output .= '// DIR' . "\n";
-		$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
+		$output .= 'define(\'DIR_OPENCART\', \'' . addslashes(DIR_OPENCART) . '\');' . "\n";
 		$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'catalog/\');' . "\n";
 		$output .= 'define(\'DIR_SYSTEM\', DIR_OPENCART . \'system/\');' . "\n";
 		$output .= 'define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n";
@@ -455,11 +456,11 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$output .= 'define(\'APPLICATION\', \'Admin\');' . "\n\n";
 
 		$output .= '// HTTP' . "\n";
-		$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . 'admin/\');' . "\n";
-		$output .= 'define(\'HTTP_CATALOG\', \'' . $option['http_server'] . '\');' . "\n";
+		$output .= 'define(\'HTTP_SERVER\', \'' . addslashes($option['http_server']) . 'admin/\');' . "\n";
+		$output .= 'define(\'HTTP_CATALOG\', \'' . addslashes($option['http_server']) . '\');' . "\n";
 
 		$output .= '// DIR' . "\n";
-		$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
+		$output .= 'define(\'DIR_OPENCART\', \'' . addslashes(DIR_OPENCART) . '\');' . "\n";
 		$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'admin/\');' . "\n";
 		$output .= 'define(\'DIR_SYSTEM\', DIR_OPENCART . \'system/\');' . "\n";
 		$output .= 'define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n";

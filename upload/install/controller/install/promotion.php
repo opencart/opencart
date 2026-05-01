@@ -19,7 +19,10 @@ class Promotion extends \Opencart\System\Engine\Controller {
 		curl_setopt($curl, CURLOPT_URL, 'https://www.opencart.com/index.php?route=api/install');
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 
@@ -27,14 +30,12 @@ class Promotion extends \Opencart\System\Engine\Controller {
 
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
+		curl_close($curl);
+
 		if ($status == 200) {
-			$response = $output;
-		} else {
-			$response = '';
+			return (string)$output;
 		}
 
-		unset($curl);
-
-		return $response;
+		return '';
 	}
 }

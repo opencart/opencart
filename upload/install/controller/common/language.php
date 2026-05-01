@@ -17,7 +17,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$data['text_language'] = $this->language->get('text_language');
 
 		if (isset($this->request->get['route'])) {
-			$route = $this->request->get['route'];
+			$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$this->request->get['route']);
 		} else {
 			$route = $this->config->get('action_default');
 		}

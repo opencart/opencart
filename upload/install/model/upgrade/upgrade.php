@@ -17,6 +17,17 @@ namespace Opencart\Install\Model\Upgrade;
  */
 class Upgrade extends \Opencart\System\Engine\Model {
 	/**
+	 * Sanitize a table or column identifier for safe use in raw SQL.
+	 *
+	 * @param string $name
+	 *
+	 * @return string
+	 */
+	private function safeIdentifier(string $name): string {
+		return preg_replace('/[^a-zA-Z0-9_]/', '', $name);
+	}
+
+	/**
 	 * Add Record
 	 *
 	 * @param string               $table
@@ -25,14 +36,16 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function addRecord(string $table, array $data): int {
+		$table = $this->safeIdentifier($table);
+
 		$implode = [];
 
 		foreach ($data as $key => $value) {
-			$key = $this->db->escape((string)$key);
+			$key = $this->safeIdentifier((string)$key);
 
 			switch (gettype($value)) {
 				case 'boolean':
-					$implode[] = "`" . $key . "` = '" . (bool)$value . "'";
+					$implode[] = "`" . $key . "` = '" . (int)$value . "'";
 					break;
 				case 'integer':
 					$implode[] = "`" . $key . "` = '" . (int)$value . "'";
@@ -44,10 +57,8 @@ class Upgrade extends \Opencart\System\Engine\Model {
 					$implode[] = "`" . $key . "` = '" . $this->db->escape((string)$value) . "'";
 					break;
 				case 'array':
-					$implode[] = "`" . $key . "` = '" . $this->db->escape(json_encode($value)) . "'";
-					break;
 				case 'object':
-					$implode[] = "`" . $key . "` = '" . $this->db->escape(json_encode($value)) . "'";
+					$implode[] = "`" . $key . "` = '" . $this->db->escape((string)json_encode($value)) . "'";
 					break;
 			}
 		}
@@ -65,6 +76,8 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public function getRecords(string $table): array {
+		$table = $this->safeIdentifier($table);
+
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . $table . "`");
 
 		return $query->rows;
@@ -78,7 +91,9 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function hasTable(string $table): int {
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "'");
+		$table = $this->safeIdentifier($table);
+
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $this->db->escape(DB_DATABASE) . "' AND TABLE_NAME = '" . $this->db->escape(DB_PREFIX . $table) . "'");
 
 		return $query->num_rows;
 	}
@@ -92,7 +107,10 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	 * @return int
 	 */
 	public function hasField(string $table, string $field): int {
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "' AND COLUMN_NAME = '" . $field . "'");
+		$table = $this->safeIdentifier($table);
+		$field = $this->safeIdentifier($field);
+
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $this->db->escape(DB_DATABASE) . "' AND TABLE_NAME = '" . $this->db->escape(DB_PREFIX . $table) . "' AND COLUMN_NAME = '" . $this->db->escape($field) . "'");
 
 		return $query->num_rows;
 	}
@@ -105,6 +123,8 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function dropTable(string $table): void {
+		$table = $this->safeIdentifier($table);
+
 		if ($this->hasTable($table)) {
 			$this->db->query("DROP TABLE `" . DB_PREFIX . $table . "`");
 		}
@@ -119,6 +139,9 @@ class Upgrade extends \Opencart\System\Engine\Model {
 	 * @return void
 	 */
 	public function dropField(string $table, string $field): void {
+		$table = $this->safeIdentifier($table);
+		$field = $this->safeIdentifier($field);
+
 		if ($this->hasField($table, $field)) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . $table . "` DROP `" . $field . "`");
 		}

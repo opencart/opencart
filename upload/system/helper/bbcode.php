@@ -9,30 +9,30 @@
 function oc_bbcode_decode(string $string): string {
 	// Simple, safe replacements (no attribute output)
 	$pattern = [
-		'/\[b\](.*?)\[\/b\]/is'                                            => '<strong>$1</strong>',
-		'/\[i\](.*?)\[\/i\]/is'                                            => '<em>$1</em>',
-		'/\[u\](.*?)\[\/u\]/is'                                            => '<u>$1</u>',
-		'/\[quote\](.*?)\[\/quote]/is'                                     => '<blockquote>$1</blockquote>',
-		'/\[code\](.*?)\[\/code\]/is'                                      => '<code>$1</code>',
-		'/\[s\](.*?)\[\/s\]/is'                                            => '<s>$1</s>',
-		'/\[\*\]([\w\W]+?)\n?(?=(?:(?:\[\*\])|(?:\[\/list\])))/'           => '<li>$1</li>',
-		'/\[list\](.*?)\[\/list\]/is'                                      => '<ul>$1</ul>',
-		'/\[list\=(1|A|a|I|i)\](.*?)\[\/list\]/is'                         => '<ol type="$1">$2</ol>',
-		'/\[size\=([\-\+]?\d+)\](.*?)\[\/size\]/is'                        => '<span style="font-size: $1%;">$2</span>',
+		'/\[b\](.*?)\[\/b\]/is'                                               => '<strong>$1</strong>',
+		'/\[i\](.*?)\[\/i\]/is'                                               => '<em>$1</em>',
+		'/\[u\](.*?)\[\/u\]/is'                                               => '<u>$1</u>',
+		'/\[quote\](.*?)\[\/quote]/is'                                        => '<blockquote>$1</blockquote>',
+		'/\[code\](.*?)\[\/code\]/is'                                         => '<code>$1</code>',
+		'/\[s\](.*?)\[\/s\]/is'                                               => '<s>$1</s>',
+		'/\[\*\]([\w\W]+?)\n?(?=(?:(?:\[\*\])|(?:\[\/list\])))/'              => '<li>$1</li>',
+		'/\[list\](.*?)\[\/list\]/is'                                         => '<ul>$1</ul>',
+		'/\[list\=(1|A|a|I|i)\](.*?)\[\/list\]/is'                            => '<ol type="$1">$2</ol>',
+		'/\[size\=([\-\+]?\d+)\](.*?)\[\/size\]/is'                           => '<span style="font-size: $1%;">$2</span>',
 		'/\[color\=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)\](.*?)\[\/color\]/is' => '<span style="color: $1;">$2</span>',
 	];
 
 	$string = preg_replace(array_keys($pattern), array_values($pattern), $string);
 
 	// Image: validate URL protocol and escape src
-	$string = preg_replace_callback('/\[img\](.*?)\[\/img\]/is', function (array $m): string {
+	$string = preg_replace_callback('/\[img\](.*?)\[\/img\]/is', function(array $m): string {
 		$url = oc_bbcode_safe_url($m[1]);
 
 		return $url === '' ? '' : '<img src="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" alt="" class="img-fluid" />';
 	}, $string);
 
 	// URL: [url]https://...[/url]
-	$string = preg_replace_callback('/\[url\](.*?)\[\/url\]/is', function (array $m): string {
+	$string = preg_replace_callback('/\[url\](.*?)\[\/url\]/is', function(array $m): string {
 		$url = oc_bbcode_safe_url($m[1]);
 
 		if ($url === '') {
@@ -45,7 +45,7 @@ function oc_bbcode_decode(string $string): string {
 	}, $string);
 
 	// URL (named): [url=https://...]label[/url]
-	$string = preg_replace_callback('/\[url\=([^\[]+?)\](.*?)\[\/url\]/is', function (array $m): string {
+	$string = preg_replace_callback('/\[url\=([^\[]+?)\](.*?)\[\/url\]/is', function(array $m): string {
 		$url = oc_bbcode_safe_url($m[1]);
 
 		if ($url === '') {
@@ -56,7 +56,7 @@ function oc_bbcode_decode(string $string): string {
 	}, $string);
 
 	// YouTube: only allow ID matching expected character set
-	$string = preg_replace_callback('/\[youtube\](.*?)\[\/youtube\]/is', function (array $m): string {
+	return preg_replace_callback('/\[youtube\](.*?)\[\/youtube\]/is', function(array $m): string {
 		$id = trim($m[1]);
 
 		if (!preg_match('/^[A-Za-z0-9_-]{6,20}$/', $id)) {
@@ -65,8 +65,6 @@ function oc_bbcode_decode(string $string): string {
 
 		return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' . $id . '" allowfullscreen></iframe>';
 	}, $string);
-
-	return $string;
 }
 
 /**

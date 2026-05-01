@@ -266,7 +266,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$error .= 'ERROR: Password must be between 5 and 20 characters!' . "\n";
 		}
 
-		if (!preg_match('#^https?://[^\s\'"\\\\]+/$#i', (string)$option['http_server'])) {
+		if (!preg_match('#^https?://[^\s\'"\\\]+/$#i', (string)$option['http_server'])) {
 			$error .= 'ERROR: HTTP server URL must be a valid http(s):// URL ending with /!' . "\n";
 		}
 

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Event;
 /**
  * Class Modification
  *
-и * Adds event handling of modification ocmod controllers, models, views and libraries easier
+ * Adds event handling of modification ocmod controllers, models, views and libraries easier
  *
  * @package Opencart\Admin\Controller\Event
  */

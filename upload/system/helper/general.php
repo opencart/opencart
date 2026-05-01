@@ -126,4 +126,3 @@ function oc_glob(string $pattern, int $flags = 0): array {
 
 	return $matches;
 }
-

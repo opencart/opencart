@@ -3,9 +3,9 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      php: 7.3
+      php: 8.1
     commands:
-      - composer install
+      - composer install --no-dev --no-interaction --prefer-dist
   post_build:
     commands:
       # Do not remove this statement. This command is required for AWS CodeStar projects.

@@ -8,7 +8,7 @@ parameters:
     'upload/system/helper',
   ]
   include: ['*.php']
-  exclude: ['upload/system/storage/vendor']
+  exclude: ['upload/system/storage']
   excludeProtected: false
   excludePrivate: true
   excludeTagged: ['internal']

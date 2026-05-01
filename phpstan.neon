@@ -4,16 +4,20 @@ services:
         tags:
             - phpstan.broker.propertiesClassReflectionExtension
 parameters:
+    phpVersion: 80100
     level: 6
     paths:
-        - ./upload/
+        - upload
     excludePaths:
-        - ./tools/phpstan/
-        - ./upload/system/storage/vendor/
-        - ./upload/system/storage/cache/
-    tmpDir: .cache
+        - upload/system/storage/vendor/*
+        - upload/system/storage/cache/*
+    tmpDir: .cache/phpstan
     ignoreErrors:
+        # Dynamic proxy methods are resolved at runtime.
         - '#^Access to an undefined property Opencart\\System\\Engine\\Proxy<Opencart\\Catalog\\Model\\Checkout\\Cart>::\$getTotals\.$#'
+        # require_once paths use runtime DIR_* constants resolved from config.php.
+        - identifier: requireOnce.fileNotFound
+        # Legacy framework patterns that are still being worked through incrementally.
         - '# always exists and is not #'
         - '#^Constant [A-Z_]+ not found\.$#'
         - '#^Empty array passed to foreach\.$#'

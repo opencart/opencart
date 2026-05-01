@@ -38,9 +38,11 @@
 # CSS Files
 /upload/catalog/view/stylesheet/stylesheet.css
 
-# IDE Project files
-/upload/.idea/*
-/.idea/*
-/.DS_Store
+# Local runtime files
+/upload/install.lock
+
+# IDE and machine-specific files
+.idea/
+.DS_Store
 /.cache
 /.php-cs-fixer.cache

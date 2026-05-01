@@ -22,7 +22,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$reward = 0;
 		}
 
-		if (empty($this->request->post['reward']) && $this->request->get['call'] == 'confirm') {
+		if (empty($this->request->post['reward']) && (($this->request->get['call'] ?? '') == 'confirm')) {
 			return [];
 		}
 

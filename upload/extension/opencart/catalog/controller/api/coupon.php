@@ -22,7 +22,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon = '';
 		}
 
-		if (empty($this->request->post['coupon']) && $this->request->get['call'] == 'confirm') {
+		if (empty($this->request->post['coupon']) && (($this->request->get['call'] ?? '') == 'confirm')) {
 			return [];
 		}
 
@@ -40,7 +40,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$output['error'] = $this->language->get('error_status');
 		}
 
-		if (!$output) {
+		if (!$output && $coupon !== '') {
 			// Setting
 			$this->load->model('marketing/coupon');
 
@@ -52,7 +52,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		// Set there only to show an errormessage if the extension is being called directly
-		if (!$output) {
+		if (!$output && $coupon !== '') {
 			$this->session->data['coupon'] = $coupon;
 
 			$output['success'] = $this->language->get('text_success');

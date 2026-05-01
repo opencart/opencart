@@ -210,14 +210,20 @@ class Ip extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$ip = isset($this->request->post['ip']) ? (string)$this->request->post['ip'] : '';
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$ip || !filter_var($ip, FILTER_VALIDATE_IP)) {
+			$json['error'] = $this->language->get('error_invalid');
 		}
 
 		if (!$json) {
 			$this->load->model('extension/opencart/fraud/ip');
 
-			$this->model_extension_opencart_fraud_ip->removeIp($this->request->post['ip']);
+			$this->model_extension_opencart_fraud_ip->removeIp($ip);
 
 			$json['success'] = $this->language->get('text_success');
 		}

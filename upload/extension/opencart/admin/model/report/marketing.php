@@ -52,7 +52,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 			$sql .= " AND DATE(`o2`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
-		$sql .= " GROUP BY `o2`.`marketing_id`) AS `total` FROM `" . DB_PREFIX . "marketing` m ORDER BY m.`date_added` ASC";
+		$sql .= " GROUP BY `o2`.`marketing_id`) AS `total` FROM `" . DB_PREFIX . "marketing` `m` ORDER BY `m`.`date_added` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			$start = isset($data['start']) ? (int)$data['start'] : 0;

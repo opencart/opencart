@@ -26,7 +26,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	public function getSubscriptions(array $data = []): array {
 		$sql = "SELECT MIN(`s`.`date_added`) AS `date_start`, MAX(`s`.`date_added`) AS `date_end`, COUNT(*) AS `subscriptions`, SUM((SELECT `quantity` FROM `" . DB_PREFIX . "subscription_product` `sp` WHERE `sp`.`subscription_id` = `s`.`subscription_id`)) AS `products`, SUM(`s`.`tax`) AS `tax`, SUM(`s`.`price`) AS `total` FROM `" . DB_PREFIX . "subscription` `s`";
 
-		if (!empty($data['filter_order_status_id'])) {
+		if (!empty($data['filter_subscription_status_id'])) {
 			$sql .= " WHERE `s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		} else {
 			$sql .= " WHERE `s`.`subscription_status_id` > '0'";

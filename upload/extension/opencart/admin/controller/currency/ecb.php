@@ -95,13 +95,20 @@ class ECB extends \Opencart\System\Engine\Controller {
 
 			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-			unset($curl);
+			curl_close($curl);
 
-			if ($status == 200) {
+			if ($status == 200 && is_string($response) && $response !== '') {
 				$dom = new \DOMDocument('1.0', 'UTF-8');
-				$dom->loadXml($response);
+				// LIBXML_NONET prevents network access during XML parsing
+				if (!@$dom->loadXml($response, LIBXML_NONET)) {
+					return;
+				}
 
 				$cube = $dom->getElementsByTagName('Cube')->item(0);
+
+				if (!$cube) {
+					return;
+				}
 
 				// Compile all the rates into an array
 				$currencies = [];

@@ -371,7 +371,7 @@ class Sale extends \Opencart\System\Engine\Model {
 				$sql .= " GROUP BY YEAR(`o`.`date_added`), MONTH(`o`.`date_added`), `ot`.`title`";
 				break;
 			case 'year':
-				$sql .= " GROUP BY YEAR(`o`.`date_added`), ot.`title`";
+				$sql .= " GROUP BY YEAR(`o`.`date_added`), `ot`.`title`";
 				break;
 		}
 
@@ -554,10 +554,10 @@ class Sale extends \Opencart\System\Engine\Model {
 				break;
 		}
 
-		$sql .= " LEFT JOIN `" . DB_PREFIX . "order_total` `ot` ON (`o`.`order_id` = ot.`order_id`) WHERE `ot`.`code` = 'shipping'";
+		$sql .= " LEFT JOIN `" . DB_PREFIX . "order_total` `ot` ON (`o`.`order_id` = `ot`.`order_id`) WHERE `ot`.`code` = 'shipping'";
 
 		if (!empty($data['filter_order_status_id'])) {
-			$sql .= " AND `o`.order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
+			$sql .= " AND `o`.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " AND `o`.`order_status_id` > '0'";
 		}

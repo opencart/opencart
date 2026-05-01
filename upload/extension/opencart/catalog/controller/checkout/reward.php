@@ -66,22 +66,24 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_status');
 		}
 
-		$available = $this->customer->getRewardPoints();
+		if (!$json) {
+			$available = $this->customer->getRewardPoints();
 
-		$points_total = 0;
+			$points_total = 0;
 
-		foreach ($this->cart->getProducts() as $product) {
-			if ($product['points']) {
-				$points_total += $product['points'];
+			foreach ($this->cart->getProducts() as $product) {
+				if ($product['points']) {
+					$points_total += $product['points'];
+				}
 			}
-		}
 
-		if ($reward > $available) {
-			$json['error'] = sprintf($this->language->get('error_points'), $reward);
-		}
+			if ($reward > $available) {
+				$json['error'] = sprintf($this->language->get('error_points'), $reward);
+			}
 
-		if ($reward > $points_total) {
-			$json['error'] = sprintf($this->language->get('error_maximum'), $points_total);
+			if ($reward > $points_total) {
+				$json['error'] = sprintf($this->language->get('error_maximum'), $points_total);
+			}
 		}
 
 		if (!$json) {

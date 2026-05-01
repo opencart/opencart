@@ -51,12 +51,14 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_status');
 		}
 
-		$this->load->model('marketing/coupon');
+		if (!$json) {
+			$this->load->model('marketing/coupon');
 
-		$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
+			$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
 
-		if (!$coupon_info) {
-			$json['error'] = $this->language->get('error_coupon');
+			if (!$coupon_info) {
+				$json['error'] = $this->language->get('error_coupon');
+			}
 		}
 
 		if (!$json) {

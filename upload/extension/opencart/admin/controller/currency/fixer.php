@@ -85,58 +85,68 @@ class Fixer extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function currency(string $default = ''): void {
-		if ($this->config->get('currency_fixer_status')) {
-			$curl = curl_init();
+		if (!$this->config->get('currency_fixer_status')) {
+			return;
+		}
 
-			curl_setopt($curl, CURLOPT_URL, 'https://data.fixer.io/api/latest?access_key=' . $this->config->get('currency_fixer_api'));
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_HEADER, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		$curl = curl_init();
 
-			$response = curl_exec($curl);
+		curl_setopt($curl, CURLOPT_URL, 'https://data.fixer.io/api/latest?access_key=' . urlencode((string)$this->config->get('currency_fixer_api')));
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 
-			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		$response = curl_exec($curl);
 
-			unset($curl);
+		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-			if ($status == 200) {
-				$response_info = json_decode($response, true);
-			} else {
-				$response_info = [];
-			}
+		curl_close($curl);
 
-			if (isset($response_info['rates'])) {
-				// Compile all the rates into an array
-				$currencies = [];
+		if ($status != 200) {
+			return;
+		}
 
-				$currencies['EUR'] = 1.0000;
+		$response_info = json_decode((string)$response, true);
 
-				foreach ($response_info['rates'] as $key => $value) {
-					$currencies[$key] = $value;
+		if (!isset($response_info['rates']) || !is_array($response_info['rates'])) {
+			return;
+		}
+
+		// Compile all the rates into an array
+		$currencies = ['EUR' => 1.0000];
+
+		foreach ($response_info['rates'] as $key => $value) {
+			$currencies[$key] = $value;
+		}
+
+		if (!isset($currencies[$default]) || !$currencies[$default]) {
+			return;
+		}
+
+		// Currency
+		$this->load->model('localisation/currency');
+
+		$results = $this->model_localisation_currency->getCurrencies();
+
+		foreach ($results as $result) {
+			if (isset($currencies[$result['code']])) {
+				$from = $currencies['EUR'];
+				$to = $currencies[$result['code']];
+
+				if (!$to) {
+					continue;
 				}
 
-				// Currency
-				$this->load->model('localisation/currency');
-
-				$results = $this->model_localisation_currency->getCurrencies();
-
-				foreach ($results as $result) {
-					if (isset($currencies[$result['code']])) {
-						$from = $currencies['EUR'];
-
-						$to = $currencies[$result['code']];
-
-						$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($currencies[$default] * ($from / $to)));
-					}
-				}
-
-				$this->model_localisation_currency->editValueByCode($default, 1);
-
-				$this->cache->delete('currency');
+				$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($currencies[$default] * ($from / $to)));
 			}
 		}
+
+		$this->model_localisation_currency->editValueByCode($default, 1);
+
+		$this->cache->delete('currency');
 	}
 }

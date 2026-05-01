@@ -48,29 +48,38 @@ class Image {
 			exit('Error: PHP GD is not installed!');
 		}
 
-		if (is_file($file)) {
-			$this->file = $file;
-
-			$info = getimagesize($file);
-
-			$this->width = $info[0];
-			$this->height = $info[1];
-			$this->bits = $info['bits'] ?? '';
-			$this->mime = $info['mime'] ?? '';
-
-			if ($this->mime == 'image/gif') {
-				$this->image = imagecreatefromgif($file);
-			} elseif ($this->mime == 'image/png') {
-				$this->image = imagecreatefrompng($file);
-
-				imageinterlace($this->image, false);
-			} elseif ($this->mime == 'image/jpeg') {
-				$this->image = imagecreatefromjpeg($file);
-			} elseif ($this->mime == 'image/webp') {
-				$this->image = imagecreatefromwebp($file);
-			}
-		} else {
+		if (!is_file($file)) {
 			throw new \Exception('Error: Could not load image ' . $file . '!');
+		}
+
+		$info = @getimagesize($file);
+
+		if ($info === false) {
+			throw new \Exception('Error: Could not read image dimensions for ' . $file . '!');
+		}
+
+		$this->file = $file;
+		$this->width = (int)$info[0];
+		$this->height = (int)$info[1];
+		$this->bits = isset($info['bits']) ? (string)$info['bits'] : '';
+		$this->mime = $info['mime'] ?? '';
+
+		if ($this->mime == 'image/gif') {
+			$this->image = imagecreatefromgif($file);
+		} elseif ($this->mime == 'image/png') {
+			$this->image = imagecreatefrompng($file);
+
+			if ($this->image) {
+				imageinterlace($this->image, false);
+			}
+		} elseif ($this->mime == 'image/jpeg') {
+			$this->image = imagecreatefromjpeg($file);
+		} elseif ($this->mime == 'image/webp') {
+			$this->image = imagecreatefromwebp($file);
+		}
+
+		if (!$this->image) {
+			throw new \Exception('Error: Could not decode image ' . $file . '!');
 		}
 	}
 
@@ -139,7 +148,7 @@ class Image {
 	public function save(string $file, int $quality = 90): void {
 		$info = pathinfo($file);
 
-		$extension = strtolower($info['extension']);
+		$extension = isset($info['extension']) ? strtolower($info['extension']) : '';
 
 		if (is_object($this->image) || is_resource($this->image)) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {

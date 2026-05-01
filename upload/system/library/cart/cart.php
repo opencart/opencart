@@ -585,7 +585,7 @@ class Cart {
 	 *
 	 * $cart = $this->cart->hasMinimum();
 	 */
-	public function hasMinimum() {
+	public function hasMinimum(): bool {
 		foreach ($this->getProducts() as $product) {
 			if (!$product['minimum_status']) {
 				return false;

@@ -17,7 +17,7 @@ class PDO {
 	/**
 	 * @var int
 	 */
-	private int $affected;
+	private int $affected = 0;
 
 	/**
 	 * Constructor
@@ -116,12 +116,12 @@ class PDO {
 	/**
 	 * Get Last Id
 	 *
-	 * @return ?int
+	 * @return int
 	 */
-	public function getLastId(): ?int {
+	public function getLastId(): int {
 		$id = $this->connection->lastInsertId();
 
-		return $id ? (int)$id : null;
+		return $id ? (int)$id : 0;
 	}
 
 	/**

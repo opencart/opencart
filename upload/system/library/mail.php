@@ -13,6 +13,9 @@ namespace Opencart\System\Library;
  * Class Mail
  */
 class Mail {
+	/**
+	 * @var string
+	 */
 	private string $class;
 	/**
 	 * @var array<string, mixed>
@@ -37,6 +40,20 @@ class Mail {
 	}
 
 	/**
+	 * Strip CRLF
+	 *
+	 * Defense-in-depth against email header injection via user-controlled
+	 * single-line header values (From, To, Sender, Reply-To, Subject).
+	 *
+	 * @param string $value
+	 *
+	 * @return string
+	 */
+	private function stripCrlf(string $value): string {
+		return str_replace(["\r", "\n", "\0"], '', $value);
+	}
+
+	/**
 	 * Set To
 	 *
 	 * @param array<string>|string $to
@@ -44,7 +61,11 @@ class Mail {
 	 * @return void
 	 */
 	public function setTo($to): void {
-		$this->option['to'] = $to;
+		if (is_array($to)) {
+			$this->option['to'] = array_map([$this, 'stripCrlf'], $to);
+		} else {
+			$this->option['to'] = $this->stripCrlf($to);
+		}
 	}
 
 	/**
@@ -55,7 +76,7 @@ class Mail {
 	 * @return void
 	 */
 	public function setFrom(string $from): void {
-		$this->option['from'] = $from;
+		$this->option['from'] = $this->stripCrlf($from);
 	}
 
 	/**
@@ -66,7 +87,7 @@ class Mail {
 	 * @return void
 	 */
 	public function setSender(string $sender): void {
-		$this->option['sender'] = $sender;
+		$this->option['sender'] = $this->stripCrlf($sender);
 	}
 
 	/**
@@ -77,7 +98,7 @@ class Mail {
 	 * @return void
 	 */
 	public function setReplyTo(string $reply_to): void {
-		$this->option['reply_to'] = $reply_to;
+		$this->option['reply_to'] = $this->stripCrlf($reply_to);
 	}
 
 	/**
@@ -88,7 +109,7 @@ class Mail {
 	 * @return void
 	 */
 	public function setSubject(string $subject): void {
-		$this->option['subject'] = $subject;
+		$this->option['subject'] = $this->stripCrlf($subject);
 	}
 
 	/**

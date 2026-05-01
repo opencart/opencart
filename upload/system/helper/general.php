@@ -22,17 +22,18 @@ function oc_get_ip(): string {
 	];
 
 	foreach ($headers as $header) {
-		if (array_key_exists($header, $_SERVER)) {
-			$ip = $_SERVER[$header];
+		if (!array_key_exists($header, $_SERVER)) {
+			continue;
+		}
 
-			// This line might or might not be used.
-			$ip = trim(explode(',', $ip)[0]);
+		$ip = trim(explode(',', $_SERVER[$header])[0]);
 
+		if ($ip !== '' && filter_var($ip, FILTER_VALIDATE_IP) !== false) {
 			return $ip;
 		}
 	}
 
-	return $_SERVER['REMOTE_ADDR'];
+	return $_SERVER['REMOTE_ADDR'] ?? '';
 }
 
 // Sting functions
@@ -126,45 +127,3 @@ function oc_glob(string $pattern, int $flags = 0): array {
 	return $matches;
 }
 
-// Pre PHP8 compatibility
-/*
- * @param string $string
- * @param string $find
- *
- * @return bool
- */
-if (!function_exists('str_starts_with')) {
-	function str_starts_with(string $string, string $find): bool {
-		$substring = substr($string, 0, strlen($find));
-
-		if ($substring === $find) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-}
-
-/*
- * @param string $string
- * @param string $find
- *
- * @return bool
- */
-if (!function_exists('str_ends_with')) {
-	function str_ends_with(string $string, string $find): bool {
-		return substr($string, -strlen($find)) === $find;
-	}
-}
-
-/*
- * @param string $string
- * @param string $find
- *
- * @return bool
- */
-if (!function_exists('str_contains')) {
-	function str_contains(string $string, string $find): bool {
-		return $find === '' || strpos($string, $find) !== false;
-	}
-}

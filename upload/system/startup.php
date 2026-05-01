@@ -45,10 +45,8 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 	$_SERVER['HTTPS'] = false;
 }
 
-// Check IP
-if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CLIENT_IP'];
-}
+// Note: client IP must be obtained via oc_get_ip() — REMOTE_ADDR is left as
+// the actual TCP peer so it cannot be spoofed via untrusted forwarded headers.
 
 // OpenCart Autoloader
 require_once(DIR_SYSTEM . 'engine/autoloader.php');

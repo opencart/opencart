@@ -40,13 +40,13 @@ class Action {
 	public function __construct(string $route) {
 		$this->route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', $route);
 
-		$pos = strrpos($route, '.');
+		$pos = strrpos($this->route, '.');
 
 		if ($pos !== false) {
-			$this->controller = substr($route, 0, $pos);
-			$this->method = substr($route, $pos + 1);
+			$this->controller = substr($this->route, 0, $pos);
+			$this->method = substr($this->route, $pos + 1);
 		} else {
-			$this->controller = $route;
+			$this->controller = $this->route;
 			$this->method = 'index';
 		}
 	}

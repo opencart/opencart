@@ -99,15 +99,17 @@ class Response {
 	 * @return string
 	 */
 	private function compress(string $data, int $level = 0): string {
-		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false)) {
+		$encoding = '';
+
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
 			$encoding = 'gzip';
 		}
 
-		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false)) {
+		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
 			$encoding = 'x-gzip';
 		}
 
-		if (!isset($encoding) || ($level < -1 || $level > 9)) {
+		if (!$encoding || $level < -1 || $level > 9) {
 			return $data;
 		}
 

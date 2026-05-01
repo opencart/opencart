@@ -6,6 +6,9 @@ namespace Opencart\System\Library\Template;
  * @package Opencart\System\Library\Template
  */
 class Template {
+	/**
+	 * @var string
+	 */
 	protected string $directory = '';
 	/**
 	 * @var array<string, string>
@@ -67,7 +70,7 @@ class Template {
 		if ($code) {
 			ob_start();
 
-			extract($data);
+			extract($data, EXTR_SKIP);
 
 			include($this->compile($filename, $code));
 

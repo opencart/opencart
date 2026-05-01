@@ -7,9 +7,9 @@ namespace Opencart\System\Library\DB;
  */
 class PgSQL {
 	/**
-	 * @var mixed
+	 * @var \PgSql\Connection|false|null
 	 */
-	private $connection;
+	private $connection = null;
 
 	/**
 	 * Constructor
@@ -25,19 +25,18 @@ class PgSQL {
 			$port = '5432';
 		}
 
-		try {
-			$pg = @pg_connect('host=' . $hostname . ' port=' . $port . ' user=' . $username . ' password=' . $password . ' dbname=' . $database . ' options=\'--client_encoding=UTF8\' ');
-		} catch (\Exception $e) {
+		$pg = @pg_connect('host=' . $hostname . ' port=' . $port . ' user=' . $username . ' password=' . $password . ' dbname=' . $database . ' options=\'--client_encoding=UTF8\' ');
+
+		if (!$pg) {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
-		if ($pg) {
-			$this->connection = $pg;
-			pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
+		$this->connection = $pg;
 
-			// Sync PHP and DB time zones
-			pg_query($this->connection, "SET TIMEZONE = '" . $this->escape(date('P')) . "'");
-		}
+		pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
+
+		// Sync PHP and DB time zones
+		pg_query($this->connection, "SET TIMEZONE = '" . $this->escape(date('P')) . "'");
 	}
 
 	/**
@@ -98,7 +97,7 @@ class PgSQL {
 	public function getLastId(): int {
 		$query = $this->query("SELECT LASTVAL() AS `id`");
 
-		return $query->row['id'];
+		return (int)($query->row['id'] ?? 0);
 	}
 
 	/**
@@ -107,7 +106,7 @@ class PgSQL {
 	 * @return bool
 	 */
 	public function isConnected(): bool {
-		return pg_connection_status($this->connection) == PGSQL_CONNECTION_OK;
+		return $this->connection && pg_connection_status($this->connection) === PGSQL_CONNECTION_OK;
 	}
 
 	/**

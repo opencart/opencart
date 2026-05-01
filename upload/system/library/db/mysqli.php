@@ -10,6 +10,10 @@ class MySQLi {
 	 * @var ?\mysqli
 	 */
 	private ?\mysqli $connection;
+	/**
+	 * @var array<int, string>
+	 */
+	private array $temp_ssl_files = [];
 
 	/**
 	 * Constructor
@@ -28,41 +32,50 @@ class MySQLi {
 			$port = 3306;
 		}
 
-		// MSQL SSL connection
+		// MySQL SSL connection
 		$temp_ssl_key_file = '';
 
 		if ($ssl_key) {
 			$temp_ssl_key_file = tempnam(sys_get_temp_dir(), 'mysqli_key_');
+			chmod($temp_ssl_key_file, 0600);
 
 			$handle = fopen($temp_ssl_key_file, 'w');
 
 			fwrite($handle, $ssl_key);
 
 			fclose($handle);
+
+			$this->temp_ssl_files[] = $temp_ssl_key_file;
 		}
 
 		$temp_ssl_cert_file = '';
 
 		if ($ssl_cert) {
 			$temp_ssl_cert_file = tempnam(sys_get_temp_dir(), 'mysqli_cert_');
+			chmod($temp_ssl_cert_file, 0600);
 
 			$handle = fopen($temp_ssl_cert_file, 'w');
 
 			fwrite($handle, $ssl_cert);
 
 			fclose($handle);
+
+			$this->temp_ssl_files[] = $temp_ssl_cert_file;
 		}
 
 		$temp_ssl_ca_file = '';
 
 		if ($ssl_ca) {
 			$temp_ssl_ca_file = tempnam(sys_get_temp_dir(), 'mysqli_ca_');
+			chmod($temp_ssl_ca_file, 0600);
 
 			$handle = fopen($temp_ssl_ca_file, 'w');
 
 			fwrite($handle, '-----BEGIN CERTIFICATE-----' . PHP_EOL . $ssl_ca . PHP_EOL . '-----END CERTIFICATE-----');
 
 			fclose($handle);
+
+			$this->temp_ssl_files[] = $temp_ssl_ca_file;
 		}
 
 		try {
@@ -83,8 +96,25 @@ class MySQLi {
 			// Sync PHP and DB time zones
 			$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
 		} catch (\mysqli_sql_exception $e) {
+			$this->cleanupTempFiles();
+
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!<br/>Message: ' . $e->getMessage());
 		}
+	}
+
+	/**
+	 * Cleanup Temp SSL Files
+	 *
+	 * @return void
+	 */
+	private function cleanupTempFiles(): void {
+		foreach ($this->temp_ssl_files as $file) {
+			if (is_file($file)) {
+				@unlink($file);
+			}
+		}
+
+		$this->temp_ssl_files = [];
 	}
 
 	/**
@@ -172,5 +202,7 @@ class MySQLi {
 
 			$this->connection = null;
 		}
+
+		$this->cleanupTempFiles();
 	}
 }

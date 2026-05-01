@@ -30,6 +30,10 @@ class File {
 	public function get(string $key) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
+		if (!$files) {
+			return [];
+		}
+
 		foreach ($files as $file) {
 			$time = substr(strrchr($file, '.'), 1);
 
@@ -38,7 +42,9 @@ class File {
 					clearstatcache(false, $file);
 				}
 			} else {
-				return json_decode(file_get_contents($file), true);
+				$data = json_decode((string)file_get_contents($file), true);
+
+				return $data !== null ? $data : [];
 			}
 		}
 
@@ -61,7 +67,9 @@ class File {
 			$expire = $this->expire;
 		}
 
-		file_put_contents(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $expire), json_encode($value));
+		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $expire);
+
+		file_put_contents($file, json_encode($value), LOCK_EX);
 	}
 
 	/**

@@ -29,7 +29,9 @@ class Log {
 		if (!is_file($this->file)) {
 			$handle = fopen($this->file, 'w');
 
-			fclose($handle);
+			if ($handle) {
+				fclose($handle);
+			}
 		}
 	}
 
@@ -41,6 +43,6 @@ class Log {
 	 * @return void
 	 */
 	public function write($message): void {
-		file_put_contents($this->file, date('Y-m-d H:i:s') . ' - ' . print_r($message, true) . "\n", FILE_APPEND);
+		file_put_contents($this->file, date('Y-m-d H:i:s') . ' - ' . print_r($message, true) . "\n", FILE_APPEND | LOCK_EX);
 	}
 }

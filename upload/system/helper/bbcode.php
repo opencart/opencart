@@ -1,68 +1,93 @@
 <?php
-// BBCode Converter that converts BBCode written for OpenCart
+/**
+ * BBCode Converter that converts BBCode written for OpenCart.
+ *
+ * @param string $string
+ *
+ * @return string
+ */
 function oc_bbcode_decode(string $string): string {
-	$pattern = [];
-	$replace = [];
+	// Simple, safe replacements (no attribute output)
+	$pattern = [
+		'/\[b\](.*?)\[\/b\]/is'                                            => '<strong>$1</strong>',
+		'/\[i\](.*?)\[\/i\]/is'                                            => '<em>$1</em>',
+		'/\[u\](.*?)\[\/u\]/is'                                            => '<u>$1</u>',
+		'/\[quote\](.*?)\[\/quote]/is'                                     => '<blockquote>$1</blockquote>',
+		'/\[code\](.*?)\[\/code\]/is'                                      => '<code>$1</code>',
+		'/\[s\](.*?)\[\/s\]/is'                                            => '<s>$1</s>',
+		'/\[\*\]([\w\W]+?)\n?(?=(?:(?:\[\*\])|(?:\[\/list\])))/'           => '<li>$1</li>',
+		'/\[list\](.*?)\[\/list\]/is'                                      => '<ul>$1</ul>',
+		'/\[list\=(1|A|a|I|i)\](.*?)\[\/list\]/is'                         => '<ol type="$1">$2</ol>',
+		'/\[size\=([\-\+]?\d+)\](.*?)\[\/size\]/is'                        => '<span style="font-size: $1%;">$2</span>',
+		'/\[color\=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)\](.*?)\[\/color\]/is' => '<span style="color: $1;">$2</span>',
+	];
 
-	// Bold
-	$pattern[0] = '/\[b\](.*?)\[\/b\]/is';
-	$replace[0] = '<strong>$1</strong>';
+	$string = preg_replace(array_keys($pattern), array_values($pattern), $string);
 
-	// Italic
-	$pattern[1] = '/\[i\](.*?)\[\/i\]/is';
-	$replace[1] = '<em>$1</em>';
+	// Image: validate URL protocol and escape src
+	$string = preg_replace_callback('/\[img\](.*?)\[\/img\]/is', function (array $m): string {
+		$url = oc_bbcode_safe_url($m[1]);
 
-	// Underlined
-	$pattern[2] = '/\[u\](.*?)\[\/u\]/is';
-	$replace[2] = '<u>$1</u>';
+		return $url === '' ? '' : '<img src="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" alt="" class="img-fluid" />';
+	}, $string);
 
-	// Quote
-	$pattern[3] = '/\[quote\](.*?)\[\/quote]/is';
-	$replace[3] = '<blockquote>$1</blockquote>';
+	// URL: [url]https://...[/url]
+	$string = preg_replace_callback('/\[url\](.*?)\[\/url\]/is', function (array $m): string {
+		$url = oc_bbcode_safe_url($m[1]);
 
-	// Code
-	$pattern[4] = '/\[code\](.*?)\[\/code\]/is';
-	$replace[4] = '<code>$1</code>';
+		if ($url === '') {
+			return '';
+		}
 
-	// Strikethrough
-	$pattern[16] = '/\[s\](.*?)\[\/s\]/is';
-	$replace[16] = '<s>$1</s>';
+		$escaped = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 
-	// List Item
-	$pattern[7] = '/\[\*\]([\w\W]+?)\n?(?=(?:(?:\[\*\])|(?:\[\/list\])))/';
-	$replace[7] = '<li>$1</li>';
+		return '<a href="' . $escaped . '" rel="nofollow" target="_blank">' . $escaped . '</a>';
+	}, $string);
 
-	// List
-	$pattern[5] = '/\[list\](.*?)\[\/list\]/is';
-	$replace[5] = '<ul>$1</ul>';
+	// URL (named): [url=https://...]label[/url]
+	$string = preg_replace_callback('/\[url\=([^\[]+?)\](.*?)\[\/url\]/is', function (array $m): string {
+		$url = oc_bbcode_safe_url($m[1]);
 
-	// Ordered List
-	$pattern[6] = '/\[list\=(1|A|a|I|i)\](.*?)\[\/list\]/is';
-	$replace[6] = '<ol type="$1">$2</ol>';
+		if ($url === '') {
+			return '';
+		}
 
-	// Image
-	$pattern[8] = '/\[img\](.*?)\[\/img\]/is';
-	$replace[8] = '<img src="$1" alt="" class="img-fluid" />';
+		return '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" rel="nofollow" target="_blank">' . htmlspecialchars($m[2], ENT_QUOTES, 'UTF-8') . '</a>';
+	}, $string);
 
-	// URL
-	$pattern[9] = '/\[url\](.*?)\[\/url\]/is';
-	$replace[9] = '<a href="$1" rel="nofollow" target="_blank">$1</a>';
+	// YouTube: only allow ID matching expected character set
+	$string = preg_replace_callback('/\[youtube\](.*?)\[\/youtube\]/is', function (array $m): string {
+		$id = trim($m[1]);
 
-	// URL (named)
-	$pattern[10] = '/\[url\=([^\[]+?)\](.*?)\[\/url\]/is';
-	$replace[10] = '<a href="$1" rel="nofollow" target="_blank">$2</a>';
+		if (!preg_match('/^[A-Za-z0-9_-]{6,20}$/', $id)) {
+			return '';
+		}
 
-	// Font Size
-	$pattern[11] = '/\[size\=([\-\+]?\d+)\](.*?)\[\/size\]/is';
-	$replace[11] = '<span style="font-size: $1%;">$2</span>';
+		return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' . $id . '" allowfullscreen></iframe>';
+	}, $string);
 
-	// Font Color
-	$pattern[12] = '/\[color\=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)\](.*?)\[\/color\]/is';
-	$replace[12] = '<span style="color: $1;">$2</span>';
+	return $string;
+}
 
-	// YouTube
-	$pattern[13] = '/\[youtube\](.*?)\[\/youtube\]/is';
-	$replace[13] = '<iframe width="560" height="315" src="http://www.youtube.com/embed/$1" allowfullscreen></iframe>';
+/**
+ * Returns the input URL only if it uses a safe protocol (http, https or
+ * relative). Otherwise returns an empty string. Used by oc_bbcode_decode to
+ * defend against javascript:/data: injection through user-supplied BBCode.
+ *
+ * @param string $url
+ *
+ * @return string
+ */
+function oc_bbcode_safe_url(string $url): string {
+	$url = trim($url);
 
-	return preg_replace($pattern, $replace, $string);
+	if ($url === '') {
+		return '';
+	}
+
+	if (preg_match('#^(https?:)?//#i', $url) || str_starts_with($url, '/')) {
+		return $url;
+	}
+
+	return '';
 }

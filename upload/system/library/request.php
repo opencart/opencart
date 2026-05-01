@@ -45,12 +45,16 @@ class Request {
 		$this->server = $this->clean($_SERVER);
 	}
 
+	/**
+	 * Get
+	 *
+	 * @param string $key
+	 * @param string $type
+	 *
+	 * @return mixed
+	 */
 	public function get(string $key, string $type = ''): mixed {
-		if (isset($this->get[$key])) {
-			$value = $this->get[$key];
-		} else {
-			$value = null;
-		}
+		$value = $this->get[$key] ?? null;
 
 		switch ($type) {
 			case 'string':
@@ -68,12 +72,16 @@ class Request {
 		}
 	}
 
+	/**
+	 * Post
+	 *
+	 * @param string $key
+	 * @param string $type
+	 *
+	 * @return mixed
+	 */
 	public function post(string $key, string $type = ''): mixed {
-		if (isset($this->post[$key])) {
-			$value = $this->post[$key];
-		} else {
-			$value = null;
-		}
+		$value = $this->post[$key] ?? null;
 
 		switch ($type) {
 			case 'string':
@@ -106,7 +114,7 @@ class Request {
 				$data[$this->clean($key)] = $this->clean($value);
 			}
 		} else {
-			$data = trim(htmlspecialchars($data, ENT_COMPAT, 'UTF-8'));
+			$data = trim(htmlspecialchars((string)$data, ENT_QUOTES, 'UTF-8'));
 		}
 
 		return $data;

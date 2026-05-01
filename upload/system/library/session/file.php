@@ -31,7 +31,9 @@ class File {
 		$file = DIR_SESSION . 'sess_' . basename($session_id);
 
 		if (is_file($file)) {
-			return json_decode(file_get_contents($file), true);
+			$data = json_decode((string)file_get_contents($file), true);
+
+			return is_array($data) ? $data : [];
 		} else {
 			return [];
 		}

@@ -50,7 +50,13 @@ class Redis {
 	public function get(string $key) {
 		$data = $this->redis->get(CACHE_PREFIX . $key);
 
-		return json_decode($data, true);
+		if ($data === false) {
+			return [];
+		}
+
+		$decoded = json_decode($data, true);
+
+		return $decoded !== null ? $decoded : [];
 	}
 
 	/**

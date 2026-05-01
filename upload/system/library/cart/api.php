@@ -10,10 +10,25 @@ class Api {
 	 * @var string
 	 */
 	private string $domain;
+	/**
+	 * @var string
+	 */
 	private string $path = '/';
+	/**
+	 * @var string
+	 */
 	private string $username;
+	/**
+	 * @var string
+	 */
 	private string $key;
+	/**
+	 * @var int
+	 */
 	private int $store_id;
+	/**
+	 * @var string
+	 */
 	private string $language;
 
 	/**
@@ -57,7 +72,7 @@ class Api {
 		$signature = base64_encode(hash_hmac('sha1', $string, $this->key, true));
 
 		// Make remote call
-		$url  = 'http://' . $this->domain . $this->path . 'index.php?route=' . $route;
+		$url  = 'https://' . $this->domain . $this->path . 'index.php?route=' . $route;
 		$url .= '&username=' . urlencode($this->username);
 		$url .= '&store_id=' . $this->store_id;
 		$url .= '&language=' . $this->language;
@@ -69,7 +84,9 @@ class Api {
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_POST, true);
@@ -79,7 +96,7 @@ class Api {
 
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-		unset($curl);
+		curl_close($curl);
 
 		if ($status == 200) {
 			$response_info = json_decode($response, true);
@@ -87,15 +104,6 @@ class Api {
 			$response_info = [];
 		}
 
-		echo 'URL' . "\n";
-		echo $url . "\n";
-
-		echo 'STRING' . "\n";
-		echo $string . "\n";
-
-		echo 'RESPONSE' . "\n";
-		echo $response;
-
-		return $response_info;
+		return is_array($response_info) ? $response_info : [];
 	}
 }

@@ -32,11 +32,7 @@ class Mail {
 			$to = $this->option['to'];
 		}
 
-		if (version_compare(PHP_VERSION, '8.0', '>=')) {
-			$eol = "\r\n";
-		} else {
-			$eol = PHP_EOL;
-		}
+		$eol = "\r\n";
 
 		$boundary = '----=_NextPart_' . md5((string)time());
 
@@ -82,9 +78,19 @@ class Mail {
 		if (!empty($this->option['attachments'])) {
 			foreach ($this->option['attachments'] as $attachment) {
 				if (is_file($attachment)) {
+					$size = filesize($attachment);
+
+					if ($size === false || $size === 0) {
+						continue;
+					}
+
 					$handle = fopen($attachment, 'r');
 
-					$content = fread($handle, filesize($attachment));
+					if (!$handle) {
+						continue;
+					}
+
+					$content = fread($handle, $size);
 
 					fclose($handle);
 

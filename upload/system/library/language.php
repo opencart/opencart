@@ -20,7 +20,7 @@ class Language {
 	/**
 	 * @var string
 	 */
-	protected string $directory;
+	protected string $directory = '';
 	/**
 	 * @var array<string, string>
 	 */

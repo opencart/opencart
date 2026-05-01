@@ -6,9 +6,18 @@ namespace Opencart\System\Library\Session;
  * @package Opencart\System\Library\Session
  */
 class Redis {
+	/**
+	 * @var object
+	 */
 	private object $config;
+	/**
+	 * @var \Redis
+	 */
 	private \Redis $redis;
-	public string $prefix;
+	/**
+	 * @var string
+	 */
+	private string $prefix = '';
 
 	/**
 	 * Constructor
@@ -21,8 +30,9 @@ class Redis {
 		try {
 			$this->redis = new \Redis();
 			$this->redis->pconnect(CACHE_HOSTNAME, CACHE_PORT);
-			$this->prefix = CACHE_PREFIX . '.session.'; // session prefix to identify session keys
+			$this->prefix = CACHE_PREFIX . '.session.';
 		} catch (\RedisException $e) {
+			throw new \Exception('Error: Could not connect to Redis session backend! Message: ' . $e->getMessage());
 		}
 	}
 
@@ -38,9 +48,11 @@ class Redis {
 
 		if (!$data) {
 			return [];
-		} else {
-			return json_decode($data, true);
 		}
+
+		$decoded = json_decode($data, true);
+
+		return is_array($decoded) ? $decoded : [];
 	}
 
 	/**

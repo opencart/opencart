@@ -115,9 +115,19 @@ class Smtp {
 		if (!empty($this->option['attachments'])) {
 			foreach ($this->option['attachments'] as $attachment) {
 				if (is_file($attachment)) {
+					$size = filesize($attachment);
+
+					if ($size === false || $size === 0) {
+						continue;
+					}
+
 					$handle = fopen($attachment, 'r');
 
-					$content = fread($handle, filesize($attachment));
+					if (!$handle) {
+						continue;
+					}
+
+					$content = fread($handle, $size);
 
 					fclose($handle);
 
@@ -178,6 +188,13 @@ class Smtp {
 				fwrite($handle, 'STARTTLS' . "\r\n");
 
 				$this->handleReply($handle, 220, 'Error: STARTTLS not accepted from server!');
+
+				$context = stream_context_get_default();
+
+				stream_context_set_option($context, 'ssl', 'verify_peer', true);
+				stream_context_set_option($context, 'ssl', 'verify_peer_name', true);
+				stream_context_set_option($context, 'ssl', 'allow_self_signed', false);
+				stream_context_set_option($context, 'ssl', 'peer_name', $hostname);
 
 				if (stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT) !== true) {
 					throw new \Exception('Error: TLS could not be established!');

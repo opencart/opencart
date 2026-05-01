@@ -1,6 +1,6 @@
-# INSTALL
+# Install
 
-These instructions are for a new OpenCart 4 installation. If you are updating an existing store, use [UPGRADE.md](UPGRADE.md) instead.
+These instructions are for a new OpenCart 4 installation. For an in-place upgrade of an existing store, use [UPGRADE.md](UPGRADE.md) instead.
 
 ## Requirements
 

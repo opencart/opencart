@@ -72,6 +72,14 @@
 * Fixed: use Composer for autoloading in https://github.com/opencart/opencart/pull/15392
 * Fixed: Fix FA7 admin icon in https://github.com/opencart/opencart/pull/15394
 * Changed: Applied PHP CS Fixer in https://github.com/opencart/opencart/pull/15400
+* Changed: PHP 8.1-8.5 compatibility cleanup; drop curl_close() (removed in PHP 8.5)
+* Fixed: Remaining PHP CS Fixer violations (octal_notation, modernize_strpos, phpdoc_line_span)
+* Changed: samePath() helper in admin/controller/common/security.php for path comparison normalisation
+* Changed: Bumped symfony/polyfill-ctype and symfony/polyfill-mbstring to 1.37.0
+* Changed: Modernised Dockerfile, buildspec.yml, docker-compose.yml; mysql 5.7 -> 8.0; added redis/memcached/postgres ports and named volumes
+* Changed: Updated phpstan.neon (phpVersion 80100, ignore requireOnce.fileNotFound) and .php-cs-fixer.php (@PHP74Migration -> @PHP81Migration)
+* Added: Developer reference documentation in docs/developer/ (basic, engine, library, system, extension, modification)
+* Changed: Rewritten root markdown (README.md, INSTALL.md, UPGRADE.md) to reflect 4.1.0.4 reality
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

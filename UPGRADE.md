@@ -1,6 +1,12 @@
-# UPGRADE
+# Upgrade
 
-These instructions are for upgrading an existing store in place to the OpenCart version contained in this repository. Do not use them for a brand-new installation.
+These instructions are for upgrading an existing store in place to the OpenCart version contained in this repository. For a brand-new installation, use [INSTALL.md](INSTALL.md) instead.
+
+## Requirements
+
+- PHP 8.1 or newer
+- A backup of the database and the complete store filesystem before you start
+- A staging copy of the live site to test against
 
 ## Before you start
 

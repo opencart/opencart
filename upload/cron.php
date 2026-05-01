@@ -1,4 +1,18 @@
 <?php
+// Cross-platform guard: cron.php is meant for CLI / scheduler use. When it
+// is hit over HTTP, only allow it if the caller knows the CRON_SECRET env
+// var (or a matching ?secret=... query string). This complements the
+// Apache <Files> deny rule for hosts that ignore .htaccess (nginx, IIS).
+if (PHP_SAPI !== 'cli') {
+	$expected = (string)getenv('CRON_SECRET');
+	$provided = isset($_GET['secret']) ? (string)$_GET['secret'] : '';
+
+	if ($expected === '' || !hash_equals($expected, $provided)) {
+		http_response_code(403);
+		exit('Forbidden');
+	}
+}
+
 // Configuration
 if (!is_file('config.php')) {
 	exit('CRON is unable to load configuration from file config.php');
@@ -45,8 +59,8 @@ $registry->set('log', $log);
 
 // Error Handler
 set_error_handler(function(int $code, string $message, string $file, int $line) use ($log, $config) {
-	// error suppressed with @
-	if (@error_reporting() === 0) {
+	// Respect the active error_reporting level (PHP 8 made @ stop zeroing it).
+	if (!(error_reporting() & $code)) {
 		return false;
 	}
 

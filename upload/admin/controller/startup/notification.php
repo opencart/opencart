@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Common;
+namespace Opencart\Admin\Controller\Startup;
 /**
  * Class Notification
  *

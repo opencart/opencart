@@ -12,7 +12,17 @@ class Setting extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function index(): void {
-		$hostname = (!empty($this->request->server['HTTPS']) ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST'] ?? '') . rtrim(dirname($this->request->server['PHP_SELF'] ?? ''), '/.\\') . '/';
+		// Validate the Host header before using it to look up a store record.
+		// Hostnames are RFC 952/1123: letters, digits, dots and hyphens, with
+		// optionally a :port suffix. Anything else means the header was forged
+		// and should not be trusted for hostname-based store resolution.
+		$host = (string)($this->request->server['HTTP_HOST'] ?? '');
+
+		if (!preg_match('/^[A-Za-z0-9.\-:]{1,255}$/', $host)) {
+			$host = '';
+		}
+
+		$hostname = (!empty($this->request->server['HTTPS']) ? 'https://' : 'http://') . str_replace('www.', '', $host) . rtrim(dirname($this->request->server['PHP_SELF'] ?? ''), '/.\\') . '/';
 
 		// Store
 		$this->load->model('setting/store');

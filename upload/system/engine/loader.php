@@ -230,7 +230,14 @@ class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
-		// Create a new key to store the model object
+		// Keep the original route so /after listeners always see the trigger
+		// they were registered for, even if /before listeners rewrite $route.
+		$trigger = $route;
+
+		// Trigger the pre events (lets OCMOD redirect $route to extension/ocmod/...)
+		$this->event->trigger('library/' . $trigger . '/before', [&$route, &$args]);
+
+		// Create a new key to store the library object
 		$key = 'library_' . str_replace('/', '_', $route);
 
 		if (!$this->registry->has($key)) {
@@ -245,6 +252,9 @@ class Loader {
 		} else {
 			$object = $this->registry->get($key);
 		}
+
+		// Trigger the post events
+		$this->event->trigger('library/' . $trigger . '/after', [&$route, &$args, &$object]);
 
 		return $object;
 	}

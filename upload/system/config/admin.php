@@ -60,6 +60,9 @@ $_['action_event']       = [
 		0   => 'event/modification.view',
 		999 => 'event/language'
 	],
+	'library/*/before' => [
+		0 => 'event/modification.library'
+	],
 	'language/*/before' => [
 		0 => 'event/modification.language'
 	],

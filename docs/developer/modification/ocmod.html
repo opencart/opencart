@@ -1,0 +1,459 @@
+<h1>OCMOD &mdash; OpenCart 4.1 Modification System</h1>
+
+<p>OCMOD lets you modify OpenCart's PHP, Twig, language and config files <strong>without touching the originals</strong>. Instead of editing <code>catalog/controller/...</code> directly, you ship an XML file with <code>&lt;search&gt;</code> / <code>&lt;add&gt;</code> rules. OpenCart applies the rules to a copy of the original file in memory and writes the patched version under <code>extension/ocmod/</code>.</p>
+
+<p>When you build a new module and want to bundle OCMOD modifications with it, <strong>don't invent a new path</strong>. Drop the <code>.ocmod.xml</code> files into an <code>ocmod/</code> folder <strong>inside your <code>.ocmod.zip</code> package</strong>, exactly like the canonical OpenCart examples (see <code>oc_ocmod_example.ocmod.zip</code>).</p>
+
+<ul>
+  <li><a href="#package-layout">Package layout</a></li>
+  <li><a href="#lifecycle">Lifecycle</a></li>
+  <li><a href="#xml-format">XML format</a></li>
+  <li><a href="#namespace-rewrite">Namespace rewrite for PHP classes</a></li>
+  <li><a href="#path-mapping">Mapping: XML path &rarr; output file &rarr; OCMOD namespace</a></li>
+  <li><a href="#three-ways">Three valid ways to ship a modification</a></li>
+  <li><a href="#admin-actions">Refresh / Log / Clear / Enable / Disable / Delete</a></li>
+  <li><a href="#limitations">Known limitations in OC 4.1</a></li>
+  <li><a href="#pitfalls">Common pitfalls</a></li>
+  <li><a href="#code-map">Key files in the codebase</a></li>
+</ul>
+
+<a name="package-layout"/>
+
+<h2>.ocmod.zip package layout</h2>
+
+<p>Minimum:</p>
+
+```
+my_module.ocmod.zip
+├── install.json                          ← metadata
+├── admin/                                ← unpacked into extension/<code>/admin/
+│   └── ...
+├── catalog/                              ← unpacked into extension/<code>/catalog/
+│   └── ...
+├── system/                               ← unpacked into extension/<code>/system/
+│   └── ...
+└── ocmod/                                ← NOT unpacked to disk
+    ├── modification1.ocmod.xml           ←   read by installer.xml() and
+    └── modification2.ocmod.xml           ←   inserted into oc_modification
+```
+
+<p><code>install.json</code>:</p>
+
+```json
+{
+    "name": "My module",
+    "description": "What it does",
+    "version": "1.0.0",
+    "author": "You",
+    "link": "https://example.com",
+    "code": "my_module"
+}
+```
+
+<p><strong>Important:</strong> OpenCart deliberately skips the <code>ocmod/</code> directory when unpacking files into <code>extension/&lt;code&gt;/</code> (<code>installer.install()</code>, lines 431-433). The XML lives only in the <code>oc_modification</code> table. This is by design &mdash; it lets the admin UI enable / disable each XML individually.</p>
+
+<p>Canonical examples ship under <code>upload/system/storage/marketplace/</code>:</p>
+
+<ul>
+  <li><code>oc_ocmod_example.ocmod.zip</code> &mdash; pure OCMOD (only <code>ocmod/</code> + <code>install.json</code>)</li>
+  <li><code>oc_payment_example.ocmod.zip</code> &mdash; full extension with admin/catalog/system, no ocmod</li>
+  <li><code>oc_theme_example.ocmod.zip</code>, <code>oc_language_example.ocmod.zip</code> &mdash; other variants</li>
+</ul>
+
+<a name="lifecycle"/>
+
+<h2>Lifecycle</h2>
+
+```
+┌────────────────────┐
+│ .ocmod.zip upload  │  Admin > Extensions > Installer > Upload
+└──────────┬─────────┘
+           ▼
+┌────────────────────────────────────────────────────────────┐
+│ installer.upload()                                         │
+│   ├─ saves the ZIP at storage/marketplace/<code>.ocmod.zip │
+│   └─ inserts into oc_extension_install                     │
+└──────────┬─────────────────────────────────────────────────┘
+           ▼
+┌────────────────────────────────────────────────────────────┐
+│ installer.install()  (Install button)                       │
+│   ├─ unpacks admin/, catalog/, system/ into extension/<code>/│
+│   └─ SKIPS the ocmod/ directory                             │
+└──────────┬─────────────────────────────────────────────────┘
+           ▼
+┌────────────────────────────────────────────────────────────┐
+│ installer.xml()                                             │
+│   └─ for each ocmod/*.ocmod.xml inside the ZIP:             │
+│        insert into oc_modification (xml + extension_install_id)│
+└──────────┬─────────────────────────────────────────────────┘
+           ▼
+┌────────────────────────────────────────────────────────────┐
+│ Admin > Extensions > Modifications > Refresh                │
+│   ├─ wipes extension/ocmod/                                 │
+│   ├─ reads XML from oc_modification + system/*.ocmod.xml    │
+│   ├─ applies <operation> rules to the ORIGINAL files        │
+│   └─ writes the patched files to extension/ocmod/<key>      │
+└──────────┬─────────────────────────────────────────────────┘
+           ▼
+┌────────────────────────────────────────────────────────────┐
+│ Runtime: controller/model/view/library load                │
+│   ├─ event/modification.php builds the OCMOD class name     │
+│   ├─ class_exists() → autoloader picks up the patched file  │
+│   ├─ patched file declares the OCMOD-namespaced class       │
+│   └─ event rewrites $route to extension/ocmod/<route>       │
+└────────────────────────────────────────────────────────────┘
+```
+
+<a name="xml-format"/>
+
+<h2>XML format</h2>
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <name>Human readable name</name>
+    <description>What this modification does</description>
+    <code>my_unique_code</code>
+    <version>1.0.0</version>
+    <author>Your name</author>
+    <link>https://example.com/your-mod</link>
+
+    <file path="catalog/controller/common/header.php">
+        <operation error="skip">
+            <search><![CDATA[$this->load->language('common/header');]]></search>
+            <add position="after"><![CDATA[
+$data['custom_banner'] = 'Hello world';
+            ]]></add>
+        </operation>
+    </file>
+</modification>
+```
+
+<h3>&lt;file path="..."&gt;</h3>
+
+<table>
+  <tr><th>Attribute</th><th>Description</th></tr>
+  <tr>
+    <td><code>path</code></td>
+    <td>Path relative to the OpenCart root, forward slashes. Multiple paths can be OR'd with <code>|</code>. Glob is supported.</td>
+  </tr>
+</table>
+
+<p>Allowed prefixes: <code>admin/</code>, <code>catalog/</code>, <code>system/</code>, <code>extension/</code>.</p>
+
+<h3>&lt;operation error="..."&gt;</h3>
+
+<table>
+  <tr><th><code>error</code></th><th>Behaviour when <code>&lt;search&gt;</code> finds no match</th></tr>
+  <tr><td><code>skip</code></td><td>Continue with the next operation (recommended for optional patches)</td></tr>
+  <tr><td><code>break</code></td><td>(default) Stop all operations for the <strong>current file</strong></td></tr>
+  <tr><td><code>abort</code></td><td>Roll back the entire modification &mdash; all files revert to their original state</td></tr>
+</table>
+
+<h3>&lt;search&gt;</h3>
+
+<table>
+  <tr><th>Attribute</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>regex</code></td><td><code>false</code></td><td>If <code>true</code>, the body is a PCRE pattern (<code>/foo/i</code>)</td></tr>
+  <tr><td><code>trim</code></td><td><code>true</code></td><td>Trim whitespace from the body before matching</td></tr>
+  <tr><td><code>index</code></td><td>(none)</td><td>Comma-separated zero-based occurrence indices: <code>0,2</code> = 1st and 3rd hits</td></tr>
+  <tr><td><code>limit</code></td><td><code>-1</code></td><td>(regex mode) maximum number of replacements</td></tr>
+</table>
+
+<h3>&lt;add&gt;</h3>
+
+<table>
+  <tr><th>Attribute</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>position</code></td><td><code>replace</code></td><td><code>replace</code>, <code>before</code>, <code>after</code></td></tr>
+  <tr><td><code>offset</code></td><td><code>0</code></td><td>(plain mode) extra lines to consume / shift relative to the match</td></tr>
+  <tr><td><code>trim</code></td><td><code>false</code></td><td>Trim whitespace from the body before inserting</td></tr>
+</table>
+
+<h3>&lt;ignoreif&gt; (optional)</h3>
+
+<p>If the file already contains the given snippet (or matches the regex), the operation is skipped. Useful for repeated refreshes or when another modification has already patched the same file.</p>
+
+<a name="namespace-rewrite"/>
+
+<h2>&#9888;&#65039; When patching a PHP class &mdash; also rewrite the namespace</h2>
+
+<p>OpenCart's event handlers look the patched class up in the <strong>OCMOD namespace</strong>, not the original. So if the original is <code>Opencart\Admin\Controller\Catalog\Attribute</code>, your modification has to rewrite the patched file's namespace to <code>Opencart\Admin\Controller\Extension\Ocmod\Catalog\Attribute</code>. Then the autoloader finds the patched file when the event handler asks <code>class_exists()</code>, and the route gets rewritten to <code>extension/ocmod/&lt;route&gt;</code>.</p>
+
+<h3>Canonical example (from oc_ocmod_example.ocmod.zip)</h3>
+
+<p><strong>Core admin controller:</strong></p>
+
+```xml
+<file path="admin/controller/catalog/attribute.php">
+    <operation>
+        <search><![CDATA[Opencart\Admin\Controller\Catalog;]]></search>
+        <add position="replace">
+            <![CDATA[Opencart\Admin\Controller\Extension\Ocmod\Catalog;]]>
+        </add>
+    </operation>
+    <!-- now make your real changes -->
+    <operation error="skip">
+        <search><![CDATA[$this->load->language('catalog/attribute');]]></search>
+        <add position="after"><![CDATA[$data['custom'] = 'patched';]]></add>
+    </operation>
+</file>
+```
+
+<p><strong>Core admin model:</strong></p>
+
+```xml
+<file path="admin/model/catalog/attribute.php">
+    <operation>
+        <search><![CDATA[Opencart\Admin\Model\Catalog;]]></search>
+        <add position="replace">
+            <![CDATA[Opencart\Admin\Model\Extension\Ocmod\Catalog;]]>
+        </add>
+    </operation>
+</file>
+```
+
+<p><strong>Core system library</strong> (e.g. cap quantities added to the cart):</p>
+
+```xml
+<file path="system/library/cart/cart.php">
+    <operation>
+        <search><![CDATA[namespace Opencart\System\Library\Cart;]]></search>
+        <add position="replace">
+            <![CDATA[namespace Opencart\System\Library\Extension\Ocmod\Cart;]]>
+        </add>
+    </operation>
+    <operation error="skip">
+        <search><![CDATA[public function add(int $product_id, int $quantity = 1, array $option = [], int $subscription_plan_id = 0, array $override = []): void {]]></search>
+        <add position="after"><![CDATA[
+        // Cap injected via OCMOD
+        if ($quantity > 100) {
+            $quantity = 100;
+        }
+]]></add>
+    </operation>
+</file>
+```
+
+<p>Anywhere a controller calls <code>$this->load->library('cart/cart')</code>, OpenCart's Loader fires <code>library/cart/cart/before</code>, the OCMOD handler sees the patched class exists and rewrites the route to <code>extension/ocmod/cart/cart</code>. The Factory then builds <code>Opencart\System\Library\Extension\Ocmod\Cart\Cart</code> and the storefront/admin transparently use the patched class.</p>
+
+<p><strong>Patched file from another extension</strong> (<code>extension/&lt;code&gt;/...</code>):</p>
+
+```xml
+<file path="extension/opencart/admin/controller/report/customer_order.php">
+    <operation>
+        <search><![CDATA[Opencart\Admin\Controller\Extension\Opencart\Report;]]></search>
+        <add position="replace">
+            <![CDATA[Opencart\Admin\Controller\Extension\Ocmod\Extension\Opencart\Report;]]>
+        </add>
+    </operation>
+</file>
+```
+
+<h3>Twig template patches &mdash; no namespace rewrite</h3>
+
+<p>Twig templates aren't PHP classes &mdash; there is no namespace to rewrite. Patch the content directly:</p>
+
+```xml
+<file path="catalog/view/template/common/header.twig">
+    <operation error="skip">
+        <ignoreif><![CDATA[hello-from-ocmod]]></ignoreif>
+        <search><![CDATA[</head>]]></search>
+        <add position="before"><![CDATA[
+<meta name="hello-from-ocmod" content="patched"/>
+        ]]></add>
+    </operation>
+</file>
+```
+
+<a name="path-mapping"/>
+
+<h2>Mapping: XML path &rarr; output file &rarr; OCMOD namespace</h2>
+
+<table>
+  <tr>
+    <th>XML &lt;file path&gt;</th>
+    <th>Patched file output</th>
+    <th>Patched namespace</th>
+  </tr>
+  <tr>
+    <td><code>admin/controller/catalog/attribute.php</code></td>
+    <td><code>extension/ocmod/admin/controller/catalog/attribute.php</code></td>
+    <td><code>Opencart\Admin\Controller\Extension\Ocmod\Catalog</code></td>
+  </tr>
+  <tr>
+    <td><code>admin/model/catalog/attribute.php</code></td>
+    <td><code>extension/ocmod/admin/model/catalog/attribute.php</code></td>
+    <td><code>Opencart\Admin\Model\Extension\Ocmod\Catalog</code></td>
+  </tr>
+  <tr>
+    <td><code>catalog/controller/product/product.php</code></td>
+    <td><code>extension/ocmod/catalog/controller/product/product.php</code></td>
+    <td><code>Opencart\Catalog\Controller\Extension\Ocmod\Product</code></td>
+  </tr>
+  <tr>
+    <td><code>system/library/cart/cart.php</code></td>
+    <td><code>extension/ocmod/system/library/cart/cart.php</code></td>
+    <td><code>Opencart\System\Library\Extension\Ocmod\Cart</code></td>
+  </tr>
+  <tr>
+    <td><code>system/library/mail.php</code></td>
+    <td><code>extension/ocmod/system/library/mail.php</code></td>
+    <td><code>Opencart\System\Library\Extension\Ocmod</code></td>
+  </tr>
+  <tr>
+    <td><code>extension/&lt;code&gt;/admin/controller/x.php</code></td>
+    <td><code>extension/ocmod/extension/&lt;code&gt;/admin/controller/x.php</code></td>
+    <td><code>Opencart\Admin\Controller\Extension\Ocmod\Extension\&lt;Code&gt;</code></td>
+  </tr>
+  <tr>
+    <td><code>extension/&lt;code&gt;/system/library/y.php</code></td>
+    <td><code>extension/ocmod/extension/&lt;code&gt;/system/library/y.php</code></td>
+    <td><code>Opencart\System\Library\Extension\Ocmod\Extension\&lt;Code&gt;</code></td>
+  </tr>
+  <tr>
+    <td><code>catalog/view/template/...twig</code></td>
+    <td><code>extension/ocmod/catalog/view/template/...twig</code></td>
+    <td>(does not apply)</td>
+  </tr>
+  <tr>
+    <td><code>admin/language/en-gb/...php</code></td>
+    <td><code>extension/ocmod/admin/language/en-gb/...php</code></td>
+    <td>(does not apply)</td>
+  </tr>
+</table>
+
+<a name="three-ways"/>
+
+<h2>Three valid ways to ship an OCMOD modification</h2>
+
+<h3>1. As part of your own .ocmod.zip package (recommended for new modules)</h3>
+
+<p>This is the <strong>OpenCart 4.1 idiom</strong>. When you build a new extension and want to bundle OCMOD modifications with it, drop them into the <code>ocmod/</code> folder inside the <code>.ocmod.zip</code>:</p>
+
+```
+my_module.ocmod.zip
+├── install.json
+├── admin/      ← your module's regular files
+├── catalog/
+├── system/
+└── ocmod/
+    ├── patch_header.ocmod.xml
+    └── patch_checkout.ocmod.xml
+```
+
+<p>The Admin &gt; Installer workflow handles the rest:</p>
+
+<ul>
+  <li>The module's files land in <code>extension/&lt;code&gt;/</code></li>
+  <li>The XMLs are inserted into <code>oc_modification</code> (linked to your <code>extension_install_id</code>, so they're cleaned up when the module is uninstalled)</li>
+  <li>Click <strong>Modifications &gt; Refresh</strong> and the patched files are generated</li>
+</ul>
+
+<h3>2. Standalone .ocmod.zip (modification only, no extension code)</h3>
+
+```
+my_patch.ocmod.zip
+├── install.json
+└── ocmod/
+    └── patch.ocmod.xml
+```
+
+<p>Upload it through <strong>Installer</strong> like any other package. Inserted into <code>oc_modification</code>, linked to its <code>extension_install_id</code>, but no files on disk.</p>
+
+<h3>3. Developer drop-in (for fast iteration)</h3>
+
+<p>Put <code>*.ocmod.xml</code> straight into <code>upload/system/</code>:</p>
+
+```
+upload/system/dev_test.ocmod.xml
+```
+
+<p>Refresh picks it up automatically &mdash; no installer, no DB row. Delete the file and refresh again to roll back.</p>
+
+<a name="admin-actions"/>
+
+<h2>Refresh / Log / Clear / Enable / Disable / Delete</h2>
+
+<p>Admin &gt; Extensions &gt; Modifications:</p>
+
+<table>
+  <tr><th>Button</th><th>Route</th><th>What it does</th></tr>
+  <tr>
+    <td>Refresh</td>
+    <td><code>marketplace/modification.refresh</code></td>
+    <td>Wipes <code>extension/ocmod/</code> and re-applies every active XML. <strong>Always</strong> run after editing XML, after enable/disable, or after upgrading OpenCart.</td>
+  </tr>
+  <tr>
+    <td>Log</td>
+    <td><code>marketplace/modification.log</code></td>
+    <td>Streams <code>system/storage/logs/ocmod.log</code></td>
+  </tr>
+  <tr>
+    <td>Clear</td>
+    <td><code>marketplace/modification.clear</code></td>
+    <td>Deletes everything under <code>extension/ocmod/</code> without re-applying (rollback)</td>
+  </tr>
+  <tr>
+    <td>Enable</td>
+    <td><code>marketplace/modification.enable</code></td>
+    <td><code>oc_modification.status = 1</code>. Run Refresh afterwards.</td>
+  </tr>
+  <tr>
+    <td>Disable</td>
+    <td><code>marketplace/modification.disable</code></td>
+    <td><code>oc_modification.status = 0</code>. Run Refresh afterwards.</td>
+  </tr>
+  <tr>
+    <td>Delete</td>
+    <td><code>marketplace/modification.delete</code></td>
+    <td>Removes the row from <code>oc_modification</code>. Run Refresh afterwards.</td>
+  </tr>
+</table>
+
+<a name="limitations"/>
+
+<h2>Known limitations in OC 4.1</h2>
+
+<ol>
+  <li>
+    <p><strong>Catalog extension OCMOD overrides cannot be loaded transparently.</strong> <code>catalog/controller/startup/extension.php</code> only registers the global <code>extension/ocmod</code> path, not per-extension <code>extension/ocmod/extension/&lt;code&gt;</code> paths the way the admin counterpart does. Patches under <code>extension/&lt;code&gt;/catalog/...</code> get written to <code>extension/ocmod/extension/&lt;code&gt;/catalog/...</code> by refresh, but the autoloader, language and template engines won't find them at runtime in the storefront. Patch the extension's own files in place, or stage your patch on the admin side.</p>
+  </li>
+  <li>
+    <p><strong>Helpers (<code>system/helper/...</code>) are not event-driven.</strong> <code>Loader::helper()</code> uses <code>include_once</code> directly without firing any event. Helper-file patches are written to <code>extension/ocmod/system/helper/&lt;x&gt;.php</code> by refresh but never loaded. If you must override a helper, ship a replacement function in your own extension and load it earlier than the core helper.</p>
+  </li>
+  <li>
+    <p><strong>Top-level files cannot be patched.</strong> <code>cron.php</code>, <code>index.php</code>, <code>config.php</code>, <code>.htaccess</code> and other repository-root files load before the event system or sit outside it entirely.</p>
+  </li>
+</ol>
+
+<a name="pitfalls"/>
+
+<h2>Common pitfalls</h2>
+
+<ul>
+  <li><strong>Always run Refresh after changing XML.</strong> Without it the patched files don't exist, and the autoloader has nothing to pick up.</li>
+  <li><strong>Keep <code>&lt;search&gt;</code> blocks short and unique</strong> &mdash; line-by-line matching uses case-insensitive <code>stripos()</code>; long blocks are brittle to whitespace differences.</li>
+  <li>Use <strong><code>error="skip"</code></strong> for optional patches and <strong><code>error="abort"</code></strong> only when a partial apply would leave the file broken.</li>
+  <li><strong>Do not patch files inside <code>extension/ocmod/</code></strong> &mdash; that's the output directory and is wiped on every refresh.</li>
+  <li><strong>Cache invalidation:</strong> after refreshing a Twig template patch, clear <code>system/storage/cache/</code> and the Twig template cache; otherwise stale compiled templates keep pointing at the old contents.</li>
+  <li><strong>OpenCart upgrades:</strong> after upgrading core, run Refresh again so your modifications re-apply to the new source.</li>
+</ul>
+
+<a name="code-map"/>
+
+<h2>Key files in the codebase</h2>
+
+<table>
+  <tr><th>File</th><th>Role</th></tr>
+  <tr><td><code>admin/controller/marketplace/modification.php</code></td><td>Refresh / clear / enable / disable / log / delete UI</td></tr>
+  <tr><td><code>admin/controller/marketplace/installer.php</code></td><td>Upload / install / xml / uninstall of <code>.ocmod.zip</code> packages</td></tr>
+  <tr><td><code>admin/model/setting/modification.php</code></td><td>CRUD over the <code>oc_modification</code> table</td></tr>
+  <tr><td><code>admin/controller/event/modification.php</code></td><td>Rewrites admin routes (controllers, models, views, languages, libraries) to <code>extension/ocmod/&lt;route&gt;</code> when a patched class or file exists</td></tr>
+  <tr><td><code>catalog/controller/event/modification.php</code></td><td>Same for the storefront</td></tr>
+  <tr><td><code>admin/controller/startup/extension.php</code></td><td>Registers OCMOD autoloader paths and template / language paths (both global <code>extension/ocmod/...</code> and per-extension <code>extension/ocmod/extension/&lt;code&gt;/...</code>)</td></tr>
+  <tr><td><code>catalog/controller/startup/extension.php</code></td><td>Same for the storefront, but currently only the global path is registered (see Known limitations)</td></tr>
+  <tr><td><code>system/engine/loader.php</code></td><td>Fires the <code>controller / model / view / language / library / config</code> <code>before</code> and <code>after</code> events that OCMOD hooks into</td></tr>
+  <tr><td><code>system/config/admin.php</code> and <code>catalog.php</code></td><td>Wire each <code>*/before</code> trigger to the corresponding <code>event/modification.*</code> handler</td></tr>
+  <tr><td><code>system/helper/db_schema.php</code></td><td>Definition of the <code>oc_modification</code> table</td></tr>
+  <tr><td><code>system/storage/marketplace/oc_ocmod_example.ocmod.zip</code></td><td>Canonical example: a full <code>.ocmod.xml</code> showing every pattern</td></tr>
+</table>

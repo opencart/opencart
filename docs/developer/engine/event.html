@@ -1,0 +1,256 @@
+<h1>Events</h1>
+
+<p>OpenCart fires events at well-known hook points so extensions can observe or rewrite framework calls without monkey-patching the core. This is the same mechanism OCMOD uses to redirect routes to patched copies under <code>extension/ocmod/</code>.</p>
+
+<ul>
+  <li><a href="#what-fires">What the framework fires</a></li>
+  <li><a href="#registration">Registering a listener</a></li>
+  <li><a href="#config-events">Config-driven listeners</a></li>
+  <li><a href="#db-events">Database-driven listeners</a></li>
+  <li><a href="#handler-class">Writing a handler class</a></li>
+  <li><a href="#args-by-reference">Arguments by reference and rewriting routes</a></li>
+  <li><a href="#wildcards">Wildcards in trigger names</a></li>
+  <li><a href="#priority">Priority and ordering</a></li>
+  <li><a href="#examples">Worked examples</a></li>
+  <li><a href="#code-map">Where this lives in the codebase</a></li>
+</ul>
+
+<a name="what-fires"/>
+
+<h2>What the framework fires</h2>
+
+<p><code>system/engine/loader.php</code> emits a <code>before</code> trigger before each load and an <code>after</code> trigger when the load succeeds. The exact trigger string is built from the load type and the route, e.g. <code>controller/checkout/cart/before</code>.</p>
+
+<table>
+  <tr><th>Loader call</th><th>Before trigger</th><th>After trigger</th><th>By-reference args</th></tr>
+  <tr><td><code>$this->load->controller($route)</code></td><td><code>controller/&lt;route&gt;/before</code></td><td><code>controller/&lt;route&gt;/after</code></td><td><code>$route, $args, $output</code></td></tr>
+  <tr><td><code>$this->load->model($route)</code> (lazy proxy)</td><td><code>model/&lt;route&gt;/before</code></td><td><code>model/&lt;route&gt;/after</code></td><td><code>$route, $args, $output</code></td></tr>
+  <tr><td><code>$this->load->view($route, $data)</code></td><td><code>view/&lt;route&gt;/before</code></td><td><code>view/&lt;route&gt;/after</code></td><td><code>$route, $data, $code, $output</code></td></tr>
+  <tr><td><code>$this->load->language($route, $prefix, $code)</code></td><td><code>language/&lt;route&gt;/before</code></td><td><code>language/&lt;route&gt;/after</code></td><td><code>$route, $prefix, $code, $output</code></td></tr>
+  <tr><td><code>$this->load->library($route, ...$args)</code></td><td><code>library/&lt;route&gt;/before</code></td><td><code>library/&lt;route&gt;/after</code></td><td><code>$route, $args, $object</code></td></tr>
+  <tr><td><code>$this->load->config($route)</code></td><td><code>config/&lt;route&gt;/before</code></td><td><code>config/&lt;route&gt;/after</code></td><td><code>$route, $output</code></td></tr>
+</table>
+
+<p><strong>Helpers</strong> (<code>$this->load->helper()</code>) do not fire events.</p>
+
+<p>The <code>after</code> trigger only fires if the load succeeded -- a failed factory lookup throws and never reaches the second event.</p>
+
+<a name="registration"/>
+
+<h2>Registering a listener</h2>
+
+<p>There are two ways a listener gets attached to a trigger pattern:</p>
+
+<ol>
+  <li><strong>Statically through the application config.</strong> <code>system/config/admin.php</code> and <code>system/config/catalog.php</code> declare an <code>action_event</code> array that the framework reads on every request and registers verbatim with the Event registry.</li>
+  <li><strong>Dynamically from the database.</strong> The <code>oc_event</code> table holds rows that <code>admin/controller/startup/event.php</code> and <code>catalog/controller/startup/event.php</code> read at startup; each enabled row becomes one registration. This is how marketplace-installed extensions (and the admin <em>Events</em> screen) hook in.</li>
+</ol>
+
+<p>Both paths converge on the same primitive:</p>
+
+```php
+$event->register($trigger, new \Opencart\System\Engine\Action($action), $priority);
+```
+
+<p>where <code>$trigger</code> is a glob-style pattern like <code>controller/*/before</code> and <code>$action</code> is a route to a method on a controller class such as <code>event/modification.controller</code>.</p>
+
+<a name="config-events"/>
+
+<h2>Config-driven listeners</h2>
+
+<p>Excerpt from <code>system/config/admin.php</code>:</p>
+
+```php
+$_['action_event'] = [
+    'controller/*/before' => [
+        0 => 'event/modification.controller',
+        1 => 'event/language.before'
+    ],
+    'controller/*/after' => [
+        0 => 'event/language.after'
+    ],
+    'model/*/before' => [
+        0 => 'event/modification.model'
+    ],
+    'view/*/before' => [
+        0   => 'event/modification.view',
+        999 => 'event/language'
+    ],
+    'library/*/before' => [
+        0 => 'event/modification.library'
+    ],
+    'language/*/before' => [
+        0 => 'event/modification.language'
+    ],
+    'language/*/after' => [
+        0 => 'startup/language.after'
+    ]
+];
+```
+
+<p>Catalog has the same shape with a few extra entries (<code>event/theme</code>, <code>event/translation</code>).</p>
+
+<p>The integer key on the inner array is the priority -- lower runs first.</p>
+
+<a name="db-events"/>
+
+<h2>Database-driven listeners</h2>
+
+<p>The <code>oc_event</code> row schema (<code>system/helper/db_schema.php</code>):</p>
+
+<table>
+  <tr><th>Column</th><th>Description</th></tr>
+  <tr><td><code>code</code></td><td>Internal identifier (your choice)</td></tr>
+  <tr><td><code>description</code></td><td>Free-form text shown in admin</td></tr>
+  <tr><td><code>trigger</code></td><td>Trigger pattern, e.g. <code>catalog/view/common/header/before</code> or <code>admin/controller/sale/order/before</code></td></tr>
+  <tr><td><code>action</code></td><td>Route to the handler method, e.g. <code>extension/my_module/event/observer.handler</code></td></tr>
+  <tr><td><code>status</code></td><td>1 = active, 0 = disabled</td></tr>
+  <tr><td><code>sort_order</code></td><td>Priority (lower runs first)</td></tr>
+</table>
+
+<p>Both startups split the row's <code>trigger</code> on <code>/</code> and look at the first segment:</p>
+
+<ul>
+  <li><code>admin/...</code> -- the segment is dropped, the rest is registered. Only the admin startup picks these rows up.</li>
+  <li><code>catalog/...</code> -- the segment is dropped, the rest is registered. Only the catalog startup picks these rows up.</li>
+  <li><code>system/...</code> -- registered as-is on both sides.</li>
+</ul>
+
+<p>So the same <code>oc_event</code> table can hold listeners scoped to either application or both. An extension can <code>$this->model_setting_event->addEvent(...)</code> at install time and <code>deleteEventByCode(...)</code> at uninstall time.</p>
+
+<a name="handler-class"/>
+
+<h2>Writing a handler class</h2>
+
+<p>A handler is a regular controller. The only requirement is that the method signature matches the trigger family (see the table at the top of this page).</p>
+
+```php
+<?php
+namespace Opencart\Catalog\Controller\Extension\MyModule\Event;
+
+class Observer extends \Opencart\System\Engine\Controller {
+    public function before(string &$route, array &$args): void {
+        // ... runs before every controller load ...
+    }
+
+    public function after(string &$route, array &$args, &$output): void {
+        // ... runs after every controller load ...
+    }
+}
+```
+
+<p>Register it once at install:</p>
+
+```php
+$this->load->model('setting/event');
+
+$this->model_setting_event->addEvent(
+    'my_module',
+    'My module observer',
+    'catalog/controller/*/before',
+    'extension/my_module/event/observer.before'
+);
+```
+
+<a name="args-by-reference"/>
+
+<h2>Arguments by reference and rewriting routes</h2>
+
+<p>Every argument in the listener payload is passed by reference. A listener can therefore <em>change</em> what the framework will load next. This is exactly what <code>event/modification.php</code> uses to redirect a core route to its OCMOD copy:</p>
+
+```php
+public function controller(string &$route, array &$args): void {
+    if (str_starts_with($route, 'extension/ocmod/')) {
+        return;
+    }
+
+    $class = $this->prepareClassName($route, 'Opencart\Admin\Controller\Extension\Ocmod\\');
+
+    if (class_exists($class)) {
+        $route = 'extension/ocmod/' . $route;
+    }
+}
+```
+
+<p>Touching <code>$args</code> inside <code>controller/*/before</code> mutates the parameters the controller is about to receive; touching <code>$output</code> inside <code>controller/*/after</code> mutates the response that will be returned to the caller. Use this carefully -- a misbehaving <code>after</code> listener can break unrelated pages.</p>
+
+<a name="wildcards"/>
+
+<h2>Wildcards in trigger names</h2>
+
+<p><code>Event::trigger()</code> compiles each registered trigger into a regex with two substitutions:</p>
+
+<table>
+  <tr><th>In the trigger string</th><th>Becomes regex</th></tr>
+  <tr><td><code>*</code></td><td><code>.*</code></td></tr>
+  <tr><td><code>?</code></td><td><code>.</code> (single character)</td></tr>
+</table>
+
+<p>So <code>controller/*/before</code> matches <code>controller/anything/at/all/before</code>, and <code>controller/checkout/?/before</code> matches single-segment routes only. The match is anchored at the start of the trigger, not at the end -- be careful with patterns like <code>controller/sale</code> which matches <code>controller/sale/order/before</code> as well.</p>
+
+<a name="priority"/>
+
+<h2>Priority and ordering</h2>
+
+<p>Within a single trigger, listeners run in ascending priority order. The Event class re-sorts the internal array on every <code>register()</code> call, so registration order does not matter -- only the priority value does.</p>
+
+<p>OCMOD listeners deliberately use priority <code>0</code> so they run first. <code>event/language</code> uses <code>998</code>/<code>999</code> so it can fill in any text the route changed.</p>
+
+<a name="examples"/>
+
+<h2>Worked examples</h2>
+
+<h3>Log every admin save</h3>
+
+```php
+namespace Opencart\Admin\Controller\Extension\AuditLog\Event;
+
+class Audit extends \Opencart\System\Engine\Controller {
+    public function save(string &$route, array &$args, &$output): void {
+        if (!str_ends_with($route, '.save')) {
+            return;
+        }
+
+        $this->load->library('log');
+        $this->log->write(sprintf('%s saved %s', $this->user->getUserName(), $route));
+    }
+}
+```
+
+<p>Register from your install method:</p>
+
+```php
+$this->model_setting_event->addEvent(
+    'audit_log_save',
+    'Log admin saves',
+    'admin/controller/*/after',
+    'extension/audit_log/event/audit.save'
+);
+```
+
+<h3>Inject extra view data on the storefront homepage</h3>
+
+```php
+public function before(string &$route, array &$data, string &$code, string &$output): void {
+    if ($route !== 'common/home') {
+        return;
+    }
+
+    $data['promo_banner'] = '<div class="alert alert-info">Free shipping today!</div>';
+}
+```
+
+<a name="code-map"/>
+
+<h2>Where this lives in the codebase</h2>
+
+<table>
+  <tr><th>File</th><th>Role</th></tr>
+  <tr><td><code>system/engine/event.php</code></td><td>The Event registry: <code>register()</code>, <code>trigger()</code>, <code>unregister()</code>, <code>clear()</code>.</td></tr>
+  <tr><td><code>system/engine/loader.php</code></td><td>Fires every <code>&lt;type&gt;/&lt;route&gt;/&lt;before|after&gt;</code> trigger.</td></tr>
+  <tr><td><code>system/framework.php</code></td><td>Reads <code>$config['action_event']</code> at request bootstrap and registers the static listeners.</td></tr>
+  <tr><td><code>system/config/admin.php</code> and <code>catalog.php</code></td><td>Declares the static <code>action_event</code> map.</td></tr>
+  <tr><td><code>admin/controller/startup/event.php</code> and <code>catalog/controller/startup/event.php</code></td><td>Reads <code>oc_event</code> at startup and registers each enabled row.</td></tr>
+  <tr><td><code>system/helper/db_schema.php</code></td><td>Definition of the <code>oc_event</code> table.</td></tr>
+  <tr><td><code>admin/model/setting/event.php</code></td><td>CRUD over <code>oc_event</code> -- use this in your install/uninstall code.</td></tr>
+</table>

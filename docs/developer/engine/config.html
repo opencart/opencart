@@ -1,0 +1,97 @@
+<h1>Config</h1>
+
+<p><code>\Opencart\System\Engine\Config</code> is the framework's settings store. It loads PHP config files (the ones that fill <code>$_['key']</code>) into a flat key/value map and exposes simple <code>get</code> / <code>set</code> / <code>has</code> methods.</p>
+
+<ul>
+  <li><a href="#api">API</a></li>
+  <li><a href="#load">Loading config files</a></li>
+  <li><a href="#load-order">What gets loaded at request start</a></li>
+  <li><a href="#paths">Add-paths and extension overrides</a></li>
+  <li><a href="#well-known">Well-known keys</a></li>
+  <li><a href="#using">Using <code>$this->config</code></a></li>
+</ul>
+
+<a name="api"/>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>get(string $key): mixed</code></td><td>Returns the value or the empty string when missing.</td></tr>
+  <tr><td><code>set(string $key, mixed $value): void</code></td><td>Stores or replaces a value.</td></tr>
+  <tr><td><code>has(string $key): bool</code></td><td>True if the key has been set.</td></tr>
+  <tr><td><code>load(string $filename): array</code></td><td>Loads a config file and merges its <code>$_</code> array into the store.</td></tr>
+  <tr><td><code>addPath(string $namespace, string $directory = ''): void</code></td><td>Either sets the base directory (one-arg form) or adds an override directory for a particular namespace prefix.</td></tr>
+</table>
+
+<a name="load"/>
+
+<h2>Loading config files</h2>
+
+<p>A config file is a plain PHP file that fills the <code>$_</code> array, similar to a language file:</p>
+
+```php
+<?php
+$_['action_default']    = 'common/dashboard';
+$_['action_pre_action'] = ['startup/setting', 'startup/session', /* ... */];
+```
+
+<p><code>$config->load('admin')</code> resolves the file to <code>system/config/admin.php</code> (the base directory was set with <code>addPath()</code> earlier), <code>require</code>s it, and merges the resulting <code>$_</code> array into the internal data store. Existing keys are overwritten silently.</p>
+
+<a name="load-order"/>
+
+<h2>What gets loaded at request start</h2>
+
+<ol>
+  <li><code>system/config/default.php</code> -- shared defaults (DB engine, session engine, error filename, etc.).</li>
+  <li><code>system/config/admin.php</code> or <code>catalog.php</code> -- pre-action and event maps for that side.</li>
+  <li>Database settings via <code>startup/setting</code> -- merges <code>oc_setting</code> rows for the current store into the same map.</li>
+  <li>Per-extension config keys when <code>startup/extension</code> activates each enabled extension.</li>
+</ol>
+
+<p>By the time a controller runs, all four sources are blended into one flat map.</p>
+
+<a name="paths"/>
+
+<h2>Add-paths and extension overrides</h2>
+
+<p>Two-argument <code>addPath()</code> registers a directory for a route namespace:</p>
+
+```php
+$config->addPath('extension/hello', DIR_EXTENSION . 'hello/system/config/');
+```
+
+<p>From then on, <code>$config->load('extension/hello/module')</code> resolves to that directory instead of the default. The startup chain uses this so each enabled extension can ship its own config files without colliding.</p>
+
+<a name="well-known"/>
+
+<h2>Well-known keys</h2>
+
+<table>
+  <tr><th>Key</th><th>Source</th><th>Notes</th></tr>
+  <tr><td><code>action_pre_action</code></td><td>Config file</td><td>List of pre-action routes -- see <a href="../system/startup.html">system/startup</a>.</td></tr>
+  <tr><td><code>action_default</code></td><td>Config file</td><td>Fallback main action when none was supplied.</td></tr>
+  <tr><td><code>action_event</code></td><td>Config file</td><td>Static event listener map -- see <a href="event.html">engine/event</a>.</td></tr>
+  <tr><td><code>action_error</code></td><td>Config file</td><td>Action used when something throws.</td></tr>
+  <tr><td><code>db_engine</code>, <code>db_hostname</code>, ...</td><td>config.php</td><td>Database connection.</td></tr>
+  <tr><td><code>session_engine</code>, <code>session_name</code>, <code>session_expire</code></td><td>config.php / oc_setting</td><td>Session configuration.</td></tr>
+  <tr><td><code>config_*</code></td><td>oc_setting</td><td>Anything tied to <em>System &rarr; Settings</em>.</td></tr>
+</table>
+
+<a name="using"/>
+
+<h2>Using <code>$this->config</code></h2>
+
+```php
+if ($this->config->get('config_maintenance')) {
+    // ...
+}
+
+$this->config->set('config_store_id', 0);
+
+if ($this->config->has('config_admin_language')) {
+    $code = $this->config->get('config_admin_language');
+}
+```
+
+<p>Avoid mutating config from inside a request unless you genuinely need to (e.g. <code>startup/setting</code> does it to inject DB settings). Random <code>$this->config->set(...)</code> calls leak across the request and are hard to reason about.</p>

@@ -1,0 +1,40 @@
+<h1>Document</h1>
+
+<p><code>\Opencart\System\Library\Document</code> collects everything the layout needs to print into <code>&lt;head&gt;</code> and the script slots: title, description, keywords, link/canonical tags, stylesheets, scripts and meta tags.</p>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>setTitle(string $title)</code> / <code>getTitle()</code></td><td>The <code>&lt;title&gt;</code> tag.</td></tr>
+  <tr><td><code>setDescription(string $description)</code> / <code>getDescription()</code></td><td>The meta description.</td></tr>
+  <tr><td><code>setKeywords(string $keywords)</code> / <code>getKeywords()</code></td><td>The meta keywords.</td></tr>
+  <tr><td><code>addLink(string $href, string $rel)</code> / <code>getLinks()</code></td><td><code>&lt;link rel="canonical"&gt;</code>, <code>alternate</code>, etc.</td></tr>
+  <tr><td><code>addStyle(string $href, string $rel = 'stylesheet', string $media = 'screen')</code> / <code>getStyles()</code></td><td>External stylesheets.</td></tr>
+  <tr><td><code>addScript(string $href, string $position = 'header')</code> / <code>getScripts(string $position = 'header')</code></td><td>External scripts. <code>$position</code> is either <code>header</code> or <code>footer</code>.</td></tr>
+  <tr><td><code>addMeta(string $meta)</code> / <code>getMeta()</code></td><td>Raw meta tag entries (full HTML).</td></tr>
+</table>
+
+<h2>Usage</h2>
+
+<p>From a controller:</p>
+
+```php
+$this->document->setTitle($this->language->get('heading_title'));
+$this->document->setDescription($this->language->get('meta_description'));
+
+$this->document->addLink('https://example.com/canonical', 'canonical');
+
+$this->document->addStyle('view/stylesheet/extension/hello.css');
+$this->document->addScript('view/javascript/extension/hello.js', 'footer');
+```
+
+<p>The base layout (<code>common/header</code> / <code>common/footer</code>) iterates over these and prints them. Adding the same href twice produces duplicate tags; deduplicate at your callsite if needed.</p>
+
+<h2>SEO link helpers</h2>
+
+<p>For canonical URLs that point at a route inside the same store, build the href via <code>$this->url->link(...)</code>:</p>
+
+```php
+$this->document->addLink($this->url->link('product/product', 'product_id=' . $product_id), 'canonical');
+```

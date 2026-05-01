@@ -1,0 +1,126 @@
+<h1>Loader</h1>
+
+<p><code>\Opencart\System\Engine\Loader</code> is the orchestrator. Every <code>$this->load->X(...)</code> call inside a controller or model goes through it. The loader resolves the route, fires the matching <code>before</code> event, builds the object via the factory, calls it, fires the matching <code>after</code> event, and returns the result.</p>
+
+<ul>
+  <li><a href="#methods">Methods</a></li>
+  <li><a href="#controller">controller()</a></li>
+  <li><a href="#model">model()</a></li>
+  <li><a href="#view">view()</a></li>
+  <li><a href="#language">language()</a></li>
+  <li><a href="#library">library()</a></li>
+  <li><a href="#config">config()</a></li>
+  <li><a href="#helper">helper()</a></li>
+  <li><a href="#sanitisation">Route sanitisation</a></li>
+</ul>
+
+<a name="methods"/>
+
+<h2>Methods</h2>
+
+<table>
+  <tr><th>Method</th><th>Returns</th><th>Fires events</th></tr>
+  <tr><td><code>controller($route, ...$args)</code></td><td>Whatever the controller method returned, or an <code>Exception</code>.</td><td>Yes</td></tr>
+  <tr><td><code>model($route)</code></td><td>void (sets <code>$this->model_*</code>)</td><td>Yes (per method, via the proxy)</td></tr>
+  <tr><td><code>view($route, $data = [], $code = '')</code></td><td>Rendered string.</td><td>Yes</td></tr>
+  <tr><td><code>language($route, $prefix = '', $code = '')</code></td><td>Translation map.</td><td>Yes</td></tr>
+  <tr><td><code>library($route, &amp;...$args)</code></td><td>The library object.</td><td>Yes</td></tr>
+  <tr><td><code>config($route)</code></td><td>Config map.</td><td>Yes</td></tr>
+  <tr><td><code>helper($route)</code></td><td>void (requires the file once)</td><td>No</td></tr>
+</table>
+
+<a name="controller"/>
+
+<h2>controller()</h2>
+
+```php
+$output = $this->load->controller('common/header');
+```
+
+<p>Resolves <code>common/header</code> &rarr; <code>Opencart\Admin\Controller\Common\Header::index()</code>, fires <code>controller/common/header/before</code>, calls the method with the trailing args, fires <code>controller/common/header/after</code> with the return value, and returns it.</p>
+
+<p>If the method name is given via dot syntax (<code>common/header.partial</code>), that method is called instead of <code>index</code>. Methods starting with <code>__</code> are blocked.</p>
+
+<a name="model"/>
+
+<h2>model()</h2>
+
+```php
+$this->load->model('setting/setting');
+
+$value = $this->model_setting_setting->getSetting('config');
+```
+
+<p>Loads the model class, then walks its public methods and writes a closure for each one onto a <code>Proxy</code> object. The proxy is exposed as <code>$this->model_setting_setting</code>. Every closure dispatches <code>model/&lt;route&gt;/&lt;method&gt;/before</code>, calls the real method, and dispatches <code>model/&lt;route&gt;/&lt;method&gt;/after</code>.</p>
+
+<p>This proxy layer is what lets OCMOD redirect a single method to a patched copy without rewriting any caller.</p>
+
+<a name="view"/>
+
+<h2>view()</h2>
+
+```php
+$html = $this->load->view('common/dashboard', $data);
+```
+
+<p>Fires <code>view/&lt;route&gt;/before</code> with <code>$route</code>, <code>$data</code>, <code>$code</code> and an empty <code>$output</code>. If a listener fills <code>$output</code> the loader uses it directly (skips Twig). Otherwise <code>$this->template->render(...)</code> renders <code>view/template/&lt;route&gt;.twig</code>. <code>view/&lt;route&gt;/after</code> fires last and can rewrite the output.</p>
+
+<a name="language"/>
+
+<h2>language()</h2>
+
+```php
+$this->load->language('common/dashboard');
+
+$title = $this->language->get('heading_title');
+```
+
+<p>Fires <code>language/&lt;route&gt;/before</code>, calls <code>Language::load($route, $prefix, $code)</code>, fires <code>language/&lt;route&gt;/after</code>. The returned map is also merged into <code>$this->language</code> so <code>get()</code> / <code>all()</code> calls see the new keys.</p>
+
+<a name="library"/>
+
+<h2>library()</h2>
+
+```php
+$this->load->library('cart/cart');
+
+$cart = $this->cart;
+```
+
+<p>Asks the factory to instantiate <code>Opencart\System\Library\Cart\Cart</code>, registers it on the registry under <code>cart</code> (the last segment of the route), and returns it. The instance is cached -- a second call returns the same object. <code>library/&lt;route&gt;/before</code> and <code>after</code> fire around the build.</p>
+
+<a name="config"/>
+
+<h2>config()</h2>
+
+```php
+$entries = $this->load->config('marketplace/extension');
+```
+
+<p>Loads a config file by route. Used mostly internally; most code talks to the global <code>$this->config</code> instead.</p>
+
+<a name="helper"/>
+
+<h2>helper()</h2>
+
+```php
+$this->load->helper('general');
+```
+
+<p>Requires <code>system/helper/&lt;route&gt;.php</code> once. Helpers are plain functions (not classes) so they do not go through the factory or fire events.</p>
+
+<a name="sanitisation"/>
+
+<h2>Route sanitisation</h2>
+
+<p>Each method strips characters that should never appear in a route. The exact alphabet differs slightly by method:</p>
+
+<table>
+  <tr><th>Method</th><th>Allowed in route</th></tr>
+  <tr><td><code>controller</code></td><td><code>a-zA-Z0-9_/.|</code> (the <code>.</code> separates method name)</td></tr>
+  <tr><td><code>model</code> / <code>library</code></td><td><code>a-zA-Z0-9_/</code></td></tr>
+  <tr><td><code>view</code></td><td><code>a-zA-Z0-9_/</code></td></tr>
+  <tr><td><code>language</code> / <code>config</code></td><td><code>a-zA-Z0-9_-/</code> (allows <code>en-gb</code>-style codes)</td></tr>
+</table>
+
+<p>This is a defence-in-depth check, not a validator -- never pass user input as a route.</p>

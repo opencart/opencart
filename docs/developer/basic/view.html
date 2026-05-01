@@ -1,0 +1,141 @@
+<h1>Views</h1>
+
+<p>Views are Twig templates. The controller hands the loader a route and a data array; the loader resolves the template path and lets Twig render it.</p>
+
+<ul>
+  <li><a href="#location">Where templates live</a></li>
+  <li><a href="#extension">Extension and theme overrides</a></li>
+  <li><a href="#calling">Calling a template from a controller</a></li>
+  <li><a href="#data">Passing data</a></li>
+  <li><a href="#tags">Common Twig tags</a></li>
+  <li><a href="#partials">Including partials</a></li>
+  <li><a href="#assets">Assets: images, CSS, JS</a></li>
+  <li><a href="#example">Minimal example</a></li>
+</ul>
+
+<a name="location"/>
+
+<h2>Where templates live</h2>
+
+<table>
+  <tr><th>Path</th><th>Notes</th></tr>
+  <tr><td><code>admin/view/template/&lt;group&gt;/&lt;name&gt;.twig</code></td><td>Core admin templates.</td></tr>
+  <tr><td><code>catalog/view/template/&lt;group&gt;/&lt;name&gt;.twig</code></td><td>Core storefront templates (default theme).</td></tr>
+  <tr><td><code>extension/&lt;code&gt;/admin/view/template/...</code></td><td>Admin templates shipped by an extension.</td></tr>
+  <tr><td><code>extension/&lt;code&gt;/catalog/view/template/...</code></td><td>Catalog templates shipped by an extension.</td></tr>
+</table>
+
+<a name="extension"/>
+
+<h2>Extension and theme overrides</h2>
+
+<p>The catalog template loader resolves a route in this order:</p>
+
+<ol>
+  <li>Active theme's override directory (<code>catalog/view/theme/&lt;theme&gt;/template/...</code>)</li>
+  <li>Patched OCMOD copy (<code>extension/ocmod/...</code>) if the route was rewritten by <code>event/modification.view</code></li>
+  <li>Default catalog template</li>
+</ol>
+
+<p>This is why themes can override any storefront page without touching the source.</p>
+
+<a name="calling"/>
+
+<h2>Calling a template from a controller</h2>
+
+```php
+$data['title'] = 'Hello';
+
+$this->response->setOutput($this->load->view('demo/hello', $data));
+```
+
+<p>The route uses forward slashes and no extension. The loader fires <code>view/&lt;route&gt;/before</code> and <code>view/&lt;route&gt;/after</code> events around the render -- this is the hook OCMOD uses to redirect <code>$route</code> to a patched template.</p>
+
+<a name="data"/>
+
+<h2>Passing data</h2>
+
+<p>The data array becomes the Twig variable scope. Top-level keys are accessible as variables:</p>
+
+```php
+$data['user'] = ['name' => 'Ada', 'role' => 'admin'];
+```
+
+```twig
+{{ user.name }} ({{ user.role }})
+```
+
+<p>For HTML that should not be re-escaped (already-rendered partials), pass it as a string and use it directly:</p>
+
+```twig
+{{ header }}
+```
+
+<p>OpenCart's templates rely on partials being safe HTML, so they do not use <code>|raw</code>; do not introduce <code>|raw</code> on values that come from user input.</p>
+
+<a name="tags"/>
+
+<h2>Common Twig tags</h2>
+
+<table>
+  <tr><th>Tag</th><th>Use</th></tr>
+  <tr><td><code>{{ value }}</code></td><td>Print, HTML-escaped.</td></tr>
+  <tr><td><code>{% if x %}...{% endif %}</code></td><td>Conditional.</td></tr>
+  <tr><td><code>{% for item in items %}...{% endfor %}</code></td><td>Iteration. <code>loop.index</code>, <code>loop.first</code>, <code>loop.last</code> available inside.</td></tr>
+  <tr><td><code>{% set x = ... %}</code></td><td>Local variable.</td></tr>
+  <tr><td><code>{{ value|escape }}</code> / <code>|e</code></td><td>Explicit HTML escape.</td></tr>
+  <tr><td><code>{{ value|default('-') }}</code></td><td>Fallback if null/empty.</td></tr>
+  <tr><td><code>{{ value|number_format(2) }}</code></td><td>Number formatting.</td></tr>
+</table>
+
+<a name="partials"/>
+
+<h2>Including partials</h2>
+
+<p>For static partials use <code>{% include 'common/partial.twig' %}</code>. For partials that require their own controller logic, render them as sub-controllers and pass the result as data:</p>
+
+```php
+$data['header'] = $this->load->controller('common/header');
+```
+
+```twig
+{{ header }}
+```
+
+<a name="assets"/>
+
+<h2>Assets</h2>
+
+<p>Static files (images, CSS, JS) live under <code>view/image/</code>, <code>view/javascript/</code>, <code>view/stylesheet/</code> on the same side (admin or catalog). The startup chain prepends each enabled extension's view paths so referencing <code>image/foo.png</code> resolves through that search path.</p>
+
+<p>Use the document API to add stylesheets and scripts so they appear in <code>{{ styles }}</code> and <code>{{ scripts }}</code> blocks of the layout:</p>
+
+```php
+$this->document->addStyle('view/stylesheet/extension/hello.css');
+$this->document->addScript('view/javascript/extension/hello.js');
+```
+
+<a name="example"/>
+
+<h2>Minimal example</h2>
+
+```twig
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <h1>{{ heading_title }}</h1>
+    </div>
+    <div class="container-fluid">
+        {% if products %}
+            <ul>
+                {% for product in products %}
+                    <li><a href="{{ product.href }}">{{ product.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>{{ text_no_results }}</p>
+        {% endif %}
+    </div>
+</div>
+{{ footer }}
+```

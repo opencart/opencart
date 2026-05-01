@@ -1,0 +1,45 @@
+<h1>Session</h1>
+
+<p><code>\Opencart\System\Library\Session</code> is the session facade. It owns the session id, exposes a <code>data</code> array for read/write, and forwards storage operations to the configured adaptor.</p>
+
+<h2>Adaptors</h2>
+
+<table>
+  <tr><th>Engine</th><th>File</th><th>Notes</th></tr>
+  <tr><td><code>file</code></td><td><code>system/library/session/file.php</code></td><td>Default. Files under <code>system/storage/session/</code>.</td></tr>
+  <tr><td><code>db</code></td><td><code>system/library/session/db.php</code></td><td>Stores rows in <code>oc_session</code>; survives load-balanced deployments.</td></tr>
+  <tr><td><code>redis</code></td><td><code>system/library/session/redis.php</code></td><td>Redis-backed.</td></tr>
+</table>
+
+<p>Pick the adaptor with <code>session_engine</code>, the cookie name with <code>session_name</code>, the lifetime with <code>config_session_expire</code> and the SameSite policy with <code>config_session_samesite</code>.</p>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>start(string $session_id = ''): string</code></td><td>Resumes the session if a non-empty id is given, otherwise creates a new one. Returns the active id.</td></tr>
+  <tr><td><code>getId(): string</code></td><td>The active id.</td></tr>
+  <tr><td><code>close(): void</code></td><td>Persists the data array and releases any locks.</td></tr>
+  <tr><td><code>destroy(): void</code></td><td>Deletes the storage record for the active id.</td></tr>
+  <tr><td><code>gc(): void</code></td><td>Garbage-collects expired sessions.</td></tr>
+</table>
+
+<h2>The data array</h2>
+
+<p>Once <code>start()</code> has run, the session exposes a public <code>$data</code> array used by every part of the framework:</p>
+
+```php
+$this->session->data['user_token'] = oc_token(32);
+$this->session->data['cart'][$product_id] = $quantity;
+
+if (!empty($this->session->data['success'])) {
+    $message = $this->session->data['success'];
+    unset($this->session->data['success']);
+}
+```
+
+<p>Anything stored under a well-known key shows up across the framework: <code>cart</code> drives the cart library, <code>customer_id</code> drives the customer library, <code>user_token</code> is checked on every admin route.</p>
+
+<h2>Cookie hardening</h2>
+
+<p><code>startup/session</code> emits the cookie with <code>secure</code>, <code>httponly</code> and the configured <code>SameSite</code> on every request. Do not call <code>setcookie()</code> for the session cookie yourself -- let the startup own it.</p>

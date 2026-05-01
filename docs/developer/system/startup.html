@@ -1,0 +1,134 @@
+<h1>Startup pre-actions</h1>
+
+<p>Each request goes through a list of <em>pre-actions</em> before the main route runs. They prepare the registry: settings, session, language, customer, currency, tax, marketing, etc. The list lives in <code>system/config/&lt;app&gt;.php</code> as <code>action_pre_action</code>; the implementations are plain controllers under <code>&lt;app&gt;/controller/startup/</code>.</p>
+
+<ul>
+  <li><a href="#how-it-runs">How the framework runs them</a></li>
+  <li><a href="#admin-list">Admin pre-action list</a></li>
+  <li><a href="#catalog-list">Catalog pre-action list</a></li>
+  <li><a href="#short-circuit">Short-circuiting and error handling</a></li>
+  <li><a href="#adding-one">Adding your own pre-action</a></li>
+</ul>
+
+<a name="how-it-runs"/>
+
+<h2>How the framework runs them</h2>
+
+<p>From <code>system/framework.php</code>:</p>
+
+```php
+foreach ($config->get('action_pre_action') as $pre_action) {
+    $pre_action = new \Opencart\System\Engine\Action($pre_action);
+
+    $result = $pre_action->execute($registry, $args);
+
+    if ($result instanceof \Opencart\System\Engine\Action) {
+        $action = $result;
+        break;
+    }
+
+    if ($result instanceof \Exception) {
+        $action = $error;
+        // ...
+    }
+}
+```
+
+<p>Three things to notice:</p>
+
+<ol>
+  <li>Pre-actions run in the order they appear in the array. Their order matters -- <code>session</code> must run before anything that touches <code>$this->session</code>, <code>language</code> must run before <code>customer</code> if customer messages need translation, and so on.</li>
+  <li>If a pre-action <em>returns</em> an <code>Action</code> object, that becomes the request's main action and the loop terminates. <code>startup/login</code> and <code>startup/maintenance</code> use this to short-circuit straight to the login or maintenance page.</li>
+  <li>If a pre-action throws, the loop swaps the main action for <code>action_error</code> (default: <code>error/not_found</code>).</li>
+</ol>
+
+<a name="admin-list"/>
+
+<h2>Admin pre-action list</h2>
+
+<p>Declared in <code>system/config/admin.php</code>:</p>
+
+<table>
+  <tr><th>Order</th><th>Pre-action</th><th>What it does</th></tr>
+  <tr><td>1</td><td><code>startup/setting</code></td><td>Loads <code>oc_setting</code> rows for store 0 into <code>Config</code>.</td></tr>
+  <tr><td>2</td><td><code>startup/session</code></td><td>Constructs the configured session driver, restores the cookie, refreshes session lifetime and re-emits the cookie with secure flags.</td></tr>
+  <tr><td>3</td><td><code>startup/language</code></td><td>Resolves the active language code, registers <code>language</code> in the registry, loads the <code>default</code> file.</td></tr>
+  <tr><td>4</td><td><code>startup/application</code></td><td>Sets <code>application</code> in the registry to <code>"Admin"</code>.</td></tr>
+  <tr><td>5</td><td><code>startup/extension</code></td><td>Reads <code>oc_extension</code> and prepends each enabled extension's <code>admin/controller</code>, <code>admin/model</code>, <code>admin/language</code>, <code>system/library</code>, <code>admin/view/template</code>, <code>admin/view/javascript</code>, <code>admin/view/stylesheet</code> paths.</td></tr>
+  <tr><td>6</td><td><code>startup/startup</code></td><td>Registers <code>oc_*</code>-style helper functions and the legacy bootstrap.</td></tr>
+  <tr><td>7</td><td><code>startup/error</code></td><td>Wires the error handler so unhandled exceptions become a clean error page rather than a stack trace.</td></tr>
+  <tr><td>8</td><td><code>startup/event</code></td><td>Reads <code>oc_event</code> and registers each enabled row with the Event registry. See <a href="../engine/event.html">engine/event</a>.</td></tr>
+  <tr><td>9</td><td><code>startup/sass</code></td><td>Compiles the admin theme's <code>.scss</code> entry points to <code>.css</code> on demand.</td></tr>
+  <tr><td>10</td><td><code>startup/login</code></td><td>If the request is not authenticated and not the login page, returns an <code>Action</code> for <code>common/login</code>, short-circuiting the rest of the chain.</td></tr>
+  <tr><td>11</td><td><code>startup/authorize</code></td><td>Confirms the current user has access to the requested route via the <code>oc_user_group.permission</code> map. Falls through to error otherwise.</td></tr>
+  <tr><td>12</td><td><code>startup/permission</code></td><td>Loads access/modify permission flags for the active user group into the registry so the controller can guard write operations.</td></tr>
+</table>
+
+<a name="catalog-list"/>
+
+<h2>Catalog pre-action list</h2>
+
+<p>Declared in <code>system/config/catalog.php</code>:</p>
+
+<table>
+  <tr><th>Order</th><th>Pre-action</th><th>What it does</th></tr>
+  <tr><td>1</td><td><code>startup/setting</code></td><td>Loads store-specific <code>oc_setting</code> rows into <code>Config</code>.</td></tr>
+  <tr><td>2</td><td><code>startup/seo_url</code></td><td>Translates the SEO-friendly URL into a route + query string before the rest of the chain runs.</td></tr>
+  <tr><td>3</td><td><code>startup/session</code></td><td>Same as admin -- secure cookie, configured driver.</td></tr>
+  <tr><td>4</td><td><code>startup/language</code></td><td>Resolves language from cookie or store default; loads the <code>default</code> file.</td></tr>
+  <tr><td>5</td><td><code>startup/customer</code></td><td>Restores logged-in customer state if the session cookie is valid.</td></tr>
+  <tr><td>6</td><td><code>startup/currency</code></td><td>Picks the active currency from cookie or store default; refreshes exchange rates if stale.</td></tr>
+  <tr><td>7</td><td><code>startup/tax</code></td><td>Constructs the <code>Tax</code> library bound to the customer's tax-zone.</td></tr>
+  <tr><td>8</td><td><code>startup/application</code></td><td>Sets <code>application</code> to <code>"Catalog"</code>.</td></tr>
+  <tr><td>9</td><td><code>startup/extension</code></td><td>Same as admin but with <code>catalog/</code> paths.</td></tr>
+  <tr><td>10</td><td><code>startup/startup</code></td><td>Helper-function bootstrap.</td></tr>
+  <tr><td>11</td><td><code>startup/marketing</code></td><td>Captures <code>?tracking=</code> click-attribution into the customer session.</td></tr>
+  <tr><td>12</td><td><code>startup/error</code></td><td>Error handler.</td></tr>
+  <tr><td>13</td><td><code>startup/event</code></td><td>Loads <code>oc_event</code> rows.</td></tr>
+  <tr><td>14</td><td><code>startup/sass</code></td><td>Theme SCSS compilation.</td></tr>
+  <tr><td>15</td><td><code>startup/api</code></td><td>If the request comes through <code>?route=api/...</code>, validates the API key/session and short-circuits authorization.</td></tr>
+  <tr><td>16</td><td><code>startup/maintenance</code></td><td>If <code>config_maintenance</code> is on and the visitor is not whitelisted, returns the maintenance action.</td></tr>
+  <tr><td>17</td><td><code>startup/authorize</code></td><td>Catalog-side authorization (mostly forwarding for restricted routes).</td></tr>
+</table>
+
+<a name="short-circuit"/>
+
+<h2>Short-circuiting and error handling</h2>
+
+<p>Three patterns appear repeatedly:</p>
+
+<ul>
+  <li><strong>Return an Action to redirect.</strong> The pre-action constructs a new <code>\Opencart\System\Engine\Action(...)</code> and returns it. The framework switches the request's main action to that one and stops processing further pre-actions.</li>
+  <li><strong>Throw to error out.</strong> Any exception causes the framework to substitute <code>action_error</code> as the main action.</li>
+  <li><strong>Mutate the registry and return null.</strong> The default pattern -- the pre-action sets up a service in the registry and lets the chain continue.</li>
+</ul>
+
+<a name="adding-one"/>
+
+<h2>Adding your own pre-action</h2>
+
+<p>Pre-actions are just controllers, so the file goes wherever a controller would. Two paths:</p>
+
+<h3>Inside an extension (recommended)</h3>
+
+<p>Drop a controller under <code>extension/&lt;your_module&gt;/admin/controller/startup/check.php</code> and a matching catalog file if you need both sides:</p>
+
+```php
+namespace Opencart\Admin\Controller\Extension\YourModule\Startup;
+
+class Check extends \Opencart\System\Engine\Controller {
+    public function index(): mixed {
+        if (!$this->config->get('your_module_enabled')) {
+            return null;
+        }
+
+        // ... your work here ...
+    }
+}
+```
+
+<p>Then either modify <code>action_pre_action</code> via OCMOD on <code>system/config/admin.php</code>, or use an <code>oc_event</code> row hooked to <code>controller/*/before</code> to run the same logic at request time. The latter is preferable because it does not require touching the config file.</p>
+
+<h3>Patching the core list</h3>
+
+<p>If you genuinely need a pre-action to run in a specific position relative to the built-ins, use OCMOD to insert your route into the <code>action_pre_action</code> array in <code>system/config/admin.php</code> or <code>system/config/catalog.php</code>.</p>

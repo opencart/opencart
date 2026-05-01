@@ -1,0 +1,57 @@
+<h1>Request</h1>
+
+<p><code>\Opencart\System\Library\Request</code> is the input wrapper. At construction time it copies <code>$_GET</code>, <code>$_POST</code>, <code>$_COOKIE</code>, <code>$_FILES</code> and <code>$_SERVER</code> into typed public arrays after passing every value through <code>clean()</code>.</p>
+
+<h2>Properties</h2>
+
+<table>
+  <tr><th>Property</th><th>Source</th></tr>
+  <tr><td><code>$request->get</code></td><td><code>$_GET</code></td></tr>
+  <tr><td><code>$request->post</code></td><td><code>$_POST</code></td></tr>
+  <tr><td><code>$request->cookie</code></td><td><code>$_COOKIE</code></td></tr>
+  <tr><td><code>$request->files</code></td><td><code>$_FILES</code></td></tr>
+  <tr><td><code>$request->server</code></td><td><code>$_SERVER</code></td></tr>
+</table>
+
+<h2>What <code>clean()</code> does</h2>
+
+<p>Every scalar is run through <code>trim(htmlspecialchars(..., ENT_QUOTES, 'UTF-8'))</code>. This is a safety net for templates -- any text echoed back to the page is already HTML-safe -- but it is not a substitute for SQL escaping. Always cast/escape values before putting them in a query.</p>
+
+<p>Keys are cleaned the same way, so attempts to inject HTML through a form field name are neutralised at parse time.</p>
+
+<h2>Typed accessors</h2>
+
+```php
+$id     = $this->request->get('product_id', 'int');
+$page   = $this->request->get('page', 'int');
+$filter = $this->request->post('filter', 'array');
+$status = $this->request->post('status', 'bool');
+```
+
+<p>The second argument is the cast: <code>string</code>, <code>int</code>, <code>float</code>, <code>bool</code>, <code>array</code>. Without it, the raw value is returned (or <code>null</code> if the key is missing).</p>
+
+<h2>Common patterns</h2>
+
+```php
+if (($this->request->server['REQUEST_METHOD'] === 'POST') && $this->validate()) {
+    // ... save ...
+}
+
+if (isset($this->request->get['filter_name'])) {
+    $filter_name = (string)$this->request->get['filter_name'];
+} else {
+    $filter_name = '';
+}
+```
+
+<p>Direct array access (<code>$this->request->get['x']</code>) is the most common style across the core. The typed accessors are newer; both are valid.</p>
+
+<h2>Files</h2>
+
+```php
+if (!empty($this->request->files['upload']['tmp_name']) && is_uploaded_file($this->request->files['upload']['tmp_name'])) {
+    // ...
+}
+```
+
+<p>The framework does not pre-validate uploads. Always check <code>error</code>, <code>tmp_name</code>, MIME type and the file extension before accepting.</p>

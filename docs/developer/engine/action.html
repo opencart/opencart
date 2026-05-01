@@ -1,0 +1,85 @@
+<h1>Action</h1>
+
+<p><code>\Opencart\System\Engine\Action</code> wraps a controller route plus its method into a single executable object. The framework uses it for the request's main action, every pre-action, every event listener, and the error fallback.</p>
+
+<ul>
+  <li><a href="#shape">Shape of an action</a></li>
+  <li><a href="#construct">Constructing one</a></li>
+  <li><a href="#execute">Executing it</a></li>
+  <li><a href="#return">What <code>execute()</code> returns</a></li>
+  <li><a href="#why">Why it exists</a></li>
+</ul>
+
+<a name="shape"/>
+
+<h2>Shape of an action</h2>
+
+<p>An action stores three private fields:</p>
+
+<table>
+  <tr><th>Field</th><th>Source</th><th>Example</th></tr>
+  <tr><td><code>route</code></td><td>The full input string, sanitised to <code>[a-zA-Z0-9_|/.]</code></td><td><code>common/dashboard.save</code></td></tr>
+  <tr><td><code>controller</code></td><td>The route up to the last <code>.</code></td><td><code>common/dashboard</code></td></tr>
+  <tr><td><code>method</code></td><td>The route after the last <code>.</code>, or <code>"index"</code> if none</td><td><code>save</code></td></tr>
+</table>
+
+<a name="construct"/>
+
+<h2>Constructing one</h2>
+
+```php
+$action = new \Opencart\System\Engine\Action('catalog/product.save');
+```
+
+<p>The route is sanitised by <code>preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', $route)</code>. Anything outside the allowed alphabet is silently dropped, so you should not rely on the constructor as a validator.</p>
+
+<a name="execute"/>
+
+<h2>Executing it</h2>
+
+```php
+$result = $action->execute($registry, $args);
+```
+
+<p>The method:</p>
+
+<ol>
+  <li>Refuses to call magic methods (anything starting with <code>__</code>).</li>
+  <li>Looks up the controller in the registry under <code>fallback_controller_&lt;controller&gt;</code>; if absent, asks the factory to construct it and caches it.</li>
+  <li>If the resolved object is not a <code>Controller</code>, returns a "could not load controller" exception.</li>
+  <li>Calls the requested method with the unpacked args and returns its result.</li>
+</ol>
+
+<a name="return"/>
+
+<h2>What <code>execute()</code> returns</h2>
+
+<p><code>execute()</code> returns whichever of these comes first:</p>
+
+<ul>
+  <li>The method's own return value (anything).</li>
+  <li>An <code>Exception</code> instance when the controller could not be loaded or the method does not exist or is magic. <em>Note: it returns the exception, it does not throw it.</em></li>
+</ul>
+
+<p>The framework's bootstrap loop (<code>system/framework.php</code>) checks for these:</p>
+
+<ul>
+  <li>A returned <code>Action</code> from a pre-action triggers a redirect (replaces the main action and breaks the loop).</li>
+  <li>A returned <code>Exception</code> swaps in <code>action_error</code>.</li>
+  <li>Anything else (or <code>null</code>) means "continue".</li>
+</ul>
+
+<a name="why"/>
+
+<h2>Why it exists</h2>
+
+<p>Actions are the abstraction that lets the same dispatch path serve four different needs:</p>
+
+<ul>
+  <li>The request's main controller (set up at the end of pre-actions, executed by the bootstrap).</li>
+  <li>Pre-action items in <code>action_pre_action</code>.</li>
+  <li>Event listeners registered via <code>$event->register($trigger, new Action(...), $priority)</code>.</li>
+  <li>The error fallback (<code>action_error</code>).</li>
+</ul>
+
+<p>Storing them as data instead of executing inline lets the framework reorder, swap or short-circuit them; that is what <code>action_event</code> registration and the <code>controller/*/before</code> rewriting depend on.</p>

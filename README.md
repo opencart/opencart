@@ -1,87 +1,103 @@
 # OpenCart
 
-## Overview
-
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg?style=flat-square)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg?style=flat-square)](https://php.net/)
 [![GitHub release](https://img.shields.io/github/v/release/opencart/opencart)](https://github.com/opencart/opencart)
 [![Lint](https://github.com/opencart/opencart/actions/workflows/Lint.yml/badge.svg)](https://github.com/opencart/opencart/actions/workflows/Lint.yml)
 
-OpenCart is a free open source e-commerce platform for online merchants. OpenCart provides a professional and reliable foundation from which to build a successful online store.
+OpenCart is a free, open source e-commerce platform for building and managing online stores.
 
-## How to install
+This repository currently tracks OpenCart `4.1.0.4`. The deployable application lives in `upload/`; the repository root contains documentation, tooling, Docker assets, and CI configuration.
 
-Please read the [installation instructions](INSTALL.md) included in the repository or download file.
+## Requirements
 
-## How to upgrade from previous versions
+- PHP 8.1 or newer
+- A supported database server and driver (`mysqli` is the default installation path)
+- PHP extensions: `curl`, `gd`, `openssl`, `zip`, `zlib`, and either `mbstring` or `iconv`
+- `file_uploads` enabled
+- `session.auto_start` disabled
+- Write access to the runtime storage directories and to the two `config.php` files during installation
 
-Please read the [upgrading instructions](UPGRADE.md) included in the repository or download file.
+## Repository layout
 
-## Reporting a bug
+- `upload/` deployable OpenCart application
+- `docs/` project documentation
+- `tools/` developer tooling (`phpstan.phar`, `php-cs-fixer.phar`, Docker build context, API tooling)
+- `.github/workflows/Lint.yml` CI checks
 
-Read the instructions below before you create a bug report.
+## Installation
 
-1. Search the [OpenCart forum](https://forum.opencart.com/viewforum.php?f=201), ask the community if they have seen the bug or know how to fix it.
-2. Check all open and closed issues on the [GitHub bug tracker](https://github.com/opencart/opencart/issues).
-3. If your bug is related to the OpenCart core code then please create a bug report on GitHub.
-4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/CHANGELOG.md)
-5. Use [Google](https://www.google.com) to search for your issue.
-6. Make sure that your bug/issue is not related to your hosting environment.
+- Fresh install: see [INSTALL.md](INSTALL.md)
+- In-place upgrade: see [UPGRADE.md](UPGRADE.md)
 
-If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](https://forum.opencart.com/viewforum.php?f=201)
+## Local Docker environment
 
-**Important!**
+From the repository root:
 
-- If your bug report is not related to the core code (such as a 3rd party module or your server configuration) then the issue will be closed without a reason. You must contact the extension developer, use the forum or find a commercial partner to resolve a 3rd party code issue.
-- If you would like to report a serious security bug please PM an OpenCart moderator/administrator on the forum. Please do not report concept/ideas/unproven security flaws - all security reports are taken seriously but you must include the EXACT details steps to reproduce it. Please DO NOT post security flaws in a public location.
+```bash
+docker compose up -d
+```
 
-## How to contribute
+The compose stack:
 
-Fork the repository, edit and [submit a pull request](https://github.com/opencart/opencart/wiki/Creating-a-pull-request).
+- builds the local PHP/Apache image from `tools/Dockerfile`
+- mounts `./upload` into the container
+- provisions MySQL 5.7
+- runs `upload/install/cli_install.php` on first boot
+- exposes OpenCart at `http://localhost/` and Adminer at `http://localhost:8080/`
 
-Please be very clear on your commit messages and pull request, empty pull request messages may be rejected without reason.
+Default bootstrap credentials:
 
-Your code standards should match the [OpenCart coding standards](https://github.com/opencart/opencart/wiki/Coding-standards). We use an automated code scanner to check for most basic mistakes - if the test fails your pull request will be rejected.
+- Admin username: `admin`
+- Admin password: `admin`
+- Database: `opencart`
+- MySQL root password: `opencart`
 
-## How to run the application Locally (Docker Image)
+The first successful bootstrap creates `upload/install.lock` to prevent repeated CLI installs.
 
-### Windows OS
+## Development
 
-* make sure you have Docker Desktop installed on your Local Machine
-* in the terminal in the file containing the projects run `docker-compose up -d`
+Install or refresh dependencies from the repository root:
 
-## Versioning
+```bash
+composer install
+```
 
-The version is broken down into 4 points e.g 1.2.3.4 We use MAJOR.MINOR.FEATURE.PATCH to describe the version numbers.
+Composer installs runtime dependencies into `upload/system/storage/vendor/` and autoloads the local PHPStan extension from `tools/phpstan/`.
 
-A MAJOR is very rare, it would only be considered if the source was effectively re-written or a clean break was desired for other reasons. This increment would likely break most 3rd party modules.
+Common checks:
 
-A MINOR is when there are significant changes that affect core structures. This increment would likely break some 3rd party modules.
+```bash
+find upload -type f -name "*.php" ! -path 'upload/system/storage/vendor/*' -exec php -l -n {} +
+php tools/php-cs-fixer.phar fix --dry-run --diff
+php tools/phpstan.phar analyze --no-progress --memory-limit=1G
+```
 
-A FEATURE version is when new extensions or features are added (such as a payment gateway, shipping module etc). Updating a feature version is at a low risk of breaking 3rd party modules.
+The default CI workflow runs syntax linting, PHP CS Fixer, and PHPStan across PHP 8.1-8.5.
 
-A PATCH version is when a fix is added, it should be considered safe to update patch versions e.g 1.2.3.4 to 1.2.3.5
+## Reporting issues
 
-## Releases
+Before opening a core bug report:
 
-OpenCart will announce to developers 1 week prior to public release of FEATURE versions, this is to allow for testing of their own modules for compatibility. For bigger releases (ones that contain many core changes, features and fixes) an extended period will be considered following an announced release candidate (RC). Patch versions (which are considered safe to update with) may have a significantly reduced developer release period.
+1. Search existing GitHub issues and discussions.
+2. Confirm the problem is reproducible on a clean OpenCart install.
+3. Rule out third-party extensions, themes, and server-specific misconfiguration.
 
-The master branch will always contain an "_rc" postfix of the next intended version. The next "_rc" version may change at any time.
+Security issues should not be disclosed publicly before they are reproducible and triaged.
 
-Developer release source code will not change once tagged.
+## Contributing
 
-If a bug is found in an announced developer release that is significant (such as a major feature is broken) then the release will be pulled. A patch version will be issued to replace it, depending on the severity of the patch an extended testing period may be announced. If the developer release version was never made public then the preceding patch version tag will be removed.
+Fork the repository, make focused changes, and open a pull request with a clear description of the problem, fix, and any behavioural impact.
 
-To receive developer notifications about release information, sign up to the newsletter on the [OpenCart website](https://www.opencart.com) - located in the footer. Then choose the developer news option.
+Please keep changes aligned with the existing project conventions and run the local quality checks before submitting.
 
 ## License
 
-[GNU General Public License version 3 (GPLv3)](https://github.com/opencart/opencart/blob/master/LICENSE.md)
+OpenCart is licensed under the [GNU General Public License version 3](LICENSE.md).
 
 ## Links
 
-- [OpenCart homepage](https://www.opencart.com/)
+- [OpenCart website](https://www.opencart.com/)
 - [OpenCart forums](https://forum.opencart.com/)
-- [OpenCart blog](https://www.opencart.com/index.php?route=feature/blog)
-- [How to documents](http://docs.opencart.com/en-gb/introduction/)
-- [Newsletter](https://newsletter.opencart.com/h/r/B660EBBE4980C85C)
-- [Discussions](https://github.com/opencart/opencart/discussions)
+- [GitHub issues](https://github.com/opencart/opencart/issues)
+- [GitHub discussions](https://github.com/opencart/opencart/discussions)
+- [Change log](CHANGELOG.md)

@@ -1,0 +1,51 @@
+<h1>Response</h1>
+
+<p><code>\Opencart\System\Library\Response</code> collects the body, headers and compression settings the framework will emit at the end of the request. Controllers write into it; the bootstrap calls <code>output()</code> once everything is rendered.</p>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>addHeader(string $header)</code></td><td>Queue a header. Pass the full line (e.g. <code>'Content-Type: application/json'</code>).</td></tr>
+  <tr><td><code>getHeaders(): array</code></td><td>Currently queued headers.</td></tr>
+  <tr><td><code>setOutput(string $output)</code></td><td>Replace the body buffer.</td></tr>
+  <tr><td><code>getOutput(): string</code></td><td>Read the current body buffer (used by the bootstrap and by <code>controller/*/after</code> listeners).</td></tr>
+  <tr><td><code>setCompression(int $level)</code></td><td>Set zlib compression level (0-9). The library only compresses if the client advertised support via <code>Accept-Encoding</code>.</td></tr>
+  <tr><td><code>redirect(string $url, int $status = 302)</code></td><td>Send a <code>Location</code> redirect and <code>exit()</code>.</td></tr>
+  <tr><td><code>output()</code></td><td>Flush headers and body. Called by the bootstrap; you do not call it yourself.</td></tr>
+</table>
+
+<h2>Returning HTML</h2>
+
+```php
+$this->response->setOutput($this->load->view('common/dashboard', $data));
+```
+
+<p>Calling <code>setOutput</code> replaces the buffer entirely. To append, read first:</p>
+
+```php
+$this->response->setOutput($this->response->getOutput() . $extra_html);
+```
+
+<h2>Returning JSON</h2>
+
+```php
+$json = ['success' => true, 'message' => $this->language->get('text_success')];
+
+$this->response->addHeader('Content-Type: application/json');
+$this->response->setOutput(json_encode($json));
+```
+
+<p>Always set the content type explicitly -- the default is <code>text/html</code>.</p>
+
+<h2>Redirects</h2>
+
+```php
+$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
+```
+
+<p>The third argument to <code>$this->url->link(...)</code> forces HTTPS where the storefront supports both schemes. <code>redirect()</code> calls <code>exit()</code>, so anything after it is dead code.</p>
+
+<h2>Compression</h2>
+
+<p>Set once during bootstrap (<code>system/framework.php</code> reads <code>config_compression</code> and applies the level via <code>setCompression()</code>). Avoid toggling it from request code -- some routes stream binary (<code>image</code>, downloads) and double-compressing breaks them.</p>

@@ -1,0 +1,42 @@
+<h1>Cache</h1>
+
+<p><code>\Opencart\System\Library\Cache</code> is a thin facade over a pluggable adaptor. The active adaptor is selected by the <code>cache_engine</code> config key and constructed at request bootstrap.</p>
+
+<h2>Adaptors</h2>
+
+<table>
+  <tr><th>Engine</th><th>File</th><th>Notes</th></tr>
+  <tr><td><code>file</code></td><td><code>system/library/cache/file.php</code></td><td>Default. Stores entries in <code>system/storage/cache/</code>.</td></tr>
+  <tr><td><code>apcu</code></td><td><code>system/library/cache/apcu.php</code></td><td>Per-process shared memory; fast but local to one PHP-FPM pool.</td></tr>
+  <tr><td><code>mem</code> / <code>memcached</code></td><td><code>system/library/cache/mem(cached).php</code></td><td>Network cache; survives across PHP processes and hosts.</td></tr>
+  <tr><td><code>redis</code></td><td><code>system/library/cache/redis.php</code></td><td>Redis-backed.</td></tr>
+</table>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>get(string $key): mixed</code></td><td>Returns the cached value or <code>false</code> if missing/expired.</td></tr>
+  <tr><td><code>set(string $key, mixed $value, int $expire = 0): void</code></td><td>Stores a value. <code>$expire</code> is seconds; <code>0</code> uses the engine's default (<code>cache_expire</code> from config, which is 3600 by default).</td></tr>
+  <tr><td><code>delete(string $key): void</code></td><td>Removes a single entry.</td></tr>
+  <tr><td><code>clear(): void</code></td><td>Wipes the entire cache for the active adaptor.</td></tr>
+</table>
+
+<h2>Usage</h2>
+
+```php
+$key = 'product.' . (int)$product_id;
+
+$product = $this->cache->get($key);
+
+if (!$product) {
+    $product = $this->model_catalog_product->getProduct($product_id);
+    $this->cache->set($key, $product, 3600);
+}
+```
+
+<p>Cache values must be serialisable. Avoid caching closures or open resources.</p>
+
+<h2>Naming</h2>
+
+<p>Use dotted prefixes (<code>product.</code>, <code>category.path.</code>, ...) so <code>clear()</code>-style cleanup can be reasoned about. The framework already follows this scheme for built-in caches.</p>

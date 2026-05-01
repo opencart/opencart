@@ -1,0 +1,38 @@
+<h1>Log</h1>
+
+<p><code>\Opencart\System\Library\Log</code> is a tiny line-based file logger. Each <code>write()</code> call appends a timestamped row to a single file under <code>system/storage/logs/</code>.</p>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>__construct(string $filename)</code></td><td>The log file's basename. The library prepends the storage path. Empty filename means "do nothing" -- writes are silently dropped.</td></tr>
+  <tr><td><code>write(mixed $message): void</code></td><td>Appends one line. If <code>$message</code> is not a string the library <code>print_r</code>'s it.</td></tr>
+</table>
+
+<h2>Built-in instance</h2>
+
+<p>The framework constructs one log instance at bootstrap with the filename from <code>config('error_filename')</code> and stores it on the registry as <code>log</code>. Controllers reach it through <code>$this->log</code>:</p>
+
+```php
+$this->log->write('User ' . $this->user->getUserName() . ' edited setting ' . $key);
+```
+
+<h2>Per-extension log</h2>
+
+<p>If your extension produces a lot of output you do not want polluting the main error log, instantiate a dedicated logger:</p>
+
+```php
+$log = new \Opencart\System\Library\Log('hello.log');
+$log->write('--- run start ---');
+```
+
+<p>The file ends up at <code>system/storage/logs/hello.log</code>.</p>
+
+<h2>Where errors land</h2>
+
+<p>The error / exception handlers in <code>system/framework.php</code> and <code>cron.php</code> call <code>$log->write(...)</code> for unhandled errors when <code>error_log</code> is enabled. The <em>Maintenance &rarr; Error Logs</em> page in admin reads the same file.</p>
+
+<h2>Rotation</h2>
+
+<p>OpenCart does not rotate logs. Configure <code>logrotate</code> on the host or wire a cron that prunes old lines.</p>

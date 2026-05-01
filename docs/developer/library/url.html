@@ -1,0 +1,41 @@
+<h1>URL</h1>
+
+<p><code>\Opencart\System\Library\Url</code> turns route + query strings into absolute URLs. The catalog also chains a "rewrite" object onto it that converts the raw URL into an SEO-friendly form before output.</p>
+
+<h2>Constructor</h2>
+
+```php
+$url = new \Opencart\System\Library\Url($base);
+```
+
+<p><code>$base</code> is the storefront's site URL (configured via <code>HTTP_SERVER</code> in <code>config.php</code>). Internally the library appends <code>?route=...</code> and any extra args.</p>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>link(string $route, string|array $args = '', bool $js = false): string</code></td><td>Build a URL.</td></tr>
+  <tr><td><code>addRewrite(object $rewrite)</code></td><td>Register a rewrite handler. Anything with a <code>rewrite($url): string</code> method qualifies; the catalog wires <code>$this->seo_url</code> here so SEO URLs work everywhere.</td></tr>
+</table>
+
+<h2>Building links</h2>
+
+```php
+$href = $this->url->link('product/product', 'product_id=' . $product_id);
+
+$href = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
+```
+
+<p>Always pass the admin <code>user_token</code> (or the API session token) on links to authenticated pages. The router rejects requests that arrive without one.</p>
+
+<h2>Args</h2>
+
+<p><code>$args</code> may be a query-string fragment (<code>'foo=1&bar=2'</code>) or an associative array (<code>['foo' =&gt; 1, 'bar' =&gt; 2]</code>). The library encodes values with <code>http_build_query</code> when an array is supplied.</p>
+
+<h2>Js mode</h2>
+
+<p>Pass <code>true</code> as the third argument when the URL will be embedded in a JS string -- it returns a form safe to interpolate without further escaping. Most callers leave it <code>false</code>.</p>
+
+<h2>SEO URLs</h2>
+
+<p>The catalog startup chain instantiates the rewrite handler so <code>https://store/index.php?route=product/product&amp;product_id=42</code> rewrites to <code>https://store/some-product</code> on the way out. <code>$this->url->link()</code> is the only safe way to build a URL -- never concatenate <code>?route=</code> by hand.</p>

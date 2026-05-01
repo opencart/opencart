@@ -1,0 +1,42 @@
+<h1>Language</h1>
+
+<p><code>\Opencart\System\Library\Language</code> is the translation store. Language files are PHP files that fill <code>$_['key'] = 'value'</code>; the library merges them into one flat map and exposes <code>get</code> / <code>set</code> / <code>all</code>.</p>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>__construct(string $code)</code></td><td>The active language code, e.g. <code>en-gb</code>.</td></tr>
+  <tr><td><code>load(string $filename, string $prefix = '', string $code = ''): array</code></td><td>Loads a language file and merges its <code>$_</code> into the store. Most callers go through <code>$this->load->language(...)</code> instead, which also fires events.</td></tr>
+  <tr><td><code>get(string $key): string</code></td><td>Returns the translation, or the key itself if missing (so untranslated strings are visible during development).</td></tr>
+  <tr><td><code>set(string $key, string $value): void</code></td><td>Overrides a single string at runtime.</td></tr>
+  <tr><td><code>all(string $prefix = ''): array</code></td><td>Returns the full map, optionally filtered to keys starting with <code>$prefix</code>.</td></tr>
+  <tr><td><code>clear(): void</code></td><td>Wipes the in-memory store.</td></tr>
+  <tr><td><code>addPath(string $namespace, string $directory = '')</code></td><td>Registers an extension's language directory so its files resolve under a namespace.</td></tr>
+</table>
+
+<h2>Loading from a controller</h2>
+
+```php
+$this->load->language('common/dashboard');
+
+$title = $this->language->get('heading_title');
+
+$data = array_merge($data, $this->language->all());
+```
+
+<p>The third call is the idiom that lets templates use bare variables (<code>{{ heading_title }}</code>) instead of having to call <code>{{ language('heading_title') }}</code>.</p>
+
+<h2>Where files live</h2>
+
+<table>
+  <tr><th>Path</th><th>Notes</th></tr>
+  <tr><td><code>admin/language/&lt;code&gt;/&lt;route&gt;.php</code></td><td>Core admin strings.</td></tr>
+  <tr><td><code>catalog/language/&lt;code&gt;/&lt;route&gt;.php</code></td><td>Core storefront strings.</td></tr>
+  <tr><td><code>extension/&lt;ext&gt;/&lt;side&gt;/language/&lt;code&gt;/...</code></td><td>Strings shipped by an extension.</td></tr>
+  <tr><td><code>extension/ocmod/&lt;side&gt;/language/&lt;code&gt;/...</code></td><td>OCMOD-patched copies (the loader redirects <code>$route</code> here when one exists).</td></tr>
+</table>
+
+<h2>Two-letter prefix</h2>
+
+<p>The optional <code>$prefix</code> on <code>load()</code> namespaces the keys. Used by the catalog mail templates so order-confirmation strings do not collide with checkout strings even though both files might define <code>text_subject</code>.</p>

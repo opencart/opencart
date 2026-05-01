@@ -1,0 +1,47 @@
+<h1>Image</h1>
+
+<p><code>\Opencart\System\Library\Image</code> wraps GD-based image manipulation. Used internally by the catalog model for product thumbnails and on-the-fly resizes.</p>
+
+<h2>Constructor</h2>
+
+```php
+$image = new \Opencart\System\Library\Image('/absolute/path/to/file.jpg');
+```
+
+<p>The constructor opens the file, reads dimensions / MIME / bits, and keeps the GD resource around for subsequent operations.</p>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>getFile() / getImage()</code></td><td>Path to the source file / GD resource.</td></tr>
+  <tr><td><code>getWidth() / getHeight()</code></td><td>Pixel dimensions.</td></tr>
+  <tr><td><code>getBits() / getMime()</code></td><td>Bits per channel and the detected MIME.</td></tr>
+  <tr><td><code>resize(int $width = 0, int $height = 0, string $default = '')</code></td><td>Resize. <code>$default</code> controls the fit strategy (<code>'w'</code>, <code>'h'</code>, <code>''</code>).</td></tr>
+  <tr><td><code>watermark(self $watermark, string $position = 'bottomright')</code></td><td>Overlay another <code>Image</code> instance. Position is one of <code>topleft</code>, <code>topright</code>, <code>bottomleft</code>, <code>bottomright</code>.</td></tr>
+  <tr><td><code>crop(int $top_x, int $top_y, int $bottom_x, int $bottom_y)</code></td><td>Crop to a rectangle.</td></tr>
+  <tr><td><code>rotate(int $degree, string $color = 'FFFFFF')</code></td><td>Rotate by N degrees, filling exposed corners with <code>$color</code> (hex without <code>#</code>).</td></tr>
+  <tr><td><code>save(string $file, int $quality = 90)</code></td><td>Encode and write to disk. The output format is inferred from the destination file extension.</td></tr>
+</table>
+
+<h2>Usage</h2>
+
+```php
+$source = new \Opencart\System\Library\Image(DIR_IMAGE . 'catalog/' . $filename);
+$source->resize(400, 400);
+$source->save(DIR_IMAGE . 'cache/' . $cache_name);
+```
+
+<p>For watermarks, both images must be opened first:</p>
+
+```php
+$image = new \Opencart\System\Library\Image(DIR_IMAGE . 'catalog/' . $filename);
+$mark  = new \Opencart\System\Library\Image(DIR_IMAGE . 'logo.png');
+
+$image->watermark($mark, 'bottomright');
+$image->save(DIR_IMAGE . 'cache/' . $cache_name);
+```
+
+<h2>Model layer</h2>
+
+<p>For typical product images, do not instantiate <code>Image</code> directly -- use <code>$this->model_tool_image->resize($filename, $width, $height)</code>. It handles cache invalidation and returns a public URL that points at the cached image.</p>

@@ -1,0 +1,94 @@
+<h1>Models</h1>
+
+<p>A model holds the persistence and domain logic for a feature. Models are loaded on demand by the framework and exposed on the controller as <code>$this->model_&lt;path&gt;</code>.</p>
+
+<ul>
+  <li><a href="#location">Where models live</a></li>
+  <li><a href="#namespace">Namespace and class name</a></li>
+  <li><a href="#loading">Loading a model</a></li>
+  <li><a href="#proxy">The proxy: why method calls go through events</a></li>
+  <li><a href="#registry">What is available on <code>$this</code></a></li>
+  <li><a href="#example">Minimal example</a></li>
+</ul>
+
+<a name="location"/>
+
+<h2>Where models live</h2>
+
+<table>
+  <tr><th>Path</th><th>Used by</th></tr>
+  <tr><td><code>admin/model/&lt;group&gt;/&lt;name&gt;.php</code></td><td>Core admin models.</td></tr>
+  <tr><td><code>catalog/model/&lt;group&gt;/&lt;name&gt;.php</code></td><td>Core storefront models.</td></tr>
+  <tr><td><code>extension/&lt;code&gt;/admin/model/&lt;group&gt;/&lt;name&gt;.php</code></td><td>Admin models from an extension.</td></tr>
+  <tr><td><code>extension/&lt;code&gt;/catalog/model/&lt;group&gt;/&lt;name&gt;.php</code></td><td>Catalog models from an extension.</td></tr>
+</table>
+
+<a name="namespace"/>
+
+<h2>Namespace and class name</h2>
+
+<table>
+  <tr><th>Route</th><th>File</th><th>Class</th></tr>
+  <tr><td><code>setting/setting</code></td><td><code>admin/model/setting/setting.php</code></td><td><code>Opencart\Admin\Model\Setting\Setting</code></td></tr>
+  <tr><td><code>extension/hello/module/hello</code></td><td><code>extension/hello/admin/model/module/hello.php</code></td><td><code>Opencart\Admin\Model\Extension\Hello\Module\Hello</code></td></tr>
+</table>
+
+<p>Models extend <code>\Opencart\System\Engine\Model</code>.</p>
+
+<a name="loading"/>
+
+<h2>Loading a model</h2>
+
+```php
+$this->load->model('setting/setting');
+
+$this->model_setting_setting->editSetting('config', $data);
+$value = $this->model_setting_setting->getSetting('config');
+```
+
+<p>The path slashes become underscores in the property name (<code>setting/setting</code> &rarr; <code>$this->model_setting_setting</code>). Calling <code>$this->load->model(...)</code> twice with the same route is cheap -- the loaded instance is cached.</p>
+
+<a name="proxy"/>
+
+<h2>The proxy: why method calls go through events</h2>
+
+<p>When you load a model, the framework does not give you the real object. It gives you a <code>\Opencart\System\Engine\Proxy</code> with one closure per public method. Each closure dispatches:</p>
+
+<ol>
+  <li><code>model/&lt;route&gt;/&lt;method&gt;/before</code> -- listeners can rewrite the args (or the route)</li>
+  <li>the actual method on the underlying model</li>
+  <li><code>model/&lt;route&gt;/&lt;method&gt;/after</code> -- listeners can rewrite the return value</li>
+</ol>
+
+<p>This is what lets OCMOD redirect <code>setting/setting.editSetting</code> to a patched copy at <code>extension/ocmod/setting/setting</code>. From your code's point of view it is invisible.</p>
+
+<a name="registry"/>
+
+<h2>What is available on <code>$this</code></h2>
+
+<p>The same registry-backed services as a controller (<code>$this->db</code>, <code>$this->config</code>, <code>$this->cache</code>, <code>$this->load</code>, etc.). A model can load other models, fire events, or query the cache exactly like a controller.</p>
+
+<a name="example"/>
+
+<h2>Minimal example</h2>
+
+```php
+<?php
+namespace Opencart\Catalog\Model\Demo;
+
+class Hello extends \Opencart\System\Engine\Model {
+    public function getMessage(int $id): string {
+        $query = $this->db->query("SELECT `message` FROM `" . DB_PREFIX . "demo_hello` WHERE `hello_id` = '" . (int)$id . "'");
+
+        return (string)($query->row['message'] ?? '');
+    }
+}
+```
+
+<p>Notes:</p>
+
+<ul>
+  <li>Always cast or escape values that go into a SQL string. <code>$this->db->escape($value)</code> for strings, <code>(int)</code> / <code>(float)</code> for numbers.</li>
+  <li>Prefix table names with <code>DB_PREFIX</code>. The constant is set from <code>config.php</code> and is required for multi-install support.</li>
+  <li>Return plain arrays/scalars rather than entity objects -- the rest of OpenCart treats results as arrays.</li>
+</ul>

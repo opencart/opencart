@@ -1,0 +1,59 @@
+<h1>DB</h1>
+
+<p><code>\Opencart\System\Library\DB</code> is the database facade. It picks an adaptor at construction time and forwards every call. Models talk to it through <code>$this->db</code>.</p>
+
+<h2>Adaptors</h2>
+
+<table>
+  <tr><th>Engine</th><th>File</th><th>Notes</th></tr>
+  <tr><td><code>mysqli</code></td><td><code>system/library/db/mysqli.php</code></td><td>Default. Procedural mysqli with tracking of affected rows / last id.</td></tr>
+  <tr><td><code>pdo</code></td><td><code>system/library/db/pdo.php</code></td><td>PDO MySQL driver.</td></tr>
+  <tr><td><code>pgsql</code></td><td><code>system/library/db/pgsql.php</code></td><td>PostgreSQL via the <code>pgsql</code> extension.</td></tr>
+</table>
+
+<p>The active adaptor is configured by the <code>db_engine</code> key in <code>config.php</code>.</p>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>query(string $sql): object</code></td><td>Runs a query. <code>SELECT</code> returns an object with <code>num_rows</code>, <code>row</code> (first row) and <code>rows</code> (all rows). Other statements return a generic object (used for chained metadata).</td></tr>
+  <tr><td><code>escape(string $value): string</code></td><td>Quotes a string for inclusion in a query. Does <em>not</em> add the surrounding quotes.</td></tr>
+  <tr><td><code>countAffected(): int</code></td><td>Affected rows from the last write.</td></tr>
+  <tr><td><code>getLastId(): int</code></td><td>The auto-increment value of the last insert.</td></tr>
+  <tr><td><code>isConnected(): bool</code></td><td>Whether the underlying connection is alive.</td></tr>
+</table>
+
+<h2>Reading rows</h2>
+
+```php
+$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `status` = '1'");
+
+foreach ($query->rows as $row) {
+    // ...
+}
+
+$first = $query->row;
+$count = $query->num_rows;
+```
+
+<h2>Writing safely</h2>
+
+<p>OpenCart does not expose prepared statements at this layer. Build queries by hand and protect every value:</p>
+
+<ul>
+  <li>Cast scalars: <code>(int)$id</code>, <code>(float)$price</code>.</li>
+  <li>Wrap strings: <code>'" . $this->db->escape($value) . "'</code>.</li>
+  <li>Always prefix table names with <code>DB_PREFIX</code>.</li>
+  <li>Backtick identifiers (column / table names) so reserved words stay parseable.</li>
+</ul>
+
+```php
+$this->db->query("INSERT INTO `" . DB_PREFIX . "log` SET `message` = '" . $this->db->escape($message) . "', `created_at` = NOW()");
+
+$id = $this->db->getLastId();
+```
+
+<h2>Time zones</h2>
+
+<p><code>cron.php</code> and <code>system/framework.php</code> both run a <code>SET time_zone = '...'</code> immediately after connecting so PHP and the database agree on the offset. If you switch the connection at runtime, repeat that step.</p>

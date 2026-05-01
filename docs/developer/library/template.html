@@ -1,0 +1,32 @@
+<h1>Template</h1>
+
+<p><code>\Opencart\System\Library\Template</code> is the rendering facade. It picks an adaptor at construction (currently always Twig) and exposes <code>render()</code>.</p>
+
+<h2>Adaptors</h2>
+
+<table>
+  <tr><th>Engine</th><th>File</th><th>Notes</th></tr>
+  <tr><td><code>twig</code></td><td><code>system/library/template/twig.php</code></td><td>Default. Wraps the bundled Twig 3.</td></tr>
+  <tr><td><code>template</code></td><td><code>system/library/template/template.php</code></td><td>Plain PHP fallback. Not used by core templates.</td></tr>
+</table>
+
+<h2>API</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>__construct(string $adaptor)</code></td><td>Engine name.</td></tr>
+  <tr><td><code>render(string $filename, array $data = [], string $code = ''): string</code></td><td>Render a template. <code>$filename</code> is a route (no extension); <code>$data</code> becomes the variable scope; <code>$code</code> is reserved for caching.</td></tr>
+  <tr><td><code>addPath(string $namespace, string $directory = '')</code></td><td>Register an extension's view directory so its templates resolve under a route prefix.</td></tr>
+</table>
+
+<h2>How <code>$this->load->view()</code> uses it</h2>
+
+<p>The loader fires <code>view/&lt;route&gt;/before</code>, then -- unless a listener filled <code>$output</code> -- calls <code>$this->template->render($route, $data, $code)</code>, then fires <code>view/&lt;route&gt;/after</code>. You normally never call <code>render()</code> directly; you call <code>$this->load->view(...)</code>.</p>
+
+<h2>Twig sandboxing</h2>
+
+<p>OpenCart does not enable Twig's sandbox by default. Templates can call any PHP function exposed via <code>twig_safe</code> filters or registered globals, so treat templates as code, not as configuration. Never load a template path that came from user input.</p>
+
+<h2>Caching</h2>
+
+<p>Twig compiles templates to PHP and caches them under <code>system/storage/cache/template/</code>. After editing a <code>.twig</code> file it is sometimes necessary to clear that directory (or hit <em>Settings &rarr; Reset</em>) to force recompilation on hosts that cache aggressively.</p>

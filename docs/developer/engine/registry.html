@@ -1,0 +1,109 @@
+<h1>Registry</h1>
+
+<p>The registry is OpenCart's service container. It is a typed map of <code>string =&gt; object</code>: every shared service the framework constructs (config, db, session, cache, language, ...) is stored on it, and every controller, model and library reads its dependencies from it via property access.</p>
+
+<ul>
+  <li><a href="#api">The five methods</a></li>
+  <li><a href="#magic">Magic property access</a></li>
+  <li><a href="#how-its-populated">How the registry gets populated</a></li>
+  <li><a href="#standard-keys">Standard keys</a></li>
+  <li><a href="#using-it">Using the registry from your code</a></li>
+</ul>
+
+<a name="api"/>
+
+<h2>The five methods</h2>
+
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>get(string $key): ?object</code></td><td>Returns the stored object or <code>null</code> if the key is unknown.</td></tr>
+  <tr><td><code>set(string $key, object $value): void</code></td><td>Stores an object. Replaces any previous value silently.</td></tr>
+  <tr><td><code>has(string $key): bool</code></td><td>True if the key is set.</td></tr>
+  <tr><td><code>unset(string $key): void</code></td><td>Removes a key.</td></tr>
+</table>
+
+<p>Values must be objects -- the registry rejects scalars at the type-hint level. For scalar configuration use <code>Config</code>, which is itself stored on the registry.</p>
+
+<a name="magic"/>
+
+<h2>Magic property access</h2>
+
+<p>The registry implements <code>__get</code>, <code>__set</code> and <code>__isset</code>, so these are equivalent:</p>
+
+```php
+$registry->get('db');
+$registry->db;
+
+$registry->set('cache', $cache);
+$registry->cache = $cache;
+
+$registry->has('session');
+isset($registry->session);
+```
+
+<p>Controllers, models and libraries also forward property access to the registry via the same magic methods on their base classes. That is why <code>$this->db</code> inside a controller resolves to <code>$registry->get('db')</code>.</p>
+
+<a name="how-its-populated"/>
+
+<h2>How the registry gets populated</h2>
+
+<p>The framework bootstrap (<code>system/framework.php</code>) constructs each service and stores it on the registry in a fixed order:</p>
+
+<ol>
+  <li><code>autoloader</code> -- PSR-4-style autoloader.</li>
+  <li><code>config</code> -- application config (<code>default</code> + <code>admin</code>/<code>catalog</code>).</li>
+  <li><code>log</code> -- error log writer.</li>
+  <li><code>event</code> -- event registry.</li>
+  <li><code>factory</code> -- builds controllers, models, libraries on demand.</li>
+  <li><code>load</code> -- the loader.</li>
+  <li><code>request</code>, <code>response</code>, <code>db</code> (if <code>db_autostart</code>), <code>cache</code>, <code>template</code>, <code>language</code>, <code>url</code>, <code>document</code>.</li>
+</ol>
+
+<p>Pre-actions then add or replace entries (<code>session</code>, <code>customer</code>, <code>currency</code>, <code>tax</code>, <code>user</code>, etc.).</p>
+
+<a name="standard-keys"/>
+
+<h2>Standard keys</h2>
+
+<table>
+  <tr><th>Key</th><th>Class</th></tr>
+  <tr><td><code>config</code></td><td><code>\Opencart\System\Engine\Config</code></td></tr>
+  <tr><td><code>load</code></td><td><code>\Opencart\System\Engine\Loader</code></td></tr>
+  <tr><td><code>event</code></td><td><code>\Opencart\System\Engine\Event</code></td></tr>
+  <tr><td><code>factory</code></td><td><code>\Opencart\System\Engine\Factory</code></td></tr>
+  <tr><td><code>autoloader</code></td><td><code>\Opencart\System\Engine\Autoloader</code></td></tr>
+  <tr><td><code>db</code></td><td><code>\Opencart\System\Library\DB</code></td></tr>
+  <tr><td><code>cache</code></td><td><code>\Opencart\System\Library\Cache</code></td></tr>
+  <tr><td><code>session</code></td><td><code>\Opencart\System\Library\Session</code></td></tr>
+  <tr><td><code>request</code> / <code>response</code></td><td><code>\Opencart\System\Library\Request</code> / <code>Response</code></td></tr>
+  <tr><td><code>language</code></td><td><code>\Opencart\System\Library\Language</code></td></tr>
+  <tr><td><code>url</code></td><td><code>\Opencart\System\Library\Url</code></td></tr>
+  <tr><td><code>document</code></td><td><code>\Opencart\System\Library\Document</code></td></tr>
+  <tr><td><code>log</code></td><td><code>\Opencart\System\Library\Log</code></td></tr>
+  <tr><td><code>user</code></td><td><code>\Opencart\System\Library\User</code> (admin only)</td></tr>
+  <tr><td><code>customer</code></td><td><code>\Opencart\Catalog\Model\Account\Customer</code> proxy (catalog only)</td></tr>
+</table>
+
+<a name="using-it"/>
+
+<h2>Using the registry from your code</h2>
+
+<p>You normally never touch the registry directly -- access services through <code>$this</code>. The exception is when you are writing a library and need to be registry-aware: extend the constructor with <code>\Opencart\System\Engine\Registry $registry</code> and the factory will hand it in.</p>
+
+```php
+namespace Opencart\System\Library\Hello;
+
+class Greeter {
+    private \Opencart\System\Engine\Registry $registry;
+
+    public function __construct(\Opencart\System\Engine\Registry $registry) {
+        $this->registry = $registry;
+    }
+
+    public function hello(): string {
+        $config = $this->registry->get('config');
+
+        return 'Hello from ' . $config->get('config_name');
+    }
+}
+```

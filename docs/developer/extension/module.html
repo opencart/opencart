@@ -1,0 +1,328 @@
+<h1>How to build an OpenCart 4.1 module</h1>
+
+<p>An OpenCart extension is a folder under <code>extension/&lt;your_code&gt;/</code> that mirrors the framework layout and ships an <code>install.json</code>. To distribute it, you zip that folder with the suffix <code>.ocmod.zip</code> and let an admin upload it through <em>Extensions &rarr; Installer</em>. This page walks through the layout, the install/uninstall flow, and a working "Hello world" example.</p>
+
+<ul>
+  <li><a href="#anatomy">Anatomy of an extension</a></li>
+  <li><a href="#install-json">install.json</a></li>
+  <li><a href="#namespaces">Namespacing rules</a></li>
+  <li><a href="#install-flow">Install / uninstall flow</a></li>
+  <li><a href="#hello-world">Worked example: a "Hello" admin module</a></li>
+  <li><a href="#admin-link">Surfacing the module in admin</a></li>
+  <li><a href="#ocmod-patches">Including OCMOD patches</a></li>
+  <li><a href="#packaging">Packaging the .ocmod.zip</a></li>
+  <li><a href="#testing">Testing without uploading</a></li>
+</ul>
+
+<a name="anatomy"/>
+
+<h2>Anatomy of an extension</h2>
+
+<p>The folder you ship inside the zip looks like the OpenCart source tree, scoped to one extension code:</p>
+
+```
+your_module/
+├── install.json
+├── admin/
+│   ├── controller/
+│   │   └── module/
+│   │       └── your_module.php
+│   ├── model/
+│   │   └── module/
+│   │       └── your_module.php
+│   ├── language/
+│   │   ├── en-gb/
+│   │   │   └── module/
+│   │   │       └── your_module.php
+│   │   └── fr-fr/
+│   │       └── module/
+│   │           └── your_module.php
+│   └── view/
+│       └── template/
+│           └── module/
+│               └── your_module.twig
+├── catalog/
+│   ├── controller/
+│   │   └── module/
+│   │       └── your_module.php
+│   ├── model/
+│   ├── language/
+│   └── view/
+└── system/
+    └── library/
+        └── your_module/
+            └── helper.php
+```
+
+<p>Only the folders you need have to exist. A pure storefront module has no <code>admin/</code> tree, a config-only module has no <code>view/</code>, and so on.</p>
+
+<p>The <code>ocmod/</code> sub-folder (optional) is reserved for OCMOD core patches -- see <a href="#ocmod-patches">Including OCMOD patches</a> below and the <a href="../modification/ocmod.html">OCMOD reference</a>.</p>
+
+<a name="install-json"/>
+
+<h2><code>install.json</code></h2>
+
+<p>A minimal manifest:</p>
+
+```json
+{
+  "name":    "Hello Module",
+  "version": "1.0",
+  "author":  "Your Name",
+  "link":    "https://example.com"
+}
+```
+
+<table>
+  <tr><th>Key</th><th>Required</th><th>Notes</th></tr>
+  <tr><td><code>name</code></td><td>yes</td><td>Display name shown in <em>Extensions &rarr; Installer</em>.</td></tr>
+  <tr><td><code>version</code></td><td>yes</td><td>Free-form. Used to compare upgrades.</td></tr>
+  <tr><td><code>author</code></td><td>yes</td><td>Free-form.</td></tr>
+  <tr><td><code>link</code></td><td>recommended</td><td>Hyperlink shown in admin.</td></tr>
+</table>
+
+<a name="namespaces"/>
+
+<h2>Namespacing rules</h2>
+
+<p>The PSR-4-style autoloader (<code>system/engine/autoloader.php</code>) maps the <code>Opencart\Extension</code> namespace to <code>DIR_EXTENSION</code> (which is <code>system/storage/extension/</code> after install, <code>upload/extension/</code> when bundled with the source).</p>
+
+<p>So a controller at <code>extension/your_module/admin/controller/module/your_module.php</code> must declare:</p>
+
+```php
+namespace Opencart\Admin\Controller\Extension\YourModule\Module;
+
+class YourModule extends \Opencart\System\Engine\Controller {
+    // ...
+}
+```
+
+<p>Rules:</p>
+
+<ul>
+  <li><strong>StudlyCase</strong> the extension code in the namespace (<code>your_module</code> &rarr; <code>YourModule</code>) and the file/class name (<code>your_module.php</code> &rarr; class <code>YourModule</code>).</li>
+  <li>Admin classes live under <code>Opencart\Admin\Controller\Extension\&lt;Code&gt;\...</code>; catalog classes under <code>Opencart\Catalog\Controller\Extension\&lt;Code&gt;\...</code>.</li>
+  <li>Library classes live under <code>Opencart\System\Library\&lt;subnamespace&gt;\...</code> (no <code>Extension</code> segment, because libraries are loaded from <code>system/library/</code>).</li>
+  <li>Routes follow the same convention: <code>extension/your_module/module/your_module</code> resolves to <code>YourModule\Module\YourModule</code>.</li>
+</ul>
+
+<a name="install-flow"/>
+
+<h2>Install / uninstall flow</h2>
+
+<p>When an admin uploads a <code>.ocmod.zip</code>, this is what happens (handled in <code>admin/controller/marketplace/installer.php</code>):</p>
+
+<ol>
+  <li><strong>Upload.</strong> The zip is moved to <code>system/storage/marketplace/</code> with the original filename.</li>
+  <li><strong>Install.</strong> The extension is unpacked into <code>system/storage/extension/&lt;code&gt;/</code>. <code>install.json</code> is parsed and a row is added to <code>oc_extension_install</code>.</li>
+  <li><strong>Run install hook.</strong> If your admin controller has a public <code>install()</code> method, it is invoked. This is where you create database tables, register events and crons, set defaults.</li>
+  <li><strong>OCMOD refresh.</strong> Any <code>ocmod/*.ocmod.xml</code> files inside the zip are merged into the current modification cache.</li>
+</ol>
+
+<p>Uninstall reverses steps 3 and 4 (the files stay on disk so you can re-enable later) and removes the <code>oc_extension_install</code> row.</p>
+
+<p>Because steps 3 and 4 only run when an admin clicks <em>Install</em> in the UI, never assume your install hook has been called. The upload step on its own is a no-op as far as your code is concerned.</p>
+
+<a name="hello-world"/>
+
+<h2>Worked example: a "Hello" admin module</h2>
+
+<p>Folder layout:</p>
+
+```
+hello/
+├── install.json
+└── admin/
+    ├── controller/
+    │   └── module/
+    │       └── hello.php
+    ├── language/
+    │   └── en-gb/
+    │       └── module/
+    │           └── hello.php
+    └── view/
+        └── template/
+            └── module/
+                └── hello.twig
+```
+
+<h3><code>install.json</code></h3>
+
+```json
+{
+  "name":    "Hello Module",
+  "version": "1.0",
+  "author":  "Your Name",
+  "link":    "https://example.com"
+}
+```
+
+<h3><code>admin/controller/module/hello.php</code></h3>
+
+```php
+<?php
+namespace Opencart\Admin\Controller\Extension\Hello\Module;
+
+class Hello extends \Opencart\System\Engine\Controller {
+    public function index(): void {
+        $this->load->language('extension/hello/module/hello');
+
+        $this->document->setTitle($this->language->get('heading_title'));
+
+        $data['breadcrumbs'][] = [
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+        ];
+
+        $data['breadcrumbs'][] = [
+            'text' => $this->language->get('heading_title'),
+            'href' => $this->url->link('extension/hello/module/hello', 'user_token=' . $this->session->data['user_token'])
+        ];
+
+        $data['save']   = $this->url->link('extension/hello/module/hello.save', 'user_token=' . $this->session->data['user_token']);
+        $data['back']   = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token']);
+
+        $data['module_hello_status'] = $this->config->get('module_hello_status');
+
+        $data['header']      = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer']      = $this->load->controller('common/footer');
+
+        $this->response->setOutput($this->load->view('extension/hello/module/hello', $data));
+    }
+
+    public function save(): void {
+        $this->load->language('extension/hello/module/hello');
+
+        $json = [];
+
+        if (!$this->user->hasPermission('modify', 'extension/hello/module/hello')) {
+            $json['error'] = $this->language->get('error_permission');
+        }
+
+        if (!$json) {
+            $this->load->model('setting/setting');
+
+            $this->model_setting_setting->editSetting('module_hello', $this->request->post);
+
+            $json['success'] = $this->language->get('text_success');
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+    public function install(): void {
+        $this->load->model('user/user_group');
+        $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/hello/module/hello');
+        $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/hello/module/hello');
+    }
+
+    public function uninstall(): void {
+        $this->load->model('setting/setting');
+        $this->model_setting_setting->deleteSetting('module_hello');
+    }
+}
+```
+
+<h3><code>admin/language/en-gb/module/hello.php</code></h3>
+
+```php
+<?php
+$_['heading_title']    = 'Hello Module';
+$_['text_extension']   = 'Extensions';
+$_['text_success']     = 'Success: You have modified the Hello module!';
+$_['text_edit']        = 'Edit Hello Module';
+$_['entry_status']     = 'Status';
+$_['error_permission'] = 'Warning: You do not have permission to modify the Hello module!';
+```
+
+<h3><code>admin/view/template/module/hello.twig</code></h3>
+
+```twig
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="float-end">
+                <button form="form-module" type="submit" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+                <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ol class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
+            <div class="card-body">
+                <form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax">
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                        <div class="col-sm-10 form-check form-switch form-switch-lg">
+                            <input type="hidden" name="module_hello_status" value="0"/>
+                            <input type="checkbox" name="module_hello_status" value="1" id="input-status" class="form-check-input"{% if module_hello_status %} checked{% endif %}/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ footer }}
+```
+
+<a name="admin-link"/>
+
+<h2>Surfacing the module in admin</h2>
+
+<p>OpenCart 4 lists installed modules under <em>Extensions &rarr; Extensions &rarr; Modules</em>. Once <code>module_hello</code> shows up in <code>oc_extension</code>, the page automatically lets the admin <em>Install</em>, <em>Edit</em>, or <em>Uninstall</em> it. The <em>Edit</em> button links to <code>extension/hello/module/hello</code>, which is why the file path and namespace must follow the convention exactly.</p>
+
+<p>If you need a top-level menu entry instead, OCMOD-patch <code>admin/controller/common/column_left.php</code> to add a row, or hook <code>controller/common/column_left/before</code> via an event listener and append to <code>$data['menus']</code>.</p>
+
+<a name="ocmod-patches"/>
+
+<h2>Including OCMOD patches</h2>
+
+<p>If your module needs to alter a core file, ship the rewrite XML inside an <code>ocmod/</code> folder at the root of the zip:</p>
+
+```
+hello/
+├── install.json
+├── admin/
+└── ocmod/
+    └── hello.ocmod.xml
+```
+
+<p><code>hello.ocmod.xml</code> uses the same syntax described in <a href="../modification/ocmod.html">modification/ocmod</a>. The installer's "OCMOD refresh" step picks it up automatically -- you do not need to reference it from <code>install.json</code> or call any API.</p>
+
+<a name="packaging"/>
+
+<h2>Packaging the .ocmod.zip</h2>
+
+<p>From the parent of your module folder:</p>
+
+```
+cd path/to/parent
+zip -r hello.ocmod.zip hello/
+```
+
+<p>Three things to watch:</p>
+
+<ul>
+  <li>The zip must contain the module folder, not the contents directly. <code>install.json</code> sits one level below the zip root, inside <code>hello/</code>.</li>
+  <li>The filename must end in <code>.ocmod.zip</code>. The installer rejects plain <code>.zip</code>.</li>
+  <li>Do not zip macOS metadata (<code>.DS_Store</code>, <code>__MACOSX/</code>). Use <code>zip -X</code> or pass <code>--exclude</code>.</li>
+</ul>
+
+<a name="testing"/>
+
+<h2>Testing without uploading</h2>
+
+<p>During development you can skip the zip step and place the folder directly under <code>system/storage/extension/&lt;code&gt;/</code>, then insert a row into <code>oc_extension_install</code> and <code>oc_extension</code> as if the installer had run. The simplest way to do that is to run the installer once with a placeholder zip and then keep editing the unpacked files in place -- the autoloader picks up changes immediately.</p>
+
+<p>For OCMOD patches, after every edit click <em>Extensions &rarr; Modifications &rarr; Refresh</em> to rebuild the cache. The framework loads patched files only after a refresh.</p>

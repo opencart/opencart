@@ -1,77 +1,107 @@
 # INSTALL
 
-* This is for __new installation only__
-* These instructions are for a manual installation using FTP, cPanel or other web hosting Control Panel.
+These instructions are for a new OpenCart 4 installation. If you are updating an existing store, use [UPGRADE.md](UPGRADE.md) instead.
 
+## Requirements
 
-If you are __upgrading your existing cart__, be sure to read the [upgrade instructions](UPGRADE.md) instead
+- PHP 8.1 or newer
+- A database and credentials for a supported driver (`mysqli` is the default installation path)
+- PHP extensions: `curl`, `gd`, `openssl`, `zip`, `zlib`, and either `mbstring` or `iconv`
+- `file_uploads` enabled
+- `session.auto_start` disabled
+- If `open_basedir` is enabled, it must allow access to the OpenCart directory tree
 
+## What to deploy
 
-## Linux Install
+Deploy the contents of the `upload/` directory to your web root. In this repository, `upload/` is the application root; the repository root itself is not meant to be served by the web server.
 
-1. Upload all of the files and folders to your server from the "Upload" folder, place them in your web root. The web root is different on some servers, cPanel it should be ```public_html/``` and on Plesk it should be ```httpdocs/```.
-2. Make sure your web user has the permission to read, write and execute all directories under the web root.
-3. Rename config-dist.php to config.php and admin/config-dist.php to ```admin/config.php```
-4. For Linux/Unix make sure the following folders and files are writable.
+If you are deploying from a Git checkout, keep `upload/system/storage/vendor/` in place or run `composer install` from the repository root before uploading files.
 
-		chmod 0777 config.php
-		chmod 0777 admin/config.php
+## Manual browser install
 
-5. Make sure you have installed a MySQL Database which has a user assigned to it
-	* do not use your ```root``` username and ```root``` password
-6. Visit the store homepage e.g. http://www.example.com or http://www.example.com/store/
-7. You should be taken to the installer page. Follow the on screen instructions.
-8. After successful install, delete the ```/install/``` directory from ftp.
-9. If you have downloaded the compiled version with a folder called "vendor" - this should be uploaded above the webroot (so the same folder where the ```public_html``` or ```httpdocs``` is)
+1. Copy the contents of `upload/` to your document root.
+2. Create the two writable config placeholders:
+   - rename `config-dist.php` to `config.php`
+   - rename `admin/config-dist.php` to `admin/config.php`
+3. In this repository, both `config-dist.php` files are intentionally empty placeholders, so renaming them is enough.
+4. Make the following files writable during installation:
+   - `config.php`
+   - `admin/config.php`
+5. Make sure your web server user can write to the runtime directories that OpenCart uses:
+   - `system/storage/cache/`
+   - `system/storage/download/`
+   - `system/storage/logs/`
+   - `system/storage/session/`
+   - `system/storage/upload/`
+   - `image/`
+6. Create an empty database and a database user with permissions to that database.
+7. Open your store URL in the browser. If `config.php` already exists but is still blank, OpenCart will take you to `/install/`.
+8. Follow the on-screen installer steps and provide the database, store, and administrator details.
+9. After installation completes, remove or block access to `install/`.
+10. Remove write access from `config.php` and `admin/config.php` if your hosting model allows it.
 
-## Windows Install
+## CLI install
 
-1. Upload all the files and folders to your server from the "Upload" folder. This can be to anywhere of your choice. e.g. ```/wwwroot/store``` or ```/wwwroot```
-2. Rename ```config-dist.php``` to ```config.php``` and ```admin/config-dist.php``` to ```admin/config.php```
-3. For Windows make sure the following folders and files permissions allow Read and Write.
+The CLI installer is useful for local and scripted deployments. The source comments document it as currently tested on Linux.
 
-		config.php
-		admin/config.php
+From the repository root:
 
-4. Make sure you have installed a MySQL Database which has a user assigned to it
-	* do not use your ```root``` username and ```root``` password
-5. You should be taken to the installer page. Follow the on screen instructions.
-6. After successful install, delete the ```/install/``` directory.
+```bash
+php upload/install/cli_install.php install \
+  --username admin \
+  --password strong-password \
+  --email admin@example.com \
+  --http_server https://www.example.com/ \
+  --language en-gb \
+  --db_driver mysqli \
+  --db_hostname localhost \
+  --db_username opencart \
+  --db_password secret \
+  --db_database opencart \
+  --db_port 3306 \
+  --db_prefix oc_
+```
 
-7. Make sure the following extensions are enabled in php.ini:
+Notes:
 
-extension=curl;
-extension=gd;
-extension=zip;
+- If you are already inside the deployed `upload/` directory, use `php install/cli_install.php ...` instead.
+- `--http_server` must be a valid `http://` or `https://` URL ending with `/`.
+- `config.php` and `admin/config.php` must already exist and be writable before the CLI installer runs.
 
-## Local Install
+## Local Docker install
 
-There are many all-in-one web servers out there and most of them should work with OpenCart out of the box.
+From the repository root:
 
-Some examples...
+```bash
+docker compose up -d
+```
 
-* https://www.apachefriends.org/
-* http://www.ampps.com/
-* http://www.usbwebserver.net
-* http://www.wampserver.com/en/
+This stack builds the PHP/Apache container from `tools/Dockerfile`, provisions MySQL, and runs the CLI installer automatically on first boot.
 
-## Notes
+Useful defaults:
 
-Godaddy Issues
+- Storefront and admin: `http://localhost/`
+- Admin username: `admin`
+- Admin password: `admin`
+- Database name: `opencart`
+- MySQL root password: `opencart`
+- Adminer: `http://localhost:8080/`
 
-If your hosting on godaddy you might need to rename the ```php.ini``` to ```user.ini```
-
-It seems godaddy has started changing the industry standard names of files.
-
-----------------------------
+The compose bootstrap creates `upload/install.lock` after a successful automated install.
 
 ## Going live
-When your site is ready to go live open file ```system/config/default.php``` 
 
-**Find:**
+Before serving production traffic:
 
-`$_['error_display'] = true;`
+1. Change any default administrator credentials.
+2. Confirm that `install/` is removed or inaccessible.
+3. Set `$_['error_display'] = false;` in `upload/system/config/default.php`.
+4. Verify mail settings, HTTPS, scheduled tasks, and file permissions.
+5. Keep regular backups of the database and `image/` plus any custom storage path.
 
-**Replace with:**
+## Troubleshooting
 
-`$_['error_display'] = false;`
+- If the installer says `config.php` is missing, rename the `config-dist.php` placeholders or create empty `config.php` files manually.
+- If the installer fails environment checks, confirm the required PHP version and extensions are loaded in the same PHP runtime that serves the site.
+- If `open_basedir` is enabled, it must allow access to the OpenCart install path and any external `DIR_STORAGE` path you use.
+- If runtime dependencies are missing, run `composer install` from the repository root and redeploy `upload/system/storage/vendor/`.

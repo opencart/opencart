@@ -1,0 +1,133 @@
+<h1>Controllers</h1>
+
+<p>A controller is the entry point for a route. The router resolves a request like <code>?route=common/dashboard</code> to a controller class, instantiates it, and calls the requested method.</p>
+
+<ul>
+  <li><a href="#location">Where controllers live</a></li>
+  <li><a href="#namespace">Namespace and class name</a></li>
+  <li><a href="#method">Methods and the default action</a></li>
+  <li><a href="#registry">What is available on <code>$this</code></a></li>
+  <li><a href="#load-controller">Loading another controller</a></li>
+  <li><a href="#response">Returning output</a></li>
+  <li><a href="#example">Minimal example</a></li>
+</ul>
+
+<a name="location"/>
+
+<h2>Where controllers live</h2>
+
+<table>
+  <tr><th>Path</th><th>Used by</th></tr>
+  <tr><td><code>admin/controller/&lt;group&gt;/&lt;name&gt;.php</code></td><td>Core admin controllers.</td></tr>
+  <tr><td><code>catalog/controller/&lt;group&gt;/&lt;name&gt;.php</code></td><td>Core storefront controllers.</td></tr>
+  <tr><td><code>extension/&lt;code&gt;/admin/controller/&lt;group&gt;/&lt;name&gt;.php</code></td><td>Admin controllers shipped by an extension.</td></tr>
+  <tr><td><code>extension/&lt;code&gt;/catalog/controller/&lt;group&gt;/&lt;name&gt;.php</code></td><td>Catalog controllers shipped by an extension.</td></tr>
+</table>
+
+<a name="namespace"/>
+
+<h2>Namespace and class name</h2>
+
+<p>The autoloader maps <code>Opencart\Admin</code> to <code>admin/</code>, <code>Opencart\Catalog</code> to <code>catalog/</code> and <code>Opencart\Extension</code> to the extension storage. The route, namespace and file name must agree:</p>
+
+<table>
+  <tr><th>Route</th><th>File</th><th>Class</th></tr>
+  <tr><td><code>common/dashboard</code></td><td><code>admin/controller/common/dashboard.php</code></td><td><code>Opencart\Admin\Controller\Common\Dashboard</code></td></tr>
+  <tr><td><code>extension/hello/module/hello</code></td><td><code>extension/hello/admin/controller/module/hello.php</code></td><td><code>Opencart\Admin\Controller\Extension\Hello\Module\Hello</code></td></tr>
+</table>
+
+<p>Snake-case route segments become StudlyCase namespace segments (<code>my_module</code> &rarr; <code>MyModule</code>).</p>
+
+<a name="method"/>
+
+<h2>Methods and the default action</h2>
+
+<p>If the route has a trailing <code>.method</code>, that method is called; otherwise <code>index()</code> is called. So:</p>
+
+<ul>
+  <li><code>?route=catalog/product</code> &rarr; <code>Product::index()</code></li>
+  <li><code>?route=catalog/product.save</code> &rarr; <code>Product::save()</code></li>
+</ul>
+
+<p>Methods starting with <code>__</code> are blocked by the loader to keep magic methods unreachable from the URL.</p>
+
+<a name="registry"/>
+
+<h2>What is available on <code>$this</code></h2>
+
+<p>Controllers extend <code>\Opencart\System\Engine\Controller</code>, which forwards property access to the registry. The most common services:</p>
+
+<table>
+  <tr><th>Property</th><th>Class</th><th>Notes</th></tr>
+  <tr><td><code>$this->load</code></td><td>Loader</td><td>Loads other controllers, models, views, languages, libraries.</td></tr>
+  <tr><td><code>$this->config</code></td><td>Config</td><td>Read store settings and runtime config.</td></tr>
+  <tr><td><code>$this->db</code></td><td>DB</td><td>Database query interface.</td></tr>
+  <tr><td><code>$this->session</code></td><td>Session</td><td>Server-side session storage.</td></tr>
+  <tr><td><code>$this->request</code></td><td>Request</td><td><code>get</code>, <code>post</code>, <code>cookie</code>, <code>files</code>, <code>server</code>.</td></tr>
+  <tr><td><code>$this->response</code></td><td>Response</td><td>Headers, body, redirect.</td></tr>
+  <tr><td><code>$this->language</code></td><td>Language</td><td>Translation strings loaded by <code>$this->load->language(...)</code>.</td></tr>
+  <tr><td><code>$this->url</code></td><td>Url</td><td>Build links with <code>link($route, $args, $secure)</code>.</td></tr>
+  <tr><td><code>$this->document</code></td><td>Document</td><td>Page title, meta, links, scripts.</td></tr>
+  <tr><td><code>$this->cache</code></td><td>Cache</td><td>Application cache.</td></tr>
+  <tr><td><code>$this->user</code></td><td>User (admin only)</td><td>Currently authenticated admin user.</td></tr>
+  <tr><td><code>$this->customer</code></td><td>Customer (catalog only)</td><td>Currently authenticated storefront customer.</td></tr>
+</table>
+
+<a name="load-controller"/>
+
+<h2>Loading another controller</h2>
+
+<p>To compose a page from sub-controllers, use the loader:</p>
+
+```php
+$data['header']      = $this->load->controller('common/header');
+$data['column_left'] = $this->load->controller('common/column_left');
+$data['footer']      = $this->load->controller('common/footer');
+```
+
+<p>The return value is whatever the called method returned (typically the rendered HTML of a partial view).</p>
+
+<a name="response"/>
+
+<h2>Returning output</h2>
+
+<p>A controller does not return its HTML directly. It writes to the response object:</p>
+
+```php
+$this->response->setOutput($this->load->view('common/dashboard', $data));
+```
+
+<p>For JSON endpoints (e.g. <code>.save</code> handlers):</p>
+
+```php
+$this->response->addHeader('Content-Type: application/json');
+$this->response->setOutput(json_encode($json));
+```
+
+<p>For redirects:</p>
+
+```php
+$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']));
+```
+
+<a name="example"/>
+
+<h2>Minimal example</h2>
+
+```php
+<?php
+namespace Opencart\Catalog\Controller\Demo;
+
+class Hello extends \Opencart\System\Engine\Controller {
+    public function index(): void {
+        $this->load->language('demo/hello');
+
+        $data['heading_title'] = $this->language->get('heading_title');
+
+        $data['header'] = $this->load->controller('common/header');
+        $data['footer'] = $this->load->controller('common/footer');
+
+        $this->response->setOutput($this->load->view('demo/hello', $data));
+    }
+}
+```

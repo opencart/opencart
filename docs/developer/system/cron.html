@@ -1,0 +1,174 @@
+<h1>Cron jobs</h1>
+
+<p>OpenCart treats scheduled jobs as plain controllers. Each entry in the <code>oc_cron</code> table points at a controller route; the dispatcher in <code>catalog/controller/cron/cron.php</code> walks that table and invokes any job whose cycle has elapsed.</p>
+
+<ul>
+  <li><a href="#entry-point">The CLI entry point: <code>cron.php</code></a></li>
+  <li><a href="#guard">SAPI / secret guard</a></li>
+  <li><a href="#table">The <code>oc_cron</code> table</a></li>
+  <li><a href="#dispatcher">Dispatcher: <code>cron/cron</code></a></li>
+  <li><a href="#built-in">Built-in jobs</a></li>
+  <li><a href="#admin-ui">Admin UI: <code>marketplace/cron</code></a></li>
+  <li><a href="#writing-job">Writing your own cron job</a></li>
+  <li><a href="#scheduling">How to schedule it on the host</a></li>
+</ul>
+
+<a name="entry-point"/>
+
+<h2>The CLI entry point</h2>
+
+<p><code>upload/cron.php</code> is the bootstrap script. It is conceptually similar to <code>index.php</code> but with three differences:</p>
+
+<ul>
+  <li>It registers the <strong>catalog</strong> namespace (cron jobs run as catalog controllers).</li>
+  <li>It does <em>not</em> run the <code>action_pre_action</code> chain. There is no session, no SEO URL parsing, no maintenance check.</li>
+  <li>It executes a single fixed action: <code>cron/cron</code>.</li>
+</ul>
+
+<a name="guard"/>
+
+<h2>SAPI / secret guard</h2>
+
+<p>The first lines of <code>cron.php</code> reject HTTP traffic unless the caller proves it knows the <code>CRON_SECRET</code> env var:</p>
+
+```php
+if (PHP_SAPI !== 'cli') {
+    $expected = (string)getenv('CRON_SECRET');
+    $provided = isset($_GET['secret']) ? (string)$_GET['secret'] : '';
+
+    if ($expected === '' || !hash_equals($expected, $provided)) {
+        http_response_code(403);
+        exit('Forbidden');
+    }
+}
+```
+
+<p>This complements the Apache <code>&lt;Files cron.php&gt;</code> deny rule and matters on hosts that ignore <code>.htaccess</code> (nginx, IIS). If you want to allow web-triggered crons, set <code>CRON_SECRET</code> in your environment and call <code>https://example.com/cron.php?secret=&lt;value&gt;</code>; otherwise leave it unset and reach the script via CLI only.</p>
+
+<a name="table"/>
+
+<h2>The <code>oc_cron</code> table</h2>
+
+<p>Schema (from <code>system/helper/db_schema.php</code>):</p>
+
+<table>
+  <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+  <tr><td><code>cron_id</code></td><td>int auto-increment</td><td>Primary key.</td></tr>
+  <tr><td><code>code</code></td><td>varchar(128)</td><td>Internal identifier (unique per job).</td></tr>
+  <tr><td><code>description</code></td><td>text</td><td>Free-form, shown in admin.</td></tr>
+  <tr><td><code>cycle</code></td><td>varchar(12)</td><td>One of <code>hour</code>, <code>day</code>, <code>week</code>, <code>month</code>, <code>year</code>. Read by <code>strtotime('+1 &lt;cycle&gt;')</code>.</td></tr>
+  <tr><td><code>action</code></td><td>text</td><td>Controller route the dispatcher will load, e.g. <code>cron/currency</code>.</td></tr>
+  <tr><td><code>status</code></td><td>tinyint(1)</td><td>1 = enabled.</td></tr>
+  <tr><td><code>date_added</code></td><td>datetime</td><td>When the row was created.</td></tr>
+  <tr><td><code>date_modified</code></td><td>datetime</td><td>Last successful run -- used to compute the next due time.</td></tr>
+</table>
+
+<a name="dispatcher"/>
+
+<h2>Dispatcher</h2>
+
+<p><code>catalog/controller/cron/cron.php</code>:</p>
+
+```php
+public function index(): void {
+    $time = time();
+
+    $this->load->model('setting/cron');
+
+    $results = $this->model_setting_cron->getCrons();
+
+    $this->load->controller('cron/subscription', 3, 'subscription', 1, '', '');
+
+    foreach ($results as $result) {
+        if ($result['status'] && (strtotime('+1 ' . $result['cycle'], strtotime($result['date_modified'])) < ($time + 10))) {
+            $this->load->controller($result['action'], $result['cron_id'], $result['code'], $result['cycle'], $result['date_added'], $result['date_modified']);
+
+            $this->model_setting_cron->editCron($result['cron_id']);
+        }
+    }
+}
+```
+
+<p>The 10-second slack window absorbs scheduling jitter so a job set to run "every hour" still fires when the OS scheduler invokes <code>cron.php</code> a few seconds early. <code>editCron()</code> updates <code>date_modified</code> to the current time after the controller returns so the next due time is calculated from the most recent successful run.</p>
+
+<p>The arguments passed to <code>$this->load->controller()</code> become the cron handler's <code>index($cron_id, $code, $cycle, $date_added, $date_modified)</code> parameters.</p>
+
+<a name="built-in"/>
+
+<h2>Built-in jobs</h2>
+
+<table>
+  <tr><th>Route</th><th>Cycle</th><th>What it does</th></tr>
+  <tr><td><code>cron/currency</code></td><td>day</td><td>Refreshes the currency exchange-rate table from the configured provider.</td></tr>
+  <tr><td><code>cron/gdpr</code></td><td>day</td><td>Anonymises GDPR-flagged customer/order rows after their retention window.</td></tr>
+  <tr><td><code>cron/subscription</code></td><td>day</td><td>Walks <code>oc_subscription</code> and creates renewal orders for subscriptions whose next billing date has been reached. Always called by the dispatcher; not driven by an <code>oc_cron</code> row.</td></tr>
+</table>
+
+<a name="admin-ui"/>
+
+<h2>Admin UI</h2>
+
+<p><code>admin/controller/marketplace/cron.php</code> exposes a list view at <code>?route=marketplace/cron</code> with these actions:</p>
+
+<ul>
+  <li><strong>Run now</strong> -- invokes the route directly through <code>$this->load->controller(...)</code> from the admin SAPI.</li>
+  <li><strong>Enable / disable</strong> -- toggles the <code>status</code> column.</li>
+  <li><strong>Edit</strong> -- changes the description (the route, code and cycle are owned by the extension that installed the row).</li>
+  <li><strong>Delete</strong> -- removes the row. This is what an extension's uninstall method should do via <code>$this->model_setting_cron->deleteCronByCode(...)</code>.</li>
+</ul>
+
+<a name="writing-job"/>
+
+<h2>Writing your own cron job</h2>
+
+<p>Place a controller in your extension under <code>extension/&lt;your_module&gt;/catalog/controller/cron/&lt;name&gt;.php</code>:</p>
+
+```php
+namespace Opencart\Catalog\Controller\Extension\YourModule\Cron;
+
+class Cleanup extends \Opencart\System\Engine\Controller {
+    public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
+        $this->load->model('setting/setting');
+        // ... do work, e.g. delete stale tokens, recompute caches ...
+    }
+}
+```
+
+<p>Register the row in the install method of your extension:</p>
+
+```php
+$this->load->model('setting/cron');
+
+$this->model_setting_cron->addCron(
+    'your_module_cleanup',
+    'Cleans up stale tokens',
+    'day',
+    'extension/your_module/cron/cleanup'
+);
+```
+
+<p>And remove it on uninstall:</p>
+
+```php
+$this->model_setting_cron->deleteCronByCode('your_module_cleanup');
+```
+
+<a name="scheduling"/>
+
+<h2>Scheduling on the host</h2>
+
+<p>Run <code>cron.php</code> as often as your shortest cycle requires. Hourly is enough if you do not have any "10 minutes" jobs (the framework does not support sub-hour cycles out of the box).</p>
+
+<p><strong>CLI (preferred):</strong></p>
+
+```
+0 * * * * /usr/bin/php /path/to/opencart/upload/cron.php > /dev/null 2>&1
+```
+
+<p><strong>HTTP fallback</strong> (only if you cannot use CLI):</p>
+
+```
+0 * * * * curl -s 'https://example.com/cron.php?secret=YOUR_CRON_SECRET' > /dev/null
+```
+
+<p>Set <code>CRON_SECRET</code> in your web server's environment so the SAPI guard accepts the request. Treat the value like a password -- anyone with it can trigger every enabled cron.</p>

@@ -37,7 +37,7 @@ class MySQLi {
 
 		if ($ssl_key) {
 			$temp_ssl_key_file = tempnam(sys_get_temp_dir(), 'mysqli_key_');
-			chmod($temp_ssl_key_file, 0600);
+			chmod($temp_ssl_key_file, 0o600);
 
 			$handle = fopen($temp_ssl_key_file, 'w');
 
@@ -52,7 +52,7 @@ class MySQLi {
 
 		if ($ssl_cert) {
 			$temp_ssl_cert_file = tempnam(sys_get_temp_dir(), 'mysqli_cert_');
-			chmod($temp_ssl_cert_file, 0600);
+			chmod($temp_ssl_cert_file, 0o600);
 
 			$handle = fopen($temp_ssl_cert_file, 'w');
 
@@ -67,7 +67,7 @@ class MySQLi {
 
 		if ($ssl_ca) {
 			$temp_ssl_ca_file = tempnam(sys_get_temp_dir(), 'mysqli_ca_');
-			chmod($temp_ssl_ca_file, 0600);
+			chmod($temp_ssl_ca_file, 0o600);
 
 			$handle = fopen($temp_ssl_ca_file, 'w');
 

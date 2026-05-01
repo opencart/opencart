@@ -388,9 +388,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			mkdir($directory . $folder, 0755);
+			mkdir($directory . $folder, 0o755);
 
-			chmod($directory . $folder, 0755);
+			chmod($directory . $folder, 0o755);
 
 			@touch($directory . $folder . '/' . 'index.html');
 

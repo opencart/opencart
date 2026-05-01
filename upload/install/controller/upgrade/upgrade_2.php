@@ -98,7 +98,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 									$path = $path . '/' . $directory;
 								}
 
-								if (!is_dir($base . $path) && !@mkdir($base . $path, 0755)) {
+								if (!is_dir($base . $path) && !@mkdir($base . $path, 0o755)) {
 									$json['error'] = sprintf($this->language->get('error_directory'), $path);
 								}
 							}

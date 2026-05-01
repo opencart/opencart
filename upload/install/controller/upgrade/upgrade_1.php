@@ -364,7 +364,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		foreach ($directories as $directory) {
 			if (!is_dir($storage . $directory)) {
-				mkdir($storage . $directory, 0755);
+				mkdir($storage . $directory, 0o755);
 
 				$handle = fopen($storage . $directory . '/index.html', 'w');
 
@@ -404,7 +404,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 				$path = substr($file, strlen($source));
 
 				if (is_dir($source . $path) && !is_dir($destination . $path)) {
-					mkdir($destination . $path, 0755);
+					mkdir($destination . $path, 0o755);
 				}
 
 				if (is_file($source . $path) && !is_file($destination . $path)) {

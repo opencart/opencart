@@ -10,7 +10,9 @@ function oc_token(int $length = 32): string {
 	return substr(bin2hex(random_bytes($length)), 0, $length);
 }
 
-/** @return string */
+/**
+ * @return string
+ */
 function oc_get_ip(): string {
 	$headers = [
 		'HTTP_CF_CONNECTING_IP', // CloudFlare
@@ -105,7 +107,7 @@ function oc_strtolower(string $string): string {
  * @return array<int, string>
  */
 function oc_glob(string $pattern, int $flags = 0): array {
-	if (strpos($pattern, '{') === false) {
+	if (!str_contains($pattern, '{')) {
 		$result = glob($pattern, $flags);
 
 		return is_array($result) ? $result : [];

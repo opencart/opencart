@@ -69,7 +69,7 @@ class Apcu {
 			$cache_list = $cache_info['cache_list'];
 
 			foreach ($cache_list as $entry) {
-				if (strpos($entry['info'], CACHE_PREFIX . $key) === 0) {
+				if (str_starts_with($entry['info'], CACHE_PREFIX . $key)) {
 					apcu_delete($entry['info']);
 				}
 			}

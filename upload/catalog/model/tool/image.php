@@ -51,7 +51,7 @@ class Image extends \Opencart\System\Engine\Model {
 				}
 
 				if (!is_dir(DIR_IMAGE . $path)) {
-					@mkdir(DIR_IMAGE . $path, 0777);
+					@mkdir(DIR_IMAGE . $path, 0o777);
 				}
 			}
 

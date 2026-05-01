@@ -353,7 +353,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 
 										if ($ignoreif) {
 											if ($ignoreif->getAttribute('regex') != 'true') {
-												if (strpos($modification[$key], $ignoreif->textContent) !== false) {
+												if (str_contains($modification[$key], $ignoreif->textContent)) {
 													continue;
 												}
 											} else {
@@ -542,7 +542,7 @@ class Modification extends \Opencart\System\Engine\Controller {
 						$path = $path . '/' . $directory;
 
 						if (!is_dir(DIR_EXTENSION . 'ocmod/' . $path)) {
-							@mkdir(DIR_EXTENSION . 'ocmod/' . $path, 0755);
+							@mkdir(DIR_EXTENSION . 'ocmod/' . $path, 0o755);
 						}
 					}
 

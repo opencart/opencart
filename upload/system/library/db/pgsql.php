@@ -7,9 +7,13 @@ namespace Opencart\System\Library\DB;
  */
 class PgSQL {
 	/**
-	 * @var \PgSql\Connection|false|null
+	 * @var \PgSql\Connection|null
 	 */
-	private $connection = null;
+	private ?\PgSql\Connection $connection = null;
+	/**
+	 * @var int
+	 */
+	private int $affected = 0;
 
 	/**
 	 * Constructor
@@ -53,6 +57,8 @@ class PgSQL {
 			throw new \Exception('Error: ' . pg_last_error($this->connection) . '<br/>' . $sql);
 		}
 
+		$this->affected = (int)pg_affected_rows($resource);
+
 		$data = [];
 
 		while ($result = pg_fetch_assoc($resource)) {
@@ -86,7 +92,7 @@ class PgSQL {
 	 * @return int
 	 */
 	public function countAffected(): int {
-		return pg_affected_rows($this->connection);
+		return $this->affected;
 	}
 
 	/**

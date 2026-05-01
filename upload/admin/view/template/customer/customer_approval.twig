@@ -32,7 +32,7 @@
               </div>
               <div class="mb-3">
                 <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" id="input-customer-group" class="form-select">
-                  <option value=""></option>
+                  <option value="">{{ text_select }}</option>
                   {% for customer_group in customer_groups %}
                     <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
                   {% endfor %}
@@ -40,7 +40,7 @@
               </div>
               <div class="mb-3">
                 <label for="input-type" class="form-label">{{ entry_type }}</label> <select name="filter_type" id="input-type" class="form-select">
-                  <option value=""></option>
+                  <option value="">{{ text_select }}</option>
                   <option value="customer">{{ text_customer }}</option>
                   <option value="affiliate">{{ text_affiliate }}</option>
                 </select>

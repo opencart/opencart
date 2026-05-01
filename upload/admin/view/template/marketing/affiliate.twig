@@ -34,7 +34,7 @@
               </div>
               <div class="mb-3">
                 <label for="input-payment-method" class="form-label">{{ entry_payment_method }}</label> <select name="filter_payment_method" id="input-payment-method" class="form-select">
-                  <option value=""></option>
+                  <option value="">{{ text_select }}</option>
                   {% for payment_method in payment_methods %}
                     <option value="{{ payment_method.value }}"{% if filter_payment_method == payment_method.value %} selected{% endif %}>{{ payment_method.text }}</option>
                   {% endfor %}
@@ -53,7 +53,7 @@
               </div>
               <div class="mb-3">
                 <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
-                  <option value=""></option>
+                  <option value="">{{ text_select }}</option>
                   <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
                   <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>

@@ -127,7 +127,7 @@ $('#input-route').on('change', function() {
         success: function(json) {
             translation = [];
 
-            html = '<option value=""></option>';
+            html = '<option value="">{{ text_select }}</option>';
 
             if (json) {
                 for (i = 0; i < json.length; i++) {

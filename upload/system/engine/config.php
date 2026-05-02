@@ -47,8 +47,12 @@ class Config {
 	 *
 	 * @return mixed
 	 */
-	public function get(string $key) {
-		return $this->data[$key] ?? '';
+	public function get(string $key, $default = ''): mixed {
+		if ($this->has($key)) {
+			return $this->data[$key];
+		}
+
+		return $default;
 	}
 
 	/**

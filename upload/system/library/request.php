@@ -45,50 +45,31 @@ class Request {
 		$this->server = $this->clean($_SERVER);
 	}
 
-	public function get(string $key, string $type = ''): mixed {
+	public function get(string $key, $default = false): mixed {
 		if (isset($this->get[$key])) {
-			$value = $this->get[$key];
-		} else {
-			$value = null;
+			return $this->get[$key];
 		}
 
-		switch ($type) {
-			case 'string':
-				return (string)$value;
-			case 'int':
-				return (int)$value;
-			case 'float':
-				return (float)$value;
-			case 'bool':
-				return (bool)$value;
-			case 'array':
-				return (array)$value;
-			default:
-				return $value;
-		}
+		return $default;
 	}
 
-	public function post(string $key, string $type = ''): mixed {
+	public function post(string $key, $default = false): mixed {
 		if (isset($this->post[$key])) {
-			$value = $this->post[$key];
-		} else {
-			$value = null;
+			return $this->post[$key];
 		}
 
-		switch ($type) {
-			case 'string':
-				return (string)$value;
-			case 'int':
-				return (int)$value;
-			case 'float':
-				return (float)$value;
-			case 'bool':
-				return (bool)$value;
-			case 'array':
-				return (array)$value;
-			default:
-				return $value;
+		return $default;
+	}
+
+	public function getOnly(array $keys): array {
+		$result = [];
+		foreach ($keys as $key) {
+			if (isset($this->get[$key])) {
+				$result[$key] = $this->get[$key];
+			}
 		}
+
+		return $result;
 	}
 
 	/**

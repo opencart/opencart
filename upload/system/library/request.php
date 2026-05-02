@@ -45,7 +45,15 @@ class Request {
 		$this->server = $this->clean($_SERVER);
 	}
 
-	public function get(string $key, $default = false): mixed {
+	/**
+	 * Get
+	 *
+	 * @param string $key
+	 * @param mixed  $default
+	 *
+	 * @return mixed
+	 */
+	public function get(string $key, mixed $default = false): mixed {
 		if (isset($this->get[$key])) {
 			return $this->get[$key];
 		}
@@ -53,7 +61,15 @@ class Request {
 		return $default;
 	}
 
-	public function post(string $key, $default = false): mixed {
+	/**
+	 * Post
+	 *
+	 * @param string $key
+	 * @param mixed  $default
+	 *
+	 * @return mixed
+	 */
+	public function post(string $key, mixed $default = false): mixed {
 		if (isset($this->post[$key])) {
 			return $this->post[$key];
 		}
@@ -61,6 +77,13 @@ class Request {
 		return $default;
 	}
 
+	/**
+	 * getOnly
+	 *
+	 * @param string[] $keys
+	 *
+	 * @return array<string, string>
+	 */
 	public function getOnly(array $keys): array {
 		$result = [];
 		foreach ($keys as $key) {

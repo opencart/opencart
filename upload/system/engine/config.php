@@ -44,10 +44,11 @@ class Config {
 	 * Get
 	 *
 	 * @param string $key
+	 * @param mixed  $default
 	 *
 	 * @return mixed
 	 */
-	public function get(string $key, $default = ''): mixed {
+	public function get(string $key, mixed $default = ''): mixed {
 		if ($this->has($key)) {
 			return $this->data[$key];
 		}

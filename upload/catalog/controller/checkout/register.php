@@ -100,6 +100,10 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
+		// Postcode
+		$payment_country = $this->model_localisation_country->getCountry($data['payment_country_id']);
+		$data['payment_postcode_required'] = $payment_country['postcode_required'] ?? false;
+
 		// Zones
 		$this->load->model('localisation/zone');
 
@@ -150,8 +154,11 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/zone');
 
 		if ($data['payment_country_id'] == $data['shipping_country_id']) {
+			$data['shipping_postcode_required'] = $data['payment_postcode_required'];
 			$data['shipping_zones'] = $data['payment_zones'];
 		} else {
+			$shipping_country = $this->model_localisation_country->getCountry($data['shipping_country_id']);
+			$data['shipping_postcode_required'] = $shipping_country['postcode_required'] ?? false;
 			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 

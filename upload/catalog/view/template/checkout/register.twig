@@ -167,7 +167,7 @@
           <input type="text" name="payment_city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
           <div id="error-payment-city" class="invalid-feedback"></div>
         </div>
-        <div class="col mb-3 required">
+        <div class="col mb-3 {% if payment_postcode_required %} required{% endif %}">
           <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label>
           <input type="text" name="payment_postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
           <div id="error-payment-postcode" class="invalid-feedback"></div>
@@ -326,7 +326,7 @@
         <input type="text" name="shipping_city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
         <div id="error-shipping-city" class="invalid-feedback"></div>
       </div>
-      <div class="col mb-3 required">
+      <div class="col mb-3 {% if shipping_postcode_required %} required{% endif %}">
         <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
         <input type="text" name="shipping_postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
         <div id="error-shipping-postcode" class="invalid-feedback"></div>

@@ -1025,7 +1025,13 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_product->getProducts($filter_data);
 	 */
 	public function getProducts(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
+		$sql = "SELECT `p`.*, `pd`.*";
+
+		if (!empty($data['filter_model'])) {
+			$sql .= ", `pc`.`product_code_id`, `pc`.`code`, `pc`.`value`";
+		}
+
+		$sql .= " FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
 
 		if (!empty($data['filter_model'])) {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";

@@ -285,7 +285,7 @@
         {% if shipping_required %}
           <div class="col mb-3">
             <div class="form-check">
-              <input type="checkbox" name="address_match" value="1" id="input-address-match" class="form-check-input" checked/> <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
+              <input type="checkbox" name="address_match" value="1" id="input-address-match" class="form-check-input" {% if address_match %} checked{% endif %}/> <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
             </div>
           </div>
         {% endif %}
@@ -293,7 +293,7 @@
       </div>
     </fieldset>
   {% endif %}
-  <fieldset id="shipping-address" style="display: {% if not config_checkout_payment_address %}block{% else %}none{% endif %};">
+  <fieldset id="shipping-address" style="display: {% if not config_checkout_payment_address or ( config_checkout_payment_address and not address_match ) %}block{% else %}none{% endif %};">
     <legend>{{ text_shipping_address }}</legend>
     <div class="row row-cols-1 row-cols-md-2">
       {% if config_checkout_payment_address %}

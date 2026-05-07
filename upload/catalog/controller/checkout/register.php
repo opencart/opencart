@@ -61,6 +61,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['lastname'] = $this->session->data['customer']['lastname'];
 			$data['email'] = $this->session->data['customer']['email'];
 			$data['telephone'] = $this->session->data['customer']['telephone'];
+			$data['address_match'] = (int)$this->session->data['customer']['address_match'];
 			$data['account_custom_field'] = $this->session->data['customer']['custom_field'];
 		} else {
 			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
@@ -68,6 +69,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['lastname'] = '';
 			$data['email'] = '';
 			$data['telephone'] = '';
+			$data['address_match'] = 1;
 			$data['account_custom_field'] = [];
 		}
 
@@ -479,6 +481,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				'lastname'          => $post_info['lastname'],
 				'email'             => $post_info['email'],
 				'telephone'         => $post_info['telephone'],
+				'address_match'     => $post_info['address_match'],
 				'custom_field'      => $post_info['custom_field']['account'] ?? [],
 				'password'          => $post_info['password'],
 				'newsletter'        => $post_info['newsletter']

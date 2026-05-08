@@ -5328,7 +5328,13 @@ function oc_db_schema() {
 				'key'  => [
 					'code'
 				]
-			]
+			],
+			[
+				'name' => 'product_id',
+				'key'  => [
+					'product_id'
+				]
+			]		
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',

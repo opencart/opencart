@@ -61,6 +61,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['lastname'] = $this->session->data['customer']['lastname'];
 			$data['email'] = $this->session->data['customer']['email'];
 			$data['telephone'] = $this->session->data['customer']['telephone'];
+			$data['address_match'] = (int)$this->session->data['customer']['address_match'];
 			$data['account_custom_field'] = $this->session->data['customer']['custom_field'];
 		} else {
 			$data['customer_group_id'] = (int)$this->config->get('config_customer_group_id');
@@ -68,6 +69,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['lastname'] = '';
 			$data['email'] = '';
 			$data['telephone'] = '';
+			$data['address_match'] = 1;
 			$data['account_custom_field'] = [];
 		}
 
@@ -99,6 +101,10 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		// Postcode
+		$payment_country = $this->model_localisation_country->getCountry($data['payment_country_id']);
+		$data['payment_postcode_required'] = $payment_country['postcode_required'] ?? false;
 
 		// Zones
 		$this->load->model('localisation/zone');
@@ -150,8 +156,11 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/zone');
 
 		if ($data['payment_country_id'] == $data['shipping_country_id']) {
+			$data['shipping_postcode_required'] = $data['payment_postcode_required'];
 			$data['shipping_zones'] = $data['payment_zones'];
 		} else {
+			$shipping_country = $this->model_localisation_country->getCountry($data['shipping_country_id']);
+			$data['shipping_postcode_required'] = $shipping_country['postcode_required'] ?? false;
 			$data['shipping_zones'] = $this->model_localisation_zone->getZonesByCountryId($data['shipping_country_id']);
 		}
 
@@ -204,6 +213,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			'lastname'              => '',
 			'email'                 => '',
 			'telephone'             => '',
+			'custom_field'          => [],
 			'payment_company'       => '',
 			'payment_address_1'     => '',
 			'payment_address_2'     => '',
@@ -224,7 +234,8 @@ class Register extends \Opencart\System\Engine\Controller {
 			'shipping_zone_id'      => 0,
 			'shipping_custom_field' => [],
 			'password'              => '',
-			'agree'                 => 0
+			'agree'                 => 0,
+			'newsletter'            => 0
 		];
 
 		$post_info = $this->request->post + $required;
@@ -470,18 +481,23 @@ class Register extends \Opencart\System\Engine\Controller {
 				'lastname'          => $post_info['lastname'],
 				'email'             => $post_info['email'],
 				'telephone'         => $post_info['telephone'],
-				'custom_field'      => $post_info['custom_field'] ?? []
+				'address_match'     => $post_info['address_match'],
+				'custom_field'      => $post_info['custom_field']['account'] ?? [],
+				'password'          => $post_info['password'],
+				'newsletter'        => $post_info['newsletter']
 			];
 
 			// Register
 			if ($post_info['account']) {
-				$customer_data['customer_id'] = $this->model_account_customer->addCustomer($post_info);
+				$customer_data['customer_id'] = $this->model_account_customer->addCustomer($customer_data);
 			}
 
 			// Logged in, so edit customer details
 			if ($this->customer->isLogged()) {
-				$this->model_account_customer->editCustomer($this->customer->getId(), $post_info);
+				$this->model_account_customer->editCustomer($this->customer->getId(), $customer_data);
 			}
+
+			unset($customer_data['password']);
 
 			// Check if current customer group requires approval
 			if (!$customer_group_info['approval']) {
@@ -551,7 +567,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					'iso_code_2'     => $iso_code_2,
 					'iso_code_3'     => $iso_code_3,
 					'address_format' => $address_format,
-					'custom_field'   => $post_info['payment_custom_field'] ?? []
+					'custom_field'   => $post_info['payment_custom_field']['address'] ?? []
 				];
 
 				// Add
@@ -642,7 +658,7 @@ class Register extends \Opencart\System\Engine\Controller {
 						'iso_code_2'     => $iso_code_2,
 						'iso_code_3'     => $iso_code_3,
 						'address_format' => $address_format,
-						'custom_field'   => $post_info['shipping_custom_field'] ?? []
+						'custom_field'   => $post_info['shipping_custom_field']['address'] ?? []
 					];
 
 					// Add Address to account if account is being created.

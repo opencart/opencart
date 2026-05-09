@@ -292,7 +292,7 @@ var chain = new Chain();
             });
 
             // Click
-            $dropdown.on('click', 'a', function(e) {
+            $dropdown.on('mousedown', 'a', function(e) {
                 e.preventDefault();
 
                 var value = $(this).attr('href');

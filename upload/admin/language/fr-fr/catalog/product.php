@@ -75,6 +75,7 @@ $_['entry_product_code']         = 'Codes de Produits';
 $_['entry_location']             = 'Localisation';
 $_['entry_shipping']             = 'Nécessite une Expédition';
 $_['entry_manufacturer']         = 'Fabricant';
+$_['entry_date_added']           = 'Date d\'ajout';
 $_['entry_date_available']       = 'Date Disponible';
 $_['entry_quantity']             = 'Quantité';
 $_['entry_minimum']              = 'Quantité Minimale';

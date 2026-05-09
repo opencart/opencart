@@ -75,6 +75,7 @@ $_['entry_product_code']         = 'Product Codes';
 $_['entry_location']             = 'Location';
 $_['entry_shipping']             = 'Requires Shipping';
 $_['entry_manufacturer']         = 'Manufacturer';
+$_['entry_date_added']           = 'Date Added';
 $_['entry_date_available']       = 'Date Available';
 $_['entry_quantity']             = 'Quantity';
 $_['entry_minimum']              = 'Minimum Quantity';

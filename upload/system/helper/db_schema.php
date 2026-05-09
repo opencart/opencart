@@ -5334,7 +5334,7 @@ function oc_db_schema() {
 				'key'  => [
 					'product_id'
 				]
-			]		
+			]
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',

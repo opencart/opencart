@@ -282,7 +282,9 @@ var chain = new Chain();
             // Focus out
             $(element).on('focusout', function(e) {
                 if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
-                    $dropdown.removeClass('show');
+                    this.timer = setTimeout(function(object) {
+                        object.removeClass('show');
+                    }, 150, $dropdown);
                 }
             });
 
@@ -309,6 +311,7 @@ var chain = new Chain();
                 clearTimeout(this.timer);
 
                 $('#autocomplete-loading').remove();
+                $dropdown.find('li').remove();
 
                 $dropdown.prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
                 $dropdown.addClass('show');
@@ -352,9 +355,11 @@ var chain = new Chain();
                             html += '<li><a href="' + category[name][j]['value'] + '" class="dropdown-item">' + category[name][j]['label'] + '</a></li>';
                         }
                     }
-                }
 
-                $dropdown.html(html);
+                    $dropdown.html(html);
+                } else {
+                    $dropdown.removeClass('show');
+                }
             }
         });
     }

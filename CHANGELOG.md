@@ -86,6 +86,11 @@
 * Fixed: Fix dashboard activities sort in https://github.com/opencart/opencart/pull/15422
 * Changed: Use ENT_COMPAT in query clean in https://github.com/opencart/opencart/pull/15423
 * Changed: Removing unused SSL context options in https://github.com/opencart/opencart/pull/15424
+* Fixed: Fix multiple issues in checkout's register component in https://github.com/opencart/opencart/pull/15428
+* Fixed: "Argument #1 ($product_id) must be of type int, null …" in https://github.com/opencart/opencart/pull/15429
+* Fixed: Fix autocomplete in Safari in https://github.com/opencart/opencart/pull/15431
+* Fixed: db_schema PHP CS fixer in https://github.com/opencart/opencart/pull/15432
+* Fixed: Missing language texts in https://github.com/opencart/opencart/pull/15433
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

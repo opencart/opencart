@@ -5,41 +5,41 @@
         <h5>{{ text_information }}</h5>
         <ul class="list-unstyled">
           {% if articles %}
-            <li><a href="cms/topic" data-on="click:onClick" data-target="content">{{ text_blog }}</a></li>
+            <li><a href="cms/topic" data-on="click:onClick">{{ text_blog }}</a></li>
           {% endif %}
           {% for information in informations %}
-            <li><a href="information/information-{{ information.information_id }}" data-target="content">{{ information.title }}</a></li>
+            <li><a href="information/information-{{ information.information_id }}" data-on="click:onClick">{{ information.title }}</a></li>
           {% endfor %}
         </ul>
       </div>
       <div class="col-sm-3">
         <h5>{{ text_service }}</h5>
         <ul class="list-unstyled">
-          <li><a href="information/contact" data-bind="contact" data-target="content">{{ text_contact }}</a></li>
-          <li><a href="account/return_form" data-target="content">{{ text_return }}</a></li>
+          <li><a href="information/contact" data-on="click:onClick">{{ text_contact }}</a></li>
+          <li><a href="account/return_form" data-on="click:onClick">{{ text_return }}</a></li>
           {% if gdpr %}
-            <li><a href="information/gdpr" data-target="content">{{ text_gdpr }}</a></li>
+            <li><a href="information/gdpr" data-on="click:onClick">{{ text_gdpr }}</a></li>
           {% endif %}
-          <li><a href="information/sitemap" data-target="content">{{ text_sitemap }}</a></li>
+          <li><a href="information/sitemap" data-on="click:onClick">{{ text_sitemap }}</a></li>
         </ul>
       </div>
       <div class="col-sm-3">
         <h5>{{ text_extra }}</h5>
         <ul class="list-unstyled">
-          <li><a href="catalog/manufacturer" data-target="content">{{ text_manufacturer }}</a></li>
+          <li><a href="catalog/manufacturer" data-on="click:onClick">{{ text_manufacturer }}</a></li>
           {% if affiliate %}
-            <li><a href="account/affiliate" data-target="content">{{ text_affiliate }}</a></li>
+            <li><a href="account/affiliate" data-on="click:onClick">{{ text_affiliate }}</a></li>
           {% endif %}
-          <li><a href="catalog/special" data-target="content">{{ text_special }}</a></li>
+          <li><a href="catalog/special" data-on="click:onClick">{{ text_special }}</a></li>
         </ul>
       </div>
       <div class="col-sm-3">
         <h5>{{ text_account }}</h5>
         <ul class="list-unstyled">
-          <li><a href="account/account" data-target="content">{{ text_account }}</a></li>
-          <li><a href="account/order" data-target="content">{{ text_order }}</a></li>
-          <li><a href="account/wishlist" data-target="content">{{ text_wishlist }}</a></li>
-          <li><a href="account/newsletter" data-target="content">{{ text_newsletter }}</a></li>
+          <li><a href="account/account" data-on="click:onClick">{{ text_account }}</a></li>
+          <li><a href="account/order" data-on="click:onClick">{{ text_order }}</a></li>
+          <li><a href="account/wishlist" data-on="click:onClick">{{ text_wishlist }}</a></li>
+          <li><a href="account/newsletter" data-on="click:onClick">{{ text_newsletter }}</a></li>
         </ul>
       </div>
     </div>

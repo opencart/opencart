@@ -1264,8 +1264,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store->request->get['route'] = 'api/order';
 
-			// 4. Add the request POST var
+			// 4. Add the request POST var, with added preserved order_status_id for confirm
 			$store->request->post = $this->request->post;
+			if ($call == 'confirm') {
+				$order_id = isset($this->request->post['order_id']) ? (int)$this->request->post['order_id'] : 0;
+				$this->load->model('sale/order');
+				$order_info = $this->model_sale_order->getOrder($order_id);
+				$store->request->post['order_status_id'] = $order_info['order_status_id'] ?? $this->config->get('config_order_status_id');
+			}
 
 			// 5. Call the required API controller.
 			$store->load->controller($store->request->get['route']);

@@ -61,6 +61,8 @@ export default class extends Controller {
 
             if (config.config_tax) data.tax = product.special ? product.special : product.price;
 
+            data.discounts = product.discount;
+
             // Stock
             data.quantity = product.quantity;
             data.minimum = product.minimum;
@@ -102,14 +104,59 @@ export default class extends Controller {
             data.length_class_id = product.length_class_id;
 
             // Attributes
-            data.attribute_groups = product.attribute_group;
+            data.attribute_groups = [];
 
-            // Discounts
-            data.discounts = product.discount;
+            for (let attribute_group of product.attribute_group) {
+                let attributes = [];
 
-            data.options = product.option;
+                for (let attribute of attribute_group.attribute) {
+                    attributes.push(attribute.description[config.config_language]);
+                }
 
-            data.subscription_plans = product.subscription_plans;
+               data.attribute_groups.push({
+                   name: attribute_group.description[config.config_language].name,
+                   attribute: attributes,
+               });
+            }
+
+            data.options = [];
+
+            for (let option of product.option) {
+                let option_values = [];
+
+                for (let option_value of option.option_value) {
+                    option_values.push(Object.assign(option_value, option_value.description[config.config_language]));
+                }
+
+                data.options.push(Object.assign(option, { option_value: option_values }));
+            }
+
+            // Subscription Plans
+            data.subscription_plans = [];
+
+            for (let subscription_plan of product.subscription_plans) {
+                let description = '';
+
+                let price = product.special ? product.special : product.price;
+
+                if (subscription_plan.duration) {
+                    price = (product.special ? product.special : product.price) / subscription_plan.duration;
+                }
+
+                //price = tax.calculate(price, $product.tax_class_id, $this->config.config_tax'));
+                let frequency = language['text_' + subscription_plan.frequency];
+
+                if (subscription_plan.duration) {
+                   // description = language['text_subscription_duration'] price, subscription_plan.cycle, frequency, subscription_plan.duration);
+                } else {
+                   // description = sprintf(language['text_subscription_cancel'], price, subscription_plan.cycle, frequency);
+                }
+
+                //data.subscription_plans[] = {
+               //     'description' => description
+
+                //} + $result;
+            }
 
             data.review_status = config.config_review_status;
 
@@ -119,15 +166,7 @@ export default class extends Controller {
         }
     }
 
-    onChange(e) {
-        let subscription = this.querySelectorAll('.subscription');
-
-        subscription.classList.add('d-none');
-
-        $('#subscription-description-' + $(element).val()).classList.remove('d-none');
-    }
-
-    onSubmit(e) {
+    addToCart(e) {
         e.preventDefault();
 
         loader.request({
@@ -170,16 +209,31 @@ export default class extends Controller {
             }
         });
     }
-}
 
-/*
-$(document).ready(function() {
-    $('.magnific-popup').magnificPopup({
-        type: 'image',
-        delegate: 'a',
-        gallery: {
-            enabled: true
-        }
-    });
-});
-*/
+    addToWishList() {
+
+    }
+
+    addToCompare() {
+
+    }
+
+    onChange(e) {
+        //let subscription = e;
+
+        //subscription.classList.add('d-none');
+
+        //$('#subscription-description-' + $(element).val()).classList.remove('d-none');
+    }
+
+    popup() {
+        $('.magnific-popup').magnificPopup({
+            type: 'image',
+            delegate: 'a',
+            gallery: {
+                enabled: true
+            }
+        });
+
+    }
+}

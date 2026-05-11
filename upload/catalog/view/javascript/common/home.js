@@ -3,17 +3,14 @@ import { loader } from '../index.js';
 
 export default class extends Controller {
     render() {
-
         return loader.template('common/home');
     }
 
     onClick(e) {
         e.preventDefault();
 
-        let target = document.getElementById(e.target.getAttribute('data-target'));
+        let target = document.getElementById('content');
 
-        if (target.matches('x-include')) {
-            target.src = e.target.getAttribute('href');
-        }
+        target.src = e.target.getAttribute('href');
     }
 }

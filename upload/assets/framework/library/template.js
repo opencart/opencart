@@ -712,18 +712,149 @@ class CurlyTag {
         return token;
     }
 
+    /**
+     * SECURE: Parse expression without code execution
+     * Supports: variables, property access, array access, literals, and operators
+     * @param {string} expression - The expression to evaluate
+     * @param {object} ctx - The context data
+     * @returns {any} - The result of evaluation
+     */
     evaluate(expression, ctx) {
         if (!expression) return undefined;
 
         try {
-            let func = new Function('data', `with(data) return (${expression});`);
-
-            return func({ ...ctx });
+            return this.parseExpression(expression.trim(), ctx);
         } catch (error) {
-            console.log(`[Template] Warning: Evaluate error '${error}'`);
-
+            console.log(`[Template] Warning: Evaluate error '${error.message}'`);
             return undefined;
         }
+    }
+
+    /**
+     * Safe recursive expression parser
+     * Handles: variables, properties, array access, literals, comparisons, logical ops
+     */
+    parseExpression(expr, ctx) {
+        // Remove leading/trailing spaces
+        expr = expr.trim();
+
+        // Literals: numbers, strings, booleans, null
+        if (/^\d+(\.\d+)?$/.test(expr)) {
+            return Number(expr);
+        }
+        if (/^'[^']*'$/.test(expr) || /^"[^"]*"$/.test(expr)) {
+            return expr.slice(1, -1);
+        }
+        if (expr === 'true') return true;
+        if (expr === 'false') return false;
+        if (expr === 'null' || expr === 'undefined') return undefined;
+
+        // Array literals: [1, 2, 3] or ['a', 'b']
+        if (/^\[.*\]$/.test(expr)) {
+            return this.parseArray(expr, ctx);
+        }
+
+        // Logical OR (||) - lowest precedence
+        let orMatch = expr.match(/^(.+?)\s*\|\|\s*(.+)$/);
+        if (orMatch) {
+            let left = this.parseExpression(orMatch[1], ctx);
+            return left ? left : this.parseExpression(orMatch[2], ctx);
+        }
+
+        // Logical AND (&&)
+        let andMatch = expr.match(/^(.+?)\s*&&\s*(.+)$/);
+        if (andMatch) {
+            let left = this.parseExpression(andMatch[1], ctx);
+            return left ? this.parseExpression(andMatch[2], ctx) : false;
+        }
+
+        // Comparison operators: ==, !=, ===, !==, <, >, <=, >=
+        let compMatch = expr.match(/^(.+?)\s*(===|!==|==|!=|<=|>=|<|>)\s*(.+)$/);
+        if (compMatch) {
+            let left = this.parseExpression(compMatch[1], ctx);
+            let op = compMatch[2];
+            let right = this.parseExpression(compMatch[3], ctx);
+
+            switch (op) {
+                case '==': return left == right;
+                case '!=': return left != right;
+                case '===': return left === right;
+                case '!==': return left !== right;
+                case '<': return left < right;
+                case '>': return left > right;
+                case '<=': return left <= right;
+                case '>=': return left >= right;
+            }
+        }
+
+        // Property access and array access: obj.prop, obj['prop'], obj[0]
+        return this.resolvePath(expr, ctx);
+    }
+
+    /**
+     * Resolve variable paths: var, var.prop, var['prop'], var[0], var.prop.nested
+     */
+    resolvePath(path, ctx) {
+        // Match: identifier followed by property accesses
+        let match = path.match(/^([a-zA-Z_]\w*)(.*)$/);
+        if (!match) return undefined;
+
+        let [, varName, rest] = match;
+        let value = ctx[varName];
+
+        if (!rest) {
+            return value;
+        }
+
+        // Process property/array accesses: .prop, ['key'], [0]
+        let accessRegex = /\.([a-zA-Z_]\w*)|\[(['"]?)([^\[\]'"]+)\2\]/g;
+        let accessMatch;
+
+        while ((accessMatch = accessRegex.exec(rest)) !== null) {
+            if (value == null) return undefined;
+
+            if (accessMatch[1]) {
+                // Property: .prop
+                value = value[accessMatch[1]];
+            } else {
+                // Array/object access: [key] or ['key']
+                value = value[accessMatch[3]];
+            }
+        }
+
+        return value;
+    }
+
+    /**
+     * Parse array literals safely
+     */
+    parseArray(expr, ctx) {
+        // Remove brackets
+        let content = expr.slice(1, -1).trim();
+        if (!content) return [];
+
+        // Split by comma (simple approach - doesn't handle nested arrays perfectly)
+        let items = [];
+        let current = '';
+        let depth = 0;
+
+        for (let i = 0; i < content.length; i++) {
+            let char = content[i];
+            if (char === '[' || char === '(') depth++;
+            else if (char === ']' || char === ')') depth--;
+            else if (char === ',' && depth === 0) {
+                items.push(this.parseExpression(current.trim(), ctx));
+                current = '';
+                continue;
+            }
+            current += char;
+        }
+
+        if (current) {
+            items.push(this.parseExpression(current.trim(), ctx));
+        }
+
+        return items;
     }
 
     /**
@@ -749,7 +880,7 @@ class CurlyTag {
             let args = [];
 
             if (argument) {
-                args = this.evaluate('[' + argument + ']', ctx);
+                args = this.parseExpression('[' + argument + ']', ctx);
             }
 
             let func = this.filter[name];
@@ -1231,8 +1362,15 @@ class CurlyTag {
             return;
         }
 
-        // Split if more than one item to compare
-        if (!this.evaluate(`[${match[1]}].includes(${top.value})`, ctx)) return token.end;
+        // Safely parse the when condition
+        let caseValue = this.evaluate(top.value, ctx);
+        let whenValues = this.parseExpression('[' + match[1] + ']', ctx);
+
+        if (!Array.isArray(whenValues)) {
+            whenValues = [whenValues];
+        }
+
+        if (!whenValues.includes(caseValue)) return token.end;
 
         top.active = true;
     }

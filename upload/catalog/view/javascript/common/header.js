@@ -25,19 +25,11 @@ export default class extends Controller {
         return await loader.template('common/header', { ...data, ...language, ...config });
     }
 
-    register(e) {
+    onClick(e) {
         e.preventDefault();
 
-        console.log('register');
+        let target = document.getElementById('content');
 
-        console.log(this);
-
-        console.log(this.$contact);
-    }
-
-    login(e) {
-        e.preventDefault();
-
-        console.log('login');
+        target.src = e.target.getAttribute('href');
     }
 }

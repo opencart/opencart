@@ -140,6 +140,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			$product_info['manufacturer'] = '';
 		}
 
+		$product_info['discount'] = $this->model_catalog_product->getDiscounts($product_info['product_id']);
+
 		// Attributes
 		$attribute_groups = [];
 
@@ -151,22 +153,65 @@ class Product extends \Opencart\System\Engine\Controller {
 			$attribute_info = $this->model_catalog_attribute->getAttribute($result['attribute_id']);
 
 			if ($attribute_info) {
-				$attribute_groups[$attribute_info['attribute_group_id']][] = $attribute_info + ['description' => $this->model_catalog_attribute->getAttributeDescriptions($result['attribute_id'])];
+				$description_data = [];
+
+				$descriptions = $this->model_catalog_product->getAttributeDescriptions($result['product_id'], $result['attribute_id']);
+
+				foreach ($descriptions as $code => $description) {
+					$description_data[$code] = array_merge($description, $this->model_catalog_attribute->getAttributeDescription($result['attribute_id'], $result['language_id']));
+				}
+
+				$attribute_groups[$attribute_info['attribute_group_id']][] = array_merge($attribute_info, ['description' => $description_data]);
 			}
 		}
 
-		// Attribute Groups
 		$product_info['attribute_group'] = [];
 
 		foreach ($attribute_groups as $attribute_group_id => $value) {
 			$attribute_group_info = $this->model_catalog_attribute->getAttributeGroup($attribute_group_id);
 
 			if ($attribute_group_info) {
-				$product_info['attribute_group'][] = $attribute_group_info + ['description' => $this->model_catalog_attribute->getDescriptions($attribute_group_info['attribute_group_id'])] + ['attribute' => $value];
+				$product_info['attribute_group'][] = array_merge($attribute_group_info, ['description' => $this->model_catalog_attribute->getDescriptions($attribute_group_info['attribute_group_id'])], ['attribute' => $value]);
 			}
 		}
 
-		$product_info['discount'] = $this->model_catalog_product->getDiscounts($product_info['product_id']);
+		// Options
+		$product_info['option'] = [];
+
+		$this->load->model('catalog/option');
+
+		$results = $this->model_catalog_product->getOptions($product_info['product_id']);
+
+		foreach ($results as $result) {
+			$option_values = [];
+
+			if ($result['type'] == 'select' || $result['type'] == 'radio' || $result['type'] == 'checkbox') {
+				foreach ($result['product_option_value'] as $product_option_value) {
+					$option_values[] = array_merge($product_option_value, ['description' => $this->model_catalog_option->getValueDescriptions($product_option_value['option_value_id'])]);
+				}
+			}
+
+			unset($result['product_option_value']);
+
+			$product_info['option'][] = array_merge($result, ['option_value' => $option_values], ['description' => $this->model_catalog_option->getDescriptions($result['option_id'])]);
+		}
+
+		// Subscription Plans
+		$product_info['subscription_plans'] = [];
+
+		$this->load->model('catalog/subscription_plan');
+
+		$results = $this->model_catalog_product->getSubscriptions($product_info['product_id']);
+
+		foreach ($results as $result) {
+			$product_info['subscription_plans'][] = array_merge($result, ['description' => $this->model_catalog_subscription_plan->getDescriptions($result['subscription_plan_id'])]);
+		}
+
+
+
+
+
+
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'product-' . $product_info['product_id'] . '.json';

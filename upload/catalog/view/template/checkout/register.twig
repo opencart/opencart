@@ -564,8 +564,6 @@ $('#form-register').on('submit', function(e) {
                 $('#button-register').button('reset');
             },
             success: function(json) {
-                console.log(json);
-
                 $('#form-register').find('.is-invalid').removeClass('is-invalid');
                 $('#form-register').find('.invalid-feedback').removeClass('d-block');
 

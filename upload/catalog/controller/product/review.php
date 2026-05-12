@@ -179,7 +179,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$this->load->model('account/order');
 
 			if (!$this->model_account_order->getTotalOrdersByProductId($product_id)) {
-				$json['error']['purchased'] = $this->language->get('error_purchased');
+				$json['error']['warning'] = $this->language->get('error_purchased');
 			}
 		}
 

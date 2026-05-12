@@ -635,7 +635,7 @@ class Language extends \Opencart\System\Engine\Model {
 				$image .= 'extension/' . $result['extension'] . '/catalog/';
 			}
 
-			$language_data[$result['code']] = $result + ['image' => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png'];
+			$language_data[$result['code']] = ['image' => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png'] + $result;
 		}
 
 		return $language_data;

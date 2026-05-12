@@ -295,7 +295,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		foreach ($query->rows as $result) {
-			$customer_data[] = $result + ['custom_field' => $result['custom_field'] ? json_decode($result['custom_field'], true) : []];
+			$customer_data[] = ['custom_field' => $result['custom_field'] ? json_decode($result['custom_field'], true) : []] + $result;
 		}
 
 		return $customer_data;

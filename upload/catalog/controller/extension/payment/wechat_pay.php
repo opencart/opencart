@@ -52,26 +52,26 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 		$subject = trim($this->config->get('config_name'));
 		$currency = $this->config->get('payment_wechat_pay_currency');
 		$total_amount = trim($this->currency->format($order_info['total'], $currency, '', false));
-		$notify_url = HTTPS_SERVER . "payment_callback/wechat_pay"; //$this->url->link('wechat_pay/callback');
+		$notify_url = HTTPS_SERVER . "payment_callback/wechat_pay";
 
-		$options = array(
-			'appid'			 =>  $this->config->get('payment_wechat_pay_app_id'),
-			'appsecret'		 =>  $this->config->get('payment_wechat_pay_app_secret'),
-			'mch_id'			=>  $this->config->get('payment_wechat_pay_mch_id'),
-			'partnerkey'		=>  $this->config->get('payment_wechat_pay_api_secret')
-		);
+		$this->load->model('extension/payment/wechat_pay');
 
-		\Wechat\Loader::config($options);
-		$pay = new \Wechat\WechatPay();
+		$orderData = [
+			'body' => $subject,
+			'out_trade_no' => $order_id,
+			'total_fee' => $total_amount,
+			'notify_url' => $notify_url,
+			'trade_type' => 'NATIVE',
+		];
 
-		$result = $pay->getPrepayId(NULL, $subject, $order_id, $total_amount * 100, $notify_url, $trade_type = "NATIVE", NULL, $currency);
+		$result = $this->model_extension_payment_wechat_pay->unifiedOrder($orderData);
 
 		$data['error'] = '';
 		$data['code_url'] = '';
-		if($result === FALSE){
-			$data['error_warning'] = $pay->errMsg;
+		if ($result === false) {
+			$data['error_warning'] = $this->model_extension_payment_wechat_pay->errMsg;
 		} else {
-			$data['code_url'] = $result;
+			$data['code_url'] = $result['code_url'];
 		}
 
 		$data['action_success'] = $this->url->link('checkout/success');
@@ -107,19 +107,16 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 	}
 
 	public function callback() {
-		$options = array(
-			'appid'			 =>  $this->config->get('payment_wechat_pay_app_id'),
-			'appsecret'		 =>  $this->config->get('payment_wechat_pay_app_secret'),
-			'mch_id'			=>  $this->config->get('payment_wechat_pay_mch_id'),
-			'partnerkey'		=>  $this->config->get('payment_wechat_pay_api_secret')
-		);
+		$this->load->model('extension/payment/wechat_pay');
 
-		\Wechat\Loader::config($options);
-		$pay = new \Wechat\WechatPay();
-		$notifyInfo = $pay->getNotify();
+		$xmlData = file_get_contents('php://input');
 
-		if ($notifyInfo === FALSE) {
-			$this->log->write('Wechat Pay Error: ' . $pay->errMsg);
+		$notifyInfo = $this->model_extension_payment_wechat_pay->parseCallback($xmlData);
+
+		if ($notifyInfo === false) {
+			$this->log->write('Wechat Pay Error: ' . $this->model_extension_payment_wechat_pay->errMsg);
+			$this->response->addHeader('Content-Type: application/xml');
+			$this->response->setOutput($this->model_extension_payment_wechat_pay->buildCallbackResponse(false));
 		} else {
 			if ($notifyInfo['result_code'] == 'SUCCESS' && $notifyInfo['return_code'] == 'SUCCESS') {
 				$order_id = $notifyInfo['out_trade_no'];
@@ -132,11 +129,7 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 					}
 				}
 				$this->response->addHeader('Content-Type: application/xml');
-				$this->response->setOutput('<?xml version="1.0" encoding="UTF-8"?>
-<xml>
-  <return_code><![CDATA[SUCCESS]]></return_code>
-  <return_msg><![CDATA[DEAL WITH SUCCESS]]></return_msg>
-</xml>');
+				$this->response->setOutput($this->model_extension_payment_wechat_pay->buildCallbackResponse(true));
 			}
 		}
 	}

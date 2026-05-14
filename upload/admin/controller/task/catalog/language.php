@@ -84,13 +84,13 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->log->write($language_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'language.json';
+		$filename = 'language.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($language_data))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($language_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

@@ -219,9 +219,11 @@ export default class extends Controller {
     }
 
     onChange(e) {
-        //let subscription = e;
+        let subscription = e.target.value;
 
-        //subscription.classList.add('d-none');
+        subscription.classList.add('d-none');
+
+
 
         //$('#subscription-description-' + $(element).val()).classList.remove('d-none');
     }

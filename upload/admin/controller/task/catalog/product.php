@@ -105,13 +105,13 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Images
-		$product_images = [];
+		$image_data = [];
 
 		$results = $this->model_catalog_product->getImages($product_info['product_id']);
 
 		foreach ($results as $result) {
 			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$product_images[] = [
+				$image_data[] = [
 					'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
 					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'))
 				];
@@ -119,12 +119,12 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Description
-		$product_description = [];
+		$description_data = [];
 
 		$descriptions = $this->model_catalog_product->getDescriptions($product_info['product_id']);
 
 		foreach ($descriptions as $code => $description) {
-			$product_description[$code] = [
+			$description_data[$code] = [
 				'name'             => $result['name'],
 				'description'      => $result['description'],
 				'tag'              => $result['tag'],
@@ -135,13 +135,13 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Product Codes
-		$product_codes = [];
+		$product_code_data = [];
 
 		$results = $this->model_catalog_product->getCodes($product_info['product_id']);
 
 		foreach ($results as $result) {
 			if ($result['status']) {
-				$product_codes[] = $result;
+				$product_code_data[] = $result;
 			}
 		}
 
@@ -190,7 +190,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$product_attribute_group_data = [];
+		$attribute_group_data = [];
 
 		foreach ($attribute_groups as $attribute_group_id => $value) {
 			$attribute_group_info = $this->model_catalog_attribute->getAttributeGroup($attribute_group_id);
@@ -204,7 +204,7 @@ class Product extends \Opencart\System\Engine\Controller {
 					$attribute_group_description_data[$code] = ['name' => $attribute_group_description['name']];
 				}
 
-				$product_attribute_group_data[] = [
+				$attribute_group_data[] = [
 					'attribute_group_id' => $attribute_group_info['attribute_group_id'],
 					'description'        => $attribute_group_description_data,
 					'attribute'          => $value,
@@ -327,11 +327,11 @@ class Product extends \Opencart\System\Engine\Controller {
 			'product_id'         => $product_info['product_id'],
 			'popup'              => $popup,
 			'thumb'              => $thumb,
-			'images'             => $product_images,
-			'description'        => $product_description,
+			'images'             => $image_data,
+			'description'        => $description_data,
 			'model'              => $product_info['model'],
-			'product_codes'      => $product_codes,
-			'attribute_groups'   => $product_attribute_group_data,
+			'product_codes'      => $product_code_data,
+			'attribute_groups'   => $attribute_group_data,
 			'options'            => $product_option_data,
 			'subscription_plans' => $subscription_plan_data,
 			'location'           => $product_info['location'],

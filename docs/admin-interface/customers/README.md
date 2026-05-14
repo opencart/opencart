@@ -14,7 +14,7 @@ OpenCart 4 offers a complete customer management system that allows you to effic
 
 ## Video Tutorial
 
-{% embed url="https://youtu.be/yCH2YIgfeho" %}
+{% embed url="https://youtu.be/C5fRLhKfhMs" %}
 
 _Video: Customers Management in OpenCart_
 

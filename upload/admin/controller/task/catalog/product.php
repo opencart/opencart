@@ -125,12 +125,12 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($descriptions as $code => $description) {
 			$description_data[$code] = [
-				'name'             => $result['name'],
-				'description'      => $result['description'],
-				'tag'              => $result['tag'],
-				'meta_title'       => $result['meta_title'],
-				'meta_description' => $result['meta_description'],
-				'meta_keyword'     => $result['meta_keyword']
+				'name'             => $description['name'],
+				'description'      => $description['description'],
+				'tag'              => $description['tag'],
+				'meta_title'       => $description['meta_title'],
+				'meta_description' => $description['meta_description'],
+				'meta_keyword'     => $description['meta_keyword']
 			];
 		}
 
@@ -251,7 +251,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$option_description_data = [];
 
-			$option_descriptions = $this->model_catalog_option->getDescriptions($result['option_id']);
+			$option_descriptions = $this->model_catalog_option->getDescriptions($option['option_id']);
 
 			foreach ($option_descriptions as $code => $option_description) {
 				$option_description_data[$code] = ['name' => $option_description['name']];
@@ -264,7 +264,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'type'              => $option['type'],
 				'value'             => $option['value'],
 				'option_value'      => $option_value_data,
-				'Validation'        => $option['Validation'],
+				'validation'        => $option['validation'],
 				'required'          => $option['required'],
 				'sort_order'        => $option['sort_order']
 			];
@@ -278,26 +278,27 @@ class Product extends \Opencart\System\Engine\Controller {
 		$product_subscriptions = $this->model_catalog_product->getSubscriptions($product_info['product_id']);
 
 		foreach ($product_subscriptions as $product_subscription) {
-			$product_subscription_info = $this->model_catalog_subscription_plan->getSubscription($product_subscription['product_id']);
+			$subscription_info = $this->model_catalog_subscription_plan->getSubscription($product_subscription['product_id']);
 
-			if ($product_subscription_info) {
+			if ($subscription_info) {
 				$subscription_plan_data[$product_subscription['customer_group_id']] = [
-					'subscription_plan_id' => $product_subscription_info['subscription_plan_id'],
+					'subscription_plan_id' => $subscription_info['subscription_plan_id'],
 					'trial_price'          => $product_subscription['trial_price'],
-					'trial_frequency '     => $product_subscription_info['trial_frequency'],
-					'trial_duration'       => $product_subscription_info['trial_duration'],
-					'trial_cycle'          => $product_subscription_info['trial_cycle'],
-					'trial_status'         => $product_subscription_info['trial_status'],
+					'trial_frequency '     => $subscription_info['trial_frequency'],
+					'trial_duration'       => $subscription_info['trial_duration'],
+					'trial_cycle'          => $subscription_info['trial_cycle'],
+					'trial_status'         => $subscription_info['trial_status'],
 					'price'                => $product_subscription['price'],
-					'frequency '           => $product_subscription_info['frequency'],
-					'duration'             => $product_subscription_info['duration'],
-					'cycle'                => $product_subscription_info['cycle'],
-					'status'               => $product_subscription_info['status'],
-					'sort_order'           => $product_subscription_info['sort_order']
+					'frequency '           => $subscription_info['frequency'],
+					'duration'             => $subscription_info['duration'],
+					'cycle'                => $subscription_info['cycle'],
+					'status'               => $subscription_info['status'],
+					'sort_order'           => $subscription_info['sort_order']
 				];
 			}
 		}
 
+		// Discount
 		$discount_data = [];
 
 		$discounts = $this->model_catalog_product->getDiscounts($product_info['product_id']);

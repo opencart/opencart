@@ -2174,6 +2174,12 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	public function getOptionValues(int $product_id, int $product_option_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ov`.`option_value_id` = `ovd`.`option_value_id`) WHERE `pov`.`product_id` = '" . (int)$product_id . "' AND `pov`.`product_option_id` = '" . (int)$product_option_id . "'");
+
+		return $query->rows;
+	}
+
 	/**
 	 * Get Option Values By Option ID
 	 *

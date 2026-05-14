@@ -10,7 +10,7 @@
  * @see       https://www.opencart.com
  */
 function oc_yaml_encode($yaml) {
-	return \Symfony\Component\Yaml\Yaml::dump($yaml);
+	return \Symfony\Component\Yaml\Yaml::dump($yaml, 10, 4, \Symfony\Component\Yaml\Yaml::DUMP_OBJECT_AS_MAP);
 }
 
 function oc_yaml_decode($data) {

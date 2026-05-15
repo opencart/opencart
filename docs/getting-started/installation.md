@@ -103,7 +103,7 @@ Go to the “Upload” folder and select all the files inside and zip it to a ne
 
 ### Creating a database for the shop
 
-The next step is to create a database on the MySQL server for OpenCart to store a shop's data on. You should log into the site’s control panel and locate MySQL Databases. Using MySQL Databases, you can create a new database by entering a database name and a username/password to access this database. The user that was just created needs to be added to the database, along with enabling all of the necessary permissions. We will use this database information later when we are configuring OpenCart using the auto-installer.
+The next step is to create a database on your MySQL or MariaDB server for OpenCart to store a shop's data on. You should log into the site’s control panel and locate MySQL Databases. Using MySQL Databases, you can create a new database by entering a database name and a username/password to access this database. The user that was just created needs to be added to the database, along with enabling all of the necessary permissions. We will use this database information later when we are configuring OpenCart using the auto-installer.
 
 ### Launch the auto-installer
 

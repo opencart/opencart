@@ -2,7 +2,7 @@
 
 OpenCart has certain technical requirements for the software to operate properly. The software must be uploaded to a web server, which will make the store publicly available on the web. If you do not already have a domain or web hosting account, those can easily be purchased for an affordable price at various places online.
 
-When selecting a hosting service, an Apache server is recommended. You will also need a database server that supports MySQLi, PDO, or PostgreSQL. (MySQLi is recommended if possible.) Finally, you will need to have the following PHP libraries installed in your PHP configuration:
+When selecting a hosting service, an Apache server is recommended. You will also need a database server that supports MySQLi, PDO, or PostgreSQL. MySQL or MariaDB are supported when using MySQLi or PDO with a MySQL driver. (MySQLi is recommended if possible.) Finally, you will need to have the following PHP libraries installed in your PHP configuration:
 
 * PHP 8.0 or later
 * Curl

@@ -122,7 +122,7 @@ make build
 
 ### Using Docker Compose Profiles for Optional Services
 
-By default, only the core services (`apache`, `php`, `mysql`) are started.
+By default, only the core services (`apache`, `php`, `mysql`) are started. The `mysql` service runs MariaDB.
 Optional services such as **Adminer**, **Redis**, **Memcached**, and **PostgreSQL** can be enabled using [Docker Compose profiles](https://docs.docker.com/compose/profiles/).
 
 To enable one or more optional services, use the `--profile` flag and specify your env file:

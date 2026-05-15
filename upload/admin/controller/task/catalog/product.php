@@ -107,13 +107,13 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Images
 		$image_data = [];
 
-		$results = $this->model_catalog_product->getImages($product_info['product_id']);
+		$images = $this->model_catalog_product->getImages($product_info['product_id']);
 
-		foreach ($results as $result) {
-			if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
+		foreach ($images as $image) {
+			if ($image['image'] && is_file(DIR_IMAGE . html_entity_decode($image['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image_data[] = [
-					'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
-					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'))
+					'popup' => $this->model_tool_image->resize($image['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+					'thumb' => $this->model_tool_image->resize($image['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'))
 				];
 			}
 		}
@@ -137,11 +137,14 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Product Codes
 		$product_code_data = [];
 
-		$results = $this->model_catalog_product->getCodes($product_info['product_id']);
+		$product_codes = $this->model_catalog_product->getCodes($product_info['product_id']);
 
-		foreach ($results as $result) {
-			if ($result['status']) {
-				$product_code_data[] = $result;
+		foreach ($product_codes as $product_code) {
+			if ($product_code['status']) {
+				$product_code_data[] = [
+					'code'  => $product_code['code'],
+					'value' => $product_code['value']
+				];
 			}
 		}
 
@@ -259,7 +262,6 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$product_option_data[] = [
 				'product_option_id' => $option['product_option_id'],
-				'option_id'         => $option['option_id'],
 				'description'       => $option_description_data,
 				'type'              => $option['type'],
 				'value'             => $option['value'],

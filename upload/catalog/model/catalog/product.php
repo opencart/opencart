@@ -112,7 +112,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 			if (!empty($data['filter_filter'])) {
 				$filters = explode(',', $data['filter_filter']);
-				$preparedFilters = array_map(fn($f) => (int)$f, $filters);
+				$preparedFilters = array_map(fn ($f) => (int)$f, $filters);
 
 				$sql .= " INNER JOIN (SELECT `pf`.`product_id` FROM `" . DB_PREFIX . "product_filter` `pf` WHERE `pf`.`filter_id` IN (" . implode(',', $preparedFilters) . ") GROUP BY pf.product_id HAVING COUNT(DISTINCT pf.filter_id) = " . count($preparedFilters) . ") `f` ON `f`.`product_id` = `p2s`.`product_id` INNER JOIN `oc_product` `p` ON (`p`.`product_id` = `f`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
 			} else {
@@ -279,7 +279,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 			if (!empty($data['filter_filter'])) {
 				$filters = explode(',', $data['filter_filter']);
-				$preparedFilters = array_map(fn($f) => (int)$f, $filters);
+				$preparedFilters = array_map(fn ($f) => (int)$f, $filters);
 
 				$sql .= " INNER JOIN (SELECT `pf`.`product_id` FROM `" . DB_PREFIX . "product_filter` `pf` WHERE `pf`.`filter_id` IN (" . implode(',', $preparedFilters) . ") GROUP BY pf.product_id HAVING COUNT(DISTINCT pf.filter_id) = " . count($preparedFilters) . ") `f` ON `f`.`product_id` = `p2s`.`product_id` INNER JOIN `oc_product` `p` ON (`p`.`product_id` = `f`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
 			} else {

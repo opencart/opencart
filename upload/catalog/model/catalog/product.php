@@ -108,10 +108,13 @@ class Product extends \Opencart\System\Engine\Model {
 				$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p2c`.`category_id` = `c2s`.`category_id` AND `c2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "')";
 			}
 
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `p2c`.`product_id` AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "')";
+			$sql .= " INNER JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `p2c`.`product_id` AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "')";
 
 			if (!empty($data['filter_filter'])) {
-				$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`pf`.`product_id` = `p2s`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pf`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
+				$filters = explode(',', $data['filter_filter']);
+				$preparedFilters = array_map(fn($f) => (int)$f, $filters);
+
+				$sql .= " INNER JOIN (SELECT `pf`.`product_id` FROM `" . DB_PREFIX . "product_filter` `pf` WHERE `pf`.`filter_id` IN (" . implode(',', $preparedFilters) . ") GROUP BY pf.product_id HAVING COUNT(DISTINCT pf.filter_id) = " . count($preparedFilters) . ") `f` ON `f`.`product_id` = `p2s`.`product_id` INNER JOIN `oc_product` `p` ON (`p`.`product_id` = `f`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
 			} else {
 				$sql .= " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
 			}
@@ -130,18 +133,6 @@ class Product extends \Opencart\System\Engine\Model {
 				$sql .= " AND `cp`.`path_id` = '" . (int)$data['filter_category_id'] . "'";
 			} else {
 				$sql .= " AND `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "'";
-			}
-
-			if (!empty($data['filter_filter'])) {
-				$implode = [];
-
-				$filters = explode(',', $data['filter_filter']);
-
-				foreach ($filters as $filter_id) {
-					$implode[] = (int)$filter_id;
-				}
-
-				$sql .= " AND `pf`.`filter_id` IN (" . implode(',', $implode) . ")";
 			}
 		}
 
@@ -284,10 +275,13 @@ class Product extends \Opencart\System\Engine\Model {
 				$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p2c`.`category_id` = `c2s`.`category_id`)";
 			}
 
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `p2c`.`product_id`)";
+			$sql .= " INNER JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `p2c`.`product_id`)";
 
 			if (!empty($data['filter_filter'])) {
-				$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`pf`.`product_id` = `p2s`.`product_id`) LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pf`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
+				$filters = explode(',', $data['filter_filter']);
+				$preparedFilters = array_map(fn($f) => (int)$f, $filters);
+
+				$sql .= " INNER JOIN (SELECT `pf`.`product_id` FROM `" . DB_PREFIX . "product_filter` `pf` WHERE `pf`.`filter_id` IN (" . implode(',', $preparedFilters) . ") GROUP BY pf.product_id HAVING COUNT(DISTINCT pf.filter_id) = " . count($preparedFilters) . ") `f` ON `f`.`product_id` = `p2s`.`product_id` INNER JOIN `oc_product` `p` ON (`p`.`product_id` = `f`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
 			} else {
 				$sql .= " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW() AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "')";
 			}
@@ -306,18 +300,6 @@ class Product extends \Opencart\System\Engine\Model {
 				$sql .= " AND `cp`.`path_id` = '" . (int)$data['filter_category_id'] . "'";
 			} else {
 				$sql .= " AND `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "'";
-			}
-
-			if (!empty($data['filter_filter'])) {
-				$implode = [];
-
-				$filters = explode(',', $data['filter_filter']);
-
-				foreach ($filters as $filter_id) {
-					$implode[] = (int)$filter_id;
-				}
-
-				$sql .= " AND `pf`.`filter_id` IN (" . implode(',', $implode) . ")";
 			}
 		}
 

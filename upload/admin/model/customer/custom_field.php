@@ -11,7 +11,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	/**
 	 * Add Custom Field
 	 *
-	 * Create a new custom field record in the database.R
+	 * Create a new custom field record in the database.
 	 *
 	 * @param array<string, mixed> $data array of data
 	 *

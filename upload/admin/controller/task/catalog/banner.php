@@ -93,14 +93,28 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_banner')];
 		}
 
+		// Image
+		$image_data = [];
+
+		$images = $this->model_design_banner->getImages($banner_info['banner_id']);
+
+		foreach ($images as $code => $image) {
+			$image_data[$code] = [
+				'title'      => $image['title'],
+				'image'      => $image['image'],
+				'link'       => $image['link'],
+				'sort_order' => $image['sort_order']
+			];
+		}
+
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/design/';
-		$filename = 'banner-' . $banner_info['banner_id'] . '.json';
+		$filename = 'banner-' . $banner_info['banner_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode(array_merge($banner_info, ['image' => $this->model_design_banner->getImages($banner_info['banner_id'])])))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($image_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

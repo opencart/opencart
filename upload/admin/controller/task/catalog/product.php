@@ -227,27 +227,27 @@ class Product extends \Opencart\System\Engine\Controller {
 			$option_value_data = [];
 
 			if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox') {
-				foreach ($option['product_option_value'] as $product_option_value) {
+				foreach ($option['product_option_value'] as $option_value) {
 					$option_value_description_data = [];
 
-					$option_value_descriptions = $this->model_catalog_option->getValueDescriptions($product_option_value['option_value_id']);
+					$option_value_descriptions = $this->model_catalog_option->getValueDescriptions($option_value['option_value_id']);
 
 					foreach ($option_value_descriptions as $code => $option_value_description) {
 						$option_value_description_data[$code] = ['name' => $option_value_description['name']];
 					}
 
 					$option_value_data[] = [
-						'product_option_value_id' => $product_option_value['product_option_value_id'],
+						'product_option_value_id' => $option_value['product_option_value_id'],
 						'description'             => $option_value_description_data,
-						'image'                   => $product_option_value['image'],
-						'quantity'                => $product_option_value['quantity'],
-						'price'                   => $product_option_value['price'],
-						'price_prefix'            => $product_option_value['price_prefix'],
-						'points'                  => $product_option_value['points'],
-						'points_prefix'           => $product_option_value['points_prefix'],
-						'weight'                  => $product_option_value['weight'],
-						'weight_prefix'           => $product_option_value['weight_prefix'],
-						'sort_order'              => $product_option_value['sort_order']
+						'image'                   => $option_value['image'],
+						'quantity'                => $option_value['quantity'],
+						'price'                   => $option_value['price'],
+						'price_prefix'            => $option_value['price_prefix'],
+						'points'                  => $option_value['points'],
+						'points_prefix'           => $option_value['points_prefix'],
+						'weight'                  => $option_value['weight'],
+						'weight_prefix'           => $option_value['weight_prefix'],
+						'sort_order'              => $option_value['sort_order']
 					];
 				}
 			}

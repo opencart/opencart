@@ -305,10 +305,10 @@ class Banner extends \Opencart\System\Engine\Model {
 	public function getImages(int $banner_id): array {
 		$image_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "' ORDER BY `sort_order` ASC");
+		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `bi`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "banner_image` `bi` WHERE `bi`.`banner_id` = '" . (int)$banner_id . "' ORDER BY `bi`.`sort_order` ASC");
 
 		foreach ($query->rows as $result) {
-			$image_data[$result['language_id']] = $result;
+			$image_data[$result['code']] = $result;
 		}
 
 		return $image_data;

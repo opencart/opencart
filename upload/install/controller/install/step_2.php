@@ -55,24 +55,28 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['php_version'] = PHP_VERSION;
 		$data['version'] = version_compare(PHP_VERSION, '8.0', '>=');
 
-		$open_basedir = str_replace('\\', '/', ini_get('open_basedir')) . '/';
+		$open_basedir = str_replace('\\', '/', ini_get('open_basedir'));
 
 		$directory = rtrim(DIR_OPENCART, '/');
 
 		$required = substr($directory, 0, strrpos($directory, '/')) . '/';
 
 		if ($open_basedir) {
-			$data['open_basedir'] = false;
+			$data['open_basedir'] = true;
 
-			$directories = explode(',', $open_basedir, 1);
+			$directories = explode(PATH_SEPARATOR, $open_basedir);
 
 			foreach ($directories as $directory) {
-				if (str_starts_with($directory, $required)) {
-					$data['open_basedir'] = true;
+				$directory = rtrim(str_replace('\\', '/', $directory), '/') . '/';
+
+				if (str_starts_with($required, $directory)) {
+					$data['open_basedir'] = false;
+
+					break;
 				}
 			}
 		} else {
-			$data['open_basedir'] = true;
+			$data['open_basedir'] = false;
 		}
 
 		$data['open_basedir_current'] = $open_basedir;
@@ -157,17 +161,23 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$required = substr($directory, 0, strrpos($directory, '/')) . '/';
 
 		if ($open_basedir) {
-			$data['open_basedir'] = false;
+			$allowed = false;
 
-			$directories = explode(',', $open_basedir);
+			$directories = explode(PATH_SEPARATOR, $open_basedir);
 
 			foreach ($directories as $directory) {
-				if (str_starts_with($directory, $required)) {
-					$data['open_basedir'] = true;
+				$directory = rtrim(str_replace('\\', '/', $directory), '/') . '/';
+
+				if (str_starts_with($required, $directory)) {
+					$allowed = true;
+
+					break;
 				}
 			}
 
-			$json['error'] = sprintf($this->language->get('error_open_basedir'), $required);
+			if (!$allowed) {
+				$json['error'] = sprintf($this->language->get('error_open_basedir'), $required);
+			}
 		}
 
 		if (!ini_get('file_uploads')) {

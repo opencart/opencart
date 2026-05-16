@@ -79,7 +79,22 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 				$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($customer_group_id);
 
 				if ($customer_group_info) {
-					$customer_group_data[] = array_merge($customer_group_info, ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])]);
+					$description_data = [];
+
+					$descriptions = $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id']);
+
+					foreach ($descriptions as $code => $description) {
+						$description_data[$code] = [
+							'name'        => $description['name'],
+							'description' => $description['description']
+						];
+					}
+
+					$customer_group_data[] = [
+						'customer_group_id' => $customer_group_info['customer_group_id'],
+						'description'       => $description_data,
+						'sort_order'        => $customer_group_info['sort_order']
+					];
 				}
 			}
 		}
@@ -93,13 +108,13 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $customer_group_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
-		$filename = 'customer_group.json';
+		$filename = 'customer_group.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($customer_group_data))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($customer_group_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -191,24 +206,98 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_customer_group')];
 		}
 
+		// Description
+		$description_data = [];
+
+		$descriptions = $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id']);
+
+		foreach ($descriptions as $code => $description) {
+			$description_data[$code] = [
+				'name'        => $description['name'],
+				'description' => $description['description']
+			];
+		}
+
+		// Custom Field
 		$custom_field_data = [];
 
 		$this->load->model('customer/custom_field');
 
-		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
+		$custom_fields = $this->model_customer_customer_group->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
 
 		foreach ($custom_fields as $custom_field) {
-			$custom_field_data[] = array_merge($custom_field, ['description' => $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id'])]);
+			$custom_field_description_data = [];
+
+			$custom_field_descriptions = $this->model_customer_custom_field->getDescriptions($custom_field['custom_field_id']);
+
+			foreach ($custom_field_descriptions as $code => $custom_field_description) {
+				$custom_field_description_data[$code] = ['name' => $custom_field_description['name']];
+			}
+
+			$custom_field_value_data = [];
+
+			if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio' || $custom_field['type'] == 'checkbox') {
+				foreach ($custom_field['custom_field_value'] as $custom_field_value) {
+					$custom_field_value_description_data = [];
+
+					$custom_field_descriptions = $this->model_customer_custom_field->getValueDescriptions($custom_field['custom_field_id']);
+
+					foreach ($custom_field_descriptions as $custom_field_description) {
+						$custom_field_value_description_data[] = ['name' => $custom_field_description['name']];
+					}
+
+					$custom_field_value_data[] = [
+						'custom_field_value_id' => $custom_field['custom_field_value_id'],
+						'description'           => $custom_field_value_description_data,
+						'sort_order'            => $custom_field['sort_order']
+					];
+				}
+
+				$sort_order = [];
+
+				foreach ($custom_field_value_data as $key => $value) {
+					$sort_order[$key] = $value['sort_order'];
+				}
+
+				array_multisort($sort_order, SORT_ASC, $custom_field_value_data);
+			}
+
+			$custom_field_data[] = [
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'description'        => $custom_field_description_data,
+				'type'               => $custom_field['type'],
+				'custom_field_value' => $custom_field_value_data,
+				'value'              => $custom_field['value'],
+				'required'           => $custom_field['required'],
+				'validation'         => $custom_field['validation'],
+				'location'           => $custom_field['location'],
+				'sort_order'         => $custom_field['sort_order']
+			];
 		}
 
+		$sort_order = [];
+
+		foreach ($custom_field_data as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $custom_field_data);
+
+		$customer_group_data = [
+			'customer_group_id' => $customer_group_info['customer_group_id'],
+			'description'       => $description_data,
+			'custom_field'      => $custom_field_data,
+			'approval'          => $customer_group_info['approval']
+		];
+
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/customer/';
-		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.json';
+		$filename = 'customer_group-' . $customer_group_info['customer_group_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode(array_merge($customer_group_info, ['description' => $this->model_customer_customer_group->getDescriptions($customer_group_info['customer_group_id'])], ['custom_field' => $custom_field_data])))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($customer_group_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

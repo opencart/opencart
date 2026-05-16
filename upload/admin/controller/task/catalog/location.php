@@ -79,19 +79,27 @@ class Location extends \Opencart\System\Engine\Controller {
 				$location_info = $this->model_localisation_location->getLocation($location_id);
 
 				if ($location_info) {
-					$location_data[] = $location_info;
+					$location_data[] = [
+						'location_id' => $location_info['location_id'],
+						'name'        => $location_info['name'],
+						'address'     => $location_info['address'],
+						'telephone'   => $location_info['telephone'],
+						'image'       => $location_info['image'],
+						'open'        => $location_info['open'],
+						'comment'     => $location_info['comment']
+					];
 				}
 			}
 		}
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'location.json';
+		$filename = 'location.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($location_data))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($location_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

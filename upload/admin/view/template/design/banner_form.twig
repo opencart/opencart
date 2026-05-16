@@ -54,8 +54,8 @@
                           </tr>
                         </thead>
                         <tbody>
-                          {% if banner_images[language.language_id] %}
-                            {% for banner_image in banner_images[language.language_id] %}
+                          {% if banner_images[language.code] %}
+                            {% for banner_image in banner_images[language.code] %}
                               <tr id="image-row-{{ image_row }}">
                                 <td class="text-center">
                                   <div class="border rounded d-block" style="max-width: 300px;">
@@ -82,7 +82,7 @@
                         <tfoot>
                           <tr>
                             <td colspan="4"></td>
-                            <td class="text-end"><button type="button" id="button-banner-{{ language.language_id }}" data-language="{{ language.language_id }}" title="{{ button_banner_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                            <td class="text-end"><button type="button" id="button-banner-{{ language.language_id }}" title="{{ button_banner_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                           </tr>
                         </tfoot>
                       </table>

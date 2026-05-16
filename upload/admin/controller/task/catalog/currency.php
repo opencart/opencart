@@ -77,18 +77,25 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$currency_info = $this->model_localisation_currency->getCurrencyByCode((string)$code);
 
 			if ($currency_info && $currency_info['status']) {
-				$currency_data[$currency_info['code']] = $currency_info;
+				$currency_data[$currency_info['code']] = [
+					'title'         => $currency_info['title'],
+					'code'          => $currency_info['code'],
+					'symbol_left'   => $currency_info['symbol_left'],
+					'symbol_right'  => $currency_info['symbol_right'],
+					'decimal_place' => $currency_info['decimal_place'],
+					'value'         => $currency_info['value']
+				];
 			}
 		}
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'currency.json';
+		$filename = 'currency.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($currency_data))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($currency_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

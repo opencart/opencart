@@ -43,7 +43,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * Generate language list.
 	 *
-	 * @param $args
+	 * @param array<string, string> $args
 	 *
 	 * @return array|void
 	 */
@@ -77,11 +77,14 @@ class Language extends \Opencart\System\Engine\Controller {
 			$language_info = $this->model_localisation_language->getLanguageByCode((string)$code);
 
 			if ($language_info && $language_info['status']) {
-				$language_data[$language_info['code']] = $language_info;
+				$language_data[$language_info['code']] = [
+					'name '     => $language_info['name'],
+					'code'      => $language_info['code'],
+					'locale'    => $language_info['locale'],
+					'extension' => $language_info['extension']
+				];
 			}
 		}
-
-		$this->log->write($language_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'language.yaml';

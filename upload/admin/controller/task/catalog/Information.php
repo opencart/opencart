@@ -76,26 +76,38 @@ class Information extends \Opencart\System\Engine\Controller {
 			$information_info = $this->model_catalog_information->getInformation((int)$information_id);
 
 			if ($information_info && $information_info['status']) {
-				$information_data[] = array_merge($information_info, ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])]);
+				$description_data = [];
+
+				$descriptions = $this->model_catalog_information->getDescriptions($information_info['information_id']);
+
+				foreach ($descriptions as $code => $description) {
+					$description_data[$code] = ['title' => $description['title']];
+				}
+
+				$information_data[] = [
+					'information_id' => $information_info['information_id'],
+					'description'    => $description_data,
+					'sort_order'     => $information_info['sort_order']
+				];
 			}
 		}
 
 		$sort_order = [];
 
 		foreach ($information_data as $key => $value) {
-			$sort_order[$key] = $value['title'];
+			$sort_order[$key] = $value['sort_order'];
 		}
 
 		array_multisort($sort_order, SORT_ASC, $information_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'information.json';
+		$filename = 'information.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($information_data))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($information_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -177,14 +189,34 @@ class Information extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_information')];
 		}
 
+		$description_data = [];
+
+		$descriptions = $this->model_catalog_information->getDescriptions($information_info['information_id']);
+
+		foreach ($descriptions as $code => $description) {
+			$description_data[$code] = [
+				'title'            => $description['title'],
+				'description'      => $description['description'],
+				'meta_title'       => $description['meta_title'],
+				'meta_description' => $description['meta_description'],
+				'meta_keyword'     => $description['meta_keyword']
+			];
+		}
+
+		$information_data = [
+			'information_id' => $information_info['information_id'],
+			'description'    => $description_data,
+			'sort_order'     => $information_info['sort_order']
+		];
+
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'information-' . $information_info['information_id'] . '.json';
+		$filename = 'information-' . $information_info['information_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode(array_merge($information_info, ['description' => $this->model_catalog_information->getDescriptions($information_info['information_id'])])))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($information_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -220,7 +252,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/information/information-' . $information_info['information_id'] . '.json';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/information/information-' . $information_info['information_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

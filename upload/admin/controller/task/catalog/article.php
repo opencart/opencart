@@ -92,14 +92,42 @@ class Article extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_article')];
 		}
 
+		// Description
+		$description_data = [];
+
+		$descriptions = $this->model_cms_article->getDescriptions($article_info['article_id']);
+
+		foreach ($descriptions as $code => $description) {
+			$description_data[$code] = [
+				'name'             => $description['name'],
+				'description'      => $description['description'],
+				'image'            => $description['image'],
+				'tag'              => $description['tag'],
+				'meta_title'       => $description['meta_title'],
+				'meta_description' => $description['meta_description'],
+				'meta_keyword'     => $description['meta_keyword']
+			];
+		}
+
+		$article_data = [
+			'article_id'    => $article_info['article_id'],
+			'description'   => $description_data,
+			'topic_id'      => $article_info['topic_id'],
+			'author'        => $article_info['author'],
+			'rating'        => $article_info['rating'],
+			'status'        => $article_info['status'],
+			'date_added'    => $article_info['date_added'],
+			'date_modified' => $article_info['date_modified']
+		];
+
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
-		$filename = 'article-' . $article_info['article_id'] . '.json';
+		$filename = 'article-' . $article_info['article_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode(array_merge($article_info, ['description' => $this->model_cms_article->getDescriptions($article_info['article_id'])])))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($article_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

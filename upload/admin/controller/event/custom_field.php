@@ -24,7 +24,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/custom_field');
 
-		$results = $this->model_customer_custom_field->getCustomerGroups($args[1]['customer_group_id']);
+		$results = $this->model_customer_custom_field->getCustomerGroups($output);
 
 		foreach ($results as $result) {
 			$task_data = [
@@ -55,7 +55,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/custom_field');
 
-		$results = $this->model_customer_custom_field->getCustomerGroups($args[1]['customer_group_id']);
+		$results = $this->model_customer_custom_field->getCustomerGroups($args[0]);
 
 		foreach ($results as $result) {
 			$task_data = [

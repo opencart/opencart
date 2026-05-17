@@ -289,7 +289,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($custom_field_info)) {
-			$custom_field_values = $this->model_customer_custom_field->getValueDescriptions($custom_field_info['custom_field_id']);
+			$custom_field_values = $this->model_customer_custom_field->getValues($custom_field_info['custom_field_id']);
 		} else {
 			$custom_field_values = [];
 		}
@@ -297,7 +297,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$data['custom_field_values'] = [];
 
 		foreach ($custom_field_values as $custom_field_value) {
-			$data['custom_field_values'][] = $custom_field_value;
+			$data['custom_field_values'][] = $custom_field_value + ['description' => $this->model_customer_custom_field->getValueDescriptions($custom_field_value['custom_field_value_id'])];
 		}
 
 		// Customer Groups

@@ -670,24 +670,16 @@ class CustomField extends \Opencart\System\Engine\Model {
 	 *
 	 * $custom_field_values = $this->model_customer_custom_field->getValueDescriptions($custom_field_id);
 	 */
-	public function getValueDescriptions(int $custom_field_id): array {
-		$custom_field_value_data = [];
+	public function getValueDescriptions(int $custom_field_value_id): array {
+		$custom_field_value_description_data = [];
 
-		$custom_field_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
+		$custom_field_value_description_query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `cfvd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "custom_field_value_description` `cfvd` WHERE `custom_field_value_id` = '" . (int)$custom_field_value_id . "'");
 
-		foreach ($custom_field_value_query->rows as $custom_field_value) {
-			$custom_field_value_description_data = [];
-
-			$custom_field_value_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value_description` WHERE `custom_field_value_id` = '" . (int)$custom_field_value['custom_field_value_id'] . "'");
-
-			foreach ($custom_field_value_description_query->rows as $custom_field_value_description) {
-				$custom_field_value_description_data[$custom_field_value_description['language_id']] = ['name' => $custom_field_value_description['name']];
-			}
-
-			$custom_field_value_data[] = ['custom_field_value_description' => $custom_field_value_description_data] + $custom_field_value;
+		foreach ($custom_field_value_description_query->rows as $custom_field_value_description) {
+			$custom_field_value_description_data[$custom_field_value_description['code']] = ['name' => $custom_field_value_description['name']];
 		}
 
-		return $custom_field_value_data;
+		return $custom_field_value_description_data;
 	}
 
 	/**

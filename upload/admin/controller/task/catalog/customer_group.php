@@ -223,7 +223,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/custom_field');
 
-		$custom_fields = $this->model_customer_customer_group->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
+		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_info['customer_group_id']]);
 
 		foreach ($custom_fields as $custom_field) {
 			$custom_field_description_data = [];
@@ -237,19 +237,21 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$custom_field_value_data = [];
 
 			if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio' || $custom_field['type'] == 'checkbox') {
-				foreach ($custom_field['custom_field_value'] as $custom_field_value) {
+				$custom_field_values = $this->model_customer_custom_field->getValues($custom_field['custom_field_id']);
+
+				foreach ($custom_field_values as $custom_field_value) {
 					$custom_field_value_description_data = [];
 
-					$custom_field_descriptions = $this->model_customer_custom_field->getValueDescriptions($custom_field['custom_field_id']);
+					$custom_field_value_descriptions = $this->model_customer_custom_field->getValueDescriptions($custom_field_value['custom_field_value_id']);
 
-					foreach ($custom_field_descriptions as $custom_field_description) {
-						$custom_field_value_description_data[] = ['name' => $custom_field_description['name']];
+					foreach ($custom_field_value_descriptions as $code => $custom_field_value_description) {
+						$custom_field_value_description_data[$code] = ['name' => $custom_field_value_description['name']];
 					}
 
 					$custom_field_value_data[] = [
-						'custom_field_value_id' => $custom_field['custom_field_value_id'],
+						'custom_field_value_id' => $custom_field_value['custom_field_value_id'],
 						'description'           => $custom_field_value_description_data,
-						'sort_order'            => $custom_field['sort_order']
+						'sort_order'            => $custom_field_value['sort_order']
 					];
 				}
 
@@ -286,7 +288,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$customer_group_data = [
 			'customer_group_id' => $customer_group_info['customer_group_id'],
 			'description'       => $description_data,
-			'custom_field'      => $custom_field_data,
+			'custom_fields'     => $custom_field_data,
 			'approval'          => $customer_group_info['approval']
 		];
 

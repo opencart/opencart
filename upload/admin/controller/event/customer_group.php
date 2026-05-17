@@ -19,6 +19,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function addCustomerGroup(string &$route, array &$args, &$output): void {
+		// Catalog
 		$task_data = [
 			'code'   => 'customer_group',
 			'action' => 'task/catalog/customer_group',
@@ -37,6 +38,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
+		// Admin
 		$task_data = [
 			'code'   => 'admin.customer_group',
 			'action' => 'task/admin/customer_group',

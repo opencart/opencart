@@ -149,8 +149,8 @@ class Category extends \Opencart\System\Engine\Controller {
 				'code'   => 'category._info' . $store_id . '.' . $category_info['category_id'],
 				'action' => 'task/catalog/category._info',
 				'args'   => [
-					'country_id' => $category_info['category_id'],
-					'store_id'   => $store_id
+					'category_id' => $category_info['category_id'],
+					'store_id'    => $store_id
 				]
 			];
 

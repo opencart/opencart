@@ -77,7 +77,18 @@ class Country extends \Opencart\System\Engine\Controller {
 			$country_info = $this->model_localisation_country->getCountry((int)$country_id);
 
 			if ($country_info && $country_info['status']) {
-				$country_data[] = $country_info + ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])];
+				$description_data = [];
+
+				$descriptions = $this->model_localisation_country->getDescriptions($country_info['country_id']);
+
+				foreach ($descriptions as $code => $description) {
+					$description_data[$code] = ['name' => $description['name']];
+				}
+
+				$country_data[] = [
+					'country_id'  => $country_info['country_id'],
+					'description' => $description_data
+				];
 			}
 		}
 
@@ -90,7 +101,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $country_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'country.json';
+		$filename = 'country.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -190,6 +201,14 @@ class Country extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_country')];
 		}
 
+		$description_data = [];
+
+		$descriptions = $this->model_catalog_category->getDescriptions($country_info['category_id']);
+
+		foreach ($descriptions as $code => $description) {
+			$description_data[$code] = ['name' => $description['name']];
+		}
+
 		// Zones
 		$zone_data = [];
 
@@ -199,7 +218,19 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($zones as $zone) {
 			if ($zone['status']) {
-				$zone_data[] = array_merge($zone, ['description' => $this->model_localisation_zone->getDescriptions($zone['zone_id'])]);
+				$description_data = [];
+
+				$descriptions = $this->model_localisation_zone->getDescriptions($zone['zone_id']);
+
+				foreach ($descriptions as $code => $description) {
+					$description_data[$code] = ['name' => $description['name']];
+				}
+
+				$zone_data[] = [
+					'zone_id'     => $zone['zone_id'],
+					'description' => $description_data,
+					'code'        => $zone['code']
+				];
 			}
 		}
 
@@ -214,14 +245,25 @@ class Country extends \Opencart\System\Engine\Controller {
 			$geo_zone_data['geo_zone'][$geo_zone['zone_id']] = $geo_zone['geo_zone_id'];
 		}
 
+		$country_data = [
+			'country_id'        => $country_info['country_id'],
+			'description'       => $description_data,
+			'iso_code_2'        => $country_info['iso_code_2'],
+			'iso_code_3'        => $country_info['iso_code_3'],
+			'address_format_id' => $country_info['address_format_id'],
+			'postcode_required' => $country_info['postcode_required'],
+			'zones'             => $zone_data,
+			'geo_zones'         => $geo_zone_data
+		];
+
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'country-' . $country_info['country_id'] . '.json';
+		$filename = 'country-' . $country_info['country_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode(array_merge($country_info, ['description' => $this->model_localisation_country->getDescriptions($country_info['country_id'])], ['zone' => $zone_data], ['geo_zone' => $geo_zone_data])))) {
+		if (!file_put_contents($directory . $filename, json_encode($country_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
@@ -252,7 +294,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/country-' . $country_info['country_id'] . '.json';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/country-' . $country_info['country_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

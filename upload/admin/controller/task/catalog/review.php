@@ -107,7 +107,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_APPLICATION . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'return_reason.json';
+		$filename = 'return_reason.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -138,7 +138,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/review.json';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/localisation/review.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

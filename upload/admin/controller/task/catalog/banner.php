@@ -150,7 +150,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/design/banner-' . $banner_info['banner_id'] . '.json';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/design/banner-' . $banner_info['banner_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

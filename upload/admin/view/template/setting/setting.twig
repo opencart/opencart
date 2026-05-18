@@ -365,6 +365,15 @@
                           <div class="form-text">{{ help_product_report }}</div>
                         </div>
                       </div>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_product_filter_fix }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="hidden" name="config_product_filters_fix" value="0"/> <input type="checkbox" name="config_product_filters_fix" value="1" id="input-product_filters_fix" class="form-check-input"{% if config_product_filters_fix %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_product_filter_fix }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

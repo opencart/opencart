@@ -181,6 +181,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_pagination_admin'] = $this->config->get('config_pagination_admin');
 		$data['config_autocomplete_limit'] = $this->config->get('config_autocomplete_limit');
 		$data['config_product_report_status'] = $this->config->get('config_product_report_status');
+		$data['config_product_filters_fix'] = $this->config->get('config_product_filters_fix');
 
 		// Review
 		$data['config_review_status'] = $this->config->get('config_review_status');

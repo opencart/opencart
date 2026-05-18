@@ -72,21 +72,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 
 
-
-
-
-
-
-		$setting_info = $this->model_setting_setting->getSettings('config', $store_info['store_id']);
-
-		if ($setting_info) {
-			$description_info = $this->model_localisation_country->getDescription((int)$country_id, $language_info['language_id']);
-
-			if (!$description_info) {
-				continue;
-			}
-		}
-
 		$this->load->model('setting/task');
 
 		$filter_data = [

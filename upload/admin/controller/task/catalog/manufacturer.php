@@ -89,7 +89,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $manufacturer_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'manufacturer.json';
+		$filename = 'manufacturer.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -178,7 +178,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
+		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -220,7 +220,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-' . $manufacturer_info['manufacturer_id'] . '.json';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

@@ -121,7 +121,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $countries);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country.json';
+		$filename = 'country.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -207,7 +207,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country-' . $args['country_id'] . '.json';
+		$filename = 'country-' . $args['country_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -252,13 +252,13 @@ class Filter extends \Opencart\System\Engine\Controller {
 				$base = DIR_CATALOG . 'view/data/';
 				$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
 
-				$file = $base . $directory . 'country.json';
+				$file = $base . $directory . 'country.yaml';
 
 				if (is_file($file)) {
 					unlink($file);
 				}
 
-				$files = oc_directory_read($base . $directory, false, '/country\-.+\.json$/');
+				$files = oc_directory_read($base . $directory, false, '/country\-.+\.yaml$/');
 
 				foreach ($files as $file) {
 					unlink($file);

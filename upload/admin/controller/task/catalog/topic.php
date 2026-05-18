@@ -89,7 +89,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $topic_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
-		$filename = 'topic.json';
+		$filename = 'topic.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -187,7 +187,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
-		$filename = 'topic-' . $topic_info['topic_id'] . '.json';
+		$filename = 'topic-' . $topic_info['topic_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -229,7 +229,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/cms/topic-' . $topic_info['topic_id'] . '.json';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/cms/topic-' . $topic_info['topic_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);

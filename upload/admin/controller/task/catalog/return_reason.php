@@ -71,17 +71,25 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/return_reason');
 
-		$results = $this->model_localisation_return_reason->getReturnReasons();
+		$return_reasons = $this->model_localisation_return_reason->getReturnReasons();
 
-		foreach ($results as $result) {
+		foreach ($return_reasons as $return_reason) {
+			$description_data = [];
+
+			$descriptions = $this->model_localisation_return_reason->getDescriptions($return_reason['return_reason_id']);
+
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = ['name' => $description['name']];
+			}
+
 			$return_reason_data[] = [
-				'return_reason_id' => $result['return_reason_id'],
-				'name'             => $result['name']
+				'return_reason_id' => $return_reason['return_reason_id'],
+				'description'      => $description_data
 			];
 		}
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
-		$filename = 'return_reason.ymal';
+		$filename = 'return_reason.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

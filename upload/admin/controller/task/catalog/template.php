@@ -78,7 +78,7 @@ class Template extends \Opencart\System\Engine\Controller {
 		$pos = strrpos($args['route'], '/');
 
 		$directory = DIR_CATALOG . 'view/data/' .parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/language/'  .  substr($args['route'], 0, $pos) . '/';
-		$filename = substr($args['route'], $pos + 1) . '.json';
+		$filename = substr($args['route'], $pos + 1) . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

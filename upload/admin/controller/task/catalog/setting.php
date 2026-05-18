@@ -202,7 +202,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$base = DIR_CATALOG . 'view/data/';
 
-		$filename = parse_url($store_info['url'], PHP_URL_HOST) . '-' . $language_info['code'] . '.json';
+		$filename = parse_url($store_info['url'], PHP_URL_HOST) . '-' . $language_info['code'] . '.yaml';
 
 		if (!file_put_contents($base . $filename, json_encode($config))) {
 			return ['error' => sprintf($this->language->get('error_file'), $filename)];
@@ -223,7 +223,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 	public function clear(array $args = []): array {
 		$this->load->language('task/catalog/setting');
 
-		$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '-' . $language['code'] . '.json';
+		$file = DIR_CATALOG . 'view/data/' . parse_url($store['url'], PHP_URL_HOST) . '-' . $language['code'] . '.yaml';
 
 		if (is_file($file)) {
 			unlink($file);

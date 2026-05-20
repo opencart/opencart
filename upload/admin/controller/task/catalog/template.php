@@ -84,7 +84,7 @@ class Template extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, json_encode($data))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

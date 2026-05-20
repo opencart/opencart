@@ -135,46 +135,42 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * Clear
+	 * Delete
 	 *
-	 * Delete generated JSON country files.
+	 * Delete generated JSON information files.
 	 *
 	 * @param array<string, string> $args
 	 *
 	 * @return array
 	 */
-	public function clear(array $args = []): array {
-		$this->load->language('task/catalog/language');
+	public function delete(array $args = []): array {
+		$this->load->language('task/catalog/product');
 
-		$stores = [];
+		if (!array_key_exists('product_id', $args)) {
+			return ['error' => $this->language->get('error_required')];
+		}
 
-		$stores[] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
+		$this->load->model('catalog/product');
+
+		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
+
+		if (!$product_info) {
+			return ['error' => $this->language->get('error_product')];
+		}
 
 		$this->load->model('setting/store');
 
-		$stores = array_merge($stores, $this->model_setting_store->getStores());
+		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
-		foreach ($stores as $store) {
-			$base = DIR_CATALOG . 'view/data/';
-			$directory = parse_url($store['url'], PHP_URL_HOST) . '/' . $language['code'] . '/localisation/';
-
-			$file = $base . $directory . 'country.yaml';
+		foreach ($store_urls as $store_url) {
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/product-' . $product_info['product_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
-
-			$files = oc_directory_read($base . $directory, false, '/country\-.+\.yaml$/');
-
-			foreach ($files as $file) {
-				unlink($file);
-			}
 		}
 
-		return ['success' => $this->language->get('text_clear')];
+		return ['success' => sprintf($this->language->get('text_delete'), $product_info['name'])];
 	}
 }
 

@@ -206,7 +206,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		$information_data = [
 			'information_id' => $information_info['information_id'],
 			'description'    => $description_data,
-			'sort_order'     => $information_info['sort_order']
 		];
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';

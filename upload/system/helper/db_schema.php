@@ -474,7 +474,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'link',
-				'type' => 'text'
+				'type' => 'varchar(255)'
 			],
 			[
 				'name' => 'image',

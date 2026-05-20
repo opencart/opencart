@@ -1,5 +1,9 @@
 <?php
 /**
+ * WeChat Pay Model - v3 API Implementation
+ * 
+ * This class implements WeChat Pay v3 API using RSA-SHA256 signature
+ * 
  * @package		OpenCart
  * @author		Meng Wenbin
  * @copyright	Copyright (c) 2010 - 2017, Chengdu Guangda Network Technology Co. Ltd. (https://www.opencart.cn/)
@@ -42,6 +46,58 @@ class ModelExtensionPaymentWechatPay extends Model {
 		return $method_data;
 	}
 
+	public function getErrMsg() {
+		return $this->errMsg;
+	}
+
+	public function getErrCode() {
+		return $this->errCode;
+	}
+
+	private function loadPrivateKey() {
+		$privateKeyContent = $this->config->get('payment_wechat_pay_private_key');
+
+		$this->log->write('WechatPay loadPrivateKey: content length=' . strlen($privateKeyContent ?: '') . ', first 50 chars=' . substr($privateKeyContent ?: '', 0, 50));
+
+		if (empty($privateKeyContent)) {
+			$this->errCode = 'CONFIG_ERROR';
+			$this->errMsg = 'Merchant private key not configured';
+			return false;
+		}
+
+		$privateKey = openssl_pkey_get_private($privateKeyContent);
+
+		if ($privateKey === false) {
+			$this->errCode = 'KEY_ERROR';
+			$this->errMsg = 'Failed to load merchant private key: ' . openssl_error_string();
+			$this->log->write('WechatPay loadPrivateKey failed: ' . openssl_error_string());
+			return false;
+		}
+
+		$this->log->write('WechatPay loadPrivateKey success');
+		return $privateKey;
+	}
+
+	private function loadPublicKey() {
+		$publicKeyContent = $this->config->get('payment_wechat_pay_public_key');
+
+		if (empty($publicKeyContent)) {
+			$this->errCode = 'CONFIG_ERROR';
+			$this->errMsg = 'Public key not configured';
+			return false;
+		}
+
+		$publicKey = openssl_pkey_get_public($publicKeyContent);
+
+		if ($publicKey === false) {
+			$this->errCode = 'KEY_ERROR';
+			$this->errMsg = 'Failed to load public key';
+			return false;
+		}
+
+		return $publicKey;
+	}
+
 	public function generateNonceStr(int $length = 32): string {
 		$chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 		$str = '';
@@ -51,107 +107,111 @@ class ModelExtensionPaymentWechatPay extends Model {
 		return $str;
 	}
 
-	public function generateSign(array $params): string|false {
-		if (empty($params)) {
-			$this->errCode = 'PARAM_ERROR';
-			$this->errMsg = 'Sign parameters cannot be empty';
+	private function generateSignV3(string $signString): string|false {
+		$privateKey = $this->loadPrivateKey();
+		if ($privateKey === false) {
 			return false;
 		}
 
-		$params = array_filter($params, function($v) {
-			return $v !== null && $v !== '';
-		});
+		$signature = '';
+		$result = openssl_sign($signString, $signature, $privateKey, OPENSSL_ALGO_SHA256);
 
-		unset($params['sign']);
-
-		ksort($params);
-
-		$string = '';
-		foreach ($params as $key => $value) {
-			$string .= $key . '=' . $value . '&';
+		if (!$result) {
+			$this->errCode = 'SIGN_ERROR';
+			$this->errMsg = 'Failed to generate signature';
+			return false;
 		}
 
-		$partnerkey = $this->config->get('payment_wechat_pay_api_secret');
-		$string .= 'key=' . $partnerkey;
-
-		$sign = strtoupper(md5($string));
-
-		return $sign;
+		return base64_encode($signature);
 	}
 
-	public function verifySign(array $params): bool {
-		if (empty($params['sign'])) {
-			$this->errCode = 'SIGN_ERROR';
-			$this->errMsg = 'Sign does not exist';
+	private function verifySignV3(string $signString, string $signature): bool {
+		$publicKey = $this->loadPublicKey();
+		if ($publicKey === false) {
 			return false;
 		}
 
-		$receivedSign = $params['sign'];
-		$calculatedSign = $this->generateSign($params);
+		$result = openssl_verify($signString, base64_decode($signature), $publicKey, OPENSSL_ALGO_SHA256);
 
-		if ($calculatedSign === false) {
-			return false;
-		}
-
-		if ($receivedSign !== $calculatedSign) {
+		if ($result !== 1) {
 			$this->errCode = 'SIGN_ERROR';
-			$this->errMsg = 'Sign verification failed';
+			$this->errMsg = 'Signature verification failed';
 			return false;
 		}
 
 		return true;
 	}
 
-	public function arrayToXml(array $params): string|false {
-		if (empty($params)) {
-			$this->errCode = 'PARAM_ERROR';
-			$this->errMsg = 'XML parameters cannot be empty';
+	private function buildAuthorization(string $method, string $url, string $body = ''): string|false {
+		$mchId = $this->config->get('payment_wechat_pay_mch_id');
+		$serialNo = $this->config->get('payment_wechat_pay_cert_serial_no');
+
+		if (empty($mchId) || empty($serialNo)) {
+			$this->errCode = 'CONFIG_ERROR';
+			$this->errMsg = 'Merchant ID or certificate serial number not configured';
 			return false;
 		}
 
-		$xml = '<xml>';
-		foreach ($params as $key => $value) {
-			if (is_numeric($value)) {
-				$xml .= '<' . $key . '>' . $value . '</' . $key . '>';
-			} else {
-				$xml .= '<' . $key . '><![CDATA[' . $value . ']]></' . $key . '>';
-			}
-		}
-		$xml .= '</xml>';
+		$timestamp = time();
+		$nonce = $this->generateNonceStr();
 
-		return $xml;
+		$signString = $method . "\n" . $url . "\n" . $timestamp . "\n" . $nonce . "\n" . $body . "\n";
+
+		$this->log->write('WechatPay BuildAuth: timestamp=' . $timestamp . ', nonce=' . $nonce . ', serialNo=' . $serialNo);
+		$this->log->write('WechatPay SignString: ' . str_replace("\n", '\\n', $signString));
+
+		$signature = $this->generateSignV3($signString);
+		if ($signature === false) {
+			$this->log->write('WechatPay generateSignV3 failed');
+			return false;
+		}
+
+		$this->log->write('WechatPay Signature generated successfully, length=' . strlen($signature));
+
+		return sprintf(
+			'WECHATPAY2-SHA256-RSA2048 mchid="%s",nonce_str="%s",timestamp="%d",serial_no="%s",signature="%s"',
+			$mchId,
+			$nonce,
+			$timestamp,
+			$serialNo,
+			$signature
+		);
 	}
 
-	public function xmlToArray(string $xml): array|false {
-		if (empty($xml)) {
-			$this->errCode = 'PARAM_ERROR';
-			$this->errMsg = 'XML data cannot be empty';
+	private function httpRequestV3(string $method, string $url, array $data = [], int $timeout = 30): array|false {
+		$urlPath = parse_url($url, PHP_URL_PATH);
+		$body = empty($data) ? '' : json_encode($data);
+
+		$this->log->write('WechatPay httpRequestV3: method=' . $method . ', url=' . $url . ', urlPath=' . $urlPath);
+
+		$authorization = $this->buildAuthorization($method, $urlPath, $body);
+		if ($authorization === false) {
+			$this->log->write('WechatPay buildAuthorization failed: ' . $this->errMsg);
 			return false;
 		}
 
-		$result = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-
-		if ($result === false) {
-			$this->errCode = 'XML_ERROR';
-			$this->errMsg = 'XML parsing failed';
-			return false;
-		}
-
-		return json_decode(json_encode($result), true);
-	}
-
-	public function httpRequest(string $url, string $data, int $timeout = 30): string|false {
 		$ch = curl_init();
 
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+		if (!empty($body)) {
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+		}
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, [
+			'Content-Type: application/json',
+			'Accept: application/json',
+			'User-Agent: OpenCart/3.0 WechatPay/V3',
+			'Authorization: ' . $authorization
+		]);
 
 		$response = curl_exec($ch);
+		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+		$this->log->write('WechatPay HTTP Response: httpCode=' . $httpCode . ', response=' . substr($response, 0, 500));
 
 		if (curl_errno($ch)) {
 			$this->errCode = 'HTTP_ERROR';
@@ -159,93 +219,105 @@ class ModelExtensionPaymentWechatPay extends Model {
 			return false;
 		}
 
-		return $response;
+		if ($httpCode >= 400) {
+			$this->errCode = 'HTTP_ERROR';
+			$this->errMsg = 'HTTP request failed with status code: ' . $httpCode . ', Response: ' . $response;
+			return false;
+		}
+
+		$result = json_decode($response, true);
+		if (json_last_error() !== JSON_ERROR_NONE) {
+			$this->errCode = 'JSON_ERROR';
+			$this->errMsg = 'Failed to parse JSON response: ' . $response;
+			return false;
+		}
+
+		return $result;
 	}
 
 	/**
-	 * Unified Order - Replaces SDK getPrepayId method
-	 * 
-	 * Used for Native payment unified order, returns QR code URL
+	 * Unified Order (v3 API) - Native payment
 	 * 
 	 * @param array $order Order data
 	 *   - body: Product description
 	 *   - out_trade_no: Merchant order number
 	 *   - total_fee: Order amount (yuan)
 	 *   - notify_url: Callback notification URL
-	 *   - trade_type: Trade type (default NATIVE)
-	 * @return array|false Returns WeChat Pay response array on success (contains code_url), false on failure
+	 * @return array|false Returns WeChat Pay response array on success, false on failure
 	 */
 	public function unifiedOrder(array $order): array|false {
 		$appid = $this->config->get('payment_wechat_pay_app_id');
-		$mch_id = $this->config->get('payment_wechat_pay_mch_id');
+		$mchId = $this->config->get('payment_wechat_pay_mch_id');
+
+		$this->errMsg = '';
+		$this->errCode = '';
+
+		$this->log->write('WechatPay unifiedOrder: appid=' . ($appid ?: 'empty') . ', mchId=' . ($mchId ?: 'empty'));
 
 		if (empty($appid)) {
 			$this->errCode = 'CONFIG_ERROR';
 			$this->errMsg = 'WeChat APPID not configured';
+			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
-		if (empty($mch_id)) {
+		if (empty($mchId)) {
 			$this->errCode = 'CONFIG_ERROR';
 			$this->errMsg = 'Merchant ID not configured';
+			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
-		$partnerkey = $this->config->get('payment_wechat_pay_api_secret');
-		if (empty($partnerkey)) {
+		$apiV3Key = $this->config->get('payment_wechat_pay_api_v3_key');
+		if (empty($apiV3Key)) {
 			$this->errCode = 'CONFIG_ERROR';
-			$this->errMsg = 'Merchant key not configured';
+			$this->errMsg = 'APIv3 Key not configured';
+			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
-		$params = [
+		$privateKey = $this->config->get('payment_wechat_pay_private_key');
+		if (empty($privateKey)) {
+			$this->errCode = 'CONFIG_ERROR';
+			$this->errMsg = 'Private Key not configured';
+			$this->log->write('WechatPay Error: ' . $this->errMsg);
+			return false;
+		}
+
+		$serialNo = $this->config->get('payment_wechat_pay_cert_serial_no');
+		if (empty($serialNo)) {
+			$this->errCode = 'CONFIG_ERROR';
+			$this->errMsg = 'Certificate Serial No not configured';
+			$this->log->write('WechatPay Error: ' . $this->errMsg);
+			return false;
+		}
+
+		$data = [
 			'appid' => $appid,
-			'mch_id' => $mch_id,
-			'nonce_str' => $this->generateNonceStr(),
-			'body' => $order['body'],
+			'mchid' => $mchId,
+			'description' => $order['body'],
 			'out_trade_no' => $order['out_trade_no'],
-			'total_fee' => (int)($order['total_fee'] * 100),
-			'spbill_create_ip' => $this->getClientIp(),
 			'notify_url' => $order['notify_url'],
-			'trade_type' => $order['trade_type'] ?? 'NATIVE',
+			'amount' => [
+				'total' => (int)($order['total_fee'] * 100),
+				'currency' => 'CNY'
+			]
 		];
 
-		if (isset($order['product_id'])) {
-			$params['product_id'] = $order['product_id'];
-		}
+		$this->log->write('WechatPay Request Data: ' . json_encode($data));
 
-		$sign = $this->generateSign($params);
-		if ($sign === false) {
-			return false;
-		}
-		$params['sign'] = $sign;
+		$url = self::MCH_BASE_URL . '/v3/pay/transactions/native';
+		$result = $this->httpRequestV3('POST', $url, $data);
 
-		$xml = $this->arrayToXml($params);
-		if ($xml === false) {
-			return false;
-		}
-
-		$url = self::MCH_BASE_URL . '/pay/unifiedorder';
-		$response = $this->httpRequest($url, $xml);
-
-		if ($response === false) {
-			return false;
-		}
-
-		$result = $this->xmlToArray($response);
 		if ($result === false) {
+			$this->log->write('WechatPay httpRequestV3 failed: ' . $this->errMsg);
 			return false;
 		}
 
-		if ($result['return_code'] !== 'SUCCESS') {
+		if (!isset($result['code_url'])) {
 			$this->errCode = 'API_ERROR';
-			$this->errMsg = $result['return_msg'] ?? 'Unified order failed';
-			return false;
-		}
-
-		if ($result['result_code'] !== 'SUCCESS') {
-			$this->errCode = 'API_ERROR';
-			$this->errMsg = $result['err_code_des'] ?? 'Unified order failed';
+			$this->errMsg = 'Invalid response: code_url not found. Response: ' . json_encode($result);
+			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
@@ -253,46 +325,101 @@ class ModelExtensionPaymentWechatPay extends Model {
 	}
 
 	/**
-	 * Parse and verify payment callback notification - Replaces SDK getNotify method
+	 * Parse and verify payment callback notification (v3 API)
 	 * 
-	 * Reads WeChat Pay callback XML data, parses and verifies signature
-	 * 
-	 * @param string $xmlData WeChat callback raw XML data
+	 * @param string $jsonData WeChat callback raw JSON data
 	 * @return array|false Returns callback data array on success, false on failure
 	 */
-	public function parseCallback(string $xmlData): array|false {
-		$result = $this->xmlToArray($xmlData);
-		if ($result === false) {
+	public function parseCallback(string $jsonData): array|false {
+		$data = json_decode($jsonData, true);
+		if (json_last_error() !== JSON_ERROR_NONE) {
+			$this->errCode = 'JSON_ERROR';
+			$this->errMsg = 'Invalid JSON data';
 			return false;
 		}
 
-		if (!isset($result['return_code']) || $result['return_code'] !== 'SUCCESS') {
+		if (!isset($data['resource'])) {
 			$this->errCode = 'CALLBACK_ERROR';
-			$this->errMsg = 'Callback data format error';
+			$this->errMsg = 'Invalid callback data format';
 			return false;
 		}
 
-		if (!$this->verifySign($result)) {
+		$resource = $data['resource'];
+		if (!isset($resource['ciphertext']) || !isset($resource['nonce']) || !isset($resource['associated_data'])) {
+			$this->errCode = 'CALLBACK_ERROR';
+			$this->errMsg = 'Missing encrypted data fields';
 			return false;
 		}
 
-		return $result;
+		$decrypted = $this->decryptCallback(
+			$resource['ciphertext'],
+			$resource['nonce'],
+			$resource['associated_data']
+		);
+
+		if ($decrypted === false) {
+			return false;
+		}
+
+		$callbackData = json_decode($decrypted, true);
+		if (json_last_error() !== JSON_ERROR_NONE) {
+			$this->errCode = 'JSON_ERROR';
+			$this->errMsg = 'Failed to parse decrypted data';
+			return false;
+		}
+
+		return $callbackData;
+	}
+
+	private function decryptCallback(string $ciphertext, string $nonce, string $associatedData): string|false {
+		$apiV3Key = $this->config->get('payment_wechat_pay_api_v3_key');
+
+		if (empty($apiV3Key) || strlen($apiV3Key) !== 32) {
+			$this->errCode = 'CONFIG_ERROR';
+			$this->errMsg = 'APIv3 key not configured or invalid length';
+			return false;
+		}
+
+		$ciphertext = base64_decode($ciphertext);
+		if ($ciphertext === false) {
+			$this->errCode = 'DECRYPT_ERROR';
+			$this->errMsg = 'Invalid ciphertext';
+			return false;
+		}
+
+		$authTag = substr($ciphertext, -16);
+		$ciphertext = substr($ciphertext, 0, -16);
+
+		$decrypted = openssl_decrypt(
+			$ciphertext,
+			'aes-256-gcm',
+			$apiV3Key,
+			OPENSSL_RAW_DATA,
+			$nonce,
+			$authTag,
+			$associatedData
+		);
+
+		if ($decrypted === false) {
+			$this->errCode = 'DECRYPT_ERROR';
+			$this->errMsg = 'Failed to decrypt callback data';
+			return false;
+		}
+
+		return $decrypted;
 	}
 
 	/**
-	 * Build callback response XML
+	 * Build callback response (v3 API)
 	 * 
 	 * @param bool $success Whether successful
-	 * @return string XML response string
+	 * @return string JSON response string
 	 */
 	public function buildCallbackResponse(bool $success): string {
-		$params = [
-			'return_code' => $success ? 'SUCCESS' : 'FAIL',
-			'return_msg' => $success ? 'OK' : 'ERROR',
-		];
-
-		$xml = $this->arrayToXml($params);
-		return $xml !== false ? $xml : '<xml><return_code>FAIL</return_code><return_msg>ERROR</return_msg></xml>';
+		return json_encode([
+			'code' => $success ? 'SUCCESS' : 'FAIL',
+			'message' => $success ? 'Success' : 'Error'
+		]);
 	}
 
 	private function getClientIp(): string {

@@ -56,12 +56,6 @@
                 {% endif %}
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="entry-api-secret">{{ entry_api_secret }}</label>
-              <div class="col-sm-10">
-                <input type="text" name="payment_wechat_pay_api_secret" value="{{ payment_wechat_pay_api_secret }}" placeholder="{{ entry_api_secret }}" id="entry-api-secret" class="form-control"/>
-              </div>
-            </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="entry-api-v3-key">{{ entry_api_v3_key }}</label>
               <div class="col-sm-10">
@@ -89,6 +83,16 @@
                 <span class="help-block text-muted" style="font-size: 12px;">{{ help_cert_serial_no }}</span>
                 {% if error_cert_serial_no %}
                   <div class="text-danger">{{ error_cert_serial_no }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="entry-public-key-id">{{ entry_public_key_id }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="payment_wechat_pay_public_key_id" value="{{ payment_wechat_pay_public_key_id }}" placeholder="{{ entry_public_key_id }}" id="entry-public-key-id" class="form-control"/>
+                <span class="help-block text-muted" style="font-size: 12px;">{{ help_public_key_id }}</span>
+                {% if error_public_key_id %}
+                  <div class="text-danger">{{ error_public_key_id }}</div>
                 {% endif %}
               </div>
             </div>

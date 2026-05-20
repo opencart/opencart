@@ -57,8 +57,6 @@ class ModelExtensionPaymentWechatPay extends Model {
 	private function loadPrivateKey() {
 		$privateKeyContent = $this->config->get('payment_wechat_pay_private_key');
 
-		$this->log->write('WechatPay loadPrivateKey: content length=' . strlen($privateKeyContent ?: '') . ', first 50 chars=' . substr($privateKeyContent ?: '', 0, 50));
-
 		if (empty($privateKeyContent)) {
 			$this->errCode = 'CONFIG_ERROR';
 			$this->errMsg = 'Merchant private key not configured';
@@ -69,12 +67,10 @@ class ModelExtensionPaymentWechatPay extends Model {
 
 		if ($privateKey === false) {
 			$this->errCode = 'KEY_ERROR';
-			$this->errMsg = 'Failed to load merchant private key: ' . openssl_error_string();
-			$this->log->write('WechatPay loadPrivateKey failed: ' . openssl_error_string());
+			$this->errMsg = 'Failed to load merchant private key';
 			return false;
 		}
 
-		$this->log->write('WechatPay loadPrivateKey success');
 		return $privateKey;
 	}
 
@@ -157,16 +153,10 @@ class ModelExtensionPaymentWechatPay extends Model {
 
 		$signString = $method . "\n" . $url . "\n" . $timestamp . "\n" . $nonce . "\n" . $body . "\n";
 
-		$this->log->write('WechatPay BuildAuth: timestamp=' . $timestamp . ', nonce=' . $nonce . ', serialNo=' . $serialNo);
-		$this->log->write('WechatPay SignString: ' . str_replace("\n", '\\n', $signString));
-
 		$signature = $this->generateSignV3($signString);
 		if ($signature === false) {
-			$this->log->write('WechatPay generateSignV3 failed');
 			return false;
 		}
-
-		$this->log->write('WechatPay Signature generated successfully, length=' . strlen($signature));
 
 		return sprintf(
 			'WECHATPAY2-SHA256-RSA2048 mchid="%s",nonce_str="%s",timestamp="%d",serial_no="%s",signature="%s"',
@@ -182,11 +172,8 @@ class ModelExtensionPaymentWechatPay extends Model {
 		$urlPath = parse_url($url, PHP_URL_PATH);
 		$body = empty($data) ? '' : json_encode($data);
 
-		$this->log->write('WechatPay httpRequestV3: method=' . $method . ', url=' . $url . ', urlPath=' . $urlPath);
-
 		$authorization = $this->buildAuthorization($method, $urlPath, $body);
 		if ($authorization === false) {
-			$this->log->write('WechatPay buildAuthorization failed: ' . $this->errMsg);
 			return false;
 		}
 
@@ -210,8 +197,6 @@ class ModelExtensionPaymentWechatPay extends Model {
 
 		$response = curl_exec($ch);
 		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-		$this->log->write('WechatPay HTTP Response: httpCode=' . $httpCode . ', response=' . substr($response, 0, 500));
 
 		if (curl_errno($ch)) {
 			$this->errCode = 'HTTP_ERROR';
@@ -252,19 +237,15 @@ class ModelExtensionPaymentWechatPay extends Model {
 		$this->errMsg = '';
 		$this->errCode = '';
 
-		$this->log->write('WechatPay unifiedOrder: appid=' . ($appid ?: 'empty') . ', mchId=' . ($mchId ?: 'empty'));
-
 		if (empty($appid)) {
 			$this->errCode = 'CONFIG_ERROR';
 			$this->errMsg = 'WeChat APPID not configured';
-			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
 		if (empty($mchId)) {
 			$this->errCode = 'CONFIG_ERROR';
 			$this->errMsg = 'Merchant ID not configured';
-			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
@@ -272,7 +253,6 @@ class ModelExtensionPaymentWechatPay extends Model {
 		if (empty($apiV3Key)) {
 			$this->errCode = 'CONFIG_ERROR';
 			$this->errMsg = 'APIv3 Key not configured';
-			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
@@ -280,7 +260,6 @@ class ModelExtensionPaymentWechatPay extends Model {
 		if (empty($privateKey)) {
 			$this->errCode = 'CONFIG_ERROR';
 			$this->errMsg = 'Private Key not configured';
-			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
@@ -288,7 +267,6 @@ class ModelExtensionPaymentWechatPay extends Model {
 		if (empty($serialNo)) {
 			$this->errCode = 'CONFIG_ERROR';
 			$this->errMsg = 'Certificate Serial No not configured';
-			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
@@ -304,20 +282,16 @@ class ModelExtensionPaymentWechatPay extends Model {
 			]
 		];
 
-		$this->log->write('WechatPay Request Data: ' . json_encode($data));
-
 		$url = self::MCH_BASE_URL . '/v3/pay/transactions/native';
 		$result = $this->httpRequestV3('POST', $url, $data);
 
 		if ($result === false) {
-			$this->log->write('WechatPay httpRequestV3 failed: ' . $this->errMsg);
 			return false;
 		}
 
 		if (!isset($result['code_url'])) {
 			$this->errCode = 'API_ERROR';
 			$this->errMsg = 'Invalid response: code_url not found. Response: ' . json_encode($result);
-			$this->log->write('WechatPay Error: ' . $this->errMsg);
 			return false;
 		}
 
@@ -328,9 +302,34 @@ class ModelExtensionPaymentWechatPay extends Model {
 	 * Parse and verify payment callback notification (v3 API)
 	 * 
 	 * @param string $jsonData WeChat callback raw JSON data
+	 * @param string $signature Signature from Wechatpay-Signature header
+	 * @param string $timestamp Timestamp from Wechatpay-Timestamp header
+	 * @param string $nonce Nonce from Wechatpay-Nonce header
+	 * @param string $serial Serial number from Wechatpay-Serial header
 	 * @return array|false Returns callback data array on success, false on failure
 	 */
-	public function parseCallback(string $jsonData): array|false {
+	public function parseCallback(string $jsonData, string $signature = '', string $timestamp = '', string $nonce = '', string $serial = ''): array|false {
+		$this->errMsg = '';
+		$this->errCode = '';
+
+		if (!empty($signature) && !empty($timestamp) && !empty($nonce)) {
+			$publicKeyId = $this->config->get('payment_wechat_pay_public_key_id');
+			if (!empty($serial) && !empty($publicKeyId)) {
+				if ($serial !== $publicKeyId) {
+					$this->errCode = 'CERT_MISMATCH';
+					$this->errMsg = 'WeChat Pay public key ID mismatch';
+					return false;
+				}
+			}
+
+			$signString = $timestamp . "\n" . $nonce . "\n" . $jsonData . "\n";
+
+			$verified = $this->verifySignV3($signString, $signature);
+			if ($verified === false) {
+				return false;
+			}
+		}
+
 		$data = json_decode($jsonData, true);
 		if (json_last_error() !== JSON_ERROR_NONE) {
 			$this->errCode = 'JSON_ERROR';
@@ -407,29 +406,5 @@ class ModelExtensionPaymentWechatPay extends Model {
 		}
 
 		return $decrypted;
-	}
-
-	/**
-	 * Build callback response (v3 API)
-	 * 
-	 * @param bool $success Whether successful
-	 * @return string JSON response string
-	 */
-	public function buildCallbackResponse(bool $success): string {
-		return json_encode([
-			'code' => $success ? 'SUCCESS' : 'FAIL',
-			'message' => $success ? 'Success' : 'Error'
-		]);
-	}
-
-	private function getClientIp(): string {
-		if (isset($_SERVER['HTTP_CLIENT_IP'])) {
-			return $_SERVER['HTTP_CLIENT_IP'];
-		} elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			return $_SERVER['HTTP_X_FORWARDED_FOR'];
-		} elseif (isset($_SERVER['REMOTE_ADDR'])) {
-			return $_SERVER['REMOTE_ADDR'];
-		}
-		return '127.0.0.1';
 	}
 }

@@ -49,12 +49,6 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 			$data['error_mch_id'] = '';
 		}
 
-		if (isset($this->error['api_secret'])) {
-			$data['error_api_secret'] = $this->error['api_secret'];
-		} else {
-			$data['error_api_secret'] = '';
-		}
-
 		if (isset($this->error['api_v3_key'])) {
 			$data['error_api_v3_key'] = $this->error['api_v3_key'];
 		} else {
@@ -71,6 +65,12 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 			$data['error_cert_serial_no'] = $this->error['cert_serial_no'];
 		} else {
 			$data['error_cert_serial_no'] = '';
+		}
+
+		if (isset($this->error['public_key_id'])) {
+			$data['error_public_key_id'] = $this->error['public_key_id'];
+		} else {
+			$data['error_public_key_id'] = '';
 		}
 
 		if (isset($this->error['public_key'])) {
@@ -118,12 +118,6 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 			$data['payment_wechat_pay_mch_id'] = $this->config->get('payment_wechat_pay_mch_id');
 		}
 
-		if (isset($this->request->post['payment_wechat_pay_api_secret'])) {
-			$data['payment_wechat_pay_api_secret'] = $this->request->post['payment_wechat_pay_api_secret'];
-		} else {
-			$data['payment_wechat_pay_api_secret'] = $this->config->get('payment_wechat_pay_api_secret');
-		}
-
 		if (isset($this->request->post['payment_wechat_pay_api_v3_key'])) {
 			$data['payment_wechat_pay_api_v3_key'] = $this->request->post['payment_wechat_pay_api_v3_key'];
 		} else {
@@ -140,6 +134,12 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 			$data['payment_wechat_pay_cert_serial_no'] = $this->request->post['payment_wechat_pay_cert_serial_no'];
 		} else {
 			$data['payment_wechat_pay_cert_serial_no'] = $this->config->get('payment_wechat_pay_cert_serial_no');
+		}
+
+		if (isset($this->request->post['payment_wechat_pay_public_key_id'])) {
+			$data['payment_wechat_pay_public_key_id'] = $this->request->post['payment_wechat_pay_public_key_id'];
+		} else {
+			$data['payment_wechat_pay_public_key_id'] = $this->config->get('payment_wechat_pay_public_key_id');
 		}
 
 		if (isset($this->request->post['payment_wechat_pay_public_key'])) {
@@ -226,6 +226,10 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 
 		if (!$this->request->post['payment_wechat_pay_cert_serial_no']) {
 			$this->error['cert_serial_no'] = $this->language->get('error_cert_serial_no');
+		}
+
+		if (!$this->request->post['payment_wechat_pay_public_key_id']) {
+			$this->error['public_key_id'] = $this->language->get('error_public_key_id');
 		}
 
 		if (!$this->request->post['payment_wechat_pay_public_key']) {

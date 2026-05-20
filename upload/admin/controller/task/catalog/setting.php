@@ -204,7 +204,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$filename = parse_url($store_info['url'], PHP_URL_HOST) . '-' . $language_info['code'] . '.yaml';
 
-		if (!file_put_contents($base . $filename, json_encode($config))) {
+		if (!file_put_contents($base . $filename, oc_yaml_encode($config))) {
 			return ['error' => sprintf($this->language->get('error_file'), $filename)];
 		}
 

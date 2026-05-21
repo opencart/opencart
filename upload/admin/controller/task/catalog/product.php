@@ -378,14 +378,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $product_info['name'])];
 	}
 
-	public function category() {
-
-
-
-
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $product_info['name'])];
-	}
-
 	/**
 	 * Delete
 	 *

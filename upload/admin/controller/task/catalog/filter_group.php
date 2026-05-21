@@ -144,18 +144,18 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/product');
+		$this->load->language('task/catalog/filter_group');
 
-		if (!array_key_exists('product_id', $args)) {
+		if (!array_key_exists('filter_group_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/filter');
 
-		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
+		$filter_group_info = $this->model_catalog_filter->getFilterGroups((int)$args['filter_group_id']);
 
-		if (!$product_info) {
-			return ['error' => $this->language->get('error_product')];
+		if (!$filter_group_info) {
+			return ['error' => $this->language->get('error_filter_group')];
 		}
 
 		$this->load->model('setting/store');
@@ -163,14 +163,14 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/product-' . $product_info['product_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/filter_group-' . $filter_group_info['filter_group_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $product_info['name'])];
+		return ['success' => sprintf($this->language->get('text_delete'), $filter_group_info['name'])];
 	}
 }
 

@@ -103,7 +103,7 @@ class ModelExtensionPaymentWechatPay extends Model {
 		return $str;
 	}
 
-	private function generateSignV3(string $signString): string|false {
+	private function generateSignV3(string $signString): false|string {
 		$privateKey = $this->loadPrivateKey();
 		if ($privateKey === false) {
 			return false;
@@ -138,7 +138,7 @@ class ModelExtensionPaymentWechatPay extends Model {
 		return true;
 	}
 
-	private function buildAuthorization(string $method, string $url, string $body = ''): string|false {
+	private function buildAuthorization(string $method, string $url, string $body = ''): false|string {
 		$mchId = $this->config->get('payment_wechat_pay_mch_id');
 		$serialNo = $this->config->get('payment_wechat_pay_cert_serial_no');
 
@@ -168,7 +168,7 @@ class ModelExtensionPaymentWechatPay extends Model {
 		);
 	}
 
-	private function httpRequestV3(string $method, string $url, array $data = [], int $timeout = 30): array|false {
+	private function httpRequestV3(string $method, string $url, array $data = [], int $timeout = 30): false|array {
 		$urlPath = parse_url($url, PHP_URL_PATH);
 		$body = empty($data) ? '' : json_encode($data);
 
@@ -228,9 +228,9 @@ class ModelExtensionPaymentWechatPay extends Model {
 	 *   - out_trade_no: Merchant order number
 	 *   - total_fee: Order amount (yuan)
 	 *   - notify_url: Callback notification URL
-	 * @return array|false Returns WeChat Pay response array on success, false on failure
+	 * @return false|array Returns WeChat Pay response array on success, false on failure
 	 */
-	public function unifiedOrder(array $order): array|false {
+	public function unifiedOrder(array $order): false|array {
 		$appid = $this->config->get('payment_wechat_pay_app_id');
 		$mchId = $this->config->get('payment_wechat_pay_mch_id');
 
@@ -306,9 +306,9 @@ class ModelExtensionPaymentWechatPay extends Model {
 	 * @param string $timestamp Timestamp from Wechatpay-Timestamp header
 	 * @param string $nonce Nonce from Wechatpay-Nonce header
 	 * @param string $serial Serial number from Wechatpay-Serial header
-	 * @return array|false Returns callback data array on success, false on failure
+	 * @return false|array Returns callback data array on success, false on failure
 	 */
-	public function parseCallback(string $jsonData, string $signature = '', string $timestamp = '', string $nonce = '', string $serial = ''): array|false {
+	public function parseCallback(string $jsonData, string $signature = '', string $timestamp = '', string $nonce = '', string $serial = ''): false|array {
 		$this->errMsg = '';
 		$this->errCode = '';
 
@@ -370,7 +370,7 @@ class ModelExtensionPaymentWechatPay extends Model {
 		return $callbackData;
 	}
 
-	private function decryptCallback(string $ciphertext, string $nonce, string $associatedData): string|false {
+	private function decryptCallback(string $ciphertext, string $nonce, string $associatedData): false|string {
 		$apiV3Key = $this->config->get('payment_wechat_pay_api_v3_key');
 
 		if (empty($apiV3Key) || strlen($apiV3Key) !== 32) {

@@ -1193,6 +1193,18 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_attribute_data;
 	}
 
+	public function getProductsByCategoryId(int $category_id): array {
+		$product_category_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_category` WHERE `category_id` = '" . (int)$category_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_category_data[] = $result['product_id'];
+		}
+
+		return $product_category_data;
+	}
+
 	public function getProductsByFilterId(int $filter_id): array {
 		$product_filter_data = [];
 

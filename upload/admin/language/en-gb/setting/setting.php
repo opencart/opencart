@@ -97,6 +97,7 @@ $_['entry_review_status']                 = 'Allow Reviews';
 $_['entry_review_purchased']              = 'Allow Reviews Of products purchased';
 $_['entry_review_guest']                  = 'Allow Guest Reviews';
 $_['entry_article_description_length']    = 'List Description Limit';
+$_['entry_article_count']                 = 'Topic Article Count';
 $_['entry_comment_status']                = 'Allow Comments';
 $_['entry_comment_guest']                 = 'Allow Guest Comments';
 $_['entry_comment_approve']               = 'Auto Approve Comments';

@@ -311,8 +311,6 @@ class Loader {
 	 *
 	 * @param string $route
 	 *
-	 * @throws \Exception
-	 *
 	 * @return callable
 	 */
 	public function callback($route): callable {

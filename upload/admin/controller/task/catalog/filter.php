@@ -81,31 +81,28 @@ class Filter extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('catalog/product');
+		$filter_info = $this->model_catalog_filter->getFilter((int)$args['filter_id']);
 
-		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
-
-
-		$sort_order = [];
-
-		foreach ($countries as $key => $value) {
-			$sort_order[$key] = $value['name'];
+		if (!$filter_info || !$filter_info['status']) {
+			return ['success' => $this->language->get('error_filter')];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $countries);
+		$this->load->model('catalog/product');
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/' . $language_info['code'] . '/localisation/';
-		$filename = 'country.yaml';
+		$products = $this->model_catalog_product->getProductsByFilterId($filter_info['filter_id']);
+
+		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+		$filename = 'filter-' . $filter_info['filter_id'] . '.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($countries))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($products))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $language_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $store_info['name'])];
 	}
 
 	/**
@@ -120,16 +117,16 @@ class Filter extends \Opencart\System\Engine\Controller {
 	public function delete(array $args = []): array {
 		$this->load->language('task/catalog/product');
 
-		if (!array_key_exists('product_id', $args)) {
+		if (!array_key_exists('filter_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('catalog/product');
+		$this->load->model('catalog/filter');
 
-		$product_info = $this->model_catalog_product->getProduct((int)$args['product_id']);
+		$filter_info = $this->model_catalog_filter->getFilter((int)$args['filter_id']);
 
-		if (!$product_info) {
-			return ['error' => $this->language->get('error_product')];
+		if (!$filter_info || !$filter_info['status']) {
+			return ['success' => $this->language->get('error_filter')];
 		}
 
 		$this->load->model('setting/store');
@@ -137,14 +134,14 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/product-' . $product_info['product_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/filter-' . $filter_info['filter_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $product_info['name'])];
+		return ['success' => sprintf($this->language->get('text_delete'), $filter_info['name'])];
 	}
 }
 

@@ -200,6 +200,7 @@ $_['help_review']                         = 'Enable/Disable new review entry and
 $_['help_review_purchased']               = 'Reviews are only allowed for products the customer has purchased.';
 $_['help_review_guest']                   = 'Allow guests to post reviews.';
 $_['help_article_description_length']     = 'In the list view, short article description character limit';
+$_['help_article_count']                  = 'Show the number of articles inside the topics in the storefront sidebar topic menu. Be warned, this will cause an extreme performance hit for stores with a lot of topics!';
 $_['help_comment_status']                 = 'Enable/Disable new comment entry and display of existing comments.';
 $_['help_comment_guest']                  = 'Allow guests to post comments.';
 $_['help_comment_approve']                = 'Auto approve comments otherwise the first comment needs to be approved before they are added to a safe list.';

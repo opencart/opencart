@@ -59,9 +59,9 @@ class ProductManufacturer extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function list(array $args = []): array {
-		$this->load->language('task/catalog/filter');
+		$this->load->language('task/catalog/product_manufacturer');
 
-		if (!array_key_exists('filter_id', $args)) {
+		if (!array_key_exists('manufacturer_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
 
@@ -81,9 +81,9 @@ class ProductManufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$filter_info = $this->model_catalog_filter->getFilter((int)$args['filter_id']);
+		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer((int)$args['manufacturer_id']);
 
-		if (!$filter_info || !$filter_info['status']) {
+		if (!$manufacturer_info || !$manufacturer_info['status']) {
 			return ['success' => $this->language->get('error_filter')];
 		}
 
@@ -91,7 +91,7 @@ class ProductManufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		$product_ids = $this->model_catalog_product->getProductsByFilterId($filter_info['filter_id']);
+		$product_ids = $this->model_catalog_product->getProducts(['filter_manufacturer_id' => $manufacturer_info['manufacturer_id']]);
 
 		foreach ($product_ids as $product_id) {
 			$store_ids = $this->model_catalog_product->getStores($product_id);
@@ -102,7 +102,7 @@ class ProductManufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'filter-' . $filter_info['filter_id'] . '.csv';
+		$filename = 'manufacturer-' . $manufacturer_info['manufacturer_id'] . '.csv';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
@@ -112,7 +112,7 @@ class ProductManufacturer extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $filter_info['name'])];
+		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $manufacturer_info['name'])];
 	}
 
 	/**

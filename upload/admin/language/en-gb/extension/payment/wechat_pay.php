@@ -36,7 +36,7 @@ $_['entry_sort_order']               = 'Sort Order';
 // Help
 $_['help_total']                     = 'The checkout total the order must reach before this payment method becomes active';
 $_['help_currency']                  = 'The currency customer paid merchant!';
-$_['help_wechat_pay_setup']          = '<a target="_blank" href="http://www.opencart.cn/docs/wechat-pay">Click here</a> to learn how to set up Wechat Pay account.';
+$_['help_wechat_pay_setup']          = '<a target="_blank" href="http://doc.opencart.cn/docs/wechat-pay">Click here</a> to learn how to set up Wechat Pay account.';
 $_['help_app_id']                    = 'Get from WeChat Public Platform: Settings & Development -> Basic Configuration -> Developer ID (AppID)';
 $_['help_app_secret']                = 'Get from WeChat Public Platform: Settings & Development -> Basic Configuration -> Developer Password (AppSecret)';
 $_['help_mch_id']                    = 'Get from WeChat Merchant Platform: Account Center -> Merchant Info -> Merchant ID';

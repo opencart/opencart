@@ -5768,25 +5768,13 @@ function oc_db_schema() {
 				'type' => 'decimal(15,4)'
 			],
 			[
-				'name' => 'price_prefix',
-				'type' => 'varchar(1)'
-			],
-			[
 				'name'    => 'points',
 				'type'    => 'int(8)',
 				'default' => '0'
 			],
 			[
-				'name' => 'points_prefix',
-				'type' => 'varchar(1)'
-			],
-			[
 				'name' => 'weight',
 				'type' => 'decimal(15,8)'
-			],
-			[
-				'name' => 'weight_prefix',
-				'type' => 'varchar(1)'
 			]
 		],
 		'primary' => [

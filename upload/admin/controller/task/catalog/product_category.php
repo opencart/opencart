@@ -146,7 +146,7 @@ class ProductCategory extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/product-category-' . $category_info['category_id'] . '.csv';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/category-' . $category_info['category_id'] . '.csv';
 
 			if (is_file($file)) {
 				unlink($file);

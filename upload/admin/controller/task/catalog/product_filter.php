@@ -35,8 +35,8 @@ class ProductFilter extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'filter.info.' . $store_id . '.' . $filter_info['filter_id'],
-				'action' => 'task/catalog/filter.info',
+				'code'   => 'product_filter.list.' . $store_id . '.' . $filter_info['filter_id'],
+				'action' => 'task/catalog/product_filter.list',
 				'args'   => [
 					'filter_id' => $filter_info['filter_id'],
 					'store_id'  => $store_id

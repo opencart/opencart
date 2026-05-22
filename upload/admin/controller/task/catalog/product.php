@@ -242,11 +242,8 @@ class Product extends \Opencart\System\Engine\Controller {
 						'image'                   => $option_value['image'],
 						'quantity'                => $option_value['quantity'],
 						'price'                   => $option_value['price'],
-						'price_prefix'            => $option_value['price_prefix'],
 						'points'                  => $option_value['points'],
-						'points_prefix'           => $option_value['points_prefix'],
 						'weight'                  => $option_value['weight'],
-						'weight_prefix'           => $option_value['weight_prefix'],
 						'sort_order'              => $option_value['sort_order']
 					];
 				}

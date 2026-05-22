@@ -91,13 +91,13 @@ class ProductManufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		$product_ids = $this->model_catalog_product->getProducts(['filter_manufacturer_id' => $manufacturer_info['manufacturer_id']]);
+		$products = $this->model_catalog_product->getProducts(['filter_manufacturer_id' => $manufacturer_info['manufacturer_id']]);
 
-		foreach ($product_ids as $product_id) {
-			$store_ids = $this->model_catalog_product->getStores($product_id);
+		foreach ($products as $product) {
+			$store_ids = $this->model_catalog_product->getStores($product['product_id']);
 
 			if (in_array($store_info['store_id'], $store_ids)) {
-				$product_data[] = $product_id;
+				$product_data[] = $product['product_id'];
 			}
 		}
 
@@ -125,17 +125,17 @@ class ProductManufacturer extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function delete(array $args = []): array {
-		$this->load->language('task/catalog/filter');
+		$this->load->language('task/catalog/product_manufacturer');
 
 		if (!array_key_exists('filter_id', $args)) {
 			return ['error' => $this->language->get('error_required')];
 		}
 
-		$this->load->model('catalog/filter');
+		$this->load->model('catalog/manufacturer');
 
-		$filter_info = $this->model_catalog_filter->getFilter((int)$args['filter_id']);
+		$manufacturer_info = $this->model_catalog_manufacturer->getFilter((int)$args['manufacturer_id']);
 
-		if (!$filter_info || !$filter_info['status']) {
+		if (!$manufacturer_info || !$manufacturer_info['status']) {
 			return ['success' => $this->language->get('error_filter')];
 		}
 
@@ -144,13 +144,13 @@ class ProductManufacturer extends \Opencart\System\Engine\Controller {
 		$store_urls = [HTTP_CATALOG, ...array_column($this->model_setting_store->getStores(), 'url')];
 
 		foreach ($store_urls as $store_url) {
-			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/filter-' . $filter_info['filter_id'] . '.yaml';
+			$file = DIR_CATALOG . 'view/data/' . parse_url($store_url, PHP_URL_HOST) . '/catalog/manufacturer-' . $manufacturer_info['manufacturer_id'] . '.yaml';
 
 			if (is_file($file)) {
 				unlink($file);
 			}
 		}
 
-		return ['success' => sprintf($this->language->get('text_delete'), $filter_info['name'])];
+		return ['success' => sprintf($this->language->get('text_delete'), $manufacturer_info['name'])];
 	}
 }

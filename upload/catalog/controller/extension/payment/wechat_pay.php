@@ -52,26 +52,32 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 		$subject = trim($this->config->get('config_name'));
 		$currency = $this->config->get('payment_wechat_pay_currency');
 		$total_amount = trim($this->currency->format($order_info['total'], $currency, '', false));
-		$notify_url = HTTPS_SERVER . "payment_callback/wechat_pay"; //$this->url->link('wechat_pay/callback');
+		$notify_url = HTTPS_SERVER . "payment_callback/wechat_pay";
 
-		$options = array(
-			'appid'			 =>  $this->config->get('payment_wechat_pay_app_id'),
-			'appsecret'		 =>  $this->config->get('payment_wechat_pay_app_secret'),
-			'mch_id'			=>  $this->config->get('payment_wechat_pay_mch_id'),
-			'partnerkey'		=>  $this->config->get('payment_wechat_pay_api_secret')
-		);
+		$out_trade_no = 'OC' . date('YmdHis') . str_pad($order_id, 6, '0', STR_PAD_LEFT);
 
-		\Wechat\Loader::config($options);
-		$pay = new \Wechat\WechatPay();
+		$this->load->model('extension/payment/wechat_pay');
 
-		$result = $pay->getPrepayId(NULL, $subject, $order_id, $total_amount * 100, $notify_url, $trade_type = "NATIVE", NULL, $currency);
+		$orderData = [
+			'body' => $subject,
+			'out_trade_no' => $out_trade_no,
+			'total_fee' => $total_amount,
+			'notify_url' => $notify_url,
+			'trade_type' => 'NATIVE',
+		];
+
+		$result = $this->model_extension_payment_wechat_pay->unifiedOrder($orderData);
 
 		$data['error'] = '';
 		$data['code_url'] = '';
-		if($result === FALSE){
-			$data['error_warning'] = $pay->errMsg;
+		if ($result === false) {
+			$data['error_warning'] = $this->model_extension_payment_wechat_pay->getErrMsg();
 		} else {
-			$data['code_url'] = $result;
+			if (isset($result['code_url']) && !empty($result['code_url'])) {
+				$data['code_url'] = $result['code_url'];
+			} else {
+				$data['error_warning'] = 'API returned success but no code_url';
+			}
 		}
 
 		$data['action_success'] = $this->url->link('checkout/success');
@@ -107,37 +113,76 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 	}
 
 	public function callback() {
-		$options = array(
-			'appid'			 =>  $this->config->get('payment_wechat_pay_app_id'),
-			'appsecret'		 =>  $this->config->get('payment_wechat_pay_app_secret'),
-			'mch_id'			=>  $this->config->get('payment_wechat_pay_mch_id'),
-			'partnerkey'		=>  $this->config->get('payment_wechat_pay_api_secret')
-		);
+		try {
+			$this->load->model('extension/payment/wechat_pay');
 
-		\Wechat\Loader::config($options);
-		$pay = new \Wechat\WechatPay();
-		$notifyInfo = $pay->getNotify();
+			$jsonData = file_get_contents('php://input');
 
-		if ($notifyInfo === FALSE) {
-			$this->log->write('Wechat Pay Error: ' . $pay->errMsg);
-		} else {
-			if ($notifyInfo['result_code'] == 'SUCCESS' && $notifyInfo['return_code'] == 'SUCCESS') {
-				$order_id = $notifyInfo['out_trade_no'];
-				$this->load->model('checkout/order');
-				$order_info = $this->model_checkout_order->getOrder($order_id);
-				if ($order_info) {
-					$order_status_id = $order_info["order_status_id"];
-					if (!$order_status_id) {
-						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_wechat_pay_completed_status_id'));
-					}
-				}
-				$this->response->addHeader('Content-Type: application/xml');
-				$this->response->setOutput('<?xml version="1.0" encoding="UTF-8"?>
-<xml>
-  <return_code><![CDATA[SUCCESS]]></return_code>
-  <return_msg><![CDATA[DEAL WITH SUCCESS]]></return_msg>
-</xml>');
+			$signature = $_SERVER['HTTP_WECHATPAY_SIGNATURE'] ?? '';
+			$timestamp = $_SERVER['HTTP_WECHATPAY_TIMESTAMP'] ?? '';
+			$nonce = $_SERVER['HTTP_WECHATPAY_NONCE'] ?? '';
+			$serial = $_SERVER['HTTP_WECHATPAY_SERIAL'] ?? '';
+
+			$notifyInfo = $this->model_extension_payment_wechat_pay->parseCallback($jsonData, $signature, $timestamp, $nonce, $serial);
+
+			if ($notifyInfo === false) {
+				$this->log->write('WechatPay callback error: ' . $this->model_extension_payment_wechat_pay->getErrMsg());
+				$this->responseCallback(false);
+				return;
 			}
+
+			$outTradeNo = $notifyInfo['out_trade_no'];
+			$tradeState = $notifyInfo['trade_state'];
+
+			$orderId = $this->parseOrderId($outTradeNo);
+			if (!$orderId) {
+				$this->responseCallback(true);
+				return;
+			}
+
+			$this->load->model('checkout/order');
+			$order_info = $this->model_checkout_order->getOrder($orderId);
+
+			if (!$order_info) {
+				$this->responseCallback(true);
+				return;
+			}
+
+			$completedStatusId = $this->config->get('payment_wechat_pay_completed_status_id');
+			if ($order_info['order_status_id'] == $completedStatusId) {
+				$this->responseCallback(true);
+				return;
+			}
+
+			if ($tradeState === 'SUCCESS') {
+				$this->model_checkout_order->addOrderHistory($order_info['order_id'], $completedStatusId);
+			}
+
+			$this->responseCallback(true);
+		} catch (Exception $e) {
+			$this->log->write('WechatPay callback exception: ' . $e->getMessage());
+			$this->responseCallback(false);
+		}
+	}
+
+	private function parseOrderId($outTradeNo) {
+		if (preg_match('/^OC\d{14}(\d+)$/', $outTradeNo, $matches)) {
+			return (int)$matches[1];
+		}
+		if (is_numeric($outTradeNo)) {
+			return (int)$outTradeNo;
+		}
+		return false;
+	}
+
+	private function responseCallback($success) {
+		if ($success) {
+			$this->response->addHeader('HTTP/1.1 204 No Content');
+			$this->response->setOutput('');
+		} else {
+			$this->response->addHeader('HTTP/1.1 500 Internal Server Error');
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode(['code' => 'FAIL', 'message' => 'Error']));
 		}
 	}
 }

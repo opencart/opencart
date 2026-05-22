@@ -30,6 +30,7 @@
               <label class="col-sm-2 control-label" for="entry-app-id">{{ entry_app_id }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_app_id" value="{{ payment_wechat_pay_app_id }}" placeholder="{{ entry_app_id }}" id="entry-app-id" class="form-control"/>
+                <span class="help-block text-muted" style="font-size: 12px;">{{ help_app_id }}</span>
                 {% if error_app_id %}
                 <div class="text-danger">{{ error_app_id }}</div>
                 {% endif %}
@@ -39,6 +40,7 @@
               <label class="col-sm-2 control-label" for="entry-app-secret">{{ entry_app_secret }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_app_secret" value="{{ payment_wechat_pay_app_secret }}" placeholder="{{ entry_app_secret }}" id="entry-app-secret" class="form-control"/>
+                <span class="help-block text-muted" style="font-size: 12px;">{{ help_app_secret }}</span>
                 {% if error_app_secret %}
                   <div class="text-danger">{{ error_app_secret }}</div>
                 {% endif %}
@@ -48,17 +50,59 @@
               <label class="col-sm-2 control-label" for="entry-mch-id">{{ entry_mch_id }}</label>
               <div class="col-sm-10">
                 <input type="text" name="payment_wechat_pay_mch_id" value="{{ payment_wechat_pay_mch_id }}" placeholder="{{ entry_mch_id }}" id="entry-mch-id" class="form-control"/>
+                <span class="help-block text-muted" style="font-size: 12px;">{{ help_mch_id }}</span>
                 {% if error_mch_id %}
                   <div class="text-danger">{{ error_mch_id }}</div>
                 {% endif %}
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="entry-api-secret">{{ entry_api_secret }}</label>
+              <label class="col-sm-2 control-label" for="entry-api-v3-key">{{ entry_api_v3_key }}</label>
               <div class="col-sm-10">
-                <input type="text" name="payment_wechat_pay_api_secret" value="{{ payment_wechat_pay_api_secret }}" placeholder="{{ entry_api_secret }}" id="entry-api-secret" class="form-control"/>
-                {% if error_api_secret %}
-                  <div class="text-danger">{{ error_api_secret }}</div>
+                <input type="text" name="payment_wechat_pay_api_v3_key" value="{{ payment_wechat_pay_api_v3_key }}" placeholder="{{ entry_api_v3_key }}" id="entry-api-v3-key" class="form-control"/>
+                <span class="help-block text-muted" style="font-size: 12px;">{{ help_api_v3_key }}</span>
+                {% if error_api_v3_key %}
+                  <div class="text-danger">{{ error_api_v3_key }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="entry-private-key">{{ entry_private_key }}</label>
+              <div class="col-sm-10">
+                <textarea name="payment_wechat_pay_private_key" rows="8" placeholder="{{ entry_private_key }}" id="entry-private-key" class="form-control">{{ payment_wechat_pay_private_key }}</textarea>
+                <span class="help-block text-muted" style="font-size: 12px;">{{ help_private_key }}</span>
+                {% if error_private_key %}
+                  <div class="text-danger">{{ error_private_key }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="entry-cert-serial-no">{{ entry_cert_serial_no }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="payment_wechat_pay_cert_serial_no" value="{{ payment_wechat_pay_cert_serial_no }}" placeholder="{{ entry_cert_serial_no }}" id="entry-cert-serial-no" class="form-control"/>
+                <span class="help-block text-muted" style="font-size: 12px;">{{ help_cert_serial_no }}</span>
+                {% if error_cert_serial_no %}
+                  <div class="text-danger">{{ error_cert_serial_no }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="entry-public-key-id">{{ entry_public_key_id }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="payment_wechat_pay_public_key_id" value="{{ payment_wechat_pay_public_key_id }}" placeholder="{{ entry_public_key_id }}" id="entry-public-key-id" class="form-control"/>
+                <span class="help-block text-muted" style="font-size: 12px;">{{ help_public_key_id }}</span>
+                {% if error_public_key_id %}
+                  <div class="text-danger">{{ error_public_key_id }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="entry-public-key">{{ entry_public_key }}</label>
+              <div class="col-sm-10">
+                <textarea name="payment_wechat_pay_public_key" rows="8" placeholder="{{ entry_public_key }}" id="entry-public-key" class="form-control">{{ payment_wechat_pay_public_key }}</textarea>
+                <span class="help-block text-muted" style="font-size: 12px;">{{ help_public_key }}</span>
+                {% if error_public_key %}
+                  <div class="text-danger">{{ error_public_key }}</div>
                 {% endif %}
               </div>
             </div>

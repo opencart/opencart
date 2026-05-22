@@ -12,6 +12,9 @@
 
 namespace ScssPhp\ScssPhp\Ast\Sass;
 
+/**
+ * @internal
+ */
 interface CallableInvocation extends SassNode
 {
     public function getArguments(): ArgumentInvocation;

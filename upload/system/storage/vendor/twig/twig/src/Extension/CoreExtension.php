@@ -17,6 +17,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\ExpressionParser\Infix\ArrowExpressionParser;
+use Twig\ExpressionParser\Infix\AssignmentExpressionParser;
 use Twig\ExpressionParser\Infix\BinaryOperatorExpressionParser;
 use Twig\ExpressionParser\Infix\ConditionalTernaryExpressionParser;
 use Twig\ExpressionParser\Infix\DotExpressionParser;
@@ -55,10 +56,12 @@ use Twig\Node\Expression\Binary\ModBinary;
 use Twig\Node\Expression\Binary\MulBinary;
 use Twig\Node\Expression\Binary\NotEqualBinary;
 use Twig\Node\Expression\Binary\NotInBinary;
+use Twig\Node\Expression\Binary\NotSameAsBinary;
 use Twig\Node\Expression\Binary\NullCoalesceBinary;
 use Twig\Node\Expression\Binary\OrBinary;
 use Twig\Node\Expression\Binary\PowerBinary;
 use Twig\Node\Expression\Binary\RangeBinary;
+use Twig\Node\Expression\Binary\SameAsBinary;
 use Twig\Node\Expression\Binary\SpaceshipBinary;
 use Twig\Node\Expression\Binary\StartsWithBinary;
 use Twig\Node\Expression\Binary\SubBinary;
@@ -131,7 +134,7 @@ final class CoreExtension extends AbstractExtension
 
     private $dateFormats = ['F j, Y H:i', '%d days'];
     private $numberFormat = [0, '.', ','];
-    private $timezone = null;
+    private $timezone;
 
     /**
      * Sets the default format to be used by the date filter.
@@ -333,7 +336,7 @@ final class CoreExtension extends AbstractExtension
         return [
             // unary operators
             new UnaryOperatorExpressionParser(NotUnary::class, 'not', 50, new PrecedenceChange('twig/twig', '3.15', 70)),
-            new UnaryOperatorExpressionParser(SpreadUnary::class, '...', 512, description: 'Spread operator'),
+            new UnaryOperatorExpressionParser(SpreadUnary::class, '...', 512, description: 'Spread operator', operandPrecedence: 0),
             new UnaryOperatorExpressionParser(NegUnary::class, '-', 500),
             new UnaryOperatorExpressionParser(PosUnary::class, '+', 500),
 
@@ -360,6 +363,8 @@ final class CoreExtension extends AbstractExtension
             new BinaryOperatorExpressionParser(EndsWithBinary::class, 'ends with', 20),
             new BinaryOperatorExpressionParser(HasSomeBinary::class, 'has some', 20),
             new BinaryOperatorExpressionParser(HasEveryBinary::class, 'has every', 20),
+            new BinaryOperatorExpressionParser(SameAsBinary::class, '===', 20),
+            new BinaryOperatorExpressionParser(NotSameAsBinary::class, '!==', 20),
             new BinaryOperatorExpressionParser(RangeBinary::class, '..', 25),
             new BinaryOperatorExpressionParser(AddBinary::class, '+', 30),
             new BinaryOperatorExpressionParser(SubBinary::class, '-', 30),
@@ -372,6 +377,9 @@ final class CoreExtension extends AbstractExtension
 
             // ternary operator
             new ConditionalTernaryExpressionParser(),
+
+            // assignment operator
+            new AssignmentExpressionParser('='),
 
             // Twig callables
             new IsExpressionParser(),
@@ -417,10 +425,8 @@ final class CoreExtension extends AbstractExtension
 
                 trigger_deprecation('twig/twig', '3.12', 'Passing a non-countable sequence of values to "%s()" is deprecated.', __METHOD__);
 
-                return $values;
+                $values = self::toArray($values, false);
             }
-
-            $values = self::toArray($values, false);
         }
 
         if (!$count = \count($values)) {
@@ -1122,9 +1128,9 @@ final class CoreExtension extends AbstractExtension
             }
             if ((int) $bTrim == $bTrim) {
                 return $a <=> (int) $bTrim;
-            } else {
-                return (float) $a <=> (float) $bTrim;
             }
+
+            return (float) $a <=> (float) $bTrim;
         }
         if (\is_string($a) && \is_int($b)) {
             $aTrim = trim($a, " \t\n\r\v\f");
@@ -1133,9 +1139,9 @@ final class CoreExtension extends AbstractExtension
             }
             if ((int) $aTrim == $aTrim) {
                 return (int) $aTrim <=> $b;
-            } else {
-                return (float) $aTrim <=> (float) $b;
             }
+
+            return (float) $aTrim <=> (float) $b;
         }
 
         // float <=> string
@@ -1173,7 +1179,7 @@ final class CoreExtension extends AbstractExtension
      */
     public static function matches(string $regexp, ?string $str): int
     {
-        set_error_handler(function ($t, $m) use ($regexp) {
+        set_error_handler(static function ($t, $m) use ($regexp) {
             throw new RuntimeError(\sprintf('Regexp "%s" passed to "matches" is not valid', $regexp).substr($m, 12));
         });
         try {
@@ -1694,7 +1700,7 @@ final class CoreExtension extends AbstractExtension
             }
 
             if (match (true) {
-                \is_array($object) => \array_key_exists($arrayItem, $object),
+                \is_array($object) => \array_key_exists($arrayItem = (string) $arrayItem, $object),
                 $object instanceof \ArrayAccess => $object->offsetExists($arrayItem),
                 default => false,
             }) {
@@ -1715,9 +1721,13 @@ final class CoreExtension extends AbstractExtension
                 }
 
                 if ($object instanceof \ArrayAccess) {
-                    $message = \sprintf('Key "%s" in object with ArrayAccess of class "%s" does not exist.', $arrayItem, $object::class);
+                    if (\is_object($arrayItem) || \is_array($arrayItem)) {
+                        $message = \sprintf('Key of type "%s" does not exist in ArrayAccess-able object of class "%s".', get_debug_type($arrayItem), get_debug_type($object));
+                    } else {
+                        $message = \sprintf('Key "%s" does not exist in ArrayAccess-able object of class "%s".', $arrayItem, get_debug_type($object));
+                    }
                 } elseif (\is_object($object)) {
-                    $message = \sprintf('Impossible to access a key "%s" on an object of class "%s" that does not implement ArrayAccess interface.', $item, $object::class);
+                    $message = \sprintf('Impossible to access a key "%s" on an object of class "%s" that does not implement ArrayAccess interface.', $item, get_debug_type($object));
                 } elseif (\is_array($object)) {
                     if (!$object) {
                         $message = \sprintf('Key "%s" does not exist as the sequence/mapping is empty.', $arrayItem);
@@ -1880,7 +1890,7 @@ final class CoreExtension extends AbstractExtension
                 return;
             }
 
-            throw new RuntimeError(\sprintf('Neither the property "%1$s" nor one of the methods "%1$s()", "get%1$s()"/"is%1$s()"/"has%1$s()" or "__call()" exist and have public access in class "%2$s".', $item, $class), $lineno, $source);
+            throw new RuntimeError(\sprintf('Neither the property "%1$s" nor one of the methods "%1$s()", "get%1$s()", "is%1$s()", "has%1$s()" or "__call()" exist and have public access in class "%2$s".', $item, $class), $lineno, $source);
         }
 
         if ($sandboxed) {
@@ -2138,7 +2148,7 @@ final class CoreExtension extends AbstractExtension
      */
     public static function parseBlockFunction(Parser $parser, Node $fakeNode, $args, int $line): AbstractExpression
     {
-        $fakeFunction = new TwigFunction('block', fn ($name, $template = null) => null);
+        $fakeFunction = new TwigFunction('block', static fn ($name, $template = null) => null);
         $args = (new CallableArgumentsExtractor($fakeNode, $fakeFunction))->extractArguments($args);
 
         return new BlockReferenceExpression($args[0], $args[1] ?? null, $line);
@@ -2149,7 +2159,7 @@ final class CoreExtension extends AbstractExtension
      */
     public static function parseAttributeFunction(Parser $parser, Node $fakeNode, $args, int $line): AbstractExpression
     {
-        $fakeFunction = new TwigFunction('attribute', fn ($variable, $attribute, $arguments = null) => null);
+        $fakeFunction = new TwigFunction('attribute', static fn ($variable, $attribute, $arguments = null) => null);
         $args = (new CallableArgumentsExtractor($fakeNode, $fakeFunction))->extractArguments($args);
 
         /*

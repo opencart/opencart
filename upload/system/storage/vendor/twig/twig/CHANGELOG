@@ -1,3 +1,44 @@
+# 3.24.0 (2026-03-17)
+
+ * Deprecate not implementing the `getOperatorTokens()` method in `ExpressionParserInterface` implementations
+ * Deprecate passing a non-`AbstractExpression` node to `Twig\Node\Expression\Binary\MatchesBinary` constructor
+ * Deprecate passing a non-`AbstractExpression` node to `Parser::setParent()`
+ * Add support for renaming variables in object destructuring (`{name: userName} = user`)
+ * Add `html_attr_relaxed` escaping strategy that preserves :, @, [, and ] for front-end framework attribute names
+ * Add support for short-circuiting in null-safe operator chains
+ * Add the `html_attr` function and `html_attr_merge` as well as `html_attr_type` filters
+
+# 3.23.0 (2026-01-23)
+
+ * Add `=` assignment operator (allows to set variables in expression or to replace the short-form of the set tag)
+ * Add sequence, mapping, and object destructuring
+ * Add `?.` null-safe operator
+ * Add `===` and `!==` operators (equivalent to the `same as` and `not same as` tests)
+ * Fix opcache preload warning for unlinked anonymous class
+ * Fix spread operator behavior
+
+# 3.22.2 (2025-12-14)
+
+ * Fix "cycle" with non-countable ArrayAccess + Traversable objects
+ * Use "getShareDir" as an indicator of Symfony version in Symfony bundle
+ * Fix escaper compatibility with PHP 8.5
+
+# 3.22.1 (2025-11-16)
+
+ * Add support for Symfony 8
+
+# 3.22.0 (2025-10-29)
+
+ * Add support for two words test in guard tag
+ * Add `Environment::registerUndefinedTestCallback()`
+ * Fix compatibility with Symfony 8
+ * Fix accessing arrays with stringable objects as key
+ * Avoid errors when failing to guess the template info for an error
+ * Fix expression parser compatibility layer
+ * Fix compiling 'index' with repr (not string) in EmbedNode
+ * Update configuration keys + allow extra keys for CommonMark extensions
+ * Allow usage of other Markdown converters than CommonMark in LeagueMarkdown
+
 # 3.21.1 (2025-05-03)
 
  * Fix ExtensionSet usage of BinaryOperatorExpressionParser
@@ -44,6 +85,7 @@
 
 # 3.18.0 (2024-12-29)
 
+ * Support for invoking closures
  * Fix unary operator precedence change
  * Ignore `SyntaxError` exceptions from undefined handlers when using the `guard` tag
  * Add a way to stream template rendering (`TemplateWrapper::stream()` and `TemplateWrapper::streamBlock()`)
@@ -52,7 +94,6 @@
 
  * Fix the null coalescing operator when the test returns null
  * Fix the Elvis operator when used as '? :' instead of '?:'
- * Support for invoking closures
 
 # 3.17.0 (2024-12-10)
 

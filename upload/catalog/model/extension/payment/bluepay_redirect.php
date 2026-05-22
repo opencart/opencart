@@ -115,7 +115,11 @@ class ModelExtensionPaymentBluePayRedirect extends Model {
 		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post_data));
 
 		$response_data = curl_exec($curl);
-		curl_close($curl);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($curl);
+		} else {
+			curl_close($curl);
+		}
 
 		return json_decode($response_data, true);
 	}

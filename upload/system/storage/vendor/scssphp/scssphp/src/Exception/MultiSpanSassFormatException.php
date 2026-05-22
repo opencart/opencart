@@ -14,6 +14,9 @@ namespace ScssPhp\ScssPhp\Exception;
 
 use SourceSpan\FileSpan;
 
+/**
+ * @internal
+ */
 final class MultiSpanSassFormatException extends MultiSpanSassException implements SassFormatException
 {
     public function withAdditionalSpan(FileSpan $span, string $label, ?\Throwable $previous = null): MultiSpanSassFormatException

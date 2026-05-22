@@ -600,7 +600,7 @@ final class SerializeVisitor implements CssVisitor, ValueVisitor, SelectorVisito
     private function writeCalculationValue(object $value): void
     {
         if ($value instanceof SassNumber && $value->hasComplexUnits() && !$this->inspect) {
-            throw new SassScriptException("$value is not a valid CSS value.");
+            throw new SassScriptException("$value isn't a valid CSS value.");
         }
         if ($value instanceof SassNumber && !is_finite($value->getValue())) {
             if (is_nan($value->getValue())) {
@@ -837,7 +837,7 @@ final class SerializeVisitor implements CssVisitor, ValueVisitor, SelectorVisito
     public function visitFunction(SassFunction $value): void
     {
         if (!$this->inspect) {
-            throw new SassScriptException("$value is not a valid CSS value.");
+            throw new SassScriptException("$value isn't a valid CSS value.");
         }
 
         $this->buffer->write('get-function(');
@@ -848,7 +848,7 @@ final class SerializeVisitor implements CssVisitor, ValueVisitor, SelectorVisito
     public function visitMixin(SassMixin $value): void
     {
         if (!$this->inspect) {
-            throw new SassScriptException("$value is not a valid CSS value.");
+            throw new SassScriptException("$value isn't a valid CSS value.");
         }
 
         $this->buffer->write('get-mixin(');
@@ -862,7 +862,7 @@ final class SerializeVisitor implements CssVisitor, ValueVisitor, SelectorVisito
             $this->buffer->writeChar('[');
         } elseif (\count($value->asList()) === 0) {
             if (!$this->inspect) {
-                throw new SassScriptException("() is not a valid CSS value.");
+                throw new SassScriptException("() isn't a valid CSS value.");
             }
 
             $this->buffer->write('()');
@@ -959,7 +959,7 @@ final class SerializeVisitor implements CssVisitor, ValueVisitor, SelectorVisito
     public function visitMap(SassMap $value): void
     {
         if (!$this->inspect) {
-            throw new SassScriptException("$value is not a valid CSS value.");
+            throw new SassScriptException("$value isn't a valid CSS value.");
         }
 
         $this->buffer->writeChar('(');
@@ -1023,7 +1023,7 @@ final class SerializeVisitor implements CssVisitor, ValueVisitor, SelectorVisito
 
         if ($value->hasComplexUnits()) {
             if (!$this->inspect) {
-                throw new SassScriptException("$value is not a valid CSS value.");
+                throw new SassScriptException("$value isn't a valid CSS value.");
             }
 
             $this->visitCalculation(SassCalculation::unsimplified('calc', [$value]));

@@ -351,7 +351,11 @@ class ModelExtensionPaymentWorldpay extends Model {
 		);
 
 		$result = json_decode(curl_exec($curl));
-		curl_close($curl);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($curl);
+		} else {
+			curl_close($curl);
+		}
 		return $result;
 	}
 

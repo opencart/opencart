@@ -62,7 +62,7 @@ final class Character
      */
     public static function isAlphabetic(string $character): bool
     {
-        $charCode = \ord($character);
+        $charCode = \ord($character[0]);
 
         return ($charCode >= \ord('a') && $charCode <= \ord('z')) || ($charCode >= \ord('A') && $charCode <= \ord('Z'));
     }
@@ -76,7 +76,7 @@ final class Character
             return false;
         }
 
-        $charCode = \ord($character);
+        $charCode = \ord($character[0]);
 
         return $charCode >= \ord('0') && $charCode <= \ord('9');
     }
@@ -86,7 +86,7 @@ final class Character
      */
     public static function isNameStart(string $character): bool
     {
-        return $character === '_' || self::isAlphabetic($character) || \ord($character) >= 0x80;
+        return $character === '_' || self::isAlphabetic($character) || \ord($character[0]) >= 0x80;
     }
 
     /**
@@ -110,7 +110,7 @@ final class Character
             return true;
         }
 
-        $charCode = \ord($character);
+        $charCode = \ord($character[0]);
 
         if ($charCode >= \ord('a') && $charCode <= \ord('f')) {
             return true;
@@ -157,12 +157,12 @@ final class Character
 
         // If this check fails, the characters are definitely different. If it
         // succeeds *and* either character is an ASCII letter, they're equivalent.
-        if ((\ord($character1) ^ \ord($character2)) !== self::ASCII_CASE_BIT) {
+        if ((\ord($character1[0]) ^ \ord($character2[0])) !== self::ASCII_CASE_BIT) {
             return false;
         }
 
         // Now we just need to verify that one of the characters is an ASCII letter.
-        $upperCase1 = \ord($character1) & ~self::ASCII_CASE_BIT;
+        $upperCase1 = \ord($character1[0]) & ~self::ASCII_CASE_BIT;
 
         return $upperCase1 >= \ord('A') && $upperCase1 <= \ord('Z');
     }

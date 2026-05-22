@@ -212,12 +212,15 @@ final class SourceFile
 
     /**
      * The 0-based column of that offset.
+     *
+     * Unlike offsets (which are byte-offsets), columns are computed based on Unicode
+     * codepoints to provide a better experience.
      */
     public function getColumn(int $offset): int
     {
         $line = $this->getLine($offset);
 
-        return $offset - $this->lineStarts[$line];
+        return mb_strlen(substr($this->string, $this->lineStarts[$line], $offset - $this->lineStarts[$line]), 'UTF-8');
     }
 
     /**
@@ -237,7 +240,17 @@ final class SourceFile
             throw new \OutOfRangeException('Column may not be negative.');
         }
 
-        $result = $this->lineStarts[$line] + $column;
+        if ($column === 0) {
+            $result = $this->lineStarts[$line];
+        } else {
+            $lineContent = substr($this->string, $this->lineStarts[$line], $this->lineStarts[$line + 1] ?? null);
+
+            if ($column > mb_strlen($lineContent, 'UTF-8')) {
+                throw new \OutOfRangeException("Line $line doesn't have $column columns.");
+            }
+
+            $result = $this->lineStarts[$line] + \strlen(mb_substr($lineContent, 0, $column, 'UTF-8'));
+        }
 
         if ($result > \strlen($this->string) || ($line + 1 < \count($this->lineStarts) && $result >= $this->lineStarts[$line + 1])) {
             throw new \OutOfRangeException("Line $line doesn't have $column columns.");

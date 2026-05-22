@@ -6,5 +6,4 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname(dirname(dirname(dirname($vendorDir))));
 
 return array(
-    'Braintree' => array($vendorDir . '/braintree/braintree_php/lib'),
 );

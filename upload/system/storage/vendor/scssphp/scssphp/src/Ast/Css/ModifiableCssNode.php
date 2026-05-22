@@ -137,7 +137,7 @@ abstract class ModifiableCssNode implements CssNode
     }
 
     /**
-     * @@internal
+     * @internal
      */
     protected function resetParentReferences(): void
     {

@@ -3,7 +3,7 @@
     "type": "library",
     "description": "scssphp is a compiler for SCSS written in PHP.",
     "keywords": ["css", "stylesheet", "scss", "sass", "less"],
-    "homepage": "http://scssphp.github.io/scssphp/",
+    "homepage": "https://scssphp.github.io/scssphp/",
     "license": [
         "MIT"
     ],
@@ -29,24 +29,25 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-json": "*",
-        "league/uri": "^7.4",
-        "league/uri-interfaces": "^7.4",
-        "scssphp/source-span": "^1.0",
-        "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
-        "symfony/polyfill-mbstring": "^1.30"
-    },
-    "suggest": {
-        "ext-mbstring": "For best performance, mbstring should be installed as it is faster than the polyfill"
+        "ext-mbstring": "*",
+        "league/uri": "^7.6",
+        "league/uri-interfaces": "^7.6",
+        "scssphp/source-span": "^1.1",
+        "symfony/filesystem": "^5.4 || ^6.0 || ^7.0 || ^8.0"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.4",
+        "jgthms/bulma": "~0.9.4",
+        "jiripudil/phpstan-sealed-classes": "^1.3",
+        "phpstan/phpstan": "^2.1.31",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpunit/phpunit": "^9.5.6",
         "sass/sass-spec": "*",
-        "squizlabs/php_codesniffer": "~3.5",
-        "symfony/phpunit-bridge": "^5.1",
-        "symfony/var-dumper": "^6.3",
+        "squizlabs/php_codesniffer": "^3.13",
+        "symfony/phpunit-bridge": "^7.3 || ^8.0",
+        "symfony/polyfill-php84": "^1.33",
+        "symfony/var-dumper": "^6.4 || ^7.3 || ^8.0",
         "thoughtbot/bourbon": "^7.0",
-        "twbs/bootstrap": "~5.0",
+        "twbs/bootstrap": "^5.3",
         "twbs/bootstrap4": "4.6.1",
         "zurb/foundation": "~6.7.0"
     },
@@ -90,6 +91,24 @@
         {
             "type": "package",
             "package": {
+                "name": "jgthms/bulma",
+                "version": "v0.9.4",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/jgthms/bulma.git",
+                    "reference": "3e00a8e6d0d0e566d507328f0185ef84854effba"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/jgthms/bulma/zipball/3e00a8e6d0d0e566d507328f0185ef84854effba",
+                    "reference": "3e00a8e6d0d0e566d507328f0185ef84854effba",
+                    "shasum": ""
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "twbs/bootstrap4",
                 "version": "v4.6.1",
                 "source": {
@@ -107,15 +126,6 @@
         }
     ],
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "bamarni/composer-bin-plugin": true
-        }
-    },
-    "extra": {
-        "bamarni-bin": {
-            "forward-command": false,
-            "bin-links": false
-        }
+        "sort-packages": true
     }
 }

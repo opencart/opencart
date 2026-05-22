@@ -20,6 +20,7 @@ use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\Expression\Binary\ConcatBinary;
 use Twig\Node\Expression\ConstantExpression;
+use Twig\Node\Expression\EmptyExpression;
 use Twig\Node\Expression\Variable\ContextVariable;
 use Twig\Parser;
 use Twig\Token;
@@ -29,8 +30,6 @@ use Twig\Token;
  */
 final class LiteralExpressionParser extends AbstractExpressionParser implements PrefixExpressionParserInterface, ExpressionParserDescriptionInterface
 {
-    private string $type = 'literal';
-
     public function parse(Parser $parser, Token $token): AbstractExpression
     {
         $stream = $parser->getStream();
@@ -40,41 +39,30 @@ final class LiteralExpressionParser extends AbstractExpressionParser implements 
                 switch ($token->getValue()) {
                     case 'true':
                     case 'TRUE':
-                        $this->type = 'constant';
-
                         return new ConstantExpression(true, $token->getLine());
 
                     case 'false':
                     case 'FALSE':
-                        $this->type = 'constant';
-
                         return new ConstantExpression(false, $token->getLine());
 
                     case 'none':
                     case 'NONE':
                     case 'null':
                     case 'NULL':
-                        $this->type = 'constant';
-
                         return new ConstantExpression(null, $token->getLine());
 
                     default:
-                        $this->type = 'variable';
-
                         return new ContextVariable($token->getValue(), $token->getLine());
                 }
 
                 // no break
             case $token->test(Token::NUMBER_TYPE):
                 $stream->next();
-                $this->type = 'constant';
 
                 return new ConstantExpression($token->getValue(), $token->getLine());
 
             case $token->test(Token::STRING_TYPE):
             case $token->test(Token::INTERPOLATION_START_TYPE):
-                $this->type = 'string';
-
                 return $this->parseStringExpression($parser);
 
             case $token->test(Token::PUNCTUATION_TYPE):
@@ -95,13 +83,8 @@ final class LiteralExpressionParser extends AbstractExpressionParser implements 
                 if (preg_match(Lexer::REGEX_NAME, $token->getValue(), $matches) && $matches[0] == $token->getValue()) {
                     // in this context, string operators are variable names
                     $stream->next();
-                    $this->type = 'variable';
 
                     return new ContextVariable($token->getValue(), $token->getLine());
-                }
-
-                if ('=' === $token->getValue() && ('==' === $stream->look(-1)->getValue() || '!=' === $stream->look(-1)->getValue())) {
-                    throw new SyntaxError(\sprintf('Unexpected operator of value "%s". Did you try to use "===" or "!==" for strict comparison? Use "is same as(value)" instead.', $token->getValue()), $token->getLine(), $stream->getSourceContext());
                 }
 
                 // no break
@@ -112,7 +95,12 @@ final class LiteralExpressionParser extends AbstractExpressionParser implements 
 
     public function getName(): string
     {
-        return $this->type;
+        return 'literal';
+    }
+
+    public function getOperatorTokens(): array
+    {
+        return [];
     }
 
     public function getDescription(): string
@@ -156,8 +144,6 @@ final class LiteralExpressionParser extends AbstractExpressionParser implements 
 
     private function parseSequenceExpression(Parser $parser)
     {
-        $this->type = 'sequence';
-
         $stream = $parser->getStream();
         $stream->expect(Token::OPERATOR_TYPE, '[', 'A sequence element was expected');
 
@@ -174,7 +160,12 @@ final class LiteralExpressionParser extends AbstractExpressionParser implements 
             }
             $first = false;
 
-            $node->addElement($parser->parseExpression());
+            // Check for empty slots (comma with no expression)
+            if ($stream->test(Token::PUNCTUATION_TYPE, ',')) {
+                $node->addElement(new EmptyExpression($stream->getCurrent()->getLine()));
+            } else {
+                $node->addElement($parser->parseExpression());
+            }
         }
         $stream->expect(Token::PUNCTUATION_TYPE, ']', 'An opened sequence is not properly closed');
 
@@ -183,8 +174,6 @@ final class LiteralExpressionParser extends AbstractExpressionParser implements 
 
     private function parseMappingExpression(Parser $parser)
     {
-        $this->type = 'mapping';
-
         $stream = $parser->getStream();
         $stream->expect(Token::PUNCTUATION_TYPE, '{', 'A mapping element was expected');
 

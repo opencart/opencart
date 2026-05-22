@@ -19,6 +19,8 @@ namespace ScssPhp\ScssPhp\Util;
  * when the underlying type uses value equality.
  *
  * @template T
+ *
+ * @internal
  */
 final class Box implements Equatable
 {

@@ -73,7 +73,11 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 		$this->logger('Curl response info: ' . print_r(curl_getinfo($ch), 1));
 		$this->logger('Curl response: ' . $response);
 
-		curl_close ($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		return $response;
 	}

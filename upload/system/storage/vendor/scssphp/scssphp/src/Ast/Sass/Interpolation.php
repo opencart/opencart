@@ -30,39 +30,12 @@ final class Interpolation implements SassNode
     private readonly FileSpan $span;
 
     /**
-     * Creates a new {@see Interpolation} by concatenating a sequence of strings,
-     * {@see Expression}s, or nested {@see Interpolation}s.
-     *
-     * @param array<string|Expression|Interpolation> $contents
-     */
-    public static function concat(array $contents, FileSpan $span): Interpolation
-    {
-        $buffer = new InterpolationBuffer();
-
-        foreach ($contents as $element) {
-            if (\is_string($element)) {
-                $buffer->write($element);
-            } elseif ($element instanceof Expression) {
-                $buffer->add($element);
-            } elseif ($element instanceof Interpolation) {
-                $buffer->addInterpolation($element);
-            } else {
-                throw new \InvalidArgumentException(sprintf('The elements in $contents may only contains strings, Expressions, or Interpolations, "%s" given.', get_debug_type($element)));
-            }
-        }
-
-        return $buffer->buildInterpolation($span);
-    }
-
-    /**
      * @param list<string|Expression> $contents
      */
     public function __construct(array $contents, FileSpan $span)
     {
         for ($i = 0; $i < \count($contents); $i++) {
-            if (!\is_string($contents[$i]) && !$contents[$i] instanceof Expression) {
-                throw new \TypeError('The contents of an Interpolation may only contain strings or Expression instances.');
-            }
+            // Dart-sass has a validation on the type of elements here. This is useless for us because phpstan supports union types, unlike the Dart type system
 
             if ($i != 0 && \is_string($contents[$i]) && \is_string($contents[$i - 1])) {
                 throw new \InvalidArgumentException('The contents of an Interpolation may not contain adjacent strings.');

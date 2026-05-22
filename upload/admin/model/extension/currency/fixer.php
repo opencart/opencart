@@ -23,7 +23,11 @@ class ModelExtensionCurrencyFixer extends Model {
 
 				$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-				curl_close($curl);
+				if (version_compare(phpversion(), '8.0.', '>=')) {
+					unset($curl);
+				} else {
+					curl_close($curl);
+				}
 
 				if ($status == 200) {
 					$response_info = json_decode($response, true);

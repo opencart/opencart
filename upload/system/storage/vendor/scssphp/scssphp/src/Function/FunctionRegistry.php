@@ -22,7 +22,7 @@ use ScssPhp\ScssPhp\Value\Value;
 class FunctionRegistry
 {
     /**
-     * @var array<string, array{overloads: array<string, callable(list<Value>): Value>, url: string}>
+     * @var array<string, array{overloads: array<string, callable(list<Value>): Value>, url?: string, canonical_name?: string}>
      */
     private const BUILTIN_FUNCTIONS = [
         // sass:color
@@ -35,13 +35,13 @@ class FunctionRegistry
             '$red, $green, $blue' => [ColorFunctions::class, 'rgb'],
             '$color, $alpha' => [ColorFunctions::class, 'rgbTwoArgs'],
             '$channels' => [ColorFunctions::class, 'rgbOneArgs'],
-        ], 'url' => 'sass:color'],
+        ]],
         'rgba' => ['overloads' => [
             '$red, $green, $blue, $alpha' => [ColorFunctions::class, 'rgba'],
             '$red, $green, $blue' => [ColorFunctions::class, 'rgba'],
             '$color, $alpha' => [ColorFunctions::class, 'rgbaTwoArgs'],
             '$channels' => [ColorFunctions::class, 'rgbaOneArgs'],
-        ], 'url' => 'sass:color'],
+        ]],
         'invert' => ['overloads' => ['$color, $weight: 100%' => [ColorFunctions::class, 'invert']], 'url' => 'sass:color'],
         'hue' => ['overloads' => ['$color' => [ColorFunctions::class, 'hue']], 'url' => 'sass:color'],
         'saturation' => ['overloads' => ['$color' => [ColorFunctions::class, 'saturation']], 'url' => 'sass:color'],
@@ -52,13 +52,13 @@ class FunctionRegistry
             '$hue, $saturation, $lightness' => [ColorFunctions::class, 'hsl'],
             '$hue, $saturation' => [ColorFunctions::class, 'hslTwoArgs'],
             '$channels' => [ColorFunctions::class, 'hslOneArgs'],
-        ], 'url' => 'sass:color'],
+        ]],
         'hsla' => ['overloads' => [
             '$hue, $saturation, $lightness, $alpha' => [ColorFunctions::class, 'hsla'],
             '$hue, $saturation, $lightness' => [ColorFunctions::class, 'hsla'],
             '$hue, $saturation' => [ColorFunctions::class, 'hslaTwoArgs'],
             '$channels' => [ColorFunctions::class, 'hslaOneArgs'],
-        ], 'url' => 'sass:color'],
+        ]],
         'grayscale' => ['overloads' => ['$color' => [ColorFunctions::class, 'grayscale']], 'url' => 'sass:color'],
         'adjust-hue' => ['overloads' => ['$color, $degrees' => [ColorFunctions::class, 'adjustHue']], 'url' => 'sass:color'],
         'lighten' => ['overloads' => ['$color, $amount' => [ColorFunctions::class, 'lighten']], 'url' => 'sass:color'],
@@ -66,7 +66,7 @@ class FunctionRegistry
         'saturate' => ['overloads' => [
             '$amount' => [ColorFunctions::class, 'saturateCss'],
             '$color, $amount' => [ColorFunctions::class, 'saturate'],
-        ], 'url' => 'sass:color'],
+        ]],
         'desaturate' => ['overloads' => ['$color, $amount' => [ColorFunctions::class, 'desaturate']], 'url' => 'sass:color'],
         'opacify' => ['overloads' => ['$color, $amount' => [ColorFunctions::class, 'opacify']], 'url' => 'sass:color'],
         'fade-in' => ['overloads' => ['$color, $amount' => [ColorFunctions::class, 'opacify']], 'url' => 'sass:color'],
@@ -75,12 +75,12 @@ class FunctionRegistry
         'alpha' => ['overloads' => [
             '$color' => [ColorFunctions::class, 'alpha'],
             '$args...' => [ColorFunctions::class, 'alphaMicrosoft'],
-        ], 'url' => 'sass:color'],
+        ]],
         'opacity' => ['overloads' => ['$color' => [ColorFunctions::class, 'opacity']], 'url' => 'sass:color'],
         'ie-hex-str' => ['overloads' => ['$color' => [ColorFunctions::class, 'ieHexStr']], 'url' => 'sass:color'],
-        'adjust-color' => ['overloads' => ['$color, $kwargs...' => [ColorFunctions::class, 'adjust']], 'url' => 'sass:color'],
-        'scale-color' => ['overloads' => ['$color, $kwargs...' => [ColorFunctions::class, 'scale']], 'url' => 'sass:color'],
-        'change-color' => ['overloads' => ['$color, $kwargs...' => [ColorFunctions::class, 'change']], 'url' => 'sass:color'],
+        'adjust-color' => ['overloads' => ['$color, $kwargs...' => [ColorFunctions::class, 'adjust']], 'url' => 'sass:color', 'canonical_name' => 'adjust'],
+        'scale-color' => ['overloads' => ['$color, $kwargs...' => [ColorFunctions::class, 'scale']], 'url' => 'sass:color', 'canonical_name' => 'scale'],
+        'change-color' => ['overloads' => ['$color, $kwargs...' => [ColorFunctions::class, 'change']], 'url' => 'sass:color', 'canonical_name' => 'change'],
         // sass:list
         'length' => ['overloads' => ['$list' => [ListFunctions::class, 'length']], 'url' => 'sass:list'],
         'nth' => ['overloads' => ['$list, $n' => [ListFunctions::class, 'nth']], 'url' => 'sass:list'],
@@ -90,13 +90,13 @@ class FunctionRegistry
         'zip' => ['overloads' => ['$lists...' => [ListFunctions::class, 'zip']], 'url' => 'sass:list'],
         'index' => ['overloads' => ['$list, $value' => [ListFunctions::class, 'index']], 'url' => 'sass:list'],
         'is-bracketed' => ['overloads' => ['$list' => [ListFunctions::class, 'isBracketed']], 'url' => 'sass:list'],
-        'list-separator' => ['overloads' => ['$list' => [ListFunctions::class, 'separator']], 'url' => 'sass:list'],
+        'list-separator' => ['overloads' => ['$list' => [ListFunctions::class, 'separator']], 'url' => 'sass:list', 'canonical_name' => 'separator'],
         // sass:map
-        'map-get' => ['overloads' => ['$map, $key, $keys...' => [MapFunctions::class, 'get']], 'url' => 'sass:map'],
+        'map-get' => ['overloads' => ['$map, $key, $keys...' => [MapFunctions::class, 'get']], 'url' => 'sass:map', 'canonical_name' => 'get'],
         'map-merge' => ['overloads' => [
             '$map1, $map2' => [MapFunctions::class, 'mergeTwoArgs'],
             '$map1, $args...' => [MapFunctions::class, 'mergeVariadic'],
-        ], 'url' => 'sass:map'],
+        ], 'canonical_name' => 'merge'],
         'map-remove' => ['overloads' => [
             // Because the signature below has an explicit `$key` argument, it doesn't
             // allow zero keys to be passed. We want to allow that case, so we add an
@@ -105,10 +105,10 @@ class FunctionRegistry
             // The first argument has special handling so that the $key parameter can be
             // passed by name.
             '$map, $key, $keys...' => [MapFunctions::class, 'remove'],
-        ], 'url' => 'sass:map'],
-        'map-keys' => ['overloads' => ['$map' => [MapFunctions::class, 'keys']], 'url' => 'sass:map'],
-        'map-values' => ['overloads' => ['$map' => [MapFunctions::class, 'values']], 'url' => 'sass:map'],
-        'map-has-key' => ['overloads' => ['$map, $key, $keys...' => [MapFunctions::class, 'hasKey']], 'url' => 'sass:map'],
+        ], 'canonical_name' => 'remove'],
+        'map-keys' => ['overloads' => ['$map' => [MapFunctions::class, 'keys']], 'url' => 'sass:map', 'canonical_name' => 'keys'],
+        'map-values' => ['overloads' => ['$map' => [MapFunctions::class, 'values']], 'url' => 'sass:map', 'canonical_name' => 'values'],
+        'map-has-key' => ['overloads' => ['$map, $key, $keys...' => [MapFunctions::class, 'hasKey']], 'url' => 'sass:map', 'canonical_name' => 'has-key'],
         // sass:math
         'abs' => ['overloads' => ['$number' => [MathFunctions::class, 'abs']], 'url' => 'sass:math'],
         'ceil' => ['overloads' => ['$number' => [MathFunctions::class, 'ceil']], 'url' => 'sass:math'],
@@ -119,8 +119,8 @@ class FunctionRegistry
         'percentage' => ['overloads' => ['$number' => [MathFunctions::class, 'percentage']], 'url' => 'sass:math'],
         'round' => ['overloads' => ['$number' => [MathFunctions::class, 'round']], 'url' => 'sass:math'],
         'unit' => ['overloads' => ['$number' => [MathFunctions::class, 'unit']], 'url' => 'sass:math'],
-        'comparable' => ['overloads' => ['$number1, $number2' => [MathFunctions::class, 'compatible']], 'url' => 'sass:math'],
-        'unitless' => ['overloads' => ['$number' => [MathFunctions::class, 'isUnitless']], 'url' => 'sass:math'],
+        'comparable' => ['overloads' => ['$number1, $number2' => [MathFunctions::class, 'compatible']], 'url' => 'sass:math', 'canonical_name' => 'compatible'],
+        'unitless' => ['overloads' => ['$number' => [MathFunctions::class, 'isUnitless']], 'url' => 'sass:math', 'canonical_name' => 'is-unitless'],
         // sass:meta
         'feature-exists' => ['overloads' => ['$feature' => [MetaFunctions::class, 'featureExists']], 'url' => 'sass:meta'],
         'inspect' => ['overloads' => ['$value' => [MetaFunctions::class, 'inspect']], 'url' => 'sass:meta'],
@@ -129,22 +129,25 @@ class FunctionRegistry
         // sass:selector
         'is-superselector' => ['overloads' => ['$super, $sub' => [SelectorFunctions::class, 'isSuperselector']], 'url' => 'sass:selector'],
         'simple-selectors' => ['overloads' => ['$selector' => [SelectorFunctions::class, 'simpleSelectors']], 'url' => 'sass:selector'],
-        'selector-parse' => ['overloads' => ['$selector' => [SelectorFunctions::class, 'parse']], 'url' => 'sass:selector'],
-        'selector-nest' => ['overloads' => ['$selectors...' => [SelectorFunctions::class, 'nest']], 'url' => 'sass:selector'],
-        'selector-append' => ['overloads' => ['$selectors...' => [SelectorFunctions::class, 'append']], 'url' => 'sass:selector'],
-        'selector-extend' => ['overloads' => ['$selector, $extendee, $extender' => [SelectorFunctions::class, 'extend']], 'url' => 'sass:selector'],
-        'selector-replace' => ['overloads' => ['$selector, $original, $replacement' => [SelectorFunctions::class, 'replace']], 'url' => 'sass:selector'],
-        'selector-unify' => ['overloads' => ['$selector1, $selector2' => [SelectorFunctions::class, 'unify']], 'url' => 'sass:selector'],
+        'selector-parse' => ['overloads' => ['$selector' => [SelectorFunctions::class, 'parse']], 'url' => 'sass:selector', 'canonical_name' => 'parse'],
+        'selector-nest' => ['overloads' => ['$selectors...' => [SelectorFunctions::class, 'nest']], 'url' => 'sass:selector', 'canonical_name' => 'nest'],
+        'selector-append' => ['overloads' => ['$selectors...' => [SelectorFunctions::class, 'append']], 'url' => 'sass:selector', 'canonical_name' => 'append'],
+        'selector-extend' => ['overloads' => ['$selector, $extendee, $extender' => [SelectorFunctions::class, 'extend']], 'url' => 'sass:selector', 'canonical_name' => 'extend'],
+        'selector-replace' => ['overloads' => ['$selector, $original, $replacement' => [SelectorFunctions::class, 'replace']], 'url' => 'sass:selector', 'canonical_name' => 'replace'],
+        'selector-unify' => ['overloads' => ['$selector1, $selector2' => [SelectorFunctions::class, 'unify']], 'url' => 'sass:selector', 'canonical_name' => 'unify'],
         // sass:string
         'unquote' => ['overloads' => ['$string' => [StringFunctions::class, 'unquote']], 'url' => 'sass:string'],
         'quote' => ['overloads' => ['$string' => [StringFunctions::class, 'quote']], 'url' => 'sass:string'],
         'to-upper-case' => ['overloads' => ['$string' => [StringFunctions::class, 'toUpperCase']], 'url' => 'sass:string'],
         'to-lower-case' => ['overloads' => ['$string' => [StringFunctions::class, 'toLowerCase']], 'url' => 'sass:string'],
         'unique-id' => ['overloads' => ['' => [StringFunctions::class, 'uniqueId']], 'url' => 'sass:string'],
-        'str-length' => ['overloads' => ['$string' => [StringFunctions::class, 'length']], 'url' => 'sass:string'],
-        'str-insert' => ['overloads' => ['$string, $insert, $index' => [StringFunctions::class, 'insert']], 'url' => 'sass:string'],
-        'str-index' => ['overloads' => ['$string, $substring' => [StringFunctions::class, 'index']], 'url' => 'sass:string'],
-        'str-slice' => ['overloads' => ['$string, $start-at, $end-at: -1' => [StringFunctions::class, 'slice']], 'url' => 'sass:string'],
+        'str-length' => ['overloads' => ['$string' => [StringFunctions::class, 'length']], 'url' => 'sass:string', 'canonical_name' => 'length'],
+        'str-insert' => ['overloads' => ['$string, $insert, $index' => [StringFunctions::class, 'insert']], 'url' => 'sass:string', 'canonical_name' => 'insert'],
+        'str-index' => ['overloads' => ['$string, $substring' => [StringFunctions::class, 'index']], 'url' => 'sass:string', 'canonical_name' => 'index'],
+        'str-slice' => ['overloads' => ['$string, $start-at, $end-at: -1' => [StringFunctions::class, 'slice']], 'url' => 'sass:string', 'canonical_name' => 'slice'],
+        // special
+        // This is only invoked using `call()`. Hand-authored `if()`s are parsed as IfExpression.
+        'if' => ['overloads' => ['$condition, $if-true, $if-false' => [self::class, 'if']]],
     ];
 
     /**
@@ -172,11 +175,27 @@ class FunctionRegistry
             throw new \InvalidArgumentException("There is no builtin function named $name.");
         }
 
-        return BuiltInCallable::overloadedFunction($name, self::BUILTIN_FUNCTIONS[$name]['overloads'], Uri::new(self::BUILTIN_FUNCTIONS[$name]['url']));
+        $url = isset(self::BUILTIN_FUNCTIONS[$name]['url']) ? Uri::new(self::BUILTIN_FUNCTIONS[$name]['url']) : null;
+
+        $callable = BuiltInCallable::overloadedFunction(self::BUILTIN_FUNCTIONS[$name]['canonical_name'] ?? $name, self::BUILTIN_FUNCTIONS[$name]['overloads'], $url);
+
+        if (isset(self::BUILTIN_FUNCTIONS[$name]['canonical_name'])) {
+            $callable = $callable->withName($name);
+        }
+
+        return $callable;
     }
 
     public static function isBuiltinFunction(string $name): bool
     {
         return isset(self::BUILTIN_FUNCTIONS[$name]) || \in_array($name, self::SPECIAL_META_GLOBAL_FUNCTIONS, true);
+    }
+
+    /**
+     * @param list<Value> $arguments
+     */
+    public static function if(array $arguments): Value
+    {
+        return $arguments[0]->isTruthy() ? $arguments[1] : $arguments[2];
     }
 }

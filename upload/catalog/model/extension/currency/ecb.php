@@ -18,7 +18,11 @@ class ModelExtensionCurrencyEcb extends Model {
 
 		$response = curl_exec($curl);
 
-		curl_close($curl);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($curl);
+		} else {
+			curl_close($curl);
+		}
 
 		if ($response) {
 			$dom = new \DOMDocument('1.0', 'UTF-8');

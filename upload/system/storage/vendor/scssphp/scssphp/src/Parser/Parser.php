@@ -586,12 +586,12 @@ class Parser
         }
 
         if ($valueText === false) {
-            $this->scanner->error('Invalid Unicode code point.', $start);
+            $this->scanner->error('Invalid Unicode code point.', $start, $this->scanner->getPosition() - $start);
         }
 
         if ($identifierStart ? Character::isNameStart($valueText) : Character::isName($valueText)) {
             if ($value > 0x10ffff) {
-                $this->scanner->error('Invalid Unicode code point.', $start);
+                $this->scanner->error('Invalid Unicode code point.', $start, $this->scanner->getPosition() - $start);
             }
 
             return $valueText;
@@ -686,7 +686,7 @@ class Parser
             return;
         }
 
-        $this->scanner->error("Expected \"$char\"");
+        $this->scanner->error("Expected \"$char\".");
     }
 
     /**

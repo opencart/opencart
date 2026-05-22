@@ -29,7 +29,11 @@ class ModelExtensionPaymentPilibaba extends Model {
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		$response = curl_exec($ch);
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		return json_decode($response, true);
 	}
@@ -43,7 +47,11 @@ class ModelExtensionPaymentPilibaba extends Model {
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		$response = curl_exec($ch);
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		return json_decode($response, true);
 	}
@@ -105,7 +113,11 @@ class ModelExtensionPaymentPilibaba extends Model {
 		if (curl_errno($ch)) {
 			$this->log('cURL error: ' . curl_errno($ch));
 		}
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$this->log('Response: ' . print_r($response, true));
 
@@ -138,7 +150,11 @@ class ModelExtensionPaymentPilibaba extends Model {
 		if (curl_errno($ch)) {
 			$this->log('cURL error: ' . curl_errno($ch));
 		}
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "pilibaba_order` SET `tracking` = '" . $this->db->escape($tracking_number) . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}

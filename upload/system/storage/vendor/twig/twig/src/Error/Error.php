@@ -148,6 +148,10 @@ class Error extends \Exception
             }
         }
 
+        if (null === $template) {
+            return; // Impossible to guess the info as the template was not found in the backtrace
+        }
+
         $r = new \ReflectionObject($template);
         $file = $r->getFileName();
 
@@ -158,7 +162,7 @@ class Error extends \Exception
 
         while ($e = array_pop($exceptions)) {
             $traces = $e->getTrace();
-            array_unshift($traces, ['file' => $e instanceof Error ? $e->phpFile : $e->getFile(), 'line' => $e instanceof Error ? $e->phpLine : $e->getLine()]);
+            array_unshift($traces, ['file' => $e instanceof self ? $e->phpFile : $e->getFile(), 'line' => $e instanceof self ? $e->phpLine : $e->getLine()]);
             while ($trace = array_shift($traces)) {
                 if (!isset($trace['file']) || !isset($trace['line']) || $file != $trace['file']) {
                     continue;

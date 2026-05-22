@@ -1440,8 +1440,7 @@ class Product extends \Opencart\System\Engine\Controller {
 								'product_option_value_id' => $product_option_value['product_option_value_id'],
 								'option_value_id'         => $product_option_value['option_value_id'],
 								'name'                    => $option_value_info['name'],
-								'price'                   => (float)$product_option_value['price'] ? $product_option_value['price'] : false,
-								'price_prefix'            => $product_option_value['price_prefix']
+								'price'                   => (float)$product_option_value['price'] ? $product_option_value['price'] : false
 							];
 						}
 					}

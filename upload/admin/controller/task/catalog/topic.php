@@ -76,14 +76,30 @@ class Topic extends \Opencart\System\Engine\Controller {
 			$topic_info = $this->model_cms_topic->getTopic($topic_id);
 
 			if ($topic_info && $topic_info['status']) {
-				$topic_data[] = array_merge($topic_info, ['description' => $this->model_cms_topic->getDescriptions($topic_info['topic_id'])]);
+				$description_data = [];
+
+				$descriptions = $this->model_cms_topic->getDescriptions($topic_info['topic_id']);
+
+				foreach ($descriptions as $code => $description) {
+					$description_data[$code] = [
+						'name'        => $description['name'],
+						'description' => $description['description'],
+						'image'       => $description['image']
+					];
+				}
+
+				$topic_data[] = [
+					'topic_id'    => $topic_info['topic_id'],
+					'description' => $description_data,
+					'sort_order'  => $topic_info['sort_order']
+				];
 			}
 		}
 
 		$sort_order = [];
 
 		foreach ($topic_data as $key => $value) {
-			$sort_order[$key] = $value['name'];
+			$sort_order[$key] = $value['sort_order'];
 		}
 
 		array_multisort($sort_order, SORT_ASC, $topic_data);
@@ -186,6 +202,26 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_topic')];
 		}
 
+		$description_data = [];
+
+		$descriptions = $this->model_cms_topic->getDescriptions($topic_info['topic_id']);
+
+		foreach ($descriptions as $code => $description) {
+			$description_data[$code] = [
+				'name'             => $description['name'],
+				'description'      => $description['description'],
+				'image'            => $description['image'],
+				'meta_title'       => $description['meta_title'],
+				'meta_description' => $description['meta_description'],
+				'meta_keyword'     => $description['meta_keyword']
+			];
+		}
+
+		$topic_data = [
+			'topic_id'    => $topic_info['topic_id'],
+			'description' => $description_data
+		];
+
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/cms/';
 		$filename = 'topic-' . $topic_info['topic_id'] . '.yaml';
 
@@ -193,7 +229,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode(array_merge($topic_info, ['description' => $this->model_cms_topic->getDescriptions($topic_info['topic_id'])])))) {
+		if (!file_put_contents($directory . $filename, oc_yaml_encode($topic_data))) {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 

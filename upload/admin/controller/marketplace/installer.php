@@ -394,6 +394,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 					$destination = str_replace('\\', '/', $source);
 
+					if (!oc_validate_relative_path($destination)) {
+						$json['error'] = sprintf($this->language->get('error_path'), $destination);
+
+						break;
+					}
+
 					// Only extract the contents of the upload folder
 					$path = $extension_install_info['code'] . '/' . $destination;
 					$base = DIR_EXTENSION;
@@ -445,7 +451,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 				$zip->close();
 
-				$this->model_setting_extension->editStatus($extension_install_id, true);
+				if (!$json) {
+					$this->model_setting_extension->editStatus($extension_install_id, true);
+				}
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

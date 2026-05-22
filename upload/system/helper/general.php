@@ -342,6 +342,29 @@ function oc_validate_filename(string $filename): bool {
 }
 
 /**
+ * Validate Relative Path
+ *
+ * @param string $path
+ *
+ * @return bool
+ */
+function oc_validate_relative_path(string $path): bool {
+	$path = str_replace('\\', '/', $path);
+
+	if ($path === '' || str_contains($path, "\0") || str_starts_with($path, '/') || preg_match('/^[A-Za-z]:/', $path) || str_contains($path, '://')) {
+		return false;
+	}
+
+	foreach (explode('/', trim($path, '/')) as $part) {
+		if ($part === '' || $part === '.' || $part === '..') {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
  * Validate URL
  *
  * @param string $url

@@ -42,6 +42,7 @@ $_['error_file_exists']      = 'Le fichier existe déjà!';
 $_['error_file_type']        = 'Type de fichier invalide!';
 $_['error_directory']        = 'Le répertoire d\'installation %s est introuvable!';
 $_['error_directory_exists'] = 'Le chemin %s existe déjà!';
+$_['error_path']             = 'Le chemin d\'installation %s n\'est pas autorisé!';
 $_['error_unzip']            = 'Impossible d\'ouvrir le fichier .zip!';
 $_['error_upload']           = 'Le fichier n\'a pu être téléchargé!';
 $_['error_unknown']          = 'Une erreur inconnue s’est produite!';

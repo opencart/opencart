@@ -14,6 +14,7 @@ namespace ScssPhp\ScssPhp\Ast\Selector;
 
 use League\Uri\Contracts\UriInterface;
 use ScssPhp\ScssPhp\Ast\Css\CssValue;
+use ScssPhp\ScssPhp\Exception\MultiSpanSassException;
 use ScssPhp\ScssPhp\Exception\SassFormatException;
 use ScssPhp\ScssPhp\Exception\SassScriptException;
 use ScssPhp\ScssPhp\Exception\SimpleSassException;
@@ -23,6 +24,7 @@ use ScssPhp\ScssPhp\Parser\InterpolationMap;
 use ScssPhp\ScssPhp\Parser\SelectorParser;
 use ScssPhp\ScssPhp\Util\EquatableUtil;
 use ScssPhp\ScssPhp\Util\ListUtil;
+use ScssPhp\ScssPhp\Util\SpanUtil;
 use ScssPhp\ScssPhp\Value\ListSeparator;
 use ScssPhp\ScssPhp\Value\SassList;
 use ScssPhp\ScssPhp\Value\SassString;
@@ -307,7 +309,7 @@ final class SelectorList extends Selector
             $lastComponent = $complex->getLastComponent();
 
             if (\count($lastComponent->getCombinators()) !== 0) {
-                throw new SimpleSassException("Parent \"$complex\" is incompatible with this selector.", $parentSelector->getSpan());
+                throw new MultiSpanSassException("Selector \"$complex\" can't be used as a parent in a compound selector.", SpanUtil::trimRight($lastComponent->getSpan()), 'outer selector', ['parent selector' => $parentSelector->getSpan()]);
             }
 
             $suffix = $parentSelector->getSuffix();

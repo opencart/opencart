@@ -282,7 +282,11 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			$this->log->write('Secure Trading WS CURL Error: (' . curl_errno($ch) . ') ' . curl_error($ch));
 		}
 
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		if (empty($response) || $response === 'No records found for search') {
 			return false;
@@ -339,7 +343,11 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			$this->log->write('Secure Trading WS CURL Error: (' . curl_errno($ch) . ') ' . curl_error($ch));
 		}
 
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		return $response;
 	}

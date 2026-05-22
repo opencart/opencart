@@ -1,7 +1,0 @@
-/vendor
-/docs
-/tags
-composer.lock
-composer.phar
-*.tgz
-tests/fixtures/large_file.png

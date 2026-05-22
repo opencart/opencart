@@ -754,7 +754,7 @@ TXT,
 
         if (\count($list) > 3) {
             throw new SassScriptException(sprintf(
-                'Only 3 elements allowed, but %s were passed',
+                'Only 3 elements allowed, but %s were passed.',
                 \count($list)
             ));
         }

@@ -23,11 +23,18 @@ final class MultipartStream implements StreamInterface
     /**
      * @param array  $elements Array of associative arrays, each containing a
      *                         required "name" key mapping to the form field,
-     *                         name, a required "contents" key mapping to a
-     *                         StreamInterface/resource/string, an optional
-     *                         "headers" associative array of custom headers,
-     *                         and an optional "filename" key mapping to a
-     *                         string to send as the filename in the part.
+     *                         name, a required "contents" key mapping to any
+     *                         value accepted by Utils::streamFor() (scalar,
+     *                         null, resource, StreamInterface, Iterator, or
+     *                         callable), or an array for nested expansion.
+     *                         Optional keys include "headers" (associative
+     *                         array of custom headers) and "filename" (string
+     *                         to send as the filename in the part).
+     *                         When "contents" is an array, it is recursively
+     *                         expanded into multiple fields using bracket notation
+     *                         (e.g., name[0][key]). Empty arrays produce no fields.
+     *                         The "filename" and "headers" options cannot be used
+     *                         with array contents.
      * @param string $boundary You can optionally provide a specific boundary
      *
      * @throws \InvalidArgumentException
@@ -91,6 +98,22 @@ final class MultipartStream implements StreamInterface
             }
         }
 
+        if (!is_string($element['name']) && !is_int($element['name'])) {
+            throw new \InvalidArgumentException("The 'name' key must be a string or integer");
+        }
+
+        if (is_array($element['contents'])) {
+            if (array_key_exists('filename', $element) || array_key_exists('headers', $element)) {
+                throw new \InvalidArgumentException(
+                    "The 'filename' and 'headers' options cannot be used when 'contents' is an array"
+                );
+            }
+
+            $this->addNestedElements($stream, $element['contents'], (string) $element['name']);
+
+            return;
+        }
+
         $element['contents'] = Utils::streamFor($element['contents']);
 
         if (empty($element['filename'])) {
@@ -101,7 +124,7 @@ final class MultipartStream implements StreamInterface
         }
 
         [$body, $headers] = $this->createElement(
-            $element['name'],
+            (string) $element['name'],
             $element['contents'],
             $element['filename'] ?? null,
             $element['headers'] ?? []
@@ -110,6 +133,24 @@ final class MultipartStream implements StreamInterface
         $stream->addStream(Utils::streamFor($this->getHeaders($headers)));
         $stream->addStream($body);
         $stream->addStream(Utils::streamFor("\r\n"));
+    }
+
+    /**
+     * Recursively expand array contents into multiple form fields.
+     *
+     * @param array<array-key, mixed> $contents
+     */
+    private function addNestedElements(AppendStream $stream, array $contents, string $root): void
+    {
+        foreach ($contents as $key => $value) {
+            $fieldName = $root === '' ? sprintf('[%s]', (string) $key) : sprintf('%s[%s]', $root, (string) $key);
+
+            if (is_array($value)) {
+                $this->addNestedElements($stream, $value, $fieldName);
+            } else {
+                $this->addElement($stream, ['name' => $fieldName, 'contents' => $value]);
+            }
+        }
     }
 
     /**

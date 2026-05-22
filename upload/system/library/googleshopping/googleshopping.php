@@ -1880,7 +1880,11 @@ class Googleshopping extends Library {
         curl_setopt_array($ch, $curl_options);
         $result = curl_exec($ch);
         $info = curl_getinfo($ch);
-        curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
         $this->debugLog("RESPONSE: " . $result);
 

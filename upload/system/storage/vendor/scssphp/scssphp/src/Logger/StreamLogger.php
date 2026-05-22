@@ -24,8 +24,11 @@ use SourceSpan\SourceSpan;
  */
 final class StreamLogger implements LoggerInterface
 {
+    /**
+     * @var resource
+     */
     private $stream;
-    private $closeOnDestruct;
+    private bool $closeOnDestruct;
 
     /**
      * @param resource $stream          A stream resource

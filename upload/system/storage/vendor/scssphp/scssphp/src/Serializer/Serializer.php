@@ -13,11 +13,14 @@
 namespace ScssPhp\ScssPhp\Serializer;
 
 use ScssPhp\ScssPhp\Ast\Css\CssNode;
+use ScssPhp\ScssPhp\Ast\Css\CssParentNode;
 use ScssPhp\ScssPhp\Ast\Selector\Selector;
 use ScssPhp\ScssPhp\Exception\SassScriptException;
 use ScssPhp\ScssPhp\Logger\LoggerInterface;
 use ScssPhp\ScssPhp\OutputStyle;
 use ScssPhp\ScssPhp\Value\Value;
+use ScssPhp\ScssPhp\Visitor\CssVisitor;
+use ScssPhp\ScssPhp\Visitor\ModifiableCssVisitor;
 
 /**
  * @internal
@@ -58,6 +61,10 @@ final class Serializer
      */
     public static function serializeValue(Value $value, bool $inspect = false, bool $quote = true): string
     {
+        // Force loading the CssParentNode and CssVisitor before using the visitor because of a weird PHP behavior.
+        class_exists(CssParentNode::class);
+        class_exists(CssVisitor::class);
+
         $visitor = new SerializeVisitor($inspect, $quote);
         $value->accept($visitor);
 
@@ -74,6 +81,10 @@ final class Serializer
      */
     public static function serializeSelector(Selector $selector, bool $inspect = false): string
     {
+        // Force loading the CssParentNode and CssVisitor before using the visitor because of a weird PHP behavior.
+        class_exists(CssParentNode::class);
+        class_exists(CssVisitor::class);
+
         $visitor = new SerializeVisitor($inspect);
         $selector->accept($visitor);
 

@@ -631,7 +631,11 @@ class PayPal {
                 $response_headers[$key] = $value;
             }
 			
-			curl_close($ch);
+			if (version_compare(phpversion(), '8.0.', '>=')) {
+				unset($ch);
+			} else {
+				curl_close($ch);
+			}
 			
 			if (isset($buffer) && is_resource($buffer)) {
                 fclose($buffer);

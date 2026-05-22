@@ -93,14 +93,17 @@ final class ListUtil
         }
 
         /**
-         * @param int $i
-         * @param int $j
+         * @param int<-1, max> $i
+         * @param int<-1, max> $j
          * @return list<T>
          */
         $backtrack = function (int $i, int $j) use ($selections, $lengths, &$backtrack) {
             if ($i === -1 || $j === -1) {
                 return [];
             }
+
+            \assert($i >= 0);
+            \assert($j >= 0);
 
             $selection = $selections[$i][$j];
 

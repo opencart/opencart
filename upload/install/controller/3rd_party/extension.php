@@ -17,7 +17,11 @@ class Controller3rdPartyExtension extends Controller {
 
 		$response = curl_exec($curl);
 
-		curl_close($curl);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($curl);
+		} else {
+			curl_close($curl);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($response);

@@ -2,8 +2,8 @@
 
 namespace SourceSpan;
 
-use League\Uri\BaseUri;
 use League\Uri\Contracts\UriInterface;
+use League\Uri\Uri;
 
 /**
  * @internal
@@ -349,10 +349,14 @@ final class Util
 
     private static function pathFromUri(UriInterface $uri): string
     {
-        if (\DIRECTORY_SEPARATOR === '\\') {
-            return BaseUri::from($uri)->windowsPath() ?? throw new \InvalidArgumentException("Uri $uri must have scheme 'file:'.");
+        if (!$uri instanceof Uri) {
+            $uri = Uri::new($uri);
         }
 
-        return BaseUri::from($uri)->unixPath() ?? throw new \InvalidArgumentException("Uri $uri must have scheme 'file:'.");
+        if (\DIRECTORY_SEPARATOR === '\\') {
+            return $uri->toWindowsPath() ?? throw new \InvalidArgumentException("Uri $uri must have scheme 'file:'.");
+        }
+
+        return $uri->toUnixPath() ?? throw new \InvalidArgumentException("Uri $uri must have scheme 'file:'.");
     }
 }

@@ -64,7 +64,11 @@ class ModelExtensionPaymentG2APay extends Model {
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $fields);
 		$response = curl_exec($curl);
 
-		curl_close($curl);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($curl);
+		} else {
+			curl_close($curl);
+		}
 
 		return json_decode($response);
 	}

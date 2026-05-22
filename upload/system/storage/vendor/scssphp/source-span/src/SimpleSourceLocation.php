@@ -12,7 +12,7 @@ final class SimpleSourceLocation extends SourceLocationMixin
     /**
      * Creates a new location indicating $offset within $sourceUrl.
      *
-     * $line and $column default to assuming the source is a single line. This
+     * $line and $column default to assuming the source is a single ASCII line. This
      * means that $line defaults to 0 and $column defaults to $offset.
      */
     public function __construct(

@@ -193,7 +193,11 @@ class ModelExtensionPaymentEway extends Model {
 			}
 		}
 
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		return $response;
 	}

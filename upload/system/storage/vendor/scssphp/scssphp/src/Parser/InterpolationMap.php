@@ -59,15 +59,20 @@ final class InterpolationMap
 
     public function mapException(FormatException $error): FormatException
     {
-        $source = $this->mapSpan($error->getSpan());
-        $startIndex = $this->indexInContents($source->getStart());
-        $endIndex = $this->indexInContents($source->getEnd());
+        if (\count($this->interpolation->getContents()) === 0) {
+            return new FormatException($error->getMessage(), $this->interpolation->getSpan(), $error);
+        }
+
+        $target = $error->getSpan();
+        $source = $this->mapSpan($target);
+        $startIndex = $this->indexInContents($target->getStart());
+        $endIndex = $this->indexInContents($target->getEnd());
 
         if (!IterableUtil::any(array_slice($this->interpolation->getContents(), $startIndex, $endIndex - $startIndex + 1), fn ($content) => $content instanceof Expression)) {
             return new FormatException($error->getMessage(), $source, $error);
         }
 
-        return new MultiSourceFormatException($error->getMessage(), $source, '', ['error in interpolated output' => $error->getSpan()], $error);
+        return new MultiSourceFormatException($error->getMessage(), $source, '', ['error in interpolated output' => $target], $error);
     }
 
     public function mapSpan(FileSpan $target): FileSpan
@@ -95,6 +100,10 @@ final class InterpolationMap
      */
     private function mapLocation(SourceLocation $target): object
     {
+        if (\count($this->interpolation->getContents()) === 0) {
+            return $this->interpolation->getSpan();
+        }
+
         $index = $this->indexInContents($target);
 
         $components = $this->interpolation->getContents();
@@ -116,6 +125,9 @@ final class InterpolationMap
         return $previousLocation->getFile()->location($previousLocation->getOffset() + $offsetInString);
     }
 
+    /**
+     * @return int<0, max>
+     */
     private function indexInContents(SourceLocation $target): int
     {
         foreach ($this->targetLocations as $i => $location) {
@@ -123,6 +135,8 @@ final class InterpolationMap
                 return $i;
             }
         }
+
+        \assert(\count($this->interpolation->getContents()) > 0);
 
         return \count($this->interpolation->getContents()) - 1;
     }

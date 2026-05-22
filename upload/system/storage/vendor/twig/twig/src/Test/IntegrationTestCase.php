@@ -102,6 +102,14 @@ abstract class IntegrationTestCase extends TestCase
     }
 
     /**
+     * @return array<callable(string): (TwigTest|false)>
+     */
+    protected function getUndefinedTestCallbacks(): array
+    {
+        return [];
+    }
+
+    /**
      * @return array<callable(string): (TokenParserInterface|false)>
      */
     protected function getUndefinedTokenParserCallbacks(): array
@@ -255,13 +263,17 @@ abstract class IntegrationTestCase extends TestCase
                 $twig->registerUndefinedFunctionCallback($callback);
             }
 
+            foreach ($this->getUndefinedTestCallbacks() as $callback) {
+                $twig->registerUndefinedTestCallback($callback);
+            }
+
             foreach ($this->getUndefinedTokenParserCallbacks() as $callback) {
                 $twig->registerUndefinedTokenParserCallback($callback);
             }
 
             $deprecations = [];
             try {
-                $prevHandler = set_error_handler(function ($type, $msg, $file, $line, $context = []) use (&$deprecations, &$prevHandler) {
+                $prevHandler = set_error_handler(static function ($type, $msg, $file, $line, $context = []) use (&$deprecations, &$prevHandler) {
                     if (\E_USER_DEPRECATED === $type) {
                         $deprecations[] = $msg;
 

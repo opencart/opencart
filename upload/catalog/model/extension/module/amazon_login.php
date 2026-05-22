@@ -205,7 +205,11 @@ class ModelExtensionModuleAmazonLogin extends Model {
                 'curl_error' => curl_error($ch)
             );
 
-            curl_close($ch);
+			if (version_compare(phpversion(), '8.0.', '>=')) {
+				unset($ch);
+			} else {
+				curl_close($ch);
+			}
 
             $this->debugLog("ERROR", $debug);
 

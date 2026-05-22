@@ -14,7 +14,10 @@ namespace ScssPhp\ScssPhp\Parser;
 
 use SourceSpan\FileSpan;
 
-class MultiSourceFormatException extends FormatException
+/**
+ * @internal
+ */
+final class MultiSourceFormatException extends FormatException
 {
     /**
      * {@see MultiSpanSassException::$primaryLabel}

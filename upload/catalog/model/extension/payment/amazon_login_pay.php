@@ -903,14 +903,22 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
                 'curl_error' => curl_error($ch)
             );
 
-            curl_close($ch);
+			if (version_compare(phpversion(), '8.0.', '>=')) {
+				unset($ch);
+			} else {
+				curl_close($ch);
+			}
 
             throw $this->loggedException($debug, $this->language->get('error_process_order'));
         } else {
             $this->debugLog("SUCCESS", $response);
         }
 
-        curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
         $result = new stdClass;
         $result->Status = (int)$info['http_code'];

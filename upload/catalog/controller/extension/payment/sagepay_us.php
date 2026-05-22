@@ -71,7 +71,11 @@ class ControllerExtensionPaymentSagepayUS extends Controller {
 
 		$response = curl_exec($ch);
 
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$json = array();
 

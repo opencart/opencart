@@ -111,7 +111,11 @@ class ModelExtensionShippingUspsOauth extends Model {
 				}
 
 				$response = json_decode($result, true);
-				curl_close($ch);
+				if (version_compare(phpversion(), '8.0.', '>=')) {
+					unset($ch);
+				} else {
+					curl_close($ch);
+				}
 
 				$cost = 0;
 				if (isset($response['totalBasePrice']) && is_numeric($response['totalBasePrice'])) {
@@ -168,7 +172,11 @@ class ModelExtensionShippingUspsOauth extends Model {
 
 		$response = curl_exec($ch);
 		$data = json_decode($response, true);
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		return isset($data['access_token']) ? $data['access_token'] : false;
 	}

@@ -14,6 +14,7 @@ namespace ScssPhp\ScssPhp\Exception;
 
 use ScssPhp\ScssPhp\StackTrace\Trace;
 use ScssPhp\ScssPhp\Util;
+use ScssPhp\ScssPhp\Util\ErrorUtil;
 use SourceSpan\FileSpan;
 
 /**
@@ -30,7 +31,7 @@ final class SimpleSassFormatException extends \Exception implements SassFormatEx
         $this->originalMessage = $message;
         $this->span = $span;
 
-        parent::__construct($span->message($message), 0, $previous);
+        parent::__construct(ErrorUtil::formatErrorMessage($message, $span, $this->getSassTrace()), 0, $previous);
     }
 
     /**

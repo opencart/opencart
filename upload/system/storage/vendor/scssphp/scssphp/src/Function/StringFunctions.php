@@ -125,12 +125,12 @@ final class StringFunctions
 
         // No matter what the start index is, an end index of 0 will produce an
         // empty string.
-        $endInt = $end->assertInt('end-at');
+        $endInt = $end->assertInt();
         if ($endInt === 0) {
             return new SassString('', $string->hasQuotes());
         }
 
-        $startCodepoint = self::codepointForIndex($start->assertInt('start-at'), $lengthInCodepoints);
+        $startCodepoint = self::codepointForIndex($start->assertInt(), $lengthInCodepoints);
         $endCodepoint = self::codepointForIndex($endInt, $lengthInCodepoints, true);
 
         if ($endCodepoint === $lengthInCodepoints) {

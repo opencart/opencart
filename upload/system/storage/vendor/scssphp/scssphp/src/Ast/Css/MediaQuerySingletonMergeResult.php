@@ -12,6 +12,9 @@
 
 namespace ScssPhp\ScssPhp\Ast\Css;
 
+/**
+ * @internal
+ */
 enum MediaQuerySingletonMergeResult implements MediaQueryMergeResult
 {
     case empty;

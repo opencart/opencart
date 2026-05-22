@@ -15,6 +15,9 @@ namespace ScssPhp\ScssPhp\Exception;
 use ScssPhp\ScssPhp\StackTrace\Trace;
 use SourceSpan\FileSpan;
 
+/**
+ * @internal
+ */
 final class MultiSpanSassRuntimeException extends MultiSpanSassException implements SassRuntimeException
 {
     private readonly Trace $sassTrace;

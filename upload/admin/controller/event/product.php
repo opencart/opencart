@@ -45,8 +45,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		// Manufacturer
 		$task_data = [
-			'code'   => 'manufacturer.' . $args[1]['manufacturer_id'],
-			'action' => 'task/catalog/manufacturer',
+			'code'   => 'product_manufacturer.' . $args[1]['manufacturer_id'],
+			'action' => 'task/catalog/product_manufacturer',
 			'args'   => ['manufacturer_id' => $args[1]['manufacturer_id']]
 		];
 
@@ -71,7 +71,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Trigger model/catalog/product/editProduct/after
+	 * Trigger model/catalog/product/editProduct/before
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -91,7 +91,9 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->model_setting_task->addTask($task_data);
 
 		// Categories
-		$category_ids = $args[1]['product_category'];
+		$this->load->model('catalog/filter');
+
+		$category_ids = array_diff($args[1]['product_category'], $this->model_catalog_product->getCategories($args[0]));
 
 		foreach ($category_ids as $category_id) {
 			$task_data = [
@@ -103,31 +105,29 @@ class Product extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		// Filters
-		$this->load->model('catalog/filter');
+		$product_info = $this->model_catalog_product->getProduct($args[0]);
 
-		$results = $this->model_catalog_product->getProductsByFilterId($output);
-
-		foreach ($results as $result) {
+		if ($product_info && $product_info['manufacturer_id'] != $args[1]['manufacturer_id']) {
+			// Manufacturer
 			$task_data = [
-				'code'   => 'filter.' . $result['filter_id'],
-				'action' => 'task/catalog/filter',
-				'args'   => ['filter_id' => $result['filter_id']]
+				'code'   => 'product_manufacturer.' . $args[1]['manufacturer_id'],
+				'action' => 'task/catalog/product_manufacturer',
+				'args'   => ['manufacturer_id' => $args[1]['manufacturer_id']]
 			];
 
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		// Manufacturer
-		$this->load->model('catalog/manufacturer');
+		// Filters
+		$this->load->model('catalog/filter');
 
-		$results = $this->model_catalog_product->getProductsByFilterId($output);
+		$filter_ids = array_diff($args[1]['product_category'], $this->model_catalog_product->getFilters($args[0]));
 
-		foreach ($results as $result) {
+		foreach ($filter_ids as $filter_id) {
 			$task_data = [
-				'code'   => 'filter.' . $result['filter_id'],
-				'action' => 'task/catalog/filter',
-				'args'   => ['filter_id' => $result['filter_id']]
+				'code'   => 'product_filter.' . $filter_id,
+				'action' => 'task/catalog/product_filter',
+				'args'   => ['filter_id' => $filter_id]
 			];
 
 			$this->model_setting_task->addTask($task_data);
@@ -139,7 +139,7 @@ class Product extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Trigger model/catalog/product/deleteProduct/after
+	 * Trigger model/catalog/product/deleteProduct/before
 	 *
 	 * @param string            $route
 	 * @param array<int, mixed> $args
@@ -158,8 +158,47 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
+		// Categories
+		$this->load->model('catalog/category');
 
+		$category_ids = $this->model_catalog_product->getCategories($args[0]);
 
+		foreach ($category_ids as $category_id) {
+			$task_data = [
+				'code'   => 'product_category.' . $category_id,
+				'action' => 'task/catalog/product_category',
+				'args'   => ['category_id' => $category_id]
+			];
 
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		// Manufacturer
+		$product_info = $this->model_catalog_product->getProduct($args[0]);
+
+		if ($product_info) {
+			$task_data = [
+				'code'   => 'product_manufacturer.' . $product_info['manufacturer_id'],
+				'action' => 'task/catalog/product_manufacturer',
+				'args'   => ['manufacturer_id' => $product_info['manufacturer_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
+
+		// Filters
+		$this->load->model('catalog/filter');
+
+		$filter_ids = $this->model_catalog_product->getFilters($args[0]);
+
+		foreach ($filter_ids as $filter_id) {
+			$task_data = [
+				'code'   => 'product_filter.' . $filter_id,
+				'action' => 'task/catalog/product_filter',
+				'args'   => ['filter_id' => $filter_id]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 }

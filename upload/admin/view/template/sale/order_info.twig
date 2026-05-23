@@ -97,7 +97,7 @@
                 <th class="text-end">{{ column_quantity }}</th>
                 <th class="text-end">{{ column_price }}</th>
                 <th class="text-end">{{ column_total }}</th>
-                <th class="text-end" style="width: 1px;">{{ column_action }}</th>
+                {#<th class="text-end" style="width: 1px;">{{ column_action }}</th>#}
               </tr>
             </thead>
             <tbody id="order-product">
@@ -154,20 +154,21 @@
                     <td class="text-end">{{ order_product.quantity }}</td>
                     <td class="text-end">{{ order_product.price }}</td>
                     <td class="text-end">{{ order_product.total }}</td>
-                    <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                    {#<td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>#}
                   </tr>
                   {% set order_product_row = order_product_row + 1 %}
                 {% endfor %}
               {% else %}
                 <tr>
-                  <td colspan="5" class="text-center">{{ text_no_results }}</td>
+                  <td colspan="4" class="text-center">{{ text_no_results }}</td>
+                  {#<td colspan="5" class="text-center">{{ text_no_results }}</td>#}
                 </tr>
               {% endif %}
             </tbody>
             <tfoot>
               <tr>
                 <td colspan="4"></td>
-                <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                {#<td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>#}
               </tr>
             </tfoot>
           </table>
@@ -613,6 +614,7 @@
       </div>
       <div class="modal-body">
         <form id="form-product-add">
+          <input type="hidden" name="order_id" value="{{ order_id }}"/>
           <div class="mb-3">
             <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>

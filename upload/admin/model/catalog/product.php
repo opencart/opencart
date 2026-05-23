@@ -2120,11 +2120,8 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'quantity'                => 1,
 	 *     'subtract'                => 0,
 	 *     'price'                   => '0.0000',
-	 *     'price_prefix'            => '',
 	 *     'points'                  => '0',
-	 *     'points_prefix'           => '',
 	 *     'weight'                  => '0.0000',
-	 *     'weight_prefix'           => ''
 	 * ];
 	 *
 	 * $this->load->model('catalog/product');

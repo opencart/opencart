@@ -54,6 +54,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 
+			/* this still has issues! Stock levels were already adjusted for original order items!
 			if ($product_info) {
 				// Merge variant code with options
 				foreach ($product_info['variant'] as $option_id => $value) {
@@ -123,6 +124,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 					$output['error']['product_' . (int)$key . '_subscription'] = $this->language->get('error_subscription');
 				}
 			} else {
+				$output['error']['product_' . (int)$key . '_product'] = $this->language->get('error_product');
+			}
+			*/
+
+			if (!$product_info) {
 				$output['error']['product_' . (int)$key . '_product'] = $this->language->get('error_product');
 			}
 

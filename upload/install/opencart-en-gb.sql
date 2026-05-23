@@ -2444,7 +2444,7 @@ VALUES (224, 35, 11, '', 1),
 -- Dumping data for table `oc_product_option_value`
 --
 
-INSERT INTO `oc_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `option_id`, `option_value_id`, `quantity`, `subtract`, `price`, `price_prefix`, `points`, `points_prefix`, `weight`, `weight_prefix`)
+INSERT INTO `oc_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `option_id`, `option_value_id`, `quantity`, `subtract`, `price`, `points`, `weight`)
 VALUES (1, 217, 42, 5, 41, 100, 0, '1.0000', 0, '1.00000000'),
        (6, 218, 42, 1, 31, 146, 1, '20.0000', 2, '20.00000000'),
        (7, 218, 42, 1, 43, 300, 1, '30.0000', 3, '30.00000000'),

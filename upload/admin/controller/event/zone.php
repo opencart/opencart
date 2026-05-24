@@ -77,22 +77,22 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 
 			// In case country was switched we want to update old country
-			if ($args[1]['country_id'] != $zone_info['country_id']) {
-				$task_data = [
-					'code'   => 'country.info.' . $zone_info['country_id'],
-					'action' => 'task/catalog/country.info',
-					'args'   => ['country_id' => $zone_info['country_id']]
-				];
+			$country_ids = array_unique([$args[1]['country_id'], $zone_info['country_id']]);
 
-				$this->load->model('setting/task');
+			foreach ($country_ids as $country_id) {
+				$task_data = [
+					'code'   => 'country.info.' . $country_id,
+					'action' => 'task/catalog/country.info',
+					'args'   => ['country_id' => $country_id]
+				];
 
 				$this->model_setting_task->addTask($task_data);
 
 				// Admin
 				$task_data = [
-					'code'   => 'admin.country.info.' . $zone_info['country_id'],
+					'code'   => 'admin.country.info.' . $country_id,
 					'action' => 'task/admin/country.info',
-					'args'   => ['country_id' => $zone_info['country_id']]
+					'args'   => ['country_id' => $country_id]
 				];
 
 				$this->model_setting_task->addTask($task_data);

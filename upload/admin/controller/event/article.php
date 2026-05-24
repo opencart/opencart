@@ -68,15 +68,17 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$article_info = $this->model_cms_article->getArticle($args[0]);
 
+		$topic_ids = array_unique([$args[1]['topic_id'], $article_info['topic_id']]);
 
+		foreach ($topic_ids as $topic_id) {
 			$task_data = [
-				'code'   => 'article_topic.' . $args[1]['topic_id'],
+				'code'   => 'article_topic.' . $topic_id,
 				'action' => 'task/catalog/article_topic',
-				'args'   => ['topic_id' => $args[1]['topic_id']]
+				'args'   => ['topic_id' => $topic_id]
 			];
 
 			$this->model_setting_task->addTask($task_data);
-
+		}
 	}
 
 	/*

@@ -21,19 +21,20 @@ class Article extends \Opencart\System\Engine\Controller {
 	 */
 	private function addArticle(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'article.list',
-			'action' => 'task/catalog/article.list',
-			'args'   => []
+			'code'   => 'article.' . $output,
+			'action' => 'task/catalog/article',
+			'args'   => ['article_id' => $output]
 		];
 
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 
+		// Topic
 		$task_data = [
-			'code'   => 'article.info.' . $output,
-			'action' => 'task/catalog/article.info',
-			'args'   => ['article_id' => $output]
+			'code'   => 'article_topic.' . $args[1]['topic_id'],
+			'action' => 'task/catalog/article_topic',
+			'args'   => ['topic_id' => $args[1]['topic_id']]
 		];
 
 		$this->model_setting_task->addTask($task_data);
@@ -44,7 +45,7 @@ class Article extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new article data.
 	 *
-	 * Trigger admin/model/cms/article/addArticle/after
+	 * Trigger admin/model/cms/article/addArticle/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args
@@ -54,22 +55,28 @@ class Article extends \Opencart\System\Engine\Controller {
 	 */
 	private function editArticle(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'article.list',
-			'action' => 'task/catalog/article.list',
-			'args'   => []
+			'code'   => 'article.' . $args[0],
+			'action' => 'task/catalog/article',
+			'args'   => ['article_id' => $args[0]]
 		];
 
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
 
-		$task_data = [
-			'code'   => 'article.info.' . $args[0],
-			'action' => 'task/catalog/article.info',
-			'args'   => ['article_id' => $args[0]]
-		];
+		$this->load->model('cms/article');
 
-		$this->model_setting_task->addTask($task_data);
+		$article_info = $this->model_cms_article->getArticle($args[0]);
+
+
+			$task_data = [
+				'code'   => 'article_topic.' . $args[1]['topic_id'],
+				'action' => 'task/catalog/article_topic',
+				'args'   => ['topic_id' => $args[1]['topic_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+
 	}
 
 	/*

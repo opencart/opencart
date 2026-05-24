@@ -93,7 +93,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Categories
 		$this->load->model('catalog/filter');
 
-		$category_ids = array_diff($args[1]['product_category'], $this->model_catalog_product->getCategories($args[0]));
+		$category_ids = array_unique(array_merge($args[1]['product_category'], $this->model_catalog_product->getCategories($args[0])));
 
 		foreach ($category_ids as $category_id) {
 			$task_data = [
@@ -105,9 +105,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
+		$manufacturer_id;
+
+		$this->load->model('catalog/product');
+
 		$product_info = $this->model_catalog_product->getProduct($args[0]);
 
-		if ($product_info && $product_info['manufacturer_id'] != $args[1]['manufacturer_id']) {
+		array_unique([$args[1]['manufacturer_id'], $product_info['manufacturer_id']]);
+
+			if ($product_info && $product_info['manufacturer_id'] != $args[1]['manufacturer_id']) {
 			// Manufacturer
 			$task_data = [
 				'code'   => 'product_manufacturer.' . $args[1]['manufacturer_id'],
@@ -121,7 +127,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Filters
 		$this->load->model('catalog/filter');
 
-		$filter_ids = array_diff($args[1]['product_category'], $this->model_catalog_product->getFilters($args[0]));
+		$filter_ids = array_unique(array_merge($args[1]['product_category'], $this->model_catalog_product->getFilters($args[0])));
 
 		foreach ($filter_ids as $filter_id) {
 			$task_data = [

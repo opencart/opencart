@@ -105,22 +105,21 @@ class Product extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		$manufacturer_id;
-
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($args[0]);
 
-		array_unique([$args[1]['manufacturer_id'], $product_info['manufacturer_id']]);
+		$manufacturer_ids = array_unique([$args[1]['manufacturer_id'], $product_info['manufacturer_id']]);
 
-			if ($product_info && $product_info['manufacturer_id'] != $args[1]['manufacturer_id']) {
+		foreach ($manufacturer_ids as $manufacturer_id) {
 			// Manufacturer
 			$task_data = [
-				'code'   => 'product_manufacturer.' . $args[1]['manufacturer_id'],
+				'code'   => 'product_manufacturer.' . $manufacturer_id,
 				'action' => 'task/catalog/product_manufacturer',
-				'args'   => ['manufacturer_id' => $args[1]['manufacturer_id']]
+				'args'   => ['manufacturer_id' => $manufacturer_id]
 			];
 
+			$this->model_setting_task->addTask($task_data);
 			$this->model_setting_task->addTask($task_data);
 		}
 

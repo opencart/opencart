@@ -57,11 +57,13 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($args[0]);
 
-		if ($args[1]['geo_zone_id'] != $tax_rate_info['geo_zone_id']) {
+		$geo_zone_ids = array_unique([$args[1]['geo_zone_id'], $tax_rate_info['geo_zone_id']]);
+
+		foreach ($geo_zone_ids as $geo_zone_id) {
 			$task_data = [
-				'code'   => 'tax_rate.' . $tax_rate_info['geo_zone_id'],
+				'code'   => 'tax_rate.' . $geo_zone_id,
 				'action' => 'task/catalog/tax_rate',
-				'args'   => ['geo_zone_id' => $tax_rate_info['geo_zone_id']]
+				'args'   => ['geo_zone_id' => $geo_zone_id]
 			];
 
 			$this->model_setting_task->addTask($task_data);

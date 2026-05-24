@@ -66,6 +66,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/task');
 
 			$this->model_setting_task->addTask($task_data);
+
 			// Admin
 			$task_data = [
 				'code'   => 'admin.country.info.' . $args[1]['country_id'],

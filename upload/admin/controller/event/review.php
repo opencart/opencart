@@ -58,15 +58,14 @@ class Review extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_task->addTask($task_data);
 
-			// In case product was switched we want to update old review list
-			if ($args[1]['product_id'] != $review_info['product_id']) {
-				$task_data = [
-					'code'   => 'review.' . $review_info['product_id'],
-					'action' => 'task/catalog/country.info',
-					'args'   => ['review_id' => $review_info['product_id']]
-				];
+			$product_ids = array_unique([$args[1]['product_id'], $review_info['product_id']]);
 
-				$this->load->model('setting/task');
+			foreach ($product_ids as $product_id) {
+				$task_data = [
+					'code'   => 'review.' . $product_id,
+					'action' => 'task/catalog/review',
+					'args'   => ['review_id' => $product_id]
+				];
 
 				$this->model_setting_task->addTask($task_data);
 			}

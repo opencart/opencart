@@ -1137,8 +1137,8 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('mail.admin.user.authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'admin/model/user/user.addToken/after', 'mail/authorize.reset', 1),
 
        ('ssr.article.add', 'Triggers article static site data creation.', 'admin/model/cms/article.addArticle/after', 'event/article.addArticle', 1),
-       ('ssr.article.edit', 'Triggers article static site data creation.', 'admin/model/cms/article.editArticle/after', 'event/article.editArticle', 1),
-       ('ssr.article.delete', 'Triggers article static site data creation.', 'admin/model/cms/article.deleteArticle/after', 'event/article.deleteArticle', 1),
+       ('ssr.article.edit', 'Triggers article static site data creation.', 'admin/model/cms/article.editArticle/before', 'event/article.editArticle', 1),
+       ('ssr.article.delete', 'Triggers article static site data creation.', 'admin/model/cms/article.deleteArticle/before', 'event/article.deleteArticle', 1),
 
        ('ssr.attribute.edit', 'Triggers attribute static site data creation.', 'admin/model/catalog/attribute.editAttribute/after', 'event/attribute.editAttribute', 1),
        ('ssr.attribute.delete', 'Triggers attribute static site data creation.', 'admin/model/catalog/attribute.deleteAttribute/after', 'event/attribute.deleteAttribute', 1),
@@ -1196,8 +1196,9 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
 
        ('ssr.option.edit', 'Triggers static option site data creation.', 'admin/model/catalog/option.editOption/after', 'event/option.editOption', 1),
        ('ssr.option.delete', 'Triggers static option site data creation.', 'admin/model/catalog/option.deleteOption/before', 'event/option.deleteOption', 1),
+
        ('ssr.product.add', 'Triggers product static site data creation.', 'admin/model/catalog/product.addProduct/after', 'event/product.addProduct', 1),
-       ('ssr.product.edit', 'Triggers product static site data creation.', 'admin/model/catalog/product.editProduct/after', 'event/product.editProduct', 1),
+       ('ssr.product.edit', 'Triggers product static site data creation.', 'admin/model/catalog/product.editProduct/before', 'event/product.editProduct', 1),
        ('ssr.product.delete', 'Triggers product static site data creation.', 'admin/model/catalog/product.deleteProduct/before', 'event/product.deleteProduct', 1),
 
        ('ssr.return_reason.add', 'Triggers return reason static site data creation.', 'admin/model/localisation/return_reason.addReturnReason/after', 'event/return_reason', 1),
@@ -1239,14 +1240,11 @@ VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.',
        ('ssr.zone.delete', 'Triggers zone static site data creation.', 'admin/model/localisation/zone.deleteZone/before', 'event/zone.deleteZone', 1),
 
        ('statistics.review.add', 'Updates review statistics when a new review is added.', 'catalog/model/catalog/review.addReview/after', 'event/statistics.addReview', 1),
-
        ('statistics.review.add', 'Updates review statistics when a new review is added.', 'admin/model/catalog/review.addReview/after', 'event/statistics.addReview', 1),
        ('statistics.review.edit', 'Updates review statistics when a new review is added.', 'admin/model/catalog/review.editReview/after', 'event/statistics.editReview', 1),
        ('statistics.review.delete', 'Updates review statistics when a new review is added.', 'admin/model/catalog/review.deleteReview/after', 'event/statistics.deleteReview', 1),
-
        ('statistics.return.add', 'Updates return statistics when a new return is added.', 'catalog/model/account/returns.addReturn/after', 'event/statistics.addReturn', 1),
        ('statistics.return.delete', 'Updates return statistics when a return is deleted.', 'catalog/model/sale/returns.deleteReturn/after', 'event/statistics.deleteReturn', 1),
-
        ('statistics.order_history', 'Updates order status statistics when a order has been updated.', 'catalog/model/checkout/order.addHistory/before', 'event/statistics.addHistory', 1);
 
 -----------------------------------------------------------

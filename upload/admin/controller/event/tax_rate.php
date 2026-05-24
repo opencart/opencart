@@ -43,15 +43,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	 * @return void
 	 */
 	public function editTaxRate(string &$route, array &$args): void {
-		$task_data = [
-			'code'   => 'tax_rate.' . $args[1]['geo_zone_id'],
-			'action' => 'task/catalog/tax_rate',
-			'args'   => ['geo_zone_id' => $args[1]['geo_zone_id']]
-		];
-
 		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
 
 		$this->load->model('localisation/tax_rate');
 

@@ -58,25 +58,27 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$zone_info = $this->model_localisation_zone->getZone($args[0]);
 
-		$country_ids = array_unique([$args[1]['country_id'], $zone_info['country_id']]);
+		if ($zone_info) {
+			$country_ids = array_unique([$args[1]['country_id'], $zone_info['country_id']]);
 
-		foreach ($country_ids as $country_id) {
-			$task_data = [
-				'code'   => 'country.info.' . $country_id,
-				'action' => 'task/catalog/country.info',
-				'args'   => ['country_id' => $country_id]
-			];
+			foreach ($country_ids as $country_id) {
+				$task_data = [
+					'code'   => 'country.info.' . $country_id,
+					'action' => 'task/catalog/country.info',
+					'args'   => ['country_id' => $country_id]
+				];
 
-			$this->model_setting_task->addTask($task_data);
+				$this->model_setting_task->addTask($task_data);
 
-			// Admin
-			$task_data = [
-				'code'   => 'admin.country.info.' . $country_id,
-				'action' => 'task/admin/country.info',
-				'args'   => ['country_id' => $country_id]
-			];
+				// Admin
+				$task_data = [
+					'code'   => 'admin.country.info.' . $country_id,
+					'action' => 'task/admin/country.info',
+					'args'   => ['country_id' => $country_id]
+				];
 
-			$this->model_setting_task->addTask($task_data);
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 

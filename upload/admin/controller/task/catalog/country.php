@@ -92,14 +92,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$sort_order = [];
-
-		foreach ($country_data as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $country_data);
-
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/localisation/';
 		$filename = 'country.yaml';
 
@@ -203,7 +195,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$description_data = [];
 
-		$descriptions = $this->model_catalog_category->getDescriptions($country_info['category_id']);
+		$descriptions = $this->model_localisation_country->getDescriptions($country_info['country_id']);
 
 		foreach ($descriptions as $code => $description) {
 			$description_data[$code] = ['name' => $description['name']];

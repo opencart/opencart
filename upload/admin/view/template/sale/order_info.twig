@@ -2361,8 +2361,8 @@ function cart_render(products, totals, shipping_required) {
             html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
             html += '  </td>';
             html += '  <td class="text-end">' + product['quantity'] + '</td>';
-            html += '  <td class="text-end">' + product['price'] + '</td>';
-            html += '  <td class="text-end">' + product['total'] + '</td>';
+            html += '  <td class="text-end">' + product['price_text'] + '</td>';
+            html += '  <td class="text-end">' + product['total_text'] + '</td>';
             html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
             html += '</tr>';
 

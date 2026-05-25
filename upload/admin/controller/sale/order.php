@@ -1254,6 +1254,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $currency);
 
+			$store->session->data['currency'] = $currency;
+
 			// 2. Remove the unneeded keys.
 			$request_data = $this->request->get;
 

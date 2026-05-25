@@ -11,7 +11,7 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 	 *
 	 * Adds task to generate new product data.
 	 *
-	 * Trigger admin/model/catalog/localisation/editAddressFormat/after
+	 * Trigger admin/model/catalog/localisation/editAddressFormat/before
 	 *
 	 * @param string                $route
 	 * @param array<string, string> $args

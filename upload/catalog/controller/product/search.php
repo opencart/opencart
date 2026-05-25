@@ -15,19 +15,19 @@ class Search extends \Opencart\System\Engine\Controller {
 		$this->load->language('product/search');
 
 		if (isset($this->request->get['search'])) {
-			$filter_search = $this->request->get['search'];
+			$filter_search = (string)$this->request->get['search'];
 		} else {
 			$filter_search = '';
 		}
 
 		if (isset($this->request->get['description'])) {
-			$filter_description = $this->request->get['description'];
+			$filter_description = (int)$this->request->get['description'];
 		} else {
-			$filter_description = '';
+			$filter_description = 0;
 		}
 
 		if (isset($this->request->get['tag'])) {
-			$filter_tag = $this->request->get['tag'];
+			$filter_tag = (string)$this->request->get['tag'];
 		} else {
 			$filter_tag = '';
 		}
@@ -39,19 +39,19 @@ class Search extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['sub_category'])) {
-			$filter_sub_category = $this->request->get['sub_category'];
+			$filter_sub_category = (int)$this->request->get['sub_category'];
 		} else {
 			$filter_sub_category = 0;
 		}
 
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'p.sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
+			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
@@ -65,7 +65,7 @@ class Search extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['limit']) && (int)$this->request->get['limit']) {
 			$limit = (int)$this->request->get['limit'];
 		} else {
-			$limit = $this->config->get('config_pagination');
+			$limit = (int)$this->config->get('config_pagination');
 		}
 
 		if (isset($this->request->get['search'])) {

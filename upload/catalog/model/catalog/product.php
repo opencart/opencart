@@ -151,7 +151,7 @@ class Product extends \Opencart\System\Engine\Model {
 			if (!empty($data['filter_search'])) {
 				$implode = [];
 
-				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', (string)$data['filter_search'])));
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
@@ -159,11 +159,27 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " (" . implode(" OR ", $implode) . ")";
+					if ($this->config->get('config_product_search') == 'and') {
+						$sql .= " (" . implode(" AND ", $implode) . ")";
+					} else {
+						$sql .= " (" . implode(" OR ", $implode) . ")";
+					}
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+					$implode = [];
+
+					foreach ($words as $word) {
+						$implode[] = "`pd`.`description` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+					}
+
+					if ($implode) {
+						if ($this->config->get('config_product_search') == 'and') {
+							$sql .= " OR (" . implode(" AND ", $implode) . ")";
+						} else {
+							$sql .= " OR (" . implode(" OR ", $implode) . ")";
+						}
+					}
 				}
 			}
 
@@ -174,7 +190,7 @@ class Product extends \Opencart\System\Engine\Model {
 			if (!empty($data['filter_tag'])) {
 				$implode = [];
 
-				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', (string)$data['filter_tag'])));
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
@@ -182,12 +198,16 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " (" . implode(" OR ", $implode) . ")";
+					if ($this->config->get('config_product_search') == 'and') {
+						$sql .= " (" . implode(" AND ", $implode) . ")";
+					} else {
+						$sql .= " (" . implode(" OR ", $implode) . ")";
+					}
 				}
 			}
 
 			if (!empty($data['filter_search'])) {
-				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "' OR pc.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower((string)$data['filter_search'])) . "' OR pc.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
 			}
 
 			$sql .= ")";
@@ -327,7 +347,7 @@ class Product extends \Opencart\System\Engine\Model {
 			if (!empty($data['filter_search'])) {
 				$implode = [];
 
-				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_search'])));
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', (string)$data['filter_search'])));
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
@@ -335,11 +355,27 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " (" . implode(" OR ", $implode) . ")";
+					if ($this->config->get('config_product_search') == 'and') {
+						$sql .= " (" . implode(" AND ", $implode) . ")";
+					} else {
+						$sql .= " (" . implode(" OR ", $implode) . ")";
+					}
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+					$implode = [];
+
+					foreach ($words as $word) {
+						$implode[] = "`pd`.`description` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+					}
+
+					if ($implode) {
+						if ($this->config->get('config_product_search') == 'and') {
+							$sql .= " OR (" . implode(" AND ", $implode) . ")";
+						} else {
+							$sql .= " OR (" . implode(" OR ", $implode) . ")";
+						}
+					}
 				}
 			}
 
@@ -350,7 +386,7 @@ class Product extends \Opencart\System\Engine\Model {
 			if (!empty($data['filter_tag'])) {
 				$implode = [];
 
-				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
+				$words = explode(' ', trim(preg_replace('/\s+/', ' ', (string)$data['filter_tag'])));
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
@@ -358,12 +394,16 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if ($implode) {
-					$sql .= " (" . implode(" OR ", $implode) . ")";
+					if ($this->config->get('config_product_search') == 'and') {
+						$sql .= " (" . implode(" AND ", $implode) . ")";
+					} else {
+						$sql .= " (" . implode(" OR ", $implode) . ")";
+					}
 				}
 			}
 
 			if (!empty($data['filter_search'])) {
-				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "' OR `pc`.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower((string)$data['filter_search'])) . "' OR `pc`.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
 			}
 
 			$sql .= ")";

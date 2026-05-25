@@ -64,20 +64,23 @@ class Article extends \Opencart\System\Engine\Controller {
 
 		$this->model_setting_task->addTask($task_data);
 
+		// Topic
 		$this->load->model('cms/article');
 
 		$article_info = $this->model_cms_article->getArticle($args[0]);
 
-		$topic_ids = array_unique([$args[1]['topic_id'], $article_info['topic_id']]);
+		if ($article_info) {
+			$topic_ids = array_unique([$args[1]['topic_id'], $article_info['topic_id']]);
 
-		foreach ($topic_ids as $topic_id) {
-			$task_data = [
-				'code'   => 'article_topic.' . $topic_id,
-				'action' => 'task/catalog/article_topic',
-				'args'   => ['topic_id' => $topic_id]
-			];
+			foreach ($topic_ids as $topic_id) {
+				$task_data = [
+					'code'   => 'article_topic.' . $topic_id,
+					'action' => 'task/catalog/article_topic',
+					'args'   => ['topic_id' => $topic_id]
+				];
 
-			$this->model_setting_task->addTask($task_data);
+				$this->model_setting_task->addTask($task_data);
+			}
 		}
 	}
 
@@ -96,16 +99,6 @@ class Article extends \Opencart\System\Engine\Controller {
 	 */
 	private function deleteArticle(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'article.list',
-			'action' => 'task/catalog/article.list',
-			'args'   => []
-		];
-
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-		$task_data = [
 			'code'   => 'article.delete.' . $args[0],
 			'action' => 'task/catalog/article.delete',
 			'args'   => ['article_id' => $args[0]]
@@ -114,5 +107,20 @@ class Article extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/task');
 
 		$this->model_setting_task->addTask($task_data);
+
+		// Topic
+		$this->load->model('cms/article');
+
+		$article_info = $this->model_cms_article->getArticle($args[0]);
+
+		if ($article_info) {
+			$task_data = [
+				'code'   => 'article_topic.' . $article_info['topic_id'],
+				'action' => 'task/catalog/article_topic',
+				'args'   => ['topic_id' => $article_info['topic_id']]
+			];
+
+			$this->model_setting_task->addTask($task_data);
+		}
 	}
 }

@@ -40,7 +40,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			];
 
 			foreach ($keys as $key) {
-				if (!isset($post_info['shipping_method'][$key])) {
+				if (empty($post_info['shipping_method'][$key])) {
 					$output['error'] = $this->language->get('error_shipping_method');
 
 					break;

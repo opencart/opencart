@@ -21,8 +21,8 @@ class Category extends \Opencart\System\Engine\Controller {
 	 */
 	public function addCategory(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'category.list',
-			'action' => 'task/catalog/category.list',
+			'code'   => 'category',
+			'action' => 'task/catalog/category',
 			'args'   => []
 		];
 
@@ -56,8 +56,8 @@ class Category extends \Opencart\System\Engine\Controller {
 	 */
 	public function editCategory(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'category.list',
-			'action' => 'task/catalog/category.list',
+			'code'   => 'category',
+			'action' => 'task/catalog/category',
 			'args'   => []
 		];
 
@@ -89,8 +89,8 @@ class Category extends \Opencart\System\Engine\Controller {
 	 */
 	public function deleteCategory(string &$route, array &$args, &$output): void {
 		$task_data = [
-			'code'   => 'category.list',
-			'action' => 'task/catalog/category.list',
+			'code'   => 'category',
+			'action' => 'task/catalog/category',
 			'args'   => []
 		];
 

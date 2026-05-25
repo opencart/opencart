@@ -16,7 +16,7 @@ class Template extends \Opencart\System\Engine\Controller {
 	 * @return array
 	 */
 	public function index(array $args = []): array {
-		$this->load->language('task/catalog/translation');
+		$this->load->language('task/catalog/template');
 
 		$required = [
 			'route',

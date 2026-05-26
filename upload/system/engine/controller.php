@@ -34,6 +34,8 @@ class Controller {
 	 *
 	 * @param string $key
 	 *
+	 * @throws \Exception
+	 *
 	 * @return object
 	 */
 	public function __get(string $key): object {

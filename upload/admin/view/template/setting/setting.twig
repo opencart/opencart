@@ -365,6 +365,26 @@
                           <div class="form-text">{{ help_product_report }}</div>
                         </div>
                       </div>
+                      <div class="row mb-3">
+                        <label for="input-product-search" class="col-sm-2 col-form-label">{{ entry_product_search }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_product_search" id="input-product-search" class="form-select">
+                            <option value="and"{% if config_product_search == 'and' %} selected{% endif %}>AND</option>
+                            <option value="or"{% if config_product_search == 'or' %} selected{% endif %}>OR</option>
+                          </select>
+                          <div class="form-text">{{ help_product_search }}</div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="input-product-search-admin" class="col-sm-2 col-form-label">{{ entry_product_search_admin }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_product_search_admin" id="input-product-search-admin" class="form-select">
+                            <option value="and"{% if config_product_search_admin == 'and' %} selected{% endif %}>AND</option>
+                            <option value="or"{% if config_product_search_admin == 'or' %} selected{% endif %}>OR</option>
+                          </select>
+                          <div class="form-text">{{ help_product_search }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

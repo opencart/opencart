@@ -52,6 +52,7 @@ $_['entry_currency']                   = 'Currency';
 $_['entry_product_description_length'] = 'List Description Limit';
 $_['entry_pagination']                 = 'Default Items Per Page';
 $_['entry_product_count']              = 'Category Product Count';
+$_['entry_product_search']             = 'Product Search';
 $_['entry_cookie']                     = 'Cookie Policy';
 $_['entry_gdpr']                       = 'GDPR Policy';
 $_['entry_tax']                        = 'Display Prices With Tax';
@@ -102,10 +103,11 @@ $_['help_customer_group_display']      = 'Display customer groups that new custo
 $_['help_customer_price']              = 'Only show prices when a customer is logged in.';
 $_['help_account']                     = 'Forces people to agree to terms before an account can be created.';
 $_['help_checkout_guest']              = 'Allow customers to checkout without creating an account. This will not be available when a downloadable product is in the shopping cart.';
-$_['help_checkout']                    = 'Forces people to agree to terms before an a customer can checkout.';
+$_['help_checkout']                    = 'Forces people to agree to terms before a customer can checkout.';
 $_['help_stock_display']               = 'Display stock quantity on the product page.';
 $_['help_stock_checkout']              = 'Allow customers to still checkout if the products they are ordering are not in stock.';
 $_['help_product_count']               = 'Show the number of products inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!';
+$_['help_product_search']              = 'Choose whether the product multi-word search uses AND or OR logic.';
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';

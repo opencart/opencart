@@ -125,6 +125,8 @@ class Loader {
 	 *
 	 * @param string $route
 	 *
+	 * @throws \Exception
+	 *
 	 * @return void
 	 */
 	public function model(string $route): void {
@@ -224,6 +226,8 @@ class Loader {
 	 * @param string       $route
 	 * @param array<mixed> $args
 	 *
+	 * @throws \Exception
+	 *
 	 * @return object
 	 */
 	public function library(string $route, &...$args): object {
@@ -277,6 +281,8 @@ class Loader {
 	 * Helper
 	 *
 	 * @param string $route
+	 *
+	 * @throws \Exception
 	 *
 	 * @return void
 	 */

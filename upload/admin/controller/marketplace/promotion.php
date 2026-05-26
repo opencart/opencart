@@ -33,7 +33,7 @@ class Promotion extends \Opencart\System\Engine\Controller {
 
 		$promotion = $this->cache->get('promotion.' . $type);
 
-		if (!$promotion) {
+		if (empty($promotion)) {
 			$curl = curl_init();
 
 			curl_setopt($curl, CURLOPT_URL, OPENCART_SERVER . 'index.php?route=api/recommended&type=' . $type . '&version=' . VERSION);

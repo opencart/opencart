@@ -97,7 +97,7 @@
                 <th class="text-end">{{ column_quantity }}</th>
                 <th class="text-end">{{ column_price }}</th>
                 <th class="text-end">{{ column_total }}</th>
-                <th class="text-end" style="width: 1px;">{{ column_action }}</th>
+                {#<th class="text-end" style="width: 1px;">{{ column_action }}</th>#}
               </tr>
             </thead>
             <tbody id="order-product">
@@ -154,20 +154,21 @@
                     <td class="text-end">{{ order_product.quantity }}</td>
                     <td class="text-end">{{ order_product.price }}</td>
                     <td class="text-end">{{ order_product.total }}</td>
-                    <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                    {#<td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>#}
                   </tr>
                   {% set order_product_row = order_product_row + 1 %}
                 {% endfor %}
               {% else %}
                 <tr>
-                  <td colspan="5" class="text-center">{{ text_no_results }}</td>
+                  <td colspan="4" class="text-center">{{ text_no_results }}</td>
+                  {#<td colspan="5" class="text-center">{{ text_no_results }}</td>#}
                 </tr>
               {% endif %}
             </tbody>
             <tfoot>
               <tr>
                 <td colspan="4"></td>
-                <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                {#<td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-product" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>#}
               </tr>
             </tfoot>
           </table>
@@ -259,12 +260,12 @@
         <div class="row">
           <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}" style="min-height: 64px;">
             <div class="input-group">
-              <section id="section-shipping-method" class="form-control rounded-start" style="min-height: 64px;">
+              <div id="input-shipping-method-info" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_shipping_method }}</strong>
                   <br/>
                   <div id="output-shipping-method">{{ shipping_method_name }}</div>
                 </div>
-              </section>
+              </div>
               <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
@@ -613,6 +614,7 @@
       </div>
       <div class="modal-body">
         <form id="form-product-add">
+          <input type="hidden" name="order_id" value="{{ order_id }}"/>
           <div class="mb-3">
             <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
@@ -2246,6 +2248,22 @@ $('#button-confirm').on('click', function() {
             }
 
             if (typeof json['error'] == 'object') {
+                if (json['error']['shipping_method']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-shipping-method-info').addClass('is-invalid');
+
+                    delete json['error']['shipping_method'];
+                }
+
+                if (json['error']['payment_method']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-payment-method-info').addClass('is-invalid');
+
+                    delete json['error']['payment_method'];
+                }
+
                 for (key in json['error']) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
@@ -2359,8 +2377,8 @@ function cart_render(products, totals, shipping_required) {
             html += '    <input type="hidden" name="product[' + order_product_row + '][subscription_plan_id]" value="' + product['subscription_plan_id'] + '"/>';
             html += '  </td>';
             html += '  <td class="text-end">' + product['quantity'] + '</td>';
-            html += '  <td class="text-end">' + product['price'] + '</td>';
-            html += '  <td class="text-end">' + product['total'] + '</td>';
+            html += '  <td class="text-end">' + product['price_text'] + '</td>';
+            html += '  <td class="text-end">' + product['total_text'] + '</td>';
             html += '  <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
             html += '</tr>';
 

@@ -27,6 +27,8 @@ class Proxy {
 	 *
 	 * @param string $key
 	 *
+	 * @throws \Exception
+	 *
 	 * @return mixed
 	 */
 	public function &__get(string $key) {
@@ -76,6 +78,8 @@ class Proxy {
 	 *
 	 * @param string               $method
 	 * @param array<string, mixed> $args
+	 *
+	 * @throws \Exception
 	 *
 	 * @return mixed
 	 */

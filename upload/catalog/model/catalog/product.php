@@ -115,7 +115,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$preparedFilters = array_map(fn ($f) => (int)$f, $filters);
 				$filtrationFix = $this->config->get('config_product_filters_fix') == 1 ? 'HAVING COUNT(DISTINCT pf.filter_id) = ' . count($preparedFilters) : '';
 
-				$sql .= " INNER JOIN (SELECT `pf`.`product_id` FROM `" . DB_PREFIX . "product_filter` `pf` WHERE `pf`.`filter_id` IN (" . implode(',', $preparedFilters) . ") GROUP BY pf.product_id $filtrationFix) `f` ON `f`.`product_id` = `p2s`.`product_id` INNER JOIN `oc_product` `p` ON (`p`.`product_id` = `f`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
+				$sql .= " INNER JOIN (SELECT `pf`.`product_id` FROM `" . DB_PREFIX . "product_filter` `pf` WHERE `pf`.`filter_id` IN (" . implode(',', $preparedFilters) . ") GROUP BY pf.product_id {$filtrationFix}) `f` ON `f`.`product_id` = `p2s`.`product_id` INNER JOIN `oc_product` `p` ON (`p`.`product_id` = `f`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
 			} else {
 				$sql .= " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
 			}
@@ -303,7 +303,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$preparedFilters = array_map(fn ($f) => (int)$f, $filters);
 				$filtrationFix = $this->config->get('config_product_filters_fix') == 1 ? 'HAVING COUNT(DISTINCT pf.filter_id) = ' . count($preparedFilters) : '';
 
-				$sql .= " INNER JOIN (SELECT `pf`.`product_id` FROM `" . DB_PREFIX . "product_filter` `pf` WHERE `pf`.`filter_id` IN (" . implode(',', $preparedFilters) . ") GROUP BY pf.product_id $filtrationFix) `f` ON `f`.`product_id` = `p2s`.`product_id` INNER JOIN `oc_product` `p` ON (`p`.`product_id` = `f`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
+				$sql .= " INNER JOIN (SELECT `pf`.`product_id` FROM `" . DB_PREFIX . "product_filter` `pf` WHERE `pf`.`filter_id` IN (" . implode(',', $preparedFilters) . ") GROUP BY pf.product_id {$filtrationFix}) `f` ON `f`.`product_id` = `p2s`.`product_id` INNER JOIN `oc_product` `p` ON (`p`.`product_id` = `f`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
 			} else {
 				$sql .= " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW() AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "')";
 			}

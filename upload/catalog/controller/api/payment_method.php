@@ -18,20 +18,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$output = [];
 
-		$required = [
-			'payment_method' => [
-				'name' => '',
-				'code' => ''
-			]
-		];
-
-		$post_info = $this->request->post + $required;
-
-		if (!is_array($post_info['payment_method'])) {
-			$post_info['payment_method'] = $required['payment_method'];
-		} else {
-			$post_info['payment_method'] += $required['payment_method'];
-		}
+		$post_info = $this->request->post;
 
 		// 1. Validate customer data exists
 		if (!isset($this->session->data['customer'])) {
@@ -57,6 +44,20 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		// 4. Validate payment address if required
 		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$output['error'] = $this->language->get('error_payment_address');
+		}
+
+		// 5. Validate payment method
+		$keys = [
+			'name',
+			'code'
+		];
+
+		foreach ($keys as $key) {
+			if (empty($post_info['payment_method'][$key])) {
+				$output['error'] = $this->language->get('error_payment_method');
+
+				break;
+			}
 		}
 
 		if (!$output) {

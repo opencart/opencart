@@ -260,12 +260,12 @@
         <div class="row">
           <div id="shipping-method" class="col-md mb-3{% if not shipping_method_code %} d-none{% endif %}" style="min-height: 64px;">
             <div class="input-group">
-              <section id="section-shipping-method" class="form-control rounded-start" style="min-height: 64px;">
+              <div id="input-shipping-method-info" class="form-control rounded-start" style="min-height: 64px;">
                 <div class="lead"><strong>{{ text_shipping_method }}</strong>
                   <br/>
                   <div id="output-shipping-method">{{ shipping_method_name }}</div>
                 </div>
-              </section>
+              </div>
               <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
@@ -2248,6 +2248,22 @@ $('#button-confirm').on('click', function() {
             }
 
             if (typeof json['error'] == 'object') {
+                if (json['error']['shipping_method']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['shipping_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-shipping-method-info').addClass('is-invalid');
+
+                    delete json['error']['shipping_method'];
+                }
+
+                if (json['error']['payment_method']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['payment_method'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-payment-method-info').addClass('is-invalid');
+
+                    delete json['error']['payment_method'];
+                }
+
                 for (key in json['error']) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');

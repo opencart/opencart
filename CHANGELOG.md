@@ -91,6 +91,24 @@
 * Fixed: Fix autocomplete in Safari in https://github.com/opencart/opencart/pull/15431
 * Fixed: db_schema PHP CS fixer in https://github.com/opencart/opencart/pull/15432
 * Fixed: Missing language texts in https://github.com/opencart/opencart/pull/15433
+* Fixed: Keep order's status on admin update in https://github.com/opencart/opencart/pull/15436
+* Changed: Removal of redundant console.log calls in https://github.com/opencart/opencart/pull/15438
+* Fixed: Fix couple UI issues in https://github.com/opencart/opencart/pull/15441
+* Fixed: Fix install open_basedir validation in https://github.com/opencart/opencart/pull/15447
+* Fixed: Prevent XSS in error log view in https://github.com/opencart/opencart/pull/15445
+* Changed: Corrections to .htaccess.txt in https://github.com/opencart/opencart/pull/15450
+* Removed: Remove HTTP_CLIENT_IP override in startup in https://github.com/opencart/opencart/pull/15451
+* Fixed: Fix missing data from the union operator being left-associative in https://github.com/opencart/opencart/pull/15442
+* Fixed: Fix promotions request in https://github.com/opencart/opencart/pull/15467
+* Changed: Admin Order edit changes in https://github.com/opencart/opencart/pull/15472
+* Changed: Change 'link' type from varchar to text in https://github.com/opencart/opencart/pull/15454
+* Fixed: Manufacturer SEO URLs in https://github.com/opencart/opencart/pull/15474
+* Fixed: Fix related products showing for wrong store in https://github.com/opencart/opencart/pull/15463
+* Fixed: Fix admin edit order not saving language and currency in https://github.com/opencart/opencart/pull/15476
+* Fixed: Fix escaping in backup in https://github.com/opencart/opencart/pull/15473
+* Changed: Adjust leading spaces in SQL language files in https://github.com/opencart/opencart/pull/15480
+* Changed: Support multi-word product name search v2 in https://github.com/opencart/opencart/pull/15479
+* Fixed: Fix admin order methods validation in https://github.com/opencart/opencart/pull/15478
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

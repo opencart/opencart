@@ -27,7 +27,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		foreach ($store_ids as $store_id) {
 			$task_data = [
-				'code'   => 'category',
+				'code'   => 'category.list.' . $store_id,
 				'action' => 'task/catalog/category.list',
 				'args'   => ['store_id' => $store_id]
 			];
@@ -72,6 +72,20 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$category_ids = $this->model_catalog_category->getStoresByStoreId($store_info['store_id']);
 
+
+		$filter_data = [
+			'filter_name'        => $filter_name,
+			'filter_store_id'    => $filter_store_id,
+			'filter_language_id' => $filter_language_id,
+			'filter_status'      => $filter_status,
+			'sort'               => $sort,
+			'order'              => $order,
+			'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'              => $this->config->get('config_pagination_admin')
+		];
+
+
+
 		foreach ($category_ids as $category_id) {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 
@@ -84,26 +98,52 @@ class Category extends \Opencart\System\Engine\Controller {
 					$description_data[$code] = ['name' => $description['name']];
 				}
 
-				$category_data[] = [
-					'category_id' => $category_info['category_id'],
-					'description' => $description_data,
-					'image'       => $category_info['image'],
-					'parent_id'   => $category_info['parent_id'],
-					'sort_order'  => $category_info['sort_order']
-				];
+				$children_data = [];
+
+				$children = $this->model_catalog_category->getCategories(['filter_parent_id' => $category_info['category_id']]);
+
+				foreach ($children as $child) {
+					$store_ids = $this->model_catalog_category->getStores($child['category_id']);
+					
+					if (in_array($store_info['store_id'], $store_ids)) {
+						$child_description_data = [];
+
+						$child_descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
+
+						foreach ($child_descriptions as $code => $child_description) {
+							$child_description_data[$code] = ['name' => $child_description['name']];
+						}
+
+						$children_data[] = [
+							'category_id' => $child['category_id'],
+							'description' => $child_description_data,
+							'image'       => $category_info['image'],
+							'sort_order'  => $category_info['sort_order']
+						];
+					}
+
+					$category_data[] = [
+						'category_id' => $category_info['category_id'],
+						'description' => $description_data,
+						'image'       => $category_info['image'],
+						'parent_id'   => $category_info['parent_id'],
+						'children'    => $children_data,
+						'sort_order'  => $category_info['sort_order']
+					];
+				}
 			}
 		}
 
 		$sort_order = [];
 
 		foreach ($category_data as $key => $value) {
-			$sort_order[$key] = $value['name'];
+			$sort_order[$key] = $value['sort_order'];
 		}
 
 		array_multisort($sort_order, SORT_ASC, $category_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'category.ymal';
+		$filename = 'category.yaml';
 
 		if (!oc_directory_create($directory, 0777)) {
 			return ['error' => sprintf($this->language->get('error_directory'), $directory)];

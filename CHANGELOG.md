@@ -109,6 +109,10 @@
 * Changed: Adjust leading spaces in SQL language files in https://github.com/opencart/opencart/pull/15480
 * Changed: Support multi-word product name search v2 in https://github.com/opencart/opencart/pull/15479
 * Fixed: Fix admin order methods validation in https://github.com/opencart/opencart/pull/15478
+* Changed: Add missing @throws docblocks in https://github.com/opencart/opencart/pull/15455
+* Fixed: Fix related products showing for wrong store in https://github.com/opencart/opencart/pull/15463
+* Fixed: Bug: admin/model/cms/article.php getComments() in https://github.com/opencart/opencart/pull/15482
+* Changed: Fix products filtration in https://github.com/opencart/opencart/pull/15483
 
 ## [v4.1.0.3] (Release date: 24.03.2025)
 

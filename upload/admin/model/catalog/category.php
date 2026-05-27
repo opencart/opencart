@@ -978,6 +978,21 @@ class Category extends \Opencart\System\Engine\Model {
 		return $category_store_data;
 	}
 
+	/*
+	 * Get information data based on stores
+	 */
+	public function getStoresByStoreId(int $store_id): array {
+		$category_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
+
+		foreach ($query->rows as $result) {
+			$category_data[] = $result['category_id'];
+		}
+
+		return $category_data;
+	}
+
 	/**
 	 * Add Layout
 	 *

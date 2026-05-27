@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_task']       = 'Generating category task list!';
-$_['text_info']       = 'Generating %s %s category information!';
+$_['text_info']       = 'Generating %s category information!';
 $_['text_delete']     = 'Category %s data deleted!';
 
 // Error

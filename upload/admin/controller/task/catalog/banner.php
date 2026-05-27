@@ -50,7 +50,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$this->model_setting_task->addTask($task_data);
 		}
 
-		return ['success' => sprintf($this->language->get('text_info'), $banner_info['name'])];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 		}
 
-		return ['success' => sprintf($this->language->get('text_list'), $store_info['name'], $banner_info['name'])];
+		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $banner_info['name'])];
 	}
 
 	/**

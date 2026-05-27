@@ -52,6 +52,7 @@ $_['entry_currency']                   = 'Devise';
 $_['entry_product_description_length'] = 'Limite de description en liste';
 $_['entry_pagination']                 = 'Articles par page par défaut';
 $_['entry_product_count']              = 'Nombre de produits par catégorie';
+$_['entry_product_filters']            = 'Filtres de produits';
 $_['entry_product_search']             = 'Recherche de produits';
 $_['entry_cookie']                     = 'Politique de cookies';
 $_['entry_gdpr']                       = 'Politique GDPR';
@@ -107,6 +108,7 @@ $_['help_checkout']                    = 'Oblige les utilisateurs à accepter le
 $_['help_stock_display']               = 'Afficher la quantité de stock sur la page produit.';
 $_['help_stock_checkout']              = 'Permettre aux clients de finaliser leurs achats même si les produits commandés ne sont pas en stock.';
 $_['help_product_count']               = 'Affiche le nombre de produits dans les sous-catégories dans le menu d\'en-tête de la vitrine. Attention, cela peut entraîner une baisse de performance significative pour les boutiques avec beaucoup de sous-catégories!';
+$_['help_product_filters']             = 'Choisissez si les filtres de produits utilisent la logique ET ou OU.';
 $_['help_product_search']              = 'Choisissez si la recherche multi-mots des produits utilise la logique AND ou OR.';
 
 // Erreur

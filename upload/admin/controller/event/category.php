@@ -36,8 +36,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			'args'   => ['category_id' => $output]
 		];
 
-		$this->load->model('setting/task');
-
 		$this->model_setting_task->addTask($task_data);
 	}
 

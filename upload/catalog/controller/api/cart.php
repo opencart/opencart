@@ -189,6 +189,30 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
+			$products = $this->cart->getProducts();
+
+			$cartOptionQuantity = [];
+
+			// Get all cart products' option quantities
+			foreach ($products as $product) {
+				$pid = $product['product_id'];
+				$qty = $product['quantity'];
+
+				if (!isset($cartOptionQuantity[$pid])) {
+					$cartOptionQuantity[$pid] = [];
+				}
+				if (!empty($product['option'])) {
+					foreach ($product['option'] as $opt) {
+						$optId = $opt['product_option_value_id'];
+
+						if (!isset($cartOptionQuantity[$pid][$optId])) {
+							$cartOptionQuantity[$pid][$optId] = 0;
+						}
+						$cartOptionQuantity[$pid][$optId] += $qty;
+					}
+				}
+			}
+
 			// If variant get master product
 			if ($product_info['master_id']) {
 				$product_id = $product_info['master_id'];
@@ -199,7 +223,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$option[$option_id] = $value;
 			}
 
-			// Validate that have been sent are part of the product
+			// Validate the options that have been sent are part of the product
 			foreach ($option as $product_option_id => $value) {
 				$product_option_info = $this->model_catalog_product->getOption($product_id, $product_option_id);
 
@@ -216,8 +240,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 							if (!$product_option_value_info) {
 								$output['error']['option_' . $product_option_id] = $this->language->get('error_option');
-							} elseif ($product_option_value_info['subtract'] && (!$product_option_value_info['quantity'] || ($product_option_value_info['quantity'] < $quantity))) {
-								$output['error']['option_' . $product_option_id] = $this->language->get('error_option_stock');
+							} elseif ($product_option_value_info['subtract']) {
+								// Compare product's option stock to cart + request quantity
+								$cartOptQty = $cartOptionQuantity[$product_id][$product_option_value_id] ?? 0;
+								$stock = $product_option_value_info['quantity'];
+
+								if ($stock < $cartOptQty + $quantity) {
+									$output['error']['option_' . $product_option_id] = $this->language->get('error_option_stock');
+								}
 							}
 						}
 					}
@@ -240,15 +270,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 			// Stock
 			$product_total = 0;
 
-			$products = $this->cart->getProducts();
-
 			foreach ($products as $product_2) {
 				if ($product_2['product_id'] == $product_info['product_id']) {
 					$product_total += $product_2['quantity'];
 				}
 			}
 
-			if (!$this->config->get('config_stock_checkout') && (!$product_info['quantity'] || ($product_info['quantity'] < $product_total))) {
+			// Compare product's total stock to cart + request quantity
+			if (!$this->config->get('config_stock_checkout') && (!$product_info['quantity'] || ($product_info['quantity'] < $product_total + $quantity))) {
 				$output['error']['warning'] = $this->language->get('error_stock');
 			}
 

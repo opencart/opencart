@@ -292,7 +292,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$output) {
-			$this->cart->add($product_id, $quantity, $option, $subscription_plan_id);
+			$this->cart->add($product_info['product_id'], $quantity, $option, $subscription_plan_id);
 
 			$output['success'] = $this->language->get('text_success');
 		}

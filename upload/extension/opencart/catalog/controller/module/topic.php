@@ -43,14 +43,14 @@ class Topic extends \Opencart\System\Engine\Controller {
 		if ($topics) {
 			$data['topics'][] = [
 				'topic_id' => 0,
-				'name'     => $this->language->get('text_all') . ($this->config->get('config_article_count') ? ' (' . $this->model_cms_article->getTotalArticles() . ')' : ''),
+				'name'     => $this->language->get('text_all') . ($this->config->get('module_topic_article_count') ? ' (' . $this->model_cms_article->getTotalArticles() . ')' : ''),
 				'href'     => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . $url)
 			];
 
 			foreach ($topics as $topic) {
 				$data['topics'][] = [
 					'topic_id' => $topic['topic_id'],
-					'name'     => $topic['name'] . ($this->config->get('config_article_count') ? ' (' . $this->model_cms_article->getTotalArticles(['filter_topic_id' => $data['topic_id']]) . ')' : ''),
+					'name'     => $topic['name'] . ($this->config->get('module_topic__article_count') ? ' (' . $this->model_cms_article->getTotalArticles(['filter_topic_id' => $data['topic_id']]) . ')' : ''),
 					'href'     => $this->url->link('cms/blog', 'language=' . $this->config->get('config_language') . '&topic_id=' . $topic['topic_id'] . $url)
 				];
 			}

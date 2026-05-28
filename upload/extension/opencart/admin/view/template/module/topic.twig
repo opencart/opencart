@@ -19,6 +19,15 @@
       <div class="card-body">
         <form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_article_count }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="module_topic_article_count" value="0"/>
+                <input type="checkbox" name="module_topic_article_count" value="1" id="input-article-count" class="form-check-input"{% if module_topic_article_count %} checked{% endif %}/>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">

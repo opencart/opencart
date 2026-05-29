@@ -53,7 +53,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['button_back'] = $this->language->get('button_back');
 
 		$data['php_version'] = PHP_VERSION;
-		$data['version'] = version_compare(PHP_VERSION, '8.0', '>=');
+		$data['version'] = version_compare(PHP_VERSION, '8.1', '>=');
 
 		$open_basedir = str_replace('\\', '/', ini_get('open_basedir'));
 
@@ -150,7 +150,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (version_compare(PHP_VERSION, '8.0', '<')) {
+		if (version_compare(PHP_VERSION, '8.1', '<')) {
 			$json['error'] = $this->language->get('error_version');
 		}
 

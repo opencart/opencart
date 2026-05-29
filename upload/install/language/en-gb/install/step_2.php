@@ -33,7 +33,7 @@ $_['text_unwritable']        = 'Unwritable';
 $_['text_missing']           = 'Missing';
 
 // Error
-$_['error_version']          = 'Warning: You need to use PHP 8.0 or above for OpenCart to work!';
+$_['error_version']          = 'Warning: You need to use PHP 8.1 or above for OpenCart to work!';
 $_['error_open_basedir']     = 'Warning: open_basedir needs to allow access to %s';
 $_['error_file_upload']      = 'Warning: file_uploads needs to be enabled!';
 $_['error_session']          = 'Warning: OpenCart will not work with session.auto_start enabled!';

@@ -68,79 +68,33 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$category_data = [];
 
-		$this->load->model('catalog/category');
-
-		$category_ids = $this->model_catalog_category->getStoresByStoreId($store_info['store_id']);
-
-
 		$filter_data = [
-			'filter_name'        => $filter_name,
-			'filter_store_id'    => $filter_store_id,
-			'filter_language_id' => $filter_language_id,
-			'filter_status'      => $filter_status,
-			'sort'               => $sort,
-			'order'              => $order,
-			'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'              => $this->config->get('config_pagination_admin')
+			'filter_store_id' => $store_info['store_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
 		];
 
+		$this->load->model('catalog/category');
 
+		$results = $this->model_catalog_category->getCategories($filter_data);
 
-		foreach ($category_ids as $category_id) {
-			$category_info = $this->model_catalog_category->getCategory($category_id);
+		foreach ($results as $result) {
+			$description_data = [];
 
-			if ($category_info && $category_info['status']) {
-				$description_data = [];
+			$descriptions = $this->model_catalog_category->getDescriptions($result['category_id']);
 
-				$descriptions = $this->model_catalog_category->getDescriptions($category_info['category_id']);
-
-				foreach ($descriptions as $code => $description) {
-					$description_data[$code] = ['name' => $description['name']];
-				}
-
-				$children_data = [];
-
-				$children = $this->model_catalog_category->getCategories(['filter_parent_id' => $category_info['category_id']]);
-
-				foreach ($children as $child) {
-					$store_ids = $this->model_catalog_category->getStores($child['category_id']);
-					
-					if (in_array($store_info['store_id'], $store_ids)) {
-						$child_description_data = [];
-
-						$child_descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
-
-						foreach ($child_descriptions as $code => $child_description) {
-							$child_description_data[$code] = ['name' => $child_description['name']];
-						}
-
-						$children_data[] = [
-							'category_id' => $child['category_id'],
-							'description' => $child_description_data,
-							'image'       => $category_info['image'],
-							'sort_order'  => $category_info['sort_order']
-						];
-					}
-
-					$category_data[] = [
-						'category_id' => $category_info['category_id'],
-						'description' => $description_data,
-						'image'       => $category_info['image'],
-						'parent_id'   => $category_info['parent_id'],
-						'children'    => $children_data,
-						'sort_order'  => $category_info['sort_order']
-					];
-				}
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = ['name' => $description['name']];
 			}
+
+			$category_data[] = [
+				'category_id' => $result['category_id'],
+				'description' => $description_data,
+				'image'       => $result['image'],
+				'parent_id'   => $result['parent_id']
+			];
 		}
-
-		$sort_order = [];
-
-		foreach ($category_data as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $category_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'category.yaml';
@@ -248,11 +202,38 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		$children_data = [];
+
+		$children = $this->model_catalog_category->getCategories(['filter_parent_id' => $category_info['category_id']]);
+
+		foreach ($children as $child) {
+			$store_ids = $this->model_catalog_category->getStores($child['category_id']);
+
+			if (in_array($store_info['store_id'], $store_ids)) {
+				$child_description_data = [];
+
+				$child_descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
+
+				foreach ($child_descriptions as $code => $child_description) {
+					$child_description_data[$code] = ['name' => $child_description['name']];
+				}
+
+				$children_data[] = [
+					'category_id' => $child['category_id'],
+					'description' => $child_description_data,
+					'image'       => $category_info['image'],
+					'sort_order'  => $category_info['sort_order']
+				];
+			}
+		}
+
 		$category_data = [
 			'category_id' => $category_info['category_id'],
 			'description' => $description_data,
 			'image'       => $category_info['image'],
 			'parent_id'   => $category_info['parent_id'],
+			'path'        => getPath,
+			'children'        => $children_data,
 			'sort_order'  => $category_info['sort_order']
 		];
 

@@ -80,6 +80,8 @@ class Category extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_category->getCategories($filter_data);
 
 		foreach ($results as $result) {
+			$path = $this->model_catalog_category->getPath($result['category_id']);
+
 			$description_data = [];
 
 			$descriptions = $this->model_catalog_category->getDescriptions($result['category_id']);
@@ -88,11 +90,11 @@ class Category extends \Opencart\System\Engine\Controller {
 				$description_data[$code] = ['name' => $description['name']];
 			}
 
-			$category_data[] = [
+			$category_data[$path] = [
 				'category_id' => $result['category_id'],
 				'description' => $description_data,
 				'image'       => $result['image'],
-				'parent_id'   => $result['parent_id']
+				'path'        => $path
 			];
 		}
 
@@ -202,6 +204,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		$path = $this->model_catalog_category->getPath($category_info['category_id']);
+
 		$children_data = [];
 
 		$children = $this->model_catalog_category->getCategories(['filter_parent_id' => $category_info['category_id']]);
@@ -222,6 +226,7 @@ class Category extends \Opencart\System\Engine\Controller {
 					'category_id' => $child['category_id'],
 					'description' => $child_description_data,
 					'image'       => $category_info['image'],
+					'path'        => $path . '_' . $child['category_id'],
 					'sort_order'  => $category_info['sort_order']
 				];
 			}
@@ -232,8 +237,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			'description' => $description_data,
 			'image'       => $category_info['image'],
 			'parent_id'   => $category_info['parent_id'],
-			'path'        => getPath,
-			'children'        => $children_data,
+			'path'        => $path,
+			'children'    => $children_data,
 			'sort_order'  => $category_info['sort_order']
 		];
 

@@ -613,7 +613,6 @@
       </div>
       <div class="modal-body">
         <form id="form-product-add">
-          <input type="hidden" name="order_id" value="{{ order_id }}"/>
           <div class="mb-3">
             <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control"/>
             <ul id="autocomplete-product" class="dropdown-menu"></ul>
@@ -1497,7 +1496,7 @@ $('#form-product-add').on('submit', function(e) {
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=product_add&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
-        data: $('#form-product-add, #form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize(),
+        data: $('#form-product-add, #form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form, #input-order-id').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
@@ -2190,7 +2189,7 @@ $('#button-refresh').on('click', function() {
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&call=cart&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&currency=' + $('#input-currency').val(),
         type: 'post',
-        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form').serialize(),
+        data: $('#form-customer, #form-cart, #form-shipping-address, #form-shipping-method, #form-payment-address, #form-payment-method, #collapse-order form, #input-order-id').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {

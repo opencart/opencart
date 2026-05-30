@@ -77,7 +77,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 								if (!$product_option_value_info) {
 									$output['error']['product_' . (int)$key . '_option_' . (int)$product_option_id] = $this->language->get('error_option');
-								} elseif ($product_option_value_info['subtract'] && (!$this->config->get('config_stock_checkout') && ($this->adjustedProductOptionValueStock($product_id,$product_option_value_id) < $posted_product['quantity']))) {
+								} elseif ($product_option_value_info['subtract'] && (!$this->config->get('config_stock_checkout') && ($this->adjustedProductOptionValueStock($product_id, $product_option_value_id) < $posted_product['quantity']))) {
 									$output['error']['product_' . (int)$key . '_option_' . (int)$product_option_id] = $this->language->get('error_option_stock');
 								}
 							}
@@ -212,7 +212,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 								$output['error']['option_' . $product_option_id] = $this->language->get('error_option');
 							} elseif ($product_option_value_info['subtract']) {
 								$product_option_value_quantity = $this->adjustedProductOptionValueStock($product_id, $product_option_value_id);
-								if (!$product_option_value_quantity || $product_option_value_quantity < $quantity+$this->cartOptionValueQuantity($product_option_value_id)) {
+								if (!$product_option_value_quantity || $product_option_value_quantity < $quantity + $this->cartOptionValueQuantity($product_option_value_id)) {
 									$output['error']['option_' . $product_option_id] = $this->language->get('error_option_stock');
 								}
 							}
@@ -332,12 +332,19 @@ class Cart extends \Opencart\System\Engine\Controller {
 		return $total_data;
 	}
 
+	/**
+	 * Get adjusted product stock if product was originally part of the order
+	 *
+	 * @param array<string, mixed> $product_info
+	 *
+	 * @return int
+	 */
 	protected function adjustedProductStock(array $product_info): int {
 		$quantity = $product_info['quantity'];
 
 		$order_id = isset($this->request->post['order_id']) ? (int)$this->request->post['order_id'] : 0;
 
-		if ($order_id==0) {
+		if ($order_id == 0) {
 			return $quantity;
 		}
 
@@ -348,7 +355,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			return $quantity;
 		}
 
-		if ($order_info['order_status_id']==0) {
+		if ($order_info['order_status_id'] == 0) {
 			return $quantity;
 		}
 
@@ -362,6 +369,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 		return $quantity;
 	}
 
+	/**
+	 * Get adjusted product option value stocks if they were originally part of the order
+	 *
+	 * @param int $product_id
+	 * @param int $product_option_value_id
+	 *
+	 * @return int
+	 */
 	protected function adjustedProductOptionValueStock(int $product_id, int $product_option_value_id): int {
 		$quantity = 0;
 
@@ -376,7 +391,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$order_id = isset($this->request->post['order_id']) ? (int)$this->request->post['order_id'] : 0;
 
-		if ($order_id==0) {
+		if ($order_id == 0) {
 			return $quantity;
 		}
 
@@ -407,6 +422,13 @@ class Cart extends \Opencart\System\Engine\Controller {
 		return $quantity;
 	}
 
+	/**
+	 * Get the total cart quantity for a product option value
+	 *
+	 * @param int $product_option_value_id
+	 *
+	 * @return int
+	 */
 	protected function cartOptionValueQuantity(int $product_option_value_id): int {
 		$quantity = 0;
 		$cart_products = $this->cart->getProducts();

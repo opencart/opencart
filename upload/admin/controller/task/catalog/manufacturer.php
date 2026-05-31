@@ -77,7 +77,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		$results = $this->model_catalog_manufacturer->getManufacturersa($filter_data);
+		$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 
 		foreach ($results as $result) {
 			$description_data = [];

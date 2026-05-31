@@ -32,59 +32,6 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			return ['success' => $this->language->get('error_filter_group')];
 		}
 
-		$this->load->model('setting/store');
-		$this->load->model('setting/task');
-
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
-
-		foreach ($store_ids as $store_id) {
-			$task_data = [
-				'code'   => 'filter_group.info.' . $store_id . '.' . $filter_group_info['filter_group_id'],
-				'action' => 'task/catalog/filter_group.info',
-				'args'   => [
-					'filter_group_id' => $filter_group_info['filter_group_id'],
-					'store_id'        => $store_id
-				]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
-
-		return ['success' => $this->language->get('text_task')];
-	}
-
-	/**
-	 * Info
-	 *
-	 * Generate filter_group information.
-	 *
-	 * @param array<string, string> $args
-	 *
-	 * @return array
-	 */
-	public function info(array $args = []): array {
-		$this->load->language('task/catalog/filter_group');
-
-		if (!array_key_exists('filter_group_id', $args)) {
-			return ['error' => $this->language->get('error_required')];
-		}
-
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
-
-		if (!$store_info) {
-			return ['error' => $this->language->get('error_store')];
-		}
-
-		$this->load->model('catalog/filter_group');
-
-		$filter_group_info = $this->model_catalog_filter->getFilterGroup((int)$args['filter_group_id']);
-
-		if (!$filter_group_info) {
-			return ['error' => $this->language->get('error_filter_group')];
-		}
-
 		// Description
 		$description_data = [];
 
@@ -120,18 +67,40 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 			'filters'         => $filter_data
 		];
 
-		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
-		$filename = 'filter_group-' . $filter_group_info['filter_group_id'] . '.yaml';
+		$this->load->model('setting/store');
 
-		if (!oc_directory_create($directory, 0777)) {
-			return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
+
+		foreach ($store_ids as $store_id) {
+			$store_info = [
+				'store_id' => 0,
+				'name'     => $this->config->get('config_name'),
+				'url'      => HTTP_CATALOG
+			];
+
+			if ($store_id) {
+				$this->load->model('setting/store');
+
+				$store_info = $this->model_setting_store->getStore((int)$store_id);
+
+				if (!$store_info) {
+					return ['error' => $this->language->get('error_store')];
+				}
+			}
+
+			$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
+			$filename = 'filter_group-' . $filter_group_info['filter_group_id'] . '.yaml';
+
+			if (!oc_directory_create($directory, 0777)) {
+				return ['error' => sprintf($this->language->get('error_directory'), $directory)];
+			}
+
+			if (!file_put_contents($directory . $filename, oc_yaml_encode($filter_group_data))) {
+				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
+			}
 		}
 
-		if (!file_put_contents($directory . $filename, oc_yaml_encode($filter_group_data))) {
-			return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
-		}
-
-		return ['success' => sprintf($this->language->get('text_info'), $store_info['name'], $filter_group_info['name'])];
+		return ['success' => $this->language->get('text_task')];
 	}
 
 	/**

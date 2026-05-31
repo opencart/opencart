@@ -236,7 +236,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			'category_id' => $category_info['category_id'],
 			'description' => $description_data,
 			'image'       => $category_info['image'],
-			'parent_id'   => $category_info['parent_id'],
 			'path'        => $path,
 			'children'    => $children_data,
 			'sort_order'  => $category_info['sort_order']

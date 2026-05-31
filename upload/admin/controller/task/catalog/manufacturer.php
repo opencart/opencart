@@ -68,37 +68,32 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$manufacturer_data = [];
 
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
+		];
+
 		$this->load->model('catalog/manufacturer');
 
-		$manufacturer_ids = $this->model_catalog_manufacturer->getStoresByStoreId($store_info['store_id']);
+		$results = $this->model_catalog_manufacturer->getManufacturersa($filter_data);
 
-		foreach ($manufacturer_ids as $manufacturer_id) {
-			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
+		foreach ($results as $result) {
+			$description_data = [];
 
-			if ($manufacturer_info && $manufacturer_info['status']) {
-				$description_data = [];
+			$descriptions = $this->model_catalog_manufacturer->getDescriptions($result['manufacturer_id']);
 
-				$descriptions = $this->model_catalog_manufacturer->getDescriptions($manufacturer_info['manufacturer_id']);
-
-				foreach ($descriptions as $code => $description) {
-					$description_data[$code] = ['name' => $description['name']];
-				}
-
-				$manufacturer_data[] = [
-					'manufacturer_id' => $manufacturer_info['manufacturer_id'],
-					'description'     => $description_data,
-					'sort_order'      => $manufacturer_info['sort_order']
-				];
+			foreach ($descriptions as $code => $description) {
+				$description_data[$code] = ['name' => $description['name']];
 			}
+
+			$manufacturer_data[] = [
+				'manufacturer_id' => $result['manufacturer_id'],
+				'description'     => $description_data,
+				'sort_order'      => $result['sort_order']
+			];
 		}
-
-		$sort_order = [];
-
-		foreach ($manufacturer_data as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $manufacturer_data);
 
 		$directory = DIR_CATALOG . 'view/data/' . parse_url($store_info['url'], PHP_URL_HOST) . '/catalog/';
 		$filename = 'manufacturer.yaml';

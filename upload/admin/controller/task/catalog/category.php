@@ -113,71 +113,51 @@ class Category extends \Opencart\System\Engine\Controller {
 			return ['error' => $this->language->get('error_category')];
 		}
 
+		$description_data = [];
 
+		$descriptions = $this->model_catalog_category->getDescriptions($category_info['category_id']);
 
+		foreach ($descriptions as $code => $description) {
+			$description_data[$code] = [
+				'name'             => $description['name'],
+				'description'      => $description['description'],
+				'meta_title'       => $description['meta_title'],
+				'meta_description' => $description['meta_description'],
+				'meta_keyword'     => $description['meta_keyword']
+			];
+		}
 
-
-
-
-
+		$path = $this->model_catalog_category->getPath($category_info['category_id']);
 
 		$this->load->model('setting/task');
 
 		$store_ids = $this->model_catalog_category->getStores($category_info['category_id']);
 
 		foreach ($store_ids as $store_id) {
-
-
-
-
 			$store_info = [
 				'store_id' => 0,
 				'name'     => $this->config->get('config_name'),
 				'url'      => HTTP_CATALOG
 			];
 
-			if ($args['store_id']) {
+			if ($store_id) {
 				$this->load->model('setting/store');
 
-				$store_info = $this->model_setting_store->getStore((int)$args['store_id']);
+				$store_info = $this->model_setting_store->getStore((int)$store_id);
 
 				if (!$store_info) {
 					return ['error' => $this->language->get('error_store')];
 				}
 			}
 
-			$this->load->model('catalog/category');
-
-			$category_info = $this->model_catalog_category->getCategory((int)$args['category_id']);
-
-			if (!$category_info || !$category_info['status']) {
-				return ['error' => $this->language->get('error_category')];
-			}
-
-			$description_data = [];
-
-			$descriptions = $this->model_catalog_category->getDescriptions($category_info['category_id']);
-
-			foreach ($descriptions as $code => $description) {
-				$description_data[$code] = [
-					'name'             => $description['name'],
-					'description'      => $description['description'],
-					'meta_title'       => $description['meta_title'],
-					'meta_description' => $description['meta_description'],
-					'meta_keyword'     => $description['meta_keyword']
-				];
-			}
-
-			$path = $this->model_catalog_category->getPath($category_info['category_id']);
-
 			$children_data = [];
 
 			$filter_data = [
-				'filter_store_id' => $store_info['store_id'],
+				'filter_store_id'  => $store_info['store_id'],
 				'filter_parent_id' => $category_info['category_id'],
-				'filter_status'   => true,
-				'sort'            => 'sort_order',
-				'order'           => 'ASC',
+				'filter_status'    => true,
+				'sort'             => 'sort_order',
+				'order'            => 'ASC',
 			];
 
 			$children = $this->model_catalog_category->getCategories($filter_data);
@@ -219,8 +199,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			if (!file_put_contents($directory . $filename, oc_yaml_encode($category_data))) {
 				return ['error' => sprintf($this->language->get('error_file'), $directory . $filename)];
 			}
-
-
 		}
 
 		return ['success' => sprintf($this->language->get('text_info'), $category_info['name'])];

@@ -208,28 +208,32 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$children_data = [];
 
-		$children = $this->model_catalog_category->getCategories(['filter_parent_id' => $category_info['category_id']]);
+		$filter_data = [
+			'filter_store_id' => $store_info['store_id'],
+			'filter_parent_id' => $category_info['category_id'],
+			'filter_status'   => true,
+			'sort'            => 'sort_order',
+			'order'           => 'ASC',
+		];
+
+		$children = $this->model_catalog_category->getCategories($filter_data);
 
 		foreach ($children as $child) {
-			$store_ids = $this->model_catalog_category->getStores($child['category_id']);
+			$child_description_data = [];
 
-			if (in_array($store_info['store_id'], $store_ids)) {
-				$child_description_data = [];
+			$child_descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
 
-				$child_descriptions = $this->model_catalog_category->getDescriptions($child['category_id']);
-
-				foreach ($child_descriptions as $code => $child_description) {
-					$child_description_data[$code] = ['name' => $child_description['name']];
-				}
-
-				$children_data[] = [
-					'category_id' => $child['category_id'],
-					'description' => $child_description_data,
-					'image'       => $category_info['image'],
-					'path'        => $path . '_' . $child['category_id'],
-					'sort_order'  => $category_info['sort_order']
-				];
+			foreach ($child_descriptions as $code => $child_description) {
+				$child_description_data[$code] = ['name' => $child_description['name']];
 			}
+
+			$children_data[] = [
+				'category_id' => $child['category_id'],
+				'description' => $child_description_data,
+				'image'       => $category_info['image'],
+				'path'        => $path . '_' . $child['category_id'],
+				'sort_order'  => $category_info['sort_order']
+			];
 		}
 
 		$category_data = [

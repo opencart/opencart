@@ -25,7 +25,7 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 
 			foreach ($query->rows as $result) {
 				if (preg_match('/^(a:)/', $result['setting'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `setting` = '" . $this->db->escape(json_encode(unserialize($result['setting']))) . "' WHERE `module_id` = '" . (int)$result['module_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `setting` = '" . $this->db->escape(json_encode(unserialize($result['setting'], ['allowed_classes' => false]))) . "' WHERE `module_id` = '" . (int)$result['module_id'] . "'");
 				}
 			}
 		} catch (\ErrorException $exception) {
